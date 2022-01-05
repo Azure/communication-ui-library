@@ -18,6 +18,7 @@ import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
+import { useLocale } from '../localization';
 
 const SidePane = (props: {
   headingText: string;
@@ -85,6 +86,8 @@ export const EmbeddedPeoplePane = (props: {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
+  const locale = useLocale();
+
   const participantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromMeeting(callAdapter, chatAdapter, participantId);
@@ -104,7 +107,7 @@ export const EmbeddedPeoplePane = (props: {
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={'People'}
+      headingText={locale.strings.meeting.peoplePaneTitle}
       onClose={props.onClose}
       dataUiId={'meeting-composite-people-pane'}
     >
@@ -112,7 +115,7 @@ export const EmbeddedPeoplePane = (props: {
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
-        <Stack.Item styles={peopleSubheadingStyleThemed}>In this call</Stack.Item>
+        <Stack.Item styles={peopleSubheadingStyleThemed}>{locale.strings.meeting.peoplePaneSubTitle}</Stack.Item>
         <ParticipantList {...participantListProps} />
       </Stack>
     </SidePane>
@@ -129,10 +132,12 @@ export const EmbeddedChatPane = (props: {
   hidden: boolean;
   onClose: () => void;
 }): JSX.Element => {
+  const locale = useLocale();
+
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={'Chat'}
+      headingText={locale.strings.meeting.chatPaneTitle}
       onClose={props.onClose}
       dataUiId={'meeting-composite-chat-pane'}
     >

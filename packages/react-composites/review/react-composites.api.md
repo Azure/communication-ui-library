@@ -429,6 +429,7 @@ export interface CompositeLocale {
 export interface CompositeStrings {
     call: CallCompositeStrings;
     chat: ChatCompositeStrings;
+    meeting: MeetingCompositeStrings;
 }
 
 // @public
@@ -627,6 +628,11 @@ export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cam
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
+export type MeetingCompositeOptions = {
+    callControls?: boolean | MeetingCallControlOptions;
+};
+
+// @beta
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
@@ -635,8 +641,17 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
     meetingAdapter: MeetingAdapter;
-    meetingCallControlOptions?: boolean | MeetingCallControlOptions;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
+}
+
+// @public
+export interface MeetingCompositeStrings {
+    chatButtonLabel: string;
+    chatPaneTitle: string;
+    peopleButtonLabel: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
 }
 
 // @beta

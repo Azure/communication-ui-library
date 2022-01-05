@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Making mock videos in storybook cover the entire video tile",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

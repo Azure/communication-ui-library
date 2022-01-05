@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "メッセージを入力",
-    "textTooLong": "メッセージの長さが上限を超えています。"
+    "textTooLong": "メッセージの長さが上限を超えています。",
+    "sendButtonAriaLabel": "メッセージの送信"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "メッセージを送信しました",
     "deliveredTooltipText": "送信しました",
+    "seenAriaLabel": "他のユーザーが表示したメッセージ",
     "seenTooltipText": "既読",
+    "sendingAriaLabel": "メッセージを送信しています",
     "sendingTooltipText": "送信中",
+    "failedToSendAriaLabel": "メッセージの送信に失敗しました",
     "failedToSendTooltipText": "送信できませんでした"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "オンにする",
     "tooltipDisabledContent": "カメラが無効になっています",
     "tooltipOnContent": "カメラをオフ",
-    "tooltipOffContent": "カメラをオンにする"
+    "tooltipOffContent": "カメラをオンにする",
+    "tooltipVideoLoadingContent": "ビデオの読み込み中です"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
