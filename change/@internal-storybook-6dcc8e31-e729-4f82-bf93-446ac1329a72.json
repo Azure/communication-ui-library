@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

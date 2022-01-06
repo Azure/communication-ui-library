@@ -14,7 +14,7 @@ import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
-import { ChatAdapter } from '../ChatComposite';
+import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
@@ -43,12 +43,23 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    */
   meetingInvitationURL?: string;
   /**
+   * Flags to enable/disable or customize UI elements of the {@link MeetingComposite}
+   */
+  options?: MeetingCompositeOptions;
+}
+
+/**
+ * Optional features of the {@link MeetingComposite}.
+ *
+ * @beta
+ */
+export type MeetingCompositeOptions = {
+  /**
    * Call control options to change what buttons show on the meeting composite control bar.
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
-}
-
+  callControls?: boolean | MeetingCallControlOptions;
+};
 /**
  * Meeting Call controls to show or hide buttons on the calling control bar.
  *
@@ -76,7 +87,7 @@ type MeetingScreenProps = {
   fluentTheme?: PartialTheme | Theme;
   formFactor?: 'desktop' | 'mobile';
   meetingInvitationURL?: string;
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | MeetingCallControlOptions;
 };
 
 const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
@@ -86,7 +97,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }
 
   const callAdapter: CallAdapter = useMemo(() => new MeetingBackedCallAdapter(meetingAdapter), [meetingAdapter]);
-  const chatAdapter: ChatAdapter = useMemo(() => new MeetingBackedChatAdapter(meetingAdapter), [meetingAdapter]);
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
@@ -113,6 +123,12 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
+  const chatProps: ChatCompositeProps = useMemo(() => {
+    return {
+      adapter: new MeetingBackedChatAdapter(meetingAdapter)
+    };
+  }, [meetingAdapter]);
+
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
 
@@ -128,22 +144,22 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             fluentTheme={fluentTheme}
           />
         </Stack.Item>
-        {chatAdapter && hasJoinedCall && (
+        {chatProps.adapter && hasJoinedCall && (
           <EmbeddedChatPane
-            chatCompositeProps={props}
+            chatCompositeProps={chatProps}
             hidden={!showChat}
-            chatAdapter={chatAdapter}
+            chatAdapter={chatProps.adapter}
             fluentTheme={fluentTheme}
             onClose={closePane}
           />
         )}
-        {callAdapter && chatAdapter && hasJoinedCall && (
+        {callAdapter && chatProps.adapter && hasJoinedCall && (
           <CallAdapterProvider adapter={callAdapter}>
             <EmbeddedPeoplePane
               hidden={!showPeople}
               inviteLink={props.meetingInvitationURL}
               onClose={closePane}
-              chatAdapter={chatAdapter}
+              chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
             />
           </CallAdapterProvider>
@@ -158,7 +174,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
           onPeopleButtonClicked={togglePeople}
           mobileView={props.formFactor === 'mobile'}
           disableButtonsForLobbyPage={isInLobbyOrConnecting}
-          meetingCallControlOptions={props.meetingCallControlOptions}
+          callControls={props.callControls}
         />
       )}
     </Stack>
@@ -171,14 +187,14 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
  * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, meetingCallControlOptions } = props;
+  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, options } = props;
   return (
     <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <MeetingScreen
         {...props}
         meetingAdapter={meetingAdapter}
         formFactor={formFactor}
-        meetingCallControlOptions={meetingCallControlOptions}
+        callControls={options?.callControls}
         meetingInvitationURL={meetingInvitationURL}
         fluentTheme={fluentTheme}
       ></MeetingScreen>
