@@ -182,7 +182,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Share your screen"
-                          className="ms-Button ms-Button--default root-20"
+                          className="ms-Button ms-Button--default root-21"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -232,7 +232,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Leave Call"
-                          className="ms-Button ms-Button--default root-21"
+                          className="ms-Button ms-Button--default root-22"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -290,24 +290,24 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-111 css-23"
+                className="css-111 css-24"
               >
                 <div
-                  className="ms-Stack css-30"
+                  className="ms-Stack css-31"
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="css-27"
+                    className="css-28"
                   />
                   <div
-                    className="ms-Stack css-31"
+                    className="ms-Stack css-32"
                   >
                     <div
-                      className="ms-Stack css-33"
+                      className="ms-Stack css-34"
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size48 root-34"
+                        className="ms-Persona ms-Persona--size48 root-35"
                         style={
                           Object {
                             "height": 100,
@@ -316,11 +316,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size48 coin-41"
+                          className="ms-Persona-coin ms-Persona--size48 coin-42"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-43"
+                            className="ms-Persona-imageArea imageArea-44"
                             role="presentation"
                             style={
                               Object {
@@ -331,7 +331,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-46"
+                              className="ms-Persona-initials initials-47"
                               style={
                                 Object {
                                   "height": 100,
@@ -349,13 +349,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-136 css-49"
+                    className="ms-Stack css-136 css-50"
                   >
                     <div
-                      className="ms-Stack css-137 css-50"
+                      className="ms-Stack css-137 css-51"
                     >
                       <span
-                        className="css-51"
+                        className="css-52"
                         title="Michael"
                       >
                         Michael
