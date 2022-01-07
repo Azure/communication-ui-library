@@ -11,6 +11,7 @@ import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
 import { createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
 import { MeetingAdapter } from '@internal/react-composites';
+import { getEndpointUrl } from './utils/getEndpointUrl';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -54,7 +55,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         callLocator: callLocator,
-        endpoint: endpoint,
+        endpoint: await getEndpointUrl(),
         chatThreadId: threadId
       });
       adapter.on('meetingEnded', () => {
