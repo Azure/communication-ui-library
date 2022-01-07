@@ -15,7 +15,7 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
   return {
     background: 'none',
     padding: 0,
-    height: '100%',
+    height: 'auto',
     minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
     maxWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
     border: `1px solid ${theme.palette.neutralLight}`,
