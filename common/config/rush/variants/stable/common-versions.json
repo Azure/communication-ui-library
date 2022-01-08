@@ -39,7 +39,7 @@
    * After modifying this field, it's recommended to run "rush update --full" so that the package manager
    * will recalculate all version selections.
    */
-  // "implicitlyPreferredVersions": false,
+  "implicitlyPreferredVersions": false,
 
   /**
    * The "rush check" command can be used to enforce that every project in the repo must specify
