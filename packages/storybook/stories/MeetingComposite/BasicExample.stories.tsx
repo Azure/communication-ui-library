@@ -55,6 +55,7 @@ export default {
     userId: controlsToAdd.userId,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
+    meetingCallControlOptions: controlsToAdd.meetingCallControlOptions,
     // Hiding auto-generated controls
     ...defaultMeetingCompositeHiddenControls
   },
