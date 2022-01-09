@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        className="ms-TooltipHost root-2"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
       >
         <button
           aria-label="Share your screen"
-          className="ms-Button ms-Button--default root-2"
+          className="ms-Button ms-Button--default root-3"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -41,12 +41,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
           type="button"
         >
           <span
-            className="ms-Button-flexContainer flexContainer-3"
+            className="ms-Button-flexContainer flexContainer-4"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="root-94 root-11"
+              className="root-94 root-12"
               data-icon-name="ControlButtonScreenShareStart"
             >
               <span
