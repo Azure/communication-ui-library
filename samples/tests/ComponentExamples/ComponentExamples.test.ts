@@ -57,7 +57,7 @@ test.describe('Component Examples Test', () => {
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
     });
-
+    // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
     await page.mouse.move(0, 0);
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStopped.png');
