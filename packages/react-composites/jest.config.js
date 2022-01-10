@@ -10,7 +10,6 @@ const config =
   process.env['FLAVOR'] === 'stable'
     ? {
         ...commonConfig,
-        rootDir: './preprocessed',
         testPathIgnorePatterns: ['/node_modules/'],
         globals: {
           'ts-jest': {
@@ -25,7 +24,7 @@ const config =
 module.exports = {
   ...config,
   roots: [
-    path.join(__dirname, '<rootDir>')
+    path.join(__dirname, process.env['FLAVOR'] === 'stable' ? 'preprocessed' : 'src')
     // Uncomment the following line to run E2E browser tests
     // path.join(__dirname, 'tests')
   ]
