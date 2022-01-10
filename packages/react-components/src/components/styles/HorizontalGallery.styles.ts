@@ -15,6 +15,10 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
   return {
     background: 'none',
     padding: 0,
+    /**
+     * zIndex is set higher for left/right buttons to overlap LayerHost div
+     * to make the buttons clickable
+     */
     zIndex: 1,
     height: 'auto',
     minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
