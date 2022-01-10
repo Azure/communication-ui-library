@@ -9,17 +9,19 @@ import { IStyle, Theme } from '@fluentui/react';
 export const HORIZONTAL_GALLERY_BUTTON_WIDTH = 1.75;
 
 /**
+ * zIndex is set higher for left/right buttons to overlap LayerHost div
+ * to make the buttons clickable
+ */
+export const HORIZONTAL_GALLERY_NEXT_PREV_BUTTONS_ZINDEX = 1;
+
+/**
  * @private
  */
 export const leftRightButtonStyles = (theme: Theme): IStyle => {
   return {
     background: 'none',
     padding: 0,
-    /**
-     * zIndex is set higher for left/right buttons to overlap LayerHost div
-     * to make the buttons clickable
-     */
-    zIndex: 1,
+    zIndex: `${HORIZONTAL_GALLERY_NEXT_PREV_BUTTONS_ZINDEX}`,
     height: 'auto',
     minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
     maxWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
