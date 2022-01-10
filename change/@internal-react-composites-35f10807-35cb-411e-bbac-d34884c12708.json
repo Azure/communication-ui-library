@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite",
+  "packageName": "@internal/react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
