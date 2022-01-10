@@ -5,4 +5,4 @@
 # The last matching pattern has the most precendence.
 
 # These *code owners* will be the default owners for everything in the repository.
-* @alkwa-msft @jamesburnside @anjulgarg @PorterNan @mgamis-msft @prprabhu-ms @dmceachernmsft @carocao-msft @edwardlee-msft @prabhjot-msft
+* @alkwa-msft @anjulgarg @carocao-msft @dmceachernmsft @edwardlee-msft @jamesburnside @mgamis-msft @PorterNan @prabhjot-msft @prprabhu-ms
