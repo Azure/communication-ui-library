@@ -33,6 +33,22 @@
     },
     {
       "commandKind": "global",
+      "name": "if-beta",
+      "summary": "Test if current flavor is in beta, exit 1 if not.",
+      "description": "Test if current flavor is in beta, exit 1 if not.",
+      "shellCommand": "node -e \"if (process.env.FLAVOR !== 'beta'){process.exit(1)} \"",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "if-stable",
+      "summary": "Test if current flavor is in stable, exit 1 if not.",
+      "description": "Test if current flavor is in stable, exit 1 if not.",
+      "shellCommand": "node -e \"if (process.env.FLAVOR !== 'stable'){process.exit(1)} \"",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:beta",
       "summary": "Switch flavor to beta",
       "description": "Every build and test command will run based on beta version.",
@@ -55,25 +71,6 @@
       "summary": "Update dependencies for stable version.",
       "description": "Update dependencies for stable version.",
       "shellCommand": "rush update --variant stable",
-      "safeForSimultaneousRushProcesses": true
-    },
-    {
-      "commandKind": "bulk",
-      "name": "build:stable",
-      "summary": "Preprocess and build only stable (non-beta) code in packages",
-      "description": "Preprocess and build the GA version.",
-      "enableParallelism": true,
-      "incremental": true,
-      "allowWarningsInSuccessfulBuild": true,
-      "safeForSimultaneousRushProcesses": true
-    },
-    {
-      "commandKind": "bulk",
-      "name": "test:stable",
-      "summary": "Run tests for non-beta version in each project.",
-      "description": "Run jest tests for non-beta version in each project.",
-      "enableParallelism": true,
-      "allowWarningsInSuccessfulBuild": true,
       "safeForSimultaneousRushProcesses": true
     },
     {

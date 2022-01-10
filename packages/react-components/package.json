@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rushx by-flavor \"npm run build:by-flavor\"",
-    "build:esm": "if-env FLAVOR=stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env FLAVOR=beta && tsc)",
+    "build:esm": "rush if-stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (rush if-beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
@@ -21,7 +21,7 @@
     "by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env",
     "preprocess": "cpx ./src/** ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && api-extractor run --local",
-    "test:by-flavor": "(if-env FLAVOR=stable && rushx preprocess || if-env FLAVOR=beta && echo \"skip preprocess\") && jest",
+    "test:by-flavor": "(rush if-stable && rushx preprocess || rush if-beta && echo \"skip preprocess\") && jest",
     "api-extractor": "rushx by-flavor \"npm run build:esm\" && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
