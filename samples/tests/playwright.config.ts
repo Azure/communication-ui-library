@@ -17,6 +17,8 @@ const config: PlaywrightTestConfig = {
       use: {
         browserName: 'chromium',
         permissions: ['notifications', 'camera', 'microphone'],
+        // Large enough to contain all UI elements from ComponentExamples sample
+        viewport: { width: 900, height: 900 },
         launchOptions: {
           args: [
             '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
