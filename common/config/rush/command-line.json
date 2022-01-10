@@ -37,7 +37,7 @@
       "summary": "Switch flavor to beta",
       "description": "Every build and test command will run based on beta version.",
       "autoinstallerName": "rush-cpy",
-      "shellCommand": "rush update && cpy common/config/env/beta.env common/config/env --rename .env",
+      "shellCommand": "rush update && cpy common/config/env/beta.env common/config/env --rename .env && rush rebuild",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -46,7 +46,15 @@
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
       "autoinstallerName": "rush-cpy",
-      "shellCommand": "rush update --variant stable && cpy common/config/env/stable.env common/config/env --rename .env",
+      "shellCommand": "rush update:stable && cpy common/config/env/stable.env common/config/env --rename .env && rush rebuild",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "update:stable",
+      "summary": "Update dependencies for stable version.",
+      "description": "Update dependencies for stable version.",
+      "shellCommand": "rush update --variant stable",
       "safeForSimultaneousRushProcesses": true
     },
     {

@@ -1,4 +1,5 @@
 dependencies:
+  '@azure/communication-calling': 1.3.2-beta.1
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
@@ -33,6 +34,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dO0NAHJ2KqI9NGptmQtQP1C8S4tTokyplxtr4AT5bCgF6Iywg6FbN0R/8MXmMMLb4YJyuh6ewSAXZo4z2PaN6g==
+  /@azure/communication-calling/1.3.2-beta.1:
+    dependencies:
+      '@azure/communication-common': 1.1.0
+      '@azure/logger': 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-uzEzesBoF++rNm02lPcLe2oQpuvOvYSeWLzViuzYZZ+sQ0UzkF8v+ZhySXCUCFXJF5aDT6xDnpBgOcRTYOIbAg==
   /@azure/communication-chat/1.1.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -18798,12 +18806,14 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
@@ -18815,7 +18825,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-+IAkva6ae7HE8uAnY1GYptSOdfXgAowGPBRW7QPCvx2BgJ30X88QAlEDiZN8o8vKq4pXATrxPVY5tFjj0izKtw==
+      integrity: sha512-phQyeqcxNuivc/UPJuCh49W6teEoeR9kHtKNtJwtSlq1oWaRmGRgVGoLwu27zH/McZSyqIGkGLHDEZMFB8XQ2A==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
@@ -18834,12 +18844,14 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
@@ -18853,7 +18865,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-B57IS7EHEW6QSSaQnKXEXGB9goiDsljjYH+m6Z7/nSnUry3X4NGzyRIOF97c8t2JuTTgqGXxsc8uw65cjCdJMw==
+      integrity: sha512-jjj4XiBZO68LPH5tCGktxe5QbIYGfoi3A07vGe5gtydd24ocVpe3Mzmg3n02BwVwEqbmyMsKH7lGJnNeaZtA9g==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18873,6 +18885,7 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -18880,6 +18893,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
@@ -18890,7 +18904,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-UUskRPHw4Lo8SiuVqVnOdKrZF29yK0PjvUeqPTtaCWdsnq1nogxjwT83wiqpb8s6+HdyY7um3hAyB3y9gE8Pzw==
+      integrity: sha512-f4EA5yis644O/wYTtcaMhbkcjQDPf8LqA4mnvPGQz+EJP4IxDVXCa6UlqvgXR8ek644VsklrlzJBKmmg9TuNMQ==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19160,6 +19174,7 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       eslint: 7.32.0
@@ -19172,6 +19187,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       events: 3.3.0
       html-to-react: 1.4.5_react@16.14.0
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       json-stringify-safe: 5.0.1
@@ -19197,13 +19213,14 @@ packages:
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
       ttypescript: 1.5.12_ts-node@9.1.1+typescript@4.3.5
+      type-fest: 2.5.4
       typescript: 4.3.5
       use-long-press: 1.1.1_react@16.14.0
       uuid: 8.3.2
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-kI7+BoD5/dhMVsngL0pNimR2R+v0ireRqXfwoHyfBntJQWE0LXm0bks0PDzoWOP7dxA5DimJqQPZUATt75hMzg==
+      integrity: sha512-ddN6wmbsBq6H+EW3tnJKg73XRFDaZm/+kNRib0yWdRTccZOkc1Ow9UqnRcCSGs56BeOIdzcLG2OX1yXO8sjQVQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19329,6 +19346,7 @@ packages:
       core-js: 3.16.2
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       eslint: 7.32.0
@@ -19342,6 +19360,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
@@ -19373,7 +19392,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-THi1vJW9ZmOgmxvguI46gZEU58Hw1PEC2CPySzKjvnlql0+pjS7BoPmTNTqwK57vtoMLyjuKwEL6BX3uIPQt3g==
+      integrity: sha512-iYSdLkp8tT+FQ7GrnuQbOU2vy04B7FBNK0muhWxxJ1D4aHYVTZztrOD7fu+2OBmC8hTz2j34Q4HVLcDPhVIkWQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19423,6 +19442,7 @@ packages:
       cpx: 1.5.0
       cross-env: 7.0.3
       dotenv: 10.0.0
+      env-cmd: 10.1.0
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       eslint: 7.32.0
@@ -19438,6 +19458,7 @@ packages:
       express: 4.16.4
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
@@ -19474,7 +19495,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-CeO8+swWFtPhnH8HG/+FDKbqZuLO6SRkeUXCj0y/3q4FfqaMbL7Z9Pvu3HAgcIOwohU1YeVtkb0szExitreKNw==
+      integrity: sha512-R/eWy6l0+UQYxl/R566+QJ1yqYaoLCUuan1Xj8kAbvPOWpMgUv6+ofGjh9XsJeZfJhEXfYLmvcuMyaUw6A0oog==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -19688,6 +19709,7 @@ packages:
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
+  '@azure/communication-calling': 1.3.2-beta.1
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz

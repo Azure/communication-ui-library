@@ -6,25 +6,24 @@
   "main": "dist/dist-cjs/index.js",
   "types": "dist/calling-stateful-client.d.ts",
   "scripts": {
-    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
-    "build:esm": "tsc",
+    "build": "rushx by-flavor \"npm run build:by-flavor\"",
+    "build:esm": "if-env FLAVOR=stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
-    "clean": "rimraf dist",
-    "copy-original": "cpx ./src/** ./preprocessed",
-    "preprocess": "rushx copy-original && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
-    "preprocess:stable": "cross-env FLAVOR=stable rushx preprocess",
-    "clean:preprocess": "rimraf ./preprocessed",
-    "build:stable": "rushx clean:preprocess && rushx preprocess:stable && tsc -project tsconfig.preprocess.json && rushx build:cjs && api-extractor run --local",
-    "test:stable": "rushx clean:preprocess && rushx preprocess:stable && jest --verbose ./preprocessed -c jest.config.preprocess.js",
+    "clean": "rimraf dist && rimraf preprocessed",
+    "current-flavor": "echo You are running under FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.FLAVOR",
+    "by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env",
+    "preprocess": "cpx ./src/** ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && api-extractor run --local",
+    "test:by-flavor": "(if-env FLAVOR=stable && rushx preprocess || if-env FLAVOR=beta && echo \"skip preprocess\") && jest",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "test": "jest",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "rushx by-flavor \"npm run test:by-flavor\"",
+    "test:coverage": "rushx by-flavor \"npm run test:by-flavor -- --coverage\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
-    "api-extractor": "tsc && api-extractor run --local",
+    "api-extractor": "rushx by-flavor \"npm run build:esm\" && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen"
   },
   "dependencies": {
@@ -59,6 +58,8 @@
     "prettier": "2.3.1",
     "ts-jest": "^26.4.4",
     "typescript": "4.3.5",
-    "@types/react": "^16.9.49"
+    "@types/react": "^16.9.49",
+    "env-cmd": "~10.1.0",
+    "if-env": "~1.0.4"
   }
 }

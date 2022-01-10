@@ -6,10 +6,26 @@ const commonConfig = require('../../common/config/jest/jest.config');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
+const config =
+  process.env['FLAVOR'] === 'stable'
+    ? {
+        ...commonConfig,
+        rootDir: './preprocessed',
+        testPathIgnorePatterns: ['/node_modules/'],
+        globals: {
+          'ts-jest': {
+            tsconfig: 'tsconfig.preprocess.json'
+          }
+        }
+      }
+    : {
+        ...commonConfig
+      };
+
 module.exports = {
-  ...commonConfig,
+  ...config,
   roots: [
-    path.join(__dirname, 'src')
+    path.join(__dirname, '<rootDir>')
     // Uncomment the following line to run E2E browser tests
     // path.join(__dirname, 'tests')
   ]
