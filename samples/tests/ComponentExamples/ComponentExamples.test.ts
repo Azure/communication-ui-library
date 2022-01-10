@@ -58,6 +58,8 @@ test.describe('Component Examples Test', () => {
       return document.querySelectorAll('video').length === 0;
     });
 
+    await page.mouse.move(0, 0);
+
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStopped.png');
   });
 });
