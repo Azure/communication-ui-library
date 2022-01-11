@@ -38,7 +38,7 @@ const App = (): JSX.Element => {
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userId, setUserId] = useState<CommunicationUserIdentifier>();
+  const [userCallId, setCallUserId] = useState<CommunicationUserIdentifier>();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -55,7 +55,7 @@ const App = (): JSX.Element => {
       try {
         const { token, user } = await fetchTokenResponse();
         setToken(token);
-        setUserId(user);
+        setCallUserId(user);
       } catch (e) {
         console.error(e);
         setUserCredentialFetchError(true);
@@ -69,7 +69,7 @@ const App = (): JSX.Element => {
   }
 
   if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Calling sample: This is experimental behaviour');
+    console.log('ACS Meeting sample: This is experimental behaviour');
   }
 
   switch (page) {
@@ -80,23 +80,26 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
-          setEndpointUrl={setEndpointUrl}
-          setThreadId={setThreadId}
-          startCallHandler={(callDetails) => {
+          startMeetingHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
+            setEndpointUrl(callDetails.endpoint);
+            setThreadId(callDetails.threadId);
             const isTeamsCall = !!callDetails.teamsLink;
             const callLocator =
               callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
+
+            /// do chat thread things here
+
             if (!joiningExistingCall) {
               const joinParam = isTeamsCall
                 ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
                 : '?groupId=' + (callLocator as GroupCallLocator).groupId;
+
               window.history.pushState({}, document.title, window.location.origin + joinParam);
             }
-
             setPage('meeting');
           }}
         />
@@ -119,14 +122,14 @@ const App = (): JSX.Element => {
         );
       }
 
-      if (!token || !userId || !displayName || !callLocator) {
+      if (!token || !userCallId || !displayName || !callLocator) {
         document.title = `credentials - ${webAppTitle}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
         <MeetingScreen
           token={token}
-          userId={userId}
+          userId={userCallId}
           displayName={displayName}
           callLocator={callLocator}
           onCallEnded={() => setPage('endCall')}
