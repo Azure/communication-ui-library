@@ -7,7 +7,7 @@ import { mergeStyles } from '@fluentui/react';
  * @private
  */
 export const typingIndicatorContainerStyle = mergeStyles({
-  minHeight: '2.125rem'
+  minHeight: '0.125rem'
 });
 
 /**
