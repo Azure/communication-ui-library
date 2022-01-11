@@ -13,7 +13,7 @@
     "clean": "rimraf dist && rimraf preprocessed",
     "current-flavor": "echo You are running under FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.FLAVOR",
     "by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
-    "preprocess": "cpx ./src/** ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && api-extractor run --local",
     "test:by-flavor": "(if-env FLAVOR=stable && rushx preprocess || if-env FLAVOR=beta && echo \"skip preprocess\") && jest",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",

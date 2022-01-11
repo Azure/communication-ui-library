@@ -53,9 +53,9 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
-    "copy-original": "cpx ../*/src/** ./preprocess-dist & renamer --find src --replace preprocessed ./preprocess-dist/**",
+    "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
-    "copy-preprocess": "cpx ../*/preprocessed/** ./preprocess-dist & renamer --find preprocessed --replace src ./preprocess-dist/**",
+    "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build": "rushx check-deps && rushx by-flavor \"npm run build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
     "build:esm": "if-env FLAVOR=stable && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (if-env FLAVOR=beta && ttsc)",

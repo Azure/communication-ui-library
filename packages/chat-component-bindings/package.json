@@ -11,7 +11,7 @@
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist",
-    "copy-original": "cpx ./src/** ./preprocessed",
+    "copy-original": "cpx \"./src/**\" ./preprocessed",
     "preprocess": "rushx copy-original && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "preprocess:stable": "cross-env FLAVOR=stable rushx preprocess",
     "clean:preprocess": "rimraf ./preprocessed",
