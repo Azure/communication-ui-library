@@ -1,7 +1,7 @@
 {
-  "extends": "../../common/config/tsc/tsconfig.preprocess.json",
+  "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./preprocess-dist",
+    "baseUrl": "./preprocessed",
     "outDir": "./dist/dist-esm"
   },
   "typeRoots": ["./node_modules/@types"],
