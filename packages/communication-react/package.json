@@ -58,7 +58,7 @@
     "copy-preprocess": "cpx ../*/preprocessed/** ./preprocess-dist & renamer --find preprocessed --replace src ./preprocess-dist/**",
     "build": "rushx check-deps && rushx by-flavor \"npm run build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
-    "build:esm": "rush if-stable && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (rush if-beta && ttsc)",
+    "build:esm": "if-env FLAVOR=stable && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (if-env FLAVOR=beta && ttsc)",
     "build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && api-extractor run --local",
     "build:watch": "",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
