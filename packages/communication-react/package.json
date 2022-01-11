@@ -65,7 +65,7 @@
     "test": "",
     "test:coverage": "",
     "current-flavor": "echo You are running under FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.FLAVOR",
-    "by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env",
+    "by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "check-deps": "node scripts/verifyDependencies",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
