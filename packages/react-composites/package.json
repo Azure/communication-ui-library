@@ -23,7 +23,7 @@
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "test:e2e": "rushx test:e2e:call && rushx test:e2e:chat && rushx test:e2e:meeting",
-    "test:e2e:call": "playwright test tests.browser.call",
+    "test:e2e:call": "playwright test tests/browser/call/HorizontalGallery.test.ts",
     "test:e2e:chat": "playwright test tests.browser.chat",
     "test:e2e:meeting": "playwright test tests.browser.meeting",
     "test:e2e:stable": "cross-env FLAVOR=stable rushx test:e2e",
