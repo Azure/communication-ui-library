@@ -1,35 +1,23 @@
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import { PrimaryButton } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React, { useEffect } from 'react';
 import './App.css';
 import { FileCard } from './file-sharing/FileCard';
+import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { FileUploadButton } from './file-sharing/FileUploadButton';
 import { UploadedFile, FileMetaData } from './file-sharing/UploadedFile';
 
 initializeIcons();
 initializeFileTypeIcons();
 
-// MOCK FILES
-// const files: UploadedFile[] = [];
-// for (let index = 0; index < 8; index++) {
-//   files.push(new UploadedFile(new File([], 'router-settings.docx')));
-// }
-
-// SIMULATE FILE UPLOAD PROGRESS
-// updateProgress function to be called by Contoso to update the file progress status.
-// Files can not be sent with the message until all the files have a progress of 100.
-// setInterval(() => {
-//   for (let index = 0; index < files.length; index++) {
-//     files[index].updateProgress(Math.random());
-//   }
-// }, 1000);
-
 // SAMPLE SENDBOX
 function App() {
   const [files, setFiles] = React.useState<UploadedFile[]>();
   const [allFilesUploaded, setAllFilesUploaded] = React.useState(false);
+  const [messageSent, setMessageSent] = React.useState(false);
 
-  // This logic needs to be in the internal selectors.
+  // This logic needs to be in the internal selectors + handler.
   useEffect(() => {
     if (!files) return;
 
@@ -78,50 +66,96 @@ function App() {
     }
   };
 
+  const uploadedFileCards = () => {
+    return (
+      <FileCardGroup>
+        {files?.map((file, idx) => (
+          <FileCard uploadedFile={file} key={idx} />
+        ))}
+      </FileCardGroup>
+    );
+  };
+
+  const downloadableFileCards = () => {
+    return (
+      <FileCardGroup>
+        {files && files.map((file, idx) => <FileCard uploadedFile={file} downloadable key={idx} />)}
+      </FileCardGroup>
+    );
+  };
+
   // @TODO: Write logic to identify that all files have been uploaded
 
   return (
     <div style={{ padding: '2rem' }}>
       <div>
+        <p>
+          <b>Select Files</b>
+        </p>
+        <li>Clicking on upload file button opens the OS file picker.</li>
+        <li>Multiple files can be selected</li>
+        <li>Contoso can provide file extensions to limit the type of files that can be picked</li>
+        <br />
         <FileUploadButton userId="123456" fileUploadHandler={fileUploadHandler} />
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto auto auto auto',
-          padding: '10px'
-        }}
-      >
-        {files &&
-          files.map((file, idx) => (
-            <div key={idx} style={{ marginTop: '1rem' }}>
-              <FileCard uploadedFile={file} />
-            </div>
-          ))}
       </div>
 
       <br />
+      <br />
 
-      {allFilesUploaded && <div>All files uploaded</div>}
+      {files && (
+        <div>
+          <p>
+            <b>Upload</b>
+          </p>
 
+          <li>Files added to SendBox.</li>
+          <li>Contoso calls `uploadedFile.updateProgress()` to fill the progress bar.</li>
+          <li>Contoso provided `uploadHandler` function called for each file.</li>
+          <li>Contoso calls `uploadedFile.completeUpload()` for each uploaded file to mark the upload as complete.</li>
+          <li>
+            Once all the files are uploaded, the entire upload is marked as complete. Handled by an internal selector.
+          </li>
+          <li>
+            Files MetaData added to the message `metadata` attribute. {files && JSON.stringify(files[0].metaData)}
+          </li>
+          {uploadedFileCards()}
+        </div>
+      )}
+
+      <br />
       <br />
 
       {allFilesUploaded && (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'auto auto auto auto',
-            padding: '10px'
-          }}
-        >
-          {files &&
-            files.map((file, idx) => (
-              <div key={idx} style={{ marginTop: '1rem' }}>
-                <FileCard uploadedFile={file} downloadable />
-              </div>
-            ))}
+        <div>
+          <p>
+            <b>Send Message with MetaData</b>
+          </p>
+          <li>Message can only be sent once all the files have been marked as complete by Contoso</li>
+          <br />
+          {<PrimaryButton onClick={() => setMessageSent(true)}>Send Message</PrimaryButton>}
         </div>
       )}
+
+      <br />
+      <br />
+
+      {messageSent && (
+        <div>
+          <p>
+            <b>Display Files in Message Thread</b>
+          </p>
+
+          <li>
+            File MetaData is used to display the file card in message thread. `metadata.extension` is used for the icon.
+          </li>
+          <li>Clicking anywhere on the file opens `metadata.url` link in a new tab.</li>
+          <li>
+            @TODO: How to handle file permissions. Contoso may need to generate a user specific file url or deny access
+            to the file entirely.
+          </li>
+        </div>
+      )}
+      {messageSent && downloadableFileCards()}
     </div>
   );
 }

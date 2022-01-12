@@ -7,12 +7,13 @@ export type FileUploadHandler = (userId: string, uploadedFiles: UploadedFile[]) 
 export interface FileUploadButtonProps {
   userId: string;
   fileUploadHandler?: FileUploadHandler;
+  accept?: string;
 }
 
 export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { userId, fileUploadHandler } = props;
+  const { userId, fileUploadHandler, accept } = props;
 
   const onChange = (files: FileList | null): void => {
     if (!files) {
@@ -42,6 +43,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       ref={inputRef}
       hidden
       multiple
+      accept={accept}
       type="file"
       onChange={(e) => {
         onChange(e.currentTarget.files);

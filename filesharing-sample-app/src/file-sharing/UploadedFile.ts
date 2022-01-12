@@ -140,6 +140,7 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * Call this function to mark the upload as failed.
+   * @param message An error message that can be displayed to the user.
    */
   failUpload(message: string): void {
     this._emitter.emit(UPLOAD_FAILED_EVENT, message);
