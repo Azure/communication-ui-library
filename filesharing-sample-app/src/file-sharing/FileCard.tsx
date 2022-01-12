@@ -28,13 +28,13 @@ export const FileCard = (props: FileCardProps) => {
         horizontalAlign="space-between"
         verticalAlign="center"
         className={mergeStyles({
-          padding: '12px 12px 8px 12px'
+          padding: downloadable ? '12px' : '12px 12px 8px 12px'
         })}
       >
         <Stack>
           <Icon
             {...getFileTypeIconProps({
-              extension: 'docx',
+              extension: uploadedFile.extension(),
               size: 24,
               imageFileType: 'svg'
             })}
@@ -46,11 +46,17 @@ export const FileCard = (props: FileCardProps) => {
             fontWeight: '500'
           })}
         >
-          {uploadedFile.file.name}
+          {uploadedFile.truncatedName()}
         </Stack>
-        <Stack>
-          <Icon iconName="ChromeClose" style={{ fontSize: '12px' }} />
-        </Stack>
+        {downloadable ? (
+          <Stack style={{ cursor: 'pointer', padding: '0.25rem' }}>
+            <Icon iconName="Download" style={{ fontSize: '16px' }} />
+          </Stack>
+        ) : (
+          <Stack style={{ cursor: 'pointer', padding: '0.25rem' }}>
+            <Icon iconName="ChromeClose" style={{ fontSize: '12px' }} />
+          </Stack>
+        )}
       </Stack>
       {!downloadable && <FileProgressBar uploadedFile={uploadedFile} />}
     </Stack>

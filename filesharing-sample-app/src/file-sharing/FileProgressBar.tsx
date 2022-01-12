@@ -1,5 +1,5 @@
 import { ProgressIndicator } from '@fluentui/react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { UploadedFile } from './UploadedFile';
 
 export interface FileProgressProps {
@@ -16,7 +16,6 @@ export const FileProgressBar = (props: FileProgressProps) => {
     };
 
     uploadedFile.on('uploadProgressed', uploadProgressedListener);
-
     return () => {
       uploadedFile.off('uploadProgressed', uploadProgressedListener);
     };

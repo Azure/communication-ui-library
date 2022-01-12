@@ -9,21 +9,30 @@ export interface FileMetaData {
    */
   name: string;
   /**
-   * Mimetype used for rendering the file icon.
-   * An unknown mime type will be rendered as a generic icon.
-   * Example: `image/jpeg`
+   * Extension is used for rendering the file icon.
+   * An unknown extension will be rendered as a generic icon.
+   * Example: `jpeg`
    */
-  mimetype: string;
+  extension: string;
   /**
    * Download URL for the file.
    */
   url: string;
 }
 
+export const UPLOAD_PROGRESSED_EVENT = 'uploadProgressed';
+export const UPLOAD_COMPLETED_EVENT = 'uploadCompleted';
+export const UPLOAD_FAILED_EVENT = 'uploadFailed';
+export const UPLOAD_CANCELLED_EVENT = 'uploadCancelled';
+
 /**
  * Events emitted by the UploadedFile class.
  */
-export type UploadedFileEvents = 'uploadProgressed' | 'uploadComplete' | 'uploadFailed' | 'uploadCanceled';
+export type UploadedFileEvents =
+  | typeof UPLOAD_PROGRESSED_EVENT
+  | typeof UPLOAD_COMPLETED_EVENT
+  | typeof UPLOAD_FAILED_EVENT
+  | typeof UPLOAD_CANCELLED_EVENT;
 
 /**
  * Events listeners supported by the UploadedFile class.
@@ -58,26 +67,26 @@ export interface UploadEvents {
   /**
    * Subscriber function for `uploadProgressed` event.
    */
-  on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+  on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
   /**
    * Subscriber function for `uploadComplete` event.
    */
-  on(event: 'uploadComplete', listener: UploadCompleteListener): void;
+  on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
   /**
    * Subscriber function for `uploadFailed` event.
    */
-  on(event: 'uploadFailed', listener: UploadFailedListener): void;
+  on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
   /**
    * Subscriber function for `uploadCanceled` event.
    */
-  on(event: 'uploadCanceled', listener: UploadCanceledListener): void;
+  on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
 }
 
 /**
  * Each uploaded file return an object of the type `UploadedFile`.
  */
 export class UploadedFile implements UploadEvents {
-  private emitter: EventEmitter;
+  private _emitter: EventEmitter;
 
   /**
    * HTML `File` object of the uploaded file.
@@ -97,7 +106,8 @@ export class UploadedFile implements UploadEvents {
   constructor(file: File) {
     this.file = file;
     this.progress = 0;
-    this.emitter = new EventEmitter();
+    this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(100);
   }
 
   /**
@@ -107,7 +117,7 @@ export class UploadedFile implements UploadEvents {
    */
   updateProgress(value: number): void {
     this.progress = value;
-    this.emitter.emit('uploadProgressed', value);
+    this._emitter.emit(UPLOAD_PROGRESSED_EVENT, value);
   }
 
   /**
@@ -116,22 +126,45 @@ export class UploadedFile implements UploadEvents {
    * @param metaData FileMetaData
    */
   completeUpload(metaData: FileMetaData): void {
+    this.progress = 1;
     this.metaData = metaData;
-    this.emitter.emit('uploadCompleted', metaData);
+    this._emitter.emit(UPLOAD_COMPLETED_EVENT, metaData);
   }
 
   /**
    * Call this function to mark the upload as canceled.
    */
   cancelUpload(): void {
-    this.emitter.emit('uploadCanceled');
+    this._emitter.emit(UPLOAD_CANCELLED_EVENT);
   }
 
   /**
    * Call this function to mark the upload as failed.
    */
   failUpload(message: string): void {
-    this.emitter.emit('uploadFailed', message);
+    this._emitter.emit(UPLOAD_FAILED_EVENT, message);
+  }
+
+  /**
+   * @returns boolean
+   */
+  isUploaded(): boolean {
+    return !!this.metaData;
+  }
+
+  /**
+   * @param length
+   * @returns string
+   */
+  truncatedName(length = 15): string {
+    return this.file.name.split('.')[0].substring(0, length).trimEnd() + (this.file.name.length > length ? '... ' : '');
+  }
+
+  /**
+   * @returns boolean
+   */
+  extension(): string {
+    return this.file.name.split('.').pop() || '';
   }
 
   /**
@@ -140,7 +173,7 @@ export class UploadedFile implements UploadEvents {
    * @param listener
    */
   on(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
-    this.emitter.addListener(event, listener);
+    this._emitter.addListener(event, listener);
   }
 
   /**
@@ -149,6 +182,6 @@ export class UploadedFile implements UploadEvents {
    * @param listener
    */
   off(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
-    this.emitter.removeListener(event, listener);
+    this._emitter.removeListener(event, listener);
   }
 }
