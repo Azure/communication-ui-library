@@ -89,8 +89,7 @@ const App = (): JSX.Element => {
     internalSetupAndJoinChatThread();
   }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
 
-  const supportedBrowser = !isOnIphoneAndNotSafari();
-  if (!supportedBrowser) {
+  if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
   }
 
@@ -118,7 +117,6 @@ const App = (): JSX.Element => {
                     value: encodeURIComponent((callArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
                 : { name: 'groupId', value: (callArgs?.callLocator as GroupCallLocator).groupId };
-
               pushQSPUrl(joinParam);
             }
             setPage('meeting');
