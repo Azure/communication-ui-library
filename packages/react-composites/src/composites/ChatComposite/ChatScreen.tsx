@@ -8,11 +8,11 @@ import {
   MessageProps,
   MessageRenderer,
   MessageThread,
-  SendBox,
-  TypingIndicator,
-  ParticipantMenuItemsCallback,
   MessageThreadStyles,
+  ParticipantMenuItemsCallback,
+  SendBox,
   SendBoxStylesProps,
+  TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
@@ -20,21 +20,26 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+import { UploadedFile } from './file-sharing';
+import { FileCardGroup } from './file-sharing/FileCardGroup';
+import { FileUploadButton } from './file-sharing/FileUploadButton';
+import { UploadedFileCard } from './file-sharing/UploadedFileCard';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantContainer } from './ParticipantContainer';
+import { uploadedFilesSelector } from './selectors/uploadedFileSelector';
 import {
   chatArea,
   chatContainer,
   chatWrapper,
   messageThreadChatCompositeStyles,
+  participantListContainerPadding,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
-  participantListContainerPadding,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
-
-/* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from './ParticipantContainer';
 
 /**
  * @private
@@ -78,6 +83,34 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  const uploadedFiles = useSelector(uploadedFilesSelector);
+
+  // For marking all files as uploaded.
+  // TODO: Remove this once we have a better way to handle this.
+  useEffect(() => {
+    if (!uploadedFiles.files) {
+      return;
+    }
+
+    const uploadCompleteListener = (): void => {
+      for (const file of uploadedFiles.files || []) {
+        if (!file.isUploaded()) {
+          return;
+        }
+      }
+      adapter.uploadsComplete && adapter.uploadsComplete();
+    };
+
+    uploadedFiles.files.forEach((file) => {
+      file.on('uploadCompleted', uploadCompleteListener);
+    });
+
+    return () => {
+      uploadedFiles.files?.forEach((file) => {
+        file.off('uploadCompleted', uploadCompleteListener);
+      });
+    };
+  }, [adapter, uploadedFiles.files]);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -110,6 +143,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
+
+          <Stack style={{ maxWidth: '41.25rem', alignSelf: 'center', width: '100%' }}>
+            <FileCardGroup>
+              {uploadedFiles.files?.map((uploadedFile, idx) => (
+                <UploadedFileCard key={idx} uploadedFile={uploadedFile} />
+              ))}
+            </FileCardGroup>
+            <br />
+            <FileUploadButton userId={sendBoxProps.userId} fileUploadHandler={fileUploadHandler} />
+          </Stack>
+
           <Stack className={sendBoxParentStyle}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
               {onRenderTypingIndicator ? (
@@ -118,7 +162,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
+            <SendBox
+              {...sendBoxProps}
+              autoFocus={options?.autoFocus}
+              styles={sendBoxStyles}
+              // Don't let users send messages if all files have not been uploaded.
+              // disabled={uploadedFiles.files && !uploadedFiles.completed}
+            />
           </Stack>
         </Stack>
         {
@@ -133,4 +183,27 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+/**
+ * Test function
+ * @TODO: Remove this function later
+ * @internal
+ */
+const fileUploadHandler = async (userId: string, uploadedFiles: UploadedFile[]): Promise<void> => {
+  // Simulate uploading the file to a server
+  for (const file of uploadedFiles) {
+    let progress = 0;
+    for (let index = 0; index < 20; index++) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      progress += 0.05;
+      file.updateProgress(progress);
+    }
+    // Mark file upload as complete
+    file.completeUpload({
+      name: file.file.name,
+      extension: file.extension(),
+      url: 'https://www.google.com'
+    });
+  }
 };

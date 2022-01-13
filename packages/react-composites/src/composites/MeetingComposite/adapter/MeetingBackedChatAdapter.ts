@@ -40,7 +40,7 @@ function ChatAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
  *
  * @private
  */
-export class MeetingBackedChatAdapter implements ChatAdapter {
+export class MeetingBackedChatAdapter implements Omit<ChatAdapter, 'uploadFiles' | 'uploadsComplete'> {
   private meetingAdapter: MeetingAdapter;
 
   // For onStateChange we must convert meeting state to chat state. This involves creating a new handler to be passed into the onStateChange.

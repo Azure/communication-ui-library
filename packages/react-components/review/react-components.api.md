@@ -382,6 +382,17 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @beta (undocumented)
+export const FileCard: (props: FileCardProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface FileCardProps {
+    downloadable?: boolean;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 

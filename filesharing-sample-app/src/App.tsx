@@ -109,8 +109,9 @@ function App() {
           </p>
 
           <li>Files added to SendBox.</li>
-          <li>Contoso calls `uploadedFile.updateProgress()` to fill the progress bar.</li>
+          <li>Files are set in ChatAdapter UI State</li>
           <li>Contoso provided `uploadHandler` function called for each file.</li>
+          <li>Contoso calls `uploadedFile.updateProgress()` to fill the progress bar.</li>
           <li>Contoso calls `uploadedFile.completeUpload()` for each uploaded file to mark the upload as complete.</li>
           <li>
             Once all the files are uploaded, the entire upload is marked as complete. Handled by an internal selector.

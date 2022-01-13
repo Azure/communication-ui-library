@@ -9,6 +9,9 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+
+initializeFileTypeIcons();
 
 /**
  * Props for {@link ChatComposite}.

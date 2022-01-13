@@ -74,7 +74,8 @@
     "memoize-one": "~5.2.1",
     "events": "~3.3.0",
     "uuid": "^8.1.0",
-    "reselect": "~4.0.0"
+    "reselect": "~4.0.0",
+    "@fluentui/react-file-type-icons": "~8.5.8"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",

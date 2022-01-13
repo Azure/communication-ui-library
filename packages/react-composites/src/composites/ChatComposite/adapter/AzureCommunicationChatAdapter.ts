@@ -8,7 +8,7 @@ import {
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
-import { ChatMessage, ChatMessageType, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatMessageType, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
@@ -29,6 +29,7 @@ import {
   TopicChangedListener
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
+import { FileMetaData, UploadedFile } from '..';
 
 /** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
@@ -71,6 +72,15 @@ class ChatContext {
     this.setState({ ...this.state, error });
   }
 
+  public setUploadedFiles(uploadedFiles: UploadedFile[]): void {
+    console.log('Setting uploaded files', uploadedFiles, this.state);
+    this.setState({ ...this.state, uploadedFiles });
+  }
+
+  public setUploadedFilesCompleted(status: boolean): void {
+    this.setState({ ...this.state, uploadedFilesCompleted: status });
+  }
+
   public updateClientState(clientState: ChatClientState): void {
     const thread = clientState.threads[this.threadId];
     if (!thread) {
@@ -80,13 +90,15 @@ class ChatContext {
       userId: clientState.userId,
       displayName: clientState.displayName,
       thread,
-      latestErrors: clientState.latestErrors
+      latestErrors: clientState.latestErrors,
+      uploadedFiles: this.state.uploadedFiles,
+      uploadedFilesCompleted: this.state.uploadedFilesCompleted
     });
   }
 }
 
 /**
- * @private
+ * @privatez
  */
 export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
@@ -131,6 +143,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
+    this.uploadFiles = this.uploadFiles.bind(this);
+    this.uploadsComplete = this.uploadsComplete.bind(this);
   }
 
   dispose(): void {
@@ -168,9 +182,28 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context.offStateChange(handler);
   }
 
-  async sendMessage(content: string): Promise<void> {
+  async sendMessage(content: string, options?: SendMessageOptions): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onSendMessage(content);
+      const fileMetaData: FileMetaData[] = [];
+      const uploadedFiles = this.getState().uploadedFiles;
+      if (uploadedFiles) {
+        for (const file of uploadedFiles) {
+          if (file.metaData) {
+            fileMetaData.push(file.metaData);
+          }
+        }
+      }
+
+      options = options || {};
+      options.metadata = {
+        ...options.metadata,
+        acsfiles: JSON.stringify(fileMetaData)
+      };
+
+      await this.handlers.onSendMessage(content, options);
+
+      this.context.setUploadedFiles([]);
+      this.context.setUploadedFilesCompleted(false);
     });
   }
 
@@ -212,6 +245,14 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onDeleteMessage(messageId);
     });
+  }
+
+  uploadFiles(uploadedFiles: UploadedFile[]): void {
+    this.context.setUploadedFiles(uploadedFiles);
+  }
+
+  uploadsComplete(): void {
+    this.context.setUploadedFilesCompleted(true);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

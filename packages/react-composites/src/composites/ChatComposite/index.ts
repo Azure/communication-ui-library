@@ -26,3 +26,4 @@ export type {
 } from './adapter/ChatAdapter';
 
 export * from './Strings';
+export * from './file-sharing';

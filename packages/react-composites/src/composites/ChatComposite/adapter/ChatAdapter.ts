@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
+import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
+import { UploadedFile } from '../file-sharing';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -15,6 +16,18 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
+  /**
+   * Files being uploaded by a user in the current thread.
+   * Should be set to null once the upload is complete.
+   * @beta
+   */
+  uploadedFiles?: UploadedFile[];
+  /**
+   * Marks all the `uploadedFiles` as completely uploaded.
+   * Allows a message to be sent after the upload is complete.
+   * @beta
+   */
+  uploadedFilesCompleted?: boolean;
 };
 
 /**
@@ -54,7 +67,7 @@ export interface ChatAdapterThreadManagement {
   /**
    * Send a message in the thread.
    */
-  sendMessage(content: string): Promise<void>;
+  sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -87,6 +100,16 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+  /**
+   * Sets the uploaded files in state.
+   * @beta
+   */
+  uploadFiles?: (uploadedFiles: UploadedFile[]) => void;
+  /**
+   * Marks the uploaded files as complete. Allows a message to be sent after the upload is complete.
+   * @beta
+   */
+  uploadsComplete?: () => void;
 }
 
 /**

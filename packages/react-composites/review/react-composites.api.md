@@ -36,6 +36,7 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberKind } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import type { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -311,16 +312,22 @@ export interface ChatAdapterThreadManagement {
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string): Promise<void>;
+    // @beta
+    uploadFiles?: (uploadedFiles: UploadedFile[]) => void;
+    // @beta
+    uploadsComplete?: () => void;
 }
 
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
+    uploadedFiles?: UploadedFile[];
+    uploadedFilesCompleted?: boolean;
 };
 
 // @public
@@ -514,6 +521,13 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
+}
+
+// @beta
+export interface FileMetaData {
+    extension: string;
+    name: string;
+    url: string;
 }
 
 // @public
@@ -723,6 +737,64 @@ export type ParticipantsRemovedListener = (event: {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta (undocumented)
+export const UPLOAD_CANCELLED_EVENT = "uploadCancelled";
+
+// @beta (undocumented)
+export const UPLOAD_COMPLETED_EVENT = "uploadCompleted";
+
+// @beta (undocumented)
+export const UPLOAD_FAILED_EVENT = "uploadFailed";
+
+// @beta (undocumented)
+export const UPLOAD_PROGRESSED_EVENT = "uploadProgressed";
+
+// @beta
+export type UploadCanceledListener = () => void;
+
+// @beta
+export type UploadCompleteListener = (metaData: FileMetaData) => void;
+
+// @beta
+export class UploadedFile implements UploadEvents {
+    constructor(file: File);
+    cancelUpload(): void;
+    completeUpload(metaData: FileMetaData): void;
+    // (undocumented)
+    extension(): string;
+    failUpload(message: string): void;
+    file: File;
+    // (undocumented)
+    isUploaded(): boolean;
+    metaData?: FileMetaData;
+    off(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
+    on(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
+    progress: number;
+    // (undocumented)
+    truncatedName(length?: number): string;
+    updateProgress(value: number): void;
+}
+
+// @beta
+export type UploadedFileEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener | UploadCanceledListener;
+
+// @beta
+export type UploadedFileEvents = typeof UPLOAD_PROGRESSED_EVENT | typeof UPLOAD_COMPLETED_EVENT | typeof UPLOAD_FAILED_EVENT | typeof UPLOAD_CANCELLED_EVENT;
+
+// @beta
+export interface UploadEvents {
+    on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+    on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+    on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+    on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+}
+
+// @beta
+export type UploadFailedListener = (message: string) => void;
+
+// @beta
+export type UploadProgressListener = (value: number) => void;
 
 // (No @packageDocumentation comment for this package)
 
