@@ -1,5 +1,5 @@
 dependencies:
-  '@azure/communication-calling': 1.3.2-beta.1
+  '@azure/communication-calling': 1.3.2
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
@@ -34,13 +34,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dO0NAHJ2KqI9NGptmQtQP1C8S4tTokyplxtr4AT5bCgF6Iywg6FbN0R/8MXmMMLb4YJyuh6ewSAXZo4z2PaN6g==
-  /@azure/communication-calling/1.3.2-beta.1:
-    dependencies:
-      '@azure/communication-common': 1.1.0
-      '@azure/logger': 1.0.2
-    dev: false
-    resolution:
-      integrity: sha512-uzEzesBoF++rNm02lPcLe2oQpuvOvYSeWLzViuzYZZ+sQ0UzkF8v+ZhySXCUCFXJF5aDT6xDnpBgOcRTYOIbAg==
   /@azure/communication-chat/1.1.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -19714,7 +19707,7 @@ packages:
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
-  '@azure/communication-calling': 1.3.2-beta.1
+  '@azure/communication-calling': 1.3.2
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
