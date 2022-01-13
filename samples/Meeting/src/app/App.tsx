@@ -45,9 +45,7 @@ const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
 
   // User credentials to join a call with - these are retrieved from the server
-  const [token, setToken] = useState<string>();
   const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
-  const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
