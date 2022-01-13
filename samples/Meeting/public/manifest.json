@@ -1,6 +1,6 @@
 {
   "name": "Azure Communication Meeting Sample",
-  "short_name": "AzureCommunicationCallingSample",
+  "short_name": "AzureCommunicationMeetingSample",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
