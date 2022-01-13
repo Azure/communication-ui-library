@@ -8,13 +8,12 @@ import React, { useEffect, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
+  chatSDKVersion,
   createGroupId,
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
-  isMobileSession,
   isOnIphoneAndNotSafari,
-  isSmallScreen,
   navigateToHomePage
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
@@ -22,14 +21,14 @@ import { MeetingScreen } from './views/MeetingScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
-import { getThreadId } from './utils/getThreadId';
-import { createThread } from './utils/createThread';
-import { checkThreadValid } from './utils/checkThreadValid';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { joinThread } from './utils/joinThread';
+import { getThread } from './utils/getThread';
+
+const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
 
 console.log(
-  `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}`
+  `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
 );
 
 initializeIcons();
@@ -68,31 +67,10 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
-  const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
-  const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
-
-  const onCreateThread = async (): Promise<string> => {
-    const exisitedThreadId = await getThreadId();
-    if (exisitedThreadId && exisitedThreadId.length > 0) {
-      if (!(await checkThreadValid(exisitedThreadId))) {
-        throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
-      }
-      return exisitedThreadId;
-    }
-
-    const threadId = await createThread();
-    if (!threadId) {
-      console.error('Failed to create a thread, returned threadId is undefined or empty string');
-      return '';
-    } else {
-      return threadId;
-    }
-  };
-
   useEffect(() => {
     const internalSetupAndJoinChatThread = async (): Promise<void> => {
       if (displayName && userId) {
-        const newThreadId = await onCreateThread(); // change name of onCreateThread
+        const newThreadId = await getThread(); // change name of onCreateThread
         const result = await joinThread(newThreadId, userId.communicationUserId, displayName);
         if (!result) {
           alert(ALERT_TEXT_TRY_AGAIN);
@@ -111,29 +89,25 @@ const App = (): JSX.Element => {
     return <UnsupportedBrowserPage />;
   }
 
-  if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Meeting sample: This is experimental behaviour');
-  }
-
   switch (page) {
     case 'home': {
       document.title = `home - ${webAppTitle}`;
       // Show a simplified join home screen if joining an existing call
-      const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
+      const joiningExistingMeeting: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
       return (
         <HomeScreen
-          joiningExistingCall={joiningExistingCall}
+          joiningExistingCall={joiningExistingMeeting}
           startMeetingHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
-            const isTeamsCall = !!callDetails.teamsLink;
+            const isTeamsMeeting = !!callDetails.teamsLink;
             const callLocator =
               callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
 
-            if (!joiningExistingCall) {
-              const joinParam = isTeamsCall
+            if (!joiningExistingMeeting) {
+              const joinParam = isTeamsMeeting
                 ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
                 : '?groupId=' + (callLocator as GroupCallLocator).groupId;
 

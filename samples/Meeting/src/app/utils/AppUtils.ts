@@ -11,7 +11,7 @@ import { v1 as generateGUID } from 'uuid';
 export const fetchTokenResponse = async (): Promise<any> => {
   const response = await fetch('/token');
   if (response.ok) {
-    const responseAsJson = await response.json(); //(await response.json())?.value?.token;
+    const responseAsJson = await response.json();
     const token = responseAsJson.token;
     if (token) {
       return responseAsJson;
@@ -19,12 +19,6 @@ export const fetchTokenResponse = async (): Promise<any> => {
   }
   throw 'Invalid token response';
 };
-
-/**
- * Generate a random user name.
- * @return username in the format user####
- */
-export const createRandomDisplayName = (): string => 'user' + Math.ceil(Math.random() * 1000);
 
 /**
  * Get group id from the url's query params.
@@ -71,3 +65,6 @@ export const buildTime = __BUILDTIME__;
 
 declare let __CALLINGVERSION__: string; // Injected by webpack
 export const callingSDKVersion = __CALLINGVERSION__;
+
+declare let __CHATVERSION__: string; // Injected by webpack
+export const chatSDKVersion = __CHATVERSION__;
