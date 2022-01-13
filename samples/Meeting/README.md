@@ -1,6 +1,5 @@
 # Meeting Sample
 
-<!-- ![Homepage](./Media/homepage-sample-calling.png) -->
 
 🚧 Be advised we are currently working on polishing the samples in this repo. 🚧
 
