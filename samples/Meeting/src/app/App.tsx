@@ -18,12 +18,12 @@ import {
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
 import { MeetingScreen } from './views/MeetingScreen';
-import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
+import { pushQSPUrl } from './utils/pushQSPUrl';
 
 const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
 
@@ -33,7 +33,7 @@ console.log(
 
 initializeIcons();
 
-type AppPages = 'home' | 'meeting' | 'endMeeting';
+type AppPages = 'home' | 'meeting';
 
 const webAppTitle = document.title;
 
@@ -78,7 +78,7 @@ const App = (): JSX.Element => {
         }
         setEndpointUrl(await getEndpointUrl());
         setThreadId(newThreadId);
-        window.history.pushState({}, document.title, window.location + `&threadId=${newThreadId}`);
+        pushQSPUrl({ name: 'threadId=', value: newThreadId });
       }
     };
     internalSetupAndJoinChatThread();
@@ -108,20 +108,20 @@ const App = (): JSX.Element => {
 
             if (!joiningExistingMeeting) {
               const joinParam = isTeamsMeeting
-                ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (callLocator as GroupCallLocator).groupId;
+                ? {
+                    name: 'teamsLink=',
+                    value: encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
+                  }
+                : { name: 'groupId=', value: (callLocator as GroupCallLocator).groupId };
 
-              window.history.pushState({}, document.title, window.location.origin + joinParam);
+              pushQSPUrl(joinParam);
             }
             setPage('meeting');
           }}
         />
       );
     }
-    case 'endMeeting': {
-      document.title = `end meeting - ${webAppTitle}`;
-      return <EndCall rejoinHandler={() => setPage('meeting')} homeHandler={navigateToHomePage} />;
-    }
+
     case 'meeting': {
       if (userCredentialFetchError) {
         document.title = `error - ${webAppTitle}`;
@@ -145,7 +145,6 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
-          onMeetingEnded={() => setPage('endMeeting')}
           webAppTitle={webAppTitle}
           endpoint={endpointUrl}
           threadId={threadId}

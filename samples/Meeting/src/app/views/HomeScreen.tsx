@@ -92,7 +92,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             text={buttonText}
             onClick={() => {
               if (displayName) {
-                console.log('set display name ' + displayName);
                 saveDisplayNameToLocalStorage(displayName);
                 startMeetingHandler({ displayName, teamsLink });
               }

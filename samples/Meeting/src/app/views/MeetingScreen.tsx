@@ -20,13 +20,12 @@ export interface MeetingScreenProps {
   callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
   displayName: string;
   webAppTitle: string;
-  onMeetingEnded: () => void;
   endpoint: string;
   threadId: string;
 }
 
 export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, webAppTitle, onMeetingEnded, threadId, endpoint } = props;
+  const { token, userId, callLocator, displayName, webAppTitle, threadId, endpoint } = props;
   const [adapter, setAdapter] = useState<MeetingAdapter>();
   const callIdRef = useRef<string>();
   const adapterRef = useRef<MeetingAdapter>();
@@ -60,14 +59,6 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         endpoint,
         chatThreadId: threadId
       });
-      adapter.on('meetingEnded', () => {
-        onMeetingEnded();
-      });
-      // adapter.on('error', (e) => {
-      // Error is already acted upon by the Call composite, but the surrounding application could
-      // add top-level error handling logic here (e.g. reporting telemetry).
-      // console.log('Adapter error event:', e);
-      // });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
@@ -81,7 +72,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [callLocator, displayName, token, userId, onMeetingEnded]);
+  }, [callLocator, displayName, token, userId]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

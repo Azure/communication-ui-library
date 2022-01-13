@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { checkThreadValid } from './checkThreadValid';
 import { createThread } from './createThread';
 import { getThreadId } from './getThreadId';
