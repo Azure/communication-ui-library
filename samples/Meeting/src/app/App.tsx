@@ -100,7 +100,7 @@ const App = (): JSX.Element => {
         }
         setEndpointUrl(await getEndpointUrl());
         setThreadId(newThreadId);
-        window.history.pushState({}, document.title, window.location.origin + `&?threadId=${newThreadId}`);
+        window.history.pushState({}, document.title, window.location + `&threadId=${newThreadId}`);
       }
     };
     internalSetupAndJoinChatThread();
