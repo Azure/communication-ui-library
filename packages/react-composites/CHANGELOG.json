@@ -2,6 +2,91 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/react-composites_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fb2c5883c3e80e4bbd6e31e0c423e954eb24c23f",
+            "comment": "added localization strings and added meetingscreen component to increase readability of the meeting composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "32176084150130f297498301cde3de20f6f5e455",
+            "comment": "added fix to allow for false value for meetingCallOptions to hide whole bar."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "108a4b0cb8d0f7a215fe655706b85fb987ddf572",
+            "comment": "Add autofocus property to the Chat Composite"
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "resolve fixmes"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c71c79120d79b971e2a73752493a701cd7676d91",
+            "comment": "added suggested helper function per Prathmesh's comment."
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 19:41:59 GMT",
       "tag": "@internal/react-composites_v1.0.0",
       "version": "1.0.0",
