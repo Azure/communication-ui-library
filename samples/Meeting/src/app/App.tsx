@@ -27,22 +27,26 @@ import { pushQSPUrl } from './utils/pushQSPUrl';
 
 const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
 
-console.log(
-  `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
-);
-
-initializeIcons();
-
-type AppPages = 'home' | 'meeting';
-
-const webAppTitle = document.title;
+interface Credentials {
+  userId: CommunicationUserIdentifier;
+  token: string;
+}
 
 const App = (): JSX.Element => {
+  console.log(
+    `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
+  );
+
+  initializeIcons();
+
+  type AppPages = 'home' | 'meeting' | 'error';
+
+  const webAppTitle = document.title;
   const [page, setPage] = useState<AppPages>('home');
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userId, setCallUserId] = useState<CommunicationUserIdentifier>();
+  const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -58,31 +62,30 @@ const App = (): JSX.Element => {
     (async () => {
       try {
         const { token, user } = await fetchTokenResponse();
-        setToken(token);
-        setCallUserId(user);
+        setCredentials({ userId: user, token: token });
       } catch (e) {
         console.error(e);
-        setUserCredentialFetchError(true);
+        setPage('error');
       }
     })();
   }, []);
 
   useEffect(() => {
     const internalSetupAndJoinChatThread = async (): Promise<void> => {
-      if (displayName && userId) {
+      if (displayName && credentials !== undefined) {
         const newThreadId = await getThread(); // change name of onCreateThread
-        const result = await joinThread(newThreadId, userId.communicationUserId, displayName);
+        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, displayName);
         if (!result) {
           alert(ALERT_TEXT_TRY_AGAIN);
           return;
         }
         setEndpointUrl(await getEndpointUrl());
         setThreadId(newThreadId);
-        pushQSPUrl({ name: 'threadId=', value: newThreadId });
+        pushQSPUrl({ name: 'threadId', value: newThreadId });
       }
     };
     internalSetupAndJoinChatThread();
-  }, [displayName, userId]);
+  }, [displayName, credentials?.userId.communicationUserId]);
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
@@ -109,10 +112,10 @@ const App = (): JSX.Element => {
             if (!joiningExistingMeeting) {
               const joinParam = isTeamsMeeting
                 ? {
-                    name: 'teamsLink=',
+                    name: 'teamsLink',
                     value: encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
-                : { name: 'groupId=', value: (callLocator as GroupCallLocator).groupId };
+                : { name: 'groupId', value: (callLocator as GroupCallLocator).groupId };
 
               pushQSPUrl(joinParam);
             }
@@ -121,33 +124,31 @@ const App = (): JSX.Element => {
         />
       );
     }
-
     case 'meeting': {
-      if (userCredentialFetchError) {
-        document.title = `error - ${webAppTitle}`;
-        return (
-          <CallError
-            title="Error getting user credentials from server"
-            reason="Ensure the sample server is running."
-            rejoinHandler={() => setPage('meeting')}
-            homeHandler={navigateToHomePage}
-          />
-        );
-      }
-
-      if (!token || !userId || !displayName || !callLocator || !endpointUrl || !threadId) {
+      if (!credentials?.token || !credentials?.userId || !displayName || !callLocator || !endpointUrl || !threadId) {
         document.title = `credentials - ${webAppTitle}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
         <MeetingScreen
-          token={token}
-          userId={userId}
+          token={credentials.token}
+          userId={credentials.userId}
           displayName={displayName}
           callLocator={callLocator}
           webAppTitle={webAppTitle}
           endpoint={endpointUrl}
           threadId={threadId}
+        />
+      );
+    }
+    case 'error': {
+      document.title = `error - ${webAppTitle}`;
+      return (
+        <CallError
+          title="Error getting user credentials from server"
+          reason="Ensure the sample server is running."
+          rejoinHandler={() => setPage('meeting')}
+          homeHandler={navigateToHomePage}
         />
       );
     }
