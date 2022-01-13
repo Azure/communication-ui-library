@@ -41,5 +41,12 @@
   },
   "chat": {
     "chatListHeader": "このチャット内"
+  },
+  "meeting": {
+    "peopleButtonLabel": "ユーザー",
+    "chatButtonLabel": "チャット",
+    "peoplePaneTitle": "ユーザー",
+    "peoplePaneSubTitle": "この会議で",
+    "chatPaneTitle": "チャット"
   }
 }

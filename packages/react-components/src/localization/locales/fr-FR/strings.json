@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "Saisir un message",
-    "textTooLong": "La longueur de votre message dépasse la limite maximale."
+    "textTooLong": "La longueur de votre message dépasse la limite maximale.",
+    "sendButtonAriaLabel": "Envoyer un message"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "Message envoyé",
     "deliveredTooltipText": "Envoyé",
+    "seenAriaLabel": "Message vu par d’autres personnes",
     "seenTooltipText": "Vu",
+    "sendingAriaLabel": "Envoi du message",
     "sendingTooltipText": "Envoi",
+    "failedToSendAriaLabel": "Échec d'envoi du message",
     "failedToSendTooltipText": "Échec de l'envoi"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "Activer",
     "tooltipDisabledContent": "La caméra est désactivée.",
     "tooltipOnContent": "Désactiver la caméra",
-    "tooltipOffContent": "Activer la caméra"
+    "tooltipOffContent": "Activer la caméra",
+    "tooltipVideoLoadingContent": "Chargement de la vidéo"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",

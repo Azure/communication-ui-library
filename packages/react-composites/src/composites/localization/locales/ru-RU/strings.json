@@ -41,5 +41,12 @@
   },
   "chat": {
     "chatListHeader": "В этом чате"
+  },
+  "meeting": {
+    "peopleButtonLabel": "Люди",
+    "chatButtonLabel": "Чат",
+    "peoplePaneTitle": "Люди",
+    "peoplePaneSubTitle": "В этом собрании",
+    "chatPaneTitle": "Чат"
   }
 }

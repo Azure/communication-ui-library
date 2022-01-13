@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "Введите сообщение",
-    "textTooLong": "Длина сообщения превышает максимально допустимую."
+    "textTooLong": "Длина сообщения превышает максимально допустимую.",
+    "sendButtonAriaLabel": "Отправить сообщение"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "Сообщение отправлено",
     "deliveredTooltipText": "Отправлено",
+    "seenAriaLabel": "Сообщение просмотрено другими пользователями",
     "seenTooltipText": "Просмотрено",
+    "sendingAriaLabel": "Отправка сообщения",
     "sendingTooltipText": "Отправка",
+    "failedToSendAriaLabel": "Не удалось отправить сообщение",
     "failedToSendTooltipText": "Не удалось отправить"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "Включить",
     "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
-    "tooltipOffContent": "Включить камеру"
+    "tooltipOffContent": "Включить камеру",
+    "tooltipVideoLoadingContent": "Видео загружается"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",

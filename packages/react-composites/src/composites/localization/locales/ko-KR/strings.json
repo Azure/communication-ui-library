@@ -41,5 +41,12 @@
   },
   "chat": {
     "chatListHeader": "채팅 참가자"
+  },
+  "meeting": {
+    "peopleButtonLabel": "사용자",
+    "chatButtonLabel": "채팅",
+    "peoplePaneTitle": "사용자",
+    "peoplePaneSubTitle": "이 모임 참가자",
+    "chatPaneTitle": "채팅"
   }
 }

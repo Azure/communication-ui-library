@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "Nachricht eingeben",
-    "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert."
+    "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
+    "sendButtonAriaLabel": "Nachricht senden"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "Nachricht gesendet",
     "deliveredTooltipText": "Gesendet",
+    "seenAriaLabel": "Nachricht von anderen gesehen",
     "seenTooltipText": "Gesehen",
+    "sendingAriaLabel": "Nachricht wird gesendet",
     "sendingTooltipText": "Wird gesendet",
+    "failedToSendAriaLabel": "Nachricht konnte nicht gesendet werden",
     "failedToSendTooltipText": "Fehler beim Senden"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "Aktivieren",
     "tooltipDisabledContent": "Kamera ist deaktiviert",
     "tooltipOnContent": "Kamera ausschalten",
-    "tooltipOffContent": "Kamera einschalten"
+    "tooltipOffContent": "Kamera einschalten",
+    "tooltipVideoLoadingContent": "Video wird geladen"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",

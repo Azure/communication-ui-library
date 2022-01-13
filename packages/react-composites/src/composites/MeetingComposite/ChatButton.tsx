@@ -12,7 +12,7 @@ const onRenderOffIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'}
  * @private
  */
 export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
-  const strings = { label: 'Chat', ...props.strings };
+  const strings = { label: props.label, ...props.strings };
 
   return (
     <ControlBarButton

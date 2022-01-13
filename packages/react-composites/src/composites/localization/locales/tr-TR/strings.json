@@ -41,5 +41,12 @@
   },
   "chat": {
     "chatListHeader": "Bu sohbette"
+  },
+  "meeting": {
+    "peopleButtonLabel": "Kişiler",
+    "chatButtonLabel": "Sohbet",
+    "peoplePaneTitle": "Kişiler",
+    "peoplePaneSubTitle": "Bu toplantıda",
+    "chatPaneTitle": "Sohbet"
   }
 }
