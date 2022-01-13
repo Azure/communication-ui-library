@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./globalSetup')
 };
 
-if (process.env['FLAVOR'] === 'stable') {
+if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
   config.snapshotDir = './stable-snapshot';
 }
 

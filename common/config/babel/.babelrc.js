@@ -1,5 +1,5 @@
 const plugins = [];
-process.env['FLAVOR'] === 'stable' &&
+process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
     { annotations: [{ match: '@conditional-compile-remove-from(stable)' }] }
