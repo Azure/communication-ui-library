@@ -23,6 +23,7 @@ import { CallAgentProvider } from '@azure/communication-react';
 import { CallProvider } from '@azure/communication-react';
 import { RenderVideoTileExample } from './examples/RenderSingleVideoTileExample';
 import { initializeIcons, registerIcons } from '@fluentui/react';
+import { StyledControlBarExample } from './examples/StyledControlBarExample';
 
 initializeIcons();
 registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS } });
@@ -81,6 +82,7 @@ export const Examples = (): JSX.Element => {
       <CallAgentProvider callAgent={callAgent}>
         <CallProvider call={callInstance}>
           <RenderVideoTileExample />
+          <StyledControlBarExample />
         </CallProvider>
       </CallAgentProvider>
     </CallClientProvider>

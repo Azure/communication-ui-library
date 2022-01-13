@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { DefaultPalette, IButtonStyles, Theme, useTheme } from '@fluentui/react';
+import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
@@ -67,7 +67,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   return (
     <ControlBarButton
       {...props}
-      styles={styles}
+      className={mergeStyles(styles, props.styles)}
       onClick={props.onToggleScreenShare ?? props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderScreenShareOnIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderScreenShareOffIcon}

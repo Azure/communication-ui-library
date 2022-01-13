@@ -18,7 +18,7 @@ import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
-import { useLocale } from '../localization';
+import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 
 const SidePane = (props: {
   headingText: string;
@@ -86,7 +86,7 @@ export const EmbeddedPeoplePane = (props: {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
-  const locale = useLocale();
+  const meetingStrings = useMeetingCompositeStrings();
 
   const participantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
@@ -107,7 +107,7 @@ export const EmbeddedPeoplePane = (props: {
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={locale.strings.meeting.peoplePaneTitle}
+      headingText={meetingStrings.peoplePaneTitle}
       onClose={props.onClose}
       dataUiId={'meeting-composite-people-pane'}
     >
@@ -115,7 +115,7 @@ export const EmbeddedPeoplePane = (props: {
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
-        <Stack.Item styles={peopleSubheadingStyleThemed}>{locale.strings.meeting.peoplePaneSubTitle}</Stack.Item>
+        <Stack.Item styles={peopleSubheadingStyleThemed}>{meetingStrings.peoplePaneSubTitle}</Stack.Item>
         <ParticipantList {...participantListProps} />
       </Stack>
     </SidePane>
@@ -132,12 +132,12 @@ export const EmbeddedChatPane = (props: {
   hidden: boolean;
   onClose: () => void;
 }): JSX.Element => {
-  const locale = useLocale();
+  const meetingStrings = useMeetingCompositeStrings();
 
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={locale.strings.meeting.chatPaneTitle}
+      headingText={meetingStrings.chatPaneTitle}
       onClose={props.onClose}
       dataUiId={'meeting-composite-chat-pane'}
     >
