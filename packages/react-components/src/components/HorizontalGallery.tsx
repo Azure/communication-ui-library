@@ -107,7 +107,6 @@ const HorizontalGalleryNavigationButton = (props: {
   const theme = useTheme();
   return (
     <DefaultButton
-      tabIndex={2}
       className={mergeStyles(leftRightButtonStyles(theme), props.styles)}
       onClick={props.onClick}
       disabled={props.disabled}

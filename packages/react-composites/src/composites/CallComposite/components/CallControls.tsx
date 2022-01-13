@@ -145,7 +145,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const microphoneButton = options?.microphoneButton !== false && (
     <MicrophoneButton
       autoFocus
-      tabIndex={1}
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!compactMode}
@@ -156,7 +155,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const cameraButton = options?.cameraButton !== false && (
     <CameraButton
-      tabIndex={1}
       data-ui-id="call-composite-camera-button"
       {...cameraButtonProps}
       showLabel={!compactMode}
@@ -166,7 +164,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const screenShareButton = options?.screenShareButton !== false && (
     <ScreenShareButton
-      tabIndex={1}
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       showLabel={!compactMode}
@@ -176,7 +173,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const participantButton = options?.participantsButton !== false && (
     <ParticipantsButton
-      tabIndex={1}
       data-ui-id="call-composite-participants-button"
       {...participantsButtonProps}
       showLabel={!compactMode}
@@ -189,7 +185,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const devicesButton = options?.devicesButton !== false && (
     <DevicesButton
-      tabIndex={1}
       /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
       persistMenu={true}
       {...devicesButtonProps}
@@ -200,7 +195,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const endCallButton = options?.endCallButton !== false && (
     <EndCallButton
-      tabIndex={1}
       data-ui-id="call-composite-hangup-button"
       {...hangUpButtonProps}
       styles={compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle}
