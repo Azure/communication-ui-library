@@ -24,7 +24,7 @@
     "api-extractor": "rushx _by-flavor \"npm run build:esm\" && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "dependencies": {
     "@azure/communication-common": "1.0.0",

@@ -16252,6 +16252,7 @@ packages:
       resolve-url: 0.2.1
       source-map-url: 0.4.1
       urix: 0.1.0
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dev: false
     resolution:
       integrity: sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw==
@@ -16259,6 +16260,7 @@ packages:
     dependencies:
       atob: 2.1.2
       decode-uri-component: 0.2.0
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dev: false
     resolution:
       integrity: sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==
@@ -16276,6 +16278,7 @@ packages:
     resolution:
       integrity: sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
   /source-map-url/0.4.1:
+    deprecated: See https://github.com/lydell/source-map-url#deprecated
     dev: false
     resolution:
       integrity: sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
@@ -16793,7 +16796,7 @@ packages:
       qs: 6.10.1
       readable-stream: 3.6.0
       semver: 7.3.5
-    deprecated: Please upgrade to v7.0.1+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>. Thanks to @shadowgate15, @spence-s, and @niftylettuce. Superagent is sponsored by Forward Email @ <https://forwardemail.net>
+    deprecated: Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>. Thanks to @shadowgate15, @spence-s, and @niftylettuce. Superagent is sponsored by Forward Email at <https://forwardemail.net>.
     dev: false
     engines:
       node: '>= 7.0.0'
@@ -18865,7 +18868,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-jjj4XiBZO68LPH5tCGktxe5QbIYGfoi3A07vGe5gtydd24ocVpe3Mzmg3n02BwVwEqbmyMsKH7lGJnNeaZtA9g==
+      integrity: sha512-MO+x6sjDpgtBjPDvZa3mheKDA3wB5LeO//Gag7VL0++D6TXsX9W5ijsn8HNqMFg/VC9Ruumy8k7EGQGOA9VJwg==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18992,12 +18995,14 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
@@ -19010,7 +19015,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-B5dhHKhCsy5kPZLCUABzebKNSK+B/lNeucH1jbGB41T2IdpbnE6OfIZMn9N0l5SQOR4ygRSDQGEKjLme6mPiPA==
+      integrity: sha512-Iysq7BgUhBQVtYJfdUG6eGC7vIQRCuC9d9WEPwkb53w0iXdThXxYUIQCjtjMCpk0+ksqbgZswDo1TCWVGger2Q==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
