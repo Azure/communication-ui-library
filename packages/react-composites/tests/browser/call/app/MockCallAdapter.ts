@@ -1,13 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { VideoStreamOptions } from '@internal/react-components';
-import {
-  AudioDeviceInfo,
-  PermissionConstraints,
-  VideoDeviceInfo,
-  Call,
-  RemoteParticipant
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, PermissionConstraints, VideoDeviceInfo, Call } from '@azure/communication-calling';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallAdapter } from '../../../..';
 
 export class MockCallAdapter implements CallAdapter {
@@ -16,6 +11,14 @@ export class MockCallAdapter implements CallAdapter {
   constructor(state: CallAdapterState) {
     this.state = state;
   }
+
+  addParticipant(participantKey: string, participantState: RemoteParticipantState): void {
+    if (!this.state.call) {
+      return;
+    }
+    this.state.call.remoteParticipants[participantKey] = participantState;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   onStateChange(handler: (state: any) => void): void {
     return;
@@ -34,145 +37,7 @@ export class MockCallAdapter implements CallAdapter {
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   joinCall(microphoneOn?: boolean): Call | undefined {
-    this.state.page = 'call';
-    this.state.call = {
-      id: 'call1',
-      callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
-      direction: 'Incoming',
-      transcription: { isTranscriptionActive: false },
-      recording: { isRecordingActive: false },
-      startTime: new Date(500000000000),
-      endTime: new Date(500000000000),
-      diagnostics: { network: { latest: {} }, media: { latest: {} } },
-      state: 'Connected',
-      localVideoStreams: [],
-      isMuted: false,
-      isScreenSharingOn: false,
-      remoteParticipants: {
-        '2': {
-          identifier: { kind: 'unknown', id: '2' },
-          state: 'Connected',
-          videoStreams: [],
-          isMuted: false,
-          isSpeaking: true
-        },
-        '3': {
-          identifier: { kind: 'unknown', id: '3' },
-          state: 'Connected',
-          videoStreams: [],
-          isMuted: true,
-          isSpeaking: false
-        }
-      },
-      remoteParticipantsEnded: {}
-    };
-    return {
-      id: 'call1',
-      callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
-      direction: 'Incoming',
-      state: 'Connected',
-      localVideoStreams: [],
-      isMuted: false,
-      isScreenSharingOn: false,
-      remoteParticipants: [
-        {
-          identifier: { kind: 'unknown', id: '2' },
-          state: 'Connected',
-          videoStreams: [],
-          isMuted: false,
-          isSpeaking: true,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          on(event: string, listener: any): void {
-            return;
-          },
-
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          off(event: string, listener: any): void {
-            return;
-          }
-        },
-        {
-          identifier: { kind: 'unknown', id: '3' },
-          state: 'Connected',
-          videoStreams: [],
-          isMuted: true,
-          isSpeaking: false,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          on(event: string, listener: any): void {
-            return;
-          },
-
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          off(event: string, listener: any): void {
-            return;
-          }
-        }
-      ],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      feature(): any {
-        return;
-      },
-      async hangUp(): Promise<void> {
-        return;
-      },
-      async mute(): Promise<void> {
-        return;
-      },
-      async unmute(): Promise<void> {
-        return;
-      },
-      async sendDtmf(): Promise<void> {
-        return;
-      },
-      async startVideo(): Promise<void> {
-        return;
-      },
-      async stopVideo(): Promise<void> {
-        return;
-      },
-      async hold(): Promise<void> {
-        return;
-      },
-      async resume(): Promise<void> {
-        return;
-      },
-      async removeParticipant(): Promise<void> {
-        return;
-      },
-      async startScreenSharing(): Promise<void> {
-        return;
-      },
-      async stopScreenSharing(): Promise<void> {
-        return;
-      },
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-      addParticipant(): RemoteParticipant {
-        return {
-          identifier: { kind: 'unknown', id: '3' },
-          state: 'Connected',
-          videoStreams: [],
-          isMuted: true,
-          isSpeaking: false,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          on(event: string, listener: any): void {
-            return;
-          },
-
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-          off(event: string, listener: any): void {
-            return;
-          }
-        };
-      },
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-      on(event: string, listener: any): void {
-        return;
-      },
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-      off(event: string, listener: any): void {
-        return;
-      }
-    };
+    return;
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async leaveCall(forEveryone?: boolean): Promise<void> {
@@ -193,7 +58,6 @@ export class MockCallAdapter implements CallAdapter {
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   startCall(participants: string[]): Call | undefined {
-    this.state.page = 'call';
     return;
   }
   async startScreenShare(): Promise<void> {

@@ -20,6 +20,7 @@ test.describe('HorizontalGallery tests', async () => {
       buildCallingUrl(
         serverUrl,
         {
+          displayName: 'Agnes Thompson',
           isLocalPreviewMicrophoneEnabled: true,
           page: 'call',
           call: {
@@ -39,15 +40,21 @@ test.describe('HorizontalGallery tests', async () => {
               '2': {
                 identifier: { kind: 'unknown', id: '2' },
                 state: 'Connected',
-                videoStreams: [],
+                videoStreams: {
+                  '1': {
+                    id: 1,
+                    mediaStreamType: 'Video',
+                    isAvailable: true
+                  }
+                },
                 isMuted: false,
                 isSpeaking: true,
-                displayName: 'Paul Bresson'
+                displayName: 'Paul Bridges'
               },
               '3': {
                 identifier: { kind: 'unknown', id: '3' },
                 state: 'Connected',
-                videoStreams: [],
+                videoStreams: {},
                 isMuted: true,
                 isSpeaking: false,
                 displayName: 'Eryka Klein'
