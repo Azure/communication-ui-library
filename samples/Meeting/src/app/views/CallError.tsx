@@ -25,7 +25,7 @@ export interface CallErrorProps {
 
 export const CallError = (props: CallErrorProps): JSX.Element => {
   const goHomePage = 'Go to Homepage';
-  const rejoinCall = 'Retry Call';
+  const rejoinMeeting = 'Retry Meeting';
 
   return (
     <Stack
@@ -44,7 +44,7 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
           <PrimaryButton
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={rejoinCall}
+            text={rejoinMeeting}
             onClick={props.rejoinHandler}
             onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />}
           />

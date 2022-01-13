@@ -22,6 +22,11 @@ import { MeetingScreen } from './views/MeetingScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
+import { getThreadId } from './utils/getThreadId';
+import { createThread } from './utils/createThread';
+import { checkThreadValid } from './utils/checkThreadValid';
+import { getEndpointUrl } from './utils/getEndpointUrl';
+import { joinThread } from './utils/joinThread';
 
 console.log(
   `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}`
@@ -29,7 +34,7 @@ console.log(
 
 initializeIcons();
 
-type AppPages = 'home' | 'meeting' | 'endCall';
+type AppPages = 'home' | 'meeting' | 'endMeeting';
 
 const webAppTitle = document.title;
 
@@ -38,7 +43,7 @@ const App = (): JSX.Element => {
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userCallId, setCallUserId] = useState<CommunicationUserIdentifier>();
+  const [userId, setCallUserId] = useState<CommunicationUserIdentifier>();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -63,6 +68,44 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
+  const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
+  const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
+
+  const onCreateThread = async (): Promise<string> => {
+    const exisitedThreadId = await getThreadId();
+    if (exisitedThreadId && exisitedThreadId.length > 0) {
+      if (!(await checkThreadValid(exisitedThreadId))) {
+        throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
+      }
+      return exisitedThreadId;
+    }
+
+    const threadId = await createThread();
+    if (!threadId) {
+      console.error('Failed to create a thread, returned threadId is undefined or empty string');
+      return '';
+    } else {
+      return threadId;
+    }
+  };
+
+  useEffect(() => {
+    const internalSetupAndJoinChatThread = async (): Promise<void> => {
+      if (displayName && userId) {
+        const newThreadId = await onCreateThread(); // change name of onCreateThread
+        const result = await joinThread(newThreadId, userId.communicationUserId, displayName);
+        if (!result) {
+          alert(ALERT_TEXT_TRY_AGAIN);
+          return;
+        }
+        setEndpointUrl(await getEndpointUrl());
+        setThreadId(newThreadId);
+        window.history.pushState({}, document.title, window.location.origin + `&?threadId=${newThreadId}`);
+      }
+    };
+    internalSetupAndJoinChatThread();
+  }, [displayName, userId]);
+
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
     return <UnsupportedBrowserPage />;
@@ -82,16 +125,12 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startMeetingHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
-            setEndpointUrl(callDetails.endpoint);
-            setThreadId(callDetails.threadId);
             const isTeamsCall = !!callDetails.teamsLink;
             const callLocator =
               callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
-
-            /// do chat thread things here
 
             if (!joiningExistingCall) {
               const joinParam = isTeamsCall
@@ -105,8 +144,8 @@ const App = (): JSX.Element => {
         />
       );
     }
-    case 'endCall': {
-      document.title = `end call - ${webAppTitle}`;
+    case 'endMeeting': {
+      document.title = `end meeting - ${webAppTitle}`;
       return <EndCall rejoinHandler={() => setPage('meeting')} homeHandler={navigateToHomePage} />;
     }
     case 'meeting': {
@@ -122,17 +161,17 @@ const App = (): JSX.Element => {
         );
       }
 
-      if (!token || !userCallId || !displayName || !callLocator) {
+      if (!token || !userId || !displayName || !callLocator || !endpointUrl || !threadId) {
         document.title = `credentials - ${webAppTitle}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
         <MeetingScreen
           token={token}
-          userId={userCallId}
+          userId={userId}
           displayName={displayName}
           callLocator={callLocator}
-          onCallEnded={() => setPage('endCall')}
+          onMeetingEnded={() => setPage('endMeeting')}
           webAppTitle={webAppTitle}
           endpoint={endpointUrl}
           threadId={threadId}

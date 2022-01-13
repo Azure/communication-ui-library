@@ -11,7 +11,6 @@ import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
 import { createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
 import { MeetingAdapter } from '@internal/react-composites';
-import { getEndpointUrl } from '../utils/getEndpointUrl';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -21,13 +20,13 @@ export interface MeetingScreenProps {
   callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
   displayName: string;
   webAppTitle: string;
-  onCallEnded: () => void;
+  onMeetingEnded: () => void;
   endpoint: string;
   threadId: string;
 }
 
 export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, webAppTitle, onCallEnded, threadId } = props;
+  const { token, userId, callLocator, displayName, webAppTitle, onMeetingEnded, threadId, endpoint } = props;
   const [adapter, setAdapter] = useState<MeetingAdapter>();
   const callIdRef = useRef<string>();
   const adapterRef = useRef<MeetingAdapter>();
@@ -50,23 +49,25 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      console.log('we are making meeting adapter.');
+      if (!userId || !displayName || !callLocator || !threadId || !token || !endpoint) {
+        return;
+      }
       const adapter = await createAzureCommunicationMeetingAdapter({
         userId,
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         callLocator: callLocator,
-        endpoint: await getEndpointUrl(),
+        endpoint,
         chatThreadId: threadId
       });
       adapter.on('meetingEnded', () => {
-        onCallEnded();
+        onMeetingEnded();
       });
-      adapter.on('error', (e) => {
-        // Error is already acted upon by the Call composite, but the surrounding application could
-        // add top-level error handling logic here (e.g. reporting telemetry).
-        console.log('Adapter error event:', e);
-      });
+      // adapter.on('error', (e) => {
+      // Error is already acted upon by the Call composite, but the surrounding application could
+      // add top-level error handling logic here (e.g. reporting telemetry).
+      // console.log('Adapter error event:', e);
+      // });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
@@ -80,7 +81,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [callLocator, displayName, token, userId, onCallEnded]);
+  }, [callLocator, displayName, token, userId, onMeetingEnded]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
@@ -102,9 +103,9 @@ const convertPageStateToString = (state: MeetingAdapterState): string => {
     case 'accessDeniedTeamsMeeting':
       return 'error';
     case 'leftMeeting':
-      return 'end call';
+      return 'end meeting';
     case 'removedFromMeeting':
-      return 'end call';
+      return 'end meeting';
     default:
       return `${state.page}`;
   }

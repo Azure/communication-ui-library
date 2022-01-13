@@ -22,9 +22,9 @@ export interface EndCallProps {
 }
 
 export const EndCall = (props: EndCallProps): JSX.Element => {
-  const leftCall = 'You left the call';
+  const leftMeeting = 'You left the Meeting';
   const goHomePage = 'Go to homepage';
-  const rejoinCall = 'Rejoin call';
+  const rejoinMeeting = 'Rejoin Meeting';
 
   const feedbackLink =
     'https://docs.microsoft.com/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
@@ -40,13 +40,13 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
     >
       <Stack tokens={upperStackTokens}>
         <Text role={'heading'} aria-level={1} className={endCallTitleStyle}>
-          {leftCall}
+          {leftMeeting}
         </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={rejoinCall}
+            text={rejoinMeeting}
             onClick={props.rejoinHandler}
             onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
           />
