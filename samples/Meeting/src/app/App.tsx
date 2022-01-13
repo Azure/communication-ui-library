@@ -32,6 +32,11 @@ interface Credentials {
   token: string;
 }
 
+interface CallArgs {
+  callLocator: GroupLocator | TeamsMeetingLinkLocator;
+  displayName: string;
+}
+
 const App = (): JSX.Element => {
   console.log(
     `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
@@ -48,8 +53,7 @@ const App = (): JSX.Element => {
   const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
-  const [displayName, setDisplayName] = useState<string>('');
+  const [callArgs, setCallArgs] = useState<CallArgs | undefined>({ displayName: '', callLocator: createGroupId() });
 
   // Chat endpoint and thread id
   const [endpointUrl, setEndpointUrl] = useState('');
@@ -70,9 +74,9 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     const internalSetupAndJoinChatThread = async (): Promise<void> => {
-      if (displayName && credentials !== undefined) {
-        const newThreadId = await getThread(); // change name of onCreateThread
-        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, displayName);
+      if (callArgs?.displayName && credentials !== undefined) {
+        const newThreadId = await getThread();
+        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
         if (!result) {
           alert(ALERT_TEXT_TRY_AGAIN);
           return;
@@ -83,7 +87,7 @@ const App = (): JSX.Element => {
       }
     };
     internalSetupAndJoinChatThread();
-  }, [displayName, credentials?.userId.communicationUserId]);
+  }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
@@ -99,11 +103,11 @@ const App = (): JSX.Element => {
         <HomeScreen
           joiningExistingCall={joiningExistingMeeting}
           startMeetingHandler={(callDetails) => {
-            setDisplayName(callDetails.displayName);
             const isTeamsMeeting = !!callDetails.teamsLink;
-            const callLocator =
-              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-            setCallLocator(callLocator);
+            setCallArgs({
+              displayName: callDetails.displayName,
+              callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
+            });
 
             // Update window URL to have a joinable link
 
@@ -111,9 +115,9 @@ const App = (): JSX.Element => {
               const joinParam = isTeamsMeeting
                 ? {
                     name: 'teamsLink',
-                    value: encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
+                    value: encodeURIComponent((callArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
-                : { name: 'groupId', value: (callLocator as GroupCallLocator).groupId };
+                : { name: 'groupId', value: (callArgs?.callLocator as GroupCallLocator).groupId };
 
               pushQSPUrl(joinParam);
             }
@@ -123,7 +127,14 @@ const App = (): JSX.Element => {
       );
     }
     case 'meeting': {
-      if (!credentials?.token || !credentials?.userId || !displayName || !callLocator || !endpointUrl || !threadId) {
+      if (
+        !credentials?.token ||
+        !credentials?.userId ||
+        !callArgs?.displayName ||
+        !callArgs.callLocator ||
+        !endpointUrl ||
+        !threadId
+      ) {
         document.title = `credentials - ${webAppTitle}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
@@ -131,8 +142,8 @@ const App = (): JSX.Element => {
         <MeetingScreen
           token={credentials.token}
           userId={credentials.userId}
-          displayName={displayName}
-          callLocator={callLocator}
+          displayName={callArgs.displayName}
+          callLocator={callArgs.callLocator}
           webAppTitle={webAppTitle}
           endpoint={endpointUrl}
           threadId={threadId}
