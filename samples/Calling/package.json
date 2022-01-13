@@ -5,7 +5,7 @@
   "description": "This is a sample application to show how the UI Library can be used to build a calling experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "rushx clean && concurrently --kill-others-on-fail \"tsc\" \"webpack --mode=production --env production\"",
-    "build:stable": "cross-env FLAVOR=stable rushx build",
+    "build:stable": "cross-env COMMUNICATION_REACT_FLAVOR=stable rushx build",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",

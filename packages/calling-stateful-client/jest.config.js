@@ -5,7 +5,7 @@
 const commonConfig = require('../../common/config/jest/jest.config');
 
 const config =
-  process.env['FLAVOR'] === 'stable'
+  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable'
     ? {
         ...commonConfig,
         rootDir: './preprocessed',

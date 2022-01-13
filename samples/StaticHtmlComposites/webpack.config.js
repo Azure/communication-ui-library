@@ -45,7 +45,7 @@ const config = {
   plugins: [new HtmlWebpackPlugin({ template: 'index.html' })]
 };
 
-if (process.env['FLAVOR'] === 'stable') {
+if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
   if (!config.module) config.module = {};
   if (!config.module.rules) config.module.rules = [];
   config.module.rules.push({

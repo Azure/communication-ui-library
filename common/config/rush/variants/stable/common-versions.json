@@ -24,6 +24,7 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
+    // This is the version for stable build (please also update allowedAlternativeVersions below)
     "@azure/communication-calling": "1.3.2"
   },
 
@@ -52,6 +53,7 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
+    // This is the version for stable build (please also update preferredVersions above)
     "@azure/communication-calling": ["1.3.2"],
     "webpack": [
       // All projects should use this version by default
