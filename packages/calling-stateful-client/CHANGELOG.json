@@ -2,6 +2,35 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Conditional build of stable flavor"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/calling-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 19:41:59 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0",
       "version": "1.0.0",
