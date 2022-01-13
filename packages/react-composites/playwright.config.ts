@@ -73,7 +73,7 @@ const config: PlaywrightTestConfig = {
   ]
 };
 
-if (process.env['FLAVOR'] === 'stable') {
+if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
   config.snapshotDir = './stable-snapshot';
 }
 
