@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
 import { CompositeStrings, useLocale } from '../../localization';
+import { computeVariant } from '../utils';
 
 /**
  * @private
@@ -56,10 +57,10 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   return <DismissableMessageBar variant={variant} strings={strings} />;
 };
 
-function DismissableMessageBar(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+function DismissableMessageBar(props: { variant: string; strings: CompositeStrings }): JSX.Element {
   const { variant: newVariant, strings } = props;
 
-  const [variant, setVariant] = useState(0);
+  const [variant, setVariant] = useState('NO_STATE');
   // We drive the `MessageBar` indirectly via the `variant` state variable.
   // This allows the `onDismiss` handler to set the `variant` state to dismiss the `MessageBar`.
   // This means that when props change, this component renders *twice*: After the first render, this `useEffect` block
@@ -68,12 +69,12 @@ function DismissableMessageBar(props: { variant: number; strings: CompositeStrin
     setVariant(newVariant);
   }, [newVariant, setVariant]);
 
-  return variant === NO_STATE ? (
+  return variant === 'NO_STATE' ? (
     <></>
   ) : (
     <MessageBar
       onDismiss={() => {
-        setVariant(NO_STATE);
+        setVariant('NO_STATE');
       }}
       dismissButtonAriaLabel={strings.call.close}
     >
@@ -82,71 +83,10 @@ function DismissableMessageBar(props: { variant: number; strings: CompositeStrin
   );
 }
 
-const TRANSCRIPTION_STOPPED_STILL_RECORDING = 1;
-const RECORDING_STOPPED_STILL_TRANSCRIBING = 2;
-const RECORDING_AND_TRANSCRIPTION_STOPPED = 3;
-const RECORDING_AND_TRANSCRIPTION_STARTED = 4;
-const TRANSCRIPTION_STARTED = 5;
-const RECORDING_STOPPED = 6;
-const RECORDING_STARTED = 7;
-const TRANSCRIPTION_STOPPED = 8;
-const NO_STATE = 0;
-
-function computeVariant(
-  previousCallRecordState: boolean | undefined,
-  previousCallTranscribeState: boolean | undefined,
-  callRecordState: boolean | undefined,
-  callTranscribeState: boolean | undefined
-): number {
-  if (previousCallRecordState && previousCallTranscribeState) {
-    if (callRecordState && !callTranscribeState) {
-      return TRANSCRIPTION_STOPPED_STILL_RECORDING;
-    } else if (!callRecordState && callTranscribeState) {
-      return RECORDING_STOPPED_STILL_TRANSCRIBING;
-    } else if (!callRecordState && !callTranscribeState) {
-      return RECORDING_AND_TRANSCRIPTION_STOPPED;
-    } else {
-      return NO_STATE;
-    }
-  } else if (previousCallRecordState && !previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return RECORDING_AND_TRANSCRIPTION_STARTED;
-    } else if (!callRecordState && callTranscribeState) {
-      return TRANSCRIPTION_STARTED;
-    } else if (!callRecordState && !callTranscribeState) {
-      return RECORDING_STOPPED;
-    } else {
-      return NO_STATE;
-    }
-  } else if (!previousCallRecordState && previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return RECORDING_AND_TRANSCRIPTION_STARTED;
-    } else if (!callRecordState && callTranscribeState) {
-      return RECORDING_STARTED;
-    } else if (!callRecordState && !callTranscribeState) {
-      return TRANSCRIPTION_STOPPED;
-    } else {
-      return NO_STATE;
-    }
-  } else if (!previousCallRecordState && !previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return RECORDING_AND_TRANSCRIPTION_STARTED;
-    } else if (callRecordState && !callTranscribeState) {
-      return RECORDING_STARTED;
-    } else if (!callRecordState && callTranscribeState) {
-      return TRANSCRIPTION_STARTED;
-    } else {
-      return NO_STATE;
-    }
-  }
-  return NO_STATE;
-}
-
-function BannerMessage(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+function BannerMessage(props: { variant: string; strings: CompositeStrings }): JSX.Element {
   const { variant, strings } = props;
-
   switch (variant) {
-    case TRANSCRIPTION_STOPPED_STILL_RECORDING:
+    case 'TRANSCRIPTION_STOPPED_STILL_RECORDING':
       return (
         <>
           <b>{strings.call.complianceBannerTranscriptionStopped}</b>
@@ -154,7 +94,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
-    case RECORDING_STOPPED_STILL_TRANSCRIBING:
+    case 'RECORDING_STOPPED_STILL_TRANSCRIBING':
       return (
         <>
           <b>{strings.call.complianceBannerRecordingStopped}</b>
@@ -162,7 +102,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
-    case RECORDING_AND_TRANSCRIPTION_STOPPED:
+    case 'RECORDING_AND_TRANSCRIPTION_STOPPED':
       return (
         <>
           <b>{strings.call.complianceBannerRecordingAndTranscriptionSaved}</b>
@@ -170,7 +110,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <LearnMore linkText={strings.call.learnMore} />
         </>
       );
-    case RECORDING_AND_TRANSCRIPTION_STARTED:
+    case 'RECORDING_AND_TRANSCRIPTION_STARTED':
       return (
         <>
           <b>{strings.call.complianceBannerRecordingAndTranscriptionStarted}</b>
@@ -178,7 +118,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
-    case TRANSCRIPTION_STARTED:
+    case 'TRANSCRIPTION_STARTED':
       return (
         <>
           <b>{strings.call.complianceBannerTranscriptionStarted}</b>
@@ -186,7 +126,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
-    case RECORDING_STOPPED:
+    case 'RECORDING_STOPPED':
       return (
         <>
           <b>{strings.call.complianceBannerRecordingSaving}</b>
@@ -194,7 +134,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <LearnMore linkText={strings.call.learnMore} />
         </>
       );
-    case RECORDING_STARTED:
+    case 'RECORDING_STARTED':
       return (
         <>
           <b>{strings.call.complianceBannerRecordingStarted}</b>
@@ -202,7 +142,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
-    case TRANSCRIPTION_STOPPED:
+    case 'TRANSCRIPTION_STOPPED':
       return (
         <>
           <b>{strings.call.complianceBannerTranscriptionSaving}</b>
