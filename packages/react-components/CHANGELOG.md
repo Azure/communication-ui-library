@@ -1,8 +1,26 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jan 2022 22:57:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.1)
+
+Tue, 04 Jan 2022 22:57:09 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0...@internal/react-components_v1.0.1)
+
+### Minor changes
+
+- New aria label string added for `SendBox`. New property added to `SendBox` to autofocus on mount. ([PR #1235](https://github.com/azure/communication-ui-library/pull/1235) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add tooltipVideoLoadingContent to Camera strings ([PR #1253](https://github.com/azure/communication-ui-library/pull/1253) by alcail@microsoft.com)
+- add aria-label strings to MessageStatusIndicator ([PR #1247](https://github.com/azure/communication-ui-library/pull/1247) by alcail@microsoft.com)
+
+### Patches
+
+- Allow focus on control bar button when disabled ([PR #1251](https://github.com/azure/communication-ui-library/pull/1251) by alcail@microsoft.com)
+- Added aria roles to the different menu props. ([PR #1227](https://github.com/azure/communication-ui-library/pull/1227) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bug Fix: Ensure TypingIndicator correctly displays the number of users ([PR #1248](https://github.com/azure/communication-ui-library/pull/1248) by alcail@microsoft.com)
+- Bump @internal/acs-ui-common to v1.0.1 ([PR #1276](https://github.com/azure/communication-ui-library/pull/1276) by beachball)
 
 ## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0)
 

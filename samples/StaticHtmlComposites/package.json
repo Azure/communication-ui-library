@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "rushx clean && webpack --mode=production",
-    "build:stable": "cross-env FLAVOR=stable rushx build",
+    "build:stable": "cross-env COMMUNICATION_REACT_FLAVOR=stable rushx build",
     "clean": "rimraf dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "webpack serve --config webpack.config.dev.js",
@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.0.0",
+    "@azure/communication-react": "1.0.1-beta.1",
     "@azure/communication-common": "1.0.0",
     "react": "~16.14.0",
     "react-dom": "16.13.1",
