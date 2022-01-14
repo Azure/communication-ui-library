@@ -122,7 +122,7 @@
     "if-env": "~1.0.4",
     "jest": "26.6.0",
     "json-stringify-safe": "^5.0.1",
-    "node-forge": "0.10.0",
+    "node-forge": ">=1.0.0",
     "prettier": "2.3.1",
     "pretty-quick": "^3.1.0",
     "react-dom": "16.13.1",
