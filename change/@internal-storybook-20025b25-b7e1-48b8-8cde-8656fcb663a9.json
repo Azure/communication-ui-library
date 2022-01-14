@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bugfix for tooltip alignment in message status indicator storybook ",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

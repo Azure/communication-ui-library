@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add flavor switch and build variant to the repo",
+  "packageName": "@internal/acs-ui-common",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "none"
+}

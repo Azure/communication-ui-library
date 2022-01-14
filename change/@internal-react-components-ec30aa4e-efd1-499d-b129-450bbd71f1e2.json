@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bug Fix: Ensure TypingIndicator correctly displays the number of users",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}
