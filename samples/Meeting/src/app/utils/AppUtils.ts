@@ -51,9 +51,6 @@ export const isOnIphoneAndNotSafari = (): boolean => {
   return userAgent.includes('iPhone') && (userAgent.includes('FxiOS') || userAgent.includes('CriOS'));
 };
 
-export const isMobileSession = (): boolean =>
-  !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
-
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
 export const navigateToHomePage = (): void => {
