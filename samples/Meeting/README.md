@@ -5,7 +5,7 @@
 
 ## Overview
 
-This is a sample application to show how we can use the `@azure/communication-ui` package to build a Meeting experience.
+This is a sample application to show how we can use the `@azure/communication-react` package to build a Meeting experience.
 The client-side application is a React based user interface. Alongside this front-end is a NodeJS web application powered by ExpressJS that performs functionality like minting new user tokens for each call participant.
 
 ## Prerequisites

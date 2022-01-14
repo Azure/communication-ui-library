@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createRandomDisplayName, getGroupIdFromUrl } from './AppUtils';
+import { getGroupIdFromUrl } from './AppUtils';
 
 describe('ContosoUtils tests', () => {
   describe('getGroupIdFromUrl tests', () => {
@@ -23,7 +23,4 @@ describe('ContosoUtils tests', () => {
       expect(getGroupIdFromUrl()).toEqual(null);
     });
   });
-
-  test('createRandomDisplayName should return a valid string for a user id', () =>
-    expect(createRandomDisplayName()).toBeTruthy());
 });
