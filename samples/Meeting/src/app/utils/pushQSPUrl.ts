@@ -12,6 +12,6 @@ export const pushQSPUrl = ({ name, value }: { name: string; value: string }): vo
   const url = new URL(window.location.href);
   if (!url.searchParams.has(name)) {
     url.searchParams.append(name, value);
-    window.history.pushState({}, document.title, url);
+    window.history.pushState({}, document.title, url.toString());
   }
 };
