@@ -22,22 +22,7 @@ const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 
-const mockVideoElement = document.createElement('div');
-mockVideoElement.innerHTML = '<span />';
-mockVideoElement.style.width = decodeURIComponent('100%25');
-mockVideoElement.style.height = decodeURIComponent('100%25');
-mockVideoElement.style.background = 'url(https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif)';
-mockVideoElement.style.backgroundPosition = 'center';
-mockVideoElement.style.backgroundRepeat = 'no-repeat';
-
 function App(): JSX.Element {
-  for (const [participantKey, participant] of Object.entries(state.call?.remoteParticipants)) {
-    for (const [videoStreamKey, videoStream] of Object.entries(participant.videoStreams)) {
-      if (videoStream.isAvailable) {
-        videoStream.view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
-      }
-    }
-  }
   const callAdapter = new MockCallAdapter(state);
 
   const locale = useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;

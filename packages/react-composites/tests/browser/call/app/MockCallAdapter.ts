@@ -10,6 +10,21 @@ export class MockCallAdapter implements CallAdapter {
 
   constructor(state: CallAdapterState) {
     this.state = state;
+
+    for (const [participantKey, participant] of Object.entries(state.call?.remoteParticipants)) {
+      for (const [videoStreamKey, videoStream] of Object.entries(participant.videoStreams)) {
+        if (videoStream.isAvailable) {
+          const mockVideoElement = document.createElement('div');
+          mockVideoElement.innerHTML = '<span />';
+          mockVideoElement.style.width = decodeURIComponent('100%25');
+          mockVideoElement.style.height = decodeURIComponent('100%25');
+          mockVideoElement.style.background = stringToHexColor(participant.displayName);
+          mockVideoElement.style.backgroundPosition = 'center';
+          mockVideoElement.style.backgroundRepeat = 'no-repeat';
+          videoStream.view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
+        }
+      }
+    }
   }
 
   addParticipant(participantKey: string, participantState: RemoteParticipantState): void {
@@ -116,3 +131,16 @@ export class MockCallAdapter implements CallAdapter {
     return;
   }
 }
+
+const stringToHexColor = (str: string): string => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let colour = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+};
