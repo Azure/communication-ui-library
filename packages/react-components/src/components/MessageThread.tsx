@@ -322,8 +322,7 @@ const memoizeAllMessages = memoizeFnAll(
 
         const personaOptions: IPersona = {
           hidePersonalDetails: true,
-          size: PersonaSize.size32,
-          text: message.senderDisplayName
+          size: PersonaSize.size32
         };
 
         const chatItemMessageStyle =
