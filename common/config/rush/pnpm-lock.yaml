@@ -13229,6 +13229,12 @@ packages:
       node: '>= 6.0.0'
     resolution:
       integrity: sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
+  /node-forge/1.2.1:
+    dev: false
+    engines:
+      node: '>= 6.13.0'
+    resolution:
+      integrity: sha512-Fcvtbb+zBcZXbTTVwqGA5W+MKBj56UjVRevvchv5XrcyXbmNdesfZL37nlcWOfpgHhgmxApw3tQbTr4CqNmX4w==
   /node-int64/0.4.0:
     dev: false
     resolution:
@@ -18868,7 +18874,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-MO+x6sjDpgtBjPDvZa3mheKDA3wB5LeO//Gag7VL0++D6TXsX9W5ijsn8HNqMFg/VC9Ruumy8k7EGQGOA9VJwg==
+      integrity: sha512-LDQqEDmwEOrjXLMDZZijuyNNjrLRAbTYAa3Y0KJ9+Yvlze1v5JKePZ6a0F5IP2MK8LwVc6aRWMd2JPBI5TW16w==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18907,7 +18913,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-f4EA5yis644O/wYTtcaMhbkcjQDPf8LqA4mnvPGQz+EJP4IxDVXCa6UlqvgXR8ek644VsklrlzJBKmmg9TuNMQ==
+      integrity: sha512-Zr3Lg48CsXEZf+uhjkc6vdPoN86eL7CZXYWJKi6TSEXIxtIOB6Bk/Hf3rc7S9tv7gK4WIcMSuZcjj0wOj2svYQ==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -18976,7 +18982,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-znHO/iU68NgcNzvhvYX9N1kqoqix/PN3QsnJhB9Y65wkpu6jUB5k++FPyx/zJlkxIQcqLp8QgVZQ/zAp8j7Wrw==
+      integrity: sha512-NPEgK3C9snWstMPXAOEHx4sp9oblTjn1IYCq9OQrI0YeWi5AFyGEwbRGjI79hfhzACyIUuZ1sNOWFQ/v0tZrZA==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19015,7 +19021,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-Iysq7BgUhBQVtYJfdUG6eGC7vIQRCuC9d9WEPwkb53w0iXdThXxYUIQCjtjMCpk0+ksqbgZswDo1TCWVGger2Q==
+      integrity: sha512-Q2oM/9GagUqw/WtfTgX2GdZt4ehzvciAQas7a72vV2bBpHjNgDiVFD/OZP8Bku5yPmEGDu+jFYDqPuZ7HJ8STA==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19056,7 +19062,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-1IJQBaIhaCqasRfSF9+Sk1IJx5hQblMObtx1i0Sb2X3m3c6S+Td2wvTknBby03oXADL+znTkfa8IFte04vBheg==
+      integrity: sha512-hzzOt+lAvKBonp+paw49zae8Ay0VorSxtRDcX67FM5RMEwXQ6GIsbFNAdb42XG04YR5MCxiU/Y6J2LlBeCghWw==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19121,7 +19127,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-X5qSHGpC4U2NPMEz/pZ2ZDUUbYVviavQTthAC1XqAuY6KfcWk6Tw5BL1rcAVtLJtJnQItwsI/s6LLfo1W/amBA==
+      integrity: sha512-GZc+PLWcZzryHUZlHxRuoptC8hxlMMTN085s6Moe3UpboHfx05CixAJC+VlCY87SCyDyaD9it90eJzz2ZdYkOg==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19139,7 +19145,7 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-bVOzzNYKgqbY71x7/373WpUmZgHP+4Wba/XfUlPNvXyciwzYEeywITWcUIUVw7Xjiz7T0GPthIn3n8opYG9oVw==
+      integrity: sha512-YyGUJwdwz5TJBUEuWy1HszKD/1ffojFaEvDP4Sxar59UHxjLgwUON0PXooHTW9xIvCWl+txahxdJ9wwZpiy3yg==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19198,7 +19204,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nanoid: 3.1.25
-      node-forge: 0.10.0
+      node-forge: 1.2.1
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
       react: 16.14.0
@@ -19225,7 +19231,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-ddN6wmbsBq6H+EW3tnJKg73XRFDaZm/+kNRib0yWdRTccZOkc1Ow9UqnRcCSGs56BeOIdzcLG2OX1yXO8sjQVQ==
+      integrity: sha512-BJ7N7PsS2aaoUe8SAGREntk5owy5EcREavrUZ0Nm2vS1jD4ecQcrnq/4DkbMme1wV3FQ4683YJ9g+DVzAQKNCA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19293,7 +19299,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-m0y9kK16axKXYjoiTYEbkyNphGmiaKX0mCSeJeqT2fk+g41XB7cRgjaLsGDcnrChNtuGIgvR1kaWQOmGjpRJuQ==
+      integrity: sha512-Ezf/TxrVaWDOMLW4JsZox+0UZi61nZxpsvTYHRfh+De6SIP2EpTIQUZAf9cI6bb49XjPlAR6wrL7ZxYn0W45ag==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19372,7 +19378,7 @@ packages:
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
       nan: 2.15.0
-      node-forge: 0.10.0
+      node-forge: 1.2.1
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
       react: 16.14.0
@@ -19397,7 +19403,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-iYSdLkp8tT+FQ7GrnuQbOU2vy04B7FBNK0muhWxxJ1D4aHYVTZztrOD7fu+2OBmC8hTz2j34Q4HVLcDPhVIkWQ==
+      integrity: sha512-nxftZxANjy0vZMM3Fl7IupR90bNKV639/rHrm8P1YPLTk+knHYmB7HM6jO2mp33ymVY41F2YCY3IcoFUyNh0dw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19471,7 +19477,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nan: 2.15.0
-      node-forge: 0.10.0
+      node-forge: 1.2.1
       playwright: 1.17.1
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
@@ -19500,7 +19506,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-R/eWy6l0+UQYxl/R566+QJ1yqYaoLCUuan1Xj8kAbvPOWpMgUv6+ofGjh9XsJeZfJhEXfYLmvcuMyaUw6A0oog==
+      integrity: sha512-LkQl/6yYRREyQtxzJxY8dzTNeNj1i08SYxlVMfr2SrNMdyKLNpZEwUC6XpYC5Bm0U6C13jrQA0j3HvNZWr9JWQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -19521,7 +19527,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-QJQPQqStMClgqozEMOaGLjapxFbdcss0n/FpvTUIVDZjB80YMiIQSr0DNK69dsZkAF6bvVyVEVqL7JmPdo3bjg==
+      integrity: sha512-ogykivjsc70k8k6PF7IDpR9soH9ruMQlMxv+2kVevWvNyqZNgnj9VlJuEGtBQGmVNEf8odxuF+W0z9ZisMWrTQ==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19554,7 +19560,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-lg5tamIvAlppmzo+SSNe2hgOByQ9Vnypd7GaGp0L6zEfR5Ebh4z9/e6FJ44x6TCUpSQaML97P1toKY6n+Q1ffA==
+      integrity: sha512-DVudtaB4pa0YEX6tWb+p0pUzzEcBpqikDjfbv4TlOKiZ7xXGqBpKdQgHAKpxYfNsS4Ot9AROGeM/sak3MGaf4g==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19684,7 +19690,7 @@ packages:
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
       nan: 2.15.0
-      node-forge: 0.10.0
+      node-forge: 1.2.1
       preact: 10.5.14
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
@@ -19710,7 +19716,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-79bjqsd08F/JCP3U5uVW2JBXM12//mTSsyHGVTA9ZBSII0oHB44NKDJmoclhL+bgggWPXoNKNmZsWAGe1qMmnw==
+      integrity: sha512-H6jPgs2WNjIhbL2PA8HHYx2iHnf8fkRqFITUJh0ysA+x4NNaQFyplYHh9Fwrzc0KnWhcSXyTZ3JBYHuDOS7ChA==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
