@@ -8,6 +8,11 @@ on:
 
 jobs:
   update_examples_snapshot:
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     name: Update component examples snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
@@ -51,6 +56,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build
@@ -83,7 +92,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests/ComponentExamples
+          git add samples/tests
           git commit -m 'Update js bundle automation snapshots'
           git push
 
@@ -92,6 +101,11 @@ jobs:
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -131,6 +145,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build
@@ -163,11 +181,16 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests/StaticHtmlComposites
+          git add samples/tests
           git commit -m 'Update js bundle automation snapshots'
           git push
 
   update_composite_snapshot:
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     name: Update composite snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
@@ -210,6 +233,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Test
         working-directory: ./packages/react-composites
         run: rushx build:e2e
@@ -240,6 +267,6 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add packages/react-composites/tests
+          git add packages/react-composites
           git commit -m 'Update composite automation snapshots'
           git push

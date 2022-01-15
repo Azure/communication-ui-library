@@ -13,6 +13,11 @@ jobs:
   build_packages:
     name: Build Packages
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -34,6 +39,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Perform changelog check
       - name: Check the necessary change file has been submitted
         run: rush changelog:check
@@ -45,6 +54,7 @@ jobs:
         run: rush build -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
+        if: ${{ matrix.flavor != 'stable' }}
         run: |
           DIFF_FILE="APIChanges.diff"
           git diff --output=$DIFF_FILE --exit-code **/review/**.md
@@ -71,6 +81,11 @@ jobs:
   call_composite_automation_test:
     name: Call Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -92,6 +107,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Call Composite Test App
         run: |
@@ -126,6 +145,11 @@ jobs:
   chat_composite_automation_test:
     name: Chat Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -147,6 +171,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Chat Composite Test App
         run: |
@@ -181,6 +209,11 @@ jobs:
   meeting_composite_automation_test:
     name: Meeting Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -202,6 +235,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Meeting Composite Test App
         run: |
@@ -262,6 +299,11 @@ jobs:
   build_calling_sample:
     name: Build Calling Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -279,6 +321,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -287,6 +333,11 @@ jobs:
   build_chat_sample:
     name: Build Chat Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -304,6 +355,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -312,6 +367,11 @@ jobs:
   build_static_html_composites_sample:
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -324,6 +384,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
@@ -355,6 +419,11 @@ jobs:
   build_component_examples:
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -367,6 +436,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -t component-examples
       - name: Visual Regression Tests
