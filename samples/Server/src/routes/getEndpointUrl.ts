@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import * as express from 'express';
-import { getEndpointUrl } from '../lib/envHelper';
+import { getEndpoint } from '../lib/envHelper';
 
 const router = express.Router();
 
 router.get('/', async function (req, res, next) {
-  res.send(getEndpointUrl());
+  res.send(getEndpoint());
 });
 
 export default router;

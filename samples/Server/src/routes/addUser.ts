@@ -3,7 +3,7 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import * as express from 'express';
-import { getEndpointUrl } from '../lib/envHelper';
+import { getEndpoint } from '../lib/envHelper';
 import { threadIdToModeratorCredentialMap } from '../lib/chat/threadIdToModeratorTokenMap';
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post('/:threadId', async function (req, res, next) {
   const threadId = req.params['threadId'];
   const moderatorCredential = threadIdToModeratorCredentialMap.get(threadId);
 
-  const chatClient = new ChatClient(getEndpointUrl(), moderatorCredential);
+  const chatClient = new ChatClient(getEndpoint(), moderatorCredential);
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   await chatThreadClient.addParticipants({
