@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Updated MessageThread to remove displaying users name on top of messages",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
