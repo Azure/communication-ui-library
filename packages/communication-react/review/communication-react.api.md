@@ -362,7 +362,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    customButtons?: CustomCallControlsButton[];
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
 // @public
@@ -963,15 +963,16 @@ export type CustomAvatarOptions = {
 };
 
 // @beta
-export interface CustomCallControlsButton {
-    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
-    // (undocumented)
-    placement: ControlBarButtonPlacement;
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+
+// @beta
+export interface CustomCallControlButtonCallbackArgs {
+    displayType?: CallControlDisplayType;
 }
 
-// @beta (undocumented)
-export interface CustomCallControlsButtonArgs {
-    displayType?: CallControlDisplayType;
+// @beta
+export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+    placement: ControlBarButtonPlacement;
 }
 
 // @public

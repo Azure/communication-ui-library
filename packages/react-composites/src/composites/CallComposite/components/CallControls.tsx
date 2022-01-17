@@ -100,7 +100,7 @@ export type CallControlOptions = {
    *
    * @beta
    */
-  customButtons?: CustomCallControlsButton[];
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
 /**
@@ -130,39 +130,44 @@ export type ControlBarButtonPlacement =
   | 'afterScreenShareButton';
 
 /**
- * A custom button to inject in the {@link CallControls}.
+ * A callback that returns the props to render a custom {@link ControlBarButton}.
+ *
+ * The response indicates where the custom button should be placed.
+ *
+ * Performance tip: This callback is only called when either the callback or its arguments change.
  *
  * @beta
  */
-export interface CustomCallControlsButton {
-  /**
-   * Callback to provide props for the injected button.
-   *
-   * A {@link ControlBarButton} with the provided props will be injected.
-   *
-   * Performance tip: `getProps` will be called each time {@link CallControls} is rendered.
-   * Consider memoizing for optimal performance.
-   */
-  getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
-  /**
-   * Where the custom button should be placed, relative to other buttons.
-   */
-  placement: ControlBarButtonPlacement;
-}
+export type CustomCallControlButtonCallback = (
+  args: CustomCallControlButtonCallbackArgs
+) => CustomCallControlButtonProps;
 
 /**
- * Arguments provided to the callback that creates a custom button.
- * See {@link CustomCallControlsButton}.
+ * Arguments for {@link CustomCallControlButtonCallback}.
  *
  * @beta
  */
-export interface CustomCallControlsButtonArgs {
+export interface CustomCallControlButtonCallbackArgs {
   /**
    * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
    *
    * @defaultValue `'default'`
    */
   displayType?: CallControlDisplayType;
+}
+
+/**
+ * Response from {@link CustomCallControlButtonCallback}.
+ *
+ * Includes the props necessary to render a {@link  ControlBarButton} and indication of where to place the button.
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+  /**
+   * Where to place the custom button relative to other buttons.
+   */
+  placement: ControlBarButtonPlacement;
 }
 
 /**
@@ -280,6 +285,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
+  const customButtonProps = useMemo(() => {
+    if (!options || !options.onFetchCustomButtonProps) {
+      return [];
+    }
+    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
+  }, [options?.onFetchCustomButtonProps, options?.displayType]);
+
   return (
     <Stack horizontalAlign="center">
       <Stack.Item>
@@ -291,20 +303,20 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             occluding some of its content.
          */}
         <ControlBar layout="horizontal">
-          <FilteredCustomButtons options={options} placement={'first'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
           {microphoneButton}
-          <FilteredCustomButtons options={options} placement={'afterMicrophoneButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
           {cameraButton}
-          <FilteredCustomButtons options={options} placement={'afterCameraButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
           {screenShareButton}
-          <FilteredCustomButtons options={options} placement={'afterScreenShareButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
           {participantButton}
-          <FilteredCustomButtons options={options} placement={'afterParticipantsButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
           {devicesButton}
-          <FilteredCustomButtons options={options} placement={'afterOptionsButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />
           {endCallButton}
-          <FilteredCustomButtons options={options} placement={'afterEndCallButton'} />
-          <FilteredCustomButtons options={options} placement={'last'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterEndCallButton'} />
+          <FilteredCustomButtons customButtonProps={customButtonProps} placement={'last'} />
         </ControlBar>
       </Stack.Item>
     </Stack>
@@ -314,19 +326,17 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);
 
 const FilteredCustomButtons = (props: {
-  options?: CallControlOptions;
+  customButtonProps: CustomCallControlButtonProps[];
   placement: ControlBarButtonPlacement;
 }): JSX.Element => {
-  const { options, placement } = props;
-  if (!options || !options.customButtons) {
-    return <></>;
-  }
-  const buttons = options.customButtons.filter((button) => button.placement === placement);
   return (
     <>
-      {buttons.map((b) => (
-        <ControlBarButton {...b.getProps({ displayType: options.displayType })} />
-      ))}
+      {' '}
+      {props.customButtonProps
+        .filter((props) => props.placement === props.placement)
+        .map((props) => (
+          <ControlBarButton {...props} />
+        ))}{' '}
     </>
   );
 };

@@ -272,7 +272,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    customButtons?: CustomCallControlsButton[];
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
 // @public
@@ -456,15 +456,16 @@ export const createAzureCommunicationChatAdapterFromClient: (chatClient: Statefu
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @beta
-export interface CustomCallControlsButton {
-    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
-    // (undocumented)
-    placement: ControlBarButtonPlacement;
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+
+// @beta
+export interface CustomCallControlButtonCallbackArgs {
+    displayType?: CallControlDisplayType;
 }
 
-// @beta (undocumented)
-export interface CustomCallControlsButtonArgs {
-    displayType?: CallControlDisplayType;
+// @beta
+export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+    placement: ControlBarButtonPlacement;
 }
 
 // @public

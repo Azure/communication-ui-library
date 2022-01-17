@@ -7,8 +7,9 @@ export type {
   CallControlDisplayType,
   CallControlOptions,
   ControlBarButtonPlacement,
-  CustomCallControlsButton,
-  CustomCallControlsButtonArgs
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs,
+  CustomCallControlButtonProps
 } from './components/CallControls';
 
 export * from './adapter';
