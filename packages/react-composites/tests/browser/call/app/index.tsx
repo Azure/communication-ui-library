@@ -1,29 +1,61 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
-import { CallAdapterState, CallComposite, COMPOSITE_LOCALE_FR_FR, COMPOSITE_LOCALE_EN_US } from '../../../../src';
+import {
+  CallAdapter,
+  CallAdapterState,
+  createAzureCommunicationCallAdapter,
+  CallComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  COMPOSITE_LOCALE_EN_US
+} from '../../../../src';
 import { IDS } from '../../common/constants';
-import { isMobile } from '../../common/testAppUtils';
+import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './MockCallAdapter';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
 const state = JSON.parse(params.state) as CallAdapterState;
-
-// Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 
 function App(): JSX.Element {
-  const callAdapter = new MockCallAdapter(state);
+  const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
+
+  useEffect(() => {
+    const initialize = async (): Promise<void> => {
+      let newAdapter: CallAdapter = new MockCallAdapter(state);
+      if (!newAdapter) {
+        const displayName = verifyParamExists(params.displayName, 'displayName');
+        const token = verifyParamExists(params.token, 'token');
+        const groupId = verifyParamExists(params.groupId, 'groupId');
+        const userId = verifyParamExists(params.userId, 'userId');
+
+        newAdapter = await createAzureCommunicationCallAdapter({
+          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+          displayName,
+          credential: new AzureCommunicationTokenCredential(token),
+          locator: { groupId: groupId }
+        });
+      }
+      setCallAdapter(wrapAdapterForTests(newAdapter));
+    };
+
+    initialize();
+
+    return () => callAdapter && callAdapter.dispose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const locale = useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;
   if (showCallDescription) {
@@ -48,6 +80,38 @@ function App(): JSX.Element {
       )}
     </>
   );
+}
+
+const wrapAdapterForTests = (adapter: CallAdapter): CallAdapter => {
+  return new Proxy(adapter, new ProxyCallAdapter());
+};
+
+class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public get<P extends keyof CallAdapter>(target: CallAdapter, prop: P): any {
+    switch (prop) {
+      case 'getState': {
+        return (...args: Parameters<CallAdapter['getState']>) => {
+          const state = target.getState(...args);
+          return memoizedUnsetSpeakingWhileMicrophoneIsMuted(state);
+        };
+      }
+      case 'onStateChange': {
+        return (...args: Parameters<CallAdapter['onStateChange']>) => {
+          const [handler] = args;
+          return target.onStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
+        };
+      }
+      case 'offStateChange': {
+        return (...args: Parameters<CallAdapter['offStateChange']>) => {
+          const [handler] = args;
+          return target.offStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
+        };
+      }
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
 }
 
 // This diagnostic gets flakily set to true only in our test harness.
