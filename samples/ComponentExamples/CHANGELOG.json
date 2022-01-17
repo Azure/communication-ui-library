@@ -1,0 +1,20 @@
+{
+  "name": "component-examples",
+  "entries": [
+    {
+      "date": "Tue, 04 Jan 2022 22:57:10 GMT",
+      "tag": "component-examples_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "component-examples",
+            "comment": "Bump @azure/communication-react to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "New aria label string added for `SendBox`. New property added to `SendBox` to autofocus on mount.",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

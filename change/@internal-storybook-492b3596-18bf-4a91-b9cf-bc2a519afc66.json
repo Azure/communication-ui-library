@@ -1,7 +1,0 @@
-{
-  "comment": "Update button stories to reflect focus on disabled",
-  "type": "none",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

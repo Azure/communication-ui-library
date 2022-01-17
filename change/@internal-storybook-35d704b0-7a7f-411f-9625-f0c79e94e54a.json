@@ -1,7 +1,0 @@
-{
-  "comment": "update Storybook snapshots",
-  "type": "none",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

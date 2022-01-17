@@ -2,6 +2,85 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/react-components_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "7d63e1e3652cf8aa46db7726c1d1428ddde13357",
+            "comment": "Allow focus on control bar button when disabled"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c4781582c18060fe5958cf1c6f409d334b748648",
+            "comment": "Added aria roles to the different menu props."
+          },
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "9b963ad5f9829cd4f0bf4c58b2118eb0c9986cc7",
+            "comment": "Bug Fix: Ensure TypingIndicator correctly displays the number of users"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "108a4b0cb8d0f7a215fe655706b85fb987ddf572",
+            "comment": "New aria label string added for `SendBox`. New property added to `SendBox` to autofocus on mount."
+          },
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ca22cb04767248d4566d2d0b72a3f8aee1b73dff",
+            "comment": "Add tooltipVideoLoadingContent to Camera strings"
+          },
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "296d964e7b2b7ecb6d9407568be90f00fefe2830",
+            "comment": "add aria-label strings to MessageStatusIndicator"
+          }
+        ],
+        "none": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6",
+            "comment": "Define fixed color for end call button"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "0a5dff02bfb249c0a3505b57eb47a56f82341358",
+            "comment": "Fixed constrast error for buttons in Calling"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Conditional build of stable flavor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 19:41:59 GMT",
       "tag": "@internal/react-components_v1.0.0",
       "version": "1.0.0",

@@ -59,7 +59,7 @@ module.exports = (appDir, babelConfig) => {
     }
   };
 
-  process.env['FLAVOR'] === 'stable' &&
+  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
     config.module.rules.push({
       test: /\.tsx?$/,
       exclude: /node_modules/,

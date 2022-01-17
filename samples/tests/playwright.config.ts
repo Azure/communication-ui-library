@@ -17,6 +17,8 @@ const config: PlaywrightTestConfig = {
       use: {
         browserName: 'chromium',
         permissions: ['notifications', 'camera', 'microphone'],
+        // Large enough to contain all UI elements from ComponentExamples sample
+        viewport: { width: 900, height: 900 },
         launchOptions: {
           args: [
             '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
@@ -36,7 +38,7 @@ const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./globalSetup')
 };
 
-if (process.env['FLAVOR'] === 'stable') {
+if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
   config.snapshotDir = './stable-snapshot';
 }
 

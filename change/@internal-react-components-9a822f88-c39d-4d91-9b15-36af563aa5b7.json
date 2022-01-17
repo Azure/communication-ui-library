@@ -1,7 +1,0 @@
-{
-  "comment": "Add tooltipVideoLoadingContent to Camera strings",
-  "type": "minor",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

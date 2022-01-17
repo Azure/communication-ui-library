@@ -143,7 +143,9 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const compactMode = options?.displayType === 'compact';
 
   const microphoneButton = options?.microphoneButton !== false && (
+    // tab focus on MicrophoneButton on page load
     <MicrophoneButton
+      autoFocus
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!compactMode}

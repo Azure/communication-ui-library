@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fixed constrast error for buttons in Calling",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}
