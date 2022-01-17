@@ -60,6 +60,7 @@ export interface ChatMessage extends MessageCommon {
   mine?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
+  metaData?: Record<string, string>;
 }
 
 /**

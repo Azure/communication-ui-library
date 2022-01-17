@@ -17,22 +17,25 @@ export interface FileCardProps {
    */
   fileExtension: string;
   /**
-   * If true, features like upload progress and cancel button will not be shown.
-   * Default value is false;
-   */
-  downloadable?: boolean;
-  /**
    * File upload/download progress percentage between 0 and 1.
    * Not shown if undefined.
    */
   progress?: number;
+  /**
+   * Icon to display for actions like download, upload, etc.
+   */
+  actionIcon?: JSX.Element;
+  /**
+   * Function that runs when actionIcon is clicked
+   */
+  actionHandler?: () => void;
 }
 
 /**
  * @beta
  */
 export const FileCard = (props: FileCardProps): JSX.Element => {
-  const { fileName, fileExtension, downloadable, progress } = props;
+  const { fileName, fileExtension, progress, actionIcon } = props;
 
   const progressIndicator = (): JSX.Element => (
     <ProgressIndicator
@@ -81,12 +84,13 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
         >
           {fileName}
         </Stack>
-        <Stack style={{ cursor: 'pointer', padding: '0.25rem' }}>
-          {downloadable ? (
-            <Icon iconName="Download" style={{ fontSize: '16px' }} />
-          ) : (
-            <Icon iconName="ChromeClose" style={{ fontSize: '12px' }} />
-          )}
+        <Stack
+          style={{ cursor: 'pointer', padding: '0.25rem' }}
+          onClick={() => {
+            props.actionHandler && props.actionHandler();
+          }}
+        >
+          {actionIcon && actionIcon}
         </Stack>
       </Stack>
       {progress !== undefined && progressIndicator()}

@@ -13,7 +13,8 @@ import {
   SendBox,
   SendBoxStylesProps,
   TypingIndicator,
-  TypingIndicatorStylesProps
+  TypingIndicatorStylesProps,
+  FileCardGroup
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -21,7 +22,6 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { UploadedFile } from './file-sharing';
-import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { FileUploadButton } from './file-sharing/FileUploadButton';
 import { UploadedFileCard } from './file-sharing/UploadedFileCard';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';

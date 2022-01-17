@@ -56,7 +56,8 @@ const convertToUiChatMessage = (
     clientMessageId: message.clientMessageId,
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
-    mine: messageSenderId === userId
+    mine: messageSenderId === userId,
+    metaData: message.metadata
   };
 };
 

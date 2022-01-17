@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { UploadedFile } from './UploadedFile';
 import { FileCard } from '@internal/react-components';
+import { Icon } from '@fluentui/react';
 
 /**
  * @beta
@@ -29,6 +30,11 @@ export const UploadedFileCard = (props: UploadedFileCardProps): JSX.Element => {
   }, [uploadedFile]);
 
   return (
-    <FileCard fileName={uploadedFile.truncatedName()} fileExtension={uploadedFile.extension()} progress={progress} />
+    <FileCard
+      fileName={uploadedFile.truncatedName()}
+      fileExtension={uploadedFile.extension()}
+      progress={progress}
+      actionIcon={<Icon iconName="ChromeClose" style={{ fontSize: '16px' }} />}
+    />
   );
 };

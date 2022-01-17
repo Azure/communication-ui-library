@@ -8,6 +8,8 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
+import { FileCard, FileCardGroup } from '..';
+import { Icon } from '@fluentui/react';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -31,6 +33,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   const [isEditing, setIsEditing] = useState(false);
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
+
+  console.log('MESSAGE META', props.message.metaData?.acsfiles);
 
   const { onDeleteMessage, message } = props;
   const onRemoveClick = useCallback(() => {
@@ -59,6 +63,25 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       />
     );
   } else {
-    return <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />;
+    return (
+      <div>
+        <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />
+        <FileCardGroup>
+          {props.message.metaData?.acsfiles &&
+            JSON.parse(props.message.metaData.acsfiles).map((file, idx) => (
+              <div key={idx}>
+                <FileCard
+                  fileName={file.name}
+                  fileExtension={file.extension}
+                  actionIcon={<Icon iconName="Download" style={{ fontSize: '12px' }} />}
+                  actionHandler={() => {
+                    window.open(file.url, '_blank');
+                  }}
+                />
+              </div>
+            ))}
+        </FileCardGroup>
+      </div>
+    );
   }
 };

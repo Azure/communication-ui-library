@@ -83,3 +83,4 @@ export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 
 export * from './FileCard';
+export * from './FileCardGroup';

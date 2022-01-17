@@ -1215,7 +1215,7 @@ export const FileCard: (props: FileCardProps) => JSX.Element;
 
 // @beta (undocumented)
 export interface FileCardProps {
-    downloadable?: boolean;
+    actionIcon?: JSX.Element;
     fileExtension: string;
     fileName: string;
     progress?: number;
