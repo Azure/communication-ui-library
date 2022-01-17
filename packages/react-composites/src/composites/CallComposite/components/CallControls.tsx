@@ -3,6 +3,8 @@
 
 import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
+import { ControlBarButton } from '@internal/react-components';
+import { ControlBarButtonProps } from '@internal/react-components';
 import {
   CameraButton,
   ControlBar,
@@ -41,6 +43,13 @@ export type CallControlsProps = {
 };
 
 /**
+ * Control bar display type for {@link CallComposite}.
+ *
+ * @public
+ */
+export type CallControlDisplayType = 'default' | 'compact';
+
+/**
  * Customization options for the control bar in calling experience.
  *
  * @public
@@ -55,7 +64,7 @@ export type CallControlOptions = {
    *
    * @defaultValue 'default'
    */
-  displayType?: 'default' | 'compact';
+  displayType?: CallControlDisplayType;
   /**
    * Show or Hide Camera Button during a call
    * @defaultValue true
@@ -86,7 +95,75 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /**
+   * Inject custom buttons in the call controls.
+   *
+   * @beta
+   */
+  customButtons?: CustomCallControlsButton[];
 };
+
+/**
+ * Placement for a custom button injected in the {@link CallControls}.
+ *
+ * 'first': Place the button on the left end (right end in rtl mode).
+ * 'afterCameraButton': Place the button on the right (left in rtl mode) of the camera button.
+ * ... and so on.
+ *
+ * It is an error to place the button in reference to another button that has
+ * been hidden via a {@link CallControlOptions} field.
+ *
+ * Multiple buttons placed in the same position are appended in order.
+ * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
+ * in the order provided.
+ *
+ * @beta
+ */
+export type ControlBarButtonPlacement =
+  | 'first'
+  | 'last'
+  | 'afterCameraButton'
+  | 'afterEndCallButton'
+  | 'afterMicrophoneButton'
+  | 'afterOptionsButton'
+  | 'afterParticipantsButton'
+  | 'afterScreenShareButton';
+
+/**
+ * A custom button to inject in the {@link CallControls}.
+ *
+ * @beta
+ */
+export interface CustomCallControlsButton {
+  /**
+   * Callback to provide props for the injected button.
+   *
+   * A {@link ControlBarButton} with the provided props will be injected.
+   *
+   * Performance tip: `getProps` will be called each time {@link CallControls} is rendered.
+   * Consider memoizing for optimal performance.
+   */
+  getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
+  /**
+   * Where the custom button should be placed, relative to other buttons.
+   */
+  placement: ControlBarButtonPlacement;
+}
+
+/**
+ * Arguments provided to the callback that creates a custom button.
+ * See {@link CustomCallControlsButton}.
+ *
+ * @beta
+ */
+export interface CustomCallControlsButtonArgs {
+  /**
+   * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
+   *
+   * @defaultValue `'default'`
+   */
+  displayType?: CallControlDisplayType;
+}
 
 /**
  * @private
@@ -214,12 +291,20 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             occluding some of its content.
          */}
         <ControlBar layout="horizontal">
+          <FilteredCustomButtons options={options} placement={'first'} />
           {microphoneButton}
+          <FilteredCustomButtons options={options} placement={'afterMicrophoneButton'} />
           {cameraButton}
+          <FilteredCustomButtons options={options} placement={'afterCameraButton'} />
           {screenShareButton}
+          <FilteredCustomButtons options={options} placement={'afterScreenShareButton'} />
           {participantButton}
+          <FilteredCustomButtons options={options} placement={'afterParticipantsButton'} />
           {devicesButton}
+          <FilteredCustomButtons options={options} placement={'afterOptionsButton'} />
           {endCallButton}
+          <FilteredCustomButtons options={options} placement={'afterEndCallButton'} />
+          <FilteredCustomButtons options={options} placement={'last'} />
         </ControlBar>
       </Stack.Item>
     </Stack>
@@ -227,3 +312,21 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 };
 
 const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);
+
+const FilteredCustomButtons = (props: {
+  options?: CallControlOptions;
+  placement: ControlBarButtonPlacement;
+}): JSX.Element => {
+  const { options, placement } = props;
+  if (!options || !options.customButtons) {
+    return <></>;
+  }
+  const buttons = options.customButtons.filter((button) => button.placement === placement);
+  return (
+    <>
+      {buttons.map((b) => (
+        <ControlBarButton {...b.getProps({ displayType: options.displayType })} />
+      ))}
+    </>
+  );
+};

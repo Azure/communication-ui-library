@@ -22,6 +22,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
+import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -256,8 +257,11 @@ export interface CallCompositeStrings {
 }
 
 // @public
+export type CallControlDisplayType = 'default' | 'compact';
+
+// @public
 export type CallControlOptions = {
-    displayType?: 'default' | 'compact';
+    displayType?: CallControlDisplayType;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
@@ -268,6 +272,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    customButtons?: CustomCallControlsButton[];
 };
 
 // @public
@@ -432,6 +437,9 @@ export interface CompositeStrings {
     meeting: MeetingCompositeStrings;
 }
 
+// @beta
+export type ControlBarButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+
 // @public
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
@@ -446,6 +454,18 @@ export const createAzureCommunicationChatAdapterFromClient: (chatClient: Statefu
 
 // @beta
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
+// @beta
+export interface CustomCallControlsButton {
+    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
+    // (undocumented)
+    placement: ControlBarButtonPlacement;
+}
+
+// @beta (undocumented)
+export interface CustomCallControlsButtonArgs {
+    displayType?: CallControlDisplayType;
+}
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {

@@ -347,8 +347,11 @@ export interface CallCompositeStrings {
 }
 
 // @public
+export type CallControlDisplayType = 'default' | 'compact';
+
+// @public
 export type CallControlOptions = {
-    displayType?: 'default' | 'compact';
+    displayType?: CallControlDisplayType;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
@@ -359,6 +362,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    customButtons?: CustomCallControlsButton[];
 };
 
 // @public
@@ -881,6 +885,9 @@ export const ControlBar: (props: ControlBarProps) => JSX.Element;
 // @public
 export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
+// @beta
+export type ControlBarButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
     labelKey?: string;
@@ -954,6 +961,18 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
 };
+
+// @beta
+export interface CustomCallControlsButton {
+    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
+    // (undocumented)
+    placement: ControlBarButtonPlacement;
+}
+
+// @beta (undocumented)
+export interface CustomCallControlsButtonArgs {
+    displayType?: CallControlDisplayType;
+}
 
 // @public
 export interface CustomMessage extends MessageCommon {
