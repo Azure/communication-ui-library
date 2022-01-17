@@ -3,6 +3,8 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
+
 /**
  * @private
  */
@@ -13,7 +15,12 @@ export const participantItemContainerStyle = mergeStyles({
   maxWidth: '20rem',
   minWidth: '12rem',
   cursor: 'pointer',
-  alignItems: 'center'
+  alignItems: 'center',
+  // Mobile height for participant items increased from default height
+  '@media screen and (max-width: 640px)': {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`
+  }
 });
 
 /**
