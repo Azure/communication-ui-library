@@ -12,7 +12,10 @@ import {
   createAzureCommunicationCallAdapter,
   CallComposite,
   COMPOSITE_LOCALE_FR_FR,
-  COMPOSITE_LOCALE_EN_US
+  COMPOSITE_LOCALE_EN_US,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonProps,
+  CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
@@ -33,6 +36,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
+const injectCustomButtons = Boolean(params.injectCustomButtons);
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -71,6 +75,15 @@ function App(): JSX.Element {
               locale={locale}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
+              options={
+                injectCustomButtons
+                  ? {
+                      callControls: {
+                        onFetchCustomButtonProps
+                      }
+                    }
+                  : undefined
+              }
             />
           </_IdentifierProvider>
         </div>
@@ -160,5 +173,35 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
+
+const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      strings: {
+        label: 'custom #1'
+      },
+      placement: 'first'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      strings: {
+        label: 'custom #2'
+      },
+      placement: 'afterMicrophoneButton'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      strings: {
+        label: 'custom #3'
+      },
+      placement: 'last'
+    };
+  }
+];
 
 ReactDOM.render(<App />, document.getElementById('root'));
