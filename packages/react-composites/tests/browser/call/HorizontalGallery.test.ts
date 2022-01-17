@@ -58,6 +58,20 @@ test.describe('HorizontalGallery tests', async () => {
                 isMuted: true,
                 isSpeaking: false,
                 displayName: 'Eryka Klein'
+              },
+              '4': {
+                identifier: { kind: 'unknown', id: '4' },
+                state: 'Connected',
+                videoStreams: {
+                  '1': {
+                    id: 1,
+                    mediaStreamType: 'Video',
+                    isAvailable: true
+                  }
+                },
+                isMuted: false,
+                isSpeaking: true,
+                displayName: 'Fiona Harper'
               }
             },
             remoteParticipantsEnded: {}
