@@ -232,7 +232,7 @@ test.describe('Call composite participant menu items injection tests', () => {
   });
 });
 
-test.describe('xkcd Call composite custom button injection tests', () => {
+test.describe('Call composite custom button injection tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.

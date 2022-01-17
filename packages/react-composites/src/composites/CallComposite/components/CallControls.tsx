@@ -331,12 +331,11 @@ const FilteredCustomButtons = (props: {
 }): JSX.Element => {
   return (
     <>
-      {' '}
       {props.customButtonProps
-        .filter((props) => props.placement === props.placement)
-        .map((props) => (
-          <ControlBarButton {...props} />
-        ))}{' '}
+        .filter((buttonProps) => buttonProps.placement === props.placement)
+        .map((buttonProps) => (
+          <ControlBarButton {...buttonProps} />
+        ))}
     </>
   );
 };

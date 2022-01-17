@@ -20,7 +20,7 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { FontIcon, Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -79,7 +79,10 @@ function App(): JSX.Element {
                 injectCustomButtons
                   ? {
                       callControls: {
-                        onFetchCustomButtonProps
+                        onFetchCustomButtonProps,
+                        // Hide some buttons to keep the mobile-view control bar narrow
+                        devicesButton: false,
+                        cameraButton: false
                       }
                     }
                   : undefined
@@ -178,6 +181,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
       showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
+      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
       strings: {
         label: 'custom #1'
       },
@@ -187,6 +193,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
       showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
+      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
       strings: {
         label: 'custom #2'
       },
@@ -196,6 +205,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
       showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
+      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
       strings: {
         label: 'custom #3'
       },
