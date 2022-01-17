@@ -73,7 +73,7 @@ const App = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const internalSetupAndJoinChatThread = async (): Promise<void> => {
+    (async () => {
       if (callArgs?.displayName && credentials !== undefined) {
         const newThreadId = await getThread();
         const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
@@ -85,8 +85,7 @@ const App = (): JSX.Element => {
         setThreadId(newThreadId);
         pushQSPUrl({ name: 'threadId', value: newThreadId });
       }
-    };
-    internalSetupAndJoinChatThread();
+    })();
   }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
 
   if (isOnIphoneAndNotSafari()) {
@@ -145,17 +144,6 @@ const App = (): JSX.Element => {
           webAppTitle={webAppTitle}
           endpoint={endpointUrl}
           threadId={threadId}
-        />
-      );
-    }
-    case 'error': {
-      document.title = `error - ${webAppTitle}`;
-      return (
-        <CallError
-          title="Error getting user credentials from server"
-          reason="Ensure the sample server is running."
-          rejoinHandler={() => setPage('meeting')}
-          homeHandler={navigateToHomePage}
         />
       );
     }
