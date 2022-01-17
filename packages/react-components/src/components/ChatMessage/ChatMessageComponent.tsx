@@ -34,7 +34,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  console.log('MESSAGE META', props.message.metaData?.acsfiles);
+  console.log('MESSAGE META', props.message.content, props.message.metaData?.acsfiles);
 
   const { onDeleteMessage, message } = props;
   const onRemoveClick = useCallback(() => {

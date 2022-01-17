@@ -76,7 +76,12 @@ export class EventSubscriber {
     const existingMessage = this.chatContext.getState().threads[event.threadId]?.chatMessages[event.id];
     if (existingMessage) {
       newMessage.sequenceId = existingMessage.sequenceId;
+      // BUG in event. Event doesn't send metadata.
+      newMessage.metadata = newMessage.metadata ?? existingMessage.metadata;
     }
+
+    console.log('NEW MESSAGE', newMessage);
+
     this.chatContext.batch(() => {
       this.chatContext.createThreadIfNotExist(event.threadId);
       this.chatContext.setChatMessage(event.threadId, newMessage);
