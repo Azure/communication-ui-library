@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
 import { CompositeStrings, useLocale } from '../../localization';
-import { computeVariant } from '../utils';
+import { ComplianceBannerVariant, computeVariant } from '../utils';
 
 /**
  * @private
@@ -50,7 +50,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
 
   const strings = useLocale().strings;
-  const [variant, setVariant] = useState('NO_STATE');
+  const [variant, setVariant] = useState<ComplianceBannerVariant>('NO_STATE');
   const cachedProps = useRef<CachedComplianceBannerProps>({
     latestBooleanState: {
       callTranscribeState: false,
@@ -116,7 +116,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   );
 };
 
-function BannerMessage(props: { variant: string; strings: CompositeStrings }): JSX.Element {
+function BannerMessage(props: { variant: ComplianceBannerVariant; strings: CompositeStrings }): JSX.Element {
   const { variant, strings } = props;
   switch (variant) {
     case 'TRANSCRIPTION_STOPPED_STILL_RECORDING':

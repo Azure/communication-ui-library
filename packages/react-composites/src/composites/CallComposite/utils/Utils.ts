@@ -132,6 +132,20 @@ export const getCallCompositePage = (
 };
 
 /**
+ * @private
+ */
+export type ComplianceBannerVariant =
+  | 'NO_STATE'
+  | 'TRANSCRIPTION_STOPPED_STILL_RECORDING'
+  | 'RECORDING_STOPPED_STILL_TRANSCRIBING'
+  | 'RECORDING_AND_TRANSCRIPTION_STOPPED'
+  | 'RECORDING_AND_TRANSCRIPTION_STARTED'
+  | 'TRANSCRIPTION_STARTED'
+  | 'RECORDING_STOPPED'
+  | 'RECORDING_STARTED'
+  | 'TRANSCRIPTION_STOPPED';
+
+/**
  * Return different conditions based on the current and previous state of recording and transcribing
  *
  * @param callRecordState - The current call record state: on, off, stopped
@@ -144,7 +158,7 @@ export const getCallCompositePage = (
 export const computeVariant = (
   callRecordState: string | undefined,
   callTranscribeState: string | undefined
-): string => {
+): ComplianceBannerVariant => {
   if (callRecordState === 'on' && callTranscribeState === 'on') {
     return 'RECORDING_AND_TRANSCRIPTION_STARTED';
   } else if (callRecordState === 'on' && callTranscribeState === 'off') {
