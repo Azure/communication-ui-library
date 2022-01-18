@@ -82,7 +82,7 @@ function App(): JSX.Element {
                         onFetchCustomButtonProps,
                         // Hide some buttons to keep the mobile-view control bar narrow
                         devicesButton: false,
-                        cameraButton: false
+                        endCallButton: false
                       }
                     }
                   : undefined
