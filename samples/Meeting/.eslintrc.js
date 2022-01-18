@@ -49,13 +49,6 @@ module.exports = {
       env: {
         jest: true
       }
-    },
-    {
-      files: ['App.tsx'],
-      rules: {
-        // Allow requiring the package.json
-        '@typescript-eslint/no-var-requires': 'off'
-      }
     }
   ]
 };
