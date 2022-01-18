@@ -13,7 +13,7 @@ export const getResourceConnectionString = (): string => {
   return resourceConnectionString;
 };
 
-export const getEnvUrl = (): string => {
+export const getEndpoint = (): string => {
   const uri = process.env['EndpointUrl'] || appSettings.EndpointUrl;
 
   return `${uri.protocol}//${uri.host}`;
