@@ -146,6 +146,11 @@ export type ComplianceBannerVariant =
   | 'TRANSCRIPTION_STOPPED';
 
 /**
+ * @private
+ */
+export type complianceState = 'on' | 'off' | 'stopped';
+
+/**
  * Return different conditions based on the current and previous state of recording and transcribing
  *
  * @param callRecordState - The current call record state: on, off, stopped
@@ -156,8 +161,8 @@ export type ComplianceBannerVariant =
  * @private
  */
 export const computeVariant = (
-  callRecordState: string | undefined,
-  callTranscribeState: string | undefined
+  callRecordState: complianceState,
+  callTranscribeState: complianceState
 ): ComplianceBannerVariant => {
   if (callRecordState === 'on' && callTranscribeState === 'on') {
     return 'RECORDING_AND_TRANSCRIPTION_STARTED';
