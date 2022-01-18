@@ -8,6 +8,17 @@ import { getToken } from '../lib/identityClient';
 
 const router = express.Router();
 
+/**
+ * route: /refreshToken/[id]
+ *
+ * purpose: Get a new token for the given user id.
+ *
+ * @param id: id of the user
+ *
+ * @returns the user object with token details
+ *
+ */
+
 router.post('/:id', async function (req, res, next) {
   if (!req.params['id']) {
     res.sendStatus(404);
