@@ -12,6 +12,17 @@ interface AddUserParam {
   DisplayName: string;
 }
 
+/**
+ * route: /addUser/[threadId]
+ *
+ * purpose: Add the user to the chat thread with given threadId.
+ *
+ * @param threadId: id of the thread to which user needs to be added
+ * @param id: id of the user
+ * @param displayName: display name of the user
+ *
+ */
+
 router.post('/:threadId', async function (req, res, next) {
   const addUserParam: AddUserParam = req.body;
   const threadId = req.params['threadId'];
