@@ -101,8 +101,9 @@ export type CallControlOptions = {
    * Inject custom buttons in the call controls.
    *
    * @beta
+   *
+   * @conditional-compile-remove-from(stable): custom button injection
    */
-  /* @conditional-compile-remove-from(stable): custom button injection */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
@@ -121,8 +122,9 @@ export type CallControlOptions = {
  * in the order provided.
  *
  * @beta
+ *
+ * @conditional-compile-remove-from(stable): custom button injection
  */
-/* @conditional-compile-remove-from(stable): custom button injection */
 export type ControlBarButtonPlacement =
   | 'first'
   | 'last'
@@ -141,8 +143,9 @@ export type ControlBarButtonPlacement =
  * Performance tip: This callback is only called when either the callback or its arguments change.
  *
  * @beta
+ *
+ * @conditional-compile-remove-from(stable): custom button injection
  */
-/* @conditional-compile-remove-from(stable): custom button injection */
 export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
 ) => CustomCallControlButtonProps;
@@ -151,8 +154,9 @@ export type CustomCallControlButtonCallback = (
  * Arguments for {@link CustomCallControlButtonCallback}.
  *
  * @beta
+ *
+ * @conditional-compile-remove-from(stable): custom button injection
  */
-/* @conditional-compile-remove-from(stable): custom button injection */
 export interface CustomCallControlButtonCallbackArgs {
   /**
    * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
@@ -168,8 +172,9 @@ export interface CustomCallControlButtonCallbackArgs {
  * Includes the props necessary to render a {@link  ControlBarButton} and indication of where to place the button.
  *
  * @beta
+ *
+ * @conditional-compile-remove-from(stable): custom button injection
  */
-/* @conditional-compile-remove-from(stable): custom button injection */
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
   /**
    * Where to place the custom button relative to other buttons.
@@ -222,12 +227,21 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
+
+  const options = typeof props.options === 'boolean' ? {} : props.options;
+
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  const customButtonProps = useMemo(() => {
+    if (!options || !options.onFetchCustomButtonProps) {
+      return [];
+    }
+    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
+  }, [options?.onFetchCustomButtonProps, options?.displayType]);
+
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
     return <></>;
   }
-
-  const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const compactMode = options?.displayType === 'compact';
 
@@ -291,14 +305,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
     />
   );
-
-  /* @conditional-compile-remove-from(stable): custom button injection */
-  const customButtonProps = useMemo(() => {
-    if (!options || !options.onFetchCustomButtonProps) {
-      return [];
-    }
-    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
-  }, [options?.onFetchCustomButtonProps, options?.displayType]);
 
   return (
     <Stack horizontalAlign="center">
@@ -366,8 +372,8 @@ const FilteredCustomButtons = (props: {
     <>
       {props.customButtonProps
         .filter((buttonProps) => buttonProps.placement === props.placement)
-        .map((buttonProps) => (
-          <ControlBarButton {...buttonProps} />
+        .map((buttonProps, i) => (
+          <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
         ))}
     </>
   );
