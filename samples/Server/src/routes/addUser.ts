@@ -18,8 +18,8 @@ interface AddUserParam {
  * purpose: Add the user to the chat thread with given threadId.
  *
  * @param threadId: id of the thread to which user needs to be added
- * @param id: id of the user
- * @param displayName: display name of the user
+ * @param id: id of the user as string
+ * @param displayName: display name of the user as string
  *
  */
 
