@@ -6,7 +6,7 @@ export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 export type { CallControlDisplayType, CallControlOptions } from './components/CallControls';
 /* @conditional-compile-remove-from(stable): custom button injection */
 export type {
-  ControlBarButtonPlacement,
+  CustomCallControlButtonPlacement,
   CustomCallControlButtonCallback,
   CustomCallControlButtonCallbackArgs,
   CustomCallControlButtonProps

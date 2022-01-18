@@ -123,7 +123,7 @@ export type CallControlOptions = {
  *
  * @beta
  */
-export type ControlBarButtonPlacement =
+export type CustomCallControlButtonPlacement =
   | 'first'
   | 'last'
   | 'afterCameraButton'
@@ -174,7 +174,7 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
   /**
    * Where to place the custom button relative to other buttons.
    */
-  placement: ControlBarButtonPlacement;
+  placement: CustomCallControlButtonPlacement;
 }
 
 /**
@@ -361,7 +361,7 @@ const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeSty
 /* @conditional-compile-remove-from(stable): custom button injection */
 const FilteredCustomButtons = (props: {
   customButtonProps: CustomCallControlButtonProps[];
-  placement: ControlBarButtonPlacement;
+  placement: CustomCallControlButtonPlacement;
 }): JSX.Element => {
   return (
     <>

@@ -438,7 +438,7 @@ export interface CompositeStrings {
 }
 
 // @beta
-export type ControlBarButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
 
 // @public
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
@@ -465,7 +465,7 @@ export interface CustomCallControlButtonCallbackArgs {
 
 // @beta
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
-    placement: ControlBarButtonPlacement;
+    placement: CustomCallControlButtonPlacement;
 }
 
 // @public
