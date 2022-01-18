@@ -134,61 +134,34 @@ export const getCallCompositePage = (
 /**
  * Return different conditions based on the current and previous state of recording and transcribing
  *
- * @param previousCallRecordState - The previous call record state
- * @param previousCallTranscribeState - The previous call transcribe state
- * @param callRecordState - The current call record state
- * @param callTranscribeState - The current call transcribe state
+ * @param callRecordState - The current call record state: on, off, stopped
+ * @param callTranscribeState - The current call transcribe state: on, off, stopped
  *
- * @remarks - The previous states are needed to determine if the recording or transcribing state is changed
+ * @remarks - The stopped state means: previously on but currently off
  *
  * @private
  */
 export const computeVariant = (
-  previousCallRecordState: boolean | undefined,
-  previousCallTranscribeState: boolean | undefined,
-  callRecordState: boolean | undefined,
-  callTranscribeState: boolean | undefined
+  callRecordState: string | undefined,
+  callTranscribeState: string | undefined
 ): string => {
-  if (previousCallRecordState && previousCallTranscribeState) {
-    if (callRecordState && !callTranscribeState) {
-      return 'TRANSCRIPTION_STOPPED_STILL_RECORDING';
-    } else if (!callRecordState && callTranscribeState) {
-      return 'RECORDING_STOPPED_STILL_TRANSCRIBING';
-    } else if (!callRecordState && !callTranscribeState) {
-      return 'RECORDING_AND_TRANSCRIPTION_STOPPED';
-    } else {
-      return 'NO_STATE';
-    }
-  } else if (previousCallRecordState && !previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return 'RECORDING_AND_TRANSCRIPTION_STARTED';
-    } else if (!callRecordState && callTranscribeState) {
-      return 'TRANSCRIPTION_STARTED';
-    } else if (!callRecordState && !callTranscribeState) {
-      return 'RECORDING_STOPPED';
-    } else {
-      return 'NO_STATE';
-    }
-  } else if (!previousCallRecordState && previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return 'RECORDING_AND_TRANSCRIPTION_STARTED';
-    } else if (callRecordState && !callTranscribeState) {
-      return 'RECORDING_STARTED';
-    } else if (!callRecordState && !callTranscribeState) {
-      return 'TRANSCRIPTION_STOPPED';
-    } else {
-      return 'NO_STATE';
-    }
-  } else if (!previousCallRecordState && !previousCallTranscribeState) {
-    if (callRecordState && callTranscribeState) {
-      return 'RECORDING_AND_TRANSCRIPTION_STARTED';
-    } else if (callRecordState && !callTranscribeState) {
-      return 'RECORDING_STARTED';
-    } else if (!callRecordState && callTranscribeState) {
-      return 'TRANSCRIPTION_STARTED';
-    } else {
-      return 'NO_STATE';
-    }
+  if (callRecordState === 'on' && callTranscribeState === 'on') {
+    return 'RECORDING_AND_TRANSCRIPTION_STARTED';
+  } else if (callRecordState === 'on' && callTranscribeState === 'off') {
+    return 'RECORDING_STARTED';
+  } else if (callRecordState === 'off' && callTranscribeState === 'on') {
+    return 'TRANSCRIPTION_STARTED';
+  } else if (callRecordState === 'on' && callTranscribeState === 'stopped') {
+    return 'TRANSCRIPTION_STOPPED_STILL_RECORDING';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'on') {
+    return 'RECORDING_STOPPED_STILL_TRANSCRIBING';
+  } else if (callRecordState === 'off' && callTranscribeState === 'stopped') {
+    return 'TRANSCRIPTION_STOPPED';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'off') {
+    return 'RECORDING_STOPPED';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'stopped') {
+    return 'RECORDING_AND_TRANSCRIPTION_STOPPED';
+  } else {
+    return 'NO_STATE';
   }
-  return 'NO_STATE';
 };

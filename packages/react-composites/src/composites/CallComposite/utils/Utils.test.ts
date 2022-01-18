@@ -38,36 +38,29 @@ describe('SDKUtils tests', () => {
 
 describe('Record and Transcription tests', () => {
   describe('computeVariant tests', () => {
-    test('computeVariant should return expected values', () => {
-      // start recording but not transcribing, should return RECORDING_STARTED
-      expect(computeVariant(false, false, true, false)).toEqual('RECORDING_STARTED');
-
-      // start transcribing but not recording, should return TRANSCRIPTION_STARTED
-      expect(computeVariant(false, false, false, true)).toEqual('TRANSCRIPTION_STARTED');
-
-      // stop recording and transcribing remains turned off, should return RECORDING_STOPPED
-      expect(computeVariant(true, false, false, false)).toEqual('RECORDING_STOPPED');
-
-      // stop transcribing and recording remains turned off , should return TRANSCRIPTION_STOPPED
-      expect(computeVariant(false, true, false, false)).toEqual('TRANSCRIPTION_STOPPED');
-
-      // stop both transcribing and recording , should return  RECORDING_AND_TRANSCRIPTION_STOPPED
-      expect(computeVariant(true, true, false, false)).toEqual('RECORDING_AND_TRANSCRIPTION_STOPPED');
-
-      // start both transcribing and recording , should return RECORDING_AND_TRANSCRIPTION_STARTED
-      expect(computeVariant(false, false, true, true)).toEqual('RECORDING_AND_TRANSCRIPTION_STARTED');
-
-      // recording stopped and continue transcribing , should return RECORDING_STOPPED_STILL_TRANSCRIBING
-      expect(computeVariant(true, true, false, true)).toEqual('RECORDING_STOPPED_STILL_TRANSCRIBING');
-
-      // transcribing stopped and continue recording, should return TRANSCRIPTION_STOPPED_STILL_RECORDING
-      expect(computeVariant(true, true, true, false)).toEqual('TRANSCRIPTION_STOPPED_STILL_RECORDING');
-
-      // no change, should return NO_STATE
-      expect(computeVariant(true, true, true, true)).toEqual('NO_STATE');
-      expect(computeVariant(true, false, true, false)).toEqual('NO_STATE');
-      expect(computeVariant(false, true, false, true)).toEqual('NO_STATE');
-      expect(computeVariant(false, false, false, false)).toEqual('NO_STATE');
+    test('start recording and transcription state remains off, computeVariant should return RECORDING_STARTED', () => {
+      expect(computeVariant('on', 'off')).toEqual('RECORDING_STARTED');
+    });
+    test('start transcribing but recording state remains off, computeVariant should return TRANSCRIPTION_STARTED', () => {
+      expect(computeVariant('off', 'on')).toEqual('TRANSCRIPTION_STARTED');
+    });
+    test('stop recording and transcribtion state remains off, computeVariant should return RECORDING_STOPPED', () => {
+      expect(computeVariant('stopped', 'off')).toEqual('RECORDING_STOPPED');
+    });
+    test('stop transcribing and recording state remains off, computeVariant should return TRANSCRIPTION_STOPPED', () => {
+      expect(computeVariant('off', 'stopped')).toEqual('TRANSCRIPTION_STOPPED');
+    });
+    test('stop both transcribing and recording, computeVariant should return RECORDING_AND_TRANSCRIPTION_STOPPED', () => {
+      expect(computeVariant('stopped', 'stopped')).toEqual('RECORDING_AND_TRANSCRIPTION_STOPPED');
+    });
+    test('start both transcribing and recording, computeVariant should return RECORDING_AND_TRANSCRIPTION_STARTED', () => {
+      expect(computeVariant('on', 'on')).toEqual('RECORDING_AND_TRANSCRIPTION_STARTED');
+    });
+    test('recording stopped and continue transcribing, computeVariant should return RECORDING_STOPPED_STILL_TRANSCRIBING', () => {
+      expect(computeVariant('stopped', 'on')).toEqual('RECORDING_STOPPED_STILL_TRANSCRIBING');
+    });
+    test('transcribing stopped and continue recording, computeVariant should return TRANSCRIPTION_STOPPED_STILL_RECORDING', () => {
+      expect(computeVariant('on', 'stopped')).toEqual('TRANSCRIPTION_STOPPED_STILL_RECORDING');
     });
   });
 });
