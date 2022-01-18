@@ -10,7 +10,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
 import { createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
-import { MeetingAdapter } from '@internal/react-composites';
+import { AvatarPersonaData, MeetingAdapter } from '@internal/react-composites';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -77,6 +77,10 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
+  const onFetchAvatarPersonaData = async (userId): Promise<AvatarPersonaData> => ({
+    text: 'hello',
+    imageInitials: 'A'
+  });
 
   return (
     <MeetingComposite
@@ -85,6 +89,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
       rtl={currentRtl}
       meetingInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
     />
   );
 };
