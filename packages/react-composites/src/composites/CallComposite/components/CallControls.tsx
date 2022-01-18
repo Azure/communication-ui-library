@@ -97,16 +97,16 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove-from(stable): custom button injection */
   /**
    * Inject custom buttons in the call controls.
    *
    * @beta
-   *
-   * @conditional-compile-remove-from(stable): custom button injection
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
+/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Placement for a custom button injected in the {@link CallControls}.
  *
@@ -122,8 +122,6 @@ export type CallControlOptions = {
  * in the order provided.
  *
  * @beta
- *
- * @conditional-compile-remove-from(stable): custom button injection
  */
 export type ControlBarButtonPlacement =
   | 'first'
@@ -135,6 +133,7 @@ export type ControlBarButtonPlacement =
   | 'afterParticipantsButton'
   | 'afterScreenShareButton';
 
+/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton}.
  *
@@ -143,19 +142,16 @@ export type ControlBarButtonPlacement =
  * Performance tip: This callback is only called when either the callback or its arguments change.
  *
  * @beta
- *
- * @conditional-compile-remove-from(stable): custom button injection
  */
 export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
 ) => CustomCallControlButtonProps;
 
+/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Arguments for {@link CustomCallControlButtonCallback}.
  *
  * @beta
- *
- * @conditional-compile-remove-from(stable): custom button injection
  */
 export interface CustomCallControlButtonCallbackArgs {
   /**
@@ -166,14 +162,13 @@ export interface CustomCallControlButtonCallbackArgs {
   displayType?: CallControlDisplayType;
 }
 
+/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Response from {@link CustomCallControlButtonCallback}.
  *
  * Includes the props necessary to render a {@link  ControlBarButton} and indication of where to place the button.
  *
  * @beta
- *
- * @conditional-compile-remove-from(stable): custom button injection
  */
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
   /**
