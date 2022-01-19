@@ -82,7 +82,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status packages -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
@@ -171,7 +171,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status packages -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
@@ -270,12 +270,11 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status packages -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
             echo "::set-output name=hasChanged::true"
-            exit
           fi
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
