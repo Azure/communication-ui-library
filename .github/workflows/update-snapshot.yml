@@ -241,19 +241,19 @@ jobs:
         working-directory: ./packages/react-composites
         run: rushx build:e2e
       - name: Update chat snapshot
-        id: updatesnapshots
+        id: update-chat-snapshots
         run: rushx test:e2e:chat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Update calling snapshot
-        id: updatesnapshots
+        id: update-calling-snapshots
         run: rushx test:e2e:call:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Update meeting snapshot
-        id: updatesnapshots
+        id: update-meeting-snapshots
         if: ${{ matrix.flavor != 'stable' }}
         run: rushx test:e2e:meeting:update
         working-directory: ./packages/react-composites
