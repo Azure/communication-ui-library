@@ -54,10 +54,9 @@ jobs:
         run: rush build -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
-        if: ${{ matrix.flavor != 'stable' }}
         run: |
           DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code **/review/**.md
+          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/**' ||  '**/stable-review/**'  }}.md
           DIFF_STATUS=$?
           echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
           if [$DIFF_STATUS -ne 0]

@@ -37,7 +37,7 @@
       "summary": "Switch flavor to beta",
       "description": "Every build and test command will run based on beta version.",
       "autoinstallerName": "rush-cpy",
-      "shellCommand": "rush install && cpy common/config/env/beta.env common/config/env --rename .env",
+      "shellCommand": "rush install && cpy common/config/env/beta.env common/config/env --rename .env && node common/scripts/invalidate-build.js",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -46,7 +46,7 @@
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
       "autoinstallerName": "rush-cpy",
-      "shellCommand": "rush install --variant stable && cpy common/config/env/stable.env common/config/env --rename .env",
+      "shellCommand": "rush install --variant stable && cpy common/config/env/stable.env common/config/env --rename .env && node common/scripts/invalidate-build.js",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -74,6 +74,14 @@
       "description": "Run jest tests for non-beta version in each project.",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "build:all",
+      "summary": "Build all flavor in one command (mainly for api update)",
+      "description": "Build all flavor in one command (mainly for api update). This command will switch current flavor to beta.",
+      "shellCommand": "rush switch-flavor:stable && rush rebuild && rush switch-flavor:beta && rush rebuild",
       "safeForSimultaneousRushProcesses": true
     },
     {
