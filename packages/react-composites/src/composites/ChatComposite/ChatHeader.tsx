@@ -6,7 +6,7 @@ import React from 'react';
 import * as reselect from 'reselect';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatBaseSelectorProps } from '@internal/chat-component-bindings';
-import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
+import { chatHeaderContainerStyle, topicNameLabelStyle } from '../common/styles/Chat.styles';
 
 /**
  * @private

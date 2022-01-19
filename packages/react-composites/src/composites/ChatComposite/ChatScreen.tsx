@@ -13,7 +13,8 @@ import {
   ParticipantMenuItemsCallback,
   MessageThreadStyles,
   SendBoxStylesProps,
-  TypingIndicatorStylesProps
+  TypingIndicatorStylesProps,
+  ParticipantList
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -31,10 +32,11 @@ import {
   typingIndicatorChatCompositeStyles,
   participantListContainerPadding,
   typingIndicatorContainerStyles
-} from './styles/Chat.styles';
+} from '../common/styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantContainer } from '../common/ParticipantContainer';
+import { useLocale } from '../localization';
 
 /**
  * @private
@@ -69,6 +71,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
+  const locale = useLocale();
+  const chatListHeader = locale.strings.chat.chatListHeader;
+
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
@@ -78,6 +83,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  const participantListProps = usePropsFor(ParticipantList);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -125,8 +131,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove-from(stable) */
           options?.participantPane === true && (
             <ParticipantContainer
+              participantListProps={participantListProps}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              title={chatListHeader}
             />
           )
         }

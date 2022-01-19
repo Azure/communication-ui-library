@@ -7,7 +7,7 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
-import { chatScreenContainerStyle } from './styles/Chat.styles';
+import { chatScreenContainerStyle } from '../common/styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 
 /**
