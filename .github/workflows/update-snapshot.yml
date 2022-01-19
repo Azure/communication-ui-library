@@ -8,15 +8,15 @@ on:
 
 jobs:
   update_examples_snapshot:
+    name: Update component examples snapshot by label
+    # This job will only run if the comment was on a pull requests and matches the label
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
           - flavor: 'beta'
           - flavor: 'stable'
-    name: Update component examples snapshot by label
-    # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -186,15 +186,15 @@ jobs:
           git push
 
   update_composite_snapshot:
+    name: Update composite snapshot by label
+    # This job will only run if the comment was on a pull requests and matches the label
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
           - flavor: 'beta'
           - flavor: 'stable'
-    name: Update composite snapshot by label
-    # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
