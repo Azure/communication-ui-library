@@ -1,9 +1,6 @@
 {
   "type": "patch",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "Participant button Item mobile view fix for touch",
   "packageName": "@internal/react-composites",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
