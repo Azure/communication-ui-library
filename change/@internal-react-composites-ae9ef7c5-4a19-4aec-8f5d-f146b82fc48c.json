@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Participant button Item mobile view fix for touch",
+  "comment": "Increase size of participant flyout menu items for mobile view",
   "packageName": "@internal/react-composites",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
