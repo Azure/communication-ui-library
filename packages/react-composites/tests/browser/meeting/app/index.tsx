@@ -10,12 +10,16 @@ import {
   MeetingAdapter,
   MeetingAdapterState,
   createAzureCommunicationMeetingAdapter,
-  MeetingComposite
+  MeetingComposite,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs,
+  CustomCallControlButtonProps
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Icon } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -27,6 +31,7 @@ const groupId = verifyParamExists(params.groupId, 'groupId');
 const userId = verifyParamExists(params.userId, 'userId');
 const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
+const injectCustomButtons = Boolean(verifyParamExists(params.injectCustomButtons, 'injectCustomButtons'));
 
 function App(): JSX.Element {
   const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);
@@ -75,7 +80,23 @@ function App(): JSX.Element {
       {meetingAdapter && (
         <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
           <_IdentifierProvider identifiers={IDS}>
-            <MeetingComposite meetingAdapter={meetingAdapter} formFactor={isMobile() ? 'mobile' : 'desktop'} />
+            <MeetingComposite
+              meetingAdapter={meetingAdapter}
+              formFactor={isMobile() ? 'mobile' : 'desktop'}
+              options={
+                injectCustomButtons
+                  ? {
+                      callControls: {
+                        onFetchCustomButtonProps,
+                        // Hide some buttons to keep the mobile-view control bar narrow
+                        devicesButton: false,
+                        screenShareButton: false,
+                        microphoneButton: false
+                      }
+                    }
+                  : undefined
+              }
+            />
           </_IdentifierProvider>
         </div>
       )}
@@ -141,5 +162,44 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: MeetingAdapterState): Meetin
  * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
+
+const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
+      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
+      strings: {
+        label: 'custom #1'
+      },
+      placement: 'first'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
+      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
+      strings: {
+        label: 'custom #2'
+      },
+      placement: 'afterMicrophoneButton'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
+      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
+      strings: {
+        label: 'custom #3'
+      },
+      placement: 'last'
+    };
+  }
+];
 
 ReactDOM.render(<App />, document.getElementById('root'));

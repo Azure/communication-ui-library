@@ -211,3 +211,18 @@ export const buildUrl = (
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ * Turn off all videos on all pages showing {@link CallComposite} or {@link Meeting}
+ * @remark `timeout` is applied to each individual step that waits for a condition.
+ */
+export const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    await pageClick(page, dataUiId('call-composite-camera-button'));
+  }
+  for (const page of pages) {
+    await waitForFunction(page, () => {
+      return document.querySelectorAll('video').length === 0;
+    });
+  }
+};

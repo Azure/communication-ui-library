@@ -8,11 +8,14 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   stubMessageTimestamps,
+  turnOffAllVideos,
+  waitForCallCompositeToLoad,
   waitForMeetingCompositeToLoad,
   waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
+import { v1 as generateGUID } from 'uuid';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../common/chatTestHelpers';
 import { createMeetingObjectsAndUsers } from '../common/fixtureHelpers';
 import { MeetingUserType } from '../common/fixtureTypes';
@@ -76,6 +79,37 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
    *   - Teams lobby screen
    *   - Leave meeting
    */
+});
+
+test.describe('Meeting composite custom button injection tests', () => {
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(
+        buildUrl(serverUrl, user, {
+          injectCustomButtons: 'true'
+        })
+      );
+      await waitForCallCompositeToLoad(page);
+    }
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('injected buttons appear', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
+    const page = pages[0];
+    expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
+  });
 });
 
 export const meetingTestSetup = async ({
