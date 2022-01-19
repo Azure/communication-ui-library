@@ -78,6 +78,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
 
   return (
     <Persona
+      {...props}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}
       imageInitials={data?.imageInitials ?? imageInitials}
