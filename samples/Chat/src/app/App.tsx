@@ -8,7 +8,7 @@ import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
-import { getThreadId } from './utils/getThreadId';
+import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { getBuildTime, getChatSDKVersion } from './utils/utils';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
@@ -119,7 +119,7 @@ export default (): JSX.Element => {
     }
   };
 
-  if (getThreadId() && page === 'home') {
+  if (getExistingThreadIdFromURL() && page === 'home') {
     setPage('configuration');
   }
 
