@@ -6,6 +6,7 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   PER_STEP_TIMEOUT_MS,
+  turnOffAllVideos,
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector
@@ -262,15 +263,3 @@ test.describe('Call composite custom button injection tests', () => {
     expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
   });
 });
-
-// `timeout` is applied to each individual step that waits for a condition.
-const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
-  for (const page of pages) {
-    await pageClick(page, dataUiId('call-composite-camera-button'));
-  }
-  for (const page of pages) {
-    await waitForFunction(page, () => {
-      return document.querySelectorAll('video').length === 0;
-    });
-  }
-};
