@@ -34,7 +34,7 @@ import {
 } from './styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from './ParticipantContainer';
+import { ParticipantContainer } from '../common/ParticipantContainer';
 
 /**
  * @private

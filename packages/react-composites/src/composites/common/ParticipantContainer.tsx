@@ -1,17 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { participantListStack, participantListStyle, participantListWrapper, listHeader } from './styles/Chat.styles';
-import { OnRenderAvatarCallback, ParticipantList, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  participantListStack,
+  participantListStyle,
+  participantListWrapper,
+  listHeader
+} from '../ChatComposite/styles/Chat.styles';
+import {
+  OnRenderAvatarCallback,
+  ParticipantList,
+  ParticipantListProps,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import { FocusZone, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
-import { usePropsFor } from './hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
+import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  participantListProps?: ParticipantListProps;
 };
 
 /**
@@ -19,7 +30,7 @@ type ParticipantContainerProps = {
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
-  const participantListProps = usePropsFor(ParticipantList);
+  const participantListProps = props.participantListProps ? props.participantListProps : usePropsFor(ParticipantList);
   const locale = useLocale();
   const chatListHeader = locale.strings.chat.chatListHeader;
   return (

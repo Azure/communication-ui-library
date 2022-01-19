@@ -20,6 +20,7 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ParticipantContainer } from '../common/ParticipantContainer';
 
 const SidePane = (props: {
   headingText: string;
@@ -118,7 +119,10 @@ export const EmbeddedPeoplePane = (props: {
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
         <Stack.Item styles={peopleSubheadingStyleThemed}>{meetingStrings.peoplePaneSubTitle}</Stack.Item>
-        <ParticipantList {...participantListProps} />
+        <ParticipantContainer
+          participantListProps={participantListProps}
+          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        />
       </Stack>
     </SidePane>
   );
