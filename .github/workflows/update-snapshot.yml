@@ -82,7 +82,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status packages -s) ]]
+          if [[ -z $(git status samples/tests -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
@@ -171,7 +171,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status packages -s) ]]
+          if [[ -z $(git status samples/tests -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
