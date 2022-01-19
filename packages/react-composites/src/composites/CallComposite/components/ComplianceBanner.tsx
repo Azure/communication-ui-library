@@ -27,7 +27,7 @@ type CachedComplianceBannerProps = {
  * @private
  */
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
-  function determineStates(previous: complianceState, current: boolean | undefined) {
+  function determineStates(previous: complianceState, current: boolean | undefined): complianceState {
     // if current state is on, then return on
     if (current) {
       return 'on';
