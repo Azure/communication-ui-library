@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
@@ -125,18 +125,12 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const participantsButtonStyles = useMemo(
-    () =>
-      props.increaseFlyoutItemSize
-        ? { ...participantButtonWithIncreasedTouchTargets, ...controlButtonBaseStyle }
-        : controlButtonBaseStyle,
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
 
   const devicesButtonStyles = useMemo(
-    () =>
-      props.increaseFlyoutItemSize
-        ? { ...devicesButtonWithIncreasedTouchTargets, ...controlButtonBaseStyle }
-        : controlButtonBaseStyle,
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
   // when props.options is false then we want to hide the whole control bar.
@@ -231,3 +225,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     </Stack>
   );
 };
+
+const concatButtonBaseStyles = (styles: IButtonStyles): IButtonStyles =>
+  concatStyleSets(controlButtonBaseStyle, styles);
