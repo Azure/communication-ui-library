@@ -21,6 +21,7 @@ import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantContainer } from '../common/ParticipantContainer';
 
+
 const SidePane = (props: {
   headingText: string;
   children: React.ReactNode;

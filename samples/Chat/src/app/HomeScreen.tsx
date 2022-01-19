@@ -78,13 +78,13 @@ export default (): JSX.Element => {
 
   const onCreateThread = async (): Promise<void> => {
     const exisitedThreadId = getThreadId();
+    setHomeScreenState(HOMESCREEN_SHOWING_LOADING_SPINNER_CREATE_THREAD);
+
     if (exisitedThreadId && exisitedThreadId.length > 0) {
-      setHomeScreenState(HOMESCREEN_SHOWING_LOADING_SPINNER_CREATE_THREAD);
       window.location.href += `?threadId=${exisitedThreadId}`;
       return;
     }
 
-    setHomeScreenState(HOMESCREEN_SHOWING_LOADING_SPINNER_CREATE_THREAD);
     const threadId = await createThread();
     if (!threadId) {
       console.error('Failed to create a thread, returned threadId is undefined or empty string');
