@@ -7,4 +7,6 @@ interface UserConfig {
   id: string;
 }
 
+// This is for samples only.
+// All User information (name, profile image) are stored in memory only and deleted after refresh
 export const userIdToUserConfigMap = new Map<string, UserConfig>();
