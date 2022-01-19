@@ -70,11 +70,11 @@ export interface MeetingCallControlOptions
   extends Pick<
     CallControlOptions,
     | 'cameraButton'
-    | 'microphoneButton'
-    | 'screenShareButton'
     | 'devicesButton'
     | 'displayType'
+    | 'microphoneButton'
     | 'onFetchCustomButtonProps'
+    | 'screenShareButton'
   > {
   /**
    * Show or hide the chat button in the meeting control bar.
