@@ -92,7 +92,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests
+          git add samples/tests/*.png
           git commit -m 'Update js bundle automation snapshots'
           git push
 
@@ -181,7 +181,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests
+          git add samples/tests/*.png
           git commit -m 'Update js bundle automation snapshots'
           git push
 
@@ -240,9 +240,22 @@ jobs:
       - name: Build Test
         working-directory: ./packages/react-composites
         run: rushx build:e2e
-      - name: Update snapshot
+      - name: Update chat snapshot
         id: updatesnapshots
-        run: rushx test:e2e:update
+        run: rushx test:e2e:chat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Update calling snapshot
+        id: updatesnapshots
+        run: rushx test:e2e:call:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Update meeting snapshot
+        id: updatesnapshots
+        if: ${{ matrix.flavor != 'stable' }}
+        run: rushx test:e2e:meeting:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -267,6 +280,6 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add packages/react-composites
+          git add packages/react-composites/*.png
           git commit -m 'Update composite automation snapshots'
           git push

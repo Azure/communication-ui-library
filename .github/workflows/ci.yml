@@ -211,8 +211,8 @@ jobs:
     strategy:
       matrix:
         include:
+          # Meeting composite only work for beta
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
