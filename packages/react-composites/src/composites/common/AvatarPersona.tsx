@@ -64,7 +64,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const { userId, dataProvider } = props;
+  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
   const [data, setData] = React.useState<AvatarPersonaData | undefined>();
 
   useEffect(() => {
@@ -79,11 +79,11 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   return (
     <Persona
       {...props}
-      text={data?.text ?? props.text}
-      imageUrl={data?.imageUrl ?? props.imageUrl}
-      imageInitials={data?.imageInitials ?? props.imageInitials}
-      initialsColor={data?.initialsColor ?? props.initialsColor}
-      initialsTextColor={data?.initialsTextColor ?? props.initialsTextColor ?? 'white'}
+      text={data?.text ?? text}
+      imageUrl={data?.imageUrl ?? imageUrl}
+      imageInitials={data?.imageInitials ?? imageInitials}
+      initialsColor={data?.initialsColor ?? initialsColor}
+      initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
     />
   );
 };
