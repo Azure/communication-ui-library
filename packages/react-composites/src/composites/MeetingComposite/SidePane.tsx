@@ -19,6 +19,7 @@ import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 const SidePane = (props: {
   headingText: string;
@@ -82,6 +83,7 @@ export const EmbeddedPeoplePane = (props: {
   hidden: boolean;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -131,6 +133,7 @@ export const EmbeddedChatPane = (props: {
   fluentTheme?: PartialTheme | Theme;
   hidden: boolean;
   onClose: () => void;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   const meetingStrings = useMeetingCompositeStrings();
 
@@ -146,6 +149,7 @@ export const EmbeddedChatPane = (props: {
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
         options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     </SidePane>
   );
