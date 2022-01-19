@@ -37,6 +37,7 @@ import { getThreadId } from './utils/getThreadId';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
+import { refreshTokenAsync } from './utils/refreshToken';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -103,7 +104,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       setThreadId(threadId);
       setEndpointUrl(endpointUrl);
 
-      await sendEmojiRequest(selectedAvatar);
+      await sendEmojiRequest(token.identity, selectedAvatar);
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
