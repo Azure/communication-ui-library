@@ -97,7 +97,8 @@ test.describe('Meeting composite custom button injection tests', () => {
           injectCustomButtons: 'true'
         })
       );
-      await waitForCallCompositeToLoad(page);
+
+      await waitForMeetingCompositeToLoad(page);
     }
     await loadCallPageWithParticipantVideos(pages);
   });
