@@ -10,7 +10,7 @@ import {
 } from '@internal/react-components';
 import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { peopleSubheadingStyle } from './styles/SidePane.styles';
+import { peopleSubheadingStyle } from './styles/ParticipantContainer.styles';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;

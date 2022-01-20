@@ -12,7 +12,7 @@ import {
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
-} from '../common/styles/SidePane.styles';
+} from '../common/styles/ParticipantContainer.styles';
 import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -20,7 +20,6 @@ import { CallAdapter } from '../CallComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantContainer } from '../common/ParticipantContainer';
-
 
 const SidePane = (props: {
   headingText: string;
