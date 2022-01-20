@@ -103,7 +103,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       setThreadId(threadId);
       setEndpointUrl(endpointUrl);
 
-      await sendEmojiRequest(selectedAvatar);
+      await sendEmojiRequest(token.identity, selectedAvatar);
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
