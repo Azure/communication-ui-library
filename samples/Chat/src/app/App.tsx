@@ -9,9 +9,9 @@ import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
-import { chatSDKVersion, getBuildTime } from './utils/utils';
+import { getBuildTime, getChatSDKVersion } from './utils/utils';
 
-console.info(`Thread chat sample using @azure/communication-chat : ${chatSDKVersion}`);
+console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
