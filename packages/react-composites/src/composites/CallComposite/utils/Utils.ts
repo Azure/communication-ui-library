@@ -148,7 +148,7 @@ export type ComplianceBannerVariant =
 /**
  * @private
  */
-export type complianceState = 'on' | 'off' | 'stopped';
+export type ComplianceState = 'on' | 'off' | 'stopped';
 
 /**
  * Return different conditions based on the current and previous state of recording and transcribing
@@ -161,8 +161,8 @@ export type complianceState = 'on' | 'off' | 'stopped';
  * @private
  */
 export const computeVariant = (
-  callRecordState: complianceState,
-  callTranscribeState: complianceState
+  callRecordState: ComplianceState,
+  callTranscribeState: ComplianceState
 ): ComplianceBannerVariant => {
   if (callRecordState === 'on' && callTranscribeState === 'on') {
     return 'RECORDING_AND_TRANSCRIPTION_STARTED';
