@@ -104,7 +104,7 @@ const App = (): JSX.Element => {
               displayName: callDetails.displayName,
               callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
             };
-            setCallArgs(callArgs);
+            setCallArgs(localCallArgs);
 
             // Update window URL to have a joinable link
             if (!joiningExistingMeeting) {
