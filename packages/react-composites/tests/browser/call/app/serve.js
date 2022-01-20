@@ -12,4 +12,5 @@
 const express = require('express');
 const server = express();
 server.use(express.static(__dirname + '/dist'));
-server.listen(3000);
+const listener = server.listen(3000);
+console.log('Server listening at: http://localhost:' + listener.address().port);
