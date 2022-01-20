@@ -474,7 +474,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
-  private resetDiagnosticsForwarder(newCall?: Call) {
+  private resetDiagnosticsForwarder(newCall?: Call): void {
     if (this.diagnosticsForwarder) {
       this.diagnosticsForwarder.unsubscribe();
     }

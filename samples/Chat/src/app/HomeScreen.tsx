@@ -37,7 +37,7 @@ import { useTheme } from '@internal/react-components';
 import { Chat20Filled } from '@fluentui/react-icons';
 import heroSVG from '../assets/hero.svg';
 import heroDarkModeSVG from '../assets/hero_dark.svg';
-import { getThreadId } from './utils/getThreadId';
+import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { createThread } from './utils/createThread';
 import { ThemeSelector } from './theming/ThemeSelector';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
@@ -77,7 +77,7 @@ export default (): JSX.Element => {
   const imageProps = { src: currentTheme.name === 'Light' ? heroSVG.toString() : heroDarkModeSVG.toString() };
 
   const onCreateThread = async (): Promise<void> => {
-    const exisitedThreadId = getThreadId();
+    const exisitedThreadId = getExistingThreadIdFromURL();
     setHomeScreenState(HOMESCREEN_SHOWING_LOADING_SPINNER_CREATE_THREAD);
 
     if (exisitedThreadId && exisitedThreadId.length > 0) {
