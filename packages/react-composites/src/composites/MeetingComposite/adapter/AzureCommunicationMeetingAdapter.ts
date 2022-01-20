@@ -37,7 +37,6 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
