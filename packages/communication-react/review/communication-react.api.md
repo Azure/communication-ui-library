@@ -347,8 +347,11 @@ export interface CallCompositeStrings {
 }
 
 // @public
+export type CallControlDisplayType = 'default' | 'compact';
+
+// @public
 export type CallControlOptions = {
-    displayType?: 'default' | 'compact';
+    displayType?: CallControlDisplayType;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
@@ -359,6 +362,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
 // @public
@@ -954,6 +958,22 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
 };
+
+// @beta
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+
+// @beta
+export interface CustomCallControlButtonCallbackArgs {
+    displayType?: CallControlDisplayType;
+}
+
+// @beta
+export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+
+// @beta
+export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+    placement: CustomCallControlButtonPlacement;
+}
 
 // @public
 export interface CustomMessage extends MessageCommon {
