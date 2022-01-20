@@ -3,28 +3,86 @@
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, PermissionConstraints, VideoDeviceInfo, Call } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { CallAdapterState, CallAdapter } from '../../../..';
+import { CallAdapterState, CallAdapter } from '../../../../../dist/dist-esm';
+import { CallingState } from '../../CallingState';
 
 export class MockCallAdapter implements CallAdapter {
   state: CallAdapterState;
 
-  constructor(state: CallAdapterState) {
-    this.state = state;
+  constructor(state: CallingState) {
+    const remoteParticipants = {};
+    for (const remoteParticipant of state.remoteParticipants) {
+      const key = Math.random().toString();
 
-    for (const [participantKey, participant] of Object.entries(state.call?.remoteParticipants)) {
-      for (const [videoStreamKey, videoStream] of Object.entries(participant.videoStreams)) {
-        if (videoStream.isAvailable) {
-          const mockVideoElement = document.createElement('div');
-          mockVideoElement.innerHTML = '<span />';
-          mockVideoElement.style.width = decodeURIComponent('100%25');
-          mockVideoElement.style.height = decodeURIComponent('100%25');
-          mockVideoElement.style.background = stringToHexColor(participant.displayName);
-          mockVideoElement.style.backgroundPosition = 'center';
-          mockVideoElement.style.backgroundRepeat = 'no-repeat';
-          videoStream.view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
-        }
+      let view = undefined;
+      if (remoteParticipant.isVideoStreamAvailable) {
+        const mockVideoElement = document.createElement('div');
+        mockVideoElement.innerHTML = '<span />';
+        mockVideoElement.style.width = decodeURIComponent('100%25');
+        mockVideoElement.style.height = decodeURIComponent('100%25');
+        mockVideoElement.style.background = stringToHexColor(remoteParticipant.displayName);
+        mockVideoElement.style.backgroundPosition = 'center';
+        mockVideoElement.style.backgroundRepeat = 'no-repeat';
+        view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
       }
+
+      remoteParticipants[key] = {
+        identifier: { kind: 'unknown', id: key },
+        state: 'Connected',
+        videoStreams: {
+          '1': {
+            id: 1,
+            mediaStreamType: 'Video',
+            isAvailable: remoteParticipant.isVideoStreamAvailable,
+            view
+          }
+        },
+        isMuted: remoteParticipant.isMuted,
+        isSpeaking: remoteParticipant.isSpeaking,
+        displayName: remoteParticipant.displayName
+      };
     }
+
+    this.state = {
+      displayName: 'Agnes Thompson',
+      isLocalPreviewMicrophoneEnabled: true,
+      page: 'call',
+      call: {
+        id: 'call1',
+        callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
+        direction: 'Incoming',
+        transcription: { isTranscriptionActive: false },
+        recording: { isRecordingActive: false },
+        startTime: new Date(500000000000),
+        endTime: new Date(500000000000),
+        diagnostics: { network: { latest: {} }, media: { latest: {} } },
+        state: 'Connected',
+        localVideoStreams: [],
+        isMuted: false,
+        isScreenSharingOn: false,
+        remoteParticipants,
+        remoteParticipantsEnded: {}
+      },
+      userId: { kind: 'unknown', id: '1' },
+      devices: {
+        isSpeakerSelectionAvailable: true,
+        selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
+        cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
+        selectedMicrophone: {
+          id: 'microphone1',
+          name: '1st Microphone',
+          deviceType: 'Microphone',
+          isSystemDefault: true
+        },
+        microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
+        selectedSpeaker: { id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true },
+        speakers: [{ id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+        unparentedViews: [],
+        deviceAccess: { video: true, audio: true }
+      },
+      isTeamsCall: false,
+      latestErrors: {}
+    };
   }
 
   addParticipant(participantKey: string, participantState: RemoteParticipantState): void {

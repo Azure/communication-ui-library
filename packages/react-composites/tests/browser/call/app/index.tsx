@@ -19,12 +19,13 @@ import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { MockCallAdapter } from './MockCallAdapter';
+import { MockCallAdapter } from './mocks/MockCallAdapter';
+import { CallingState } from '../CallingState';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const state = JSON.parse(params.state) as CallAdapterState;
+const state = JSON.parse(params.state) as CallingState;
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);

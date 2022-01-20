@@ -187,7 +187,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   }, messageTimestampId);
 };
 
-const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
+export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
     qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));
@@ -213,19 +213,8 @@ type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
 
 /**
- * Create the test URL.
- * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
- * @param user - Test user the props of which populate query search parameters
- * @param state - State
- * @param qArgs - Optional args to add to the query search parameters of the URL.
- * @returns URL string
+ * Delay a test for an amount of time in milliseconds
+ * @param ms - Milliseconds of delay
+ * @returns void
  */
-export const buildCallingUrl = (
-  serverUrl: string,
-  user: ChatUserType | CallUserType | MeetingUserType,
-  state: Record<string, unknown>,
-  qArgs?: { [key: string]: string }
-): string => {
-  console.log('state: ', state);
-  return `${serverUrl}?${encodeQueryData({ ...user, ...qArgs, state: JSON.stringify(state) })}`;
-};
+export const delay = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms));
