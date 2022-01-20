@@ -2,6 +2,7 @@
   "name": "server",
   "version": "0.0.1",
   "private": true,
+  "description": "This is the server side that supports all ACS sample applications",
   "scripts": {
     "build": "rushx clean && webpack",
     "build:stable": "echo skip",
