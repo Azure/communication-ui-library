@@ -1,0 +1,7 @@
+{
+  "extends": "./api-extractor.json",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/stable-review/"
+  }
+}
