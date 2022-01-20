@@ -31,7 +31,7 @@ interface Credentials {
 }
 
 interface CallArgs {
-  callLocator: GroupLocator | TeamsMeetingLinkLocator | undefined;
+  callLocator: GroupLocator | TeamsMeetingLinkLocator;
   displayName: string;
 }
 
@@ -51,7 +51,7 @@ const App = (): JSX.Element => {
   const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callArgs, setCallArgs] = useState<CallArgs | undefined>({ displayName: '', callLocator: undefined });
+  const [callArgs, setCallArgs] = useState<CallArgs | undefined>(undefined);
 
   // Chat endpoint and thread id
   const [endpointUrl, setEndpointUrl] = useState('');
