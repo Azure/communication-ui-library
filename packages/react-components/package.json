@@ -9,26 +9,27 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rushx _by-flavor \"npm run build:by-flavor\"",
+    "build": "rushx _by-flavor \"npm run _build:by-flavor\"",
     "build:esm": "if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
-    "test": "rushx _by-flavor \"npm run test:by-flavor\"",
+    "test": "rushx _by-flavor \"npm run _test:by-flavor\"",
     "test:coverage": "rushx _by-flavor \"npm run test:_by-flavor -- --coverage\"",
     "snapshot:update": "npm run test -- --update-snapshot",
     "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
-    "build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && api-extractor run --local",
-    "test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
-    "api-extractor": "rushx _by-flavor \"npm run build:esm\" && api-extractor run --local",
+    "api-extractor": "rushx _by-flavor \"npm run build:esm && npm run _api-extractor:by-flavor\"",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
+    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
+    "_build:by-flavor": "rushx clean && npm run build:esm && rushx build:cjs && npm run _api-extractor:by-flavor",
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
     "@fluentui/react": "~8.17.2",
