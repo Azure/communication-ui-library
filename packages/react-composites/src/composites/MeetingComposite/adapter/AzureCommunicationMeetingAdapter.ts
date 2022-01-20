@@ -150,7 +150,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
-    // Only remove self from the GroupCall. It will be up to Contoso to manage access to Chat.
+    // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
@@ -185,7 +185,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
-    // Only remove the participant from the GroupCall. It will be up to Contoso to manage access to Chat.
+    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.removeParticipant(userId);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
