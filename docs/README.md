@@ -17,6 +17,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 - [Creating Customizable UI Components](./architecture/CustomizableComponent.md) - Best practices and examples on creating delightful UI components
 - [Declarative Component Design](./architecture/ComponentDesign.md)
 - [Framework Design Principles](./architecture/DesignPrinciples.md) - Core tenets our packages must build towards
+- [Specifying Package Dependencies](./architecture/DependencySpecification.md) - Decide where to specify package dependencies
 
 ## Repo Infrastructure
 
