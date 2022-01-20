@@ -2,6 +2,95 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Tue, 04 Jan 2022 22:57:10 GMT",
+      "tag": "@internal/storybook_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "ce65f97f178589923b962fa95ace7588cb5c1c06",
+            "comment": "Bugfix for unreadable canvas code"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "194b912517537f3d87e1aea9f6298fe9a1a81b7b",
+            "comment": "Bugfix for tooltip alignment in message status indicator storybook "
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "68c7b3519010744ebc4e40753dcec15786e0f7fa",
+            "comment": "Making mock videos in storybook cover the entire video tile"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "04b443b4824e07890203cc033d5e3cd6a79c42da",
+            "comment": "Add example ErrorBar to storybook docs."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ],
+        "none": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "108a4b0cb8d0f7a215fe655706b85fb987ddf572",
+            "comment": "updated snapshots"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "32176084150130f297498301cde3de20f6f5e455",
+            "comment": "Added functionality to story book to allow meetingCallControlOptions prop to be used by viewer."
+          },
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "296d964e7b2b7ecb6d9407568be90f00fefe2830",
+            "comment": "update Storybook snapshots"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0a5dff02bfb249c0a3505b57eb47a56f82341358",
+            "comment": "created a helper component to define colors for icons in calling sample"
+          },
+          {
+            "author": "alcail@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "7d63e1e3652cf8aa46db7726c1d1428ddde13357",
+            "comment": "Update button stories to reflect focus on disabled"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c71c79120d79b971e2a73752493a701cd7676d91",
+            "comment": "Added Meeting control bar UI options for button selections."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Add back stories for beta API"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 19:41:59 GMT",
       "tag": "@internal/storybook_v1.0.0",
       "version": "1.0.0",

@@ -5,6 +5,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /**
  * @param {appDir} - Directory of the app files (i.e. the folder containing the index.tsx of the test app)
@@ -46,12 +47,21 @@ module.exports = (appDir, babelConfig) => {
           use: ['style-loader', 'css-loader']
         },
         {
-          test: /\.svg/,
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
           type: 'asset/inline'
         }
       ]
     },
-    plugins: [new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })],
+    plugins: [
+      new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') }),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: path.join(__dirname, 'fonts', 'segoeui-bold.woff2'), to: 'fonts' },
+          { from: path.join(__dirname, 'fonts', 'segoeui-regular.woff2'), to: 'fonts' },
+          { from: path.join(__dirname, 'fonts', 'segoeui-semibold.woff2'), to: 'fonts' }
+        ]
+      })
+    ],
     devServer: {
       port: 3000,
       hot: true,
@@ -59,7 +69,7 @@ module.exports = (appDir, babelConfig) => {
     }
   };
 
-  process.env['FLAVOR'] === 'stable' &&
+  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
     config.module.rules.push({
       test: /\.tsx?$/,
       exclude: /node_modules/,

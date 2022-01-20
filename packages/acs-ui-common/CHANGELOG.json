@@ -2,6 +2,27 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Add conditional build for GA apis"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 19:41:59 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0",
       "version": "1.0.0",
