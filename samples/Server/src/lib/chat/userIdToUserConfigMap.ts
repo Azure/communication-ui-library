@@ -7,6 +7,7 @@ interface UserConfig {
   id: string;
 }
 
-// This is for samples only.
-// All User information (name, profile image) are stored in memory only and deleted when the server restarts
+// For the purpose of this sample, we opted to use an in-memory data store.
+// This means that if the web application is restarted any information maintained would be wiped.
+// For longer term storage solutions we suggest using Azure Blob Storage (https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction)
 export const userIdToUserConfigMap = new Map<string, UserConfig>();
