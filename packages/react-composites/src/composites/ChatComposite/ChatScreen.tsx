@@ -30,13 +30,13 @@ import {
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
-  participantListContainerPadding,
   typingIndicatorContainerStyles
-} from '../common/styles/Chat.styles';
+} from './styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantContainer } from '../common/ParticipantContainer';
 import { useLocale } from '../localization';
+import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 
 /**
  * @private

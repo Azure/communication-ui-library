@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { participantListStack, participantListStyle, participantListWrapper, listHeader } from './styles/Chat.styles';
+import {
+  participantListStack,
+  participantListStyle,
+  participantListWrapper,
+  listHeader
+} from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
   ParticipantList,

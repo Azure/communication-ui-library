@@ -13,10 +13,8 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
-  isOnIphoneAndNotSafari,
-  navigateToHomePage
+  isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { CallError } from './views/CallError';
 import { MeetingScreen } from './views/MeetingScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
