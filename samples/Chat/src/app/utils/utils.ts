@@ -4,13 +4,9 @@
 import { GUID_FOR_INITIAL_TOPIC_NAME } from './constants';
 
 declare let __BUILDTIME__: string; // Injected by webpack
+declare let __CHATVERSION__: string; // Injected by webpack
+export const getChatSDKVersion = (): string => __CHATVERSION__;
 export const getBuildTime = (): string => __BUILDTIME__;
-
-export function getChatSDKVersion(): string {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return require('../../../package.json')['dependencies']['@azure/communication-chat'];
-}
-
 export const CAT = '🐱';
 export const MOUSE = '🐭';
 export const KOALA = '🐨';
