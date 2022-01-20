@@ -232,6 +232,37 @@ test.describe('Call composite participant menu items injection tests', () => {
   });
 });
 
+test.describe('Call composite custom button injection tests', () => {
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(
+        buildUrl(serverUrl, user, {
+          injectCustomButtons: 'true'
+        })
+      );
+      await waitForCallCompositeToLoad(page);
+    }
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('injected buttons appear', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
+    const page = pages[0];
+    expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
+  });
+});
+
 // `timeout` is applied to each individual step that waits for a condition.
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
