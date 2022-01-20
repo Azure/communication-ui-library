@@ -64,10 +64,6 @@ const App = (): JSX.Element => {
     return <UnsupportedBrowserPage />;
   }
 
-  if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Calling sample: This is experimental behaviour');
-  }
-
   switch (page) {
     case 'home': {
       document.title = `home - ${webAppTitle}`;
