@@ -12,12 +12,15 @@ import {
   createAzureCommunicationCallAdapter,
   CallComposite,
   COMPOSITE_LOCALE_FR_FR,
-  COMPOSITE_LOCALE_EN_US
+  COMPOSITE_LOCALE_EN_US,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonProps,
+  CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { FontIcon, Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -33,6 +36,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
+const injectCustomButtons = Boolean(params.injectCustomButtons);
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -71,6 +75,18 @@ function App(): JSX.Element {
               locale={locale}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
+              options={
+                injectCustomButtons
+                  ? {
+                      callControls: {
+                        onFetchCustomButtonProps,
+                        // Hide some buttons to keep the mobile-view control bar narrow
+                        devicesButton: false,
+                        endCallButton: false
+                      }
+                    }
+                  : undefined
+              }
             />
           </_IdentifierProvider>
         </div>
@@ -160,5 +176,44 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
+
+const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
+      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
+      strings: {
+        label: 'custom #1'
+      },
+      placement: 'first'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
+      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
+      strings: {
+        label: 'custom #2'
+      },
+      placement: 'afterMicrophoneButton'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
+      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
+      strings: {
+        label: 'custom #3'
+      },
+      placement: 'last'
+    };
+  }
+];
 
 ReactDOM.render(<App />, document.getElementById('root'));
