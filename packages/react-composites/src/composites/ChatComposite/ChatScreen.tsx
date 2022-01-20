@@ -13,8 +13,7 @@ import {
   ParticipantMenuItemsCallback,
   MessageThreadStyles,
   SendBoxStylesProps,
-  TypingIndicatorStylesProps,
-  ParticipantList
+  TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -35,8 +34,11 @@ import {
 
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantContainer } from '../common/ParticipantContainer';
+/* @conditional-compile-remove-from(stable) */
 import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantList } from '@internal/react-components';
 
 /**
  * @private
@@ -71,7 +73,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
+  /* @conditional-compile-remove-from(stable) */
   const locale = useLocale();
+  /* @conditional-compile-remove-from(stable) */
   const chatListHeader = locale.strings.chat.chatListHeader;
 
   useEffect(() => {
@@ -83,6 +87,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  /* @conditional-compile-remove-from(stable) */
   const participantListProps = usePropsFor(ParticipantList);
 
   const onRenderAvatarCallback = useCallback(
