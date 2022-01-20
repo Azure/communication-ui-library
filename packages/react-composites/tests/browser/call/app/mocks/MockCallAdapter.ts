@@ -43,46 +43,8 @@ export class MockCallAdapter implements CallAdapter {
       };
     }
 
-    this.state = {
-      displayName: 'Agnes Thompson',
-      isLocalPreviewMicrophoneEnabled: true,
-      page: 'call',
-      call: {
-        id: 'call1',
-        callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
-        direction: 'Incoming',
-        transcription: { isTranscriptionActive: false },
-        recording: { isRecordingActive: false },
-        startTime: new Date(500000000000),
-        endTime: new Date(500000000000),
-        diagnostics: { network: { latest: {} }, media: { latest: {} } },
-        state: 'Connected',
-        localVideoStreams: [],
-        isMuted: false,
-        isScreenSharingOn: false,
-        remoteParticipants,
-        remoteParticipantsEnded: {}
-      },
-      userId: { kind: 'unknown', id: '1' },
-      devices: {
-        isSpeakerSelectionAvailable: true,
-        selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
-        cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
-        selectedMicrophone: {
-          id: 'microphone1',
-          name: '1st Microphone',
-          deviceType: 'Microphone',
-          isSystemDefault: true
-        },
-        microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-        selectedSpeaker: { id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true },
-        speakers: [{ id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true }],
-        unparentedViews: [],
-        deviceAccess: { video: true, audio: true }
-      },
-      isTeamsCall: false,
-      latestErrors: {}
-    };
+    defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
+    this.state = defaultCallAdapterState;
   }
 
   addParticipant(participantKey: string, participantState: RemoteParticipantState): void {
@@ -189,6 +151,47 @@ export class MockCallAdapter implements CallAdapter {
     return;
   }
 }
+
+const defaultCallAdapterState: CallAdapterState = {
+  displayName: 'Agnes Thompson',
+  isLocalPreviewMicrophoneEnabled: true,
+  page: 'call',
+  call: {
+    id: 'call1',
+    callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
+    direction: 'Incoming',
+    transcription: { isTranscriptionActive: false },
+    recording: { isRecordingActive: false },
+    startTime: new Date(500000000000),
+    endTime: new Date(500000000000),
+    diagnostics: { network: { latest: {} }, media: { latest: {} } },
+    state: 'Connected',
+    localVideoStreams: [],
+    isMuted: false,
+    isScreenSharingOn: false,
+    remoteParticipants: {},
+    remoteParticipantsEnded: {}
+  },
+  userId: { kind: 'unknown', id: '1' },
+  devices: {
+    isSpeakerSelectionAvailable: true,
+    selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
+    cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
+    selectedMicrophone: {
+      id: 'microphone1',
+      name: '1st Microphone',
+      deviceType: 'Microphone',
+      isSystemDefault: true
+    },
+    microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
+    selectedSpeaker: { id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true },
+    speakers: [{ id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+    unparentedViews: [],
+    deviceAccess: { video: true, audio: true }
+  },
+  isTeamsCall: false,
+  latestErrors: {}
+};
 
 const stringToHexColor = (str: string): string => {
   let hash = 0;
