@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
 import { CompositeStrings, useLocale } from '../../localization';
-import { ComplianceBannerVariant, complianceState, computeVariant } from '../utils';
+import { ComplianceBannerVariant, ComplianceState, computeVariant } from '../utils';
 
 /**
  * @private
@@ -18,8 +18,8 @@ export type ComplianceBannerProps = {
 type CachedComplianceBannerProps = {
   latestBooleanState: ComplianceBannerProps;
   latestStringState: {
-    callTranscribeState: complianceState;
-    callRecordState: complianceState;
+    callTranscribeState: ComplianceState;
+    callRecordState: ComplianceState;
   };
 };
 
@@ -27,7 +27,7 @@ type CachedComplianceBannerProps = {
  * @private
  */
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
-  function determineStates(previous: complianceState, current: boolean | undefined): complianceState {
+  function determineStates(previous: ComplianceState, current: boolean | undefined): ComplianceState {
     // if current state is on, then return on
     if (current) {
       return 'on';
