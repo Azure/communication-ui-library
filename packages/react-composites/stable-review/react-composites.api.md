@@ -241,8 +241,11 @@ export interface CallCompositeStrings {
 }
 
 // @public
+export type CallControlDisplayType = 'default' | 'compact';
+
+// @public
 export type CallControlOptions = {
-    displayType?: 'default' | 'compact';
+    displayType?: CallControlDisplayType;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
