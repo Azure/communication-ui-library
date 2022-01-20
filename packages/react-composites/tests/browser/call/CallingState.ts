@@ -5,9 +5,9 @@ export type CallingState = {
   remoteParticipants: TestRemoteParticipant[];
 };
 
-type TestRemoteParticipant = {
+export type TestRemoteParticipant = {
   displayName: string;
-  isMuted: boolean;
-  isSpeaking: boolean;
-  isVideoStreamAvailable: boolean;
+  isMuted?: boolean;
+  isSpeaking?: boolean;
+  isVideoStreamAvailable?: boolean;
 };

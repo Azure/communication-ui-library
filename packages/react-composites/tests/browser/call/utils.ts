@@ -13,6 +13,5 @@ import { CallingState } from './CallingState';
  * @returns URL string
  */
 export const buildCallingUrl = (serverUrl: string, state: CallingState, qArgs?: { [key: string]: string }): string => {
-  console.log('state: ', JSON.stringify(state));
   return `${serverUrl}?${encodeQueryData({ state: JSON.stringify(state), ...qArgs })}`;
 };
