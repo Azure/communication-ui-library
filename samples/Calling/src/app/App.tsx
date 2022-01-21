@@ -12,9 +12,7 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
-  isMobileSession,
   isOnIphoneAndNotSafari,
-  isSmallScreen,
   navigateToHomePage
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
