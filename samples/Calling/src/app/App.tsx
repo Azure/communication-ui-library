@@ -64,7 +64,7 @@ const App = (): JSX.Element => {
     return <UnsupportedBrowserPage />;
   }
 
-  if (isMobileSession() || isLandscape()) {
+  if (isMobileSession() && isLandscape()) {
     console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
