@@ -18,7 +18,17 @@ import {
   gutterWithAvatar,
   gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
+import {
+  Icon,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaSize,
+  PrimaryButton,
+  Stack,
+  IPersona,
+  getInitials
+} from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
@@ -323,7 +333,7 @@ const memoizeAllMessages = memoizeFnAll(
         const personaOptions: IPersona = {
           hidePersonalDetails: true,
           size: PersonaSize.size32,
-          text: message.senderDisplayName
+          imageInitials: getInitials(message.senderDisplayName, false, true)
         };
 
         const chatItemMessageStyle =
