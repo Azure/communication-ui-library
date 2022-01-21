@@ -37,7 +37,6 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -151,7 +150,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
-    await this.chatAdapter.removeParticipant(toFlatCommunicationIdentifier(this.chatAdapter.getState().userId));
+    // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
@@ -186,7 +185,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
-    await this.chatAdapter.removeParticipant(userId);
+    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.removeParticipant(userId);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
