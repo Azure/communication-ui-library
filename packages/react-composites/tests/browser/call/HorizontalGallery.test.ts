@@ -5,7 +5,7 @@ import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { buildCallingUrl } from './utils';
 import { dataUiId, delay, pageClick, waitForSelector } from '../common/utils';
-import { TestRemoteParticipant } from './CallingState';
+import { TestRemoteParticipant } from './TestCallingState';
 import { IDS } from '../common/constants';
 
 const defaultTestRemoteParticipants: TestRemoteParticipant[] = [
@@ -31,6 +31,9 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: defaultTestRemoteParticipants
       })
     );
+    // Click off the screen to turn away initial aria label
+    await page.mouse.click(-1, -1);
+    // Need to wait 500 milliseconds tto allow component text to render
     await delay(500);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery.png');
   });
@@ -67,12 +70,15 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: testRemoteParticipants
       })
     );
+    // Click off the screen to turn away initial aria label
+    await page.mouse.click(-1, -1);
+    // Need to wait 500 milliseconds tto allow component text to render
     await delay(500);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-page-1.png');
-    waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-page-2.png');
-    waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-page-1.png');
   });

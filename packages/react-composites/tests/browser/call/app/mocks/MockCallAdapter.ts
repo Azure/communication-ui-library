@@ -2,19 +2,22 @@
 // Licensed under the MIT license.
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, PermissionConstraints, VideoDeviceInfo, Call } from '@azure/communication-calling';
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { CallAdapterState, CallAdapter } from '../../../../../dist/dist-esm';
-import { CallingState } from '../../CallingState';
+import { RemoteParticipantState, VideoStreamRendererViewState } from '@internal/calling-stateful-client';
+import { CallAdapterState, CallAdapter } from '../../../../../src';
+import { TestCallingState } from '../../TestCallingState';
 
+/**
+ * Mock class that implements CallAdapter interface for UI snapshot tests
+ */
 export class MockCallAdapter implements CallAdapter {
-  state: CallAdapterState;
+  constructor(state: TestCallingState) {
+    const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
-  constructor(state: CallingState) {
-    const remoteParticipants = {};
     for (const remoteParticipant of state.remoteParticipants) {
-      const key = Math.random().toString();
+      // Generate random participant key
+      const participantKey = Math.random().toString();
 
-      let view = undefined;
+      let view: VideoStreamRendererViewState = undefined;
       if (remoteParticipant.isVideoStreamAvailable) {
         const mockVideoElement = document.createElement('div');
         mockVideoElement.innerHTML = '<span />';
@@ -26,15 +29,15 @@ export class MockCallAdapter implements CallAdapter {
         view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
       }
 
-      remoteParticipants[key] = {
-        identifier: { kind: 'unknown', id: key },
+      remoteParticipants[participantKey] = {
+        identifier: { kind: 'communicationUser', communicationUserId: participantKey },
         state: 'Connected',
         videoStreams: {
           '1': {
             id: 1,
             mediaStreamType: 'Video',
             isAvailable: remoteParticipant.isVideoStreamAvailable,
-            view
+            view: view
           }
         },
         isMuted: remoteParticipant.isMuted,
@@ -46,6 +49,8 @@ export class MockCallAdapter implements CallAdapter {
     defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
     this.state = defaultCallAdapterState;
   }
+
+  state: CallAdapterState;
 
   addParticipant(participantKey: string, participantState: RemoteParticipantState): void {
     if (!this.state.call) {
@@ -152,13 +157,34 @@ export class MockCallAdapter implements CallAdapter {
   }
 }
 
+/**
+ * A helper function to randomly choose a background color for mocking a video stream
+ * @param str - input string
+ * @returns hex color code as a string
+ */
+const stringToHexColor = (str: string): string => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let colour = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+};
+
+/**
+ * Default call adapter state that the {@link MockCallAdapter} class is initialized with
+ */
 const defaultCallAdapterState: CallAdapterState = {
   displayName: 'Agnes Thompson',
   isLocalPreviewMicrophoneEnabled: true,
   page: 'call',
   call: {
     id: 'call1',
-    callerInfo: { displayName: 'caller', identifier: { kind: 'unknown', id: '1' } },
+    callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
     direction: 'Incoming',
     transcription: { isTranscriptionActive: false },
     recording: { isRecordingActive: false },
@@ -184,24 +210,11 @@ const defaultCallAdapterState: CallAdapterState = {
       isSystemDefault: true
     },
     microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-    selectedSpeaker: { id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true },
-    speakers: [{ id: 'speaker1', name: 'First Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+    selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
+    speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
     unparentedViews: [],
     deviceAccess: { video: true, audio: true }
   },
   isTeamsCall: false,
   latestErrors: {}
-};
-
-const stringToHexColor = (str: string): string => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = '#';
-  for (let i = 0; i < 3; i++) {
-    const value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
 };

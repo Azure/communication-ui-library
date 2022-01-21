@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { encodeQueryData } from '../common/utils';
-import { CallingState } from './CallingState';
+import { TestCallingState } from './TestCallingState';
 
 /**
  * Create the test URL.
