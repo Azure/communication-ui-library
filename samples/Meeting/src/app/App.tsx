@@ -13,10 +13,8 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
-  isOnIphoneAndNotSafari,
-  navigateToHomePage
+  isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { CallError } from './views/CallError';
 import { MeetingScreen } from './views/MeetingScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
@@ -49,11 +47,11 @@ const App = (): JSX.Element => {
   const webAppTitle = document.title;
   const [page, setPage] = useState<AppPages>('home');
 
-  // User credentials to join a call with - these are retrieved from the server
+  // User credentials to join a meeting chat thread with - these are retrieved from the server
   const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callArgs, setCallArgs] = useState<CallArgs | undefined>({ displayName: '', callLocator: createGroupId() });
+  const [callArgs, setCallArgs] = useState<CallArgs | undefined>(undefined);
 
   // Chat endpoint and thread id
   const [endpointUrl, setEndpointUrl] = useState('');
@@ -102,20 +100,20 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingMeeting}
           startMeetingHandler={(callDetails) => {
             const isTeamsMeeting = !!callDetails.teamsLink;
-            setCallArgs({
+            const localCallArgs = {
               displayName: callDetails.displayName,
               callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
-            });
+            };
+            setCallArgs(localCallArgs);
 
             // Update window URL to have a joinable link
-
             if (!joiningExistingMeeting) {
               const joinParam = isTeamsMeeting
                 ? {
                     name: 'teamsLink',
-                    value: encodeURIComponent((callArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
+                    value: encodeURIComponent((localCallArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
-                : { name: 'groupId', value: (callArgs?.callLocator as GroupCallLocator).groupId };
+                : { name: 'groupId', value: (localCallArgs?.callLocator as GroupCallLocator).groupId };
               pushQSPUrl(joinParam);
             }
             setPage('meeting');
@@ -128,7 +126,7 @@ const App = (): JSX.Element => {
         !credentials?.token ||
         !credentials?.userId ||
         !callArgs?.displayName ||
-        !callArgs.callLocator ||
+        !callArgs?.callLocator ||
         !endpointUrl ||
         !threadId
       ) {

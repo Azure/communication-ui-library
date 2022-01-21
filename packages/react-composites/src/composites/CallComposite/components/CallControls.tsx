@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove-from(stable): custom button injection */
 import { ControlBarButton } from '@internal/react-components';
@@ -214,12 +214,12 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const participantsButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
 
   const devicesButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
 
@@ -356,7 +356,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 };
 
-const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);
+const concatButtonBaseStyles = (styles: IButtonStyles): IButtonStyles =>
+  concatStyleSets(controlButtonBaseStyle, styles);
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 const FilteredCustomButtons = (props: {
