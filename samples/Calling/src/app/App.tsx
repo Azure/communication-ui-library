@@ -12,6 +12,8 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
+  isLandscape,
+  isMobileSession,
   isOnIphoneAndNotSafari,
   navigateToHomePage
 } from './utils/AppUtils';
@@ -60,6 +62,10 @@ const App = (): JSX.Element => {
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
     return <UnsupportedBrowserPage />;
+  }
+
+  if (isMobileSession() || isLandscape()) {
+    console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
   switch (page) {
