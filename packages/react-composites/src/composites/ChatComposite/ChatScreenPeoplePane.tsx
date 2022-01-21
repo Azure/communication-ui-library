@@ -8,12 +8,19 @@ import { ParticipantContainer } from '../common/ParticipantContainer';
 import { useLocale } from '../localization';
 import { usePropsFor } from './hooks/usePropsFor';
 
-export type ChatScreenPeopelPaneProps = {
+/**
+ * Props for the chat screen people pane
+ * @private
+ */
+type ChatScreenPeoplePaneProps = {
   onFetchAvatarPersonaData: AvatarPersonaDataCallback | undefined;
   onFetchParticipantMenuItems: ParticipantMenuItemsCallback | undefined;
 };
 
-export const ChatScreenPeoplePane = (props: ChatScreenPeopelPaneProps): JSX.Element => {
+/**
+ * @private
+ */
+export const ChatScreenPeoplePane = (props: ChatScreenPeoplePaneProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const locale = useLocale();
   const chatListHeader = locale.strings.chat.chatListHeader;
