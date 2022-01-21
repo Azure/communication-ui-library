@@ -32,6 +32,7 @@ import {
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove-from(stable) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 
 /**
