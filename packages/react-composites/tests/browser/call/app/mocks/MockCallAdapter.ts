@@ -13,10 +13,10 @@ export class MockCallAdapter implements CallAdapter {
   constructor(state: TestCallingState) {
     const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
-    for (const remoteParticipant of state.remoteParticipants) {
-      // Generate random participant key
-      const participantKey = Math.random().toString();
+    // Simple
+    let participantKey = 1;
 
+    for (const remoteParticipant of state.remoteParticipants) {
       let view: VideoStreamRendererViewState = undefined;
       if (remoteParticipant.isVideoStreamAvailable) {
         const mockVideoElement = document.createElement('div');
@@ -30,7 +30,7 @@ export class MockCallAdapter implements CallAdapter {
       }
 
       remoteParticipants[participantKey] = {
-        identifier: { kind: 'communicationUser', communicationUserId: participantKey },
+        identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
         state: 'Connected',
         videoStreams: {
           '1': {
@@ -44,6 +44,7 @@ export class MockCallAdapter implements CallAdapter {
         isSpeaking: remoteParticipant.isSpeaking,
         displayName: remoteParticipant.displayName
       };
+      participantKey++;
     }
 
     defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
