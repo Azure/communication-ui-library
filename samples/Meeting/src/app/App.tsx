@@ -11,6 +11,7 @@ import {
   chatSDKVersion,
   createGroupId,
   fetchTokenResponse,
+  getChatThreadFromTeamsLink,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
@@ -57,6 +58,8 @@ const App = (): JSX.Element => {
   const [endpointUrl, setEndpointUrl] = useState('');
   const [threadId, setThreadId] = useState('');
 
+  const [teamsMeetingLink, setTeamsMeetingLink] = useState<string | undefined>(undefined);
+
   // Get Azure Communications Service token from the server
   useEffect(() => {
     (async () => {
@@ -73,15 +76,25 @@ const App = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (callArgs?.displayName && credentials !== undefined) {
-        const newThreadId = await getThread();
-        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
-        if (!result) {
-          alert(ALERT_TEXT_TRY_AGAIN);
-          return;
+        if (teamsMeetingLink === undefined) {
+          const newThreadId = await getThread();
+          const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
+          if (!result) {
+            alert(ALERT_TEXT_TRY_AGAIN);
+            return;
+          }
+          setThreadId(newThreadId);
+          pushQSPUrl({ name: 'threadId', value: newThreadId });
+        } else {
+          const teamsThread = getChatThreadFromTeamsLink(teamsMeetingLink);
+          const result = await joinThread(teamsThread, credentials.userId.communicationUserId, callArgs.displayName);
+          if (!result) {
+            alert(ALERT_TEXT_TRY_AGAIN);
+            return;
+          }
+          setThreadId(teamsThread);
         }
         setEndpointUrl(await getEndpointUrl());
-        setThreadId(newThreadId);
-        pushQSPUrl({ name: 'threadId', value: newThreadId });
       }
     })();
   }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
@@ -105,7 +118,7 @@ const App = (): JSX.Element => {
               callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
             };
             setCallArgs(localCallArgs);
-
+            setTeamsMeetingLink(callDetails.teamsLink?.meetingLink);
             // Update window URL to have a joinable link
             if (!joiningExistingMeeting) {
               const joinParam = isTeamsMeeting
@@ -113,7 +126,10 @@ const App = (): JSX.Element => {
                     name: 'teamsLink',
                     value: encodeURIComponent((localCallArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
-                : { name: 'groupId', value: (localCallArgs?.callLocator as GroupCallLocator).groupId };
+                : {
+                    name: 'groupId',
+                    value: (localCallArgs?.callLocator as GroupCallLocator).groupId
+                  };
               pushQSPUrl(joinParam);
             }
             setPage('meeting');
