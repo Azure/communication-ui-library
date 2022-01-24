@@ -58,9 +58,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           endChatHandler(removedBy !== userId);
         }
       });
-      // set topic to be Your Chat sample after getting adapter from createAzureCommunicationChatAdapter
-      // this is executed everytime when any of displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler changes
-      adapter.setTopic('Your Chat sample');
       adapter.on('error', (e) => {
         console.error(e);
         errorHandler();
