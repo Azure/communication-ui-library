@@ -87,11 +87,6 @@ const App = (): JSX.Element => {
           pushQSPUrl({ name: 'threadId', value: newThreadId });
         } else {
           const teamsThread = getChatThreadFromTeamsLink(teamsMeetingLink);
-          const result = await joinThread(teamsThread, credentials.userId.communicationUserId, callArgs.displayName);
-          if (!result) {
-            alert(ALERT_TEXT_TRY_AGAIN);
-            return;
-          }
           setThreadId(teamsThread);
         }
         setEndpointUrl(await getEndpointUrl());
