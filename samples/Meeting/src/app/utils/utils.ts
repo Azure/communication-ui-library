@@ -44,5 +44,3 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
       };
   }
 };
-
-export const existsTopicName = (topicName?: string): boolean => !!topicName;
