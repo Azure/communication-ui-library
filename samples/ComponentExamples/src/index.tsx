@@ -5,7 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Examples } from './Examples';
-import { _IdentifierProvider } from '@azure/communication-react';
 
 if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
