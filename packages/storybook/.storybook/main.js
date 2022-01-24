@@ -4,8 +4,10 @@
 const path = require('path');
 const webpack = require('webpack4');
 
+const PRODUCTION_BUILD = !!process.env.PRODUCTION;
+
 module.exports = {
-  stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(ts|tsx)'],
+  stories: [`../stories/${PRODUCTION_BUILD ? '!(INTERNAL)/' : ''}**/*.stories.@(ts|tsx|mdx)`],
   // Speeds up webpack build time after every code change. Improvements of up
   // to 4-5 seconds can be seen. Comment if components don't render properly.
   typescript: { reactDocgen: 'react-docgen' },

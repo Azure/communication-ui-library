@@ -1270,32 +1270,6 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
     previousButton?: IStyle;
 }
 
-// @internal
-export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
-
-// @internal
-export interface _IdentifierProviderProps {
-    // (undocumented)
-    children: React_2.ReactNode;
-    // (undocumented)
-    identifiers?: _Identifiers;
-}
-
-// @internal
-export interface _Identifiers {
-    messageContent: string;
-    messageTimestamp: string;
-    participantButtonPeopleMenuItem: string;
-    participantItemMenuButton: string;
-    participantList: string;
-    participantListPeopleButton: string;
-    participantListRemoveParticipantButton: string;
-    sendboxTextField: string;
-    typingIndicator: string;
-    videoGallery: string;
-    videoTile: string;
-}
-
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
