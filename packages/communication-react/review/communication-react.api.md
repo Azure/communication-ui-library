@@ -660,6 +660,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     messageType: 'chat';
     // (undocumented)
+    metaData?: Record<string, string>;
+    // (undocumented)
     mine?: boolean;
     // (undocumented)
     senderDisplayName?: string;
@@ -1214,7 +1216,17 @@ export type ErrorType = keyof ErrorBarStrings;
 export const FileCard: (props: FileCardProps) => JSX.Element;
 
 // @beta (undocumented)
+export const FileCardGroup: (props: FileCardGroupProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface FileCardGroupProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @beta (undocumented)
 export interface FileCardProps {
+    actionHandler?: () => void;
     actionIcon?: JSX.Element;
     fileExtension: string;
     fileName: string;

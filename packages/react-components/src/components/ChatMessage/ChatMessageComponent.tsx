@@ -8,7 +8,8 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileCard, FileCardGroup } from '..';
+import { FileCardGroup } from '../FileCardGroup';
+import { FileCard } from '../FileCard';
 import { Icon } from '@fluentui/react';
 
 type ChatMessageComponentProps = {
