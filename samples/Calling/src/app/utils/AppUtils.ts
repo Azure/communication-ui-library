@@ -9,7 +9,7 @@ import { v1 as generateGUID } from 'uuid';
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
-  const response = await fetch('/token');
+  const response = await fetch('/token?scope=voip');
   if (response.ok) {
     const responseAsJson = await response.json(); //(await response.json())?.value?.token;
     const token = responseAsJson.token;

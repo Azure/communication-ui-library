@@ -16,6 +16,12 @@
     "defaultBranch": "main"
   },
   "telemetryEnabled": false,
+  "variants": [
+    {
+      "variantName": "stable",
+      "description": "Build this repo using stable version of js sdk"
+    }
+  ],
   "projects": [
     {
       "packageName": "@internal/acs-ui-common",

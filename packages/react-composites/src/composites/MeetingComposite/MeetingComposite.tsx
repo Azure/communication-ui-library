@@ -17,6 +17,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -88,6 +89,7 @@ type MeetingScreenProps = {
   formFactor?: 'desktop' | 'mobile';
   meetingInvitationURL?: string;
   callControls?: boolean | MeetingCallControlOptions;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
 const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
@@ -151,6 +153,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             chatAdapter={chatProps.adapter}
             fluentTheme={fluentTheme}
             onClose={closePane}
+            onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -161,6 +164,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
               onClose={closePane}
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
+              onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
             />
           </CallAdapterProvider>
         )}

@@ -29,12 +29,16 @@ import {
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
-  participantListContainerPadding,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from './ParticipantContainer';
+import { ParticipantContainer } from '../common/ParticipantContainer';
+/* @conditional-compile-remove-from(stable) */
+import { useLocale } from '../localization';
+import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantList } from '@internal/react-components';
 
 /**
  * @private
@@ -69,6 +73,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
+  /* @conditional-compile-remove-from(stable) */
+  const locale = useLocale();
+  /* @conditional-compile-remove-from(stable) */
+  const chatListHeader = locale.strings.chat.chatListHeader;
+
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
@@ -78,6 +87,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  /* @conditional-compile-remove-from(stable) */
+  const participantListProps = usePropsFor(ParticipantList);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -125,8 +136,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove-from(stable) */
           options?.participantPane === true && (
             <ParticipantContainer
+              participantListProps={participantListProps}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              title={chatListHeader}
             />
           )
         }

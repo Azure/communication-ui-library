@@ -10,7 +10,6 @@ import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThe
 if (document.getElementById('root') !== undefined) {
   ReactDOM.render(
     <SwitchableFluentThemeProvider scopeId="SampleChatApp">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       <div className="wrapper">
         <App />
       </div>

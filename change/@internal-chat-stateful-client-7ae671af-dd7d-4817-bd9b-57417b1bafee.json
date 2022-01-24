@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add conditional build for GA apis",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}
