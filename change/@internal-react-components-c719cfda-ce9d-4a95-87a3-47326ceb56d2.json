@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "minor",
   "comment": "Identifiers added for HorizontalGallery left and right navigation buttons.",
   "packageName": "@internal/react-components",
   "email": "miguelgamis@microsoft.com",
