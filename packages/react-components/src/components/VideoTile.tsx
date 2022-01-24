@@ -7,6 +7,7 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import { OptionsDevice } from './DevicesButton';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -19,6 +20,7 @@ import {
   tileInfoContainerStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+import { LocalVideoCameraButton } from './VideoGallery/LocalVideoCameraButton';
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -85,6 +87,8 @@ export interface VideoTileProps {
   noVideoAvailableAriaLabel?: string;
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
+  /** */
+  renderCameraButton?: boolean;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -210,6 +214,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           >
             {renderElement}
+            <LocalVideoCameraButton
+              cycleCamera={function (device: OptionsDevice): Promise<void> {
+                throw new Error('Function not implemented.');
+              }}
+            />
           </Stack>
         ) : (
           <Stack className={mergeStyles(videoContainerStyles)}>
