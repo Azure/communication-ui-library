@@ -12,6 +12,10 @@ import { TestCallingState } from './TestCallingState';
  * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
-export const buildCallingUrl = (serverUrl: string, state: CallingState, qArgs?: { [key: string]: string }): string => {
+export const buildCallingUrl = (
+  serverUrl: string,
+  state: TestCallingState,
+  qArgs?: { [key: string]: string }
+): string => {
   return `${serverUrl}?${encodeQueryData({ state: JSON.stringify(state), ...qArgs })}`;
 };
