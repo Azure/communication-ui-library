@@ -1,8 +1,24 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Tue, 04 Jan 2022 22:57:10 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 23:18:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.1)
+
+Mon, 24 Jan 2022 23:18:56 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.1...@internal/storybook_v1.0.1)
+
+### Minor changes
+
+- fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps ([PR #1272](https://github.com/azure/communication-ui-library/pull/1272) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks ([PR #1277](https://github.com/azure/communication-ui-library/pull/1277) by anjulgarg@live.com)
+- Add manual documentation for adapters ([PR #1325](https://github.com/azure/communication-ui-library/pull/1325) by 2684369+JamesBurnside@users.noreply.github.com)
+- Added entry for endpointUrl in appsettings.json instead of using connectionString twice ([PR #1310](https://github.com/azure/communication-ui-library/pull/1310) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Bump @azure/communication-react to v1.0.1 ([PR #1335](https://github.com/azure/communication-ui-library/pull/1335) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.1)
 
