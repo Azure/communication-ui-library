@@ -55,7 +55,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
     <Stack
       className={mergeStyles({
         width: '14rem',
-        background: '#F3F2F1',
+        background: theme.palette.neutralLighter,
         borderRadius: theme.effects.roundedCorner4,
         boxShadow: theme.effects.elevation8
       })}
@@ -65,7 +65,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
         horizontalAlign="space-between"
         verticalAlign="center"
         className={mergeStyles({
-          padding: progress === undefined ? '12px' : '12px 12px 8px 12px'
+          padding: progress === undefined ? '0.75rem' : '0.75rem 0.75rem 0.5rem 0.75rem'
         })}
       >
         <Stack>
