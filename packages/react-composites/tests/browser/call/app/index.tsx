@@ -20,19 +20,15 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { FontIcon, Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { MockCallAdapter } from './mocks/MockCallAdapter';
+import { TestCallingState } from '../state/TestCallingState';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-// Required params
-const displayName = verifyParamExists(params.displayName, 'displayName');
-const token = verifyParamExists(params.token, 'token');
-const groupId = verifyParamExists(params.groupId, 'groupId');
-const userId = verifyParamExists(params.userId, 'userId');
-
-// Optional params
+const state = JSON.parse(params.state) as TestCallingState;
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
@@ -43,12 +39,22 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      const newAdapter = await createAzureCommunicationCallAdapter({
-        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-        displayName,
-        credential: new AzureCommunicationTokenCredential(token),
-        locator: { groupId: groupId }
-      });
+      let newAdapter: CallAdapter = undefined;
+      if (state) {
+        newAdapter = new MockCallAdapter(state);
+      } else {
+        const displayName = verifyParamExists(params.displayName, 'displayName');
+        const token = verifyParamExists(params.token, 'token');
+        const groupId = verifyParamExists(params.groupId, 'groupId');
+        const userId = verifyParamExists(params.userId, 'userId');
+
+        newAdapter = await createAzureCommunicationCallAdapter({
+          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+          displayName,
+          credential: new AzureCommunicationTokenCredential(token),
+          locator: { groupId: groupId }
+        });
+      }
       setCallAdapter(wrapAdapterForTests(newAdapter));
     };
 

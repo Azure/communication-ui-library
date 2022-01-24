@@ -187,7 +187,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   }, messageTimestampId);
 };
 
-const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
+export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
     qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));
@@ -211,3 +211,10 @@ export const buildUrl = (
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ * Delay a test for an amount of time in milliseconds
+ * @param ms - Milliseconds of delay
+ * @returns void
+ */
+export const delay = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms));
