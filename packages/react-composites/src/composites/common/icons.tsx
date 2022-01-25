@@ -11,7 +11,8 @@ import {
   WifiWarning20Filled,
   Info20Filled,
   PersonDelete20Filled,
-  CallEnd20Filled
+  CallEnd20Filled,
+  Attach20Regular
 } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -47,7 +48,8 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
-  NoticePageRemovedFromCall: <Info20Filled />
+  NoticePageRemovedFromCall: <Info20Filled />,
+  AttachFile: <Attach20Regular />
 };
 
 /**
@@ -89,6 +91,7 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
+    | 'AttachFile'
   >
 >;
 /**

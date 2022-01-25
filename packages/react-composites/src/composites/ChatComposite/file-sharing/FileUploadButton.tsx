@@ -72,7 +72,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         className={fileUploadButtonClassName}
         onClick={() => inputRef.current?.click()}
       >
-        <Icon iconName="Attach" />
+        <Icon iconName="AttachFile" />
       </Stack>
       <input
         ref={inputRef}
