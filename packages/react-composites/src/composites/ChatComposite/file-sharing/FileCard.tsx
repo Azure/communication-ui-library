@@ -38,19 +38,6 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
-  const progressIndicator = (): JSX.Element => (
-    <ProgressIndicator
-      percentComplete={progress}
-      styles={{
-        itemProgress: {
-          height: 0,
-          padding: '2px 0',
-          borderRadius: '0 0 4px 4px'
-        }
-      }}
-    />
-  );
-
   return (
     <Stack
       className={mergeStyles({
@@ -89,7 +76,18 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           {actionIcon && actionIcon}
         </Stack>
       </Stack>
-      {progress !== undefined && progress < 1 && progressIndicator()}
+      {progress !== undefined && progress < 1 && (
+        <ProgressIndicator
+          percentComplete={progress}
+          styles={{
+            itemProgress: {
+              height: 0,
+              padding: '2px 0',
+              borderRadius: '0 0 4px 4px'
+            }
+          }}
+        />
+      )}
     </Stack>
   );
 };
