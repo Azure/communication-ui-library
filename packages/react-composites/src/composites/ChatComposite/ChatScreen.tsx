@@ -35,6 +35,9 @@ import {
 
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantContainer } from './ParticipantContainer';
+import { FileUploadButton } from './file-sharing/FileUploadButton';
+import { useSelector } from './hooks/useSelector';
+import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 
 /**
  * @private
@@ -78,6 +81,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -119,6 +123,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
+            <FileUploadButton {...fileUploadButtonProps} />
           </Stack>
         </Stack>
         {

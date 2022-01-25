@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { FileUploadHandler } from './FileUploadHandler';
@@ -13,7 +14,7 @@ export interface FileUploadButtonProps {
   /**
    * The ACS user ID of the user uploading the file.
    */
-  userId: string;
+  userId: CommunicationIdentifierKind;
   /**
    * The function of type {@link FileUploadHandler} for handling file uploads.
    */
