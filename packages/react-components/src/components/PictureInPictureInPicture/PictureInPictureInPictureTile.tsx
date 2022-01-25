@@ -6,7 +6,8 @@ import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { VideoTile, VideoTileProps, VideoTileStylesProps } from '../VideoTile';
 
-type TileOrientation = 'portrait' | 'landscape';
+/** @internal */
+export type _TileOrientation = 'portrait' | 'landscape';
 
 /** @internal */
 export interface _PictureInPictureInPictureTileProps
@@ -14,7 +15,7 @@ export interface _PictureInPictureInPictureTileProps
     VideoTileProps,
     'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'
   > {
-  orientation: TileOrientation;
+  orientation: _TileOrientation;
 }
 
 /** @private */
@@ -33,7 +34,7 @@ const PictureInPictureInPictureTile = (props: VideoTileProps): JSX.Element => (
 );
 
 const primaryTileStyles = memoizeFunction(
-  (orientation: TileOrientation, themeElevation: string): VideoTileStylesProps => ({
+  (orientation: _TileOrientation, themeElevation: string): VideoTileStylesProps => ({
     root: {
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '5.5rem' : '8rem',
@@ -44,11 +45,11 @@ const primaryTileStyles = memoizeFunction(
 );
 
 const secondaryTileStyles = memoizeFunction(
-  (orientation: TileOrientation): VideoTileStylesProps => ({
+  (orientation: _TileOrientation): VideoTileStylesProps => ({
     root: {
       borderRadius: '0.25rem',
-      height: orientation === 'landscape' ? '1.625rem' : '2.0625rem',
-      width: orientation === 'landscape' ? '2.0625rem' : '1.625rem'
+      height: orientation === 'landscape' ? '1.625rem' : '2rem',
+      width: orientation === 'landscape' ? '2rem' : '1.625rem'
     }
   })
 );
