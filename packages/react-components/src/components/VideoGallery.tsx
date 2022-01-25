@@ -238,7 +238,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
-        renderCameraButton={true}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IconButton, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IconButton } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from '../DevicesButton';
 
@@ -24,7 +24,8 @@ export const LocalVideoCameraButton = (props: LocalVideoCameraButtonProps): JSX.
   const localCameraSwitcherStyles: IButtonStyles = {
     root: {
       position: 'absolute',
-      right: '0'
+      right: '0',
+      color: 'white'
     }
   };
   return (
