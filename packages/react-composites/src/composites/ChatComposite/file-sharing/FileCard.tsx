@@ -74,7 +74,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
       height: 0,
       padding: '2px 0',
       // To make the progress indicator border curve along the bottom of file card.
-      borderRadius: '0 0 4px 4px'
+      borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
     }
   };
 
