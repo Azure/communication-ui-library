@@ -21,8 +21,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Internal/Picture In P
       }
     >
       <div
+        onClick={[Function]}
         style={
           Object {
+            "cursor": "pointer",
             "position": "relative",
           }
         }
