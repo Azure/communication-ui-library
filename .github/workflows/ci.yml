@@ -51,7 +51,7 @@ jobs:
         run: rush lint
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         run: |
@@ -388,7 +388,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -440,7 +440,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
