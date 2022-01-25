@@ -34,7 +34,7 @@ jobs:
         run: rush install
 
       - name: Build Projects
-        run: rush build
+        run: rush build -v
 
       - name: Package Calling Sample Artifact
         run: rushx package
