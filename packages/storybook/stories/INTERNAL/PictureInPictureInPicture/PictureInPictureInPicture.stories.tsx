@@ -17,6 +17,7 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
 
   return (
     <PictureInPictureInPictureComponent
+      onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
         displayName: args.primaryTileParticipantName,

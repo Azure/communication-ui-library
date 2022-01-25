@@ -36,6 +36,7 @@ export interface _PictureInPictureInPictureProps {
 export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProps): JSX.Element => {
   return (
     <PictureInPictureInPictureContainer
+      onClick={props.onClick}
       primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
       secondaryView={<PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
     />
@@ -57,10 +58,12 @@ const PictureInPictureInPictureContainer = (props: {
 );
 
 const tileContainerStyles: React.CSSProperties = {
-  position: 'relative'
+  position: 'relative',
+  cursor: 'pointer'
 };
 
 const secondaryTileFloatingStyles: React.CSSProperties = {
+  // The secondary tile should float above the primary tile, aligned to the bottom right.
   position: 'absolute',
   bottom: '0.125rem',
   right: '0.125rem'
