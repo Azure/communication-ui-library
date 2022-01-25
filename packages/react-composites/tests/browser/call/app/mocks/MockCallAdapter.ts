@@ -13,11 +13,11 @@ export class MockCallAdapter implements CallAdapter {
   constructor(state: TestCallingState) {
     const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
-    // Simple
+    // Incrementing participant key starting at 1
     let participantKey = 1;
 
     for (const remoteParticipant of state.remoteParticipants) {
-      let view: VideoStreamRendererViewState = undefined;
+      let view: VideoStreamRendererViewState | undefined = undefined;
       if (remoteParticipant.isVideoStreamAvailable) {
         const mockVideoElement = document.createElement('div');
         mockVideoElement.innerHTML = '<span />';
@@ -36,12 +36,12 @@ export class MockCallAdapter implements CallAdapter {
           '1': {
             id: 1,
             mediaStreamType: 'Video',
-            isAvailable: remoteParticipant.isVideoStreamAvailable,
+            isAvailable: !!remoteParticipant.isVideoStreamAvailable,
             view: view
           }
         },
-        isMuted: remoteParticipant.isMuted,
-        isSpeaking: remoteParticipant.isSpeaking,
+        isMuted: !!remoteParticipant.isMuted,
+        isSpeaking: !!remoteParticipant.isSpeaking,
         displayName: remoteParticipant.displayName
       };
       participantKey++;
@@ -125,15 +125,15 @@ export class MockCallAdapter implements CallAdapter {
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
-    return;
+    return [];
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    return;
+    return [];
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    return;
+    return [];
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
