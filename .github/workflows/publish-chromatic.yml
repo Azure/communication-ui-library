@@ -43,6 +43,8 @@ jobs:
           buildScriptName: build
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        env:
+          NODE_ENV: development
 
       - name: Format storybook URL
         id: storybook_url
