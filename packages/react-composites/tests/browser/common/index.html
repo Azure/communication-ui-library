@@ -8,6 +8,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Composite - Test App" />
     <title>Composite - Test App</title>
+
+    <!-- Ensure that fonts have loaded before tests are run -->
+    <link rel="preload" href="./fonts/segoeui-regular.woff2" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./fonts/segoeui-semibold.woff2" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./fonts/segoeui-bold.woff2" as="font" crossorigin="anonymous" />
+    <style>
+      @font-face {
+        font-weight: 400;
+        src: url('./fonts/segoeui-regular.woff2') format('woff2');
+        font-family: 'Segoe UI';
+      }
+      @font-face {
+        font-weight: 600;
+        src: url('./fonts/segoeui-semibold.woff2') format('woff2');
+        font-family: 'Segoe UI';
+      }
+      @font-face {
+        font-weight: 700;
+        src: url('./fonts/segoeui-bold.woff2') format('woff2');
+        font-family: 'Segoe UI';
+      }
+    </style>
+
     <style>
       /* Important: For ensuring that blinking cursor doesn't get captured in
          snapshots and cause a diff in subsequent tests. */
@@ -37,6 +60,9 @@
   </head>
 
   <body>
-    <main id="root" class="Root"></main>
+    <main id="root" class="Root">
+      <!-- Anything in here is replaced by react when react mounts and completes the first render pass -->
+      Loading...
+    </main>
   </body>
 </html>

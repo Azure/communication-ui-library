@@ -1,31 +1,48 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { participantListStack, participantListStyle, participantListWrapper, listHeader } from './styles/Chat.styles';
-import { OnRenderAvatarCallback, ParticipantList, ParticipantMenuItemsCallback } from '@internal/react-components';
-import { FocusZone, Stack } from '@fluentui/react';
-import { useLocale } from '../localization';
-import { usePropsFor } from './hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import {
+  participantListStack,
+  participantListStyle,
+  participantListWrapper,
+  listHeader
+} from './styles/ParticipantContainer.styles';
+import {
+  OnRenderAvatarCallback,
+  ParticipantList,
+  ParticipantListProps,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
+import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
+import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { peopleSubheadingStyle } from './styles/ParticipantContainer.styles';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  participantListProps: ParticipantListProps;
+  title?: string;
 };
 
 /**
  * @private
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
-  const participantListProps = usePropsFor(ParticipantList);
-  const locale = useLocale();
-  const chatListHeader = locale.strings.chat.chatListHeader;
+  const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
+  const theme = useTheme();
+  const subheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
+    root: {
+      color: theme.palette.neutralSecondary
+    }
+  });
+
   return (
     <Stack className={participantListWrapper}>
       <Stack className={participantListStack}>
-        <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
+        <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
+          {title}
+        </Stack.Item>
         <FocusZone className={participantListStyle}>
           <ParticipantList
             {...participantListProps}
