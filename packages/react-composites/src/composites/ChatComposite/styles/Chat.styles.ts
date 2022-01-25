@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-import { MessageThreadStyles, TypingIndicatorStylesProps } from '@internal/react-components';
+import { MessageThreadStyles } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
 
@@ -85,59 +85,12 @@ export const topicNameLabelStyle = mergeStyles({
 /**
  * @private
  */
-export const participantListWrapper = mergeStyles({
-  boxShadow: '0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.13)',
-  width: '20rem',
-  // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
-  maxWidth: '50vw',
-  height: '100%'
-});
-
-/**
- * @private
- */
-export const participantListContainerPadding = { childrenGap: '0.5rem' };
-
-/**
- * @private
- */
-export const listHeader = mergeStyles({
-  fontSize: '1rem',
-  margin: '1rem'
-});
-
-/**
- * @private
- */
-export const participantListStack = mergeStyles({
-  height: '100%'
-});
-
-/**
- * @private
- */
-export const participantListStyle = mergeStyles({
-  height: '100%',
-  overflow: 'auto'
-});
-
-/**
- * @private
- */
 export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: MESSAGE_THREAD_WIDTH } };
 
 /**
  * @private
  */
-export const typingIndicatorChatCompositeStyles: TypingIndicatorStylesProps = {
-  typingString: { maxWidth: MESSAGE_THREAD_WIDTH }
-};
-
-/**
- * @private
- */
 export const typingIndicatorContainerStyles: IStyle = {
-  width: '100%',
   padding: '0rem 0.5rem'
 };
 
