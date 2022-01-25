@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
