@@ -38,8 +38,7 @@ const primaryTileStyles = memoizeFunction(
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '5.5rem' : '8rem',
       width: orientation === 'landscape' ? '8rem' : '5.5rem',
-      boxShadow: themeElevation,
-      background: 'blue' // TODO: [jaburnsi] REMOVE
+      boxShadow: themeElevation
     }
   })
 );
@@ -49,8 +48,7 @@ const secondaryTileStyles = memoizeFunction(
     root: {
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '1.625rem' : '2.0625rem',
-      width: orientation === 'landscape' ? '2.0625rem' : '1.625rem',
-      background: 'red' // TODO: [jaburnsi] REMOVE
+      width: orientation === 'landscape' ? '2.0625rem' : '1.625rem'
     }
   })
 );
