@@ -94,7 +94,7 @@ jobs:
 
       # Build packages
       - name: Build @azure/communication-react package
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
 
       # Test Packages
       - name: Test @azure/communication-react package
