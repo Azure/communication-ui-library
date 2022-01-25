@@ -44,6 +44,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         env:
+          # Set the node_env to ensure Internal stories are published in chromatic builds
           NODE_ENV: development
 
       - name: Format storybook URL
