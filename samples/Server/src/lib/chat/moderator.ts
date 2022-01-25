@@ -3,8 +3,7 @@
 
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient, CreateChatThreadOptions, CreateChatThreadRequest } from '@azure/communication-chat';
-import { getEnvUrl } from '../envHelper';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
+import { getEndpoint } from '../envHelper';
 import { threadIdToModeratorCredentialMap } from './threadIdToModeratorTokenMap';
 import { createUser, getToken } from '../identityClient';
 
@@ -15,10 +14,10 @@ export const createThread = async (topicName?: string): Promise<string> => {
     tokenRefresher: async () => (await getToken(user, ['chat', 'voip'])).token,
     refreshProactively: true
   });
-  const chatClient = new ChatClient(getEnvUrl(), credential);
+  const chatClient = new ChatClient(getEndpoint(), credential);
 
   const request: CreateChatThreadRequest = {
-    topic: topicName ?? GUID_FOR_INITIAL_TOPIC_NAME
+    topic: topicName ?? 'Your Chat sample'
   };
   const options: CreateChatThreadOptions = {
     participants: [

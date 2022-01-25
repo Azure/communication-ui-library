@@ -244,7 +244,7 @@ const ParticipantSystemMessageComponent = ({
   if (participantsStr !== '') {
     return (
       <SystemMessageComponent
-        iconName={(message.iconName ?? '') as SystemMessageIconTypes}
+        iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
         content={`${participantsStr} ${messageSuffix}`}
         containerStyle={style}
       />
@@ -261,7 +261,7 @@ const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
         case 'content':
           return (
             <SystemMessageComponent
-              iconName={(message.iconName ?? '') as SystemMessageIconTypes}
+              iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
               content={message.content ?? ''}
               containerStyle={props?.messageContainerStyle}
             />

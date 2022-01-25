@@ -58,7 +58,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           endChatHandler(removedBy !== userId);
         }
       });
-      adapter.setTopic('Your Chat sample');
       adapter.on('error', (e) => {
         console.error(e);
         errorHandler();

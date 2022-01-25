@@ -33,7 +33,7 @@ import { Chat20Filled } from '@fluentui/react-icons';
 import { DisplayNameField } from './DisplayNameField';
 import { sendEmojiRequest } from './utils/setEmoji';
 import { getToken } from './utils/getToken';
-import { getThreadId } from './utils/getThreadId';
+import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
@@ -89,7 +89,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   // Used when new user is being registered.
   const setupAndJoinChatThreadWithNewUser = useCallback(() => {
     const internalSetupAndJoinChatThread = async (): Promise<void> => {
-      const threadId = getThreadId();
+      const threadId = getExistingThreadIdFromURL();
       const token = await getToken();
       const endpointUrl = await getEndpointUrl();
 
@@ -103,7 +103,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       setThreadId(threadId);
       setEndpointUrl(endpointUrl);
 
-      await sendEmojiRequest(selectedAvatar);
+      await sendEmojiRequest(token.identity, selectedAvatar);
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
@@ -122,7 +122,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING) {
       const setScreenState = async (): Promise<void> => {
         try {
-          const threadId = getThreadId();
+          const threadId = getExistingThreadIdFromURL();
           if (!(await checkThreadValid(threadId))) {
             throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
           }

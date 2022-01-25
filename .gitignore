@@ -97,3 +97,6 @@ preprocess-dist/
 
 # Release outputs
 release/
+
+# Failed test results
+test-results/

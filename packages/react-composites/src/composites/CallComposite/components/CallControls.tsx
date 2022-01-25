@@ -1,8 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove-from(stable): custom button injection */
+import { ControlBarButton } from '@internal/react-components';
+/* @conditional-compile-remove-from(stable): custom button injection */
+import { ControlBarButtonProps } from '@internal/react-components';
 import {
   CameraButton,
   ControlBar,
@@ -41,6 +45,13 @@ export type CallControlsProps = {
 };
 
 /**
+ * Control bar display type for {@link CallComposite}.
+ *
+ * @public
+ */
+export type CallControlDisplayType = 'default' | 'compact';
+
+/**
  * Customization options for the control bar in calling experience.
  *
  * @public
@@ -55,7 +66,7 @@ export type CallControlOptions = {
    *
    * @defaultValue 'default'
    */
-  displayType?: 'default' | 'compact';
+  displayType?: CallControlDisplayType;
   /**
    * Show or Hide Camera Button during a call
    * @defaultValue true
@@ -86,7 +97,85 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  /**
+   * Inject custom buttons in the call controls.
+   *
+   * @beta
+   */
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+/**
+ * Placement for a custom button injected in the {@link CallControls}.
+ *
+ * 'first': Place the button on the left end (right end in rtl mode).
+ * 'afterCameraButton': Place the button on the right (left in rtl mode) of the camera button.
+ * ... and so on.
+ *
+ * It is an error to place the button in reference to another button that has
+ * been hidden via a {@link CallControlOptions} field.
+ *
+ * Multiple buttons placed in the same position are appended in order.
+ * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
+ * in the order provided.
+ *
+ * @beta
+ */
+export type CustomCallControlButtonPlacement =
+  | 'first'
+  | 'last'
+  | 'afterCameraButton'
+  | 'afterEndCallButton'
+  | 'afterMicrophoneButton'
+  | 'afterOptionsButton'
+  | 'afterParticipantsButton'
+  | 'afterScreenShareButton';
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+/**
+ * A callback that returns the props to render a custom {@link ControlBarButton}.
+ *
+ * The response indicates where the custom button should be placed.
+ *
+ * Performance tip: This callback is only called when either the callback or its arguments change.
+ *
+ * @beta
+ */
+export type CustomCallControlButtonCallback = (
+  args: CustomCallControlButtonCallbackArgs
+) => CustomCallControlButtonProps;
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+/**
+ * Arguments for {@link CustomCallControlButtonCallback}.
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonCallbackArgs {
+  /**
+   * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
+   *
+   * @defaultValue `'default'`
+   */
+  displayType?: CallControlDisplayType;
+}
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+/**
+ * Response from {@link CustomCallControlButtonCallback}.
+ *
+ * Includes the props necessary to render a {@link  ControlBarButton} and indication of where to place the button.
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+  /**
+   * Where to place the custom button relative to other buttons.
+   */
+  placement: CustomCallControlButtonPlacement;
+}
 
 /**
  * @private
@@ -125,25 +214,36 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const participantsButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
 
   const devicesButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
+    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
+
+  const options = typeof props.options === 'boolean' ? {} : props.options;
+
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  const customButtonProps = useMemo(() => {
+    if (!options || !options.onFetchCustomButtonProps) {
+      return [];
+    }
+    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
+  }, [options?.onFetchCustomButtonProps, options?.displayType]);
+
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
     return <></>;
   }
 
-  const options = typeof props.options === 'boolean' ? {} : props.options;
-
   const compactMode = options?.displayType === 'compact';
 
   const microphoneButton = options?.microphoneButton !== false && (
+    // tab focus on MicrophoneButton on page load
     <MicrophoneButton
+      autoFocus
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!compactMode}
@@ -212,16 +312,65 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             occluding some of its content.
          */}
         <ControlBar layout="horizontal">
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
+          }
           {microphoneButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
+          }
           {cameraButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
+          }
           {screenShareButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
+          }
           {participantButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
+          }
           {devicesButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />
+          }
           {endCallButton}
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterEndCallButton'} />
+          }
+          {
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'last'} />
+          }
         </ControlBar>
       </Stack.Item>
     </Stack>
   );
 };
 
-const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);
+const concatButtonBaseStyles = (styles: IButtonStyles): IButtonStyles =>
+  concatStyleSets(controlButtonBaseStyle, styles);
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+const FilteredCustomButtons = (props: {
+  customButtonProps: CustomCallControlButtonProps[];
+  placement: CustomCallControlButtonPlacement;
+}): JSX.Element => {
+  return (
+    <>
+      {props.customButtonProps
+        .filter((buttonProps) => buttonProps.placement === props.placement)
+        .map((buttonProps, i) => (
+          <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
+        ))}
+    </>
+  );
+};

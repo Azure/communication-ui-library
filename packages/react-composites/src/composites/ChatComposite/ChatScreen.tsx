@@ -9,6 +9,7 @@ import {
   MessageRenderer,
   MessageThread,
   MessageThreadStyles,
+  ParticipantList,
   ParticipantMenuItemsCallback,
   SendBox,
   SendBoxStylesProps,
@@ -17,6 +18,8 @@ import {
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+/* @conditional-compile-remove-from(stable) */
+import { useLocale } from '../localization';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
@@ -69,6 +72,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
+  /* @conditional-compile-remove-from(stable) */
+  const locale = useLocale();
+  /* @conditional-compile-remove-from(stable) */
+  const chatListHeader = locale.strings.chat.chatListHeader;
+
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
@@ -79,6 +87,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
+  /* @conditional-compile-remove-from(stable) */
+  const participantListProps = usePropsFor(ParticipantList);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -127,8 +137,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove-from(stable) */
           options?.participantPane === true && (
             <ParticipantContainer
+              participantListProps={participantListProps}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              title={chatListHeader}
             />
           )
         }
