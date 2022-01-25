@@ -70,7 +70,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      // To make the progress indicator match the figma designs. It is a hack but works.
+      // A hack to make the progress indicator match the design specs.
       height: 0,
       padding: '2px 0',
       // To make the progress indicator border curve along the bottom of file card.
