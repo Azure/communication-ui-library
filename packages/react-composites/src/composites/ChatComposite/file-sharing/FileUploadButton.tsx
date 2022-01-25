@@ -81,7 +81,6 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         accept={accept}
         type="file"
         onChange={(e) => {
-          e.stopPropagation();
           onChange(e.currentTarget.files);
         }}
       />
