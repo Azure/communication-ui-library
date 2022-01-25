@@ -725,6 +725,14 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
+
+// @internal
+export interface _PictureInPictureInPictureProps {
+    onClick?: () => void;
+}
+
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
