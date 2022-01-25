@@ -104,6 +104,12 @@ module.exports = {
       rules: {
         'header/header': 'off'
       }
+    },
+    {
+      files: 'stories/INTERNAL/**/*',
+      rules: {
+        'no-restricted-imports': 'off'
+      }
     }
   ]
 };
