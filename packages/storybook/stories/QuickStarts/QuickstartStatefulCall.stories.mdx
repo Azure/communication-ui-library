@@ -72,11 +72,24 @@ Use the `npm install` command to install the `@azure/communication-react` librar
 
 ```bash
 
-npm install --save @azure/communication-react
+npm install @azure/communication-react
 
 ```
 
-The `--save` option lists the library as a dependency in your **package.json** file.
+#### Beta-channel setup
+
+`@azure/communication-react` is in the process of migrating the core Azure Communication Services dependencies to `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application.
+
+If you are using a beta package (has a `beta` suffix) >= `@azure/communication-react@1.0.1-beta.2`, you need to install
+the low-level client libraries as well:
+
+```bash
+
+npm install @azure/communication-calling@1.3.2-beta.1
+npm install @azure/communication-chat@1.1.0
+
+```
 
 ### Run Create React App
 
