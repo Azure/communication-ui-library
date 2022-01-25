@@ -27,6 +27,7 @@ export interface FileUploadButtonProps {
   /**
    * Allows multiple files to be selected if set to `true`.
    * Default value is `false`.
+   * Similar to the `multiple` attribute of the `<input type="file" />` element.
    */
   multiple?: boolean;
 }
@@ -44,13 +45,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       return;
     }
 
-    const uploadedFiles: UploadedFile[] = [];
-
-    for (const file of files) {
-      const uploadedFile = new UploadedFile(file);
-      uploadedFiles.push(uploadedFile);
-    }
-
+    const uploadedFiles = Array.from(files).map((file) => new UploadedFile(file));
     fileUploadHandler && fileUploadHandler(userId, uploadedFiles);
   };
 
