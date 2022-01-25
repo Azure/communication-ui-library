@@ -1,6 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, mergeStyles, ProgressIndicator, Stack, Text, useTheme } from '@fluentui/react';
+import {
+  Icon,
+  IProgressIndicatorStyleProps,
+  IProgressIndicatorStyles,
+  IStyleFunctionOrObject,
+  mergeStyles,
+  ProgressIndicator,
+  Stack,
+  Text,
+  useTheme
+} from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 
@@ -38,23 +48,39 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
+  const showProgressIndicator = (): boolean => progress !== undefined && progress < 1;
+
+  const containerClassName = mergeStyles({
+    width: '14rem',
+    background: theme.palette.neutralLighter,
+    borderRadius: theme.effects.roundedCorner4,
+    boxShadow: theme.effects.elevation8
+  });
+
+  const fileInfoWrapperClassName = mergeStyles({
+    padding: '0.75rem',
+    // To make space for the progress indicator.
+    paddingBottom: showProgressIndicator() ? '0.5rem' : '0.75rem'
+  });
+
+  const actionIconClassName = mergeStyles({
+    cursor: 'pointer',
+    padding: '0.25rem'
+  });
+
+  const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
+    itemProgress: {
+      // To make the progress indicator match the figma designs. It is a hack but works.
+      height: 0,
+      padding: '2px 0',
+      // To make the progress indicator border curve along the bottom of file card.
+      borderRadius: '0 0 4px 4px'
+    }
+  };
+
   return (
-    <Stack
-      className={mergeStyles({
-        width: '14rem',
-        background: theme.palette.neutralLighter,
-        borderRadius: theme.effects.roundedCorner4,
-        boxShadow: theme.effects.elevation8
-      })}
-    >
-      <Stack
-        horizontal
-        horizontalAlign="space-between"
-        verticalAlign="center"
-        className={mergeStyles({
-          padding: progress === undefined ? '0.75rem' : '0.75rem 0.75rem 0.5rem 0.75rem'
-        })}
-      >
+    <Stack className={containerClassName}>
+      <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
         <Stack>
           <Icon
             {...getFileTypeIconProps({
@@ -68,7 +94,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           <Text>{fileName}</Text>
         </Stack>
         <Stack
-          style={{ cursor: 'pointer', padding: '0.25rem' }}
+          className={actionIconClassName}
           onClick={() => {
             props.actionHandler && props.actionHandler();
           }}
@@ -76,18 +102,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           {actionIcon && actionIcon}
         </Stack>
       </Stack>
-      {progress !== undefined && progress < 1 && (
-        <ProgressIndicator
-          percentComplete={progress}
-          styles={{
-            itemProgress: {
-              height: 0,
-              padding: '2px 0',
-              borderRadius: '0 0 4px 4px'
-            }
-          }}
-        />
-      )}
+      {showProgressIndicator() && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
     </Stack>
   );
 };
