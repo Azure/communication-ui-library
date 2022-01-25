@@ -22,7 +22,7 @@ export interface FileCardProps {
    */
   progress?: number;
   /**
-   * Icon to display for actions like download, upload, etc. on the right of file name.
+   * Icon to display for actions like download, upload, etc. along the file name.
    */
   actionIcon?: JSX.Element;
   /**
