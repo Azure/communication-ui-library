@@ -34,7 +34,8 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  CameraSwitch24Filled
 } from '@fluentui/react-icons';
 import React from 'react';
 
@@ -73,6 +74,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipants: <People20Filled />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  CameraSwitch: <CameraSwitch24Filled />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,

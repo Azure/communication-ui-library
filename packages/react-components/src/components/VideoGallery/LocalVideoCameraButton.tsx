@@ -6,11 +6,11 @@ import React from 'react';
 import { OptionsDevice } from '../DevicesButton';
 
 export interface LocalVideoCameraButtonProps {
-  // array of cameras to cycle through
+  /** Array of cameras available to the user. */
   cameras?: OptionsDevice[];
-  //
+  /** Currently selected camera in the local video stream. */
   currentCamera?: OptionsDevice;
-  // callBack to cycleCamera
+  /** callback function to change video feed. */
   cycleCamera: (device: OptionsDevice) => Promise<void>;
 }
 /**
@@ -23,10 +23,8 @@ export const LocalVideoCameraButton = (props: LocalVideoCameraButtonProps): JSX.
   const { cameras, currentCamera, cycleCamera } = props;
   const localCameraSwitcherStyles: IButtonStyles = {
     root: {
-      zIndex: '3',
       position: 'absolute',
-      right: '0',
-      background: 'blue'
+      right: '0'
     }
   };
   return (
