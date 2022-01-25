@@ -10,7 +10,7 @@ import { hiddenControl } from '../../controlsUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PictureInPictureInPictureStory = (args): JSX.Element => {
-  return <PictureInPictureInPictureComponent primaryVideo={undefined as any} secondaryVideo={undefined as any} />;
+  return <PictureInPictureInPictureComponent />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -22,12 +22,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Picture In Picture In Picture`,
   component: PictureInPictureInPictureComponent,
   argTypes: {
-    isPrimaryVideoEnabled: { control: 'boolean', defaultValue: false, name: 'Is primary video enabled' },
-    isSecondaryVideoEnabled: { control: 'boolean', defaultValue: false, name: 'Is secondary video enabled' },
-
     // Hiding auto-generated controls
-    onClick: hiddenControl,
-    primaryVideo: hiddenControl,
-    secondaryVideo: hiddenControl
+    onClick: hiddenControl
   }
 } as Meta;

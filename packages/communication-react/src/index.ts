@@ -87,6 +87,7 @@ export type {
 } from '../../chat-component-bindings/src';
 
 export {
+  _IdentifierProvider,
   CameraButton,
   ControlBar,
   ControlBarButton,
@@ -110,6 +111,8 @@ export {
 } from '../../react-components/src';
 
 export type {
+  _IdentifierProviderProps,
+  _Identifiers,
   ActiveErrorMessage,
   BaseCustomStyles,
   CallParticipantListParticipant,

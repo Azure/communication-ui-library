@@ -729,8 +729,6 @@ export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps
 // @internal
 export interface _PictureInPictureInPictureProps {
     onClick?: () => void;
-    primaryVideo: VideoTileProps;
-    secondaryVideo: VideoTileProps;
 }
 
 // @public

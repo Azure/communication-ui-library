@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { VideoTileProps } from '../VideoTile';
 
 /**
  * Props for {@link _PictureInPictureInPicture} component.
@@ -14,16 +13,6 @@ export interface _PictureInPictureInPictureProps {
    * Callback when the {@link _PictureInPictureInPicture} is clicked.
    */
   onClick?: () => void;
-
-  /**
-   * Props to display the larger, primary video feed.
-   */
-  primaryVideo: VideoTileProps;
-
-  /**
-   * Props to display the secondary, smaller video feed.
-   */
-  secondaryVideo: VideoTileProps;
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE WHEN PROPS USED (BELOW)
