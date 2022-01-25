@@ -136,7 +136,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     styles,
     userId,
     noVideoAvailableAriaLabel,
-    isSpeaking
+    isSpeaking,
+    renderCameraButton
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -214,11 +215,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           >
             {renderElement}
-            <LocalVideoCameraButton
-              cycleCamera={function (device: OptionsDevice): Promise<void> {
-                throw new Error('Function not implemented.');
-              }}
-            />
+            {renderCameraButton && (
+              <LocalVideoCameraButton
+                cycleCamera={function (device: OptionsDevice): Promise<void> {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            )}
           </Stack>
         ) : (
           <Stack className={mergeStyles(videoContainerStyles)}>

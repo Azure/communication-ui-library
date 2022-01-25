@@ -108,6 +108,7 @@ export type CallCompositeIcons = Partial<
     | 'ControlButtonParticipants'
     | 'ControlButtonScreenShareStart'
     | 'ControlButtonScreenShareStop'
+    | 'CameraSwitch'
     | 'ErrorBarCallCameraAccessDenied'
     | 'ErrorBarCallCameraAlreadyInUse'
     | 'ErrorBarCallLocalVideoFreeze'

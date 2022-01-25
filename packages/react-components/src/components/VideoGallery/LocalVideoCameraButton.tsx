@@ -1,36 +1,44 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IconButton } from '@fluentui/react';
+import { IButtonStyles, IconButton, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from '../DevicesButton';
 
 export interface LocalVideoCameraButtonProps {
   // array of cameras to cycle through
   cameras?: OptionsDevice[];
-  // selected camera
-  selectedCamera?: OptionsDevice;
+  //
+  currentCamera?: OptionsDevice;
   // callBack to cycleCamera
   cycleCamera: (device: OptionsDevice) => Promise<void>;
 }
 /**
- *
+ * local video tile camera cycle button - for use on mobile screens only.
  * @param props
  * @returns
  * @private
  */
 export const LocalVideoCameraButton = (props: LocalVideoCameraButtonProps): JSX.Element => {
-  const { cameras, selectedCamera, cycleCamera } = props;
-
+  const { cameras, currentCamera, cycleCamera } = props;
+  const localCameraSwitcherStyles: IButtonStyles = {
+    root: {
+      zIndex: '3',
+      position: 'absolute',
+      right: '0',
+      background: 'blue'
+    }
+  };
   return (
     <IconButton
-      iconProps={{ iconName: 'Camera Switch' }}
-      ariaLabel={'Cycle Camera Button'} // this needed? is there narrator on mobile?
+      styles={localCameraSwitcherStyles}
+      iconProps={{ iconName: 'CameraSwitch' }}
+      ariaLabel={'Cycle Camera Button'}
       onClick={() => {
-        if (cameras && selectedCamera !== undefined) {
+        if (cameras && currentCamera !== undefined) {
           let newCamera;
-          if (cameras?.indexOf(selectedCamera) < cameras.length) {
-            newCamera = cameras[cameras?.indexOf(selectedCamera) + 1];
+          if (cameras?.indexOf(currentCamera) < cameras.length) {
+            newCamera = cameras[cameras?.indexOf(currentCamera) + 1];
             if (newCamera !== undefined) {
               cycleCamera(newCamera);
             }
