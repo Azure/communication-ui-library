@@ -8,11 +8,11 @@ import {
   MessageProps,
   MessageRenderer,
   MessageThread,
-  SendBox,
-  TypingIndicator,
-  ParticipantMenuItemsCallback,
   MessageThreadStyles,
+  ParticipantMenuItemsCallback,
+  SendBox,
   SendBoxStylesProps,
+  TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
@@ -20,24 +20,22 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+import { FileUploadButton } from './file-sharing/FileUploadButton';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantContainer } from './ParticipantContainer';
+import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 import {
   chatArea,
   chatContainer,
   chatWrapper,
   messageThreadChatCompositeStyles,
-  sendBoxChatCompositeStyles,
-  typingIndicatorChatCompositeStyles,
   participantListContainerPadding,
+  sendboxContainerStyles,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
-
-/* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from './ParticipantContainer';
-import { FileUploadButton } from './file-sharing/FileUploadButton';
-import { useSelector } from './hooks/useSelector';
-import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 
 /**
  * @private
@@ -68,7 +66,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
-  const sendBoxParentStyle = mergeStyles({ width: '100%' });
 
   const adapter = useAdapter();
 
@@ -97,9 +94,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const sendBoxStyles = Object.assign({}, sendBoxChatCompositeStyles, styles?.sendBox);
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
-  const typingIndicatorStyles = Object.assign({}, typingIndicatorChatCompositeStyles, styles?.typingIndicator);
+  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
+  const sendBoxStyles = Object.assign({}, styles?.sendBox);
 
   return (
     <Stack className={chatContainer} grow>
@@ -114,7 +111,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
-          <Stack className={sendBoxParentStyle}>
+          <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)

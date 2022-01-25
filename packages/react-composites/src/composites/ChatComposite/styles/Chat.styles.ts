@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
+import { MessageThreadStyles, TypingIndicatorStylesProps } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
 
@@ -124,13 +124,6 @@ export const participantListStyle = mergeStyles({
 /**
  * @private
  */
-export const sendBoxChatCompositeStyles: SendBoxStylesProps = {
-  textFieldContainer: { maxWidth: MESSAGE_THREAD_WIDTH }
-};
-
-/**
- * @private
- */
 export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: MESSAGE_THREAD_WIDTH } };
 
 /**
@@ -145,7 +138,14 @@ export const typingIndicatorChatCompositeStyles: TypingIndicatorStylesProps = {
  */
 export const typingIndicatorContainerStyles: IStyle = {
   width: '100%',
-  maxWidth: MESSAGE_THREAD_WIDTH,
-  alignSelf: 'center',
   padding: '0rem 0.5rem'
+};
+
+/**
+ * @private
+ */
+export const sendboxContainerStyles: IStyle = {
+  maxWidth: MESSAGE_THREAD_WIDTH,
+  width: '100%',
+  alignSelf: 'center'
 };
