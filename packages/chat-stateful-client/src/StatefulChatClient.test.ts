@@ -166,7 +166,8 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       sender: { kind: 'communicationUser', communicationUserId: 'sender1' },
       senderDisplayName: '',
       message: 'message',
-      recipient: { kind: 'communicationUser', communicationUserId: 'userId1' }
+      recipient: { kind: 'communicationUser', communicationUserId: 'userId1' },
+      metadata: {}
     };
 
     await client.triggerEvent('chatMessageReceived', event);
