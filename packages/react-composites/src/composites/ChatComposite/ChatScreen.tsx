@@ -28,7 +28,7 @@ import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from './ParticipantContainer';
+import { ParticipantContainer } from '../common/ParticipantContainer';
 import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 import {
   chatArea,
