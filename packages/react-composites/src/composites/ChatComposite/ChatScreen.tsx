@@ -9,7 +9,6 @@ import {
   MessageRenderer,
   MessageThread,
   MessageThreadStyles,
-  ParticipantList,
   ParticipantMenuItemsCallback,
   SendBox,
   SendBoxStylesProps,
@@ -18,8 +17,7 @@ import {
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
-/* @conditional-compile-remove-from(stable) */
-import { useLocale } from '../localization';
+
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
@@ -27,18 +25,24 @@ import { FileUploadButton } from './file-sharing/FileUploadButton';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from '../common/ParticipantContainer';
+
 import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 import {
   chatArea,
   chatContainer,
   chatWrapper,
   messageThreadChatCompositeStyles,
-  participantListContainerPadding,
   sendboxContainerStyles,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
+
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantContainer } from '../common/ParticipantContainer';
+/* @conditional-compile-remove-from(stable) */
+import { useLocale } from '../localization';
+import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantList } from '@internal/react-components';
 
 /**
  * @private

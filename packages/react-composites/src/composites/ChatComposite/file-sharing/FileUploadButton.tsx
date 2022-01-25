@@ -54,20 +54,22 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
     fileUploadHandler && fileUploadHandler(userId, uploadedFiles);
   };
 
+  const fileUploadButtonClassName = mergeStyles({
+    width: '1.5rem',
+    height: '1.5rem',
+    cursor: 'pointer',
+    padding: '0.15rem',
+    ':hover': {
+      backgroundColor: theme.palette.neutralLighter
+    }
+  });
+
   return (
     <>
       <Stack
         verticalAlign="center"
         horizontalAlign="center"
-        className={mergeStyles({
-          width: '1.5rem',
-          height: '1.5rem',
-          cursor: 'pointer',
-          padding: '0.15rem',
-          ':hover': {
-            backgroundColor: theme.palette.neutralLighter
-          }
-        })}
+        className={fileUploadButtonClassName}
         onClick={() => inputRef.current?.click()}
       >
         <Icon iconName="Attach" />
