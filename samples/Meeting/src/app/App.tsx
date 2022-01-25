@@ -35,6 +35,8 @@ interface CallArgs {
   displayName: string;
 }
 
+const webAppTitle = document.title;
+
 const App = (): JSX.Element => {
   console.log(
     `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
@@ -44,7 +46,6 @@ const App = (): JSX.Element => {
 
   type AppPages = 'home' | 'meeting' | 'error';
 
-  const webAppTitle = document.title;
   const [page, setPage] = useState<AppPages>('home');
 
   // User credentials to join a meeting chat thread with - these are retrieved from the server
@@ -54,8 +55,8 @@ const App = (): JSX.Element => {
   const [callArgs, setCallArgs] = useState<CallArgs | undefined>(undefined);
 
   // Chat endpoint and thread id
-  const [endpointUrl, setEndpointUrl] = useState('');
-  const [threadId, setThreadId] = useState('');
+  const [endpointUrl, setEndpointUrl] = useState<string | undefined>(undefined);
+  const [threadId, setThreadId] = useState<string | undefined>(undefined);
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -73,15 +74,17 @@ const App = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (callArgs?.displayName && credentials !== undefined) {
-        const newThreadId = await getThread();
-        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
-        if (!result) {
-          alert(ALERT_TEXT_TRY_AGAIN);
-          return;
+        if (threadId === undefined) {
+          const newThreadId = await getThread();
+          const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
+          if (!result) {
+            alert(ALERT_TEXT_TRY_AGAIN);
+            return;
+          }
+          setThreadId(newThreadId);
+          pushQSPUrl({ name: 'threadId', value: newThreadId });
         }
         setEndpointUrl(await getEndpointUrl());
-        setThreadId(newThreadId);
-        pushQSPUrl({ name: 'threadId', value: newThreadId });
       }
     })();
   }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
@@ -105,7 +108,6 @@ const App = (): JSX.Element => {
               callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
             };
             setCallArgs(localCallArgs);
-
             // Update window URL to have a joinable link
             if (!joiningExistingMeeting) {
               const joinParam = isTeamsMeeting
@@ -115,6 +117,9 @@ const App = (): JSX.Element => {
                   }
                 : { name: 'groupId', value: (localCallArgs?.callLocator as GroupCallLocator).groupId };
               pushQSPUrl(joinParam);
+            }
+            if (isTeamsMeeting && callDetails.teamsLink) {
+              setThreadId(getChatThreadFromTeamsLink(callDetails.teamsLink.meetingLink.toString()));
             }
             setPage('meeting');
           }}
