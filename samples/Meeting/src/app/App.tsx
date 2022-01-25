@@ -11,6 +11,7 @@ import {
   chatSDKVersion,
   createGroupId,
   fetchTokenResponse,
+  getChatThreadFromTeamsLink,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
