@@ -135,7 +135,7 @@ export type CustomCallControlButtonPlacement =
   // Sidepane placements
   | 'beforeChatButton'
   | 'afterChatButton'
-  | 'afterPeoplesButton';
+  | 'afterPeopleButton';
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
