@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { ReactChild } from 'react';
+import {
+  PictureInPictureInPicturePrimaryTile,
+  PictureInPictureInPictureSecondaryTile,
+  _PictureInPictureInPictureTileProps
+} from './PictureInPictureInPictureTile';
 
 /**
  * Props for {@link _PictureInPictureInPicture} component.
@@ -13,6 +18,9 @@ export interface _PictureInPictureInPictureProps {
    * Callback when the {@link _PictureInPictureInPicture} is clicked.
    */
   onClick?: () => void;
+
+  primaryTile: _PictureInPictureInPictureTileProps;
+  secondaryTile: _PictureInPictureInPictureTileProps;
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE WHEN PROPS USED (BELOW)
@@ -26,5 +34,37 @@ export interface _PictureInPictureInPictureProps {
  * @internal
  */
 export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProps): JSX.Element => {
-  return <></>;
+  return (
+    <PictureInPictureInPictureContainer
+      onClick={props.onClick}
+      primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
+      secondaryView={<PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+    />
+  );
+};
+/**
+ * Container for the picture in picture in picture component.
+ * This governs positioning and floating of the secondary PiP.
+ */
+const PictureInPictureInPictureContainer = (props: {
+  primaryView: ReactChild;
+  secondaryView: ReactChild;
+  onClick?: () => void;
+}): JSX.Element => (
+  <div style={tileContainerStyles} onClick={props.onClick}>
+    {props.primaryView}
+    <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
+  </div>
+);
+
+const tileContainerStyles: React.CSSProperties = {
+  position: 'relative',
+  cursor: 'pointer'
+};
+
+const secondaryTileFloatingStyles: React.CSSProperties = {
+  // The secondary tile should float above the primary tile, aligned to the bottom right.
+  position: 'absolute',
+  bottom: '0.125rem',
+  right: '0.125rem'
 };
