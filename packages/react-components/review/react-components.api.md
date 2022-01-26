@@ -729,6 +729,16 @@ export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps
 // @internal
 export interface _PictureInPictureInPictureProps {
     onClick?: () => void;
+    // (undocumented)
+    primaryTile: _PictureInPictureInPictureTileProps;
+    // (undocumented)
+    secondaryTile: _PictureInPictureInPictureTileProps;
+}
+
+// @internal (undocumented)
+export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps, 'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'> {
+    // (undocumented)
+    orientation: _TileOrientation;
 }
 
 // @public
@@ -802,6 +812,9 @@ export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     messageType: 'system';
 }
+
+// @internal (undocumented)
+export type _TileOrientation = 'portrait' | 'landscape';
 
 // @public
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
