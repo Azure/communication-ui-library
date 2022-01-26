@@ -91,6 +91,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
  * @internal
  */
 export const FileUploadButtonWrapper = (props: Pick<FileUploadButtonProps, 'fileUploadHandler'>): JSX.Element => {
+  /* @conditional-compile-remove-from(stable) */
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
   /* @conditional-compile-remove-from(stable) */
   return <FileUploadButton {...fileUploadButtonProps} fileUploadHandler={props.fileUploadHandler} />;
