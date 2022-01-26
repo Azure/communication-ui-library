@@ -99,7 +99,7 @@ export type ChatCompositeIcons = Partial<
   >
 > & {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  AttachFile: JSX.Element;
+  AttachFile?: JSX.Element;
 };
 
 /**
