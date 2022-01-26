@@ -102,7 +102,8 @@ export const inlineButtonsContainerStyle: IStyle = {
   right: '0.3rem',
   top: '0',
   bottom: '0',
-  gap: '0.25rem'
+  gap: '0.25rem',
+  alignItems: 'center'
 };
 
 /**
