@@ -11,14 +11,15 @@ import {
   WifiWarning20Filled,
   Info20Filled,
   PersonDelete20Filled,
-  CallEnd20Filled,
-  Attach20Regular
+  CallEnd20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable) */
 import { CameraSwitch24Filled } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { Attach20Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
