@@ -11,42 +11,31 @@ export interface LocalVideoCameraButtonProps {
   /** Currently selected camera in the local video stream. */
   currentCamera?: OptionsDevice;
   /** callback function to change video feed. */
-  cycleCamera: (device: OptionsDevice) => Promise<void>;
+  setCamera: (device: OptionsDevice) => Promise<void>;
 }
 /**
  * local video tile camera cycle button - for use on mobile screens only.
- * @param props
- * @returns
  * @private
  */
-export const LocalVideoCameraButton = (props: LocalVideoCameraButtonProps): JSX.Element => {
-  const { cameras, currentCamera, cycleCamera } = props;
-  const localCameraSwitcherStyles: IButtonStyles = {
+export const LocalVideoCameraCycleButton = (props: LocalVideoCameraButtonProps): JSX.Element => {
+  const { cameras, currentCamera, setCamera } = props;
+  const localVideoCameraCycleButtonStyles: IButtonStyles = {
     root: {
       position: 'absolute',
       right: '0',
-      color: 'white'
+      color: 'white' // only shows up on running video feed to we want to force specific colours.
     }
   };
   return (
     <IconButton
-      styles={localCameraSwitcherStyles}
-      iconProps={{ iconName: 'CameraSwitch' }}
+      styles={localVideoCameraCycleButtonStyles}
+      iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={'Cycle Camera Button'}
       onClick={() => {
         if (cameras && currentCamera !== undefined) {
-          let newCamera;
-          if (cameras?.indexOf(currentCamera) < cameras.length) {
-            newCamera = cameras[cameras?.indexOf(currentCamera) + 1];
-            if (newCamera !== undefined) {
-              cycleCamera(newCamera);
-            }
-          } else {
-            newCamera = cameras[0];
-            if (newCamera !== undefined) {
-              cycleCamera(newCamera);
-            }
-          }
+          const index = cameras.indexOf(currentCamera);
+          const newCamera = cameras[(index + 1) % cameras.length];
+          setCamera(newCamera);
         }
       }}
     />

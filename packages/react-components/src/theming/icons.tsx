@@ -74,7 +74,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipants: <People20Filled />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
-  CameraSwitch: <CameraSwitch24Filled />,
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch: <CameraSwitch24Filled />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
