@@ -96,10 +96,11 @@ export const FileUploadButtonWrapper = (props: Pick<FileUploadButtonProps, 'file
   /* @conditional-compile-remove-from(stable) */
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
   return (
-    <>
+    <div>
+      {/* @conditional-compile-remove-from(beta) */}
       <span></span>
       {/* @conditional-compile-remove-from(stable) */}
       <FileUploadButton {...fileUploadButtonProps} fileUploadHandler={props.fileUploadHandler} />
-    </>
+    </div>
   );
 };
