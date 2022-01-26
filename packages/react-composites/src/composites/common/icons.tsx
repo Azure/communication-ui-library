@@ -14,6 +14,8 @@ import {
   CallEnd20Filled,
   Attach20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable) */
+import { CameraSwitch24Filled } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
@@ -43,6 +45,8 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch: <CameraSwitch24Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
@@ -148,4 +152,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
   >
->;
+> & {
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch?: JSX.Element;
+};
