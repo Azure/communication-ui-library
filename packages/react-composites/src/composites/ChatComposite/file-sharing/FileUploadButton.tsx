@@ -5,7 +5,9 @@ import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { FileUploadHandler } from './FileUploadHandler';
 import { UploadedFile } from './UploadedFile';
+/* @conditional-compile-remove-from(stable) */
 import { useSelector } from '../hooks/useSelector';
+/* @conditional-compile-remove-from(stable) */
 import { fileUploadButtonSelector } from '../selectors/fileUploadButtonSelector';
 
 /**
@@ -95,5 +97,5 @@ export const FileUploadButtonWrapper = (props: Pick<FileUploadButtonProps, 'file
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
   /* @conditional-compile-remove-from(stable) */
   return <FileUploadButton {...fileUploadButtonProps} fileUploadHandler={props.fileUploadHandler} />;
-  return <></>;
+  return <div></div>;
 };
