@@ -3,7 +3,7 @@
 
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { buildCallingUrl } from './utils';
+import { buildUrlWithMockAdapter } from './utils';
 import { dataUiId, pageClick, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { TestRemoteParticipant } from './TestCallingState';
 import { IDS } from '../common/constants';
@@ -27,7 +27,7 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have 1 audio participant', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
-      buildCallingUrl(serverUrl, {
+      buildUrlWithMockAdapter(serverUrl, {
         remoteParticipants: defaultTestRemoteParticipants
       })
     );
@@ -65,7 +65,7 @@ test.describe('HorizontalGallery tests', async () => {
       }
     ]);
     await page.goto(
-      buildCallingUrl(serverUrl, {
+      buildUrlWithMockAdapter(serverUrl, {
         remoteParticipants: testRemoteParticipants
       })
     );

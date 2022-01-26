@@ -12,10 +12,10 @@ import { TestCallingState } from './TestCallingState';
  * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
-export const buildCallingUrl = (
+export const buildUrlWithMockAdapter = (
   serverUrl: string,
-  state: TestCallingState,
+  state?: TestCallingState,
   qArgs?: { [key: string]: string }
 ): string => {
-  return `${serverUrl}?${encodeQueryData({ state: JSON.stringify(state), ...qArgs })}`;
+  return `${serverUrl}?${encodeQueryData({ useMockAdapter: 'true', state: JSON.stringify(state), ...qArgs })}`;
 };

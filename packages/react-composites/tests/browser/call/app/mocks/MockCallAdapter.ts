@@ -10,13 +10,18 @@ import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState'
  * Mock class that implements CallAdapter interface for UI snapshot tests
  */
 export class MockCallAdapter implements CallAdapter {
-  constructor(testState: TestCallingState) {
+  constructor(testState?: TestCallingState) {
+    this.state = defaultCallAdapterState;
+
+    if (!testState) {
+      return;
+    }
+
     const remoteParticipants = createMockRemoteParticipants(testState.remoteParticipants);
 
     if (defaultCallAdapterState.call) {
       defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
     }
-    this.state = defaultCallAdapterState;
   }
 
   state: CallAdapterState;

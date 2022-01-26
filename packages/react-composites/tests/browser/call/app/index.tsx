@@ -39,23 +39,22 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      let newAdapter: CallAdapter = undefined;
-      if (state) {
-        newAdapter = new MockCallAdapter(state);
+      if (params.useMockAdapter) {
+        setCallAdapter(new MockCallAdapter(state));
       } else {
         const displayName = verifyParamExists(params.displayName, 'displayName');
         const token = verifyParamExists(params.token, 'token');
         const groupId = verifyParamExists(params.groupId, 'groupId');
         const userId = verifyParamExists(params.userId, 'userId');
 
-        newAdapter = await createAzureCommunicationCallAdapter({
+        const newAdapter = await createAzureCommunicationCallAdapter({
           userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           locator: { groupId: groupId }
         });
+        setCallAdapter(wrapAdapterForTests(newAdapter));
       }
-      setCallAdapter(wrapAdapterForTests(newAdapter));
     };
 
     initialize();
