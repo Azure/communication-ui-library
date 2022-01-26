@@ -17,7 +17,8 @@ export class MockCallAdapter implements CallAdapter {
       return;
     }
 
-    const remoteParticipants = createMockRemoteParticipants(testState.remoteParticipants);
+    const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+    Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
 
     if (this.state.call) {
       this.state.call.remoteParticipants = remoteParticipants;
@@ -136,18 +137,44 @@ export class MockCallAdapter implements CallAdapter {
  * @param mockRemoteParticipants - array of TestRemoteParticipant
  * @returns Record of RemoteParticipantState
  */
-
-const createMockRemoteParticipants = (
+const convertTestParticipantsToCallAdapterStateParticipants = (
   mockRemoteParticipants: TestRemoteParticipant[]
 ): Record<string, RemoteParticipantState> => {
   const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
-  // Incrementing participant key starting at 1
+  //Incrementing participant key starting from 1
   let participantKey = 1;
 
   for (const remoteParticipant of mockRemoteParticipants) {
-    let view: VideoStreamRendererViewState | undefined = undefined;
-    if (remoteParticipant.isVideoStreamAvailable) {
+    remoteParticipants[participantKey] = {
+      identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
+      state: 'Connected',
+      videoStreams: {
+        1: {
+          id: 1,
+          mediaStreamType: 'Video',
+          isAvailable: !!remoteParticipant.isVideoStreamAvailable
+        }
+      },
+      isMuted: !!remoteParticipant.isMuted,
+      isSpeaking: !!remoteParticipant.isSpeaking,
+      displayName: remoteParticipant.displayName
+    };
+
+    participantKey++;
+  }
+
+  return remoteParticipants;
+};
+
+/**
+ * Helper function to add mock video element to RemoteParticipantState
+ * @param remoteParticipant - RemoteParticipantState
+ * @returns void
+ */
+const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
+  for (const videoStream of Object.values(remoteParticipant.videoStreams)) {
+    if (videoStream.isAvailable) {
       const mockVideoElement = document.createElement('div');
       mockVideoElement.innerHTML = '<span />';
       mockVideoElement.style.width = decodeURIComponent('100%25');
@@ -155,30 +182,11 @@ const createMockRemoteParticipants = (
       mockVideoElement.style.background = stringToHexColor(remoteParticipant.displayName);
       mockVideoElement.style.backgroundPosition = 'center';
       mockVideoElement.style.backgroundRepeat = 'no-repeat';
-      view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
+      const view: VideoStreamRendererViewState = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
+      videoStream.view = view;
     }
-
-    remoteParticipants[participantKey] = {
-      identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
-      state: 'Connected',
-      videoStreams: {
-        '1': {
-          id: 1,
-          mediaStreamType: 'Video',
-          isAvailable: !!remoteParticipant.isVideoStreamAvailable,
-          view: view
-        }
-      },
-      isMuted: !!remoteParticipant.isMuted,
-      isSpeaking: !!remoteParticipant.isSpeaking,
-      displayName: remoteParticipant.displayName
-    };
-    participantKey++;
   }
-
-  return remoteParticipants;
 };
-
 /**
  * Helper function to randomly choose a background color for mocking a video stream
  * @param str - input string
