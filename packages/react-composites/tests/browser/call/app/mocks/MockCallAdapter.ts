@@ -17,10 +17,9 @@ export class MockCallAdapter implements CallAdapter {
       return;
     }
 
-    const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-    Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-
     if (this.state.call) {
+      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
       this.state.call.remoteParticipants = remoteParticipants;
     }
   }
