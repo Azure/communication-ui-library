@@ -49,6 +49,7 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   AttachFile: <Attach20Regular />
 };
 
@@ -91,9 +92,12 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
-    | 'AttachFile'
   >
->;
+> & {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  AttachFile: JSX.Element;
+};
+
 /**
  * Icons that can be overridden for {@link CallComposite}.
  *

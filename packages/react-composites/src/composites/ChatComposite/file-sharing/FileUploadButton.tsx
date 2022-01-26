@@ -5,9 +5,9 @@ import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { FileUploadHandler } from './FileUploadHandler';
 import { UploadedFile } from './UploadedFile';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadButtonSelector } from '../selectors/fileUploadButtonSelector';
 
 /**
@@ -92,15 +92,13 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
  * It will return `<></>` for stable builds.
  * @internal
  */
-export const FileUploadButtonWrapper = (props: Pick<FileUploadButtonProps, 'fileUploadHandler'>): JSX.Element => {
-  /* @conditional-compile-remove-from(stable) */
+export const FileUploadButtonWrapper = (): JSX.Element => {
+  return <div>{FileUploadConditionalCode()}</div>;
+};
+
+const FileUploadConditionalCode = () => {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
-  return (
-    <div>
-      {/* @conditional-compile-remove-from(beta) */}
-      <span></span>
-      {/* @conditional-compile-remove-from(stable) */}
-      <FileUploadButton {...fileUploadButtonProps} fileUploadHandler={props.fileUploadHandler} />
-    </div>
-  );
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  return <FileUploadButton {...fileUploadButtonProps} />;
 };
