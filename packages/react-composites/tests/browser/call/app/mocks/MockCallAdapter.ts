@@ -19,8 +19,8 @@ export class MockCallAdapter implements CallAdapter {
 
     const remoteParticipants = createMockRemoteParticipants(testState.remoteParticipants);
 
-    if (defaultCallAdapterState.call) {
-      defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
+    if (this.state.call) {
+      this.state.call.remoteParticipants = remoteParticipants;
     }
   }
 
