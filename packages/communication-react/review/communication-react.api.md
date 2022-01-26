@@ -282,7 +282,7 @@ export interface CallClientState {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff'>> & {
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff'>> & /* @conditional-compile-remove-from(stable) */ {
     LocalCameraSwitch?: JSX.Element;
 };
 
@@ -1049,7 +1049,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageRemovedFromCall: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
+    ControlButtonEndCall: JSX.Element; /**
+    * The default set of icons that are available to used in the Composites.
+    *
+    * @public
+    */
     ControlButtonMicOff: JSX.Element;
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
