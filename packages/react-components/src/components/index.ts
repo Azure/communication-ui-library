@@ -81,3 +81,10 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+
+export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
+export type { _PictureInPictureInPictureProps } from './PictureInPictureInPicture/PictureInPictureInPicture';
+export type {
+  _PictureInPictureInPictureTileProps,
+  _TileOrientation
+} from './PictureInPictureInPicture/PictureInPictureInPictureTile';
