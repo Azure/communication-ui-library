@@ -5,6 +5,9 @@ import { IButtonStyles, IconButton } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from '@internal/react-components/src/components/DevicesButton';
 
+/**
+ * @internal
+ */
 export interface LocalVideoCameraButtonProps {
   /** Array of cameras available to the user. */
   cameras: OptionsDevice[];
