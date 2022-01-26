@@ -133,36 +133,31 @@ export class MockCallAdapter implements CallAdapter {
 }
 
 /**
- * Helper function to create remoteParticipants property of CallAdapterState from an array of TestRemoteParticipant
+ * Helper function to convert array of TestRemoteParticipant to record of RemoteParticipantState
  * @param mockRemoteParticipants - array of TestRemoteParticipant
  * @returns Record of RemoteParticipantState
  */
 const convertTestParticipantsToCallAdapterStateParticipants = (
-  mockRemoteParticipants: TestRemoteParticipant[]
+  testRemoteParticipants: TestRemoteParticipant[]
 ): Record<string, RemoteParticipantState> => {
   const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
-  //Incrementing participant key starting from 1
-  let participantKey = 1;
-
-  for (const remoteParticipant of mockRemoteParticipants) {
-    remoteParticipants[participantKey] = {
-      identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
+  testRemoteParticipants.forEach((testRemoteParticipant, i) => {
+    remoteParticipants[i] = {
+      identifier: { kind: 'communicationUser', communicationUserId: `${i}` },
       state: 'Connected',
       videoStreams: {
         1: {
           id: 1,
           mediaStreamType: 'Video',
-          isAvailable: !!remoteParticipant.isVideoStreamAvailable
+          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable
         }
       },
-      isMuted: !!remoteParticipant.isMuted,
-      isSpeaking: !!remoteParticipant.isSpeaking,
-      displayName: remoteParticipant.displayName
+      isMuted: !!testRemoteParticipant.isMuted,
+      isSpeaking: !!testRemoteParticipant.isSpeaking,
+      displayName: testRemoteParticipant.displayName
     };
-
-    participantKey++;
-  }
+  });
 
   return remoteParticipants;
 };
@@ -175,6 +170,8 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
 const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
   for (const videoStream of Object.values(remoteParticipant.videoStreams)) {
     if (videoStream.isAvailable) {
+      // The video is an empty html5 video element with a colored background. To ensure a consistent color the background color
+      // is the hex representation of the participant's display name.
       const mockVideoElement = document.createElement('div');
       mockVideoElement.innerHTML = '<span />';
       mockVideoElement.style.width = decodeURIComponent('100%25');
