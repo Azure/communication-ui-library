@@ -131,7 +131,11 @@ export type CustomCallControlButtonPlacement =
   | 'afterMicrophoneButton'
   | 'afterOptionsButton'
   | 'afterParticipantsButton'
-  | 'afterScreenShareButton';
+  | 'afterScreenShareButton'
+  // Sidepane placements
+  | 'beforeChatButton'
+  | 'afterChatButton'
+  | 'afterPeoplesButton';
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
