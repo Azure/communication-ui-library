@@ -4,12 +4,13 @@
 const path = require('path');
 const webpack = require('webpack4');
 
-const PRODUCTION_BUILD = !!process.env.PRODUCTION;
+const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
+console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
 
 module.exports = {
   // Include all stories that have .ts, .tsx or .mdx extensions. When in production do not
   // include the INTERNAL/ folder.
-  stories: [`../stories/${PRODUCTION_BUILD ? '!(INTERNAL)/' : ''}**/*.stories.@(ts|tsx|mdx)`],
+  stories: [`../stories/${!DEVELOPMENT_BUILD ? '!(INTERNAL)/' : ''}**/*.stories.@(ts|tsx|mdx)`],
   // Speeds up webpack build time after every code change. Improvements of up
   // to 4-5 seconds can be seen. Comment if components don't render properly.
   typescript: { reactDocgen: 'react-docgen' },
