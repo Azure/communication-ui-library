@@ -146,5 +146,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
   >
-  // eslint-disable-next-line prettier/prettier
-> /* @conditional-compile-remove-from(stable) */ & { LocalCameraSwitch?: JSX.Element };
+> & {
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch?: JSX.Element;
+};
