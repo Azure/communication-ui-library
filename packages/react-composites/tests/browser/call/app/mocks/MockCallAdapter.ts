@@ -127,24 +127,6 @@ export class MockCallAdapter implements CallAdapter {
 }
 
 /**
- * A helper function to randomly choose a background color for mocking a video stream
- * @param str - input string
- * @returns hex color code as a string
- */
-const stringToHexColor = (str: string): string => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = '#';
-  for (let i = 0; i < 3; i++) {
-    const value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
-};
-
-/**
  * Helper function to create remoteParticipants property of CallAdapterState from an array of TestRemoteParticipant
  * @param mockRemoteParticipants - array of TestRemoteParticipant
  * @returns Record of RemoteParticipantState
@@ -190,6 +172,24 @@ const createMockRemoteParticipants = (
   }
 
   return remoteParticipants;
+};
+
+/**
+ * Helper function to randomly choose a background color for mocking a video stream
+ * @param str - input string
+ * @returns hex color code as a string
+ */
+const stringToHexColor = (str: string): string => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let colour = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
 };
 
 /**
