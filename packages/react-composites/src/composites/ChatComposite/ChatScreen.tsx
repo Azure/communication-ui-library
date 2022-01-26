@@ -21,10 +21,9 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileUploadButton } from './file-sharing/FileUploadButton';
+import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/FileUploadButton';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { useSelector } from './hooks/useSelector';
 
 import {
   chatArea,
@@ -35,8 +34,6 @@ import {
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 
-/* @conditional-compile-remove-from(stable): file sharing */
-import { fileUploadButtonSelector } from './selectors/fileUploadButtonSelector';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantContainer } from '../common/ParticipantContainer';
 /* @conditional-compile-remove-from(stable) */
@@ -91,8 +88,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
-  /* @conditional-compile-remove-from(stable): file sharing */
-  const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
   /* @conditional-compile-remove-from(stable) */
   const participantListProps = usePropsFor(ParticipantList);
 
@@ -136,8 +131,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
-            {/* @conditional-compile-remove-from(stable): file sharing */}
-            <FileUploadButton {...fileUploadButtonProps} />
+            <FileUploadButton />
           </Stack>
         </Stack>
         {
