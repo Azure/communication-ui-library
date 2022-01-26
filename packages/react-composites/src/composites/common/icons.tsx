@@ -95,12 +95,12 @@ export type ChatCompositeIcons = Partial<
     | 'EditBoxSubmit'
   >
 >;
+
 /**
  * Icons that can be overridden for {@link CallComposite}.
  *
  * @public
  */
-
 export type CallCompositeIcons = Partial<
   Pick<
     CompositeIcons,
@@ -146,5 +146,5 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
   >
-> & /* @conditional-compile-remove-from(stable) */
-{ LocalCameraSwitch?: JSX.Element };
+  // eslint-disable-next-line prettier/prettier
+> /* @conditional-compile-remove-from(stable) */ & { LocalCameraSwitch?: JSX.Element };
