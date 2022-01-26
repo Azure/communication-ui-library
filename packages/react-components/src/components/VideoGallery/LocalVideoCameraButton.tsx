@@ -13,19 +13,21 @@ export interface LocalVideoCameraButtonProps {
   /** callback function to change video feed. */
   setCamera: (device: OptionsDevice) => Promise<void>;
 }
+
+const localVideoCameraCycleButtonStyles: IButtonStyles = {
+  root: {
+    position: 'absolute',
+    right: '0',
+    color: 'white' // only shows up on running video feed to we want to force specific colours.
+  }
+};
 /**
  * local video tile camera cycle button - for use on mobile screens only.
  * @private
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraButtonProps): JSX.Element => {
   const { cameras, currentCamera, setCamera } = props;
-  const localVideoCameraCycleButtonStyles: IButtonStyles = {
-    root: {
-      position: 'absolute',
-      right: '0',
-      color: 'white' // only shows up on running video feed to we want to force specific colours.
-    }
-  };
+
   return (
     <IconButton
       styles={localVideoCameraCycleButtonStyles}
