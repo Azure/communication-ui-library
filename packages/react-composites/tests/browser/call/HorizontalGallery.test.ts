@@ -4,7 +4,7 @@
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { buildCallingUrl } from './utils';
-import { dataUiId, delay, pageClick, waitForSelector } from '../common/utils';
+import { dataUiId, pageClick, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { TestRemoteParticipant } from './TestCallingState';
 import { IDS } from '../common/constants';
 
@@ -33,8 +33,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
     // Click off the screen to turn away initial aria label
     await page.mouse.click(-1, -1);
-    // Need to wait 500 milliseconds tto allow component text to render
-    await delay(500);
+    await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery.png');
   });
 
@@ -72,8 +71,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
     // Click off the screen to turn away initial aria label
     await page.mouse.click(-1, -1);
-    // Need to wait 500 milliseconds tto allow component text to render
-    await delay(500);
+    await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));

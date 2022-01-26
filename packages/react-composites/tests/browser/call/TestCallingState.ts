@@ -5,7 +5,7 @@
  * Calling state passed to set up playwright test as a query argument
  */
 export type TestCallingState = {
-  remoteParticipants: TestRemoteParticipant[];
+  remoteParticipants?: TestRemoteParticipant[];
 };
 
 /**

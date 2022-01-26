@@ -73,7 +73,7 @@ export async function waitForFunction<R>(
  * Wait for page fonts to have loaded. This is because we sometimes see test failures due to
  * font differences where it looks like the Segoe UI font has not yet loaded.
  */
-const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
+export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
     await document.fonts.ready;
   });
@@ -211,10 +211,3 @@ export const buildUrl = (
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
-
-/**
- * Delay a test for an amount of time in milliseconds
- * @param ms - Milliseconds of delay
- * @returns void
- */
-export const delay = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms));

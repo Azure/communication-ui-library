@@ -4,50 +4,18 @@ import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, PermissionConstraints, VideoDeviceInfo, Call } from '@azure/communication-calling';
 import { RemoteParticipantState, VideoStreamRendererViewState } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallAdapter } from '../../../../../src';
-import { TestCallingState } from '../../TestCallingState';
+import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests
  */
 export class MockCallAdapter implements CallAdapter {
-  constructor(state: TestCallingState) {
-    const remoteParticipants: Record<string, RemoteParticipantState> = {};
+  constructor(testState: TestCallingState) {
+    const remoteParticipants = createMockRemoteParticipants(testState.remoteParticipants);
 
-    // Incrementing participant key starting at 1
-    let participantKey = 1;
-
-    for (const remoteParticipant of state.remoteParticipants) {
-      let view: VideoStreamRendererViewState | undefined = undefined;
-      if (remoteParticipant.isVideoStreamAvailable) {
-        const mockVideoElement = document.createElement('div');
-        mockVideoElement.innerHTML = '<span />';
-        mockVideoElement.style.width = decodeURIComponent('100%25');
-        mockVideoElement.style.height = decodeURIComponent('100%25');
-        mockVideoElement.style.background = stringToHexColor(remoteParticipant.displayName);
-        mockVideoElement.style.backgroundPosition = 'center';
-        mockVideoElement.style.backgroundRepeat = 'no-repeat';
-        view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
-      }
-
-      remoteParticipants[participantKey] = {
-        identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
-        state: 'Connected',
-        videoStreams: {
-          '1': {
-            id: 1,
-            mediaStreamType: 'Video',
-            isAvailable: !!remoteParticipant.isVideoStreamAvailable,
-            view: view
-          }
-        },
-        isMuted: !!remoteParticipant.isMuted,
-        isSpeaking: !!remoteParticipant.isSpeaking,
-        displayName: remoteParticipant.displayName
-      };
-      participantKey++;
+    if (defaultCallAdapterState.call) {
+      defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
     }
-
-    defaultCallAdapterState.call.remoteParticipants = remoteParticipants;
     this.state = defaultCallAdapterState;
   }
 
@@ -174,6 +142,54 @@ const stringToHexColor = (str: string): string => {
     colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
+};
+
+/**
+ * Helper function to create remoteParticipants property of CallAdapterState from an array of TestRemoteParticipant
+ * @param mockRemoteParticipants - array of TestRemoteParticipant
+ * @returns Record of RemoteParticipantState
+ */
+
+const createMockRemoteParticipants = (
+  mockRemoteParticipants: TestRemoteParticipant[]
+): Record<string, RemoteParticipantState> => {
+  const remoteParticipants: Record<string, RemoteParticipantState> = {};
+
+  // Incrementing participant key starting at 1
+  let participantKey = 1;
+
+  for (const remoteParticipant of mockRemoteParticipants) {
+    let view: VideoStreamRendererViewState | undefined = undefined;
+    if (remoteParticipant.isVideoStreamAvailable) {
+      const mockVideoElement = document.createElement('div');
+      mockVideoElement.innerHTML = '<span />';
+      mockVideoElement.style.width = decodeURIComponent('100%25');
+      mockVideoElement.style.height = decodeURIComponent('100%25');
+      mockVideoElement.style.background = stringToHexColor(remoteParticipant.displayName);
+      mockVideoElement.style.backgroundPosition = 'center';
+      mockVideoElement.style.backgroundRepeat = 'no-repeat';
+      view = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
+    }
+
+    remoteParticipants[participantKey] = {
+      identifier: { kind: 'communicationUser', communicationUserId: `${participantKey}` },
+      state: 'Connected',
+      videoStreams: {
+        '1': {
+          id: 1,
+          mediaStreamType: 'Video',
+          isAvailable: !!remoteParticipant.isVideoStreamAvailable,
+          view: view
+        }
+      },
+      isMuted: !!remoteParticipant.isMuted,
+      isSpeaking: !!remoteParticipant.isSpeaking,
+      displayName: remoteParticipant.displayName
+    };
+    participantKey++;
+  }
+
+  return remoteParticipants;
 };
 
 /**
