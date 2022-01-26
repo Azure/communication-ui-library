@@ -131,11 +131,27 @@ export type CustomCallControlButtonPlacement =
   | 'afterMicrophoneButton'
   | 'afterOptionsButton'
   | 'afterParticipantsButton'
-  | 'afterScreenShareButton'
-  // Sidepane placements
-  | 'beforeChatButton'
-  | 'afterChatButton'
-  | 'afterPeoplesButton';
+  | 'afterScreenShareButton';
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+/**
+ * Placement for a custom button injected in the {@link CallControls} for
+ * MeetingCallControlBar sidepane buttons.
+ *
+ * 'first': Place the button on the left end (right end in rtl mode).
+ * 'afterChatButton': Place the button on the right (left in rtl mode) of the Chat button.
+ * ... and so on.
+ *
+ * It is an error to place the button in reference to another button that has
+ * been hidden via a {@link CallControlOptions} field.
+ *
+ * Multiple buttons placed in the same position are appended in order.
+ * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
+ * in the order provided.
+ *
+ * @beta
+ */
+export type CustomMeetingControlButtonPlacement = 'first' | 'last' | 'afterChatButton';
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
@@ -178,7 +194,7 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
   /**
    * Where to place the custom button relative to other buttons.
    */
-  placement: CustomCallControlButtonPlacement;
+  placement: CustomCallControlButtonPlacement | CustomMeetingControlButtonPlacement;
 }
 
 /**
