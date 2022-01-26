@@ -1,8 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
+import React, { useMemo } from 'react';
+import {
+  CallControlOptions,
+  CallControls,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonPlacement,
+  CustomCallControlButtonProps
+} from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
@@ -13,6 +19,9 @@ import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+/* @conditional-compile-remove-from(stable): custom button injection */
+import { ControlBarButton } from '@internal/react-components';
+
 /**
  * @private
  */
@@ -73,6 +82,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    */
   const isEnabled = (option: boolean | undefined): boolean => !(option === false);
 
+  /* @conditional-compile-remove-from(stable): custom button injection*/
+  const isCustomButtonEnabled = (option: CustomCallControlButtonCallback[] | undefined): boolean =>
+    !(option === undefined || option.length == 0);
+
   // Reduce the controls shown when mobile view is enabled.
   if (props.mobileView) {
     callControlOptions = reduceCallControlsForMobile(callControlOptions);
@@ -83,6 +96,18 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    * control bar such that all controls can be accessed.
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+
+  /* @conditional-compile-remove-from(stable): custom button injection*/
+  const options = typeof props.callControls === 'boolean' ? {} : props.callControls;
+
+  //TODO
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  const customButtonProps = useMemo(() => {
+    if (!options || !options.onFetchCustomButtonProps) {
+      return [];
+    }
+    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
+  }, [options?.onFetchCustomButtonProps, options?.displayType]);
 
   return (
     <Stack
@@ -96,6 +121,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       </Stack.Item>
       {meetingCallControlOptions !== false && (
         <Stack.Item>
+          {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'beforeChatButton'} />
+          )}
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
             <ChatButton
               checked={props.chatButtonChecked}
@@ -105,6 +134,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
             />
+          )}
+          {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterChatButton'} />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
@@ -116,8 +149,28 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               label={meetingStrings.peopleButtonLabel}
             />
           )}
+          {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
+            /* @conditional-compile-remove-from(stable): custom button injection */
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterPeoplesButton'} />
+          )}
         </Stack.Item>
       )}
     </Stack>
+  );
+};
+
+/* @conditional-compile-remove-from(stable): custom button injection */
+const FilteredCustomButtons = (props: {
+  customButtonProps: CustomCallControlButtonProps[];
+  placement: CustomCallControlButtonPlacement;
+}): JSX.Element => {
+  return (
+    <>
+      {props.customButtonProps
+        .filter((buttonProps) => buttonProps.placement === props.placement)
+        .map((buttonProps, i) => (
+          <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
+        ))}
+    </>
   );
 };
