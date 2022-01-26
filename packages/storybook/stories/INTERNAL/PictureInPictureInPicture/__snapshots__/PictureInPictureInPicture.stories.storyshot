@@ -19,7 +19,58 @@ exports[`storybook snapshot tests Storyshots UI Components/Internal/Picture In P
           "justifyContent": "center",
         }
       }
-    />
+    >
+      <div
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-6"
+          data-ui-id="video-tile"
+        >
+          <div
+            className="css-4"
+          />
+          <div
+            className="ms-Stack css-7"
+          >
+            <div
+              className="css-8"
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "bottom": "0.125rem",
+              "position": "absolute",
+              "right": "0.125rem",
+            }
+          }
+        >
+          <div
+            className="ms-Stack css-11"
+            data-ui-id="video-tile"
+          >
+            <div
+              className="css-4"
+            />
+            <div
+              className="ms-Stack css-12"
+            >
+              <div
+                className="css-8"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
