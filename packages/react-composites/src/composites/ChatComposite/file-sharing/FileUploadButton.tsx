@@ -96,8 +96,8 @@ export const FileUploadButtonWrapper = (): JSX.Element => {
   return <div>{FileUploadConditionalCode()}</div>;
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const FileUploadConditionalCode = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FileUploadConditionalCode = (): any => {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
