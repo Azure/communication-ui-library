@@ -32,9 +32,9 @@ export type CallingHandlers = {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => Call | undefined;
-  onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-  onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-  onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+  onSelectMicrophone: (device: Pick<AudioDeviceInfo, 'name' | 'id'>) => Promise<void>;
+  onSelectSpeaker: (device: Pick<AudioDeviceInfo, 'name' | 'id'>) => Promise<void>;
+  onSelectCamera: (device: Pick<VideoDeviceInfo, 'name' | 'id'>, options?: VideoStreamOptions) => Promise<void>;
   onToggleMicrophone: () => Promise<void>;
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
@@ -142,28 +142,31 @@ export const createDefaultCallingHandlers = memoizeOne(
       return callAgent ? callAgent.startCall(participants, options) : undefined;
     };
 
-    const onSelectMicrophone = async (device: AudioDeviceInfo): Promise<void> => {
+    const onSelectMicrophone = async (device: Pick<AudioDeviceInfo, 'name' | 'id'>): Promise<void> => {
       if (!deviceManager) {
         return;
       }
-      return deviceManager.selectMicrophone(device);
+      return deviceManager.selectMicrophone(device as AudioDeviceInfo);
     };
 
-    const onSelectSpeaker = async (device: AudioDeviceInfo): Promise<void> => {
+    const onSelectSpeaker = async (device: Pick<AudioDeviceInfo, 'name' | 'id'>): Promise<void> => {
       if (!deviceManager) {
         return;
       }
-      return deviceManager.selectSpeaker(device);
+      return deviceManager.selectSpeaker(device as AudioDeviceInfo);
     };
 
-    const onSelectCamera = async (device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> => {
+    const onSelectCamera = async (
+      device: Pick<VideoDeviceInfo, 'name' | 'id'>,
+      options?: VideoStreamOptions
+    ): Promise<void> => {
       if (!deviceManager) {
         return;
       }
       if (call && _isInCall(call.state)) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        return stream?.switchSource(device);
+        return stream?.switchSource(device as VideoDeviceInfo);
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
@@ -179,7 +182,7 @@ export const createDefaultCallingHandlers = memoizeOne(
           undefined,
           undefined,
           {
-            source: device,
+            source: device as VideoDeviceInfo,
             mediaStreamType: 'Video'
           },
           options
