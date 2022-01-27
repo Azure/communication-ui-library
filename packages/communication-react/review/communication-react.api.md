@@ -1049,11 +1049,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageRemovedFromCall: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element; /**
-    * The default set of icons that are available to used in the Composites.
-    *
-    * @public
-    */
+    ControlButtonEndCall: JSX.Element;
     ControlButtonMicOff: JSX.Element;
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
@@ -1480,6 +1476,7 @@ export interface MeetingCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    pictureInPictureTileAriaLabel: string;
 }
 
 // @beta
