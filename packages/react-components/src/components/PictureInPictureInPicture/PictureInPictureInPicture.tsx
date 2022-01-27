@@ -20,10 +20,9 @@ export interface _PictureInPictureInPictureProps {
   onClick?: () => void;
 
   primaryTile: _PictureInPictureInPictureTileProps;
-  secondaryTile: _PictureInPictureInPictureTileProps;
+  secondaryTile?: _PictureInPictureInPictureTileProps;
 }
 
-/* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE WHEN PROPS USED (BELOW)
 /**
  * Component that displays a video feed for use as a Picture-in-Picture style component.
  * It contains a secondary video feed resulting in an inner Picture-in-Picture style feed.
@@ -38,7 +37,7 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
       primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
-      secondaryView={<PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+      secondaryView={props.secondaryTile && <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
     />
   );
 };
@@ -48,16 +47,34 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
  */
 const PictureInPictureInPictureContainer = (props: {
   primaryView: ReactChild;
-  secondaryView: ReactChild;
+  secondaryView?: ReactChild;
   onClick?: () => void;
 }): JSX.Element => (
-  <div style={tileContainerStyles} onClick={props.onClick}>
+  <aside
+    style={tileContainerStyles}
+    onClick={props.onClick}
+    onKeyPress={(e) => props.onClick && handleKeyDown(e, props.onClick)}
+    aria-label="Some label"
+    tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
+  >
     {props.primaryView}
     <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
-  </div>
+  </aside>
 );
 
+/**
+ * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as click
+ */
+const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () => void): void => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    // If the PiP is clicked through keyboard, perform the onClick behavior only.
+    e.preventDefault();
+    onClickCallback();
+  }
+};
+
 const tileContainerStyles: React.CSSProperties = {
+  display: 'inline-block',
   position: 'relative',
   cursor: 'pointer'
 };
