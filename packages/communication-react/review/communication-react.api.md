@@ -594,7 +594,7 @@ export type ChatCompositeClientState = {
 
 // @public
 export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>> & {
-    AttachFile?: JSX.Element;
+    SendBoxAttachFile?: JSX.Element;
 };
 
 // @public
@@ -867,7 +867,7 @@ export const COMPOSITE_ONLY_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
-    AttachFile: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
 };
 
 // @public
@@ -1059,7 +1059,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
-    AttachFile: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;

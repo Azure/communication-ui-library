@@ -91,7 +91,7 @@ export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { m
  * @private
  */
 export const typingIndicatorContainerStyles: IStyle = {
-  padding: '0rem 0.5rem'
+  padding: '0rem 0.25rem'
 };
 
 /**
