@@ -123,7 +123,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         <Stack.Item>
           {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarRight.first'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarEnd.first'} />
           )}
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
             <ChatButton
@@ -139,7 +139,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons
               customButtonProps={customButtonProps}
-              placement={'desktop.controlBarRight.afterChatButton'}
+              placement={'desktop.controlBarEnd.afterChatButton'}
             />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
@@ -154,7 +154,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           )}
           {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarRight.last'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarEnd.last'} />
           )}
         </Stack.Item>
       )}

@@ -122,11 +122,9 @@ export type CallControlOptions = {
  */
 export type CustomCallControlButtonPlacement =
   | `desktop.controlBarCenter.${CustomCallControlBarCenterPlacement}`
-  | `desktop.controlBarRight.${CustomCallControlBarRightPlacement}`
-  // | `desktop.overflow.${CustomCallControlBarCenterPlacement}`
-  // | `mobile.overflow.${CustomCallControlBarCenterPlacement}`
+  | `desktop.controlBarEnd.${CustomCallControlBarEndPlacement}`
   | `mobile.controlBarCenter.${CustomCallControlBarCenterPlacement}`
-  | `mobile.controlBarRight.${CustomCallControlBarRightPlacement}`;
+  | `mobile.controlBarEnd.${CustomCallControlBarEndPlacement}`;
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
@@ -173,7 +171,7 @@ export type CustomCallControlBarCenterPlacement =
  *
  * @beta
  */
-export type CustomCallControlBarRightPlacement = 'first' | 'last' | 'afterChatButton';
+export type CustomCallControlBarEndPlacement = 'first' | 'last' | 'afterChatButton';
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
@@ -342,8 +340,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
     />
   );
-
-  const controlBarCenterFirst = { desktop: { controlBarCenter: { placement: 'first' } } };
 
   return (
     <Stack horizontalAlign="center">
