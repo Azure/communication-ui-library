@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Created new Notification Icon for the chat button in the meeting composite.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
