@@ -9,6 +9,7 @@ import {
   _PictureInPictureInPicture,
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
+import { useLocale } from '../../localization';
 
 /**
  * @private
@@ -78,9 +79,18 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [props.dominantRemoteParticipant]
   );
 
+  const ariaLabel = useLocale().strings.meeting.pictureInPictureTileAriaLabel;
+  const strings = useMemo(
+    () => ({
+      rootAriaLabel: ariaLabel
+    }),
+    [ariaLabel]
+  );
+
   return (
     <_PictureInPictureInPicture
       onClick={props.onClick}
+      strings={strings}
       // If there are no remote participants, show the local participant as the primary tile
       primaryTile={remoteVideoTile ?? localVideoTile}
       // If we are showing the local participant as the primary tile, show nothing for the secondary tile
