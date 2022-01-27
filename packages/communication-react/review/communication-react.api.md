@@ -586,7 +586,9 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>> & {
+    SendBoxAttachFile?: JSX.Element;
+};
 
 // @public
 export type ChatCompositeOptions = {
@@ -856,6 +858,7 @@ export const COMPOSITE_ONLY_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
 };
 
 // @public
@@ -1047,13 +1050,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element; /**
-    * The default set of icons that are available to used in the Composites.
-    *
-    * @public
-    */
+    ControlButtonEndCall: JSX.Element;
     ControlButtonMicOff: JSX.Element;
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;

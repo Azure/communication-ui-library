@@ -8,27 +8,29 @@ import {
   MessageProps,
   MessageRenderer,
   MessageThread,
-  SendBox,
-  TypingIndicator,
-  ParticipantMenuItemsCallback,
   MessageThreadStyles,
+  ParticipantMenuItemsCallback,
+  SendBox,
   SendBoxStylesProps,
+  TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/FileUploadButton';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+
 import {
   chatArea,
   chatContainer,
   chatWrapper,
   messageThreadChatCompositeStyles,
-  sendBoxChatCompositeStyles,
-  typingIndicatorChatCompositeStyles,
+  sendboxContainerStyles,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 
@@ -69,7 +71,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
-  const sendBoxParentStyle = mergeStyles({ width: '100%' });
 
   const adapter = useAdapter();
 
@@ -104,9 +105,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const sendBoxStyles = Object.assign({}, sendBoxChatCompositeStyles, styles?.sendBox);
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
-  const typingIndicatorStyles = Object.assign({}, typingIndicatorChatCompositeStyles, styles?.typingIndicator);
+  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
+  const sendBoxStyles = Object.assign({}, styles?.sendBox);
 
   return (
     <Stack className={chatContainer} grow>
@@ -121,7 +122,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
-          <Stack className={sendBoxParentStyle}>
+          <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
@@ -130,6 +131,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
+            <FileUploadButton />
           </Stack>
         </Stack>
         {
