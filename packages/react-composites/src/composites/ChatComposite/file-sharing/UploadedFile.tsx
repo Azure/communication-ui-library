@@ -137,7 +137,7 @@ export class UploadedFile implements UploadEvents {
   /**
    * Update the progress of the upload.
    * Emits the `uploadProgressed` event.
-   * @param progress number between 0 and 1
+   * @param progress - number between 0 and 1
    */
   updateProgress(value: number): void {
     this.progress = value;
@@ -147,7 +147,7 @@ export class UploadedFile implements UploadEvents {
   /**
    * Mark the upload as complete.
    * Requires the `metaData` param containing uploaded file information.
-   * @param metaData {@link FileMetaData}
+   * @param metaData - {@link FileMetaData}
    */
   completeUpload(metaData: FileMetaData): void {
     this.progress = 1;
@@ -164,7 +164,7 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * Mark the upload as failed.
-   * @param message An error message that can be displayed to the user.
+   * @param message - An error message that can be displayed to the user.
    */
   failUpload(message: string): void {
     this._emitter.emit(UPLOAD_FAILED_EVENT, message);
@@ -179,7 +179,7 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * Returns a truncated name for the file if it exceeds `length`.
-   * @param length default 15
+   * @param length - default 15
    * @returns string
    */
   truncatedName(length = 15): string {
@@ -196,8 +196,8 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * File upload event subscriber.
-   * @param event {@link UploadedFileEvents}
-   * @param listener {@link UploadedFileEventListener}
+   * @param event - {@link UploadedFileEvents}
+   * @param listener - {@link UploadedFileEventListener}
    */
   on(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
     this._emitter.addListener(event, listener);
@@ -205,8 +205,8 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * File upload event unsubscriber.
-   * @param event {@link UploadedFileEvents}
-   * @param listener {@link UploadedFileEventListener}
+   * @param event - {@link UploadedFileEvents}
+   * @param listener - {@link UploadedFileEventListener}
    */
   off(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
     this._emitter.removeListener(event, listener);

@@ -2,9 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
+import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { UploadedFile } from '../file-sharing/UploadedFile';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -15,6 +17,20 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Files being uploaded by a user in the current thread.
+   * Should be set to null once the upload is complete.
+   * @beta
+   */
+  uploadedFiles?: UploadedFile[];
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Marks all the `uploadedFiles` as completely uploaded.
+   * Allows a message to be sent after the upload is complete.
+   * @beta
+   */
+  uploadedFilesCompleted?: boolean;
 };
 
 /**
@@ -54,7 +70,7 @@ export interface ChatAdapterThreadManagement {
   /**
    * Send a message in the thread.
    */
-  sendMessage(content: string): Promise<void>;
+  sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -87,6 +103,18 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Sets the uploaded files in ui state.
+   * @beta
+   */
+  uploadFiles?: (uploadedFiles: UploadedFile[]) => void;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Marks the uploaded files in ui state as complete.
+   * @beta
+   */
+  uploadsComplete?: () => void;
 }
 
 /**

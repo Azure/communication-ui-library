@@ -26,3 +26,8 @@ export type {
 } from './adapter/ChatAdapter';
 
 export * from './Strings';
+
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+export type { FileUploadHandler } from './file-sharing';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+export * from './file-sharing/UploadedFile';
