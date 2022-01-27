@@ -12,9 +12,9 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
+  isLandscape,
   isMobileSession,
   isOnIphoneAndNotSafari,
-  isSmallScreen,
   navigateToHomePage
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
@@ -64,8 +64,8 @@ const App = (): JSX.Element => {
     return <UnsupportedBrowserPage />;
   }
 
-  if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Calling sample: This is experimental behaviour');
+  if (isMobileSession() && isLandscape()) {
+    console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
   switch (page) {
