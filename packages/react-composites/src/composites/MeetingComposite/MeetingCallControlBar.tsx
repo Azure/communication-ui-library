@@ -95,7 +95,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
-        <Stack.Item>
+        <Stack horizontal>
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
             <ChatButton
               checked={props.chatButtonChecked}
@@ -116,7 +116,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               label={meetingStrings.peopleButtonLabel}
             />
           )}
-        </Stack.Item>
+        </Stack>
       )}
     </Stack>
   );
