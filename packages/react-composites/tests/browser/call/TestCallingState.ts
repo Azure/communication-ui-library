@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /**
- * Calling state passed to set up playwright test as a query argument
+ * Calling state passed as as a query argument to set up MockCallingAdapter in playwright test
  */
 export type TestCallingState = {
   remoteParticipants?: TestRemoteParticipant[];
