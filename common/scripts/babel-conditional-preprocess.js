@@ -69,7 +69,7 @@ function Handle(path, annotations) {
         }
         if (removed) {
           comment.ignore = true;
-          // Comment will be inherit to next line even we it is set to 'ignore'
+          // Comment will be inherit to next line even it is set to 'ignore'
           // this will cause some unexpected removals of code
           // clear the comment to ensure nothing gets wrong
           comment.value = '';
