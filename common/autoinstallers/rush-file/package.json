@@ -1,0 +1,9 @@
+{
+  "name": "rush-file",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "cpy-cli": "3.1.1",
+    "rimraf": "^2.6.2"
+  }
+}

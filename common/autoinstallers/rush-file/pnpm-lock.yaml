@@ -1,10 +1,11 @@
 dependencies:
   cpy-cli: 3.1.1
+  rimraf: 2.7.1
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.16.7:
     dependencies:
-      '@babel/highlight': 7.16.7
+      '@babel/highlight': 7.16.10
     dev: false
     engines:
       node: '>=6.9.0'
@@ -16,7 +17,7 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
-  /@babel/highlight/7.16.7:
+  /@babel/highlight/7.16.10:
     dependencies:
       '@babel/helper-validator-identifier': 7.16.7
       chalk: 2.4.2
@@ -25,7 +26,7 @@ packages:
     engines:
       node: '>=6.9.0'
     resolution:
-      integrity: sha512-aKpPMfLvGO3Q97V0qhw/V2SWNWlwfJknuwAunU7wZLSfrM4xTBvg7E5opUVi1kJTBKihE38CPg4nBiqX83PWYw==
+      integrity: sha512-5FnTQLSLswEj6IkgVw5KusNUUFY9ZGqe/TRFnP/BKYHYgfh7tc+C7mwiy95/yNP7Dh9x580Vv8r7u7ZfTBFxdw==
   /@mrmlnc/readdir-enhanced/2.2.1:
     dependencies:
       call-me-maybe: 1.0.1
@@ -44,7 +45,7 @@ packages:
   /@types/glob/7.2.0:
     dependencies:
       '@types/minimatch': 3.0.5
-      '@types/node': 17.0.8
+      '@types/node': 17.0.12
     dev: false
     resolution:
       integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==
@@ -56,10 +57,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
-  /@types/node/17.0.8:
+  /@types/node/17.0.12:
     dev: false
     resolution:
-      integrity: sha512-YofkM6fGv4gDJq78g4j0mMuGMkZVxZDgtU0JRdx6FgiJDG+0fY0GKVolOV8WqVmEhLCXkQRjwDdKyPxJp/uucg==
+      integrity: sha512-4YpbAsnJXWYK/fpTVFlMIcUIho2AYCi4wg5aNPrG1ng7fn/1/RZfCIpRCiBX+12RVa34RluilnvCqD+g3KiSiA==
   /@types/normalize-package-data/2.4.1:
     dev: false
     resolution:
@@ -969,7 +970,7 @@ packages:
   /normalize-package-data/2.5.0:
     dependencies:
       hosted-git-info: 2.8.9
-      resolve: 1.21.0
+      resolve: 1.22.0
       semver: 5.7.1
       validate-npm-package-license: 3.0.4
     dev: false
@@ -1206,7 +1207,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
-  /resolve/1.21.0:
+  /resolve/1.22.0:
     dependencies:
       is-core-module: 2.8.1
       path-parse: 1.0.7
@@ -1214,13 +1215,20 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-3wCbTpk5WJlyE4mSOtDLhqQmGFi0/TD9VPwmiolnk8U0wRgMEktqCXd3vy5buTO3tljvalNvKrjHEfrd2WpEKA==
+      integrity: sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==
   /ret/0.1.15:
     dev: false
     engines:
       node: '>=0.12'
     resolution:
       integrity: sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
+  /rimraf/2.7.1:
+    dependencies:
+      glob: 7.2.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
   /safe-regex/1.1.0:
     dependencies:
       ret: 0.1.15
@@ -1294,10 +1302,12 @@ packages:
       resolve-url: 0.2.1
       source-map-url: 0.4.1
       urix: 0.1.0
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dev: false
     resolution:
       integrity: sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw==
   /source-map-url/0.4.1:
+    deprecated: See https://github.com/lydell/source-map-url#deprecated
     dev: false
     resolution:
       integrity: sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
@@ -1473,3 +1483,4 @@ packages:
       integrity: sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==
 specifiers:
   cpy-cli: 3.1.1
+  rimraf: ^2.6.2

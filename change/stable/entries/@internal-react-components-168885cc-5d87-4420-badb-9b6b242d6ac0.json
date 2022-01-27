@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "created button component for local video feed camera switcher",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -33,10 +33,46 @@
     },
     {
       "commandKind": "global",
+      "name": "copy-change-entries-to-stable",
+      "summary": "Switch flavor to beta",
+      "description": "Every build and test command will run based on beta version.",
+      "autoinstallerName": "rush-file",
+      "shellCommand": "cpy change/*.json change/stable/entries/",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "pre-stable-bump",
+      "summary": "Prepare for stable version bump",
+      "description": "Copy all stable entries, and stable changelog into the place. Backup beta changelogs.",
+      "autoinstallerName": "rush-file",
+      "shellCommand": "cpy change/stable/entries/*.json change && cpy packages/**/CHANGELOG.* change/beta/log --parents && cpy **/CHANGELOG.* ../../../ --parents --cwd=change/stable/log",
+      "safeForSimultaneousRushProcesses": false
+    },
+    {
+      "commandKind": "global",
+      "name": "post-stable-bump",
+      "summary": "Switch flavor to beta",
+      "description": "Copy changelogs back to stable folder, restore beta changelogs. Remove all stable entries.",
+      "autoinstallerName": "rush-file",
+      "shellCommand": "cpy packages/**/CHANGELOG.* change/stable/log --parents && cpy **/CHANGELOG.* ../../../  --parents --cwd=change/beta/log && rimraf change/stable/entries/*.json",
+      "safeForSimultaneousRushProcesses": false
+    },
+    {
+      "commandKind": "global",
+      "name": "bump-stable",
+      "summary": "Switch flavor to beta",
+      "description": "Every build and test command will run based on beta version.",
+      "autoinstallerName": "rush-file",
+      "shellCommand": "rush pre-stable-bump && node common/config/node_modules/beachball/bin/beachball bump && rush post-stable-bump",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:beta",
       "summary": "Switch flavor to beta",
       "description": "Every build and test command will run based on beta version.",
-      "autoinstallerName": "rush-cpy",
+      "autoinstallerName": "rush-file",
       "shellCommand": "rush install && cpy common/config/env/beta.env common/config/env --rename .env && node common/scripts/invalidate-build.js",
       "safeForSimultaneousRushProcesses": true
     },
@@ -45,7 +81,7 @@
       "name": "switch-flavor:stable",
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
-      "autoinstallerName": "rush-cpy",
+      "autoinstallerName": "rush-file",
       "shellCommand": "rush install --variant stable && cpy common/config/env/stable.env common/config/env --rename .env && node common/scripts/invalidate-build.js",
       "safeForSimultaneousRushProcesses": true
     },

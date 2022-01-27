@@ -1,0 +1,901 @@
+{
+  "name": "@internal/calling-component-bindings",
+  "entries": [
+    {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Add conditional build for GA apis"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add name based ascending sorting to participants returned by participantListSelector",
+            "author": "anjulgarg@live.com",
+            "commit": "a5ef7d84168bb1373471539c868ed612804bc15f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "hiding users in the lobby from acs clients",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "3c9838c6f830e8a53a4cbbcec05730e718bdc7ae",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disallow removing Teams participants from call",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add an internal util function for checking if a call is in lobby",
+            "author": "anjulgarg@live.com",
+            "commit": "836862e592bb443ce8632187014fa63519aa1c65",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Translate several UFDs to ErrorBar notifications",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "c748caf9977b71ec0a33ff5a995f315a85e4d2c5",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump headless calling SDK to 1.3.1-beta.1",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a0790e82c1b27c4e5daa31d5134e6a3930789131",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add ErrorBar messages when missing device permissions",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "70d11a4c599f636222166ded8381f51b1b3f3559",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update OptionsButton to DevicesButton",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "82d840c4537580b2fba4561b73a0990d105c1142",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Drop error bar for networkReconnect condition",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "0b49b86aae31dce6d7718080228899f7818e0fa0",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "updating calling to use 1.2.2-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "dbca58a3e5bf2d7ec873f81078b093ce87bd6cde",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Remove selector instance from export Add types for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "a177869815ae6351e3a8834c8fed7d0e39073b35",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles",
+            "author": "anjulgarg@live.com",
+            "commit": "7a635376e5b97413b2be0bf7137abbabf9497db1",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Remove dominant speaker processing in videoGallerySelector.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "f531b581d3ba70190c46cff21263998c651f6a70",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Disable old unstable implementation of dominant speaker logic",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "7c21a5bec3c6ea80e537f7b5b2e5295ce16e638f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Changed dominantSpeakers type format of videoGallerySelector.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "bd30fc16b3ce5cde00ef9b80db5f1c3336bab283",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "bump calling sdk to 1.2.3-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5b6f038700dc756a80946aac2aefc0f580cd82e7",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix camera and mic selectors to interact with the local preview mic/camera settings when a call has not yet been joined",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fb3754a13b4236d7a4b5f6972ba37af2092c9db9",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix browser camera indicator still showing in use after turning it off",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "aa001a001bba36180909fd653f7cb114a5477a0e",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "added isSpeaking dependency on mute state",
+            "author": "alcail@microsoft.com",
+            "commit": "0dff57815f44afe77fe3add68858c54b65db3cb7",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Clean old files before build",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Centralize beachball config",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f5d9cbd40f6ea0c19315a8e81642145961ba3f56",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Adjust api comments - iteration 2",
+            "author": "jinan@microsoft.com",
+            "commit": "6e009ecb701a9838fb922cccfaa0c9642ab9067a",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Document all public API and hide leaked exports",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e6a412b28c67f7525b68fcd15432fe96294641e2",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add Dominant Speaker support to Video Gallery",
+            "author": "anjulgarg@live.com",
+            "commit": "969c3efa0d656ba6602d854e33b3c71e6910ee4e",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "updating calling to use 1.2.1-beta.1",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "e337a0813532da34430795921a4bfc324453d881",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bubble up call connection error to UI",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "d4f1ee89cec41f9796e3e753a630d3827fccb989",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Show ACS errors via ErrorBar in CallComposite ",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ce42eff8dfc15bfe36b3d04a87335904b04606ea",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Removed errors from start screen sharing from active errors.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ba70bfe2647153eb01161ff6cbe5b0118f6f33d",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Delete ErrorBar handlers",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "bb304627f7fdcbbec79e6098ded5fec56e3e260e",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common dep",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add active and dominant speaker support to screenshare screen.",
+            "author": "anjulgarg@live.com",
+            "commit": "d32bd7329ddba0972a7bb12020814dbfe2b4fc64",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add timestamp to teed errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48aefca725807e58d1d2e4a6ff0121f5b09437e",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix participant button selector after update to participant button's props relating to the participant list to be top level",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e34381f9f3cca10f5d9e33f931d80ca801c0ed08",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update onParticipantRemove signature to be async",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a7ba52570f82492cde2e3fcf6ba5013057a86889",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix tsdoc comments - rename @Link -> @link",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fdd49d7dc69ebb9c47cd285c8fdbc5be49080fad",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "updated Typescript to version 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fixing video gallery styling issues during and after screenshare",
+            "author": "anjulgarg@live.com",
+            "commit": "815ed360449e1d19c2f22cabf34b66266851a39f",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Upgrade to calling sdk v1.2.0-beta.1",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Remove getCall from selector Use more specific props in the call to target the right update",
+            "author": "jinan@microsoft.com",
+            "commit": "4037bb1533169ff9c80248dbf3463dd7201e94e4",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "calling-component-bindings_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add react as dev dep to ensure version",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "packlet rename",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update callclientprovider prop from statefulCallClient to just callClient",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Bump react-components to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Bump calling-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2f0729eed634693aeafd82c983ace6f3f6a249b1",
+            "package": "calling-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "added participantsButtonSelector",
+            "author": "alcail@microsoft.com",
+            "commit": "0caa0447437edb33a98a2dfc145d9d68020f102f",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Serialize userId from state",
+            "author": "prprabhu@microsoft.com",
+            "commit": "f6eb99250f193b9bd0ea612bcc6bbfbec9b66eaf",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add undefined case to device permission selector",
+            "author": "allenhwang@microsoft.com",
+            "commit": "8e62c9d32eeaff4a9ab0ac86c5fc5616f44415be",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add selector to retrieve device permissions",
+            "author": "allenhwang@microsoft.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "remove selector export",
+            "author": "jinan@microsoft.com",
+            "commit": "e189ab378939756ac003a64976d9d7dc776e1621",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "update react peer deps to be >=16.8.0 <18.0.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "upgrading version of calling to 1.1.0-beta.2",
+            "author": "alkwa@microsoft.com",
+            "commit": "2c6f314ad34a89fff189aa09eac469553867ecb4",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update calling sdk to 1.1.0-beta1",
+            "author": "jinan@microsoft.com",
+            "commit": "1934937fb5d7a0112448388dd737984aa04afd56",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update usePropsFor to use re-enforced version of type guard.",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Adjustments for merging chat&calling hooks",
+            "author": "jinan@microsoft.com",
+            "commit": "3a2d31dd2327a07a3d250dfb7f60fd1eedae2226",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Add options to onSelectCamera and onToggleCamera",
+            "author": "easony@microsoft.com",
+            "commit": "df43b67b6ee241bcdfd1f31664f20eb80b5d366b",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update selectors for CallClientState",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7741fe7c1a7a9ccd145d2209959fd3296ece8cb1",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Fix for 'no permission warning' everytime",
+            "author": "jinan@microsoft.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update remote participants and video streams to use objects",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2f0729eed634693aeafd82c983ace6f3f6a249b1",
+            "package": "calling-component-bindings"
+          },
+          {
+            "comment": "Update to use Array for unparentedViews",
+            "author": "prprabhu@microsoft.com",
+            "commit": "39b8464c9c3b9ba90621b9103995b9d8dc5cfb4a",
+            "package": "calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.1",
+      "version": "1.0.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add calling providers and hooks to the selector package",
+            "author": "easony@microsoft.com",
+            "commit": "a458a977e42cddc0d2d3d32e2fa71a547316fe1c",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix wrong object passed to StreamMedia",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6b938ce9dee82e1810788f740f4fbae32537be19",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update selector types to include rendering status",
+            "author": "allenhwang@microsoft.com",
+            "commit": "316a3e3da82de9cbc8ff2b17e6b750a48f482987",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename DTOs that shadow objects from Calling SDK",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7a9006f767cb2b74ba23f223ef9aab7051759624",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Remove selectors not related to components",
+            "author": "mail@jamesburnside.com",
+            "commit": "9673a1fbed2e7f96a7611ffc240606fef038e5ed",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename state-only shadow type for Call",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c9279b6b83fe83fb66f481409ab772fa5c6492de",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Upgrade selector to use updated Stateful render functions",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6bbef4dfcb6925aabc24c5fc88f0b9079192b982",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add Teams Interop to Group Call Sample",
+            "author": "anjulgarg@live.com",
+            "commit": "3d8c98d16528f6808de5450aca8da091ca61b268",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "[#2404092] Adding stateful attributes to CallClientProvider for starting a call with camera on/off",
+            "author": "anjulgarg@live.com",
+            "commit": "ba94db89af172725b7b1b22b2785a31ccc91049f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update handler to match adapter version of composite",
+            "author": "jinan@microsoft.com",
+            "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Introduce common identifier format",
+            "author": "prprabhu@microsoft.com",
+            "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update videoGallery selectors to get active screenshare from Stateful",
+            "author": "allenhwang@microsoft.com",
+            "commit": "9d2e850874d1d78cf07363053f1df945e53f784c",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Move common type to @internal/acs-ui-common",
+            "author": "prprabhu@microsoft.com",
+            "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename DeviceManager to avoid name conflict",
+            "author": "prprabhu@microsoft.com",
+            "commit": "b39695499e521747786302e7b0ee90e9011b3c42",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Throwing error when onToggleMicrophone is invoked before call is started.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "23af2789b2f1bdaaad2cf1cd3b90d568aacd2c23",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "fix bugs",
+            "author": "easony@microsoft.com",
+            "commit": "60d0d837ddafbddf0c407545df218cfedaf63daa",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Change DeviceManagerState to DeviceManager to be consistent with other objects",
+            "author": "allenhwang@microsoft.com",
+            "commit": "b8b5439dd399831531ca8879f43138dda1e34341",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add initial calling selector package setup",
+            "author": "allenhwang@microsoft.com",
+            "commit": "876a3aad947f14f60b4fa68b8e2ed81485904e5c",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "ParticipantList selector changed return to to CommunicationCallingParticipant",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ca7062f78858ff26b2578b798e83d7e0ebc201c1",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
+            "author": "anjulgarg@live.com",
+            "commit": "3321f647e948aaf307a2f69e146ea14fe29853a0",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update handler type to match component",
+            "author": "jinan@microsoft.com",
+            "commit": "738d45f35174857a6d7fd921ca21da77a1817e23",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
+            "author": "alcail@microsoft.com",
+            "commit": "70e2f0ddff463a0713fc0438e0d0d4a0765f36b9",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files",
+            "author": "domessin@microsoft.com",
+            "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "rename declarative packages to stateful",
+            "author": "domessin@microsoft.com",
+            "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename declarative to stateful",
+            "author": "mail@jamesburnside.com",
+            "commit": "5c5cd639bdadccf200fcca10a80cbc67f611ae90",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add initial base selector and handler for calling",
+            "author": "allenhwang@microsoft.com",
+            "commit": "fecd45a719493073acc6c2a423840b5bc5db5a00",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
+            "author": "mail@jamesburnside.com",
+            "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "CameraButton selectors and handlers updated to work before a call is started. Selector for unparented videostream added.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1e8aa0d5a8f60b4961db4ed2708d83c2efb739da",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add handler and selector for call controls",
+            "author": "anjulgarg@live.com",
+            "commit": "6168a8007ae1a006e9f2650028496d75ecc7c7ed",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add component binding exports to meta package",
+            "author": "mail@jamesburnside.com",
+            "commit": "5dad8969357c34e1b60c61e75dc7aec9203f1007",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add memoized selector and VideoGallery component",
+            "author": "easony@microsoft.com",
+            "commit": "78cad6eca0b9814304dd8a4528f3a4bfb33fcfa1",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Added ParticipantList selector and handler",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "e312872bd229245045b024bb7bd27b481e094048",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update exports to not conflict with other internal packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "dedupe export",
+            "author": "mail@jamesburnside.com",
+            "commit": "1df1d442338254c600b53178f481551096d178a6",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "dedupe memoizefnall code",
+            "author": "mail@jamesburnside.com",
+            "commit": "b11203aad28ceb459f5cd7f04a4163bfb4832466",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "internal build cleanup",
+            "author": "mail@jamesburnside.com",
+            "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "ensure consistent eslint-plugin-import version across packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    }
+  ]
+}

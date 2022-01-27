@@ -95,6 +95,9 @@ docGen/
 preprocessed/
 preprocess-dist/
 
+# Temp changelog folder
+/change/beta
+
 # Release outputs
 release/
 

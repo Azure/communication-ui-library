@@ -1,0 +1,895 @@
+{
+  "name": "@internal/chat-component-bindings",
+  "entries": [
+    {
+      "date": "Tue, 04 Jan 2022 22:57:09 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "37423747ed57559ac4a1280244a4e765e4838899",
+            "comment": "Conditional build of stable flavor"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "f9cdec1a3af3a0093790ae40a44c6a44906afbab",
+            "comment": "Create release branch"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.0.1",
+            "commit": "8adade9eda05f6344554be0384e1da977283cee6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set pagesize to 50 to fix thread incomplete",
+            "author": "jinan@microsoft.com",
+            "commit": "8629d2352fe460d3a235cfb0ff16e9ca3df49e6b",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update MessageThread selector to filter out unsupported messages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f87bf0c6588a4fff9469a130d0492ce429a57779",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Disallow removing Teams participants from chat",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename `Error.inner` to `Error.innerError`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "adab866a9c328d8bd01af921334967555099e77f",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Refactor message.attached logic",
+            "author": "jinan@microsoft.com",
+            "commit": "31882842673d3613b38f87206f2887faddf62d54",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add release tags to all public API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "124e02693fd0042365dd1f3d636ecc72eb5837ea",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update to new ChatMessage types",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "963d3980a0b05a656409e5cd06b948222cc7e9ee",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix html message type not rendering",
+            "author": "jinan@microsoft.com",
+            "commit": "a096aefc769115301e42a491034ec6ce98f17ecb",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Remove selector instance from export Add types for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "a177869815ae6351e3a8834c8fed7d0e39073b35",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Clean old files before build",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump chat sdk to version 1.1.0",
+            "author": "jinan@microsoft.com",
+            "commit": "8d053eded816621717e386d8b6a43111631b860f",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Centralize beachball config",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f5d9cbd40f6ea0c19315a8e81642145961ba3f56",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add edited tag to messages",
+            "author": "jinan@microsoft.com",
+            "commit": "4546bc367f25c89e9029f7ab2e57a8d76d196c81",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Apply chat sdk hotfix",
+            "author": "jinan@microsoft.com",
+            "commit": "9800b6315a1bf7aed50c14d7a657db4679ccfaa6",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Rename ChatErrorTarget",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f830f9027d3cfbec510ea90c79a88312d7c20d79",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add deleted message fileter into bindings",
+            "author": "jinan@microsoft.com",
+            "commit": "0ec439180274944792ca520a635be68842411948",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add methods to clear calling ACS errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8605636fe960d1fb62ef6acc8d74a673678da849",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add timestamp to teed errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48aefca725807e58d1d2e4a6ff0121f5b09437e",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Delete ErrorBar handlers",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "bb304627f7fdcbbec79e6098ded5fec56e3e260e",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common dep",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Move the name filter logic to selector Make component acs unrelated",
+            "author": "jinan@microsoft.com",
+            "commit": "c82204a9af25e0ac5d7c36ffc4b1c6de59eb5b11",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Replace StatefulChatClient.clearErrors() with modifier pattern",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "6d2eee00112b2bb935c6d7427fb70983f4614087",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Workaround before we get sequenceId from signal",
+            "author": "jinan@microsoft.com",
+            "commit": "47cba93be33c8862d0383f3b448ea37f32bfd150",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add system message for selector props",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "updated Typescript version to 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support more error types in ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "19783e935bfcd18d5e46a9a1117d52e968a658c5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fixed MessageThread selector to allow messages of type 'html'.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c25e3551ddbba88349c6a0c8b52d56e0124d3d60",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix error handling of failures in `ChatThreadClient.listMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b50fc223bf692c5e9bd48b4f256a60dd68f08c8d",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Limit the number of errors show in UI",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a019433c4df7628204f73234f95147ba8f4d8490",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add data bindings for ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3d4ca56a9e629402776acd25022e484eaed57d36",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "chat-component-bindings_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove useThreadID export",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "packlet rename",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump react-components to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump chat-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update references to threads object",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c7acbb18d4c59730dee93077348053560d2a64a9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use Object for chat participants",
+            "author": "prprabhu@microsoft.com",
+            "commit": "a92d356a268249acc19cc2f640b7825884293c14",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Adjustments for merging chat&calling hooks",
+            "author": "jinan@microsoft.com",
+            "commit": "3a2d31dd2327a07a3d250dfb7f60fd1eedae2226",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use Object for chatMessages",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove extra selector export",
+            "author": "jinan@microsoft.com",
+            "commit": "e189ab378939756ac003a64976d9d7dc776e1621",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "update react peer deps to be >=16.8.0 <18.0.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update usePropsFor to use re-enforced version of type guard",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 16:16:28 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.1",
+      "version": "1.0.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename useSelector to useChatSelector",
+            "author": "easony@microsoft.com",
+            "commit": "a458a977e42cddc0d2d3d32e2fa71a547316fe1c",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "renamed disabledReadReceipt props to showMessageStatus",
+            "author": "alcail@microsoft.com",
+            "commit": "c59ae286d4695e1c0c8be9c16c5640ffff3f33c5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add check to avoid modifications after unmount",
+            "author": "allenhwang@microsoft.com",
+            "commit": "fe7b3b99250ea663fa248a7e8ebfbaac6e7d3c92",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "removed displayName from chatParticipantListSelector",
+            "author": "alcail@microsoft.com",
+            "commit": "5e0e0683a55b9d310317cc3a20a35a7a4b9812c7",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update sendMessage back to void return value",
+            "author": "jinan@microsoft.com",
+            "commit": "43a347ce1198f546fc27ca0f825ad895b978a3a6",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add event support for chat composite",
+            "author": "jinan@microsoft.com",
+            "commit": "da16218ad2168e182d7ed98067ebee6764e7ea3b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add participant list to usePropsFor",
+            "author": "jinan@microsoft.com",
+            "commit": "82ea9d6778c83d4bfbbd1a65ec108b0a67bb9150",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Introduce common identifier format",
+            "author": "prprabhu@microsoft.com",
+            "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Move common type to @internal/acs-ui-common",
+            "author": "prprabhu@microsoft.com",
+            "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Extract hooks and providers to selector package Simplified provider logic, move client creation logic to contoso",
+            "author": "jinan@microsoft.com",
+            "commit": "e25893790612f215e8ca71936a28c08a696d6e90",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add selectors and handlers for Calling",
+            "author": "anjulgarg@live.com",
+            "commit": "78cad6eca0b9814304dd8a4528f3a4bfb33fcfa1",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "including message type so we know how to render the message payload",
+            "author": "alkwa@microsoft.com",
+            "commit": "88d09c848b99ad296dd9257c5c1f13ebd298a5f0",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add commonjs support",
+            "author": "mail@jamesburnside.com",
+            "commit": "0256e5a737f71c8d86d416fa7f5532f8e3b1403b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add api extractor for package",
+            "author": "mail@jamesburnside.com",
+            "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Calculate more props in selector for perf improvement",
+            "author": "jinan@microsoft.com",
+            "commit": "eceee3e2a932b4fdf8c19f735dc39d1ba893b2dc",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
+            "author": "mail@jamesburnside.com",
+            "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add participantList selector",
+            "author": "anjulgarg@live.com",
+            "commit": "fc6e07ff5dac2b3f74831e0513f6184252883108",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "change StatefulChatClient.state to getState()",
+            "author": "domessin@microsoft.com",
+            "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump azure-communication-{chat, common, identity} to 1.0.0",
+            "author": "prprabhu@microsoft.com",
+            "commit": "0cc8b86b561e6dd5096d383b9a16180adf3a3bef",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add chatHeaderSelector and handlers",
+            "author": "anjulgarg@live.com",
+            "commit": "e30b7d802dd70cdfd9888a529b876cef6312517a",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add messages types in selector",
+            "author": "easony@microsoft.com",
+            "commit": "a13e78cf114d17f96375a4d9f7707692f8f869ea",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix copyright header to MIT and add LICENSE files",
+            "author": "domessin@microsoft.com",
+            "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "accounting for Text as a message content type",
+            "author": "alkwa@microsoft.com",
+            "commit": "dab9ec8bf2d55302660585f985968c77acc6308b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Updated onMessageSend handler for SendBox. Added selector for TypingIndicator.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c86e2ceddd7e8d3517831babdfed2179406e6cd5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Reinforce usePropsFor type guard",
+            "author": "jinan@microsoft.com",
+            "commit": "738d45f35174857a6d7fd921ca21da77a1817e23",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update exports to not conflict with other internal packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "export createAllHandler for adapter to consume",
+            "author": "jinan@microsoft.com",
+            "commit": "ac1612cc8166e6e993baa4102fd2b37c6a641eb0",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Updated chatParticipantSelector return object property names. Removed WebUiChatParticipant type.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "e312872bd229245045b024bb7bd27b481e094048",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update chatThread to deep memoize each element when doing mapping",
+            "author": "jinan@microsoft.com",
+            "commit": "f9b51760080434f83be95b242a787bb5985dacc4",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "typingIndicatorSelector refactor",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "3897fa4281010d30bf66c5dd6de8626a0d0cbf94",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update TypingIndicatorEvent to native SDK type",
+            "author": "mail@jamesburnside.com",
+            "commit": "5aeba5d3ba08330e21c866fb418c5449a18442ce",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "update selector for declarative variable change",
+            "author": "jinan@microsoft.com",
+            "commit": "f2721412e1f8de874d825bce478a02bed5fb261d",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fixed empty display names in typingIndicatorSelector",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "15d4c9004a9e279bfd33f3a5d560c6a2e8c5b11b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "removing chat coolperiod in chat selector",
+            "author": "alkwa@microsoft.com",
+            "commit": "e90af942dbca8073b49c498c1b51823f4b8a378a",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "cleanup exports",
+            "author": "mail@jamesburnside.com",
+            "commit": "1df1d442338254c600b53178f481551096d178a6",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "dedupe memoizefnall code",
+            "author": "mail@jamesburnside.com",
+            "commit": "b11203aad28ceb459f5cd7f04a4163bfb4832466",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "fix deps",
+            "author": "mail@jamesburnside.com",
+            "commit": "51c74cb366d265ef1d1b6a26dee2a567c81314d1",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "internal build cleanup",
+            "author": "mail@jamesburnside.com",
+            "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "ensure consistent eslint-plugin-import version across packages",
+            "author": "mail@jamesburnside.com",
+            "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add react dependency",
+            "author": "mail@jamesburnside.com",
+            "commit": "c590ee09046fa6644f0cbf771cf648d2f4ff2e95",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update chatMessage and chatThread props to match their respective SDK components",
+            "author": "jinan@microsoft.com",
+            "commit": "e2c65004c90488ad1e5157681a0a2f039935d422",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Initial package check in for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "65bee316c8248055f757cbe9e9779f1db4281fa0",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "fix running test and linting commands",
+            "author": "mail@jamesburnside.com",
+            "commit": "65b7f4421dbf70048d81874bea8f61142ddc17f1",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add initial readme files",
+            "author": "mail@jamesburnside.com",
+            "commit": "6b72826937bd090793ec114574b7af0b855ac252",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update api.md to avoid 'unimported' type error",
+            "author": "jinan@microsoft.com",
+            "commit": "39fb2ab1c4616d3dd5ad0d8f6fbbe411473ffde2",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update API extractor warnings to be errors",
+            "author": "mail@jamesburnside.com",
+            "commit": "6de72cc24413602f742623ec187980030d6fce00",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "remove enums in favor of string literals",
+            "author": "mail@jamesburnside.com",
+            "commit": "901149609fbeea558b7c50b965afd7cc59bff81c",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Temporary TypingIndicator fix for sample chat",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "08fc8fbca3ccae66829ee3a4ee33edd029e864e5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update selector to mactch props type of MessageThread",
+            "author": "jinan@microsoft.com",
+            "commit": "887a509087cee8b19b0d064ab8aed401d806b493",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update to remove usage of npm run",
+            "author": "mail@jamesburnside.com",
+            "commit": "eeb1794d0f58730678f55670962bea36758be46e",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "update onMessageSend to onSendMessage",
+            "author": "mail@jamesburnside.com",
+            "commit": "d7ccfa757c023b9ff54b29d6cc3eb400a7098201",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "cleanup exports",
+            "author": "mail@jamesburnside.com",
+            "commit": "129feae606a331accabc4d962d888a5d1f7690a2",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    }
+  ]
+}
