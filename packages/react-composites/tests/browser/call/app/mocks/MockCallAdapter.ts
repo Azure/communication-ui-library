@@ -171,7 +171,7 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
 const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
   for (const videoStream of Object.values(remoteParticipant.videoStreams)) {
     if (videoStream.isAvailable) {
-      // The video is an empty html5 video element with a colored background. To ensure a consistent color the background color
+      // The video is an empty element with a colored background. To ensure a consistent color, the background color
       // is the hex representation of the participant's display name.
       const mockVideoElement = document.createElement('div');
       mockVideoElement.innerHTML = '<span />';
@@ -185,6 +185,7 @@ const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
     }
   }
 };
+
 /**
  * Helper function to randomly choose a background color for mocking a video stream
  * @param str - input string
