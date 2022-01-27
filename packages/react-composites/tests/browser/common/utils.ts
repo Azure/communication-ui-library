@@ -145,6 +145,13 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 };
 
 /**
+ * Click off the Composite page
+ */
+export const clickOffPage = async (page: Page): Promise<void> => {
+  await page.mouse.click(-1, -1);
+};
+
+/**
  * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
  */
 export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<void> => {

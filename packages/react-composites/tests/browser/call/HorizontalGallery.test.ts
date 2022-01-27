@@ -4,7 +4,7 @@
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, pageClick, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
+import { dataUiId, pageClick, clickOffPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { TestRemoteParticipant } from './TestCallingState';
 import { IDS } from '../common/constants';
 
@@ -31,8 +31,8 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: defaultTestRemoteParticipants
       })
     );
-    // Click off the screen to turn away initial aria label
-    await page.mouse.click(-1, -1);
+    // Click off page to turn away initial aria label
+    await clickOffPage(page);
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery.png');
   });
@@ -69,8 +69,8 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: testRemoteParticipants
       })
     );
-    // Click off the screen to turn away initial aria label
-    await page.mouse.click(-1, -1);
+    // Click off page to turn away initial aria label
+    await clickOffPage(page);
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
