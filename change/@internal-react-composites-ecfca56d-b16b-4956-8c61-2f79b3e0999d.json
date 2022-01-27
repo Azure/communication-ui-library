@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Fix handler device type which breaks type check",
+  "packageName": "@internal/react-composites",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
