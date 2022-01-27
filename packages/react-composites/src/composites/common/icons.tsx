@@ -55,7 +55,7 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  AttachFile: <Attach20Regular />
+  SendBoxAttachFile: <Attach20Regular />
 };
 
 /**
@@ -100,7 +100,7 @@ export type ChatCompositeIcons = Partial<
   >
 > & {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  AttachFile?: JSX.Element;
+  SendBoxAttachFile?: JSX.Element;
 };
 
 /**
