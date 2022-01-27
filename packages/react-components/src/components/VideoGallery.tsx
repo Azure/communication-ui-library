@@ -48,6 +48,7 @@ import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from '@fluentui/react-hooks';
+import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -122,6 +123,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
+
+  renderLocalCameraSwitcher?: boolean;
 
   /**
    * Whether to display a mute icon beside the user's display name.
@@ -228,7 +231,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
-            <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            <>
+              <LocalVideoCameraCycleButton />
+              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            </>
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}

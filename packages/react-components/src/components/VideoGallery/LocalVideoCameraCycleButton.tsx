@@ -3,18 +3,18 @@
 
 import { IButtonStyles, IconButton } from '@fluentui/react';
 import React from 'react';
-import { OptionsDevice } from '@internal/react-components/src/components/DevicesButton';
+import { OptionsDevice } from '../..';
 
 /**
  * @internal
  */
-export interface LocalVideoCameraButtonProps {
+export interface LocalVideoCameraCycleButtonProps {
   /** Array of cameras available to the user. */
-  cameras: OptionsDevice[];
+  cameras?: OptionsDevice[];
   /** Currently selected camera in the local video stream. */
-  currentCamera: OptionsDevice;
+  currentCamera?: OptionsDevice;
   /** callback function to change video feed. */
-  setCamera: (device: OptionsDevice) => Promise<void>;
+  setCamera?: (device: OptionsDevice) => Promise<void>;
 }
 
 const localVideoCameraCycleButtonStyles: IButtonStyles = {
@@ -29,7 +29,7 @@ const localVideoCameraCycleButtonStyles: IButtonStyles = {
  * local video tile camera cycle button - for use on mobile screens only.
  * @private
  */
-export const LocalVideoCameraCycleButton = (props: LocalVideoCameraButtonProps): JSX.Element => {
+export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
   const { cameras, currentCamera, setCamera } = props;
 
   return (
@@ -41,7 +41,9 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraButtonProps):
         if (cameras && currentCamera !== undefined) {
           const index = cameras.indexOf(currentCamera);
           const newCamera = cameras[(index + 1) % cameras.length];
-          setCamera(newCamera);
+          if (setCamera !== undefined) {
+            setCamera(newCamera);
+          }
         }
       }}
     />

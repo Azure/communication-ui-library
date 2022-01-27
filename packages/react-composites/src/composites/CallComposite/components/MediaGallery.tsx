@@ -43,9 +43,7 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
-
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
