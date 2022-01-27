@@ -733,6 +733,13 @@ export interface _PictureInPictureInPictureProps {
     primaryTile: _PictureInPictureInPictureTileProps;
     // (undocumented)
     secondaryTile?: _PictureInPictureInPictureTileProps;
+    // (undocumented)
+    strings: _PictureInPictureInPictureStrings;
+}
+
+// @internal
+export interface _PictureInPictureInPictureStrings {
+    rootAriaLabel: string;
 }
 
 // @internal (undocumented)

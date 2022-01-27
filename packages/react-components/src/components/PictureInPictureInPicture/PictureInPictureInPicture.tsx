@@ -9,6 +9,16 @@ import {
 } from './PictureInPictureInPictureTile';
 
 /**
+ * Strings of {@link _PictureInPictureInPicture} that can be overridden.
+ *
+ * @internal
+ */
+export interface _PictureInPictureInPictureStrings {
+  /** Aria-label for the focusable root of the PictureInPictureInPicture component. */
+  rootAriaLabel: string;
+}
+
+/**
  * Props for {@link _PictureInPictureInPicture} component.
  *
  * @internal
@@ -21,6 +31,8 @@ export interface _PictureInPictureInPictureProps {
 
   primaryTile: _PictureInPictureInPictureTileProps;
   secondaryTile?: _PictureInPictureInPictureTileProps;
+
+  strings: _PictureInPictureInPictureStrings;
 }
 
 /**
@@ -38,6 +50,7 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
       onClick={props.onClick}
       primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
       secondaryView={props.secondaryTile && <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+      ariaLabel={props.strings.rootAriaLabel}
     />
   );
 };
@@ -49,12 +62,13 @@ const PictureInPictureInPictureContainer = (props: {
   primaryView: ReactChild;
   secondaryView?: ReactChild;
   onClick?: () => void;
+  ariaLabel: string;
 }): JSX.Element => (
   <aside
     style={tileContainerStyles}
     onClick={props.onClick}
     onKeyPress={(e) => props.onClick && handleKeyDown(e, props.onClick)}
-    aria-label="Some label"
+    aria-label={props.ariaLabel}
     tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
   >
     {props.primaryView}
@@ -63,7 +77,7 @@ const PictureInPictureInPictureContainer = (props: {
 );
 
 /**
- * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as click
+ * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as mouse click.
  */
 const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () => void): void => {
   if (e.key === 'Enter' || e.key === ' ') {
