@@ -18,9 +18,11 @@ export class MockCallAdapter implements CallAdapter {
     }
 
     if (this.state.call) {
-      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-      this.state.call.remoteParticipants = remoteParticipants;
+      if (testState.remoteParticipants) {
+        const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+        Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
+        this.state.call.remoteParticipants = remoteParticipants;
+      }
     }
   }
 
@@ -224,7 +226,7 @@ const defaultCallAdapterState: CallAdapterState = {
     remoteParticipants: {},
     remoteParticipantsEnded: {}
   },
-  userId: { kind: 'unknown', id: '1' },
+  userId: { kind: 'communicationUser', communicationUserId: '1' },
   devices: {
     isSpeakerSelectionAvailable: true,
     selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
