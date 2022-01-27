@@ -8,6 +8,7 @@ import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
+import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 /**
  * @private
@@ -35,13 +36,13 @@ const createCompositeHandlers = memoizeOne(
       await adapter.removeParticipant(userId);
     },
     onSelectCamera: async (deviceInfo, options) => {
-      await adapter.setCamera(deviceInfo, options);
+      await adapter.setCamera(deviceInfo as VideoDeviceInfo, options);
     },
     onSelectMicrophone: async (deviceInfo) => {
-      await adapter.setMicrophone(deviceInfo);
+      await adapter.setMicrophone(deviceInfo as AudioDeviceInfo);
     },
     onSelectSpeaker: async (deviceInfo) => {
-      await adapter.setSpeaker(deviceInfo);
+      await adapter.setSpeaker(deviceInfo as AudioDeviceInfo);
     },
     onStartCall: (participants) => {
       const rawIds = participants.map((participant) => toFlatCommunicationIdentifier(participant));
