@@ -6,8 +6,8 @@ import {
   CallControlOptions,
   CallControls,
   CustomCallControlButtonCallback,
-  CustomCallControlButtonProps,
-  CustomMeetingControlButtonPlacement
+  CustomCallControlButtonPlacement,
+  CustomCallControlButtonProps
 } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
@@ -123,7 +123,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         <Stack.Item>
           {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarRight.first'} />
           )}
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
             <ChatButton
@@ -137,7 +137,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           )}
           {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterChatButton'} />
+            <FilteredCustomButtons
+              customButtonProps={customButtonProps}
+              placement={'desktop.controlBarRight.afterChatButton'}
+            />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
@@ -151,7 +154,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           )}
           {isCustomButtonEnabled(options?.onFetchCustomButtonProps) !== false && (
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'last'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarRight.last'} />
           )}
         </Stack.Item>
       )}
@@ -162,7 +165,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
 /* @conditional-compile-remove-from(stable): custom button injection */
 const FilteredCustomButtons = (props: {
   customButtonProps: CustomCallControlButtonProps[];
-  placement: CustomMeetingControlButtonPlacement;
+  placement: CustomCallControlButtonPlacement;
 }): JSX.Element => {
   return (
     <>
