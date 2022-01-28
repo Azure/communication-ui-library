@@ -16,3 +16,9 @@ export const uploadedFilesSelector = createSelector(
     return { files: uploadedFiles, completed: uploadedFilesCompleted };
   }
 );
+
+/**
+ * Workaround to make this module compile under the `--isolatedModules` flag.
+ * @internal
+ */
+export {};
