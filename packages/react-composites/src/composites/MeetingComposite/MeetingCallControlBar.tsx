@@ -13,6 +13,8 @@ import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+
 /**
  * @private
  */
@@ -87,11 +89,22 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   return (
     <Stack
       horizontal
-      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
+      className={mergeStyles(
+        temporaryMeetingControlBarStyles,
+        callControlsContainerStyles,
+        controlBarContainerStyles,
+        controlBarStyles
+      )}
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls options={callControlOptions} increaseFlyoutItemSize={props.mobileView} />
+          <CallControls
+            options={callControlOptions}
+            increaseFlyoutItemSize={props.mobileView}
+            controlBarStyles={controlBarStyles}
+            commonButtonStyles={commonButtonStyles}
+            endCallButtonStyles={endCallButtonStyles}
+          />
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
@@ -104,6 +117,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-chat-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
+              styles={commonButtonStyles}
             />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
@@ -114,10 +128,57 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.peopleButtonLabel}
+              styles={commonButtonStyles}
             />
           )}
         </Stack.Item>
       )}
     </Stack>
   );
+};
+
+const controlBarStyles: BaseCustomStyles = {
+  root: {
+    padding: '0.75rem',
+    columnGap: '0.5rem'
+  }
+};
+
+const commonButtonStyles: ControlBarButtonStyles = {
+  root: {
+    border: 'solid 1px #E1DFDD',
+    borderRadius: '0.25rem',
+    minHeight: '2.5rem'
+  },
+  flexContainer: {
+    flexFlow: 'row nowrap'
+  },
+  textContainer: {
+    // Override the default so that label doesn't introduce a new block.
+    display: 'inline'
+  },
+  label: {
+    // Override styling from ControlBarButton so that label doesn't introduce a new block.
+    display: 'inline',
+    fontSize: '0.875rem'
+  }
+};
+
+const endCallButtonStyles: ControlBarButtonStyles = {
+  root: {
+    borderRadius: '0.25rem',
+    minHeight: '2.5rem'
+  },
+  flexContainer: {
+    flexFlow: 'row nowrap'
+  },
+  textContainer: {
+    // Override the default so that label doesn't introduce a new block.
+    display: 'inline'
+  },
+  label: {
+    // Override styling from ControlBarButton so that label doesn't introduce a new block.
+    display: 'inline',
+    fontSize: '0.875rem'
+  }
 };
