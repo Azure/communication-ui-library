@@ -7,7 +7,7 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
@@ -103,7 +103,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
-        <Stack horizontal className={mergeStyles(controlBarStyles.root)}>
+        <Stack horizontal className={mergeStyles(buttonContainerStyle)}>
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
               checked={props.peopleButtonChecked}
@@ -132,11 +132,13 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   );
 };
 
+const buttonContainerStyle: IStyle = {
+  padding: '0.75rem',
+  columnGap: '0.5rem'
+};
+
 const controlBarStyles: BaseCustomStyles = {
-  root: {
-    padding: '0.75rem',
-    columnGap: '0.5rem'
-  }
+  root: buttonContainerStyle
 };
 
 const commonButtonStyles: ControlBarButtonStyles = {
@@ -159,21 +161,9 @@ const commonButtonStyles: ControlBarButtonStyles = {
   }
 };
 
-const endCallButtonStyles: ControlBarButtonStyles = {
+const endCallButtonStyles: ControlBarButtonStyles = concatStyleSets(commonButtonStyles, {
   root: {
-    borderRadius: '0.25rem',
-    minHeight: '2.5rem'
-  },
-  flexContainer: {
-    flexFlow: 'row nowrap'
-  },
-  textContainer: {
-    // Override the default so that label doesn't introduce a new block.
-    display: 'inline'
-  },
-  label: {
-    // Override styling from ControlBarButton so that label doesn't introduce a new block.
-    display: 'inline',
-    fontSize: '0.875rem'
+    // Suppress border around the dark-red button.
+    border: 'none'
   }
-};
+});
