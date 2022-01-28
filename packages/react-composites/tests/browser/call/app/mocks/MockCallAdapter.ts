@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { VideoStreamOptions } from '@internal/react-components';
-import { AudioDeviceInfo, PermissionConstraints, VideoDeviceInfo, Call } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
 import { RemoteParticipantState, VideoStreamRendererViewState } from '@internal/calling-stateful-client';
-import { CallAdapterState, CallAdapter } from '../../../../../src';
+import { CallAdapter, CallAdapterState } from '../../../../../src';
 import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
@@ -30,108 +29,83 @@ export class MockCallAdapter implements CallAdapter {
 
   state: CallAdapterState;
 
-  addParticipant(participantKey: string, participantState: RemoteParticipantState): void {
-    if (!this.state.call) {
-      return;
-    }
-    this.state.call.remoteParticipants[participantKey] = participantState;
+  addParticipant(): void {
+    throw Error('addParticipant not implemented');
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  onStateChange(handler: (state: any) => void): void {
+  onStateChange(): void {
     return;
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  offStateChange(handler: (state: any) => void): void {
+  offStateChange(): void {
     return;
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getState(): any {
+  getState(): CallAdapterState {
     return this.state;
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   dispose(): void {
-    return;
+    throw Error('dispose not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  joinCall(microphoneOn?: boolean): Call | undefined {
-    return;
+  joinCall(): Call | undefined {
+    throw Error('joinCall not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async leaveCall(forEveryone?: boolean): Promise<void> {
-    return;
+  leaveCall(): Promise<void> {
+    throw Error('leaveCall not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async startCamera(options?: VideoStreamOptions): Promise<void> {
-    return;
+  startCamera(): Promise<void> {
+    throw Error('leaveCall not implemented');
   }
-  async stopCamera(): Promise<void> {
-    return;
+  stopCamera(): Promise<void> {
+    throw Error('stopCamera not implemented');
   }
-  async mute(): Promise<void> {
-    return;
+  mute(): Promise<void> {
+    throw Error('mute not implemented');
   }
-  async unmute(): Promise<void> {
-    return;
+  unmute(): Promise<void> {
+    throw Error('unmute not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  startCall(participants: string[]): Call | undefined {
-    return;
+  startCall(): Call | undefined {
+    throw Error('startCall not implemented');
   }
-  async startScreenShare(): Promise<void> {
-    return;
+  startScreenShare(): Promise<void> {
+    throw Error('startScreenShare not implemented');
   }
-  async stopScreenShare(): Promise<void> {
-    return;
+  stopScreenShare(): Promise<void> {
+    throw Error('stopScreenShare not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async removeParticipant(userId: string): Promise<void> {
-    return;
+  removeParticipant(): Promise<void> {
+    throw Error('removeParticipant not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    return;
+  createStreamView(): Promise<void> {
+    throw Error('createStreamView not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    return;
+  disposeStreamView(): Promise<void> {
+    throw Error('disposeStreamView not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    return;
+  askDevicePermission(): Promise<void> {
+    throw Error('askDevicePermission not implemented');
   }
-
-  public async queryCameras(): Promise<VideoDeviceInfo[]> {
+  async queryCameras(): Promise<VideoDeviceInfo[]> {
     return [];
   }
-
-  public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+  async queryMicrophones(): Promise<AudioDeviceInfo[]> {
     return [];
   }
-
-  public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+  async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return [];
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
-    return;
+  setCamera(): Promise<void> {
+    throw Error('setCamera not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void> {
-    return;
+  setMicrophone(): Promise<void> {
+    throw Error('setMicrophone not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void> {
-    return;
+  setSpeaker(): Promise<void> {
+    throw Error('setSpeaker not implemented');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  on(event: string): void {
-    return;
+  on(): void {
+    throw Error('on not implemented');
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  off(event: string): void {
-    return;
+  off(): void {
+    throw Error('off not implemented');
   }
 }
 
