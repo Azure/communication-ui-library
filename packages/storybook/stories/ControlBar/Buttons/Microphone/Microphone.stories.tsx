@@ -100,6 +100,9 @@ const MicrophoneButtonWithDevices = (props: MicrophoneButtonProps): JSX.Element 
     },
     onSelectSpeaker: async (device: { id: string; name: string }) => {
       setSelectedSpeaker(device);
+    },
+    onToggleMicrophone: async (): Promise<void> => {
+      /* Need a defined callback to show split button */
     }
   };
 

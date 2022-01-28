@@ -152,7 +152,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       strings={strings}
       labelKey={props.labelKey ?? 'microphoneButtonLabel'}
       menuProps={deviceMenuProps}
-      menuIconProps={{ hidden: true }}
+      menuIconProps={!props.showDeviceSelectionMenu ? { hidden: true } : undefined}
+      split={!!props.showDeviceSelectionMenu}
     />
   );
 };
