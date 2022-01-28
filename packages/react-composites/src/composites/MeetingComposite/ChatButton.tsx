@@ -4,7 +4,6 @@
 import React from 'react';
 import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable) */
 import { NotificationIcon } from './NotificationIcon';
 import { Stack } from '@fluentui/react';
 
@@ -34,12 +33,9 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
         onClick={props.onClick}
       />
-      {
-        /* @conditional-compile-remove-from(stable) */
-        numberOfUnreadMessages !== undefined && numberOfUnreadMessages > 0 && (
-          <NotificationIcon numberOfMessages={numberOfUnreadMessages} />
-        )
-      }
+      {numberOfUnreadMessages !== undefined && numberOfUnreadMessages > 0 && (
+        <NotificationIcon numberOfMessages={numberOfUnreadMessages} />
+      )}
     </Stack>
   );
 };

@@ -104,7 +104,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  /* @conditional-compile-remove-from(stable) */
   const [unreadChatMessages, setUnreadChatMessages] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -119,7 +118,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
       meetingAdapter.offStateChange(updateMeetingPage);
     };
   }, [meetingAdapter]);
-  /* @conditional-compile-remove-from(stable) */
   useEffect(() => {
     const incrementUnreadtChatMessages = (event: { message: ChatMessage }): void => {
       if (!showChat && event.message.senderDisplayName !== '') {
@@ -141,7 +139,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }, []);
 
   const toggleChat = useCallback(() => {
-    /* @conditional-compile-remove-from(stable) */
     if (!showChat) {
       setUnreadChatMessages(0);
     }
