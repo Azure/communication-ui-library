@@ -28,7 +28,7 @@ import { TestCallingState } from '../TestCallingState';
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const state = JSON.parse(params.state) as TestCallingState;
+const mockCallState = JSON.parse(params.mockCallState) as TestCallingState;
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
@@ -39,8 +39,8 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      if (params.useMockAdapter) {
-        setCallAdapter(new MockCallAdapter(state));
+      if (mockCallState) {
+        setCallAdapter(new MockCallAdapter(mockCallState));
       } else {
         const displayName = verifyParamExists(params.displayName, 'displayName');
         const token = verifyParamExists(params.token, 'token');

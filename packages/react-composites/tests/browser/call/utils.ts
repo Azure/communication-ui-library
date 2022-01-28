@@ -14,8 +14,9 @@ import { TestCallingState } from './TestCallingState';
  */
 export const buildUrlWithMockAdapter = (
   serverUrl: string,
-  state?: TestCallingState,
+  testCallingState?: TestCallingState,
   qArgs?: { [key: string]: string }
 ): string => {
-  return `${serverUrl}?${encodeQueryData({ useMockAdapter: 'true', state: JSON.stringify(state), ...qArgs })}`;
+  const state: TestCallingState = testCallingState ?? {};
+  return `${serverUrl}?${encodeQueryData({ mockCallState: JSON.stringify(state), ...qArgs })}`;
 };
