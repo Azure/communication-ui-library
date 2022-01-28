@@ -25,6 +25,10 @@ export type MicrophoneButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
+  microphones: AudioDeviceInfo[];
+  speakers: AudioDeviceInfo[];
+  selectedMicrophone?: AudioDeviceInfo;
+  selectedSpeaker?: AudioDeviceInfo;
 };
 
 /**
@@ -38,7 +42,11 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     return {
       disabled: !callExists || !permission,
-      checked: callExists ? !isMuted : false
+      checked: callExists ? !isMuted : false,
+      microphones: deviceManager.microphones,
+      speakers: deviceManager.speakers,
+      selectedMicrophone: deviceManager.selectedMicrophone,
+      selectedSpeaker: deviceManager.selectedSpeaker
     };
   }
 );

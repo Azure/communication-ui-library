@@ -91,7 +91,11 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls options={callControlOptions} increaseFlyoutItemSize={props.mobileView} />
+          <CallControls
+            options={callControlOptions}
+            increaseFlyoutItemSize={props.mobileView}
+            splitButtonsForDeviceSelection={true}
+          />
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (

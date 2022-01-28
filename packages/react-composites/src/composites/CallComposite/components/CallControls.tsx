@@ -253,6 +253,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!compactMode}
+      // xkcd: style this correctly to increase touch targets.
       styles={controlButtonBaseStyle}
       {...microphoneButtonStrings}
       showDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
