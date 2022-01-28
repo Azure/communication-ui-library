@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
