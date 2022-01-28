@@ -5,7 +5,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { OptionsDevice } from './DevicesButton';
+import { OptionsDevice, generateDefaultDeviceMenuProps, DeviceMenuStrings } from './DevicesButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
@@ -94,6 +94,20 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    */
   selectedSpeaker?: OptionsDevice;
   /**
+   * Callback when a microphone is selected
+   */
+  onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+  /**
+   * Speaker when a speaker is selected
+   */
+  onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+  /**
+   * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
+   *
+   * default: false
+   */
+  showDeviceSelectionMenu?: boolean;
+  /**
    * Optional strings to override in component
    */
   strings?: Partial<MicrophoneButtonStrings>;
@@ -120,6 +134,14 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const onRenderMicOffIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />
   );
+  const deviceMenuProps =
+    props.menuProps ??
+    (props.showDeviceSelectionMenu
+      ? generateDefaultDeviceMenuProps(
+          { ...props, styles: props.styles?.menuStyles },
+          fillDummyStringsIfMissing(strings)
+        )
+      : undefined);
 
   return (
     <ControlBarButton
@@ -129,6 +151,22 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'microphoneButtonLabel'}
+      menuProps={deviceMenuProps}
+      menuIconProps={{ hidden: true }}
     />
   );
 };
+
+// Due to backward compatibility requirements, strings in MicrophoneButtonStrings must be
+// optional. So we fill in default values for missing ones.
+const fillDummyStringsIfMissing = (strings: MicrophoneButtonStrings): DeviceMenuStrings => ({
+  // Setup defaults
+  cameraMenuTitle: '',
+  microphoneMenuTitle: '',
+  speakerMenuTitle: '',
+  cameraMenuTooltip: '',
+  microphoneMenuTooltip: '',
+  speakerMenuTooltip: '',
+  // Now override available values
+  ...strings
+});

@@ -1,13 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MicrophoneButton } from '@azure/communication-react';
+import { MicrophoneButton, MicrophoneButtonProps } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
+import {
+  controlsToAdd,
+  defaultControlsMicrophones,
+  defaultControlsSpeakers,
+  hiddenControl
+} from '../../../controlsUtils';
 import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
 import { MicrophoneButtonExample } from './snippets/Default.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -78,7 +83,27 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const MicrophoneStory = (args): JSX.Element => {
-  return <MicrophoneButton {...args} />;
+  return <MicrophoneButtonWithDevices {...args} />;
+};
+
+const MicrophoneButtonWithDevices = (props: MicrophoneButtonProps): JSX.Element => {
+  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
+    defaultControlsMicrophones[0]
+  );
+  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(defaultControlsSpeakers[0]);
+
+  const deviceProps: MicrophoneButtonProps = {
+    selectedMicrophone: selectedMicrophone,
+    selectedSpeaker: selectedSpeaker,
+    onSelectMicrophone: async (device: { id: string; name: string }) => {
+      setSelectedMicrophone(device);
+    },
+    onSelectSpeaker: async (device: { id: string; name: string }) => {
+      setSelectedSpeaker(device);
+    }
+  };
+
+  return <MicrophoneButton {...props} {...deviceProps} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -92,9 +117,16 @@ export default {
   argTypes: {
     checked: controlsToAdd.checked,
     showLabel: controlsToAdd.showLabel,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
     // Hiding auto-generated controls
     onToggleMicrophone: hiddenControl,
-    strings: hiddenControl
+    selectedMicrophone: hiddenControl,
+    selectedSpeaker: hiddenControl,
+    onSelectMicrophone: hiddenControl,
+    onSelectSpeaker: hiddenControl,
+    strings: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {
