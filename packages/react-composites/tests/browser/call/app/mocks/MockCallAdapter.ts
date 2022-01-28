@@ -7,7 +7,9 @@ import { CallAdapterState, CallAdapter } from '../../../../../src';
 import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
- * Mock class that implements CallAdapter interface for UI snapshot tests
+ * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
+ * some composite behaviour will not work like clicking the 'Start Call' button in the Configuration page. The usage of
+ * MockCallAdapter is intended to talk snapshot based only on the state of a CallAdapter.
  */
 export class MockCallAdapter implements CallAdapter {
   constructor(testState?: TestCallingState) {
