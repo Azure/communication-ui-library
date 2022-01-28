@@ -20,6 +20,9 @@ import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove-from(stable) */
 import { Circle20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { Attach20Regular } from '@fluentui/react-icons';
+
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
@@ -55,7 +58,9 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
-  NoticePageRemovedFromCall: <Info20Filled />
+  NoticePageRemovedFromCall: <Info20Filled />,
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  SendBoxAttachFile: <Attach20Regular />
 };
 
 /**
@@ -98,7 +103,10 @@ export type ChatCompositeIcons = Partial<
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
   >
->;
+> & {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  SendBoxAttachFile?: JSX.Element;
+};
 
 /**
  * Icons that can be overridden for {@link CallComposite}.
