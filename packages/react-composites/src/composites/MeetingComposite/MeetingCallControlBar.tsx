@@ -89,12 +89,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   return (
     <Stack
       horizontal
-      className={mergeStyles(
-        temporaryMeetingControlBarStyles,
-        callControlsContainerStyles,
-        controlBarContainerStyles,
-        controlBarStyles
-      )}
+      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
@@ -108,18 +103,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
-        <Stack.Item>
-          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButton
-              checked={props.chatButtonChecked}
-              showLabel={true}
-              onClick={props.onChatButtonClicked}
-              data-ui-id="meeting-composite-chat-button"
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
-              styles={commonButtonStyles}
-            />
-          )}
+        <Stack horizontal className={mergeStyles(controlBarStyles.root)}>
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
               checked={props.peopleButtonChecked}
@@ -131,7 +115,18 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               styles={commonButtonStyles}
             />
           )}
-        </Stack.Item>
+          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
+            <ChatButton
+              checked={props.chatButtonChecked}
+              showLabel={true}
+              onClick={props.onChatButtonClicked}
+              data-ui-id="meeting-composite-chat-button"
+              disabled={props.disableButtonsForLobbyPage}
+              label={meetingStrings.chatButtonLabel}
+              styles={commonButtonStyles}
+            />
+          )}
+        </Stack>
       )}
     </Stack>
   );
