@@ -33,7 +33,7 @@ test.describe('HorizontalGallery tests', async () => {
     await clickOffPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-1-audio-participant.png');
+    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
   });
 
   test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
@@ -84,12 +84,12 @@ test.describe('HorizontalGallery tests', async () => {
     await clickOffPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-multiple-audio-participants-page-1.png');
+    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-multiple-audio-participants-page-2.png');
+    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-2.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-multiple-audio-participants-page-1.png');
+    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-1.png');
   });
 });
