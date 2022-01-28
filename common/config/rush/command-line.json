@@ -70,7 +70,7 @@
       "name": "build:all-flavors",
       "summary": "Build all flavor in one command (mainly for api update)",
       "description": "Build all flavor in one command (mainly for api update). This command will switch current flavor to beta.",
-      "shellCommand": "(rush switch-flavor:stable && rush rebuild) || rush switch-flavor:beta && rush rebuild",
+      "shellCommand": "(rush switch-flavor:stable && rush rebuild -v) || rush switch-flavor:beta && rush rebuild -v",
       "safeForSimultaneousRushProcesses": true
     },
     {
