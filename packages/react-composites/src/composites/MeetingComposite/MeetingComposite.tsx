@@ -104,7 +104,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  const [unreadChatMessages, setUnreadChatMessages] = useState<number>(0);
+  const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
@@ -122,7 +122,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     const incrementUnreadtChatMessages = (event: { message: ChatMessage }): void => {
       if (!showChat && event.message.senderDisplayName !== '') {
         if (event.message.type === 'text' || event.message.type === 'html') {
-          setUnreadChatMessages(unreadChatMessages + 1);
+          setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
         }
       }
     };
@@ -131,7 +131,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       meetingAdapter.off('messageReceived', incrementUnreadtChatMessages);
     };
-  }, [meetingAdapter, setUnreadChatMessages, showChat, unreadChatMessages]);
+  }, [meetingAdapter, setUnreadChatMessagesCount, showChat, unreadChatMessagesCount]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
@@ -140,7 +140,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const toggleChat = useCallback(() => {
     if (!showChat) {
-      setUnreadChatMessages(0);
+      setUnreadChatMessagesCount(0);
     }
     setShowPeople(false);
     setShowChat(!showChat);
@@ -206,7 +206,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
             callControls={props.callControls}
-            numberOfUnreadMessages={unreadChatMessages}
+            numberOfUnreadMessages={unreadChatMessagesCount}
           />
         </ChatAdapterProvider>
       )}

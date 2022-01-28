@@ -9,19 +9,19 @@ import { NotificationIconStyles, NotificationTextStyles } from './styles/Meeting
  * @private
  */
 export type NotificationIconProps = {
-  numberOfMessages: number;
+  chatMessagesCount: number;
 };
 /**
  * @private
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
-  const { numberOfMessages } = props;
+  const { chatMessagesCount } = props;
   return (
     <Stack horizontalAlign="center" verticalAlign="center" style={{ position: 'absolute', top: 0, right: '0.78rem' }}>
       <Icon styles={NotificationIconStyles} iconName="NotificationCircle" />
       <Stack styles={NotificationTextStyles}>
-        {numberOfMessages > 0 && numberOfMessages < 9 ? <>{numberOfMessages}</> : <></>}
-        {numberOfMessages > 9 ? <>+9</> : <></>}
+        {chatMessagesCount > 0 && chatMessagesCount < 9 ? <>{chatMessagesCount}</> : <></>}
+        {chatMessagesCount > 9 ? <>+9</> : <></>}
       </Stack>
     </Stack>
   );

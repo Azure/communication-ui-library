@@ -11,7 +11,7 @@ import { Stack } from '@fluentui/react';
  * @private
  */
 export interface ChatButtonProps extends ControlBarButtonProps {
-  numberOfUnreadMessages?: number;
+  unreadMessageCount?: number;
 }
 
 const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
@@ -21,7 +21,7 @@ const onRenderOffIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'}
  */
 export const ChatButton = (props: ChatButtonProps): JSX.Element => {
   const strings = { label: props.label, ...props.strings };
-  const { numberOfUnreadMessages } = props;
+  const { unreadMessageCount } = props;
 
   return (
     <Stack style={{ position: 'relative' }}>
@@ -33,8 +33,8 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
         onClick={props.onClick}
       />
-      {numberOfUnreadMessages !== undefined && numberOfUnreadMessages > 0 && (
-        <NotificationIcon numberOfMessages={numberOfUnreadMessages} />
+      {unreadMessageCount !== undefined && unreadMessageCount > 0 && (
+        <NotificationIcon chatMessagesCount={unreadMessageCount} />
       )}
     </Stack>
   );
