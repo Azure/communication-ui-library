@@ -41,6 +41,7 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
+import { FileUploadHandler } from './file-sharing/FileUploadHandler';
 
 /**
  * @private
@@ -53,6 +54,9 @@ export type ChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField' | false;
+  fileUploadAccept?: string;
+  fileUploadMultiple?: boolean;
+  fileUploadHandler?: FileUploadHandler;
 };
 
 /**
@@ -68,7 +72,16 @@ export type ChatScreenStyles = {
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles } = props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    options,
+    styles,
+    fileUploadAccept,
+    fileUploadHandler,
+    fileUploadMultiple
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
 
@@ -131,7 +144,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
-            <FileUploadButton />
+            <FileUploadButton
+              accept={fileUploadAccept}
+              multiple={fileUploadMultiple}
+              fileUploadHandler={fileUploadHandler}
+            />
           </Stack>
         </Stack>
         {

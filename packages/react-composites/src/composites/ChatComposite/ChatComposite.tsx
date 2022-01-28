@@ -9,6 +9,8 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
+/* @conditional-compile-remove-from(stable) */
+import { FileUploadHandler } from './file-sharing/FileUploadHandler';
 
 /**
  * Props for {@link ChatComposite}.
@@ -67,6 +69,27 @@ export type ChatCompositeOptions = {
    * Set focus on the composite when the composite first mounts.
    */
   autoFocus?: 'sendBoxTextField' | false;
+  /* @conditional-compile-remove-from(stable) */
+  /**
+   * A string containing the comma separated list of accepted file types.
+   * Similar to the `accept` attribute of the `<input type="file" />` element.
+   * @beta
+   */
+  fileUploadAccept?: string;
+  /* @conditional-compile-remove-from(stable) */
+  /**
+   * Allows multiple files to be selected if set to `true`.
+   * Similar to the `multiple` attribute of the `<input type="file" />` element.
+   * @defaultValue false
+   * @beta
+   */
+  fileUploadMultiple?: boolean;
+  /* @conditional-compile-remove-from(stable) */
+  /**
+   * The function of type {@link FileUploadHandler} for handling file uploads.
+   * @beta
+   */
+  fileUploadHandler?: FileUploadHandler;
 };
 
 /**
@@ -86,6 +109,20 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
+  /**
+   * @TODO Remove this function and pass the props directly when FILE_SHARING is promoted to stable.
+   * @private
+   */
+  const fileSharingOptions = () => {
+    /* @conditional-compile-remove-from(stable) */
+    return {
+      fileUploadAccept: options?.fileUploadAccept,
+      fileUploadMultiple: options?.fileUploadMultiple,
+      fileUploadHandler: options?.fileUploadHandler
+    };
+    return {};
+  };
+
   return (
     <div className={chatScreenContainerStyle}>
       <BaseComposite {...props}>
@@ -96,6 +133,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            {...fileSharingOptions()}
           />
         </ChatAdapterProvider>
       </BaseComposite>
