@@ -17,6 +17,9 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
 
   return (
     <Stack style={{ position: 'relative' }}>
+      {/** Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
+       * this requires the parent to have `position relative`
+       */}
       <ControlBarButton
         {...props}
         labelKey={'chatButtonLabelKey'}

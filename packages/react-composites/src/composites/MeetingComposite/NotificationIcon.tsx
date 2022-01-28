@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, Stack } from '@fluentui/react';
+import { Icon, IIconStyles, Stack } from '@fluentui/react';
 import { NotificationIconStyles, NotificationTextStyles } from './styles/MeetingCompositeStyles';
 
 /**
@@ -16,13 +16,27 @@ export type NotificationIconProps = {
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   const { numberOfMessages } = props;
+
+  const renderNumber = (numberOfMessages): JSX.Element => {
+    if (numberOfMessages < 1) {
+      return <></>;
+    } else {
+      return <Stack styles={NotificationTextStyles}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>;
+    }
+  };
+
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" style={{ position: 'absolute', top: 0, right: '0.78rem' }}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
       <Icon styles={NotificationIconStyles} iconName="NotificationCircle" />
-      <Stack styles={NotificationTextStyles}>
-        {numberOfMessages > 0 && numberOfMessages < 9 ? <>{numberOfMessages}</> : <></>}
-        {numberOfMessages > 9 ? <>+9</> : <></>}
-      </Stack>
+      {renderNumber(numberOfMessages)}
     </Stack>
   );
+};
+
+const notificationIconContainerStyles: IIconStyles = {
+  root: {
+    position: 'absolute',
+    top: 0,
+    right: '0.78rem'
+  }
 };
