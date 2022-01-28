@@ -31,6 +31,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
     // Click off page to turn away initial aria label
     await clickOffPage(page);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-1-audio-participant.png');
   });
@@ -81,6 +82,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
     // Click off page to turn away initial aria label
     await clickOffPage(page);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-multiple-audio-participants-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
