@@ -29,6 +29,7 @@ import {
   TopicChangedListener
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileMetaData, UploadedFile, ACSFilesMetaData } from '../file-sharing';
 
 /** Context of Chat, which is a centralized context for all state updates */
