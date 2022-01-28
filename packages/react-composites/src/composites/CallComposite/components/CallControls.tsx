@@ -42,6 +42,12 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
+
+  /**
+   * Whether to use split buttons to show device selection drop-downs
+   * Used by {@linke MeetingComposite}.
+   */
+  splitButtonsForDeviceSelection?: boolean;
 };
 
 /**
@@ -249,6 +255,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
       {...microphoneButtonStrings}
+      showDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
 
