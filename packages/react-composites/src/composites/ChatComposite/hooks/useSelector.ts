@@ -11,7 +11,7 @@ import { useSelectorWithAdaptation } from './useAdaptedSelector';
  */
 export const useSelector = <SelectorT extends (state: ChatAdapterState, props: any) => any>(
   selector: SelectorT,
-  selectorProps: Parameters<SelectorT>[1]
+  selectorProps?: Parameters<SelectorT>[1]
 ): ReturnType<SelectorT> => {
   // use selector with no adaptation
   return useSelectorWithAdaptation(selector, (state) => state, selectorProps);
