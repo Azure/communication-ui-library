@@ -48,7 +48,11 @@ exports.default = babelHelper.declare((_api, opts) => {
 
       Expression(path) {
         Handle(path, annotations);
-      }
+      },
+
+      ClassMethod(path) {
+        Handle(path, annotations);
+      },
     }
   };
 });
