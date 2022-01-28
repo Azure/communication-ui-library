@@ -596,6 +596,9 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField' | false;
+    fileUploadAccept?: string;
+    fileUploadMultiple?: boolean;
+    fileUploadHandler?: FileUploadHandler;
 };
 
 // @public
@@ -1230,6 +1233,16 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @beta
+export interface FileMetaData {
+    extension: string;
+    name: string;
+    url: string;
+}
+
+// @beta
+export type FileUploadHandler = (userId: CommunicationIdentifierKind, uploadedFiles: UploadedFile[]) => void;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -2055,6 +2068,62 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @beta (undocumented)
+export const UPLOAD_CANCELLED_EVENT = "uploadCancelled";
+
+// @beta (undocumented)
+export const UPLOAD_COMPLETED_EVENT = "uploadCompleted";
+
+// @beta (undocumented)
+export const UPLOAD_FAILED_EVENT = "uploadFailed";
+
+// @beta (undocumented)
+export const UPLOAD_PROGRESSED_EVENT = "uploadProgressed";
+
+// @beta
+export type UploadCanceledListener = () => void;
+
+// @beta
+export type UploadCompleteListener = (metaData: FileMetaData) => void;
+
+// @beta
+export class UploadedFile implements UploadEvents {
+    constructor(file: File);
+    cancelUpload(): void;
+    completeUpload(metaData: FileMetaData): void;
+    extension(): string;
+    failUpload(message: string): void;
+    file: File;
+    // (undocumented)
+    isUploaded(): boolean;
+    metaData?: FileMetaData;
+    off(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
+    on(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
+    progress: number;
+    truncatedName(length?: number): string;
+    updateProgress(value: number): void;
+}
+
+// @beta
+export type UploadedFileEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener | UploadCanceledListener;
+
+// @beta
+export type UploadedFileEvents = typeof UPLOAD_PROGRESSED_EVENT | typeof UPLOAD_COMPLETED_EVENT | typeof UPLOAD_FAILED_EVENT | typeof UPLOAD_CANCELLED_EVENT;
+
+// @beta
+export interface UploadEvents {
+    on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+    on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+    on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+    on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+}
+
+// @beta
+export type UploadFailedListener = (message: string) => void;
+
+// @beta
+export type UploadProgressListener = (value: number) => void;
 
 // @public
 export const useCall: () => Call | undefined;
