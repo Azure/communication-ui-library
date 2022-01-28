@@ -92,6 +92,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     messageType: 'chat';
     // (undocumented)
+    metadata?: Record<string, string>;
+    // (undocumented)
     mine?: boolean;
     // (undocumented)
     senderDisplayName?: string;

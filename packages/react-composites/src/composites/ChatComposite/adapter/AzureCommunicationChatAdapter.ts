@@ -430,6 +430,7 @@ const isChatError = (e: Error): e is ChatError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
 };
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * Generates metadata object for a chat message containing uploaded file information.
  * @internal
