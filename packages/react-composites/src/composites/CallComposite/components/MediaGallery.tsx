@@ -36,6 +36,8 @@ export interface MediaGalleryProps {
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove-from(stable) */
+  isMobile?: boolean;
 }
 
 /**
@@ -52,6 +54,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
+        /* @conditional-compile-remove-from(stable) */
+        renderLocalCameraSwitcher={props.isMobile}
         onRenderAvatar={(userId, options) => (
           <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
@@ -59,7 +63,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         )}
       />
     );
-  }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
+  }, [props.isMobile, props.onFetchAvatarPersonaData, videoGalleryProps]);
 
   return VideoGalleryMemoized;
 };

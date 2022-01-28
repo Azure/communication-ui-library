@@ -123,9 +123,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /* @conditional-compile-remove-from(stable) */
   renderLocalCameraSwitcher?: boolean;
-
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -169,7 +168,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar,
     showMuteIndicator,
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    renderLocalCameraSwitcher
   } = props;
 
   const ids = useIdentifiers();
@@ -232,7 +232,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={
           localVideoStream?.renderElement ? (
             <>
-              <LocalVideoCameraCycleButton />
+              {renderLocalCameraSwitcher && <LocalVideoCameraCycleButton />}
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
             </>
           ) : undefined
