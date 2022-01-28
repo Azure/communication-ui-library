@@ -62,7 +62,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
 
-        if (!callIdRef.current && state?.call?.id) {
+        if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
