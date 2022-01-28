@@ -94,7 +94,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           <CallControls
             options={callControlOptions}
             increaseFlyoutItemSize={props.mobileView}
-            splitButtonsForDeviceSelection={true}
+            splitButtonsForDeviceSelection={!props.mobileView}
           />
         </CallAdapterProvider>
       </Stack.Item>
