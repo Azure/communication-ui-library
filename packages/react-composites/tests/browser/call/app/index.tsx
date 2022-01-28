@@ -40,20 +40,9 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       if (mockCallState) {
-        setCallAdapter(new MockCallAdapter(mockCallState));
+        setCallAdapter(wrapAdapterForTests(new MockCallAdapter(mockCallState)));
       } else {
-        const displayName = verifyParamExists(params.displayName, 'displayName');
-        const token = verifyParamExists(params.token, 'token');
-        const groupId = verifyParamExists(params.groupId, 'groupId');
-        const userId = verifyParamExists(params.userId, 'userId');
-
-        const newAdapter = await createAzureCommunicationCallAdapter({
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          locator: { groupId: groupId }
-        });
-        setCallAdapter(wrapAdapterForTests(newAdapter));
+        setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials()));
       }
     };
 
@@ -158,6 +147,22 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
  * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
+
+// Function to create call adapter using createAzureCommunicationCallAdapter
+const createCallAdapterWithCredentials = async (): Promise<CallAdapter> => {
+  const displayName = verifyParamExists(params.displayName, 'displayName');
+  const token = verifyParamExists(params.token, 'token');
+  const groupId = verifyParamExists(params.groupId, 'groupId');
+  const userId = verifyParamExists(params.userId, 'userId');
+
+  const callAdapter = await createAzureCommunicationCallAdapter({
+    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    displayName,
+    credential: new AzureCommunicationTokenCredential(token),
+    locator: { groupId: groupId }
+  });
+  return callAdapter;
+};
 
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {
   return [
