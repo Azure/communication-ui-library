@@ -9,7 +9,14 @@ import {
   _PictureInPictureInPicture,
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
+
+/* @conditional-compile-remove-from(stable) MeetingComposite */
 import { useLocale } from '../../localization';
+
+// ariaLabel is remove in stable builds by beta compile, remove when MeetingComposite
+// is added to stable builds.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let ariaLabel;
 
 /**
  * @private
@@ -79,6 +86,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [props.dominantRemoteParticipant]
   );
 
+  /* @conditional-compile-remove-from(stable) MeetingComposite */
   const ariaLabel = useLocale().strings.meeting.pictureInPictureTileAriaLabel;
   const strings = useMemo(
     () => ({
