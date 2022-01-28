@@ -18,6 +18,7 @@ import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -170,16 +171,18 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         )}
       </Stack>
       {(isInLobbyOrConnecting || hasJoinedCall) && (
-        <MeetingCallControlBar
-          callAdapter={callAdapter}
-          chatButtonChecked={showChat}
-          onChatButtonClicked={toggleChat}
-          peopleButtonChecked={showPeople}
-          onPeopleButtonClicked={togglePeople}
-          mobileView={props.formFactor === 'mobile'}
-          disableButtonsForLobbyPage={isInLobbyOrConnecting}
-          callControls={props.callControls}
-        />
+        <ChatAdapterProvider adapter={chatProps.adapter}>
+          <MeetingCallControlBar
+            callAdapter={callAdapter}
+            chatButtonChecked={showChat}
+            onChatButtonClicked={toggleChat}
+            peopleButtonChecked={showPeople}
+            onPeopleButtonClicked={togglePeople}
+            mobileView={props.formFactor === 'mobile'}
+            disableButtonsForLobbyPage={isInLobbyOrConnecting}
+            callControls={props.callControls}
+          />
+        </ChatAdapterProvider>
       )}
     </Stack>
   );
