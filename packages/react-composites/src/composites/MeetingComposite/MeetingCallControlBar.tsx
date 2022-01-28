@@ -25,6 +25,7 @@ export interface MeetingCallControlBarProps {
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | MeetingCallControlOptions;
+  numberOfUnreadMessages?: number;
 }
 
 const inferMeetingCallControlOptions = (
@@ -104,6 +105,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-chat-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
+              numberOfUnreadMessages={props.numberOfUnreadMessages}
             />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (

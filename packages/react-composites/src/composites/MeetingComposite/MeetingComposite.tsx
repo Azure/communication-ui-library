@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -19,6 +19,7 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
+import { ChatMessage } from '@azure/communication-chat';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -103,13 +104,36 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  meetingAdapter.onStateChange((newState) => {
-    setCurrentPage(newState.page);
-    setCurrentMeetingState(newState.meeting?.state);
-  });
-
+  /* @conditional-compile-remove-from(stable) */
+  const [unreadChatMessages, setUnreadChatMessages] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
+
+  useEffect(() => {
+    const updateMeetingPage = (newState): void => {
+      setCurrentPage(newState.page);
+      setCurrentMeetingState(newState.meeting?.state);
+    };
+    meetingAdapter.onStateChange(updateMeetingPage);
+    return () => {
+      meetingAdapter.offStateChange(updateMeetingPage);
+    };
+  }, [meetingAdapter]);
+  /* @conditional-compile-remove-from(stable) */
+  useEffect(() => {
+    const incrementUnreadtChatMessages = (event: { message: ChatMessage }): void => {
+      if (!showChat && event.message.senderDisplayName !== '') {
+        if (event.message.type === 'text' || event.message.type === 'html') {
+          setUnreadChatMessages(unreadChatMessages + 1);
+        }
+      }
+    };
+    meetingAdapter.on('messageReceived', incrementUnreadtChatMessages);
+
+    return () => {
+      meetingAdapter.off('messageReceived', incrementUnreadtChatMessages);
+    };
+  }, [meetingAdapter, setUnreadChatMessages, showChat, unreadChatMessages]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
@@ -117,6 +141,10 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }, []);
 
   const toggleChat = useCallback(() => {
+    /* @conditional-compile-remove-from(stable) */
+    if (!showChat) {
+      setUnreadChatMessages(0);
+    }
     setShowPeople(false);
     setShowChat(!showChat);
   }, [showChat]);
@@ -181,6 +209,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
             callControls={props.callControls}
+            numberOfUnreadMessages={unreadChatMessages}
           />
         </ChatAdapterProvider>
       )}
