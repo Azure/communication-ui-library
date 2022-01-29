@@ -191,7 +191,10 @@ const generateDefaultDeviceMenuPropsTrampoline = (
 ): IContextualMenuProps | undefined => {
   /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
   if (props.showDeviceSelectionMenu) {
-    generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, fillDummyStringsIfMissing(strings));
+    return generateDefaultDeviceMenuProps(
+      { ...props, styles: props.styles?.menuStyles },
+      fillDummyStringsIfMissing(strings)
+    );
   }
   return undefined;
 };
