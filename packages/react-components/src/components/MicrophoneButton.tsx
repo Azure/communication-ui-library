@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
-import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { OptionsDevice, generateDefaultDeviceMenuProps, DeviceMenuStrings } from './DevicesButton';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+
+/* @conditional-compile-remove-from(stable) meeting-composite */
+import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) meeting-composite */
+import { ControlBarButtonStyles } from './ControlBarButton';
+/* @conditional-compile-remove-from(stable) meeting-composite */
+import { DeviceMenuStrings, OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -24,24 +30,29 @@ export interface MicrophoneButtonStrings {
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
   tooltipOffContent?: string;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Title of microphone menu
    */
   microphoneMenuTitle?: string;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Title of speaker menu
    */
   speakerMenuTitle?: string;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Tooltip of microphone menu
    */
   microphoneMenuTooltip?: string;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
 }
 
+/* @conditional-compile-remove-from(stable) meeting-composite */
 /**
  * Styles for {@link MicrophoneButton}
  *
@@ -54,6 +65,7 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
+/* @conditional-compile-remove-from(stable) meeting-composite */
 /**
  * Styles for the {@link MicrophoneButton} menu.
  *
@@ -77,30 +89,37 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Available microphones for selection
    */
   microphones?: OptionsDevice[];
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Available speakers for selection
    */
   speakers?: OptionsDevice[];
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Microphone that is shown as currently selected
    */
   selectedMicrophone?: OptionsDevice;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Speaker that is shown as currently selected
    */
   selectedSpeaker?: OptionsDevice;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Callback when a microphone is selected
    */
   onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Speaker when a speaker is selected
    */
   onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -111,6 +130,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<MicrophoneButtonStrings>;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   /**
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
@@ -134,14 +154,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const onRenderMicOffIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />
   );
-  const deviceMenuProps =
-    props.menuProps ??
-    (props.showDeviceSelectionMenu
-      ? generateDefaultDeviceMenuProps(
-          { ...props, styles: props.styles?.menuStyles },
-          fillDummyStringsIfMissing(strings)
-        )
-      : undefined);
 
   return (
     <ControlBarButton
@@ -151,13 +163,14 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'microphoneButtonLabel'}
-      menuProps={deviceMenuProps}
-      menuIconProps={!props.showDeviceSelectionMenu ? { hidden: true } : undefined}
-      split={!!props.showDeviceSelectionMenu}
+      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
+      menuIconProps={!showDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
+      split={showDeviceSelectionMenuTrampoline(props)}
     />
   );
 };
 
+/* @conditional-compile-remove-from(stable) meeting-composite */
 // Due to backward compatibility requirements, strings in MicrophoneButtonStrings must be
 // optional. So we fill in default values for missing ones.
 const fillDummyStringsIfMissing = (strings: MicrophoneButtonStrings): DeviceMenuStrings => ({
@@ -171,3 +184,22 @@ const fillDummyStringsIfMissing = (strings: MicrophoneButtonStrings): DeviceMenu
   // Now override available values
   ...strings
 });
+
+const generateDefaultDeviceMenuPropsTrampoline = (
+  props: MicrophoneButtonProps,
+  strings: MicrophoneButtonStrings
+): IContextualMenuProps | undefined => {
+  /* @conditional-compile-remove-from(stable) meeting-composite */
+  if (props.showDeviceSelectionMenu) {
+    generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, fillDummyStringsIfMissing(strings));
+  }
+  return undefined;
+};
+
+const showDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
+  /* @conditional-compile-remove-from(stable) meeting-composite */
+  if (props.showDeviceSelectionMenu) {
+    return true;
+  }
+  return false;
+};
