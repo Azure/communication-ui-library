@@ -198,7 +198,7 @@ export type {
 } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-/* @conditional-compile-remove-from(stable) meeting-composite */
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
 export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from '../../react-components/src';
 
 export * from '../../calling-stateful-client/src';

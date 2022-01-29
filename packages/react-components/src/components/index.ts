@@ -58,7 +58,7 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
-/* @conditional-compile-remove-from(stable) meeting-composite */
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
 export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';
