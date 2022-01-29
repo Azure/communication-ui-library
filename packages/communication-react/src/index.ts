@@ -155,10 +155,8 @@ export type {
   MessageThreadProps,
   MessageThreadStrings,
   MessageThreadStyles,
-  MicrophoneButtonContextualMenuStyles,
   MicrophoneButtonProps,
   MicrophoneButtonStrings,
-  MicrophoneButtonStyles,
   OnRenderAvatarCallback,
   OptionsDevice,
   ParticipantAddedSystemMessage,
@@ -200,6 +198,8 @@ export type {
 } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
+/* @conditional-compile-remove-from(stable) meeting-composite */
+export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from '../../react-components/src';
 
 export * from '../../calling-stateful-client/src';
 export * from '../../chat-stateful-client/src';
