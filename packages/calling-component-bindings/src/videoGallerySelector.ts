@@ -12,6 +12,7 @@ import {
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
+  getDeviceManager,
   getDisplayName,
   getDominantSpeakers,
   getIdentifier,
@@ -147,7 +148,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIsScreenSharingOn,
     getDisplayName,
     getIdentifier,
-    getDominantSpeakers
+    getDominantSpeakers,
+    getDeviceManager
   ],
   (
     screenShareRemoteParticipantId,
@@ -157,7 +159,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isScreenSharingOn,
     displayName: string | undefined,
     identifier: string,
-    dominantSpeakers
+    dominantSpeakers,
+    deviceManager
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -191,7 +194,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         }
       },
       remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants),
-      dominantSpeakers: dominantSpeakerIds
+      dominantSpeakers: dominantSpeakerIds,
+      cameras: deviceManager.cameras,
+      selectedCamera: deviceManager.selectedCamera
     };
   }
 );

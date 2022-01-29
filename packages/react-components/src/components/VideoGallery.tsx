@@ -49,6 +49,7 @@ import { VideoTile } from './VideoTile';
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
+import { OptionsDevice } from './DevicesButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -137,6 +138,18 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
+  /**
+   * Camera that is shown as currently selected
+   */
+  selectedCamera?: OptionsDevice;
+  /**
+   * Callback when a camera is selected
+   */
+  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+  /**
+   * Available cameras for selection
+   */
+  cameras?: OptionsDevice[];
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -224,17 +237,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
-
+    console.log(props.cameras);
     return (
       <VideoTile
         key={localParticipant.userId}
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
-            <>
-              {renderLocalCameraSwitcher && <LocalVideoCameraCycleButton />}
+            <Stack>
+              {renderLocalCameraSwitcher && (
+                <LocalVideoCameraCycleButton
+                  cameras={props.cameras}
+                  selectedCamera={props.selectedCamera}
+                  onSelectCamera={props.onSelectCamera}
+                />
+              )}
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-            </>
+            </Stack>
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}

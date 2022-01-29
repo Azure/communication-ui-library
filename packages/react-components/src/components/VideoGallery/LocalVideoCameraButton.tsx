@@ -3,18 +3,18 @@
 
 import { IButtonStyles, IconButton } from '@fluentui/react';
 import React from 'react';
-import { OptionsDevice } from '../..';
+import { OptionsDevice } from '../DevicesButton';
 
 /**
  * @internal
  */
 export interface LocalVideoCameraCycleButtonProps {
   /** Array of cameras available to the user. */
-  cameras?: OptionsDevice[];
+  cameras: OptionsDevice[];
   /** Currently selected camera in the local video stream. */
-  currentCamera?: OptionsDevice;
+  selectedCamera?: OptionsDevice;
   /** callback function to change video feed. */
-  setCamera?: (device: OptionsDevice) => Promise<void>;
+  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
 }
 
 const localVideoCameraCycleButtonStyles: IButtonStyles = {
@@ -30,7 +30,7 @@ const localVideoCameraCycleButtonStyles: IButtonStyles = {
  * @private
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
-  const { cameras, currentCamera, setCamera } = props;
+  const { cameras, selectedCamera, onSelectCamera } = props;
 
   return (
     <IconButton
@@ -38,11 +38,13 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={'Cycle Camera Button'}
       onClick={() => {
-        if (cameras && currentCamera !== undefined) {
-          const index = cameras.indexOf(currentCamera);
+        console.log('clicked');
+        if (cameras && selectedCamera !== undefined) {
+          const index = cameras.findIndex((camera) => selectedCamera.id === camera.id);
+          console.log(index);
           const newCamera = cameras[(index + 1) % cameras.length];
-          if (setCamera !== undefined) {
-            setCamera(newCamera);
+          if (onSelectCamera !== undefined) {
+            onSelectCamera(newCamera);
           }
         }
       }}
