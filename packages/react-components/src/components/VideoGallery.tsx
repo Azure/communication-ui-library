@@ -48,8 +48,10 @@ import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from '@fluentui/react-hooks';
-import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
+/* @conditional-compile-remove-from(stable) */
 import { OptionsDevice } from './DevicesButton';
+/* @conditional-compile-remove-from(stable) */
+import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -125,6 +127,10 @@ export interface VideoGalleryProps {
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /* @conditional-compile-remove-from(stable) */
+  /**
+   * Whether or not to display the camera switcher on the local video tile
+   */
+  /* @conditional-compile-remove-from(stable) */
   renderLocalCameraSwitcher?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
@@ -138,17 +144,23 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
+  /* @conditional-compile-remove-from(stable) */
   /**
    * Camera that is shown as currently selected
    */
+  /* @conditional-compile-remove-from(stable) */
   selectedCamera?: OptionsDevice;
+  /* @conditional-compile-remove-from(stable) */
   /**
    * Callback when a camera is selected
    */
+  /* @conditional-compile-remove-from(stable) */
   onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+  /* @conditional-compile-remove-from(stable) */
   /**
    * Available cameras for selection
    */
+  /* @conditional-compile-remove-from(stable) */
   cameras?: OptionsDevice[];
 }
 
@@ -182,6 +194,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    /* @conditional-compile-remove-from(stable) */
     renderLocalCameraSwitcher
   } = props;
 
@@ -244,16 +257,20 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
-            <Stack>
-              {renderLocalCameraSwitcher && (
-                <LocalVideoCameraCycleButton
-                  cameras={props.cameras}
-                  selectedCamera={props.selectedCamera}
-                  onSelectCamera={props.onSelectCamera}
-                />
-              )}
+            <>
+              {/* @conditional-compile-remove-from(stable) */}
+              {renderLocalCameraSwitcher &&
+                props.cameras !== undefined &&
+                props.selectedCamera !== undefined &&
+                props.onSelectCamera !== undefined && (
+                  <LocalVideoCameraCycleButton
+                    cameras={props.cameras}
+                    selectedCamera={props.selectedCamera}
+                    onSelectCamera={props.onSelectCamera}
+                  />
+                )}
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-            </Stack>
+            </>
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}

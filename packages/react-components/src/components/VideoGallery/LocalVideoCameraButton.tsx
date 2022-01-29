@@ -12,17 +12,24 @@ export interface LocalVideoCameraCycleButtonProps {
   /** Array of cameras available to the user. */
   cameras: OptionsDevice[];
   /** Currently selected camera in the local video stream. */
-  selectedCamera?: OptionsDevice;
+  selectedCamera: OptionsDevice;
   /** callback function to change video feed. */
-  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+  onSelectCamera: (device: OptionsDevice) => Promise<void>;
 }
 
 const localVideoCameraCycleButtonStyles: IButtonStyles = {
   root: {
     position: 'absolute',
-    right: '0',
-    color: 'white', // only shows up on running video feed to we want to force specific colours.
-    zIndex: 4
+    right: '0.2rem',
+    top: '0.2rem',
+    color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
+    zIndex: 5, // to layer the button above the video tile.
+    background: 'transparent'
+  },
+  rootFocused: {
+    // styles to remove the unwanted white highlight and blue colour after tapping on button.
+    color: '#FFFFFF',
+    background: 'transparent'
   }
 };
 /**
