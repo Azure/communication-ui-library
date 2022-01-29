@@ -25,9 +25,13 @@ export type MicrophoneButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   microphones: AudioDeviceInfo[];
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   speakers: AudioDeviceInfo[];
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   selectedMicrophone?: AudioDeviceInfo;
+  /* @conditional-compile-remove-from(stable) meeting-composite */
   selectedSpeaker?: AudioDeviceInfo;
 };
 
@@ -43,9 +47,13 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     return {
       disabled: !callExists || !permission,
       checked: callExists ? !isMuted : false,
+      /* @conditional-compile-remove-from(stable) meeting-composite */
       microphones: deviceManager.microphones,
+      /* @conditional-compile-remove-from(stable) meeting-composite */
       speakers: deviceManager.speakers,
+      /* @conditional-compile-remove-from(stable) meeting-composite */
       selectedMicrophone: deviceManager.selectedMicrophone,
+      /* @conditional-compile-remove-from(stable) meeting-composite */
       selectedSpeaker: deviceManager.selectedSpeaker
     };
   }
