@@ -256,6 +256,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       // xkcd: style this correctly to increase touch targets.
       styles={controlButtonBaseStyle}
       {...microphoneButtonStrings}
+      /* @conditional-compile-remove-from(stable) meeting-composite */
       showDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
