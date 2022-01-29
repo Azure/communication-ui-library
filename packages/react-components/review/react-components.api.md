@@ -576,6 +576,11 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
+export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
     microphones?: OptionsDevice[];
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
@@ -600,6 +605,11 @@ export interface MicrophoneButtonStrings {
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+}
+
+// @public
+export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
 // @public
