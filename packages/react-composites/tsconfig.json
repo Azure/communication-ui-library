@@ -4,6 +4,6 @@
     "outDir": "./dist/dist-esm"
   },
   "typeRoots": ["./node_modules/@types"],
-  "files": ["src/index.ts"],
+  "include": ["src/index.ts", "src/**/*.test.ts"],
   "exclude": ["dist", "node_modules"]
 }
