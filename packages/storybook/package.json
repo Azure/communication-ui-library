@@ -1,6 +1,6 @@
 {
   "name": "@internal/storybook",
-  "version": "1.0.1-beta.1",
+  "version": "1.0.1-beta.2",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
@@ -20,11 +20,11 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-calling": "1.3.2-beta.1 || 1.3.2",
+    "@azure/communication-calling": "1.3.2-beta.1",
     "@azure/communication-chat": "1.1.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-identity": "1.0.0",
-    "@azure/communication-react": "1.0.1-beta.1",
+    "@azure/communication-react": "1.0.1-beta.2",
     "@azure/communication-signaling": "1.0.0-beta.12",
     "@azure/core-http": "1.2.4",
     "@fluentui/react-hooks": "~8.3.8",
