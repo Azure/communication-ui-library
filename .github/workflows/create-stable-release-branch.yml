@@ -1,5 +1,5 @@
 # Bump package version numbers and create a release branch
-name: Beta release branch - Create
+name: Stable release branch - Create
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -8,6 +8,10 @@ on:
       description: 'Branch or tag to create release from'
       required: true
       default: 'main'
+    bump_type:
+      description: 'Bump type for stable branch [minor/patch]'
+      required: true
+      default: 'minor'
 
 jobs:
   release:
@@ -57,11 +61,11 @@ jobs:
 
       # Bump package versions
       - name: Bump package versions
-        run: node common/scripts/bump-beta-version.js
+        run: node common/scripts/remove.js
 
-      # Choose beta dependency for sdk
-      - name: Choose beta dependency for sdk
-        run: node common/scripts/choose-beta-sdk-deps.js
+      # Choose stable dependency for sdk
+      - name: Choose stable dependency for sdk
+        run: node common/scripts/choose-stable-sdk-deps.js
 
       # Generate changelog using beachball
       - name: Generate changelog using beachball
@@ -88,7 +92,7 @@ jobs:
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Beta version bump"
+          git commit -m "Stable version bump"
 
       # Create beachball change files
       - name: Create change files
