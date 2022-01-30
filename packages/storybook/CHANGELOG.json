@@ -2,6 +2,103 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 06:19:10 GMT",
+      "tag": "@internal/storybook_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Update PiPiP story to have tweakable args"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "046c1df62687f6386458304f1294f629a9f205f0",
+            "comment": "updated CSS to fix the sbdocs-title class."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0d8c061900189effb4a357931455ec7fb1576c0d",
+            "comment": "Update install instructions for beta channel"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Add ability to have local-only stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "2c32ccbc5b1aafec1d603eda1bdb7d5aa1ba22d0",
+            "comment": "Fix internal story visibility"
+          }
+        ],
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9ff29b02cc5ff791648ef84a2319b93ed2508344",
+            "comment": "Add manual documentation for adapters"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "909114e48f648bd83c3b9080d2e5697586611c48",
+            "comment": "Added entry for endpointUrl in appsettings.json instead of using connectionString twice"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.1.0",
+            "commit": "6fb343f3c08769d9a49c4903a89b2e7ee1379aeb"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8562048c56039b4a0e129098b6b337a5f3927c18",
+            "comment": "fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:10 GMT",
       "tag": "@internal/storybook_v1.0.1",
       "version": "1.0.1",

@@ -2,6 +2,53 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 06:19:08 GMT",
+      "tag": "@internal/calling-stateful-client_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-calling to peer dependency"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "6fb343f3c08769d9a49c4903a89b2e7ee1379aeb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:09 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.1",
       "version": "1.0.1",
