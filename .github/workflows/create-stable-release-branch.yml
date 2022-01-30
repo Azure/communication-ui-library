@@ -2,6 +2,8 @@
 name: Stable release branch - Create
 
 on:
+  pull_request:
+    types: [opened, synchronize]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     branch:
@@ -38,7 +40,7 @@ jobs:
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ github.event.inputs.branch || "main" }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -61,7 +63,7 @@ jobs:
 
       # Bump package versions
       - name: Bump package versions
-        run: node common/scripts/remove.js
+        run: node common/scripts/bump-stable-version.js ${{ github.event.inputs.branch || "minor" }}
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk

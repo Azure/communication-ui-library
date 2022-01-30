@@ -2,10 +2,10 @@
 name: Beta release branch - Create
 
 on:
+  pull_request:
+    types: [opened, synchronize]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    pull_request:
-      types: [opened, synchronize]
     branch:
       description: 'Branch or tag to create release from'
       required: true
@@ -36,7 +36,7 @@ jobs:
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ github.event.inputs.branch || "main" }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
