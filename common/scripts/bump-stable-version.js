@@ -25,7 +25,6 @@ const bumpVersion = (currentVersion) => {
     0
     : bumpType === 'patch' ? Number.parseInt(patch) + 1 : patch;
 
-
   return [major, newMinor, newPatch].join('.');
 }
 
