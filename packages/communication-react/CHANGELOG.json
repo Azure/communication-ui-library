@@ -2,6 +2,507 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 06:30:20 GMT",
+      "tag": "@azure/communication-react_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Create PiPiP pure component"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "31cda10cdf60dc4a65e9c30fcee90f3dccb62afd",
+            "comment": "Removed VideoGallery containuer uuid"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b33c4b24d5fe93fded45602a7fb06f74579bad36",
+            "comment": "Center send button"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Create scaffolding for PiPiP component"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "98965b17b48b862892df189b3d40adad16a45e97",
+            "comment": "ensure font has loaded in e2e tests"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "5a0e88b91709f001b9df9874dbd208e80321fba8",
+            "comment": "Moved computevariant function to utils, added unit testing"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c765b05710cd07550a9352960d87fc5019ed8d9d",
+            "comment": "set autofocus on microphone button"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Update PiPiP story to have tweakable args"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "046c1df62687f6386458304f1294f629a9f205f0",
+            "comment": "updated CSS to fix the sbdocs-title class."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0d8c061900189effb4a357931455ec7fb1576c0d",
+            "comment": "Update install instructions for beta channel"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Add ability to have local-only stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "2c32ccbc5b1aafec1d603eda1bdb7d5aa1ba22d0",
+            "comment": "Fix internal story visibility"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-chat to peer dependency"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "4c5f5d297908e63d64f6896905031644feda3d0a",
+            "comment": "Small code modifications for conditional build"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-chat to peer dependency"
+          },
+          {
+            "author": "kaurprabhjot@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "03fb8a37d798e97bfbdd17a56894b81d5b95fa5b",
+            "comment": "Fixed inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "f0db7f0546220a2806b7a7276a506feb07cee810",
+            "comment": "Fixed ScreenShareButton style to allow custom styles"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "4c5f5d297908e63d64f6896905031644feda3d0a",
+            "comment": "Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f2c313685a447dc9ce035b115a05a4f071ea9617",
+            "comment": "Horizontal gallery button height fixed"
+          },
+          {
+            "author": "kaurprabhjot@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "65d0ae54cdcd79cddea9b976bf6c3633dec90014",
+            "comment": "Fixed alignment of typing indicator in chat composite by reducing minHeight."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "806d379e8408eaec206c18e9d00609790b2cfc4d",
+            "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "4c5f5d297908e63d64f6896905031644feda3d0a",
+            "comment": "Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-{calling, chat} to peer dependency"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "4d63c1dafe67115e6ec0bf124091bef19881ba3b",
+            "comment": "Increase size of participant flyout menu items for mobile view"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9ff29b02cc5ff791648ef84a2319b93ed2508344",
+            "comment": "Add manual documentation for adapters"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "909114e48f648bd83c3b9080d2e5697586611c48",
+            "comment": "Added entry for endpointUrl in appsettings.json instead of using connectionString twice"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-calling to peer dependency"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-calling to peer dependency"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "created button component for local video feed camera switcher"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9b88c40cea014813c4124866590427196a3bf161",
+            "comment": "Added strings to the side pane from locale context."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c4c979dcb63e64ab8572dc4739bfce0bc276835f",
+            "comment": "implemented custom datamodel functionality to meeting composite excluding sidebar."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8562048c56039b4a0e129098b6b337a5f3927c18",
+            "comment": "Added MeetingCompositeOptions type to the meetings composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c90e8dffc0f341cb11662b93c7e2ec6402809efa",
+            "comment": "changed meeting peopel pane to use ParticipantContainer Component."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3d0d2b2f3bcbf28a4c37f12ccae3d69d78c14ab7",
+            "comment": "added missing return types."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "Updated calling composite icons to include new icon for local video feed camera switcher"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "52517740c7b2289aa0f2e4088341b930e2d4e223",
+            "comment": "Add API for injecting custom buttons into CallComposite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9b88c40cea014813c4124866590427196a3bf161",
+            "comment": "Added strings to the side pane from locale context."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "16135958cbd794a7fd5e0e4a712a2fb5bb730d54",
+            "comment": "Do not remove users from chat in the meeting composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8562048c56039b4a0e129098b6b337a5f3927c18",
+            "comment": "fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "60d648d0d99be67e9a2ea2da403ec3d4be2531ad",
+            "comment": "Add File upload button to Chat Composite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "9c9e5491cf95794c0f3d15008f94527885035210",
+            "comment": "Add FileCard component to chat composite"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:09 GMT",
       "tag": "@azure/communication-react_v1.0.1",
       "version": "1.0.1",
