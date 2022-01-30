@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const PACKAGES_DIR = path.join(__dirname, '..', '..', 'packages');
+const SAMPLES_DIR = path.join(__dirname, '..', '..', 'samples');
 
 function findAllPackageJSON(root) {
   return fs.readdirSync(root).map(
@@ -43,7 +44,7 @@ const updateAllVersions = (versionUpdater) => {
 }
 
 const updateAllDepVersions = (versionUpdater, deps/* dependency names to update version*/) => {
-  const packagePaths = findAllPackageJSON(PACKAGES_DIR);
+  const packagePaths = [...findAllPackageJSON(PACKAGES_DIR), ...findAllPackageJSON(SAMPLES_DIR)];
 
   const packageProcessFunc = (packageJson) => {
     const result = { ...packageJson };

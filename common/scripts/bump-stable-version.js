@@ -21,9 +21,11 @@ const bumpVersion = (currentVersion) => {
   const nonBetaVersion = removeBetaSuffix(currentVersion);
   const [major, minor, patch] = nonBetaVersion.split('.');
   const newMinor = bumpType === 'minor' ? Number.parseInt(minor) + 1 : minor;
-  const newPatch = bumpType === 'patch' ? Number.parseInt(patch) + 1 : patch;
+  const newPatch = bumpType === 'minor' ?
+    0
+    : bumpType === 'patch' ? Number.parseInt(patch) + 1 : patch;
 
-  
+
   return [major, newMinor, newPatch].join('.');
 }
 
