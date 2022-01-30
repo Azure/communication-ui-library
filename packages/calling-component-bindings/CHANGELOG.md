@@ -1,8 +1,20 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Tue, 04 Jan 2022 22:57:09 GMT and should not be manually modified.
+This log was last generated on Sun, 30 Jan 2022 03:44:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.1.0)
+
+Sun, 30 Jan 2022 03:44:38 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.1...@internal/calling-component-bindings_v1.1.0)
+
+### Patches
+
+- Move @azure/communication-calling to peer dependency ([PR #1294](https://github.com/azure/communication-ui-library/pull/1294) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.0 ([commit](https://github.com/azure/communication-ui-library/commit/4507904a548cbed5ca72399355fefc3e86cc7d06) by beachball)
+- Bump @internal/calling-stateful-client to v1.1.0 ([commit](https://github.com/azure/communication-ui-library/commit/4507904a548cbed5ca72399355fefc3e86cc7d06) by beachball)
+- Bump @internal/react-components to v1.1.0 ([commit](https://github.com/azure/communication-ui-library/commit/4507904a548cbed5ca72399355fefc3e86cc7d06) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.1)
 

@@ -2,6 +2,133 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 03:44:39 GMT",
+      "tag": "@internal/react-components_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "created button component for local video feed camera switcher"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9b88c40cea014813c4124866590427196a3bf161",
+            "comment": "Added strings to the side pane from locale context."
+          }
+        ],
+        "patch": [
+          {
+            "author": "kaurprabhjot@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "03fb8a37d798e97bfbdd17a56894b81d5b95fa5b",
+            "comment": "Fixed inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "f0db7f0546220a2806b7a7276a506feb07cee810",
+            "comment": "Fixed ScreenShareButton style to allow custom styles"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "4c5f5d297908e63d64f6896905031644feda3d0a",
+            "comment": "Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f2c313685a447dc9ce035b115a05a4f071ea9617",
+            "comment": "Horizontal gallery button height fixed"
+          },
+          {
+            "author": "kaurprabhjot@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "65d0ae54cdcd79cddea9b976bf6c3633dec90014",
+            "comment": "Fixed alignment of typing indicator in chat composite by reducing minHeight."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "806d379e8408eaec206c18e9d00609790b2cfc4d",
+            "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Create PiPiP pure component"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "31cda10cdf60dc4a65e9c30fcee90f3dccb62afd",
+            "comment": "Removed VideoGallery containuer uuid"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b33c4b24d5fe93fded45602a7fb06f74579bad36",
+            "comment": "Center send button"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Create scaffolding for PiPiP component"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:09 GMT",
       "tag": "@internal/react-components_v1.0.1",
       "version": "1.0.1",

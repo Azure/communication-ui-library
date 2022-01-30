@@ -1,0 +1,50 @@
+{
+  "name": "meeting",
+  "entries": [
+    {
+      "date": "Sun, 30 Jan 2022 03:44:41 GMT",
+      "tag": "meeting_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @azure/communication-react to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          },
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          },
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @internal/calling-component-bindings to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          },
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @internal/calling-stateful-client to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          },
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @internal/react-components to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          },
+          {
+            "author": "beachball",
+            "package": "meeting",
+            "comment": "Bump @internal/react-composites to v1.1.0",
+            "commit": "4507904a548cbed5ca72399355fefc3e86cc7d06"
+          }
+        ]
+      }
+    }
+  ]
+}
