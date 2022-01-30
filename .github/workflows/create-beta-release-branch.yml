@@ -35,7 +35,7 @@ jobs:
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
-        run: git checkout ${{ github.event.inputs.branch || "main" }}
+        run: git checkout ${{ github.event.inputs.branch || 'main' }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
