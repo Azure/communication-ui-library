@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "set autofocus on microphone button",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}
