@@ -1,8 +1,18 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Tue, 04 Jan 2022 22:57:09 GMT and should not be manually modified.
+This log was last generated on Sun, 30 Jan 2022 03:29:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.1.0)
+
+Sun, 30 Jan 2022 03:29:22 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.1...@internal/calling-stateful-client_v1.1.0)
+
+### Patches
+
+- Move @azure/communication-calling to peer dependency ([PR #1294](https://github.com/azure/communication-ui-library/pull/1294) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.0 ([commit](https://github.com/azure/communication-ui-library/commit/2f351450ff9c785f5d3da0c586e71a966c23d384) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.1)
 

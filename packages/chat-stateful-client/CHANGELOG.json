@@ -2,6 +2,65 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 03:29:22 GMT",
+      "tag": "@internal/chat-stateful-client_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          }
+        ],
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "4c5f5d297908e63d64f6896905031644feda3d0a",
+            "comment": "Small code modifications for conditional build"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "f9e922fd4ff9e2c5f3da8807b71c18560fe869a0",
+            "comment": "Move @azure/communication-chat to peer dependency"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:09 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.1",
       "version": "1.0.1",

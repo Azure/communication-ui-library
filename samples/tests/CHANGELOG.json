@@ -2,6 +2,21 @@
   "name": "sample-automation-tests",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 03:29:24 GMT",
+      "tag": "sample-automation-tests_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "sample-automation-tests",
+            "comment": "Bump @azure/communication-react to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:10 GMT",
       "tag": "sample-automation-tests_v1.0.0",
       "version": "1.0.0",

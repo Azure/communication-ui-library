@@ -2,6 +2,51 @@
   "name": "chat",
   "entries": [
     {
+      "date": "Sun, 30 Jan 2022 03:29:24 GMT",
+      "tag": "chat_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @azure/communication-react to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          },
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          },
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @internal/chat-stateful-client to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          },
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @internal/chat-component-bindings to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          },
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @internal/react-components to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          },
+          {
+            "author": "beachball",
+            "package": "chat",
+            "comment": "Bump @internal/react-composites to v1.1.0",
+            "commit": "2f351450ff9c785f5d3da0c586e71a966c23d384"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:10 GMT",
       "tag": "chat_v0.0.1",
       "version": "0.0.1",
