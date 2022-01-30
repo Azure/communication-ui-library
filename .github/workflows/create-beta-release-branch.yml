@@ -11,7 +11,7 @@ on:
       default: 'main'
 
 jobs:
-  release:
+  create_beta_release:
     name: Bump versions and create changelog PR
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,7 @@ jobs:
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
-        run: git checkout ${{ github.event.inputs.branch || 'main' }}
+        run: git checkout ${{ github.event.inputs.branch || 'jinan/create-branch-actions' }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
