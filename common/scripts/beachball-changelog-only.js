@@ -9,18 +9,18 @@ const { performBump } = require('../config/node_modules/beachball/lib/bump/perfo
 const { getOptions } = require("../config/node_modules/beachball/lib/options/getOptions");
 
 const options = getOptions(process.argv);
-const preservedVersions = {};
+const preservedPackages = {};
 
 const packageInfos = getPackageInfos(options.path);
 
-// Preserve the current version number before bump
+// Preserve the current packageInfo before bump, we don't change version number using beachball
 for (const name in packageInfos) {
-  preservedVersions[name] = packageInfos[name].version;
+  preservedPackages[name] = packageInfos[name];
 }
 const bumpInfo = gatherBumpInfo(options, packageInfos);
 
-// Recover the version number so no bump to versions by beachball
+// Restore packageInfo so no bump to versions by beachball
 for (const name in bumpInfo.packageInfos) {
-  bumpInfo.packageInfos[name].version = preservedVersions[name];
+  bumpInfo.packageInfos[name] = preservedPackages[name];
 }
 performBump(bumpInfo, options);
