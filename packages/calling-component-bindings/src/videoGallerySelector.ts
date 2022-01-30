@@ -12,7 +12,6 @@ import {
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
-  getDeviceManager,
   getDisplayName,
   getDominantSpeakers,
   getIdentifier,
@@ -23,6 +22,8 @@ import {
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 import { checkIsSpeaking } from './SelectorUtils';
+/* @conditional-compile-remove-from(stable) */
+import { getDeviceManager } from './baseSelectors';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {
   return {
@@ -149,6 +150,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDisplayName,
     getIdentifier,
     getDominantSpeakers,
+    /* @conditional-compile-remove-from(stable) */
     getDeviceManager
   ],
   (
@@ -160,6 +162,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     displayName: string | undefined,
     identifier: string,
     dominantSpeakers,
+    /* @conditional-compile-remove-from(stable) */
     deviceManager
   ) => {
     const screenShareRemoteParticipant =
@@ -195,7 +198,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       },
       remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants),
       dominantSpeakers: dominantSpeakerIds,
+      /* @conditional-compile-remove-from(stable) */
       cameras: deviceManager.cameras,
+      /* @conditional-compile-remove-from(stable) */
       selectedCamera: deviceManager.selectedCamera
     };
   }
