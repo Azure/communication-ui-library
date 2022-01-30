@@ -13,9 +13,9 @@ const preservedPackages = {};
 
 const packageInfos = getPackageInfos(options.path);
 
-// Preserve the current packageInfo before bump, we don't change version number using beachball
+// Preserve(deep clone) the current packageInfo before bump, we don't change version number using beachball
 for (const name in packageInfos) {
-  preservedPackages[name] = packageInfos[name];
+  preservedPackages[name] = JSON.parse(JSON.stringify(packageInfos[name]));
 }
 const bumpInfo = gatherBumpInfo(options, packageInfos);
 
