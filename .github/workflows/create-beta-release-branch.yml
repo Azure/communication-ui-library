@@ -85,7 +85,7 @@ jobs:
 
       # Commit changes
       - name: Hop into new branch
-        run: git checkout -b release/${{ steps.version.outputs.version }}
+        run: git checkout -b release-test/${{ steps.version.outputs.version }}
       - name: Commit changes
         run: |
           git add .
