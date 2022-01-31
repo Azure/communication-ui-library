@@ -31,3 +31,5 @@ export * from './Strings';
 export type { FileUploadHandler } from './file-sharing/FileUploadHandler';
 /* @conditional-compile-remove-from(stable) */
 export * from './file-sharing/UploadedFile';
+/* @conditional-compile-remove-from(stable) */
+export type { FileSharingOptions } from './ChatScreen';

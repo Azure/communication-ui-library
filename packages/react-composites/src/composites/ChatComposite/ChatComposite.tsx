@@ -8,9 +8,7 @@ import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
-import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove-from(stable) */
-import { FileUploadHandler } from './file-sharing/FileUploadHandler';
+import { ChatScreen, FileSharingOptions } from './ChatScreen';
 
 /**
  * Props for {@link ChatComposite}.
@@ -69,27 +67,14 @@ export type ChatCompositeOptions = {
    * Set focus on the composite when the composite first mounts.
    */
   autoFocus?: 'sendBoxTextField' | false;
-  /* @conditional-compile-remove-from(stable) */
+
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
-   * A string containing the comma separated list of accepted file types.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
+   * Properties for configuring the File Sharing feature.
+   * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileUploadAccept?: string;
-  /* @conditional-compile-remove-from(stable) */
-  /**
-   * Allows multiple files to be selected if set to `true`.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
-   * @defaultValue false
-   * @beta
-   */
-  fileUploadMultiple?: boolean;
-  /* @conditional-compile-remove-from(stable) */
-  /**
-   * The function of type {@link FileUploadHandler} for handling file uploads.
-   * @beta
-   */
-  fileUploadHandler?: FileUploadHandler;
+  fileSharing?: FileSharingOptions;
 };
 
 /**
@@ -114,11 +99,9 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
    * @private
    */
   const fileSharingOptions = () => {
-    /* @conditional-compile-remove-from(stable) */
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
     return {
-      fileUploadAccept: options?.fileUploadAccept,
-      fileUploadMultiple: options?.fileUploadMultiple,
-      fileUploadHandler: options?.fileUploadHandler
+      fileSharing: options?.fileSharing
     };
     return {};
   };

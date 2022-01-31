@@ -352,9 +352,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField' | false;
-    fileUploadAccept?: string;
-    fileUploadMultiple?: boolean;
-    fileUploadHandler?: FileUploadHandler;
+    fileSharing?: FileSharingOptions;
 };
 
 // @public
@@ -553,6 +551,13 @@ export interface FileMetaData {
     extension: string;
     name: string;
     url: string;
+}
+
+// @beta
+export interface FileSharingOptions {
+    accept?: string;
+    multiple?: boolean;
+    uploadHandler: FileUploadHandler;
 }
 
 // @beta
