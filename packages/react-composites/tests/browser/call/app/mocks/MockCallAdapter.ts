@@ -18,10 +18,12 @@ export class MockCallAdapter implements CallAdapter {
 
     const initialState = defaultCallAdapterState;
 
-    if (testState.remoteParticipants) {
-      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-      initialState.call.remoteParticipants = remoteParticipants;
+    if (initialState.call) {
+      if (testState?.remoteParticipants) {
+        const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+        Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
+        initialState.call.remoteParticipants = remoteParticipants;
+      }
     }
 
     this.state = initialState;
