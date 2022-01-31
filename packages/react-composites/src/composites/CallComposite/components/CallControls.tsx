@@ -110,26 +110,6 @@ export type CallControlOptions = {
 /**
  * Placement for a custom button injected in the {@link CallControls}.
  *
- * 'desktop.controlBarCenter.<placement>': Place button on center control bar.
- * 'desktop.controlBarRight.<placement>': Place button on right control bar for meeting composite.
- *
- * Support for desktop and mobile view.
- *
- * It is an error to place the button in reference to another button that has
- * been hidden via a {@link CallControlOptions} field.
- *
- * @beta
- */
-export type CustomCallControlButtonPlacement =
-  | `desktop.controlBarCenter.${CustomCallControlBarCenterPlacement}`
-  | `desktop.controlBarEnd.${CustomCallControlBarEndPlacement}`
-  | `mobile.controlBarCenter.${CustomCallControlBarCenterPlacement}`
-  | `mobile.controlBarEnd.${CustomCallControlBarEndPlacement}`;
-
-/* @conditional-compile-remove-from(stable): custom button injection */
-/**
- * Placement for a custom button injected in the {@link CallControls}.
- *
  * 'first': Place the button on the left end (right end in rtl mode).
  * 'afterCameraButton': Place the button on the right (left in rtl mode) of the camera button.
  * ... and so on.
@@ -143,35 +123,17 @@ export type CustomCallControlButtonPlacement =
  *
  * @beta
  */
-export type CustomCallControlBarCenterPlacement =
-  | 'first'
-  | 'last'
+export type CustomCallControlButtonPlacement =
   | 'afterCameraButton'
+  | 'afterChatButton'
   | 'afterEndCallButton'
   | 'afterMicrophoneButton'
   | 'afterOptionsButton'
   | 'afterParticipantsButton'
-  | 'afterScreenShareButton';
-
-/* @conditional-compile-remove-from(stable): custom button injection */
-/**
- * Placement for a custom button injected in the {@link CallControls} for
- * MeetingCallControlBar sidepane buttons.
- *
- * 'first': Place the button on the left end (right end in rtl mode).
- * 'afterChatButton': Place the button on the right (left in rtl mode) of the Chat button.
- * ... and so on.
- *
- * It is an error to place the button in reference to another button that has
- * been hidden via a {@link CallControlOptions} field.
- *
- * Multiple buttons placed in the same position are appended in order.
- * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
- * in the order provided.
- *
- * @beta
- */
-export type CustomCallControlBarEndPlacement = 'first' | 'last' | 'afterChatButton';
+  | 'afterPeopleButton'
+  | 'afterScreenShareButton'
+  | 'beforeChatButton'
+  | 'beforeMicrophoneButton';
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 /**
@@ -354,59 +316,37 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         <ControlBar layout="horizontal">
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarCenter.first'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'beforeMicrophoneButton'} />
           }
           {microphoneButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterMicrophoneButton'}
-            />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
           }
           {cameraButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterCameraButton'}
-            />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
           }
           {screenShareButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterScreenShareButton'}
-            />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
           }
           {participantButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterParticipantsButton'}
-            />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
           }
           {devicesButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterOptionsButton'}
-            />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />
           }
           {endCallButton}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons
-              customButtonProps={customButtonProps}
-              placement={'desktop.controlBarCenter.afterEndCallButton'}
-            />
-          }
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'desktop.controlBarCenter.last'} />
+            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterEndCallButton'} />
           }
         </ControlBar>
       </Stack.Item>
