@@ -1247,7 +1247,40 @@ export interface FileSharingOptions {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, uploadedFiles: UploadedFile[]) => void;
+export class FileUpload {
+    constructor(file: File);
+    cancelUpload(): void;
+    completeUpload(metaData: FileMetaData): void;
+    extension(): string;
+    failUpload(message: string): void;
+    file: File;
+    // (undocumented)
+    isUploaded(): boolean;
+    metaData?: FileMetaData;
+    off(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+    off(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+    off(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+    off(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+    on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+    on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+    on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+    on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+    progress: number;
+    progressUpload(value: number): void;
+    truncatedName(length?: number): string;
+}
+
+// @beta
+export type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener | UploadCanceledListener;
+
+// @beta
+export type FileUploadEvents = typeof UPLOAD_PROGRESSED_EVENT | typeof UPLOAD_COMPLETED_EVENT | typeof UPLOAD_FAILED_EVENT | typeof UPLOAD_CANCELLED_EVENT;
+
+// @beta
+export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+
+// @beta (undocumented)
+export type FileUploadManager = Pick<FileUpload, 'completeUpload' | 'failUpload' | 'file' | 'progressUpload'>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -2091,30 +2124,6 @@ export type UploadCanceledListener = () => void;
 
 // @beta
 export type UploadCompleteListener = (metaData: FileMetaData) => void;
-
-// @beta
-export class UploadedFile {
-    constructor(file: File);
-    cancelUpload(): void;
-    completeUpload(metaData: FileMetaData): void;
-    extension(): string;
-    failUpload(message: string): void;
-    file: File;
-    // (undocumented)
-    isUploaded(): boolean;
-    metaData?: FileMetaData;
-    off(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
-    on(event: UploadedFileEvents, listener: UploadedFileEventListener): void;
-    progress: number;
-    truncatedName(length?: number): string;
-    updateProgress(value: number): void;
-}
-
-// @beta
-export type UploadedFileEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener | UploadCanceledListener;
-
-// @beta
-export type UploadedFileEvents = typeof UPLOAD_PROGRESSED_EVENT | typeof UPLOAD_COMPLETED_EVENT | typeof UPLOAD_FAILED_EVENT | typeof UPLOAD_CANCELLED_EVENT;
 
 // @beta
 export type UploadFailedListener = (message: string) => void;

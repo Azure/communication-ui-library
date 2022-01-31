@@ -4,7 +4,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { FileUploadHandler } from './FileUploadHandler';
-import { UploadedFile } from './UploadedFile';
+import { FileUpload } from './FileUpload';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
@@ -49,8 +49,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       return;
     }
 
-    const uploadedFiles = Array.from(files).map((file) => new UploadedFile(file));
-    fileUploadHandler && fileUploadHandler(userId, uploadedFiles);
+    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
+    fileUploadHandler && fileUploadHandler(userId, fileUploads);
   };
 
   const fileUploadButtonClassName = mergeStyles({
