@@ -104,5 +104,6 @@ export const isSpeakingBorderDiv: IStyle = {
   position: 'absolute',
   top: '0',
   left: '0',
+  // Ensure the isSpeaking element does not steal any pointer events such as onClick events
   pointerEvents: 'none'
 };
