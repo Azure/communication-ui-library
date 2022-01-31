@@ -4,7 +4,7 @@
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, pageClick, clickOffPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
+import { dataUiId, pageClick, clickOutsideOfPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { IDS } from '../common/constants';
 
 test.describe('HorizontalGallery tests', async () => {
@@ -30,7 +30,7 @@ test.describe('HorizontalGallery tests', async () => {
       })
     );
     // Click off page to turn away initial aria label
-    await clickOffPage(page);
+    await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
@@ -81,7 +81,7 @@ test.describe('HorizontalGallery tests', async () => {
       })
     );
     // Click off page to turn away initial aria label
-    await clickOffPage(page);
+    await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-1.png');

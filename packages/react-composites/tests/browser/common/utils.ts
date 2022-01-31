@@ -145,9 +145,9 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 };
 
 /**
- * Click off the Composite page
+ * Click outside of the Composite page
  */
-export const clickOffPage = async (page: Page): Promise<void> => {
+export const clickOutsideOfPage = async (page: Page): Promise<void> => {
   await page.mouse.click(-1, -1);
 };
 
