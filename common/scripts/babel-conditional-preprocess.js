@@ -41,6 +41,10 @@ exports.default = babelHelper.declare((_api, opts) => {
       ExportAllDeclaration(path) {
         Handle(path, annotations);
       },
+      
+      JSXAttribute(path) {
+      	Handle(path, annotations);
+      },
 
       TSPropertySignature(path) {
         Handle(path, annotations);
@@ -48,7 +52,11 @@ exports.default = babelHelper.declare((_api, opts) => {
 
       Expression(path) {
         Handle(path, annotations);
-      }
+      },
+
+      ClassMethod(path) {
+        Handle(path, annotations);
+      },
     }
   };
 });
@@ -69,6 +77,10 @@ function Handle(path, annotations) {
         }
         if (removed) {
           comment.ignore = true;
+          // Comment will be inherit to next line even it is set to 'ignore'
+          // this will cause some unexpected removals of code
+          // clear the comment to ensure nothing gets wrong
+          comment.value = '';
         }
       }
     }
