@@ -205,6 +205,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.disposeStreamView.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    this.updateContextAfterJoiningCall.bind(this);
   }
 
   public dispose(): void {
@@ -246,25 +247,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
       const isTeamsMeeting = !('groupId' in this.locator);
+      const call = isTeamsMeeting
+        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          })
+        : this.callAgent.join(this.locator as GroupCallLocator, {
+            audioOptions,
+            videoOptions
+          });
 
-      if (isTeamsMeeting) {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
-      } else {
-        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
-      }
-
-      this.context.setCallId(this.call.id);
-      // Resync state after callId is set
-      this.context.updateClientState(this.callClient.getState());
-      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
-      this.subscribeCallEvents();
-      return this.call;
+      this.updateContextAfterJoiningCall(call);
+      return call;
     }
   }
 
@@ -368,14 +362,34 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
-    const idsToAdd = participants.map((participant) => {
-      // FIXME: `onStartCall` does not allow a Teams user.
-      // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
-      return backendId;
-    });
+    if (_isInCall(this.getState().call?.state ?? 'None')) {
+      throw new Error('You are already in the call.');
+    } else {
+      const idsToAdd = participants.map((participant) => {
+        // FIXME: `onStartCall` does not allow a Teams user.
+        // Need some way to return an error if a Teams user is provided.
+        const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
+        return backendId;
+      });
 
-    return this.handlers.onStartCall(idsToAdd);
+      const call = this.handlers.onStartCall(idsToAdd);
+      if (!call) {
+        throw new Error('Unable to start call.');
+      }
+      this.updateContextAfterJoiningCall(call);
+
+      return this.call;
+    }
+  }
+
+  private updateContextAfterJoiningCall(call: Call): void {
+    this.call = call;
+    this.context.setCallId(call.id);
+
+    // Resync state after callId is set
+    this.context.updateClientState(this.callClient.getState());
+    this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
+    this.subscribeCallEvents();
   }
 
   public async removeParticipant(userId: string): Promise<void> {
