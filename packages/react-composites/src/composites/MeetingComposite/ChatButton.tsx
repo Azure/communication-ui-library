@@ -5,6 +5,7 @@ import React from 'react';
 import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { Stack } from '@fluentui/react';
+import { ChatButtonContainerStyles } from './styles/MeetingCompositeStyles';
 
 const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
 const onRenderOffIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />;
@@ -16,10 +17,7 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
   const strings = { label: props.label, ...props.strings };
 
   return (
-    <Stack style={{ position: 'relative' }}>
-      {/** Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
-       * this requires the parent to have `position relative`
-       */}
+    <Stack styles={ChatButtonContainerStyles}>
       <ControlBarButton
         {...props}
         labelKey={'chatButtonLabelKey'}
