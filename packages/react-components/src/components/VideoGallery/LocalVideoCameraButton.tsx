@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IconButton, Label } from '@fluentui/react';
+import { IconButton } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from '../DevicesButton';
 import { localVideoCameraCycleButtonStyles } from '../styles/VideoGallery.styles';
