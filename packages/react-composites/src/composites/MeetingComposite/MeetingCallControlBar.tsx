@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
@@ -64,6 +64,9 @@ const inferCallControlOptions = (
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+  const theme = useTheme();
+  console.log(theme);
+
   const meetingStrings = useMeetingCompositeStrings();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
@@ -85,6 +88,8 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    * control bar such that all controls can be accessed.
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
+  const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
 
   return (
     <Stack
@@ -141,10 +146,10 @@ const desktopControlBarStyles: BaseCustomStyles = {
   root: desktopButtonContainerStyle
 };
 
-const desktopCommonButtonStyles: ControlBarButtonStyles = {
+const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
-    border: 'solid 1px #E1DFDD',
-    borderRadius: '0.25rem',
+    border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
+    borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem'
   },
   flexContainer: {
@@ -157,13 +162,16 @@ const desktopCommonButtonStyles: ControlBarButtonStyles = {
   label: {
     // Override styling from ControlBarButton so that label doesn't introduce a new block.
     display: 'inline',
-    fontSize: '0.875rem'
-  }
-};
-
-const desktopEndCallButtonStyles: ControlBarButtonStyles = concatStyleSets(desktopCommonButtonStyles, {
-  root: {
-    // Suppress border around the dark-red button.
-    border: 'none'
+    fontSize: theme.fonts.medium.fontSize
   }
 });
+
+const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
+  const overrides: ControlBarButtonStyles = {
+    root: {
+      // Suppress border around the dark-red button.
+      border: 'none'
+    }
+  };
+  return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
+};
