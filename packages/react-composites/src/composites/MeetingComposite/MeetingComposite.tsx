@@ -108,28 +108,23 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
+  meetingAdapter.onStateChange((newState) => {
+    setCurrentPage(newState.page);
+    setCurrentMeetingState(newState.meeting?.state);
+  });
+
   useEffect(() => {
-    const updateMeetingPage = (newState): void => {
-      setCurrentPage(newState.page);
-      setCurrentMeetingState(newState.meeting?.state);
-    };
-    meetingAdapter.onStateChange(updateMeetingPage);
-    return () => {
-      meetingAdapter.offStateChange(updateMeetingPage);
-    };
-  }, [meetingAdapter]);
-  useEffect(() => {
-    const incrementUnreadtChatMessages = (event: { message: ChatMessage }): void => {
+    const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {
       if (!showChat && event.message.senderDisplayName !== '') {
         if (event.message.type === 'text' || event.message.type === 'html') {
           setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
         }
       }
     };
-    meetingAdapter.on('messageReceived', incrementUnreadtChatMessages);
+    meetingAdapter.on('messageReceived', incrementUnreadtChatMessagesCount);
 
     return () => {
-      meetingAdapter.off('messageReceived', incrementUnreadtChatMessages);
+      meetingAdapter.off('messageReceived', incrementUnreadtChatMessagesCount);
     };
   }, [meetingAdapter, setUnreadChatMessagesCount, showChat, unreadChatMessagesCount]);
 
