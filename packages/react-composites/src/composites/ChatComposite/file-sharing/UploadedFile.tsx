@@ -82,34 +82,11 @@ export type UploadFailedListener = (message: string) => void;
 export type UploadCanceledListener = () => void;
 
 /**
- * UploadedFile event subscriber functions.
- * @beta
- */
-export interface UploadEvents {
-  /**
-   * Subscriber function for `uploadProgressed` event.
-   */
-  on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
-  /**
-   * Subscriber function for `uploadComplete` event.
-   */
-  on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
-  /**
-   * Subscriber function for `uploadFailed` event.
-   */
-  on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
-  /**
-   * Subscriber function for `uploadCanceled` event.
-   */
-  on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
-}
-
-/**
  * A wrapper object for a file that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @beta
  */
-export class UploadedFile implements UploadEvents {
+export class UploadedFile {
   private _emitter: EventEmitter;
 
   /**

@@ -790,7 +790,7 @@ export type UploadCanceledListener = () => void;
 export type UploadCompleteListener = (metaData: FileMetaData) => void;
 
 // @beta
-export class UploadedFile implements UploadEvents {
+export class UploadedFile {
     constructor(file: File);
     cancelUpload(): void;
     completeUpload(metaData: FileMetaData): void;
@@ -812,14 +812,6 @@ export type UploadedFileEventListener = UploadProgressListener | UploadCompleteL
 
 // @beta
 export type UploadedFileEvents = typeof UPLOAD_PROGRESSED_EVENT | typeof UPLOAD_COMPLETED_EVENT | typeof UPLOAD_FAILED_EVENT | typeof UPLOAD_CANCELLED_EVENT;
-
-// @beta
-export interface UploadEvents {
-    on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
-    on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
-    on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
-    on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
-}
 
 // @beta
 export type UploadFailedListener = (message: string) => void;
