@@ -32,13 +32,6 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
-  useEffect(() => {
-    if (!callIdRef.current) {
-      return;
-    }
-    console.log(`Call Id: ${callIdRef.current}`);
-  }, [callIdRef.current]);
-
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
     const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
@@ -63,7 +56,10 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
 
-        callIdRef.current = state?.meeting?.id;
+        if (state?.meeting?.id && callIdRef.current !== state?.meeting?.id) {
+          callIdRef.current = state?.meeting?.id;
+          console.log(`Call Id: ${callIdRef.current}`);
+        }
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
