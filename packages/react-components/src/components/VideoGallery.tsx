@@ -11,7 +11,7 @@ import {
   Modal,
   Stack
 } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -46,7 +46,6 @@ import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
-import { v4 as uuidv4 } from 'uuid';
 import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
@@ -321,12 +320,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onDisposeRemoteStreamView={onDisposeRemoteStreamView}
     />
   );
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.id = `video-gallery-${uuidv4()}`;
-    }
-  }, [containerRef]);
 
   const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
   const layerHostId = useId('layerhost');
