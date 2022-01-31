@@ -100,7 +100,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants),
+      remoteParticipants: _videoGalleryRemoteParticipantsMemo(remoteParticipants),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
       cameras: deviceManager.cameras,
