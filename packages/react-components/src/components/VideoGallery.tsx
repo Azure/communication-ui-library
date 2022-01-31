@@ -126,12 +126,11 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove-from(stable) Local-Camera-Switcher */
   /**
    * Whether or not to display the camera switcher on the local video tile
    */
-  /* @conditional-compile-remove-from(stable) */
-  renderLocalCameraSwitcher?: boolean;
+  showLocalPreviewCameraSwitcher?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -144,23 +143,20 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
   /**
    * Camera that is shown as currently selected
    */
-  /* @conditional-compile-remove-from(stable) */
   selectedCamera?: OptionsDevice;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
   /**
    * Callback when a camera is selected
    */
-  /* @conditional-compile-remove-from(stable) */
   onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
   /**
    * Available cameras for selection
    */
-  /* @conditional-compile-remove-from(stable) */
   cameras?: OptionsDevice[];
 }
 
@@ -194,8 +190,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
-    /* @conditional-compile-remove-from(stable) */
-    renderLocalCameraSwitcher
+    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+    showLocalPreviewCameraSwitcher
   } = props;
 
   const ids = useIdentifiers();
@@ -250,7 +246,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
-    console.log(props.cameras);
     return (
       <VideoTile
         key={localParticipant.userId}
@@ -258,17 +253,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={
           localVideoStream?.renderElement ? (
             <>
-              {/* @conditional-compile-remove-from(stable) */}
-              {renderLocalCameraSwitcher &&
-                props.cameras !== undefined &&
-                props.selectedCamera !== undefined &&
-                props.onSelectCamera !== undefined && (
-                  <LocalVideoCameraCycleButton
-                    cameras={props.cameras}
-                    selectedCamera={props.selectedCamera}
-                    onSelectCamera={props.onSelectCamera}
-                  />
-                )}
+              {
+                /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+                showLocalPreviewCameraSwitcher &&
+                  props.cameras !== undefined &&
+                  props.selectedCamera !== undefined &&
+                  props.onSelectCamera !== undefined && (
+                    <LocalVideoCameraCycleButton
+                      cameras={props.cameras}
+                      selectedCamera={props.selectedCamera}
+                      onSelectCamera={props.onSelectCamera}
+                    />
+                  )
+              }
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
             </>
           ) : undefined

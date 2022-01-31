@@ -2116,8 +2116,8 @@ export interface VideoGalleryProps {
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
-    renderLocalCameraSwitcher?: boolean;
     selectedCamera?: OptionsDevice;
+    showLocalPreviewCameraSwitcher?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;

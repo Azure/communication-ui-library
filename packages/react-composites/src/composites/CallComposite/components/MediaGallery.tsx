@@ -36,7 +36,6 @@ export interface MediaGalleryProps {
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  /* @conditional-compile-remove-from(stable) */
   isMobile?: boolean;
 }
 
@@ -45,7 +44,6 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  console.log(videoGalleryProps);
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -55,8 +53,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
-        /* @conditional-compile-remove-from(stable) */
-        renderLocalCameraSwitcher={props.isMobile}
+        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        showLocalPreviewCameraSwitcher={props.isMobile}
         onRenderAvatar={(userId, options) => (
           <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
