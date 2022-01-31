@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IconButton } from '@fluentui/react';
+import { IconButton, Label } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from '../DevicesButton';
 import { localVideoCameraCycleButtonStyles } from '../styles/VideoGallery.styles';
@@ -16,6 +16,8 @@ export interface LocalVideoCameraCycleButtonProps {
   selectedCamera: OptionsDevice;
   /** callback function to change video feed. */
   onSelectCamera: (device: OptionsDevice) => Promise<void>;
+  /** label for local video camera switcher */
+  label: string;
 }
 
 /**
@@ -23,13 +25,13 @@ export interface LocalVideoCameraCycleButtonProps {
  * @private
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
-  const { cameras, selectedCamera, onSelectCamera } = props;
+  const { cameras, selectedCamera, onSelectCamera, label } = props;
 
   return (
     <IconButton
       styles={localVideoCameraCycleButtonStyles}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
-      ariaLabel={'Cycle Camera Button'}
+      ariaLabel={label}
       onClick={() => {
         if (cameras && cameras.length > 1 && selectedCamera !== undefined) {
           const index = cameras.findIndex((camera) => selectedCamera.id === camera.id);

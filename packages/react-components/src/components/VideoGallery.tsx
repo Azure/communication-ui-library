@@ -69,6 +69,9 @@ export interface VideoGalleryStrings {
   screenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  /** String for local video camera switcher */
+  localVideoCameraSwitcherLabel: string;
 }
 
 /**
@@ -262,6 +265,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                       cameras={props.cameras}
                       selectedCamera={props.selectedCamera}
                       onSelectCamera={props.onSelectCamera}
+                      label={strings.localVideoCameraSwitcherLabel}
                     />
                   )
               }

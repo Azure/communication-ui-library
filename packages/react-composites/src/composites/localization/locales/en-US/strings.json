@@ -27,6 +27,7 @@
     "leftCallTitle": "You left the call",
     "lobbyScreenConnectingToCallTitle": "Joining call",
     "lobbyScreenWaitingToBeAdmittedTitle": "Waiting to be admitted",
+    "localCameraVideoSwitcher": "Cycle camera button",
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
     "mutedMessage": "You're muted",
     "networkReconnectMoreDetails": "Looks like something went wrong. We're trying to get back into the call.",
