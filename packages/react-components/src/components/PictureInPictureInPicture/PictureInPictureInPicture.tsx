@@ -81,8 +81,6 @@ const PictureInPictureInPictureContainer = (props: {
  */
 const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () => void): void => {
   if (e.key === 'Enter' || e.key === ' ') {
-    // If the PiP is clicked through keyboard, perform the onClick behavior only.
-    e.preventDefault();
     onClickCallback();
   }
 };
