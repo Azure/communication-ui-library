@@ -8,7 +8,9 @@ import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
-import { ChatScreen, FileSharingOptions } from './ChatScreen';
+import { ChatScreen } from './ChatScreen';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileSharingOptions } from './ChatScreen';
 
 /**
  * Props for {@link ChatComposite}.
