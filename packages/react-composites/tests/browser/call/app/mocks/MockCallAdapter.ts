@@ -12,19 +12,19 @@ import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState'
  */
 export class MockCallAdapter implements CallAdapter {
   constructor(testState?: TestCallingState) {
-    this.state = defaultCallAdapterState;
-
     if (!testState) {
-      return;
+      this.state = defaultCallAdapterState;
     }
 
-    if (this.state.call) {
-      if (testState.remoteParticipants) {
-        const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-        Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-        this.state.call.remoteParticipants = remoteParticipants;
-      }
+    const initialState = defaultCallAdapterState;
+
+    if (testState.remoteParticipants) {
+      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
+      initialState.call.remoteParticipants = remoteParticipants;
     }
+
+    this.state = initialState;
   }
 
   state: CallAdapterState;
