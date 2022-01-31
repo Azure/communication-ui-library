@@ -33,6 +33,7 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
         ) : undefined,
         isMirrored: true
       }}
+      strings={{ rootAriaLabel: 'Picture in Picture in Picture surfaces' }}
     />
   );
 };
@@ -69,6 +70,7 @@ export default {
     // Hiding auto-generated controls
     onClick: hiddenControl,
     primaryTile: hiddenControl,
-    secondaryTile: hiddenControl
+    secondaryTile: hiddenControl,
+    strings: hiddenControl
   }
 } as Meta;

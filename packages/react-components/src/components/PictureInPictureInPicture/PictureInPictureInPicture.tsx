@@ -9,6 +9,16 @@ import {
 } from './PictureInPictureInPictureTile';
 
 /**
+ * Strings of {@link _PictureInPictureInPicture} that can be overridden.
+ *
+ * @internal
+ */
+export interface _PictureInPictureInPictureStrings {
+  /** Aria-label for the focusable root of the PictureInPictureInPicture component. */
+  rootAriaLabel: string;
+}
+
+/**
  * Props for {@link _PictureInPictureInPicture} component.
  *
  * @internal
@@ -20,10 +30,11 @@ export interface _PictureInPictureInPictureProps {
   onClick?: () => void;
 
   primaryTile: _PictureInPictureInPictureTileProps;
-  secondaryTile: _PictureInPictureInPictureTileProps;
+  secondaryTile?: _PictureInPictureInPictureTileProps;
+
+  strings: _PictureInPictureInPictureStrings;
 }
 
-/* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE WHEN PROPS USED (BELOW)
 /**
  * Component that displays a video feed for use as a Picture-in-Picture style component.
  * It contains a secondary video feed resulting in an inner Picture-in-Picture style feed.
@@ -38,7 +49,8 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
       primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
-      secondaryView={<PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+      secondaryView={props.secondaryTile && <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+      ariaLabel={props.strings.rootAriaLabel}
     />
   );
 };
@@ -48,16 +60,33 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
  */
 const PictureInPictureInPictureContainer = (props: {
   primaryView: ReactChild;
-  secondaryView: ReactChild;
+  secondaryView?: ReactChild;
   onClick?: () => void;
+  ariaLabel: string;
 }): JSX.Element => (
-  <div style={tileContainerStyles} onClick={props.onClick}>
+  <aside
+    style={tileContainerStyles}
+    onClick={props.onClick}
+    onKeyPress={(e) => props.onClick && handleKeyDown(e, props.onClick)}
+    aria-label={props.ariaLabel}
+    tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
+  >
     {props.primaryView}
     <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
-  </div>
+  </aside>
 );
 
+/**
+ * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as mouse click.
+ */
+const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () => void): void => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    onClickCallback();
+  }
+};
+
 const tileContainerStyles: React.CSSProperties = {
+  display: 'inline-block',
   position: 'relative',
   cursor: 'pointer'
 };
