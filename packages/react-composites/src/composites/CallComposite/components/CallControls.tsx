@@ -46,7 +46,6 @@ export type CallControlsProps = {
   /**
    * Styles for the {@link ControlBar}.
    */
-
   controlBarStyles?: BaseCustomStyles;
   /**
    * Styles for all buttons except {@link EndCallButton}.

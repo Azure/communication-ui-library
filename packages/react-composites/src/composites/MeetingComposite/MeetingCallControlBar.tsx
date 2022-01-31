@@ -96,14 +96,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           <CallControls
             options={callControlOptions}
             increaseFlyoutItemSize={props.mobileView}
-            controlBarStyles={controlBarStyles}
-            commonButtonStyles={commonButtonStyles}
-            endCallButtonStyles={endCallButtonStyles}
+            controlBarStyles={!props.mobileView ? desktopControlBarStyles : undefined}
+            commonButtonStyles={!props.mobileView ? desktopCommonButtonStyles : undefined}
+            endCallButtonStyles={!props.mobileView ? desktopEndCallButtonStyles : undefined}
           />
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
-        <Stack horizontal className={mergeStyles(buttonContainerStyle)}>
+        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
               checked={props.peopleButtonChecked}
@@ -112,7 +112,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.peopleButtonLabel}
-              styles={commonButtonStyles}
+              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
@@ -123,7 +123,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-chat-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
-              styles={commonButtonStyles}
+              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}
         </Stack>
@@ -132,16 +132,16 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   );
 };
 
-const buttonContainerStyle: IStyle = {
+const desktopButtonContainerStyle: IStyle = {
   padding: '0.75rem',
   columnGap: '0.5rem'
 };
 
-const controlBarStyles: BaseCustomStyles = {
-  root: buttonContainerStyle
+const desktopControlBarStyles: BaseCustomStyles = {
+  root: desktopButtonContainerStyle
 };
 
-const commonButtonStyles: ControlBarButtonStyles = {
+const desktopCommonButtonStyles: ControlBarButtonStyles = {
   root: {
     border: 'solid 1px #E1DFDD',
     borderRadius: '0.25rem',
@@ -161,7 +161,7 @@ const commonButtonStyles: ControlBarButtonStyles = {
   }
 };
 
-const endCallButtonStyles: ControlBarButtonStyles = concatStyleSets(commonButtonStyles, {
+const desktopEndCallButtonStyles: ControlBarButtonStyles = concatStyleSets(desktopCommonButtonStyles, {
   root: {
     // Suppress border around the dark-red button.
     border: 'none'
