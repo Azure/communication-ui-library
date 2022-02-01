@@ -7,9 +7,7 @@ export {
 } from './AzureCommunicationCallAdapter';
 export type {
   AzureCommunicationCallAdapterArgs,
-  AzureCommunicationCallAdapterLocator,
-  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-  TeamsUserLocator
+  AzureCommunicationCallAdapterLocator
 } from './AzureCommunicationCallAdapter';
 
 export type {

@@ -514,22 +514,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-/**
- * Locator for calling a Teams user ID.
- *
- * // NOTE: This feature is in beta -- however using this inside AzureCommunicationCallAdapterLocator requires it to be marked `@public`
- * @public
- */
-export type TeamsUserLocator = {
-  /** Teams user ID should being with `8:orgid:` */
-  teamsUserID: string;
-};
-
 /**
  * @public
  */
-export type AzureCommunicationCallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | TeamsUserLocator;
+export type AzureCommunicationCallAdapterLocator =
+  | TeamsMeetingLinkLocator
+  | GroupCallLocator
+  | {
+      /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+      teamsUserIDs: [string];
+    };
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
