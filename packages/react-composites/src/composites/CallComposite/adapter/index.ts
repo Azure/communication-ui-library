@@ -5,7 +5,12 @@ export {
   createAzureCommunicationCallAdapter,
   createAzureCommunicationCallAdapterFromClient
 } from './AzureCommunicationCallAdapter';
-export type { AzureCommunicationCallAdapterArgs } from './AzureCommunicationCallAdapter';
+export type {
+  AzureCommunicationCallAdapterArgs,
+  AzureCommunicationCallAdapterLocator,
+  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+  TeamsUserLocator
+} from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,

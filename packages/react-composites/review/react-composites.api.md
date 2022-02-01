@@ -81,8 +81,11 @@ export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    locator: AzureCommunicationCallAdapterLocator;
 };
+
+// @public (undocumented)
+export type AzureCommunicationCallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | TeamsUserLocator;
 
 // @public
 export type AzureCommunicationChatAdapterArgs = {
@@ -447,7 +450,7 @@ export interface CompositeStrings {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: AzureCommunicationCallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -747,6 +750,11 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type TeamsUserLocator = {
+    teamsUserID: string;
+};
 
 // @public
 export type TopicChangedListener = (event: {
