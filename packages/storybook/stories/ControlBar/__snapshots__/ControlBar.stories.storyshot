@@ -147,6 +147,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                       </svg>
                     </span>
                   </i>
+                  <i
+                    aria-hidden={true}
+                    className="ms-Icon root-94 css-15 ms-Button-menuIcon menuIcon-10"
+                    data-icon-name="ChevronDown"
+                    hidden={true}
+                    style={
+                      Object {
+                        "fontFamily": "\\"FabricMDL2Icons\\"",
+                      }
+                    }
+                  >
+                    
+                  </i>
                 </span>
               </button>
             </div>
@@ -160,7 +173,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
             >
               <button
                 aria-label="Share your screen"
-                className="ms-Button ms-Button--default root-16"
+                className="ms-Button ms-Button--default root-17"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -252,7 +265,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-94 css-15 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -318,7 +331,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-94 css-15 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
