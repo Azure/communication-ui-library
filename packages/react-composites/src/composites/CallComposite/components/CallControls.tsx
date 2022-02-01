@@ -44,7 +44,7 @@ export type CallControlsProps = {
   increaseFlyoutItemSize?: boolean;
   /**
    * Whether to use split buttons to show device selection drop-downs
-   * Used by {@linke MeetingComposite}.
+   * Used by {@link MeetingComposite}.
    */
   splitButtonsForDeviceSelection?: boolean;
   /**
@@ -284,7 +284,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       styles={commonButtonStyles}
       {...microphoneButtonStrings}
       /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-      showDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
+      enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
 

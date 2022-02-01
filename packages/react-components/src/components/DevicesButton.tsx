@@ -172,12 +172,12 @@ export interface DeviceMenuProps {
  * @private
  */
 export interface DeviceMenuStrings {
-  cameraMenuTitle: string;
-  microphoneMenuTitle: string;
-  speakerMenuTitle: string;
-  cameraMenuTooltip: string;
-  microphoneMenuTooltip: string;
-  speakerMenuTooltip: string;
+  cameraMenuTitle?: string;
+  microphoneMenuTitle?: string;
+  speakerMenuTitle?: string;
+  cameraMenuTooltip?: string;
+  microphoneMenuTooltip?: string;
+  speakerMenuTooltip?: string;
 }
 
 /**

@@ -588,7 +588,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
     onToggleMicrophone?: () => Promise<void>;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
-    showDeviceSelectionMenu?: boolean;
+    enableDeviceSelectionMenu?: boolean;
     speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
     styles?: Partial<MicrophoneButtonStyles>;

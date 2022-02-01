@@ -125,7 +125,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    *
    * default: false
    */
-  showDeviceSelectionMenu?: boolean;
+  enableDeviceSelectionMenu?: boolean;
   /**
    * Optional strings to override in component
    */
@@ -164,8 +164,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       strings={strings}
       labelKey={props.labelKey ?? 'microphoneButtonLabel'}
       menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-      menuIconProps={!showDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
-      split={showDeviceSelectionMenuTrampoline(props)}
+      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
+      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
     />
   );
 };
@@ -190,18 +190,15 @@ const generateDefaultDeviceMenuPropsTrampoline = (
   strings: MicrophoneButtonStrings
 ): IContextualMenuProps | undefined => {
   /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-  if (props.showDeviceSelectionMenu) {
-    return generateDefaultDeviceMenuProps(
-      { ...props, styles: props.styles?.menuStyles },
-      fillDummyStringsIfMissing(strings)
-    );
+  if (props.enableDeviceSelectionMenu) {
+    return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
   }
   return undefined;
 };
 
-const showDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
+const enableDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
   /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-  if (props.showDeviceSelectionMenu) {
+  if (props.enableDeviceSelectionMenu) {
     return true;
   }
   return false;
