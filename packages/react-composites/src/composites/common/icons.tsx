@@ -13,9 +13,13 @@ import {
   PersonDelete20Filled,
   CallEnd20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable) */
+import { CameraSwitch24Filled } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { Attach20Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
@@ -42,12 +46,16 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch: <CameraSwitch24Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
-  NoticePageRemovedFromCall: <Info20Filled />
+  NoticePageRemovedFromCall: <Info20Filled />,
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  SendBoxAttachFile: <Attach20Regular />
 };
 
 /**
@@ -90,7 +98,11 @@ export type ChatCompositeIcons = Partial<
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
   >
->;
+> & {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  SendBoxAttachFile?: JSX.Element;
+};
+
 /**
  * Icons that can be overridden for {@link CallComposite}.
  *
@@ -141,4 +153,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
   >
->;
+> & {
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch?: JSX.Element;
+};

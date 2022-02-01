@@ -29,7 +29,7 @@ jobs:
         run: rush install
 
       - name: Build Storybook dependencies
-        run: rush build -T storybook
+        run: rush build -v -T storybook
 
       - name: Run Storybook tests
         run: rush test -o storybook

@@ -133,6 +133,12 @@ export const getControlledTheme = (choice: string): PartialTheme => {
 
 const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 
+export const orientationArg = {
+  options: ['landscape', 'portrait'],
+  control: { type: 'radio' },
+  defaultValue: 'landscape'
+};
+
 export const controlsToAdd = {
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },

@@ -116,7 +116,10 @@ const App = (): JSX.Element => {
                     name: 'teamsLink',
                     value: encodeURIComponent((localCallArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
                   }
-                : { name: 'groupId', value: (localCallArgs?.callLocator as GroupCallLocator).groupId };
+                : {
+                    name: 'groupId',
+                    value: (localCallArgs?.callLocator as GroupCallLocator).groupId
+                  };
               pushQSPUrl(joinParam);
             }
             if (isTeamsMeeting && callDetails.teamsLink) {

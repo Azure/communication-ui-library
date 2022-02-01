@@ -321,7 +321,7 @@ const memoizeAllMessages = memoizeFnAll(
             : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
         const personaOptions: IPersona = {
-          hidePersonalDetails: true,
+          hidePersonaDetails: true,
           size: PersonaSize.size32,
           text: message.senderDisplayName
         };
