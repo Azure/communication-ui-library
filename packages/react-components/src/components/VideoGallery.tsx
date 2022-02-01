@@ -47,6 +47,7 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove-from(stable) */
 import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
