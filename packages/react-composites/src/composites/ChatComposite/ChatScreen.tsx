@@ -43,6 +43,7 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
+import { FileUploadHandler } from './file-sharing/FileUploadHandler';
 
 /**
  * @private
@@ -55,6 +56,7 @@ export type ChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField' | false;
+  fileSharing?: FileSharingOptions;
 };
 
 /**
@@ -67,10 +69,36 @@ export type ChatScreenStyles = {
 };
 
 /**
+ * Properties for configuring the File Sharing feature.
+ * @beta
+ */
+export interface FileSharingOptions {
+  /**
+   * A string containing the comma separated list of accepted file types.
+   * Similar to the `accept` attribute of the `<input type="file" />` element.
+   * Accepts any type of file if not specified.
+   * @beta
+   */
+  accept?: string;
+  /**
+   * Allows multiple files to be selected if set to `true`.
+   * Similar to the `multiple` attribute of the `<input type="file" />` element.
+   * @defaultValue false
+   * @beta
+   */
+  multiple?: boolean;
+  /**
+   * A function of type {@link FileUploadHandler} for handling file uploads.
+   * @beta
+   */
+  uploadHandler: FileUploadHandler;
+}
+
+/**
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
 
@@ -146,7 +174,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
             />
-            <FileUploadButton />
+
+            <FileUploadButton
+              accept={fileSharing?.accept}
+              multiple={fileSharing?.multiple}
+              fileUploadHandler={fileSharing?.uploadHandler}
+            />
           </Stack>
         </Stack>
         {
