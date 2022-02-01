@@ -83,13 +83,17 @@ export interface VideoTileProps {
    */
   initialsName?: string;
   /**
-   * Minimum size of the personal avatar.
-   * @defaultValue 32
+   * Minimum size of the persona avatar in px.
+   * The persona avatar is the default placeholder shown when no video stream is available.
+   * For more information see <https://developer.microsoft.com/en-us/fluentui#/controls/web/persona>
+   * @defaultValue 32px
    */
   personaMinSize?: number;
   /**
-   * Maximum size of the personal avatar.
-   * @defaultValue 100
+   * Maximum size of the personal avatar in px.
+   * The persona avatar is the default placeholder shown when no video stream is available.
+   * For more information see <https://developer.microsoft.com/en-us/fluentui#/controls/web/persona>
+   * @defaultValue 100px
    */
   personaMaxSize?: number;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
@@ -99,9 +103,9 @@ export interface VideoTileProps {
 }
 
 // Coin max size is set to PersonaSize.size100
-const DEFAULT_PERSONA_MAX_SIZE = 100;
+const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 // Coin min size is set PersonaSize.size32
-const DEFAULT_PERSONA_MIN_SIZE = 32;
+const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
@@ -144,8 +148,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
-    personaMinSize = DEFAULT_PERSONA_MIN_SIZE,
-    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE
+    personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
+    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
