@@ -170,21 +170,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-// Due to backward compatibility requirements, strings in MicrophoneButtonStrings must be
-// optional. So we fill in default values for missing ones.
-const fillDummyStringsIfMissing = (strings: MicrophoneButtonStrings): DeviceMenuStrings => ({
-  // Setup defaults
-  cameraMenuTitle: '',
-  microphoneMenuTitle: '',
-  speakerMenuTitle: '',
-  cameraMenuTooltip: '',
-  microphoneMenuTooltip: '',
-  speakerMenuTooltip: '',
-  // Now override available values
-  ...strings
-});
-
 const generateDefaultDeviceMenuPropsTrampoline = (
   props: MicrophoneButtonProps,
   strings: MicrophoneButtonStrings
