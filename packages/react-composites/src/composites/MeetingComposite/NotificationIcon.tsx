@@ -28,7 +28,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <Icon styles={NotificationIconStyles(theme)} iconName="NotificationIcon" />
+      <Icon styles={NotificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
       {renderNumber(numberOfMessages)}
     </Stack>
   );
@@ -37,6 +37,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
 const notificationIconContainerStyles = memoizeFunction(
   (): IIconStyles => ({
     root: {
+      // positioning to place the badge within the button appropriately.
       position: 'absolute',
       top: '-0.5rem',
       right: '-0.5rem'
