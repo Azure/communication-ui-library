@@ -26,7 +26,7 @@ export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInP
 
 /** @private */
 export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => (
-  <PictureInPictureInPictureTile {...props} styles={secondaryTileStyles(props.orientation)} />
+  <PictureInPictureInPictureTile {...props} personaMinSize={20} styles={secondaryTileStyles(props.orientation)} />
 );
 
 const PictureInPictureInPictureTile = (props: VideoTileProps): JSX.Element => (
