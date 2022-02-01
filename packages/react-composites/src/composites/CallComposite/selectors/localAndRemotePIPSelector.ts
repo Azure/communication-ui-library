@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
 import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
@@ -36,12 +37,11 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     }
 
     // Get remote video stream details of the most dominant participant
-    const covertedRemoteParticipants = _videoGalleryRemoteParticipantsMemo(remoteParticipants);
     const [dominantRemoteParticipantId] = dominantSpeakers ?? [];
     const dominantRemoteParticipant =
-      covertedRemoteParticipants.find(
-        (remoteParticipant) => remoteParticipant.userId === dominantRemoteParticipantId
-      ) ?? covertedRemoteParticipants[0];
+      remoteParticipants && dominantSpeakers && dominantSpeakers?.length > 0
+        ? { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] }
+        : undefined;
 
     return {
       localParticipant: {
@@ -52,7 +52,7 @@ export const localAndRemotePIPSelector = reselect.createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      dominantRemoteParticipant
+      dominantRemoteParticipant: _videoGalleryRemoteParticipantsMemo(dominantRemoteParticipant)[0]
     };
   }
 );
