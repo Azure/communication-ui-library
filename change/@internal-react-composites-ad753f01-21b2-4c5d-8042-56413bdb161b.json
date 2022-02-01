@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "MeetingComposite: stop subscribing to state change event on every render.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
