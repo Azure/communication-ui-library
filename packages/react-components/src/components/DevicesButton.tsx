@@ -190,7 +190,7 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
 }
 
 /**
- * Benerates default {@link IContextualMenuProps} for buttons that
+ * Generates default {@link IContextualMenuProps} for buttons that
  * show a drop-down to select devices to use.
  *
  * @private

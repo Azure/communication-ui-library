@@ -12,7 +12,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
 import { ControlBarButtonStyles } from './ControlBarButton';
 /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-import { DeviceMenuStrings, OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
+import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
