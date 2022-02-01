@@ -77,10 +77,21 @@ export interface VideoTileProps {
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
    */
   displayName?: string;
-  /** Name of the participant used to generate initials. For example, a name `John Doe` will display `JD` as initials.
+  /**
+   * Name of the participant used to generate initials. For example, a name `John Doe` will display `JD` as initials.
    * @remarks `displayName` is used if this property is not specified.
    */
   initialsName?: string;
+  /**
+   * Minimum size of the personal avatar.
+   * @defaultValue 32
+   */
+  personaMinSize?: number;
+  /**
+   * Maximum size of the personal avatar.
+   * @defaultValue 100
+   */
+  personaMaxSize?: number;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
@@ -88,9 +99,9 @@ export interface VideoTileProps {
 }
 
 // Coin max size is set to PersonaSize.size100
-const PERSONA_MAX_SIZE = 100;
+const DEFAULT_PERSONA_MAX_SIZE = 100;
 // Coin min size is set PersonaSize.size32
-const PERSONA_MIN_SIZE = 32;
+const DEFAULT_PERSONA_MIN_SIZE = 32;
 
 const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
@@ -132,7 +143,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     styles,
     userId,
     noVideoAvailableAriaLabel,
-    isSpeaking
+    isSpeaking,
+    personaMinSize = DEFAULT_PERSONA_MIN_SIZE,
+    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -146,7 +159,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
       const personaSize = Math.min(width, height) / 3;
-      setPersonaSize(Math.max(Math.min(personaSize, PERSONA_MAX_SIZE), PERSONA_MIN_SIZE));
+      setPersonaSize(Math.max(Math.min(personaSize, personaMaxSize), personaMinSize));
     })
   );
 
