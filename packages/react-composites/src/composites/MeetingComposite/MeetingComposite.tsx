@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -102,10 +102,17 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  meetingAdapter.onStateChange((newState) => {
-    setCurrentPage(newState.page);
-    setCurrentMeetingState(newState.meeting?.state);
-  });
+
+  useEffect(() => {
+    const updateMeetingPage = (newState): void => {
+      setCurrentPage(newState.page);
+      setCurrentMeetingState(newState.meeting?.state);
+    };
+    meetingAdapter.onStateChange(updateMeetingPage);
+    return () => {
+      meetingAdapter.offStateChange(updateMeetingPage);
+    };
+  }, [meetingAdapter]);
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
