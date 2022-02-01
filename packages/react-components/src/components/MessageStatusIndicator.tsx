@@ -44,6 +44,8 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
+  numRead?: number;
+  numParticipants?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -66,7 +68,7 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles } = props;
+  const { status, styles, numRead, numParticipants } = props;
 
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
@@ -105,7 +107,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'seen':
       return (
-        <TooltipHost content={strings.seenTooltipText}>
+        <TooltipHost content={`Read by ${numRead} of ${numParticipants}`}>
           <Icon
             role="status"
             aria-label={strings.seenAriaLabel}

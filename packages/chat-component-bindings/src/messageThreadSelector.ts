@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatBaseSelectorProps, getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import {
+  ChatBaseSelectorProps,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getParticipants,
+  getReadInformation,
+  getUserId
+} from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
@@ -15,6 +23,7 @@ import {
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
+import { ChatMessageReadReceipt } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -22,7 +31,9 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     chatMessage: ChatMessageWithStatus,
     userId: string,
     isSeen: boolean,
-    isLargeGroup: boolean
+    isLargeGroup: boolean,
+    readReceipts: ChatMessageReadReceipt[],
+    numParticipants: number
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -30,7 +41,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readReceipts, numParticipants);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -41,9 +52,16 @@ const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
-  isLargeGroup: boolean
+  isLargeGroup: boolean,
+  readReceipts: ChatMessageReadReceipt[],
+  numParticipants: number
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  const convertedReadReceipts = readReceipts.map((receipt) => ({
+    senderId: toFlatCommunicationIdentifier(receipt.sender),
+    chatMessageId: receipt.chatMessageId,
+    readOn: receipt.readOn
+  }));
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
@@ -56,7 +74,9 @@ const convertToUiChatMessage = (
     clientMessageId: message.clientMessageId,
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
-    mine: messageSenderId === userId
+    mine: messageSenderId === userId,
+    readReceipts: convertedReadReceipts,
+    numParticipants: numParticipants
   };
 };
 
@@ -118,30 +138,50 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  * @public
  */
 export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
-  (userId, chatMessages, latestReadTime, isLargeGroup) => {
+  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadInformation, getParticipants],
+  (userId, chatMessages, latestReadTime, isLargeGroup, readInformation, participants) => {
+    // get number of participants
+    const numParticipants = Object.values(participants).length - 1;
+    // for each chat message, add read receipt information when readInformation.id === chatmessage.id
+    const convertedChatMessages = Object.values(chatMessages).map(function (message) {
+      const readReceipt = Object.values(readInformation).filter((info) => info.chatMessageId === message.id);
+      // readReceipt is getting duplicate information, remove duplicate here
+      const uniqueReadReceipt = readReceipt.filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex(
+            (t) =>
+              toFlatCommunicationIdentifier(t.sender) === toFlatCommunicationIdentifier(value.sender) &&
+              t.chatMessageId === value.chatMessageId
+          )
+      );
+      const convertedMessage = { message, readReceipt: uniqueReadReceipt };
+      return convertedMessage;
+    });
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Object.values(chatMessages)
+      Object.values(convertedChatMessages)
         .filter(
           (message) =>
-            message.type.toLowerCase() === ACSKnownMessageType.text ||
-            message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
-            message.type.toLowerCase() === ACSKnownMessageType.html ||
-            (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
-            (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
+            message.message.type.toLowerCase() === ACSKnownMessageType.text ||
+            message.message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
+            message.message.type.toLowerCase() === ACSKnownMessageType.html ||
+            (message.message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message.message)) ||
+            (message.message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message.message)) ||
             // TODO: Add support for topicUpdated system messages in MessageThread component.
             // message.type === ACSKnownMessageType.topicUpdated ||
-            message.clientMessageId !== undefined
+            message.message.clientMessageId !== undefined
         )
-        .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
+        .filter((message) => message.message.content && message.message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) =>
           memoizedFn(
-            message.id ?? message.clientMessageId,
-            message,
+            message.message.id ?? message.message.clientMessageId,
+            message.message,
             userId,
-            message.createdOn <= latestReadTime,
-            isLargeGroup
+            message.message.createdOn <= latestReadTime,
+            isLargeGroup,
+            message.readReceipt,
+            numParticipants
           )
         )
     );
