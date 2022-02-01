@@ -14,6 +14,7 @@ export const createDecoratedListReadReceipts = (
   context: ChatContext
 ): ((options?: RestListReadReceiptsOptions | undefined) => PagedAsyncIterableIterator<ChatMessageReadReceipt>) => {
   const setReadReceipt = (readReceipt: ChatMessageReadReceipt, context: ChatContext): void => {
+    //check here
     context.addReadReceipt(chatThreadClient.threadId, {
       ...readReceipt
     });

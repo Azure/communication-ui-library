@@ -827,6 +827,10 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    numParticipants?: number;
+    // (undocumented)
+    readReceipts?: ReadReceipt[];
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -1661,6 +1665,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    // (undocumented)
+    numParticipants?: number;
+    // (undocumented)
+    numRead?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -1979,6 +1987,13 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ReadReceipt = {
+    senderId: string;
+    chatMessageId: string;
+    readOn: Date;
+};
 
 // @public
 export interface RecordingCallFeature {

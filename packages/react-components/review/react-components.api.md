@@ -112,6 +112,10 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    numParticipants?: number;
+    // (undocumented)
+    readReceipts?: ReadReceipt[];
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -527,6 +531,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    // (undocumented)
+    numParticipants?: number;
+    // (undocumented)
+    numRead?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -802,6 +810,13 @@ export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps
     // (undocumented)
     orientation: _TileOrientation;
 }
+
+// @public
+export type ReadReceipt = {
+    senderId: string;
+    chatMessageId: string;
+    readOn: Date;
+};
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

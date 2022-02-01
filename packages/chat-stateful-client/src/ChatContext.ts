@@ -261,6 +261,7 @@ export class ChatContext {
           if (readReceipt.sender !== this.getState().userId && thread.latestReadTime < readReceipt.readOn) {
             thread.latestReadTime = readReceipt.readOn;
           }
+          // TODO: readreceipts here might have issues?
           readReceipts.push(readReceipt);
         }
       })

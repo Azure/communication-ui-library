@@ -58,6 +58,8 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  * @param messages
  */
 const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
+  // from the messages logged we can see readreceipt is not getting correct info
+  console.log(messages);
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -292,11 +294,13 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
-    defaultStatusRenderer: (status: MessageStatus) => JSX.Element,
+    defaultStatusRenderer: (status: MessageStatus, numRead: number, numParticipants: number) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
+    numRead?: number,
+    numParticipants?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>
@@ -360,7 +364,11 @@ const memoizeAllMessages = memoizeFnAll(
                     onRenderMessageStatus ? (
                       onRenderMessageStatus({ status: statusToRender })
                     ) : (
-                      defaultStatusRenderer(statusToRender)
+                      defaultStatusRenderer(
+                        statusToRender,
+                        numRead ? numRead : 0,
+                        numParticipants ? numParticipants : 0
+                      )
                     )
                   ) : (
                     <div className={mergeStyles(noMessageStatusStyle)} />
@@ -868,10 +876,16 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const defaultStatusRenderer: (status: MessageStatus) => JSX.Element = useCallback(
-    (status: MessageStatus) => <MessageStatusIndicator status={status} />,
-    []
-  );
+  const defaultStatusRenderer: (status: MessageStatus, numRead: number, numParticipants: number) => JSX.Element =
+    useCallback(
+      (status: MessageStatus, numRead: number, numParticipants: number) => (
+        <MessageStatusIndicator status={status} numRead={numRead} numParticipants={numParticipants} />
+      ),
+      []
+    );
+
+  const [numRead, setNumRead] = useState(1);
+  const [numParticipants, setNumParticipants] = useState(1);
 
   const messagesToDisplay = useMemo(
     () =>
@@ -881,6 +895,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           let statusToRender: MessageStatus | undefined = undefined;
 
           if (message.messageType === 'chat') {
+            setNumRead(message.readReceipts ? message.readReceipts?.length + 1 : 1);
+            setNumParticipants(message.numParticipants ? message.numParticipants : 1);
             if (!message.messageId || message.messageId === '') {
               key = message.clientMessageId;
             }
@@ -921,6 +937,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
+            numRead,
+            numParticipants,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage

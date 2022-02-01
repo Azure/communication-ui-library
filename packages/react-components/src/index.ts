@@ -12,6 +12,7 @@ export * from './theming';
 export type {
   BaseCustomStyles,
   CallParticipantListParticipant,
+  ReadReceipt,
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
