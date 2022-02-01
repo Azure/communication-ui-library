@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fixup a11y properties of the PiP, allow secondary tile to be optional",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
