@@ -36,7 +36,6 @@ export interface MediaGalleryProps {
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  /* @conditional-compile-remove-from(stable) */
   isMobile?: boolean;
 }
 
