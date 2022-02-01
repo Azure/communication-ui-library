@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Update how Meeting composite deals with page state so it doe not subscribe to a new event every render.",
+  "comment": "Update how Meeting composite deals with page state so it does not subscribe to a new event every render.",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"
