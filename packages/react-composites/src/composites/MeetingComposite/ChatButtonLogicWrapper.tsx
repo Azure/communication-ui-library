@@ -7,14 +7,6 @@ import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButton, ChatButtonProps } from './ChatButton';
 
-// 0 ---> up
-/**
- * meeting adapter as a prop
- * show chat as a prop -> different name (count messages?)
- *  - true = count
- *  - false = reset
- */
-
 /**
  * @private
  */
@@ -22,15 +14,21 @@ export type ChatButtonLogicWrapperProps = {
   chatButtonProps: ChatButtonProps;
   chatAdapter: ChatAdapter;
   showChat: boolean;
+  onChatButtonClicked: () => void;
+  disabled: boolean;
 };
 
 /**
  * @private
  */
 export const ChatButtonLogicWrapper = (props: ChatButtonLogicWrapperProps): JSX.Element => {
-  const { chatButtonProps, chatAdapter, showChat } = props;
+  const { chatButtonProps, chatAdapter, showChat, onChatButtonClicked, disabled } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
   useEffect(() => {
+    if (showChat === true) {
+      setUnreadChatMessagesCount(0);
+      return;
+    }
     const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {
       if (!showChat && event.message.senderDisplayName !== '') {
         if (event.message.type === 'text' || event.message.type === 'html') {
@@ -47,11 +45,11 @@ export const ChatButtonLogicWrapper = (props: ChatButtonLogicWrapperProps): JSX.
 
   return (
     <ChatButton
-      checked={chatButtonProps.chatButtonChecked}
+      chatButtonChecked={chatButtonProps.chatButtonChecked}
       showLabel={true}
-      onClick={chatButtonProps.onChatButtonClicked}
+      onClick={onChatButtonClicked}
       data-ui-id="meeting-composite-chat-button"
-      disabled={chatButtonProps.disableButtonsForLobbyPage}
+      disabled={disabled}
       label={chatButtonProps.label}
       unreadMessageCount={unreadChatMessagesCount}
     />

@@ -34,7 +34,9 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
         onClick={props.onClick}
       />
-      {unreadMessageCount !== undefined && <NotificationIcon chatMessagesCount={unreadMessageCount} />}
+      {unreadMessageCount !== undefined && unreadMessageCount > 0 && (
+        <NotificationIcon chatMessagesCount={unreadMessageCount} />
+      )}
     </Stack>
   );
 };

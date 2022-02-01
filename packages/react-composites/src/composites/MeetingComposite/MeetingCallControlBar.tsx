@@ -5,7 +5,6 @@ import React from 'react';
 import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
-import { ChatButton, ChatButtonProps } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
@@ -88,12 +87,11 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
 
-  const chatButtonProps: ChatButtonProps = {
+  const chatButtonProps = {
     checked: props.chatButtonChecked,
     showLabel: true,
-    onClick: props.onChatButtonClicked,
-    disabled: props.disableButtonsForLobbyPage,
-    label: meetingStrings.chatButtonLabel
+    label: meetingStrings.chatButtonLabel,
+    chatButtonChecked: props.chatButtonChecked
   };
 
   return (
@@ -109,7 +107,13 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       {meetingCallControlOptions !== false && (
         <Stack horizontal>
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButtonLogicWrapper chatAdapter={props.chatAdapter} chatButtonProps={...chatButtonProps} showChat={} />
+            <ChatButtonLogicWrapper
+              chatAdapter={props.chatAdapter}
+              chatButtonProps={chatButtonProps}
+              showChat={props.chatButtonChecked}
+              onChatButtonClicked={props.onChatButtonClicked}
+              disabled={props.disableButtonsForLobbyPage}
+            />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton

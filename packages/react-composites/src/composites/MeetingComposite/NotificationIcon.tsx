@@ -21,7 +21,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
       <Icon styles={NotificationIconStyles} iconName="NotificationIcon" />
       <Stack styles={NotificationTextStyles}>
         {chatMessagesCount > 0 && chatMessagesCount < 9 ? <>{chatMessagesCount}</> : <></>}
-        {chatMessagesCount > 9 ? <>+9</> : <></>}
+        {chatMessagesCount >= 9 ? <>9+</> : <></>}
       </Stack>
     </Stack>
   );
