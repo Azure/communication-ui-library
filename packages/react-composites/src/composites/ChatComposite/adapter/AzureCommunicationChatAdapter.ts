@@ -30,7 +30,7 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileMetaData, UploadedFile, ACSFilesMetaData } from '../file-sharing';
+import { FileMetadata, FileUploadState, ACSFilesMetaData } from '../file-sharing';
 
 /** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
@@ -74,19 +74,13 @@ class ChatContext {
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public setUploadedFiles(uploadedFiles: UploadedFile[]): void {
-    this.setState({ ...this.state, uploadedFiles });
+  public setFileUploads(fileUploads: FileUploadState[]): void {
+    this.setState({ ...this.state, fileUploads });
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public setUploadedFilesCompleted(status: boolean): void {
-    this.setState({ ...this.state, uploadedFilesCompleted: status });
-  }
-
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public clearUploadedFiles(): void {
-    this.setUploadedFiles([]);
-    this.setUploadedFilesCompleted(false);
+  public clearFileUploads(): void {
+    this.setFileUploads([]);
   }
 
   public updateClientState(clientState: ChatClientState): void {
@@ -103,11 +97,7 @@ class ChatContext {
     };
 
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    updatedState = {
-      ...updatedState,
-      uploadedFiles: this.state.uploadedFiles,
-      uploadedFilesCompleted: this.state.uploadedFilesCompleted
-    };
+    updatedState = { ...updatedState, fileUploads: this.state.fileUploads };
 
     this.setState(updatedState);
   }
@@ -160,9 +150,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    this.uploadFiles = this.uploadFiles.bind(this);
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    this.uploadsComplete = this.uploadsComplete.bind(this);
+    this.registerFileUploads = this.registerFileUploads.bind(this);
   }
 
   dispose(): void {
@@ -203,12 +191,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      options.metadata = { ...options.metadata, ...convertUploadedFilesToMetadata(this.getState().uploadedFiles) };
+      options.metadata = { ...options.metadata, ...convertUploadedFilesToMetadata(this.getState().fileUploads) };
 
       await this.handlers.onSendMessage(content, options);
 
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      this.context.clearUploadedFiles();
+      this.context.clearFileUploads();
     });
   }
 
@@ -253,13 +241,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  uploadFiles(uploadedFiles: UploadedFile[]): void {
-    this.context.setUploadedFiles(uploadedFiles);
-  }
-
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  uploadsComplete(): void {
-    this.context.setUploadedFilesCompleted(true);
+  registerFileUploads(fileUploads: FileUploadState[]): void {
+    this.context.setFileUploads(fileUploads);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -370,6 +353,24 @@ const convertEventType = (type: string): ChatMessageType => {
   }
 };
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/**
+ * Generates metadata object for a chat message containing uploaded file information.
+ * @internal
+ */
+const convertUploadedFilesToMetadata = (uploadedFiles?: FileUploadState[]): ACSFilesMetaData => {
+  const fileMetadata: FileMetadata[] = [];
+  if (uploadedFiles) {
+    for (const file of uploadedFiles) {
+      if (file.metadata) {
+        fileMetadata.push(file.metadata);
+      }
+    }
+  }
+
+  return { acsfiles: JSON.stringify(fileMetadata) };
+};
+
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link ChatAdapter}.
  *
@@ -429,22 +430,4 @@ export const createAzureCommunicationChatAdapterFromClient = async (
 
 const isChatError = (e: Error): e is ChatError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
-};
-
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-/**
- * Generates metadata object for a chat message containing uploaded file information.
- * @internal
- */
-const convertUploadedFilesToMetadata = (uploadedFiles?: UploadedFile[]): ACSFilesMetaData => {
-  const fileMetaData: FileMetaData[] = [];
-  if (uploadedFiles) {
-    for (const file of uploadedFiles) {
-      if (file.metaData) {
-        fileMetaData.push(file.metaData);
-      }
-    }
-  }
-
-  return { acsfiles: JSON.stringify(fileMetaData) };
 };

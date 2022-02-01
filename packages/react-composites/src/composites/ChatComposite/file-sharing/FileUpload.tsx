@@ -22,10 +22,10 @@ export interface FileUploadManager {
   progressUpload: (value: number) => void;
   /**
    * Mark the upload as complete.
-   * Requires the `metaData` param containing uploaded file information.
-   * @param metaData - {@link FileMetaData}
+   * Requires the `metadata` param containing uploaded file information.
+   * @param metadata - {@link FileMetadata}
    */
-  completeUpload: (metaData: FileMetaData) => void;
+  completeUpload: (metadata: FileMetadata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
@@ -37,7 +37,7 @@ export interface FileUploadManager {
  * Meta Data containing information about the uploaded file.
  * @beta
  */
-export interface FileMetaData {
+export interface FileMetadata {
   /**
    * File name to be displayed.
    */
@@ -52,6 +52,54 @@ export interface FileMetaData {
    * Download URL for the file.
    */
   url: string;
+}
+
+/**
+ * @beta
+ */
+export interface FileUploadState {
+  /**
+   * An object of type {@link File} being uploaded.
+   */
+  file: File;
+
+  /**
+   * A number between 0 and 1 indicating the progress of the upload.
+   */
+  progress: number;
+
+  /**
+   * Meta Data {@link FileMetadata} containing information about the uploaded file.
+   */
+  metadata?: FileMetadata;
+}
+
+/**
+ * An internal interface used by the Chat Composite to drive the UI for file uploads.
+ * @internal
+ */
+export interface FileUploadContext extends FileUploadState {
+  /**
+   * Used to cancel the upload in the UI.
+   * Emits the {@link UPLOAD_CANCELLED_EVENT} event.
+   */
+  cancelUpload(): void;
+
+  /**
+   * @returns `true` if the upload has been marked complete.
+   */
+  isUploaded(): boolean;
+
+  /**
+   * @param length - Max characters to show in the filename. Default is `15`.
+   * @returns A truncated filename. Truncated name doesn't preserve the extension.
+   */
+  truncatedName(length: number): string;
+
+  /**
+   * @returns The file extension. For example, `.jpeg`, `.png`, `.docx` etc.
+   */
+  extension(): string;
 }
 
 /**
@@ -100,7 +148,7 @@ export type UploadProgressListener = (value: number) => void;
  * Listener for `uploadComplete` event.
  * @internal
  */
-export type UploadCompleteListener = (metaData: FileMetaData) => void;
+export type UploadCompleteListener = (metadata: FileMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @internal
@@ -113,81 +161,9 @@ export type UploadFailedListener = (message: string) => void;
 export type UploadCanceledListener = () => void;
 
 /**
- * A wrapper object for a file that is being uploaded.
- * Provides common functions for updating the upload progress, canceling an upload etc.
  * @internal
  */
-export class FileUpload implements FileUploadManager {
-  private _emitter: EventEmitter;
-
-  /**
-   * HTML {@link File} object for the uploaded file.
-   */
-  public file: File;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  public progress: number;
-
-  /**
-   * Meta Data {@link FileMetaData} containing information about the uploaded file.
-   */
-  public metaData?: FileMetaData;
-
-  constructor(file: File) {
-    this.file = file;
-    this.progress = 0;
-    this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(100);
-  }
-
-  progressUpload(value: number): void {
-    this.progress = value;
-    this._emitter.emit(UPLOAD_PROGRESSED_EVENT, value);
-  }
-
-  completeUpload(metaData: FileMetaData): void {
-    this.progress = 1;
-    this.metaData = metaData;
-    this._emitter.emit(UPLOAD_COMPLETED_EVENT, metaData);
-  }
-
-  failUpload(message: string): void {
-    this._emitter.emit(UPLOAD_FAILED_EVENT, message);
-  }
-
-  /**
-   * Mark the upload as canceled.
-   */
-  cancelUpload(): void {
-    this._emitter.emit(UPLOAD_CANCELLED_EVENT);
-  }
-
-  /**
-   * @returns boolean
-   */
-  isUploaded(): boolean {
-    return !!this.metaData;
-  }
-
-  /**
-   * Returns a truncated name for the file if it exceeds `length`.
-   * @param length - default 15
-   * @returns string
-   */
-  truncatedName(length = 15): string {
-    return this.file.name.substring(0, length).trimEnd() + (this.file.name.length > length ? '... ' : '');
-  }
-
-  /**
-   * Return the file extension. For example, `.jpeg`, `.png`, `.docx` etc.
-   * @returns string
-   */
-  extension(): string {
-    return this.file.name.split('.').pop() || '';
-  }
-
+export interface FileUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */
@@ -209,9 +185,7 @@ export class FileUpload implements FileUploadManager {
    * @param event - {@link FileUploadEvents}
    * @param listener - {@link FileUploadEventListener}
    */
-  on(event: FileUploadEvents, listener: FileUploadEventListener): void {
-    this._emitter.addListener(event, listener);
-  }
+  on(event: FileUploadEvents, listener: FileUploadEventListener): void;
 
   /**
    * Unsubscriber function for `uploadProgressed` event.
@@ -234,6 +208,75 @@ export class FileUpload implements FileUploadManager {
    * @param event - {@link FileUploadEvents}
    * @param listener - {@link FileUploadEventListener}
    */
+  off(event: FileUploadEvents, listener: FileUploadEventListener): void;
+}
+
+/**
+ * @internal
+ */
+export type FileUploadUiDriver = FileUploadManager & FileUploadContext & FileUploadEventEmitter;
+
+/**
+ * A wrapper object for a file that is being uploaded.
+ * Provides common functions for updating the upload progress, canceling an upload etc.
+ * @internal
+ */
+export class FileUpload implements FileUploadUiDriver {
+  private _emitter: EventEmitter;
+  public file: File;
+  public progress: number;
+  public metadata?: FileMetadata;
+
+  constructor(file: File) {
+    this.file = file;
+    this.progress = 0;
+    this._emitter = new EventEmitter();
+    this._emitter.setMaxListeners(100);
+  }
+
+  progressUpload(value: number): void {
+    this.progress = value;
+    this._emitter.emit(UPLOAD_PROGRESSED_EVENT, value);
+  }
+
+  completeUpload(metadata: FileMetadata): void {
+    this.progress = 1;
+    this.metadata = metadata;
+    this._emitter.emit(UPLOAD_COMPLETED_EVENT, metadata);
+  }
+
+  failUpload(message: string): void {
+    this._emitter.emit(UPLOAD_FAILED_EVENT, message);
+  }
+
+  cancelUpload(): void {
+    this._emitter.emit(UPLOAD_CANCELLED_EVENT);
+  }
+
+  isUploaded(): boolean {
+    return !!this.metadata;
+  }
+
+  truncatedName(length = 15): string {
+    return this.file.name.substring(0, length).trimEnd() + (this.file.name.length > length ? '... ' : '');
+  }
+
+  extension(): string {
+    return this.metadata?.extension || this.file.name.split('.').pop() || '';
+  }
+
+  on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+  on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+  on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+  on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+  on(event: FileUploadEvents, listener: FileUploadEventListener): void {
+    this._emitter.addListener(event, listener);
+  }
+
+  off(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+  off(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+  off(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+  off(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
   off(event: FileUploadEvents, listener: FileUploadEventListener): void {
     this._emitter.removeListener(event, listener);
   }

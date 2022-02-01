@@ -4,7 +4,7 @@ export * from './FileCard';
 export * from './FileCardGroup';
 export * from './FileUploadButton';
 export * from './FileUploadHandler';
-export * from './UploadedFile';
+export * from './FileUpload';
 
 /**
  * @internal

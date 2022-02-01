@@ -60,6 +60,9 @@ export interface ChatMessage extends MessageCommon {
   mine?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
+  /**
+   * {@link @azure/communication-chat#ChatMessage.metadata}
+   */
   metadata?: Record<string, string>;
 }
 

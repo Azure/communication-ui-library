@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
+import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { UploadedFile } from '../file-sharing/UploadedFile';
+import { FileUploadState } from '../file-sharing/FileUpload';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -21,16 +21,10 @@ export type ChatAdapterUiState = {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
+   * Array of type {@link FileUploadState}
    * @beta
    */
-  uploadedFiles?: UploadedFile[];
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  /**
-   * Marks all the `uploadedFiles` as completely uploaded.
-   * Allows a message to be sent after the upload is complete.
-   * @beta
-   */
-  uploadedFilesCompleted?: boolean;
+  fileUploads?: FileUploadState[];
 };
 
 /**
@@ -106,15 +100,10 @@ export interface ChatAdapterThreadManagement {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * Sets the uploaded files in ui state.
+   * @param fileUploads - Array of {@link FileUploadState}
    * @beta
    */
-  uploadFiles?: (uploadedFiles: UploadedFile[]) => void;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  /**
-   * Marks the uploaded files in ui state as complete.
-   * @beta
-   */
-  uploadsComplete?: () => void;
+  registerFileUploads?: (fileUploads: FileUploadState[]) => void;
 }
 
 /**

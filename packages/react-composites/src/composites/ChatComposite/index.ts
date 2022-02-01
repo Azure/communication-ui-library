@@ -30,6 +30,6 @@ export * from './Strings';
 /* @conditional-compile-remove-from(stable) */
 export type { FileUploadHandler } from './file-sharing/FileUploadHandler';
 /* @conditional-compile-remove-from(stable) */
-export type { FileUploadManager, FileMetaData } from './file-sharing/FileUpload';
+export type { FileUploadManager, FileMetadata, FileUploadState } from './file-sharing/FileUpload';
 /* @conditional-compile-remove-from(stable) */
 export type { FileSharingOptions } from './ChatScreen';
