@@ -603,6 +603,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField' | false;
+    fileSharing?: FileSharingOptions;
 };
 
 // @public
@@ -1248,7 +1249,22 @@ export interface FileMetaData {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, uploadedFiles: UploadedFile[]) => void;
+export interface FileSharingOptions {
+    accept?: string;
+    multiple?: boolean;
+    uploadHandler: FileUploadHandler;
+}
+
+// @beta
+export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+
+// @beta
+export interface FileUploadManager {
+    completeUpload: (metaData: FileMetaData) => void;
+    failUpload: (message: string) => void;
+    file: File;
+    progressUpload: (value: number) => void;
+}
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;

@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { UploadedFile } from './UploadedFile';
+import { FileUploadManager } from './FileUpload';
 
 /**
  * @beta
  * A callback function for handling file uploads.
  *
  * @param userId - The user ID of the user uploading the file.
- * @param uploadedFiles - The list of uploaded files. Each file is represented by an {@link UploadedFile} object.
+ * @param fileUploads - The list of uploaded files. Each file is represented by an {@link FileUpload} object.
  */
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, uploadedFiles: UploadedFile[]) => void;
+export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;

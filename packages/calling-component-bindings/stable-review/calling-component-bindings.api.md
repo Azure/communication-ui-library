@@ -19,6 +19,7 @@ import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DevicesButton } from '@internal/react-components';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
@@ -27,6 +28,7 @@ import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
@@ -121,6 +123,9 @@ export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseS
 // @public
 export const devicesButtonSelector: DevicesButtonSelector;
 
+// @internal (undocumented)
+export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo | undefined) => undefined | string[];
+
 // @public
 export type EmptySelector = () => Record<string, never>;
 
@@ -193,6 +198,11 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @internal (undocumented)
+export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: {
+    [keys: string]: RemoteParticipantState;
+} | undefined) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
