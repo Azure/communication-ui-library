@@ -232,7 +232,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         renderElement={
           localVideoStream?.renderElement ? (
             <>
-              {renderLocalCameraSwitcher && <LocalVideoCameraCycleButton />}
+              {
+                /* @conditional-compile-remove-from(stable) */
+                renderLocalCameraSwitcher && <LocalVideoCameraCycleButton />
+              }
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
             </>
           ) : undefined
