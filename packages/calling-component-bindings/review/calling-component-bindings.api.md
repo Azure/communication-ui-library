@@ -153,6 +153,10 @@ export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
 export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
 };
 
 // @public

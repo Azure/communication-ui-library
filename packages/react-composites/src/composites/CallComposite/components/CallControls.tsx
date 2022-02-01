@@ -42,7 +42,11 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
-
+  /**
+   * Whether to use split buttons to show device selection drop-downs
+   * Used by {@link MeetingComposite}.
+   */
+  splitButtonsForDeviceSelection?: boolean;
   /**
    * Styles for the {@link ControlBar}.
    */
@@ -51,7 +55,6 @@ export type CallControlsProps = {
    * Styles for all buttons except {@link EndCallButton}.
    */
   commonButtonStyles?: ControlBarButtonStyles;
-
   /**
    * Styles for {@link EndCallButton}.
    */
@@ -280,6 +283,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
       styles={commonButtonStyles}
       {...microphoneButtonStrings}
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
 
