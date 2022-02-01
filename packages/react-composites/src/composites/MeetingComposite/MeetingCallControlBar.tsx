@@ -1,18 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+
 /**
  * @private
  */
@@ -62,6 +64,9 @@ const inferCallControlOptions = (
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+  const theme = useTheme();
+  console.log(theme);
+
   const meetingStrings = useMeetingCompositeStrings();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
@@ -83,6 +88,8 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    * control bar such that all controls can be accessed.
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
+  const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
 
   return (
     <Stack
@@ -95,21 +102,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
             options={callControlOptions}
             increaseFlyoutItemSize={props.mobileView}
             splitButtonsForDeviceSelection={!props.mobileView}
+            controlBarStyles={!props.mobileView ? desktopControlBarStyles : undefined}
+            commonButtonStyles={!props.mobileView ? desktopCommonButtonStyles : undefined}
+            endCallButtonStyles={!props.mobileView ? desktopEndCallButtonStyles : undefined}
           />
         </CallAdapterProvider>
       </Stack.Item>
       {meetingCallControlOptions !== false && (
-        <Stack.Item>
-          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButton
-              checked={props.chatButtonChecked}
-              showLabel={true}
-              onClick={props.onChatButtonClicked}
-              data-ui-id="meeting-composite-chat-button"
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
-            />
-          )}
+        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
               checked={props.peopleButtonChecked}
@@ -118,10 +118,61 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.peopleButtonLabel}
+              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}
-        </Stack.Item>
+          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
+            <ChatButton
+              checked={props.chatButtonChecked}
+              showLabel={true}
+              onClick={props.onChatButtonClicked}
+              data-ui-id="meeting-composite-chat-button"
+              disabled={props.disableButtonsForLobbyPage}
+              label={meetingStrings.chatButtonLabel}
+              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
+            />
+          )}
+        </Stack>
       )}
     </Stack>
   );
+};
+
+const desktopButtonContainerStyle: IStyle = {
+  padding: '0.75rem',
+  columnGap: '0.5rem'
+};
+
+const desktopControlBarStyles: BaseCustomStyles = {
+  root: desktopButtonContainerStyle
+};
+
+const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
+  root: {
+    border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
+    borderRadius: theme.effects.roundedCorner4,
+    minHeight: '2.5rem'
+  },
+  flexContainer: {
+    flexFlow: 'row nowrap'
+  },
+  textContainer: {
+    // Override the default so that label doesn't introduce a new block.
+    display: 'inline'
+  },
+  label: {
+    // Override styling from ControlBarButton so that label doesn't introduce a new block.
+    display: 'inline',
+    fontSize: theme.fonts.medium.fontSize
+  }
+});
+
+const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
+  const overrides: ControlBarButtonStyles = {
+    root: {
+      // Suppress border around the dark-red button.
+      border: 'none'
+    }
+  };
+  return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
 };

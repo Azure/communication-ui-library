@@ -4,12 +4,12 @@
 import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove-from(stable): custom button injection */
-import { ControlBarButton } from '@internal/react-components';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import {
+  BaseCustomStyles,
   CameraButton,
   ControlBar,
+  ControlBarButtonStyles,
   DevicesButton,
   EndCallButton,
   MicrophoneButton,
@@ -42,12 +42,23 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
-
   /**
    * Whether to use split buttons to show device selection drop-downs
    * Used by {@linke MeetingComposite}.
    */
   splitButtonsForDeviceSelection?: boolean;
+  /**
+   * Styles for the {@link ControlBar}.
+   */
+  controlBarStyles?: BaseCustomStyles;
+  /**
+   * Styles for all buttons except {@link EndCallButton}.
+   */
+  commonButtonStyles?: ControlBarButtonStyles;
+  /**
+   * Styles for {@link EndCallButton}.
+   */
+  endCallButtonStyles?: ControlBarButtonStyles;
 };
 
 /**
@@ -188,6 +199,8 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onFetchParticipantMenuItems } = props;
+  const options = typeof props.options === 'boolean' ? {} : props.options;
+  const compactMode = options?.displayType === 'compact';
 
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -219,17 +232,34 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
+  const commonButtonStyles = useMemo(
+    () => concatButtonBaseStyles(props.commonButtonStyles ?? {}),
+    [props.commonButtonStyles]
+  );
   const participantsButtonStyles = useMemo(
-    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
-    [props.increaseFlyoutItemSize]
+    () =>
+      concatButtonBaseStyles(
+        props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {},
+        props.commonButtonStyles ?? {}
+      ),
+    [props.increaseFlyoutItemSize, props.commonButtonStyles]
   );
-
   const devicesButtonStyles = useMemo(
-    () => concatButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
-    [props.increaseFlyoutItemSize]
+    () =>
+      concatButtonBaseStyles(
+        props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {},
+        props.commonButtonStyles ?? {}
+      ),
+    [props.increaseFlyoutItemSize, props.commonButtonStyles]
   );
-
-  const options = typeof props.options === 'boolean' ? {} : props.options;
+  const endCallButtonStyles = useMemo(
+    () =>
+      concatStyleSets(
+        compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle,
+        props.endCallButtonStyles ?? {}
+      ),
+    [props.endCallButtonStyles]
+  );
 
   /* @conditional-compile-remove-from(stable): custom button injection */
   const customButtonProps = useMemo(() => {
@@ -244,8 +274,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     return <></>;
   }
 
-  const compactMode = options?.displayType === 'compact';
-
   const microphoneButton = options?.microphoneButton !== false && (
     // tab focus on MicrophoneButton on page load
     <MicrophoneButton
@@ -253,8 +281,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!compactMode}
-      // xkcd: style this correctly to increase touch targets.
-      styles={controlButtonBaseStyle}
+      styles={commonButtonStyles}
       {...microphoneButtonStrings}
       /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
       showDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
@@ -266,7 +293,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-camera-button"
       {...cameraButtonProps}
       showLabel={!compactMode}
-      styles={controlButtonBaseStyle}
+      styles={commonButtonStyles}
     />
   );
 
@@ -276,6 +303,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...screenShareButtonProps}
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
+      styles={commonButtonStyles}
     />
   );
 
@@ -305,7 +333,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <EndCallButton
       data-ui-id="call-composite-hangup-button"
       {...hangUpButtonProps}
-      styles={compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle}
+      styles={endCallButtonStyles}
       showLabel={!compactMode}
     />
   );
@@ -320,7 +348,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal">
+        <ControlBar layout="horizontal" styles={props.controlBarStyles}>
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
@@ -365,8 +393,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 };
 
-const concatButtonBaseStyles = (styles: IButtonStyles): IButtonStyles =>
-  concatStyleSets(controlButtonBaseStyle, styles);
+const concatButtonBaseStyles = (...styles: IButtonStyles[]): IButtonStyles => {
+  let result = controlButtonBaseStyle;
+  styles.forEach((style) => {
+    result = concatStyleSets(result, style);
+  });
+  return result;
+};
 
 /* @conditional-compile-remove-from(stable): custom button injection */
 const FilteredCustomButtons = (props: {
