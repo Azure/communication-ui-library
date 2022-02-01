@@ -42,10 +42,7 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     if (remoteParticipantIds && remoteParticipantIds.length > 0) {
       // Fallback to using the first remote participant if no dominant speaker IDs are present
       const dominantRemoteParticipantId = (dominantSpeakers && dominantSpeakers[0]) ?? remoteParticipantIds[0];
-      dominantRemoteParticipant =
-        remoteParticipants && dominantSpeakers && dominantSpeakers?.length > 0
-          ? { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] }
-          : undefined;
+      dominantRemoteParticipant = { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] };
     }
 
     return {
