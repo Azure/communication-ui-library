@@ -97,11 +97,6 @@ export interface CallCompositeStrings {
    * Optional additional details shown to the user on the lobby screen when waiting to be admitted to a call.
    */
   lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  /**
-   * Message read aloud by the narrator for the local camera switcher button.
-   */
-  localCameraVideoSwitcher?: string;
   /**
    * Message shown to the user when they are speaking while muted.
    */
