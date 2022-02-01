@@ -47,7 +47,7 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
 import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
@@ -123,7 +123,7 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
   renderLocalCameraSwitcher?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
@@ -169,7 +169,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
-    /* @conditional-compile-remove-from(stable) */
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
     renderLocalCameraSwitcher
   } = props;
 
@@ -234,7 +234,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoStream?.renderElement ? (
             <>
               {
-                /* @conditional-compile-remove-from(stable) */
+                /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
                 renderLocalCameraSwitcher && <LocalVideoCameraCycleButton />
               }
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
