@@ -3,6 +3,37 @@
 import { EventEmitter } from 'events';
 
 /**
+ * A wrapper object for a file that is being uploaded.
+ * Allows mmanaging file uploads by providing common functions for updating the
+ * upload progress, canceling an upload, completing an upload etc.
+ * @beta
+ */
+export interface FileUploadManager {
+  /**
+   * HTML {@link File} object for the uploaded file.
+   */
+  file: File;
+  /**
+   * Update the progress of the upload.
+   * Emits the `uploadProgressed` event.
+   *
+   * @param value - number between 0 and 1
+   */
+  progressUpload: (value: number) => void;
+  /**
+   * Mark the upload as complete.
+   * Requires the `metaData` param containing uploaded file information.
+   * @param metaData - {@link FileMetaData}
+   */
+  completeUpload: (metaData: FileMetaData) => void;
+  /**
+   * Mark the upload as failed.
+   * @param message - An error message that can be displayed to the user.
+   */
+  failUpload: (message: string) => void;
+}
+
+/**
  * Meta Data containing information about the uploaded file.
  * @beta
  */
@@ -24,37 +55,37 @@ export interface FileMetaData {
 }
 
 /**
- * @beta
+ * @internal
  */
 export const UPLOAD_PROGRESSED_EVENT = 'uploadProgressed';
 /**
- * @beta
+ * @internal
  */
 export const UPLOAD_COMPLETED_EVENT = 'uploadCompleted';
 /**
- * @beta
+ * @internal
  */
 export const UPLOAD_FAILED_EVENT = 'uploadFailed';
 /**
- * @beta
+ * @internal
  */
 export const UPLOAD_CANCELLED_EVENT = 'uploadCancelled';
 
 /**
- * Events emitted by the UploadedFile class.
- * @beta
+ * Events emitted by the FileUpload class.
+ * @internal
  */
-export type UploadedFileEvents =
+export type FileUploadEvents =
   | typeof UPLOAD_PROGRESSED_EVENT
   | typeof UPLOAD_COMPLETED_EVENT
   | typeof UPLOAD_FAILED_EVENT
   | typeof UPLOAD_CANCELLED_EVENT;
 
 /**
- * Events listeners supported by the UploadedFile class.
- * @beta
+ * Events listeners supported by the FileUpload class.
+ * @internal
  */
-export type UploadedFileEventListener =
+export type FileUploadEventListener =
   | UploadProgressListener
   | UploadCompleteListener
   | UploadFailedListener
@@ -62,54 +93,31 @@ export type UploadedFileEventListener =
 
 /**
  * Listener for `uploadProgressed` event.
- * @beta
+ * @internal
  */
 export type UploadProgressListener = (value: number) => void;
 /**
  * Listener for `uploadComplete` event.
- * @beta
+ * @internal
  */
 export type UploadCompleteListener = (metaData: FileMetaData) => void;
 /**
  * Listener for `uploadFailed` event.
- * @beta
+ * @internal
  */
 export type UploadFailedListener = (message: string) => void;
 /**
  * Listener for `uploadCanceled` event.
- * @beta
+ * @internal
  */
 export type UploadCanceledListener = () => void;
 
 /**
- * UploadedFile event subscriber functions.
- * @beta
- */
-export interface UploadEvents {
-  /**
-   * Subscriber function for `uploadProgressed` event.
-   */
-  on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
-  /**
-   * Subscriber function for `uploadComplete` event.
-   */
-  on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
-  /**
-   * Subscriber function for `uploadFailed` event.
-   */
-  on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
-  /**
-   * Subscriber function for `uploadCanceled` event.
-   */
-  on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
-}
-
-/**
  * A wrapper object for a file that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
- * @beta
+ * @internal
  */
-export class UploadedFile implements UploadEvents {
+export class FileUpload implements FileUploadManager {
   private _emitter: EventEmitter;
 
   /**
@@ -134,25 +142,19 @@ export class UploadedFile implements UploadEvents {
     this._emitter.setMaxListeners(100);
   }
 
-  /**
-   * Update the progress of the upload.
-   * Emits the `uploadProgressed` event.
-   * @param progress number between 0 and 1
-   */
-  updateProgress(value: number): void {
+  progressUpload(value: number): void {
     this.progress = value;
     this._emitter.emit(UPLOAD_PROGRESSED_EVENT, value);
   }
 
-  /**
-   * Mark the upload as complete.
-   * Requires the `metaData` param containing uploaded file information.
-   * @param metaData {@link FileMetaData}
-   */
   completeUpload(metaData: FileMetaData): void {
     this.progress = 1;
     this.metaData = metaData;
     this._emitter.emit(UPLOAD_COMPLETED_EVENT, metaData);
+  }
+
+  failUpload(message: string): void {
+    this._emitter.emit(UPLOAD_FAILED_EVENT, message);
   }
 
   /**
@@ -160,14 +162,6 @@ export class UploadedFile implements UploadEvents {
    */
   cancelUpload(): void {
     this._emitter.emit(UPLOAD_CANCELLED_EVENT);
-  }
-
-  /**
-   * Mark the upload as failed.
-   * @param message An error message that can be displayed to the user.
-   */
-  failUpload(message: string): void {
-    this._emitter.emit(UPLOAD_FAILED_EVENT, message);
   }
 
   /**
@@ -179,7 +173,7 @@ export class UploadedFile implements UploadEvents {
 
   /**
    * Returns a truncated name for the file if it exceeds `length`.
-   * @param length default 15
+   * @param length - default 15
    * @returns string
    */
   truncatedName(length = 15): string {
@@ -195,20 +189,52 @@ export class UploadedFile implements UploadEvents {
   }
 
   /**
-   * File upload event subscriber.
-   * @param event {@link UploadedFileEvents}
-   * @param listener {@link UploadedFileEventListener}
+   * Subscriber function for `uploadProgressed` event.
    */
-  on(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
+  on(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+  /**
+   * Subscriber function for `uploadComplete` event.
+   */
+  on(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+  /**
+   * Subscriber function for `uploadFailed` event.
+   */
+  on(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+  /**
+   * Subscriber function for `uploadCanceled` event.
+   */
+  on(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+  /**
+   * File upload event subscriber.
+   * @param event - {@link FileUploadEvents}
+   * @param listener - {@link FileUploadEventListener}
+   */
+  on(event: FileUploadEvents, listener: FileUploadEventListener): void {
     this._emitter.addListener(event, listener);
   }
 
   /**
-   * File upload event unsubscriber.
-   * @param event {@link UploadedFileEvents}
-   * @param listener {@link UploadedFileEventListener}
+   * Unsubscriber function for `uploadProgressed` event.
    */
-  off(event: UploadedFileEvents, listener: UploadedFileEventListener): void {
+  off(event: typeof UPLOAD_PROGRESSED_EVENT, listener: UploadProgressListener): void;
+  /**
+   * Unsubscriber function for `uploadComplete` event.
+   */
+  off(event: typeof UPLOAD_COMPLETED_EVENT, listener: UploadCompleteListener): void;
+  /**
+   * Unsubscriber function for `uploadFailed` event.
+   */
+  off(event: typeof UPLOAD_FAILED_EVENT, listener: UploadFailedListener): void;
+  /**
+   * Unsubscriber function for `uploadCanceled` event.
+   */
+  off(event: typeof UPLOAD_CANCELLED_EVENT, listener: UploadCanceledListener): void;
+  /**
+   * File upload event unsubscriber.
+   * @param event - {@link FileUploadEvents}
+   * @param listener - {@link FileUploadEventListener}
+   */
+  off(event: FileUploadEvents, listener: FileUploadEventListener): void {
     this._emitter.removeListener(event, listener);
   }
 }
