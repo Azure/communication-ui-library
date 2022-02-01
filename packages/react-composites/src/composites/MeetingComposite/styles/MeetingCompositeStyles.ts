@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconStyles, IStackStyles } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -16,27 +16,6 @@ export const compositeOuterContainerStyles: IStackStyles = {
     // If this css property is to be removed, test the participant pane correctly uses the scroll overflow when there a lot
     // of participants (i.e. beyond screen height) and where one participant is sharing their screen.
     flexWrap: 'wrap'
-  }
-};
-
-/**
- * @private
- */
-export const NotificationIconStyles: IIconStyles = {
-  root: {
-    color: '#0078D4'
-  }
-};
-
-/**
- * @private
- */
-export const NotificationTextStyles: IStackStyles = {
-  root: {
-    position: 'absolute',
-    top: '0.1rem',
-    color: 'white',
-    fontSize: '0.8rem'
   }
 };
 

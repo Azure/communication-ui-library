@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, IIconStyles, Stack } from '@fluentui/react';
-import { NotificationIconStyles, NotificationTextStyles } from './styles/MeetingCompositeStyles';
+import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme } from '@fluentui/react';
 
 /**
  * @private
@@ -16,27 +15,50 @@ export type NotificationIconProps = {
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   const { numberOfMessages } = props;
-
+  const theme = useTheme();
   const renderNumber = (numberOfMessages): JSX.Element => {
     if (numberOfMessages < 1) {
       return <></>;
     } else {
-      return <Stack styles={NotificationTextStyles}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>;
+      return (
+        <Stack styles={NotificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
+      );
     }
   };
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <Icon styles={NotificationIconStyles} iconName="NotificationCircle" />
+      <Icon styles={NotificationIconStyles(theme)} iconName="NotificationIcon" />
       {renderNumber(numberOfMessages)}
     </Stack>
   );
 };
 
-const notificationIconContainerStyles: IIconStyles = {
-  root: {
-    position: 'absolute',
-    top: 0,
-    right: '0.78rem'
-  }
-};
+const notificationIconContainerStyles = memoizeFunction(
+  (): IIconStyles => ({
+    root: {
+      position: 'absolute',
+      top: '-0.5rem',
+      right: '-0.5rem'
+    }
+  })
+);
+
+const NotificationIconStyles = memoizeFunction(
+  (theme: ITheme): IIconStyles => ({
+    root: {
+      color: theme.palette.themePrimary
+    }
+  })
+);
+
+const NotificationTextStyles = memoizeFunction(
+  (theme: ITheme): IStackStyles => ({
+    root: {
+      position: 'absolute',
+      top: '0.1rem',
+      color: theme.palette.white,
+      fontSize: '0.8rem'
+    }
+  })
+);
