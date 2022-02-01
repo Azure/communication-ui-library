@@ -23,12 +23,11 @@ import memoizeOne from 'memoize-one';
 import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
-import { TestCallingState } from '../TestCallingState';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const mockCallState = JSON.parse(params.mockCallState) as TestCallingState;
+const mockCallState = JSON.parse(params.mockCallState);
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
