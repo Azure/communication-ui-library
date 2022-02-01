@@ -51,7 +51,7 @@ export const COMPOSITE_ONLY_ICONS = {
   /* @conditional-compile-remove-from(stable) */
   LocalCameraSwitch: <CameraSwitch24Filled />,
   /* @conditional-compile-remove-from(stable) Chat_Notifications */
-  notificationCircle: <Circle20Filled />,
+  NotificationIcon: <Circle20Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
@@ -161,5 +161,5 @@ export type CallCompositeIcons = Partial<
   /* @conditional-compile-remove-from(stable) */
   LocalCameraSwitch?: JSX.Element;
   /* @conditional-compile-remove-from(stable) Chat_Notifications */
-  NotificationCircle?: JSX.Element;
+  NotificationIcon?: JSX.Element;
 };
