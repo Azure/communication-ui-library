@@ -25,6 +25,14 @@ export type MicrophoneButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  microphones: AudioDeviceInfo[];
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  speakers: AudioDeviceInfo[];
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  selectedMicrophone?: AudioDeviceInfo;
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  selectedSpeaker?: AudioDeviceInfo;
 };
 
 /**
@@ -38,7 +46,15 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     return {
       disabled: !callExists || !permission,
-      checked: callExists ? !isMuted : false
+      checked: callExists ? !isMuted : false,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      microphones: deviceManager.microphones,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      speakers: deviceManager.speakers,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      selectedMicrophone: deviceManager.selectedMicrophone,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      selectedSpeaker: deviceManager.selectedSpeaker
     };
   }
 );
