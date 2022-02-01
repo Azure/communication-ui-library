@@ -78,11 +78,6 @@ class ChatContext {
     this.setState({ ...this.state, fileUploads });
   }
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public clearFileUploads(): void {
-    this.setFileUploads([]);
-  }
-
   public updateClientState(clientState: ChatClientState): void {
     const thread = clientState.threads[this.threadId];
     if (!thread) {
@@ -196,7 +191,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       await this.handlers.onSendMessage(content, options);
 
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      this.context.clearFileUploads();
+      this.context.setFileUploads([]);
     });
   }
 
