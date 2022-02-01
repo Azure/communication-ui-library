@@ -89,7 +89,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall();
+            let call;
+            /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+            // eslint-disable-next-line prefer-const
+            call = adapter.startOrJoinCall();
+
+            // Remove check once TEAMS_ADHOC_CALLING condition compile removed.
+            if (!call) {
+              adapter.joinCall();
+            }
           }}
         />
       );

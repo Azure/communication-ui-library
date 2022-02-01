@@ -204,6 +204,12 @@ export interface CallAdapterCallManagement {
    * @public
    */
   unmute(): Promise<void>;
+  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+  /**
+   * Allow the adapter to decide whether to start a new call or join an existing call as appropriate.
+   * @beta
+   */
+  startOrJoinCall(): Call | undefined;
   /**
    * Start the call.
    *

@@ -81,6 +81,10 @@ export class MeetingBackedCallAdapter implements CallAdapter {
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.meetingAdapter.joinMeeting(microphoneOn);
   };
+  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+  public startOrJoinCall = (): Call | undefined => {
+    throw new Error('Not implemented -- awaiting feedback before implementing this plumbing');
+  };
   public leaveCall = async (): Promise<void> => await this.meetingAdapter.leaveMeeting();
   public startCall = (participants: string[]): Call | undefined => {
     return this.meetingAdapter.startMeeting(participants);

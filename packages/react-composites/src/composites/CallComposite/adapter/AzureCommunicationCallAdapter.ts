@@ -200,6 +200,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.stopCamera.bind(this);
     this.mute.bind(this);
     this.unmute.bind(this);
+    /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+    this.startOrJoinCall.bind(this);
     this.startCall.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
@@ -369,9 +371,22 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
+  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+  public startOrJoinCall(): Call | undefined {
+    if ('participantIDs' in this.locator) {
+      return this.startCall(this.locator.participantIDs);
+    } else {
+      return this.joinCall();
+    }
+  }
+
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
-    const idsToAdd = participants.map((participant) => {
+    if (participants.length === 0) {
+      throw new Error('No participants specified to call');
+    }
+
+    const idsToAdd = participants?.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
       const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
@@ -522,7 +537,15 @@ export type AzureCommunicationCallAdapterLocator =
   | GroupCallLocator
   | {
       /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-      teamsUserIDs: [string];
+      /**
+       * Array of participant IDs to place a call to.
+       * @remarks Only calling a single Teams User ID is currently supported.
+       * @example
+       * ```
+       * ['8:orgid:ab220efe-5725-4742-9792-9fba7c9ac458']
+       * ```
+       */
+      participantIDs: [string];
     };
 
 /**

@@ -85,7 +85,9 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @public (undocumented)
-export type AzureCommunicationCallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | TeamsUserLocator;
+export type AzureCommunicationCallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | {
+    participantIDs: [string];
+};
 
 // @public
 export type AzureCommunicationChatAdapterArgs = {
@@ -130,6 +132,8 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     startCall(participants: string[]): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    startOrJoinCall(): Call | undefined;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -750,11 +754,6 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
-
-// @public
-export type TeamsUserLocator = {
-    teamsUserID: string;
-};
 
 // @public
 export type TopicChangedListener = (event: {

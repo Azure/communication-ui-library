@@ -37,6 +37,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
         <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>
         <Stack styles={rejoinCallButtonContainerStyles}>
+          {/* TODO: update joinCall to startOrJoinCall after gaining PR feedback */}
           <StartCallButton onClickHandler={() => adapter.joinCall()} isDisabled={false} rejoinCall={true} />
         </Stack>
       </Stack>
