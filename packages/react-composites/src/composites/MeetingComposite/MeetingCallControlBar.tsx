@@ -25,7 +25,7 @@ export interface MeetingCallControlBarProps {
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | MeetingCallControlOptions;
-  numberOfUnreadMessages?: number;
+  numberOfUnreadMessages: number;
 }
 
 const inferMeetingCallControlOptions = (
