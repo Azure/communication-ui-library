@@ -11,6 +11,7 @@ import { Stack } from '@fluentui/react';
  * @private
  */
 export interface ChatButtonProps extends ControlBarButtonProps {
+  chatButtonChecked: boolean | undefined;
   unreadMessageCount?: number;
 }
 

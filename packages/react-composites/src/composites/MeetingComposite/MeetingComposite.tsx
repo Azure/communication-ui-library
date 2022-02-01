@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -19,7 +19,6 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
-import { ChatMessage } from '@azure/communication-chat';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -113,21 +112,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     setCurrentMeetingState(newState.meeting?.state);
   });
 
-  useEffect(() => {
-    const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {
-      if (!showChat && event.message.senderDisplayName !== '') {
-        if (event.message.type === 'text' || event.message.type === 'html') {
-          setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
-        }
-      }
-    };
-    meetingAdapter.on('messageReceived', incrementUnreadtChatMessagesCount);
-
-    return () => {
-      meetingAdapter.off('messageReceived', incrementUnreadtChatMessagesCount);
-    };
-  }, [meetingAdapter, setUnreadChatMessagesCount, showChat, unreadChatMessagesCount]);
-
   const closePane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
@@ -194,6 +178,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <MeetingCallControlBar
             callAdapter={callAdapter}
+            chatAdapter={chatProps.adapter}
             chatButtonChecked={showChat}
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}

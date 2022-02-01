@@ -5,7 +5,7 @@ import React from 'react';
 import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
-import { ChatButton } from './ChatButton';
+import { ChatButton, ChatButtonProps } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
@@ -13,6 +13,8 @@ import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { ChatAdapter } from '../ChatComposite';
+import { ChatButtonLogicWrapper } from './ChatButtonLogicWrapper';
 /**
  * @private
  */
@@ -26,6 +28,7 @@ export interface MeetingCallControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | MeetingCallControlOptions;
   numberOfUnreadMessages?: number;
+  chatAdapter: ChatAdapter;
 }
 
 const inferMeetingCallControlOptions = (
@@ -85,6 +88,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
 
+  const chatButtonProps: ChatButtonProps = {
+    checked: props.chatButtonChecked,
+    showLabel: true,
+    onClick: props.onChatButtonClicked,
+    disabled: props.disableButtonsForLobbyPage,
+    label: meetingStrings.chatButtonLabel
+  };
+
   return (
     <Stack
       horizontal
@@ -98,15 +109,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       {meetingCallControlOptions !== false && (
         <Stack horizontal>
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButton
-              checked={props.chatButtonChecked}
-              showLabel={true}
-              onClick={props.onChatButtonClicked}
-              data-ui-id="meeting-composite-chat-button"
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
-              unreadMessageCount={props.numberOfUnreadMessages}
-            />
+            <ChatButtonLogicWrapper chatAdapter={props.chatAdapter} chatButtonProps={...chatButtonProps} showChat={} />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
             <PeopleButton
