@@ -9,6 +9,7 @@ import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
+// import {FileCardGroup} from '@in';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -105,6 +106,12 @@ export interface SendBoxProps {
    * boolean to determine if the input box has focus on render or not.
    */
   autoFocus?: 'sendBoxTextField' | false;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * @beta
+   *
+   */
+  onRenderAttachedFiles?: () => JSX.Element;
 }
 
 /**
@@ -221,6 +228,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       supportNewline={supportNewline}
       maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
     >
+      {
+        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        props.onRenderAttachedFiles && props.onRenderAttachedFiles()
+      }
       <InputBoxButton
         onRenderIcon={onRenderSendIcon}
         onClick={(e) => {

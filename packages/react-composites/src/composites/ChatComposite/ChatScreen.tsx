@@ -22,6 +22,8 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/FileUploadButton';
+import { FileCard } from './file-sharing/FileCard';
+import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -105,6 +107,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
+  // const uploadedFilesSelector = useSelector(uploadedFilesSelector); files and completed(status)
+  const onRenderAttachedFiles = () => {
+    return (
+      <FileCardGroup>
+        <FileCard fileName={'abc.pdf'} fileExtension={'pdf'} progress={50}></FileCard>
+      </FileCardGroup>
+    );
+  };
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
@@ -130,7 +140,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
+            <SendBox
+              {...sendBoxProps}
+              onRenderAttachedFiles={onRenderAttachedFiles}
+              autoFocus={options?.autoFocus}
+              styles={sendBoxStyles}
+            />
             <FileUploadButton />
           </Stack>
         </Stack>
