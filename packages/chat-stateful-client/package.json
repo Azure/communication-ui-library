@@ -33,7 +33,7 @@
     "@internal/acs-ui-common": "1.0.1-beta.1",
     "events": "~3.3.0",
     "immer": "9.0.6",
-    "nanoid": "~3.1.20",
+    "nanoid": "3.1.32",
     "@azure/communication-common": "1.0.0"
   },
   "peerDependencies": {
