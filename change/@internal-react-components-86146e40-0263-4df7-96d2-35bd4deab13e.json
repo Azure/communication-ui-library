@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add option to show device selection menu in MicrophoneButton",
+  "packageName": "@internal/react-components",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
