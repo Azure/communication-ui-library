@@ -168,6 +168,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    /* @conditional-compile-remove-from(stable) */
     renderLocalCameraSwitcher
   } = props;
 
