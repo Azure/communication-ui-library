@@ -3,7 +3,7 @@
 
 import { IButtonStyles, IconButton } from '@fluentui/react';
 import React from 'react';
-import { OptionsDevice } from '../..';
+import { OptionsDevice } from '../DevicesButton';
 
 /**
  * @internal
