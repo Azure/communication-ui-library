@@ -4,12 +4,12 @@
 import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove-from(stable): custom button injection */
-import { BaseCustomStyles, ControlBarButton, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import {
+  BaseCustomStyles,
   CameraButton,
   ControlBar,
+  ControlBarButtonStyles,
   DevicesButton,
   EndCallButton,
   MicrophoneButton,
