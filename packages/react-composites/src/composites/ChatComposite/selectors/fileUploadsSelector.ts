@@ -10,7 +10,7 @@ import { getFileUploads, getFileUploadsCompleted } from './baseSelectors';
 /**
  * @private
  */
-export const uploadedFilesSelector = createSelector(
+export const fileUploadsSelector = createSelector(
   [getFileUploads, getFileUploadsCompleted],
   (fileUploads, fileUploadsCompleted) => {
     return { files: fileUploads, completed: fileUploadsCompleted };
