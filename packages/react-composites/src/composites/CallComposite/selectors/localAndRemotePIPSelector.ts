@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import {
@@ -37,11 +37,16 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     }
 
     // Get remote video stream details of the most dominant participant
-    const [dominantRemoteParticipantId] = dominantSpeakers ?? [];
-    const dominantRemoteParticipant =
-      remoteParticipants && dominantSpeakers && dominantSpeakers?.length > 0
-        ? { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] }
-        : undefined;
+    let dominantRemoteParticipant: { dominantRemoteParticipantId: RemoteParticipantState } | undefined;
+    const remoteParticipantIds = remoteParticipants && Object.keys(remoteParticipants);
+    if (remoteParticipantIds && remoteParticipantIds.length > 0) {
+      // Fallback to using the first remote participant if no dominant speaker IDs are present
+      const dominantRemoteParticipantId = (dominantSpeakers && dominantSpeakers[0]) ?? remoteParticipantIds[0];
+      dominantRemoteParticipant =
+        remoteParticipants && dominantSpeakers && dominantSpeakers?.length > 0
+          ? { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] }
+          : undefined;
+    }
 
     return {
       localParticipant: {
