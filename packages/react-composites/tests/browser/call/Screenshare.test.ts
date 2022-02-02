@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { expect } from '@playwright/test';
-import { IDS } from '../common/constants';
-import { dataUiId, pageClick, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { test } from './fixture';
+import { expect } from '@playwright/test';
 import { buildUrlWithMockAdapter } from './utils';
+import { dataUiId, pageClick, clickOutsideOfPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
+import { IDS } from '../common/constants';
 
 test.describe('Screenshare tests', async () => {
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
@@ -53,8 +53,9 @@ test.describe('Screenshare tests', async () => {
         remoteParticipants: testRemoteParticipants
       })
     );
-    // Click off the screen to turn away initial aria label
-    await page.mouse.click(-1, -1);
+    // Click off page to turn away initial aria label
+    await clickOutsideOfPage(page);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
     expect(await page.screenshot()).toMatchSnapshot('local-screenshare.png');
   });
@@ -108,8 +109,9 @@ test.describe('Screenshare tests', async () => {
           remoteParticipants: testRemoteParticipants
         })
       );
-      // Click off the screen to turn away initial aria label
-      await page.mouse.click(-1, -1);
+      // Click off page to turn away initial aria label
+      await clickOutsideOfPage(page);
+      await waitForSelector(page, dataUiId(IDS.videoGallery));
       await waitForPageFontsLoaded(page);
       expect(await page.screenshot()).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
       await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
