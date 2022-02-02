@@ -21,7 +21,7 @@ export type ChatAdapterUiState = {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadState}
+   * Array of type {@link FileSharingUiState}
    * @beta
    */
   fileUploads?: FileSharingUiState;
