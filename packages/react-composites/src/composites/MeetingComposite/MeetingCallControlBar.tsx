@@ -130,6 +130,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               data-ui-id="meeting-composite-chat-button"
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
+              unreadMessageCount={props.numberOfUnreadMessages}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
               unreadMessageCount={props.numberOfUnreadMessages}
             />
