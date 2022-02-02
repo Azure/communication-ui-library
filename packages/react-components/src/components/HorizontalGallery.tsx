@@ -6,6 +6,7 @@ import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
+import { useIdentifiers } from '../identifiers';
 
 /**
  * {@link HorizontalGallery} default children per page
@@ -49,6 +50,8 @@ export interface HorizontalGalleryProps {
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
   const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
 
+  const ids = useIdentifiers();
+
   const [page, setPage] = useState(0);
 
   const numberOfChildren = React.Children.count(children);
@@ -80,6 +83,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.previousButton}
           onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
           disabled={disablePreviousButton}
+          identifier={ids.horizontalGalleryLeftNavButton}
         />
       )}
       <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
@@ -92,6 +96,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.nextButton}
           onClick={() => setPage(Math.min(lastPage, page + 1))}
           disabled={disableNextButton}
+          identifier={ids.horizontalGalleryRightNavButton}
         />
       )}
     </Stack>
@@ -103,6 +108,7 @@ const HorizontalGalleryNavigationButton = (props: {
   styles: IStyle;
   onClick?: () => void;
   disabled?: boolean;
+  identifier?: string;
 }): JSX.Element => {
   const theme = useTheme();
   return (
@@ -110,6 +116,7 @@ const HorizontalGalleryNavigationButton = (props: {
       className={mergeStyles(leftRightButtonStyles(theme), props.styles)}
       onClick={props.onClick}
       disabled={props.disabled}
+      data-ui-id={props.identifier}
     >
       {props.icon}
     </DefaultButton>
