@@ -45,7 +45,11 @@
     "offLabel": "Unmute",
     "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
-    "tooltipOffContent": "Unmute microphone"
+    "tooltipOffContent": "Unmute microphone",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose Microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose Speaker"
   },
   "devicesButton": {
     "label": "Devices",
