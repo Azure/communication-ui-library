@@ -132,7 +132,6 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               label={meetingStrings.chatButtonLabel}
               unreadMessageCount={props.numberOfUnreadMessages}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
-              unreadMessageCount={props.numberOfUnreadMessages}
             />
           )}
         </Stack>
