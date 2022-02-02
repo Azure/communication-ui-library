@@ -30,13 +30,15 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileMetadata, FileUploadState, ACSFilesMetaData } from '../file-sharing';
+import { FileMetadata, FileUploadState, ACSFilesMetaData, FileUploadContext, FileUpload } from '../file-sharing';
+import { produce } from 'immer';
 
 /** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;
   private threadId: string;
+  private fileUploadContexts?: FileUploadContext[];
 
   constructor(clientState: ChatClientState, threadId: string) {
     const thread = clientState.threads[threadId];
@@ -73,9 +75,46 @@ class ChatContext {
     this.setState({ ...this.state, error });
   }
 
+  private fileUploadProgressListener(id: string, value: number): void {
+    const fileUpload = this.state.fileUploads?.[id];
+    if (fileUpload) {
+      fileUpload.progress = value;
+    }
+    produce(this.state, (draft: ChatAdapterState) => {
+      if (draft.fileUploads?.[id]) {
+        draft.fileUploads[id] = {
+          ...draft.fileUploads?.[id],
+          progress: value
+        };
+      }
+    });
+  }
+
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public setFileUploads(fileUploads: FileUploadState[]): void {
-    this.setState({ ...this.state, fileUploads });
+  public setFileUploads(fileUploads: FileUploadContext[]): void {
+    const fileUploadsMap = fileUploads.reduce((map: Record<string, FileUploadState>, fileUpload) => {
+      map[fileUpload.id] = {
+        id: fileUpload.id,
+        file: fileUpload.file,
+        progress: fileUpload.progress,
+        metadata: fileUpload.metadata
+      };
+      return map;
+    }, {});
+
+    this.setState({ ...this.state, fileUploads: fileUploadsMap });
+
+    fileUploads.forEach((fileUpload) => {
+      fileUpload.on('uploadProgressed', this.fileUploadProgressListener);
+    });
+  }
+
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  public clearFileUploads(): void {
+    this.setState({ ...this.state, fileUploads: {} });
+    this.fileUploadContexts?.forEach((fileUploadContext) => {
+      fileUploadContext.off('uploadProgressed', this.fileUploadProgressListener);
+    });
   }
 
   public updateClientState(clientState: ChatClientState): void {
@@ -236,7 +275,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  registerFileUploads(fileUploads: FileUploadState[]): void {
+  registerFileUploads(fileUploads: FileUploadContext[]): void {
     this.context.setFileUploads(fileUploads);
   }
 

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { EventEmitter } from 'events';
+import { nanoid } from 'nanoid';
 
 /**
  * A wrapper object for a file that is being uploaded.
@@ -59,6 +60,10 @@ export interface FileMetadata {
  */
 export interface FileUploadState {
   /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+  /**
    * An object of type {@link File} being uploaded.
    */
   file: File;
@@ -78,7 +83,7 @@ export interface FileUploadState {
  * An internal interface used by the Chat Composite to drive the UI for file uploads.
  * @internal
  */
-export interface FileUploadContext extends FileUploadState {
+export interface FileUploadContext extends FileUploadEventEmitter, FileUploadState {
   /**
    * Used to cancel the upload in the UI.
    * Emits the {@link UPLOAD_CANCELLED_EVENT} event.
@@ -143,22 +148,22 @@ export type FileUploadEventListener =
  * Listener for `uploadProgressed` event.
  * @internal
  */
-export type UploadProgressListener = (value: number) => void;
+export type UploadProgressListener = (id: string, value: number) => void;
 /**
  * Listener for `uploadComplete` event.
  * @internal
  */
-export type UploadCompleteListener = (metadata: FileMetadata) => void;
+export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @internal
  */
-export type UploadFailedListener = (message: string) => void;
+export type UploadFailedListener = (id: string, message: string) => void;
 /**
  * Listener for `uploadCanceled` event.
  * @internal
  */
-export type UploadCanceledListener = () => void;
+export type UploadCanceledListener = (id: string) => void;
 
 /**
  * @internal
@@ -214,7 +219,7 @@ export interface FileUploadEventEmitter {
 /**
  * @internal
  */
-export type FileUploadUiDriver = FileUploadManager & FileUploadContext & FileUploadEventEmitter;
+export type FileUploadUiDriver = FileUploadState & FileUploadManager & FileUploadContext & FileUploadEventEmitter;
 
 /**
  * A wrapper object for a file that is being uploaded.
@@ -223,11 +228,13 @@ export type FileUploadUiDriver = FileUploadManager & FileUploadContext & FileUpl
  */
 export class FileUpload implements FileUploadUiDriver {
   private _emitter: EventEmitter;
+  public id: string;
   public file: File;
   public progress: number;
   public metadata?: FileMetadata;
 
   constructor(file: File) {
+    this.id = nanoid();
     this.file = file;
     this.progress = 0;
     this._emitter = new EventEmitter();

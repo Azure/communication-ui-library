@@ -24,7 +24,7 @@ export type ChatAdapterUiState = {
    * Array of type {@link FileUploadState}
    * @beta
    */
-  fileUploads?: FileUploadState[];
+  fileUploads?: Record<string, FileUploadState>;
 };
 
 /**
@@ -97,13 +97,6 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  /**
-   * Sets the uploaded files in ui state.
-   * @param fileUploads - Array of {@link FileUploadState}
-   * @beta
-   */
-  registerFileUploads?: (fileUploads: FileUploadState[]) => void;
 }
 
 /**
