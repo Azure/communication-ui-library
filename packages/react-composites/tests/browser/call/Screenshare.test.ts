@@ -117,7 +117,7 @@ test.describe('Screenshare tests', async () => {
       expect(await page.screenshot()).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');
       await waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
       await pageClick(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
-      expect(await page.screenshot()).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
+      expect(await page.screenshot()).toMatchSnapshot('remote-screenshare-horizontal-gallery-back-to-page-1.png');
     }
   );
 });
