@@ -104,14 +104,21 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
+
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
-  meetingAdapter.onStateChange((newState) => {
-    setCurrentPage(newState.page);
-    setCurrentMeetingState(newState.meeting?.state);
-  });
+  useEffect(() => {
+    const updateMeetingPage = (newState): void => {
+      setCurrentPage(newState.page);
+      setCurrentMeetingState(newState.meeting?.state);
+    };
+    meetingAdapter.onStateChange(updateMeetingPage);
+    return () => {
+      meetingAdapter.offStateChange(updateMeetingPage);
+    };
+  }, [meetingAdapter]);
 
   useEffect(() => {
     const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {

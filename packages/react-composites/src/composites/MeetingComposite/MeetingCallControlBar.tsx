@@ -102,6 +102,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           <CallControls
             options={callControlOptions}
             increaseFlyoutItemSize={props.mobileView}
+            splitButtonsForDeviceSelection={!props.mobileView}
             controlBarStyles={!props.mobileView ? desktopControlBarStyles : undefined}
             commonButtonStyles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             endCallButtonStyles={!props.mobileView ? desktopEndCallButtonStyles : undefined}
@@ -165,6 +166,15 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     // Override styling from ControlBarButton so that label doesn't introduce a new block.
     display: 'inline',
     fontSize: theme.fonts.medium.fontSize
+  },
+  splitButtonMenuButton: {
+    border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
+    borderRadius: theme.effects.roundedCorner4
+  },
+  splitButtonMenuButtonChecked: {
+    // Default colors the menu half similarly for :hover and when button is checked.
+    // To align with how the left-half is styled, override the checked style.
+    background: 'none'
   }
 });
 
