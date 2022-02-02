@@ -21,7 +21,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
       return <></>;
     } else {
       return (
-        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
+        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>9+</>}</Stack>
       );
     }
   };

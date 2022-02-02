@@ -5,7 +5,7 @@ import React from 'react';
 import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { NotificationIcon } from './NotificationIcon';
-import { Stack } from '@fluentui/react';
+import { IStackStyles, Stack } from '@fluentui/react';
 import { ChatButtonContainerStyles } from './styles/MeetingCompositeStyles';
 
 /**
@@ -14,15 +14,22 @@ import { ChatButtonContainerStyles } from './styles/MeetingCompositeStyles';
 export interface ChatButtonProps extends ControlBarButtonProps {
   unreadMessageCount: number;
 }
-
-const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
-const onRenderOffIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />;
 /**
  * @private
  */
 export const ChatButton = (props: ChatButtonProps): JSX.Element => {
   const strings = { label: props.label, ...props.strings };
   const { unreadMessageCount } = props;
+
+  const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
+  const onRenderOffIcon = (): JSX.Element => {
+    return (
+      <Stack styles={chatNotificationContainerStyles}>
+        {unreadMessageCount > 0 && <NotificationIcon chatMessagesCount={unreadMessageCount} />}
+        <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
+      </Stack>
+    );
+  };
 
   return (
     <Stack styles={ChatButtonContainerStyles}>
@@ -34,7 +41,14 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
         onClick={props.onClick}
       />
-      {unreadMessageCount > 0 && <NotificationIcon chatMessagesCount={unreadMessageCount} />}
+      {}
     </Stack>
   );
+};
+
+const chatNotificationContainerStyles: IStackStyles = {
+  root: {
+    display: 'inline',
+    position: 'relative'
+  }
 };
