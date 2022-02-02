@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
-import { RemoteParticipantState, VideoStreamRendererViewState } from '@internal/calling-stateful-client';
+import {
+  LocalVideoStreamState,
+  RemoteParticipantState,
+  VideoStreamRendererViewState
+} from '@internal/calling-stateful-client';
 import { CallAdapter, CallAdapterState } from '../../../../../src';
 import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
@@ -14,6 +18,7 @@ export class MockCallAdapter implements CallAdapter {
   constructor(testState?: TestCallingState) {
     if (!testState) {
       this.state = defaultCallAdapterState;
+      return;
     }
 
     const initialState = defaultCallAdapterState;
@@ -23,6 +28,11 @@ export class MockCallAdapter implements CallAdapter {
         const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
         Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
         initialState.call.remoteParticipants = remoteParticipants;
+      }
+      if (testState.isScreenSharing) {
+        initialState.call.isScreenSharingOn = true;
+        const screenShareStream: LocalVideoStreamState = createLocalScreenShareStream();
+        initialState.call.localVideoStreams = [screenShareStream];
       }
     }
 
@@ -130,6 +140,11 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
           id: 1,
           mediaStreamType: 'Video',
           isAvailable: !!testRemoteParticipant.isVideoStreamAvailable
+        },
+        2: {
+          id: 2,
+          mediaStreamType: 'ScreenSharing',
+          isAvailable: !!testRemoteParticipant.isScreenSharing
         }
       },
       isMuted: !!testRemoteParticipant.isMuted,
@@ -149,19 +164,47 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
 const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
   for (const videoStream of Object.values(remoteParticipant.videoStreams)) {
     if (videoStream.isAvailable) {
-      // The video is an empty element with a colored background. To ensure a consistent color, the background color
-      // is the hex representation of the participant's display name.
-      const mockVideoElement = document.createElement('div');
-      mockVideoElement.innerHTML = '<span />';
-      mockVideoElement.style.width = decodeURIComponent('100%25');
-      mockVideoElement.style.height = decodeURIComponent('100%25');
-      mockVideoElement.style.background = stringToHexColor(remoteParticipant.displayName);
-      mockVideoElement.style.backgroundPosition = 'center';
-      mockVideoElement.style.backgroundRepeat = 'no-repeat';
+      const mockVideoElement = createMockHTMLElement(remoteParticipant.displayName);
       const view: VideoStreamRendererViewState = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
       videoStream.view = view;
     }
   }
+};
+
+/**
+ * Helper function to create local screen share stream
+ * @returns LocalVideoStreamState
+ */
+const createLocalScreenShareStream = (): LocalVideoStreamState => {
+  const screenShareElement = createMockHTMLElement();
+  const view: VideoStreamRendererViewState = {
+    scalingMode: 'Crop',
+    isMirrored: false,
+    target: screenShareElement
+  };
+  const screenShareStream: LocalVideoStreamState = {
+    source: { id: 'screenshare1', name: 'Screenshare', deviceType: 'CaptureAdapter' },
+    mediaStreamType: 'ScreenSharing',
+    view: view
+  };
+  return screenShareStream;
+};
+
+/**
+ * Helper function that creates an html element with a colored background with an input string. To ensure a consistent color,
+ * the background coloris the hex representation of the participant's display name.
+ * @param str - input string
+ * @returns
+ */
+const createMockHTMLElement = (str?: string): HTMLElement => {
+  const mockVideoElement = document.createElement('div');
+  mockVideoElement.innerHTML = '<span />';
+  mockVideoElement.style.width = decodeURIComponent('100%25');
+  mockVideoElement.style.height = decodeURIComponent('100%25');
+  mockVideoElement.style.background = stringToHexColor(str ?? '');
+  mockVideoElement.style.backgroundPosition = 'center';
+  mockVideoElement.style.backgroundRepeat = 'no-repeat';
+  return mockVideoElement;
 };
 
 /**
