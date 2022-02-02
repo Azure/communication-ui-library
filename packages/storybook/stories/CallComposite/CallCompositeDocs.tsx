@@ -11,6 +11,9 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 
+const customButtonInjectionExampleContainer =
+  require('!!raw-loader!./snippets/CustomButtonInjectionExampleContainer.snippet.tsx').default;
+
 const formFactorSnippet = `
 <CallComposite formFactor="mobile" />
 `;
@@ -99,6 +102,15 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
         custom data model can be injected for all the components in this UI library.
+      </Description>
+
+      <Heading>Custom Button Injection</Heading>
+      <Description>Custom Buttons can be injected into CallComposite using the built in...</Description>
+      <Description>TEXT 2</Description>
+      <Source code={customButtonInjectionExampleContainer} />
+      <Description>
+        See the [Custom button injection documentation](./?path=/docs/custombuttoninjection--page) to understand how
+        custom buttons can be injected for the related components in this UI library.
       </Description>
 
       <Heading>Fonts</Heading>
