@@ -142,7 +142,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
-    adapter.registerFileUploads(fileUploads);
+    adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(adapter.getState().userId, fileUploads);
   };
 

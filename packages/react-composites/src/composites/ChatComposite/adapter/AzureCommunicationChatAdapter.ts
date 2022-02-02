@@ -32,7 +32,7 @@ import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileSharingAdapter } from './FileSharingAdapter';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadContext } from '../file-sharing';
+import { ObservableFileUpload } from '../file-sharing';
 
 /** Context of Chat, which is a centralized context for all state updates */
 export class ChatContext {
@@ -241,7 +241,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  registerFileUploads(fileUploads: FileUploadContext[]): void {
+  registerFileUploads(fileUploads: ObservableFileUpload[]): void {
     this.fileSharingAdapter.registerFileUploads(fileUploads);
   }
 

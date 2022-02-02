@@ -6,8 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadState } from '../file-sharing/FileUpload';
-import { FileUploadAdapter } from './FileSharingAdapter';
+import { FileUploadAdapter, FileSharingUiState } from './FileSharingAdapter';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -25,7 +24,7 @@ export type ChatAdapterUiState = {
    * Array of type {@link FileUploadState}
    * @beta
    */
-  fileUploads?: Record<string, FileUploadState>;
+  fileUploads?: FileSharingUiState;
 };
 
 /**
@@ -170,12 +169,17 @@ export interface ChatAdapterSubscribers {
  *
  * @public
  */
-export interface ChatAdapter
-  extends ChatAdapterThreadManagement,
-    AdapterState<ChatAdapterState>,
-    Disposable,
-    ChatAdapterSubscribers,
-    FileUploadAdapter {}
+export type ChatAdapter = ChatAdapterThreadManagement &
+  AdapterState<ChatAdapterState> &
+  Disposable &
+  ChatAdapterSubscribers &
+  {
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /**
+     * @TODO: Extend FileUploadAdapter directly once we have a stable version of the adapter.
+     */
+    [property in keyof FileUploadAdapter]: FileUploadAdapter[property];
+  };
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

@@ -6,7 +6,6 @@ import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ErrorBarStrings } from '@internal/react-components';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { MeetingAdapterState, MeetingState } from '..';
-import { FileUploadContext } from '../../ChatComposite/file-sharing';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -50,16 +49,6 @@ export class MeetingBackedChatAdapter implements ChatAdapter {
 
   constructor(meetingAdapter: MeetingAdapter) {
     this.meetingAdapter = meetingAdapter;
-  }
-
-  registerFileUploads(fileUploads: FileUploadContext[]): void {
-    throw new Error('Method not implemented.');
-  }
-  clearFileUploads(): void {
-    throw new Error('Method not implemented.');
-  }
-  cancelFileUpload(id: string): void {
-    throw new Error('Method not implemented.');
   }
 
   public fetchInitialData = async (): Promise<void> => await this.meetingAdapter.fetchInitialData();
