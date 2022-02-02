@@ -26,6 +26,7 @@ import { FileCard } from './file-sharing/FileCard';
 import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { FileUpload } from './file-sharing/FileUpload';
 
 import {
   chatArea,
@@ -137,9 +138,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   // const uploadedFilesSelector = useSelector(uploadedFilesSelector); files and completed(status)
   const onRenderAttachedFiles = () => {
+    const files: FileUpload[] = [];
+    files.push(new FileUpload(new File([], 'abc.pdf')));
     return (
       <FileCardGroup>
-        <FileCard fileName={'abc.pdf'} fileExtension={'pdf'} progress={50}></FileCard>
+        <FileCard fileName={'abc'} progress={0.5} fileExtension={'pdf'} />
       </FileCardGroup>
     );
   };
