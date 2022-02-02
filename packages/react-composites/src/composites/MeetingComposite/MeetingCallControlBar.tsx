@@ -27,7 +27,6 @@ export interface MeetingCallControlBarProps {
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | MeetingCallControlOptions;
-  numberOfUnreadMessages?: number;
   chatAdapter: ChatAdapter;
 }
 
@@ -93,13 +92,6 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
   const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
 
-  const chatButtonProps = {
-    checked: props.chatButtonChecked,
-    showLabel: true,
-    label: meetingStrings.chatButtonLabel,
-    chatButtonChecked: props.chatButtonChecked
-  };
-
   return (
     <Stack
       horizontal
@@ -133,9 +125,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
             <ChatButtonWithUnreadMessagesBadge
               chatAdapter={props.chatAdapter}
-              chatButtonProps={chatButtonProps}
+              checked={props.chatButtonChecked}
+              showLabel={true}
               isChatPaneVisible={props.chatButtonChecked}
-              onChatButtonClicked={props.onChatButtonClicked}
+              onClick={props.onChatButtonClicked}
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}

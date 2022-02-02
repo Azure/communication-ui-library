@@ -2,27 +2,28 @@
 // Licensed under the MIT license.
 
 import { ChatMessage } from '@azure/communication-chat';
+import { IStackStyles, Stack } from '@fluentui/react';
+import { Chat20Regular } from '@fluentui/react-icons';
+import { ControlBarButtonProps } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
-import { ChatButton, ChatButtonProps } from './ChatButton';
+import { ChatButton } from './ChatButton';
+import { NotificationIcon } from './NotificationIcon';
 
 /**
  * @private
  */
-export type ChatButtonLogicWrapperProps = {
-  chatButtonProps: ChatButtonProps;
+export interface ChatButtonLogicWrapperProps extends ControlBarButtonProps {
   chatAdapter: ChatAdapter;
   isChatPaneVisible: boolean;
-  onChatButtonClicked: () => void;
-  disabled: boolean;
-};
+}
 
 /**
  * @private
  */
 export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonLogicWrapperProps): JSX.Element => {
-  const { chatButtonProps, chatAdapter, isChatPaneVisible, onChatButtonClicked, disabled } = props;
+  const { chatAdapter, isChatPaneVisible } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
 
   /**
@@ -51,13 +52,24 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonLogicWrapperP
 
   return (
     <ChatButton
-      chatButtonChecked={chatButtonProps.chatButtonChecked}
+      {...props}
       showLabel={true}
-      onClick={onChatButtonClicked}
       data-ui-id="meeting-composite-chat-button"
-      disabled={disabled}
-      label={chatButtonProps.label}
-      unreadMessageCount={unreadChatMessagesCount}
+      onRenderOffIcon={(): JSX.Element => {
+        return (
+          <Stack styles={chatNotificationContainerStyles}>
+            {unreadChatMessagesCount > 0 && <NotificationIcon chatMessagesCount={unreadChatMessagesCount} />}
+            <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
+          </Stack>
+        );
+      }}
     />
   );
+};
+
+const chatNotificationContainerStyles: IStackStyles = {
+  root: {
+    display: 'inline',
+    position: 'relative'
+  }
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -103,7 +103,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
@@ -124,9 +123,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }, []);
 
   const toggleChat = useCallback(() => {
-    if (!showChat) {
-      setUnreadChatMessagesCount(0);
-    }
     setShowPeople(false);
     setShowChat(!showChat);
   }, [showChat]);
@@ -192,7 +188,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
             callControls={props.callControls}
-            numberOfUnreadMessages={unreadChatMessagesCount}
           />
         </ChatAdapterProvider>
       )}
