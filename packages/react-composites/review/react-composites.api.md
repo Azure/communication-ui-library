@@ -559,18 +559,6 @@ export interface FileMetadata {
     url: string;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "FileSharingMetadata" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type FileSharingMetadata = {
-    [FileSharingMetadataKey]: string;
-};
-
-// Warning: (ae-internal-missing-underscore) The name "FileSharingMetadataKey" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const FileSharingMetadataKey = "fileSharingMetadata";
-
 // @beta
 export interface FileSharingOptions {
     accept?: string;
