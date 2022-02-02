@@ -73,6 +73,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         callStatus === 'Connected' ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
             <MediaGallery
+              isMobile={mobileView}
               {...mediaGalleryProps}
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}

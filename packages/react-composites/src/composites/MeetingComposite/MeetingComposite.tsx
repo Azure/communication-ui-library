@@ -107,10 +107,16 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
-  meetingAdapter.onStateChange((newState) => {
-    setCurrentPage(newState.page);
-    setCurrentMeetingState(newState.meeting?.state);
-  });
+  useEffect(() => {
+    const updateMeetingPage = (newState): void => {
+      setCurrentPage(newState.page);
+      setCurrentMeetingState(newState.meeting?.state);
+    };
+    meetingAdapter.onStateChange(updateMeetingPage);
+    return () => {
+      meetingAdapter.offStateChange(updateMeetingPage);
+    };
+  }, [meetingAdapter]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
