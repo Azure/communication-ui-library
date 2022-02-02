@@ -20,7 +20,7 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { Icon, IContextualMenuItem, initializeIcons, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 
@@ -32,6 +32,9 @@ const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 const injectCustomButtons = Boolean(params.injectCustomButtons);
+
+// Needed to initialize default icons used by Fluent components.
+initializeIcons();
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
