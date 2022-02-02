@@ -25,6 +25,10 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonLogicWrapperP
   const { chatButtonProps, chatAdapter, isChatPaneVisible, onChatButtonClicked, disabled } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
 
+  /**
+   * Helper function to determine if the message in the event is a valid one from a user.
+   * Display name is used since system messages will not have one.
+   */
   const validNewChatMessage = (message): boolean =>
     !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
 
