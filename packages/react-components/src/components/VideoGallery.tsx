@@ -50,7 +50,7 @@ import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove-from(stable) */
 import { OptionsDevice } from './DevicesButton';
 /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
-import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
+import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;

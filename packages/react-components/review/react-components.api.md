@@ -917,6 +917,7 @@ export interface VideoGalleryProps {
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
+    selectedCamera?: OptionsDevice;
     showCamerSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
@@ -939,6 +940,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
