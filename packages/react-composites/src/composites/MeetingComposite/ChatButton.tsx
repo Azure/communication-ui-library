@@ -6,6 +6,7 @@ import { ControlBarButton, ControlBarButtonProps } from '@internal/react-compone
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { NotificationIcon } from './NotificationIcon';
 import { Stack } from '@fluentui/react';
+import { ChatButtonContainerStyles } from './styles/MeetingCompositeStyles';
 
 /**
  * @private
@@ -24,7 +25,7 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
   const { unreadMessageCount } = props;
 
   return (
-    <Stack style={{ position: 'relative' }}>
+    <Stack styles={ChatButtonContainerStyles}>
       <ControlBarButton
         {...props}
         labelKey={'chatButtonLabelKey'}

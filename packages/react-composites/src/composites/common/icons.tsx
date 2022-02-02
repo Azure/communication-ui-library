@@ -18,7 +18,7 @@ import { CameraSwitch24Filled } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
-/* @conditional-compile-remove-from(stable) Chat_Notifications */
+/* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
 import { Circle20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { Attach20Regular } from '@fluentui/react-icons';
@@ -50,8 +50,8 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   /* @conditional-compile-remove-from(stable) */
   LocalCameraSwitch: <CameraSwitch24Filled />,
-  /* @conditional-compile-remove-from(stable) Chat_Notifications */
-  NotificationIcon: <Circle20Filled />,
+  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
+  ControlBarButtonBadgeIcon: <Circle20Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
@@ -160,6 +160,6 @@ export type CallCompositeIcons = Partial<
 > & {
   /* @conditional-compile-remove-from(stable) */
   LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove-from(stable) Chat_Notifications */
-  NotificationIcon?: JSX.Element;
+  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
+  ControlBarButtonBadgeIcon?: JSX.Element;
 };

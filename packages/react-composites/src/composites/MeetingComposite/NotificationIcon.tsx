@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, Stack } from '@fluentui/react';
-import { NotificationIconStyles, NotificationTextStyles } from './styles/MeetingCompositeStyles';
+import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme } from '@fluentui/react';
 
 /**
  * @private
@@ -16,13 +15,51 @@ export type NotificationIconProps = {
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   const { chatMessagesCount } = props;
+  const theme = useTheme();
+  const renderNumber = (numberOfMessages): JSX.Element => {
+    if (numberOfMessages < 1) {
+      return <></>;
+    } else {
+      return (
+        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
+      );
+    }
+  };
+
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" style={{ position: 'absolute', top: 0, right: '0.78rem' }}>
-      <Icon styles={NotificationIconStyles} iconName="NotificationIcon" />
-      <Stack styles={NotificationTextStyles}>
-        {chatMessagesCount > 0 && chatMessagesCount < 9 ? <>{chatMessagesCount}</> : <></>}
-        {chatMessagesCount > 9 ? <>+9</> : <></>}
-      </Stack>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
+      <Icon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
+      {renderNumber(chatMessagesCount)}
     </Stack>
   );
 };
+
+const notificationIconContainerStyles = memoizeFunction(
+  (): IIconStyles => ({
+    root: {
+      // positioning to place the badge within the button appropriately.
+      position: 'absolute',
+      top: '-0.5rem',
+      right: '-0.5rem'
+    }
+  })
+);
+
+const notificationIconStyles = memoizeFunction(
+  (theme: ITheme): IIconStyles => ({
+    root: {
+      color: theme.palette.themePrimary
+    }
+  })
+);
+
+const notificationTextStyles = memoizeFunction(
+  (theme: ITheme): IStackStyles => ({
+    root: {
+      position: 'absolute',
+      top: '0.1rem',
+      color: theme.palette.white,
+      fontSize: theme.fonts.smallPlus.fontSize
+    }
+  })
+);

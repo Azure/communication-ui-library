@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconStyles, IStackStyles } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -20,22 +20,12 @@ export const compositeOuterContainerStyles: IStackStyles = {
 };
 
 /**
+ * Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
+ * this requires the parent to have `position relative`
  * @private
  */
-export const NotificationIconStyles: IIconStyles = {
+export const ChatButtonContainerStyles: IStackStyles = {
   root: {
-    color: '#0078D4'
-  }
-};
-
-/**
- * @private
- */
-export const NotificationTextStyles: IStackStyles = {
-  root: {
-    position: 'absolute',
-    top: '0.1rem',
-    color: 'white',
-    fontSize: '0.8rem'
+    position: 'relative'
   }
 };
