@@ -125,6 +125,9 @@ export const controlButtonStyles: IButtonStyles = {
       verticalAlign: 'text-top'
     }
   },
+  splitButtonMenuButton: {
+    border: 'none'
+  },
   flexContainer: {
     flexFlow: 'column',
     display: 'contents'

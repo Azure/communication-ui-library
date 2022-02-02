@@ -47,6 +47,8 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -121,7 +123,11 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+  /**
+   * Whether to display the local video camera switcher button
+   */
+  showCamerSwitcherInLocalPreview?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -165,7 +171,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar,
     showMuteIndicator,
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+    showCamerSwitcherInLocalPreview
   } = props;
 
   const ids = useIdentifiers();
@@ -227,7 +235,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
-            <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            <>
+              {
+                /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+                showCamerSwitcherInLocalPreview && <LocalVideoCameraCycleButton />
+              }
+              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            </>
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}
