@@ -41,7 +41,7 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-import { FileUploadHandler } from './file-sharing/FileUploadHandler';
+import { FileUpload, FileUploadHandler } from './file-sharing';
 
 /**
  * @private
@@ -137,6 +137,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
 
+  const fileUploadButtonOnChange = (files: FileList | null): void => {
+    if (!files) {
+      return;
+    }
+    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
+    adapter.registerFileUploads(fileUploads);
+    fileSharing?.uploadHandler(adapter.getState().userId, fileUploads);
+  };
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -162,7 +171,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <FileUploadButton
               accept={fileSharing?.accept}
               multiple={fileSharing?.multiple}
-              fileUploadHandler={fileSharing?.uploadHandler}
+              onChange={fileUploadButtonOnChange}
             />
           </Stack>
         </Stack>

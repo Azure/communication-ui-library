@@ -7,6 +7,7 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileUploadState } from '../file-sharing/FileUpload';
+import { FileUploadAdapter } from './FileSharingAdapter';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -173,7 +174,8 @@ export interface ChatAdapter
   extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
     Disposable,
-    ChatAdapterSubscribers {}
+    ChatAdapterSubscribers,
+    FileUploadAdapter {}
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.
