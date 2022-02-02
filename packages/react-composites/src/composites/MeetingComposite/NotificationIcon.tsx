@@ -21,14 +21,14 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
       return <></>;
     } else {
       return (
-        <Stack styles={NotificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
+        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
       );
     }
   };
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <Icon styles={NotificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
+      <Icon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
       {renderNumber(numberOfMessages)}
     </Stack>
   );
@@ -45,7 +45,7 @@ const notificationIconContainerStyles = memoizeFunction(
   })
 );
 
-const NotificationIconStyles = memoizeFunction(
+const notificationIconStyles = memoizeFunction(
   (theme: ITheme): IIconStyles => ({
     root: {
       color: theme.palette.themePrimary
@@ -53,13 +53,13 @@ const NotificationIconStyles = memoizeFunction(
   })
 );
 
-const NotificationTextStyles = memoizeFunction(
+const notificationTextStyles = memoizeFunction(
   (theme: ITheme): IStackStyles => ({
     root: {
       position: 'absolute',
       top: '0.1rem',
       color: theme.palette.white,
-      fontSize: '0.8rem'
+      fontSize: theme.fonts.smallPlus.fontSize
     }
   })
 );
