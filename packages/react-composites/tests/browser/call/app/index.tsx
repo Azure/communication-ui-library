@@ -20,36 +20,37 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { FontIcon, Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { Icon, IContextualMenuItem, initializeIcons, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { MockCallAdapter } from './mocks/MockCallAdapter';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-// Required params
-const displayName = verifyParamExists(params.displayName, 'displayName');
-const token = verifyParamExists(params.token, 'token');
-const groupId = verifyParamExists(params.groupId, 'groupId');
-const userId = verifyParamExists(params.userId, 'userId');
-
-// Optional params
+let mockCallState = undefined;
+try {
+  mockCallState = JSON.parse(params.mockCallState);
+} catch (e) {
+  console.log('Query parameter mockCallState could not be parsed: ', params.mockCallState);
+}
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 const injectCustomButtons = Boolean(params.injectCustomButtons);
+
+// Needed to initialize default icons used by Fluent components.
+initializeIcons();
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      const newAdapter = await createAzureCommunicationCallAdapter({
-        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-        displayName,
-        credential: new AzureCommunicationTokenCredential(token),
-        locator: { groupId: groupId }
-      });
-      setCallAdapter(wrapAdapterForTests(newAdapter));
+      if (mockCallState) {
+        setCallAdapter(wrapAdapterForTests(new MockCallAdapter(mockCallState)));
+      } else {
+        setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials()));
+      }
     };
 
     initialize();
@@ -153,6 +154,22 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
  * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
+
+// Function to create call adapter using createAzureCommunicationCallAdapter
+const createCallAdapterWithCredentials = async (): Promise<CallAdapter> => {
+  const displayName = verifyParamExists(params.displayName, 'displayName');
+  const token = verifyParamExists(params.token, 'token');
+  const groupId = verifyParamExists(params.groupId, 'groupId');
+  const userId = verifyParamExists(params.userId, 'userId');
+
+  const callAdapter = await createAzureCommunicationCallAdapter({
+    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    displayName,
+    credential: new AzureCommunicationTokenCredential(token),
+    locator: { groupId: groupId }
+  });
+  return callAdapter;
+};
 
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {
   return [
