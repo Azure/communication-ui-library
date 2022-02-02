@@ -1317,6 +1317,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryLeftNavButton: string;
+    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
     participantButtonPeopleMenuItem: string;
@@ -1674,24 +1676,50 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
+export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
+    enableDeviceSelectionMenu?: boolean;
+    microphones?: OptionsDevice[];
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
+    styles?: Partial<MicrophoneButtonStyles>;
 }
 
 // @public
 export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
 };
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
     offLabel: string;
     onLabel: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+}
+
+// @public
+export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
 // @public
@@ -2142,8 +2170,7 @@ export interface VideoGalleryProps {
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
-    selectedCamera?: OptionsDevice;
-    showLocalPreviewCameraSwitcher?: boolean;
+    showCamerSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;

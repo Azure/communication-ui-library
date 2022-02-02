@@ -49,8 +49,8 @@ import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove-from(stable) */
 import { OptionsDevice } from './DevicesButton';
-/* @conditional-compile-remove-from(stable) */
-import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraButton';
+/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraCycleButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -128,11 +128,11 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-  /* @conditional-compile-remove-from(stable) Local-Camera-Switcher */
+  /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
   /**
-   * Whether or not to display the camera switcher on the local video tile
+   * Whether to display the local video camera switcher button
    */
-  showLocalPreviewCameraSwitcher?: boolean;
+  showCamerSwitcherInLocalPreview?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -192,8 +192,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
-    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-    showLocalPreviewCameraSwitcher
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+    showCamerSwitcherInLocalPreview
   } = props;
 
   const ids = useIdentifiers();
@@ -257,7 +257,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             <>
               {
                 /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-                showLocalPreviewCameraSwitcher &&
+                showCamerSwitcherInLocalPreview &&
                   props.cameras !== undefined &&
                   props.selectedCamera !== undefined &&
                   props.onSelectCamera !== undefined && (
