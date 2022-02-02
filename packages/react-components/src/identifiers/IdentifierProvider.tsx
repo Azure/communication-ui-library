@@ -39,6 +39,10 @@ export interface _Identifiers {
   videoGallery: string;
   /** `data-ui-id` value for `VideoTile` Component */
   videoTile: string;
+  /** `data-ui-id` value for `HorizontalGallery` Component's left navigation button */
+  horizontalGalleryLeftNavButton: string;
+  /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
+  horizontalGalleryRightNavButton: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -52,7 +56,9 @@ const defaultIdentifiers: _Identifiers = {
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
-  videoTile: 'video-tile'
+  videoTile: 'video-tile',
+  horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
+  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button'
 };
 
 /**
