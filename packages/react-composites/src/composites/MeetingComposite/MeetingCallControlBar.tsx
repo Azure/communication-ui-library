@@ -13,7 +13,7 @@ import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.st
 import { MeetingCallControlOptions } from './MeetingComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
-import { ChatButtonLogicWrapper } from './ChatButtonLogicWrapper';
+import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 /**
  * @private
  */
@@ -107,10 +107,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       {meetingCallControlOptions !== false && (
         <Stack horizontal>
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButtonLogicWrapper
+            <ChatButtonWithUnreadMessagesBadge
               chatAdapter={props.chatAdapter}
               chatButtonProps={chatButtonProps}
-              showChat={props.chatButtonChecked}
+              isChatPaneVisible={props.chatButtonChecked}
               onChatButtonClicked={props.onChatButtonClicked}
               disabled={props.disableButtonsForLobbyPage}
             />

@@ -13,7 +13,7 @@ import { ChatButton, ChatButtonProps } from './ChatButton';
 export type ChatButtonLogicWrapperProps = {
   chatButtonProps: ChatButtonProps;
   chatAdapter: ChatAdapter;
-  showChat: boolean;
+  isChatPaneVisible: boolean;
   onChatButtonClicked: () => void;
   disabled: boolean;
 };
@@ -21,27 +21,29 @@ export type ChatButtonLogicWrapperProps = {
 /**
  * @private
  */
-export const ChatButtonLogicWrapper = (props: ChatButtonLogicWrapperProps): JSX.Element => {
-  const { chatButtonProps, chatAdapter, showChat, onChatButtonClicked, disabled } = props;
+export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonLogicWrapperProps): JSX.Element => {
+  const { chatButtonProps, chatAdapter, isChatPaneVisible, onChatButtonClicked, disabled } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
+
+  const validNewChatMessage = (message): boolean =>
+    !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
+
   useEffect(() => {
-    if (showChat === true) {
+    if (isChatPaneVisible) {
       setUnreadChatMessagesCount(0);
       return;
     }
-    const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {
-      if (!showChat && event.message.senderDisplayName !== '') {
-        if (event.message.type === 'text' || event.message.type === 'html') {
-          setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
-        }
+    const incrementUnreadChatMessagesCount = (event: { message: ChatMessage }): void => {
+      if (!isChatPaneVisible && validNewChatMessage(event.message)) {
+        setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
       }
     };
-    chatAdapter.on('messageReceived', incrementUnreadtChatMessagesCount);
+    chatAdapter.on('messageReceived', incrementUnreadChatMessagesCount);
 
     return () => {
-      chatAdapter.off('messageReceived', incrementUnreadtChatMessagesCount);
+      chatAdapter.off('messageReceived', incrementUnreadChatMessagesCount);
     };
-  }, [chatAdapter, setUnreadChatMessagesCount, showChat, unreadChatMessagesCount]);
+  }, [chatAdapter, setUnreadChatMessagesCount, isChatPaneVisible, unreadChatMessagesCount]);
 
   return (
     <ChatButton
