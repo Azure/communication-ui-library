@@ -290,8 +290,9 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
-}
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & {
+    [property in keyof FileUploadAdapter]: FileUploadAdapter[property];
+};
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -319,8 +320,6 @@ export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // @beta
-    registerFileUploads?: (fileUploads: FileUploadState[]) => void;
     removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -332,7 +331,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    fileUploads?: FileUploadState[];
+    fileUploads?: FileSharingUiState;
 };
 
 // @public
@@ -568,6 +567,37 @@ export interface FileSharingOptions {
 }
 
 // @beta
+export type FileSharingUiState = Record<string, FileUploadState>;
+
+// @beta (undocumented)
+export interface FileUploadAdapter {
+    // (undocumented)
+    cancelFileUpload?: (id: string) => void;
+    // (undocumented)
+    clearFileUploads?: () => void;
+    // (undocumented)
+    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadEventEmitter {
+    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    off(event: 'uploadFailed', listener: UploadFailedListener): void;
+    off(event: FileUploadEvents, listener: FileUploadEventListener): void;
+    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+    on(event: FileUploadEvents, listener: FileUploadEventListener): void;
+}
+
+// @beta
+export type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
+
+// @beta
+export type FileUploadEvents = 'uploadProgressed' | 'uploadCompleted' | 'uploadFailed';
+
+// @beta
 export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
 
 // @beta
@@ -580,7 +610,9 @@ export interface FileUploadManager {
 
 // @beta (undocumented)
 export interface FileUploadState {
-    file: File;
+    errorMessage?: string;
+    filename: string;
+    id: string;
     metadata?: FileMetadata;
     progress: number;
 }
@@ -766,6 +798,12 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
     type: 'network';
 };
 
+// @beta
+export interface ObservableFileUpload extends FileUploadEventEmitter {
+    file: File;
+    id: string;
+}
+
 // @public
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
@@ -792,6 +830,15 @@ export type ParticipantsRemovedListener = (event: {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta
+export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+
+// @beta
+export type UploadFailedListener = (id: string, message: string) => void;
+
+// @beta
+export type UploadProgressListener = (id: string, value: number) => void;
 
 // (No @packageDocumentation comment for this package)
 

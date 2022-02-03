@@ -30,15 +30,15 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileMetadata, FileUploadState, ACSFilesMetaData, FileUploadContext, FileUpload } from '../file-sharing';
-import { produce } from 'immer';
+import { FileSharingAdapter } from './FileSharingAdapter';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { ObservableFileUpload } from '../file-sharing';
 
 /** Context of Chat, which is a centralized context for all state updates */
-class ChatContext {
+export class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;
   private threadId: string;
-  private fileUploadContexts?: FileUploadContext[];
 
   constructor(clientState: ChatClientState, threadId: string) {
     const thread = clientState.threads[threadId];
@@ -75,48 +75,6 @@ class ChatContext {
     this.setState({ ...this.state, error });
   }
 
-  private fileUploadProgressListener(id: string, value: number): void {
-    const fileUpload = this.state.fileUploads?.[id];
-    if (fileUpload) {
-      fileUpload.progress = value;
-    }
-    produce(this.state, (draft: ChatAdapterState) => {
-      if (draft.fileUploads?.[id]) {
-        draft.fileUploads[id] = {
-          ...draft.fileUploads?.[id],
-          progress: value
-        };
-      }
-    });
-  }
-
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public setFileUploads(fileUploads: FileUploadContext[]): void {
-    const fileUploadsMap = fileUploads.reduce((map: Record<string, FileUploadState>, fileUpload) => {
-      map[fileUpload.id] = {
-        id: fileUpload.id,
-        file: fileUpload.file,
-        progress: fileUpload.progress,
-        metadata: fileUpload.metadata
-      };
-      return map;
-    }, {});
-
-    this.setState({ ...this.state, fileUploads: fileUploadsMap });
-
-    fileUploads.forEach((fileUpload) => {
-      fileUpload.on('uploadProgressed', this.fileUploadProgressListener);
-    });
-  }
-
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  public clearFileUploads(): void {
-    this.setState({ ...this.state, fileUploads: {} });
-    this.fileUploadContexts?.forEach((fileUploadContext) => {
-      fileUploadContext.off('uploadProgressed', this.fileUploadProgressListener);
-    });
-  }
-
   public updateClientState(clientState: ChatClientState): void {
     const thread = clientState.threads[this.threadId];
     if (!thread) {
@@ -144,6 +102,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  private fileSharingAdapter: FileSharingAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -152,6 +112,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    this.fileSharingAdapter = new FileSharingAdapter(this.context);
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -185,6 +147,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.off = this.off.bind(this);
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     this.registerFileUploads = this.registerFileUploads.bind(this);
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    this.clearFileUploads = this.clearFileUploads.bind(this);
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    this.cancelFileUpload = this.cancelFileUpload.bind(this);
   }
 
   dispose(): void {
@@ -225,12 +191,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      options.metadata = { ...options.metadata, ...convertUploadedFilesToMetadata(this.getState().fileUploads) };
+      options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetada() };
 
       await this.handlers.onSendMessage(content, options);
 
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      this.context.setFileUploads([]);
+      this.fileSharingAdapter.clearFileUploads();
     });
   }
 
@@ -275,8 +241,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  registerFileUploads(fileUploads: FileUploadContext[]): void {
-    this.context.setFileUploads(fileUploads);
+  registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+    this.fileSharingAdapter.registerFileUploads(fileUploads);
+  }
+
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  clearFileUploads(): void {
+    this.fileSharingAdapter.clearFileUploads();
+  }
+
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  cancelFileUpload(id: string): void {
+    this.fileSharingAdapter.cancelFileUpload(id);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -385,24 +361,6 @@ const convertEventType = (type: string): ChatMessageType => {
   } else {
     return 'text';
   }
-};
-
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-/**
- * Generates metadata object for a chat message containing uploaded file information.
- * @internal
- */
-const convertUploadedFilesToMetadata = (uploadedFiles?: FileUploadState[]): ACSFilesMetaData => {
-  const fileMetadata: FileMetadata[] = [];
-  if (uploadedFiles) {
-    for (const file of uploadedFiles) {
-      if (file.metadata) {
-        fileMetadata.push(file.metadata);
-      }
-    }
-  }
-
-  return { acsfiles: JSON.stringify(fileMetadata) };
 };
 
 /**
