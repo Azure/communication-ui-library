@@ -1989,13 +1989,6 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type ReadReceipt = {
-    senderId: string;
-    chatMessageId: string;
-    readOn: Date;
-};
-
-// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }

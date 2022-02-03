@@ -51,6 +51,13 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     first.status === second.status
   );
 };
+// potential issue
+// 1. we are only sending read receipt to the last message, we should send read receipt to all unread messages in the thread
+// 2. each person is only getting read receipt for their own messages, if we can be getting and updating read receipt for everyone
+// we can implement this logic: 1. find my latest message and get read number 2. find the messages sent after my message,check read number, if read number is larger, update my read number to this larger number
+// Assumption we made here: if user read the last message, they have read all messages in the thread.
+
+// Another issue: do not update until status is seen
 
 /**
  * Get the latest message from the message array.
@@ -59,7 +66,6 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  */
 const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
   // from the messages logged we can see readreceipt is not getting correct info
-  console.log(messages);
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -67,6 +73,38 @@ const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMes
     }
   }
   return undefined;
+};
+
+/**
+ * Get the latest message from the message array.
+ *
+ * @param messages
+ */
+const getLatestParticipantNum = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): number => {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.messageType === 'chat') {
+      return message.numParticipants ? message.numParticipants : 1;
+    }
+  }
+  return 1;
+};
+
+/**
+ * Get the latest message from the message array.
+ *
+ * @param messages
+ */
+const getLatestReadNum = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): number => {
+  // read receipt is only getting updated if it's my message
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.messageType === 'chat' && message.mine && message.status === 'seen') {
+      // first find latest message that belongs to me, update readreceipt for that message
+      return message.readReceipts ? message.readReceipts.length + 1 : 1;
+    }
+  }
+  return 1;
 };
 
 /**
@@ -619,6 +657,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage
   } = props;
+  const [latestReadNum, setLatestReadNum] = useState(1);
+  const [latestParticipantNum, setLatestParticipantNum] = useState(1);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -697,6 +737,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         lastMessage.messageId &&
         lastMessage.messageId !== messageIdSeenByMeRef.current
       ) {
+        // we are only sending read receipt for the last message
+        console.log(`sending on message seen for last message ${lastMessage.content}`);
         await onMessageSeen(lastMessage.messageId);
         messageIdSeenByMeRef.current = lastMessage.messageId;
       }
@@ -822,6 +864,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
+  useEffect(() => {
+    // set new num read and num participants
+    setLatestParticipantNum(getLatestParticipantNum(newMessages));
+    setLatestReadNum(getLatestReadNum(newMessages));
+    // console.log(`updating read num here to be ${latestReadNum} for message`)
+    // console.log(newMessages)
+  });
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
    * These two states are used to manipulate scrollbar
@@ -884,9 +933,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       []
     );
 
-  const [numRead, setNumRead] = useState(1);
-  const [numParticipants, setNumParticipants] = useState(1);
-
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -895,8 +941,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           let statusToRender: MessageStatus | undefined = undefined;
 
           if (message.messageType === 'chat') {
-            setNumRead(message.readReceipts ? message.readReceipts?.length + 1 : 1);
-            setNumParticipants(message.numParticipants ? message.numParticipants : 1);
             if (!message.messageId || message.messageId === '') {
               key = message.clientMessageId;
             }
@@ -937,8 +981,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
-            numRead,
-            numParticipants,
+            latestReadNum,
+            latestParticipantNum,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage
