@@ -49,10 +49,17 @@ export interface MediaGalleryProps {
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  const cameraSwitcherProps = {
-    ...useSelector(localVideoCameraCycleButtonSelector),
-    ...useHandlers(LocalVideoCameraCycleButton)
-  };
+  const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const cameraSwitcherProps = useMemo(() => {
+    return {
+      ...cameraSwitcherCallback,
+      ...cameraSwitcherCameras
+    };
+  }, [cameraSwitcherCallback, cameraSwitcherCameras]);
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -65,7 +72,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
         showCamerSwitcherInLocalPreview={props.isMobile}
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-        localVideoCameraSwitcherButtonProps={cameraSwitcherProps}
+        localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={(userId, options) => (
           <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />

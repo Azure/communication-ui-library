@@ -147,7 +147,7 @@ export interface VideoGalleryProps {
   /**
    * Camera control information for button to switch cameras.
    */
-  localVideoCameraSwitcherButtonProps?: LocalVideoCameraCycleButtonProps;
+  localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -183,7 +183,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
     showCamerSwitcherInLocalPreview,
     /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
-    localVideoCameraSwitcherButtonProps
+    localVideoCameraCycleButtonProps
   } = props;
 
   const ids = useIdentifiers();
@@ -214,6 +214,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     lastVisibleParticipants: visibleAudioParticipants.current,
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
+
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
+    return (
+      <>
+        {showCamerSwitcherInLocalPreview &&
+          localVideoCameraCycleButtonProps?.cameras !== undefined &&
+          localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
+          localVideoCameraCycleButtonProps?.onSelectCamera !== undefined && (
+            <LocalVideoCameraCycleButton
+              cameras={localVideoCameraCycleButtonProps.cameras}
+              selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
+              onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
+              label={strings.localVideoCameraSwitcherLabel}
+            />
+          )}
+      </>
+    );
+  };
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -247,17 +266,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             <>
               {
                 /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-                showCamerSwitcherInLocalPreview &&
-                  localVideoCameraSwitcherButtonProps?.cameras !== undefined &&
-                  localVideoCameraSwitcherButtonProps?.selectedCamera !== undefined &&
-                  localVideoCameraSwitcherButtonProps?.onSelectCamera !== undefined && (
-                    <LocalVideoCameraCycleButton
-                      cameras={localVideoCameraSwitcherButtonProps.cameras}
-                      selectedCamera={localVideoCameraSwitcherButtonProps.selectedCamera}
-                      onSelectCamera={localVideoCameraSwitcherButtonProps.onSelectCamera}
-                      label={strings.localVideoCameraSwitcherLabel}
-                    />
-                  )
+                localCameraCycleButton(localVideoCameraCycleButtonProps)
               }
               <StreamMedia videoStreamElement={localVideoStream.renderElement} />
             </>
