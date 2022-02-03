@@ -19,7 +19,6 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
-import { ChatMessage } from '@azure/communication-chat';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -104,7 +103,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
@@ -119,31 +117,12 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     };
   }, [meetingAdapter]);
 
-  useEffect(() => {
-    const incrementUnreadtChatMessagesCount = (event: { message: ChatMessage }): void => {
-      if (!showChat && event.message.senderDisplayName !== '') {
-        if (event.message.type === 'text' || event.message.type === 'html') {
-          setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
-        }
-      }
-    };
-    meetingAdapter.on('messageReceived', incrementUnreadtChatMessagesCount);
-
-    return () => {
-      meetingAdapter.off('messageReceived', incrementUnreadtChatMessagesCount);
-    };
-  }, [meetingAdapter, setUnreadChatMessagesCount, showChat, unreadChatMessagesCount]);
-
   const closePane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
   }, []);
 
   const toggleChat = useCallback(() => {
-    // When the chat pane is opened, mark all chat messages as read
-    if (!showChat) {
-      setUnreadChatMessagesCount(0);
-    }
     setShowPeople(false);
     setShowChat(!showChat);
   }, [showChat]);
@@ -201,6 +180,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <MeetingCallControlBar
             callAdapter={callAdapter}
+            chatAdapter={chatProps.adapter}
             chatButtonChecked={showChat}
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
@@ -208,7 +188,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
             callControls={props.callControls}
-            numberOfUnreadMessages={unreadChatMessagesCount}
           />
         </ChatAdapterProvider>
       )}

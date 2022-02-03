@@ -4,50 +4,24 @@
 import React from 'react';
 import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
-import { NotificationIcon } from './NotificationIcon';
-import { IStackStyles, Stack } from '@fluentui/react';
-import { ChatButtonContainerStyles } from './styles/MeetingCompositeStyles';
+
+const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
+const onRenderOffIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />;
 
 /**
  * @private
  */
-export interface ChatButtonProps extends ControlBarButtonProps {
-  unreadMessageCount: number;
-}
-/**
- * @private
- */
-export const ChatButton = (props: ChatButtonProps): JSX.Element => {
+export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
   const strings = { label: props.label, ...props.strings };
-  const { unreadMessageCount } = props;
-
-  const onRenderOnIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
-  const onRenderOffIcon = (): JSX.Element => {
-    return (
-      <Stack styles={chatNotificationContainerStyles}>
-        {unreadMessageCount > 0 && <NotificationIcon chatMessagesCount={unreadMessageCount} />}
-        <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
-      </Stack>
-    );
-  };
 
   return (
-    <Stack styles={ChatButtonContainerStyles}>
-      <ControlBarButton
-        {...props}
-        labelKey={'chatButtonLabelKey'}
-        strings={strings}
-        onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
-        onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
-        onClick={props.onClick}
-      />
-    </Stack>
+    <ControlBarButton
+      {...props}
+      labelKey={'chatButtonLabelKey'}
+      strings={strings}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
+      onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
+      onClick={props.onClick}
+    />
   );
-};
-
-const chatNotificationContainerStyles: IStackStyles = {
-  root: {
-    display: 'inline',
-    position: 'relative'
-  }
 };
