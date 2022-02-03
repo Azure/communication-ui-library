@@ -97,9 +97,9 @@ export class FileSharingAdapter implements FileUploadAdapter {
   }
 
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.fileUploads = fileUploads;
-    this.context.setFileUploads(fileUploads);
-    fileUploads.forEach(this.subscribeAllEvents);
+    this.fileUploads = this.fileUploads.concat(fileUploads);
+    this.context.setFileUploads(this.fileUploads);
+    this.fileUploads.forEach(this.subscribeAllEvents);
   }
 
   clearFileUploads(): void {
