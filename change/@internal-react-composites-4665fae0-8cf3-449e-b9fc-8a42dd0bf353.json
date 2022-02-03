@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Added MeetingCompositeOptions type to the meetings composite.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

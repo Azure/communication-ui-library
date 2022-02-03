@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost.",
-  "packageName": "@internal/react-components",
-  "email": "kaurprabhjot@microsoft.com",
-  "dependentChangeType": "patch"
-}
