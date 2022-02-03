@@ -41,7 +41,6 @@ export const ChatButton = (props: ChatButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
         onClick={props.onClick}
       />
-      {}
     </Stack>
   );
 };
