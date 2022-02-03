@@ -289,6 +289,8 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
+// Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
+//
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & {
     [property in keyof FileUploadAdapter]: FileUploadAdapter[property];
