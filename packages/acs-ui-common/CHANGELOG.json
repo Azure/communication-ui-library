@@ -2,6 +2,39 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 23:18:53 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "883659f7c75d212aa9f1493f40c995e91d01d3f9",
+            "comment": "Remove dependencies of tscc for conditional build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "e8ca86750c4548dd2796638eae88f6188017d39b",
+            "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:09 GMT",
       "tag": "@internal/acs-ui-common_v1.0.1",
       "version": "1.0.1",

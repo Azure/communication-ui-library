@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

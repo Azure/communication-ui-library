@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "- Add a separate folder for stable api review - Add `build:all` script for easy api generating",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
