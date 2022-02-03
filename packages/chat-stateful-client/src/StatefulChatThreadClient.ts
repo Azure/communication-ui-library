@@ -105,6 +105,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListParticipants(chatThreadClient, this._context);
       }
       case 'listReadReceipts': {
+        // check here
         return createDecoratedListReadReceipts(chatThreadClient, this._context);
       }
       case 'removeParticipant': {

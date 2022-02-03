@@ -757,11 +757,11 @@ export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps
 }
 
 // @public
-export type ReadReceipt = {
-    senderId: string;
+export interface ReadReceipt {
     chatMessageId: string;
     readOn: Date;
-};
+    senderId: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
