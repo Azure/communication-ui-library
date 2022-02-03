@@ -18,3 +18,14 @@ export const compositeOuterContainerStyles: IStackStyles = {
     flexWrap: 'wrap'
   }
 };
+
+/**
+ * Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
+ * this requires the parent to have `position relative`
+ * @private
+ */
+export const ChatButtonContainerStyles: IStackStyles = {
+  root: {
+    position: 'relative'
+  }
+};
