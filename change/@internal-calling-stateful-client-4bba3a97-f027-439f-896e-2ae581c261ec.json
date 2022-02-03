@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove dependencies of tscc for conditional build",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

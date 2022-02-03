@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Moved computevariant function to utils, added unit testing",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}
