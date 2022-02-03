@@ -33,8 +33,12 @@ import { AdapterError } from '../../common/adapters';
 import { FileSharingAdapter } from './FileSharingAdapter';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { ObservableFileUpload } from '../file-sharing';
+import { FileUploadAdapter } from '..';
 
-/** Context of Chat, which is a centralized context for all state updates */
+/**
+ * Context of Chat, which is a centralized context for all state updates
+ * @private
+ */
 export class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;
@@ -103,7 +107,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  private fileSharingAdapter: FileSharingAdapter;
+  private fileSharingAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -191,12 +195,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetadata() };
+      if (this.fileSharingAdapter.getFileSharingMetadata) {
+        options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetadata() };
+      }
 
       await this.handlers.onSendMessage(content, options);
 
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      this.fileSharingAdapter.clearFileUploads();
+      /**
+       * All the current uploads need to be clear from the state after a message has been sent.
+       * This ensures that any component rendering these file uploads doesn't continue to do so.
+       * This also cleans the state for new file uploads with a fresh message.
+       */
+      this.fileSharingAdapter.clearFileUploads && this.fileSharingAdapter.clearFileUploads();
     });
   }
 
@@ -242,17 +253,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.fileSharingAdapter.registerFileUploads(fileUploads);
+    this.fileSharingAdapter.registerFileUploads && this.fileSharingAdapter.registerFileUploads(fileUploads);
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   clearFileUploads(): void {
-    this.fileSharingAdapter.clearFileUploads();
+    this.fileSharingAdapter.clearFileUploads && this.fileSharingAdapter.clearFileUploads();
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   cancelFileUpload(id: string): void {
-    this.fileSharingAdapter.cancelFileUpload(id);
+    this.fileSharingAdapter.cancelFileUpload && this.fileSharingAdapter.cancelFileUpload(id);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

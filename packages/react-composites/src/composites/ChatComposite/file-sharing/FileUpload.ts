@@ -25,6 +25,7 @@ export interface FileMetadata {
 }
 
 /**
+ * Contains the state attibutes of a file upload like name, progress etc.
  * @beta
  */
 export interface FileUploadState {
@@ -35,6 +36,7 @@ export interface FileUploadState {
 
   /**
    * Filename extracted from the {@link File} object.
+   * This attribute is used to render the filename if `metadata.name` is not available.
    */
   filename: string;
 
@@ -67,7 +69,6 @@ export interface FileUploadManager {
   file: File;
   /**
    * Update the progress of the upload.
-   * Emits the `uploadProgressed` event.
    *
    * @param value - number between 0 and 1
    */
@@ -91,7 +92,7 @@ export interface FileUploadManager {
  */
 export interface ObservableFileUpload extends FileUploadEventEmitter {
   /**
-   * UNiwue identifier for the file upload.
+   * Unique identifier for the file upload.
    */
   id: string;
   /**
@@ -110,11 +111,11 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   public id: string;
   public file: File;
 
-  constructor(file: File) {
+  constructor(file: File, maxListeners = 50) {
     this.id = nanoid();
     this.file = file;
     this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(100);
+    this._emitter.setMaxListeners(maxListeners);
   }
 
   progressUpload(value: number): void {
@@ -132,6 +133,11 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   on(event: 'uploadProgressed', listener: UploadProgressListener): void;
   on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
   on(event: 'uploadFailed', listener: UploadFailedListener): void;
+  /**
+   * File upload event subscriber.
+   * @param event - {@link FileUploadEvents}
+   * @param listener - {@link FileUploadEventListener}
+   */
   on(event: FileUploadEvents, listener: FileUploadEventListener): void {
     this._emitter.addListener(event, listener);
   }
@@ -139,6 +145,11 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   off(event: 'uploadProgressed', listener: UploadProgressListener): void;
   off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
   off(event: 'uploadFailed', listener: UploadFailedListener): void;
+  /**
+   * File upload event unsubscriber.
+   * @param event - {@link FileUploadEvents}
+   * @param listener - {@link FileUploadEventListener}
+   */
   off(event: FileUploadEvents, listener: FileUploadEventListener): void {
     this._emitter.removeListener(event, listener);
   }
@@ -190,13 +201,6 @@ export interface FileUploadEventEmitter {
   on(event: 'uploadFailed', listener: UploadFailedListener): void;
 
   /**
-   * File upload event subscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
-   */
-  on(event: FileUploadEvents, listener: FileUploadEventListener): void;
-
-  /**
    * Unsubscriber function for `uploadProgressed` event.
    */
   off(event: 'uploadProgressed', listener: UploadProgressListener): void;
@@ -208,10 +212,4 @@ export interface FileUploadEventEmitter {
    * Unsubscriber function for `uploadFailed` event.
    */
   off(event: 'uploadFailed', listener: UploadFailedListener): void;
-  /**
-   * File upload event unsubscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
-   */
-  off(event: FileUploadEvents, listener: FileUploadEventListener): void;
 }

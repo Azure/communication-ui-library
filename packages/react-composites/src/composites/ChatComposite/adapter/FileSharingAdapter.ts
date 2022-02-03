@@ -19,6 +19,7 @@ export interface FileUploadAdapter {
   registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
   clearFileUploads?: () => void;
   cancelFileUpload?: (id: string) => void;
+  getFileSharingMetadata?: () => FileSharingMetadata;
 }
 
 /**

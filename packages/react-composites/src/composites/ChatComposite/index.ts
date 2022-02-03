@@ -31,8 +31,6 @@ export * from './Strings';
 export type {
   FileMetadata,
   FileUploadEventEmitter,
-  FileUploadEventListener,
-  FileUploadEvents,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
