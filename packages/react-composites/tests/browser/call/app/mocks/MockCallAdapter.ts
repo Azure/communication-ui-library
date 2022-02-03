@@ -29,10 +29,16 @@ export class MockCallAdapter implements CallAdapter {
         Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
         initialState.call.remoteParticipants = remoteParticipants;
       }
-      if (testState.isScreenSharing) {
+      if (testState?.isScreenSharing) {
         initialState.call.isScreenSharingOn = true;
         const screenShareStream: LocalVideoStreamState = createLocalScreenShareStream();
         initialState.call.localVideoStreams = [screenShareStream];
+      }
+      if (testState?.diagnostics) {
+        initialState.call.diagnostics = {
+          network: { latest: { ...initialState.call.diagnostics.network.latest, ...testState.diagnostics?.network } },
+          media: { latest: { ...initialState.call.diagnostics.media.latest, ...testState.diagnostics?.media } }
+        };
       }
     }
 
