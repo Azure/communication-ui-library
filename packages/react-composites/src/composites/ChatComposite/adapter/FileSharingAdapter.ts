@@ -10,7 +10,7 @@ import { ChatAdapterState } from './ChatAdapter';
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
  */
-export type FileSharingUiState = Record<string, FileUploadState>;
+export type FileUploadsUiState = Record<string, FileUploadState>;
 
 /**
  * @beta
@@ -19,7 +19,6 @@ export interface FileUploadAdapter {
   registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
   clearFileUploads?: () => void;
   cancelFileUpload?: (id: string) => void;
-  getFileSharingMetadata?: () => FileSharingMetadata;
 }
 
 /**
@@ -118,21 +117,6 @@ export class FileSharingAdapter implements FileUploadAdapter {
     this.deleteFileUpload(id);
   }
 
-  getFileSharingMetadata(): FileSharingMetadata {
-    const fileMetadata: FileMetadata[] = [];
-    const fileUploads = this.context.getFileUploads();
-    if (fileUploads) {
-      Object.keys(fileUploads).forEach((key) => {
-        const file = fileUploads[key];
-        if (file.metadata) {
-          fileMetadata.push(file.metadata);
-        }
-      });
-    }
-
-    return { fileSharingMetadata: JSON.stringify(fileMetadata) };
-  }
-
   private fileUploadProgressListener(id: string, progress: number): void {
     this.context.updateFileUpload(id, { progress });
   }
@@ -157,3 +141,21 @@ export class FileSharingAdapter implements FileUploadAdapter {
     fileUpload?.off('uploadFailed', this.fileUploadFailedListener);
   }
 }
+
+/**
+ * @param fileUploadUiState {@link FileUploadsUiState}
+ * @private
+ */
+export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUploadsUiState): FileSharingMetadata => {
+  const fileMetadata: FileMetadata[] = [];
+  if (fileUploads) {
+    Object.keys(fileUploads).forEach((key) => {
+      const file = fileUploads[key];
+      if (file.metadata) {
+        fileMetadata.push(file.metadata);
+      }
+    });
+  }
+
+  return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+};

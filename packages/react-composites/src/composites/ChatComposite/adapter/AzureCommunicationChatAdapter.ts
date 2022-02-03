@@ -30,10 +30,13 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileSharingAdapter } from './FileSharingAdapter';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { ObservableFileUpload } from '../file-sharing';
-import { FileUploadAdapter } from '..';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import {
+  FileUploadAdapter,
+  FileSharingAdapter,
+  convertFileUploadsUiStateToMessageMetadata
+} from './FileSharingAdapter';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -195,9 +198,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      if (this.fileSharingAdapter.getFileSharingMetadata) {
-        options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetadata() };
-      }
+      options.metadata = {
+        ...options.metadata,
+        ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
+      };
 
       await this.handlers.onSendMessage(content, options);
 

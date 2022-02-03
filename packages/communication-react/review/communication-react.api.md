@@ -551,7 +551,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    fileUploads?: FileSharingUiState;
+    fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -665,7 +665,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     messageType: 'chat';
-    // (undocumented)
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
@@ -1254,9 +1253,6 @@ export interface FileSharingOptions {
     uploadHandler: FileUploadHandler;
 }
 
-// @beta
-export type FileSharingUiState = Record<string, FileUploadState>;
-
 // @beta (undocumented)
 export interface FileUploadAdapter {
     // (undocumented)
@@ -1272,18 +1268,10 @@ export interface FileUploadEventEmitter {
     off(event: 'uploadProgressed', listener: UploadProgressListener): void;
     off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
     off(event: 'uploadFailed', listener: UploadFailedListener): void;
-    off(event: FileUploadEvents, listener: FileUploadEventListener): void;
     on(event: 'uploadProgressed', listener: UploadProgressListener): void;
     on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
     on(event: 'uploadFailed', listener: UploadFailedListener): void;
-    on(event: FileUploadEvents, listener: FileUploadEventListener): void;
 }
-
-// @beta
-export type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
-
-// @beta
-export type FileUploadEvents = 'uploadProgressed' | 'uploadCompleted' | 'uploadFailed';
 
 // @beta
 export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
@@ -1296,7 +1284,7 @@ export interface FileUploadManager {
     progressUpload: (value: number) => void;
 }
 
-// @beta (undocumented)
+// @beta
 export interface FileUploadState {
     errorMessage?: string;
     filename: string;
@@ -1304,6 +1292,9 @@ export interface FileUploadState {
     metadata?: FileMetadata;
     progress: number;
 }
+
+// @beta
+export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;

@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadAdapter, FileSharingUiState } from './FileSharingAdapter';
+import { FileUploadAdapter, FileUploadsUiState } from './FileSharingAdapter';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -21,10 +21,10 @@ export type ChatAdapterUiState = {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileSharingUiState}
+   * Array of type {@link FileUploadsUiState}
    * @beta
    */
-  fileUploads?: FileSharingUiState;
+  fileUploads?: FileUploadsUiState;
 };
 
 /**
