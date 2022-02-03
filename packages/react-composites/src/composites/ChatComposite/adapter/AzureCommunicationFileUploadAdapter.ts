@@ -24,7 +24,7 @@ export interface FileUploadAdapter {
 /**
  * @internal
  */
-class FileSharingContext {
+class FileUploadContext {
   private chatContext: ChatContext;
 
   constructor(chatContext: ChatContext) {
@@ -80,12 +80,12 @@ class FileSharingContext {
 /**
  * @internal
  */
-export class FileSharingAdapter implements FileUploadAdapter {
-  private context: FileSharingContext;
+export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
+  private context: FileUploadContext;
   private fileUploads: ObservableFileUpload[] = [];
 
   constructor(chatContext: ChatContext) {
-    this.context = new FileSharingContext(chatContext);
+    this.context = new FileUploadContext(chatContext);
   }
 
   private findFileUpload(id: string): ObservableFileUpload | undefined {

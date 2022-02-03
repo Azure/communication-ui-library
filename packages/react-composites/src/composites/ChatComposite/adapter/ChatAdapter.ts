@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadAdapter, FileUploadsUiState } from './FileSharingAdapter';
+import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.

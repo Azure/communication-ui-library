@@ -34,9 +34,9 @@ import { ObservableFileUpload } from '../file-sharing';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import {
   FileUploadAdapter,
-  FileSharingAdapter,
+  AzureCommunicationFileUploadAdapter,
   convertFileUploadsUiStateToMessageMetadata
-} from './FileSharingAdapter';
+} from './AzureCommunicationFileUploadAdapter';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -110,7 +110,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  private fileSharingAdapter: FileUploadAdapter;
+  private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -120,7 +120,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    this.fileSharingAdapter = new FileSharingAdapter(this.context);
+    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -211,7 +211,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
        * This ensures that any component rendering these file uploads doesn't continue to do so.
        * This also cleans the state for new file uploads with a fresh message.
        */
-      this.fileSharingAdapter.clearFileUploads && this.fileSharingAdapter.clearFileUploads();
+      this.fileUploadAdapter.clearFileUploads && this.fileUploadAdapter.clearFileUploads();
     });
   }
 
@@ -257,17 +257,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.fileSharingAdapter.registerFileUploads && this.fileSharingAdapter.registerFileUploads(fileUploads);
+    this.fileUploadAdapter.registerFileUploads && this.fileUploadAdapter.registerFileUploads(fileUploads);
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   clearFileUploads(): void {
-    this.fileSharingAdapter.clearFileUploads && this.fileSharingAdapter.clearFileUploads();
+    this.fileUploadAdapter.clearFileUploads && this.fileUploadAdapter.clearFileUploads();
   }
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   cancelFileUpload(id: string): void {
-    this.fileSharingAdapter.cancelFileUpload && this.fileSharingAdapter.cancelFileUpload(id);
+    this.fileUploadAdapter.cancelFileUpload && this.fileUploadAdapter.cancelFileUpload(id);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
