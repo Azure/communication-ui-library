@@ -108,7 +108,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
         <TextField
-          autoFocus={props.autoFocus === 'sendBoxTextField'}
+          autoFocus={false}
           data-ui-id={dataUiId}
           multiline
           autoAdjustHeight

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack, Icon } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -142,7 +142,37 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     files.push(new FileUpload(new File([], 'abc.pdf')));
     return (
       <FileCardGroup>
-        <FileCard fileName={'abc'} progress={0.5} fileExtension={'pdf'} />
+        <FileCard
+          fileName={'abc.pdf'}
+          progress={0.5}
+          fileExtension={'abc.pdf'}
+          actionIcon={<Icon iconName="Cancel" />}
+        />
+        <FileCard
+          fileName={'abc.pdf'}
+          progress={0.5}
+          fileExtension={'abc.pdf'}
+          actionIcon={<Icon iconName="Cancel" />}
+        />
+        <FileCard
+          fileName={'abc.pdf'}
+          progress={0.5}
+          fileExtension={'abc.pdf'}
+          actionIcon={<Icon iconName="Cancel" />}
+        />
+        <FileCard
+          fileName={'abc.pdf'}
+          progress={0.5}
+          fileExtension={'abc.pdf'}
+          actionIcon={<Icon iconName="Cancel" />}
+        />
+        <FileCard
+          fileName={'abc.pdf'}
+          progress={0.5}
+          fileExtension={'abc.pdf'}
+          actionIcon={<Icon iconName="Cancel" />}
+        />
+        <FileCard fileName={'abc.pdf'} progress={0.5} fileExtension={'.png'} actionIcon={<Icon iconName="Cancel" />} />
       </FileCardGroup>
     );
   };

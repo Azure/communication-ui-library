@@ -63,6 +63,8 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
     },
     wrapper: {},
     fieldGroup: {
+      outline: 'none',
+      border: 'none',
       height: 'auto',
       minHeight: '0',
       borderRadius: '0.25rem',

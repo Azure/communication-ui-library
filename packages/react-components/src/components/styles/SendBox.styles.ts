@@ -23,6 +23,26 @@ export const sendBoxStyleSet = {
 /**
  * @private
  */
+export const sendBoxStyleMain = mergeStyles({
+  padding: '0rem',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flexStart',
+  border: '1px solid',
+  maxHeight: '200px',
+  overflowX: 'hidden',
+  overflowY: 'auto',
+  borderRadius: '0.25rem',
+  borderColor: 'grey',
+  borderStyle: 'solid',
+  ':hover': { borderColor: '#0078D4' },
+  ':active': { borderColor: '#0078D4' },
+  ':after': { borderColor: '#0078D4', borderRadius: '0.25rem' }
+});
+
+/**
+ * @private
+ */
 export const sendBoxStyle = mergeStyles({
   paddingRight: '2rem'
 });
@@ -43,4 +63,12 @@ export const sendIconStyle = mergeStyles({
   width: '1.25rem',
   height: '1.25rem',
   margin: 'auto'
+});
+
+/**
+ * @private
+ */
+export const fileCardBoxStyle = mergeStyles({
+  width: '100%',
+  padding: '0.50rem'
 });

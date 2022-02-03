@@ -3,7 +3,14 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
-import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
+import {
+  sendBoxStyle,
+  sendBoxStyleSet,
+  sendButtonStyle,
+  sendIconStyle,
+  fileCardBoxStyle,
+  sendBoxStyleMain
+} from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -206,44 +213,48 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <InputBoxComponent
-      autoFocus={autoFocus}
-      data-ui-id={ids.sendboxTextField}
-      inlineChildren={true}
-      disabled={disabled}
-      errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-      textFieldRef={sendTextFieldRef}
-      id="sendbox"
-      inputClassName={sendBoxStyle}
-      placeholderText={strings.placeholderText}
-      textValue={textValue}
-      onChange={setText}
-      onKeyDown={() => {
-        onTyping && onTyping();
-      }}
-      onEnterKeyDown={() => {
-        sendMessageOnClick();
-      }}
-      styles={mergedStyles}
-      supportNewline={supportNewline}
-      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-    >
-      {
-        /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        props.onRenderAttachedFiles && props.onRenderAttachedFiles()
-      }
-      <InputBoxButton
-        onRenderIcon={onRenderSendIcon}
-        onClick={(e) => {
-          if (!textValueOverflow) {
-            sendMessageOnClick();
-          }
-          e.stopPropagation();
+    <div className={sendBoxStyleMain}>
+      <InputBoxComponent
+        autoFocus={autoFocus}
+        data-ui-id={ids.sendboxTextField}
+        inlineChildren={true}
+        disabled={disabled}
+        errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+        textFieldRef={sendTextFieldRef}
+        id="sendbox"
+        inputClassName={sendBoxStyle}
+        placeholderText={strings.placeholderText}
+        textValue={textValue}
+        onChange={setText}
+        onKeyDown={() => {
+          onTyping && onTyping();
         }}
-        id={'sendIconWrapper'}
-        className={mergedSendButtonStyle}
-        ariaLabel={localeStrings.sendButtonAriaLabel}
-      />
-    </InputBoxComponent>
+        onEnterKeyDown={() => {
+          sendMessageOnClick();
+        }}
+        styles={mergedStyles}
+        supportNewline={supportNewline}
+        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+      >
+        <InputBoxButton
+          onRenderIcon={onRenderSendIcon}
+          onClick={(e) => {
+            if (!textValueOverflow) {
+              sendMessageOnClick();
+            }
+            e.stopPropagation();
+          }}
+          id={'sendIconWrapper'}
+          className={mergedSendButtonStyle}
+          ariaLabel={localeStrings.sendButtonAriaLabel}
+        />
+      </InputBoxComponent>
+      <div className={fileCardBoxStyle}>
+        {
+          /* @conditional-compile-remove-from(stable): FILE_SHARING */
+          props.onRenderAttachedFiles && props.onRenderAttachedFiles()
+        }
+      </div>
+    </div>
   );
 };
