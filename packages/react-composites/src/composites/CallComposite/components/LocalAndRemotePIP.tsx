@@ -10,7 +10,6 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-/* @conditional-compile-remove-from(stable) meeting-composite */
 import { CompositeLocale, useLocale } from '../../localization';
 
 // ariaLabel is remove in stable builds by beta compile, remove when meeting-composite
