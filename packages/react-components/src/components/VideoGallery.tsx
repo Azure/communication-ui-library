@@ -47,10 +47,8 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove-from(stable) */
-import { OptionsDevice } from './DevicesButton';
 /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
-import { LocalVideoCameraCycleButton } from './VideoGallery/LocalVideoCameraButton';
+import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -145,21 +143,11 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite Local_Camera_switcher */
   /**
-   * Camera that is shown as currently selected
+   * Camera control information for button to switch cameras.
    */
-  selectedCamera?: OptionsDevice;
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  /**
-   * Callback when a camera is selected
-   */
-  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  /**
-   * Available cameras for selection
-   */
-  cameras?: OptionsDevice[];
+  localVideoCameraSwitcherButtonProps?: LocalVideoCameraCycleButtonProps;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -193,7 +181,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
-    showCamerSwitcherInLocalPreview
+    showCamerSwitcherInLocalPreview,
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+    localVideoCameraSwitcherButtonProps
   } = props;
 
   const ids = useIdentifiers();
@@ -258,13 +248,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               {
                 /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
                 showCamerSwitcherInLocalPreview &&
-                  props.cameras !== undefined &&
-                  props.selectedCamera !== undefined &&
-                  props.onSelectCamera !== undefined && (
+                  localVideoCameraSwitcherButtonProps?.cameras !== undefined &&
+                  localVideoCameraSwitcherButtonProps?.selectedCamera !== undefined &&
+                  localVideoCameraSwitcherButtonProps?.onSelectCamera !== undefined && (
                     <LocalVideoCameraCycleButton
-                      cameras={props.cameras}
-                      selectedCamera={props.selectedCamera}
-                      onSelectCamera={props.onSelectCamera}
+                      cameras={localVideoCameraSwitcherButtonProps.cameras}
+                      selectedCamera={localVideoCameraSwitcherButtonProps.selectedCamera}
+                      onSelectCamera={localVideoCameraSwitcherButtonProps.onSelectCamera}
                       label={strings.localVideoCameraSwitcherLabel}
                     />
                   )

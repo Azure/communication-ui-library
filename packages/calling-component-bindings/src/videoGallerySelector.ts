@@ -17,8 +17,6 @@ import {
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 import { checkIsSpeaking } from './SelectorUtils';
-/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-import { getDeviceManager } from './baseSelectors';
 import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
@@ -53,9 +51,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIsScreenSharingOn,
     getDisplayName,
     getIdentifier,
-    getDominantSpeakers,
-    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-    getDeviceManager
+    getDominantSpeakers
   ],
   (
     screenShareRemoteParticipantId,
@@ -65,9 +61,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isScreenSharingOn,
     displayName: string | undefined,
     identifier: string,
-    dominantSpeakers,
-    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-    deviceManager
+    dominantSpeakers
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -101,11 +95,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         }
       },
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(remoteParticipants),
-      dominantSpeakers: dominantSpeakerIds,
-      /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-      cameras: deviceManager.cameras,
-      /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-      selectedCamera: deviceManager.selectedCamera
+      dominantSpeakers: dominantSpeakerIds
     };
   }
 );

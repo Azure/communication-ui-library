@@ -460,6 +460,21 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
+// Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButton" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface LocalVideoCameraCycleButtonProps {
+    cameras?: OptionsDevice[];
+    label?: string;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+}
+
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
@@ -901,10 +916,11 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
-    cameras?: OptionsDevice[];
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
+    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraSwitcherButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @internal
+    localVideoCameraSwitcherButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
@@ -914,10 +930,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
-    selectedCamera?: OptionsDevice;
     showCamerSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
