@@ -45,5 +45,3 @@ export type {
 export type { FileSharingOptions } from './ChatScreen';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 export type { FileSharingUiState, FileUploadAdapter } from './adapter/FileSharingAdapter';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-// export type { ChatContext } from './adapter/AzureCommunicationChatAdapter';
