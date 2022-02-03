@@ -129,10 +129,6 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.emit('uploadFailed', message);
   }
 
-  // truncatedName(length = 15): string {
-  //   return this.file.name.substring(0, length).trimEnd() + (this.file.name.length > length ? '... ' : '');
-  // }
-
   on(event: 'uploadProgressed', listener: UploadProgressListener): void;
   on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
   on(event: 'uploadFailed', listener: UploadFailedListener): void;
