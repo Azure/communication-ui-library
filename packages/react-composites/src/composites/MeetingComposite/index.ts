@@ -10,7 +10,10 @@ export type {
   MeetingAdapterSubscriptions
 } from './adapter/MeetingAdapter';
 
-export type { AzureCommunicationMeetingAdapterArgs } from './adapter/AzureCommunicationMeetingAdapter';
+export type {
+  AzureCommunicationMeetingAdapterArgs,
+  CallAndChatMeetingArgs
+} from './adapter/AzureCommunicationMeetingAdapter';
 export { createAzureCommunicationMeetingAdapter } from './adapter/AzureCommunicationMeetingAdapter';
 
 export type {

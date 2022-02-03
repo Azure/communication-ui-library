@@ -10,7 +10,7 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
-import { createCallLocator } from './snippets/Server.snippet';
+import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
 const BasicStory = (args, context): JSX.Element => {
@@ -19,14 +19,23 @@ const BasicStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (args.token && args.userId && args.endpointUrl && args.displayName) {
-        const newProps = await createCallLocator(
+        const { callLocator, chatThreadId } = await createCallWithChat(
           args.token,
           args.userId,
           args.endpointUrl,
-          args.displayName,
-          args.meetingCallControlOptions
+          args.displayName
         );
-        setMeetingProps(newProps);
+        setMeetingProps({
+          userId: { communicationUserId: args.userId },
+          token: args.token,
+          displayName: args.displayName,
+          endpointUrl: args.endpointUrl,
+          meetingArgs: {
+            callLocator,
+            chatThreadId
+          },
+          meetingCallControlOptions: args.meetingCallControlOptions
+        });
       } else {
         setMeetingProps(undefined);
       }

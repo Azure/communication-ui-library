@@ -37,6 +37,7 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -388,6 +389,16 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 }
 
 /**
+ * Arguments for use in {@link createAzureCommunicationMeetingAdapter} to join a Call with an associated Chat thread.
+ *
+ * @beta
+ */
+export interface CallAndChatMeetingArgs {
+  chatThreadId: string;
+  callLocator: GroupCallLocator;
+}
+
+/**
  * Arguments for {@link createAzureCommunicationMeetingAdapter}
  *
  * @beta
@@ -397,8 +408,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  chatThreadId: string;
-  callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+  meetingArgs: CallAndChatMeetingArgs | TeamsMeetingLinkLocator;
 };
 
 /**
@@ -412,23 +422,26 @@ export const createAzureCommunicationMeetingAdapter = async ({
   displayName,
   credential,
   endpoint,
-  chatThreadId,
-  callLocator
+  meetingArgs
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const callAdapter = await createAzureCommunicationCallAdapter({
+  const locator = 'meetingLink' in meetingArgs ? meetingArgs : meetingArgs.callLocator;
+  const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callLocator
+    locator
   });
 
-  const chatAdapter = await createAzureCommunicationChatAdapter({
+  const threadId =
+    'meetingLink' in meetingArgs ? getChatThreadFromTeamsLink(meetingArgs.meetingLink) : meetingArgs.chatThreadId;
+  const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,
     displayName,
     credential,
-    threadId: chatThreadId
+    threadId
   });
 
+  const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
 };

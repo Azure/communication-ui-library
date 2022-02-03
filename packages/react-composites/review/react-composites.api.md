@@ -99,8 +99,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    chatThreadId: string;
-    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+    meetingArgs: CallAndChatMeetingArgs | TeamsMeetingLinkLocator;
 };
 
 // @public
@@ -187,6 +186,14 @@ export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
 };
+
+// @beta
+export interface CallAndChatMeetingArgs {
+    // (undocumented)
+    callLocator: GroupCallLocator;
+    // (undocumented)
+    chatThreadId: string;
+}
 
 // @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
@@ -459,7 +466,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, meetingArgs }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;

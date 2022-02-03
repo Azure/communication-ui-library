@@ -1,6 +1,7 @@
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  CallAndChatMeetingArgs,
   MeetingCallControlOptions,
   MeetingAdapter,
   MeetingComposite,
@@ -14,8 +15,7 @@ export type MeetingExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
-  locator: GroupCallLocator | TeamsMeetingLinkLocator;
-  threadId: string;
+  meetingArgs: TeamsMeetingLinkLocator | CallAndChatMeetingArgs;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   meetingCallControlOptions?: boolean | MeetingCallControlOptions;
@@ -34,24 +34,15 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [props.token]);
 
   useEffect(() => {
-    if (
-      props &&
-      credential &&
-      props.locator &&
-      props.displayName &&
-      props.threadId &&
-      props.userId &&
-      props.endpointUrl
-    ) {
+    if (props && credential && props.meetingArgs && props.displayName && props.userId && props.endpointUrl) {
       const createAdapters = async (): Promise<void> => {
         setMeetingAdapter(
           await createAzureCommunicationMeetingAdapter({
             userId: props.userId,
             displayName: props.displayName,
             credential,
-            callLocator: props.locator,
-            endpoint: props.endpointUrl,
-            chatThreadId: props.threadId
+            meetingArgs: props.meetingArgs,
+            endpoint: props.endpointUrl
           })
         );
       };
