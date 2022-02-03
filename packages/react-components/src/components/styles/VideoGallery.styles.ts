@@ -9,7 +9,8 @@ import {
   IStyleFunctionOrObject,
   Theme,
   IStyle,
-  concatStyleSets
+  concatStyleSets,
+  IButtonStyles
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
@@ -149,4 +150,23 @@ export const layerHostStyle: IStyle = {
   overflow: 'hidden',
   // pointer events for layerHost set to none to make descendants interactive
   pointerEvents: 'none'
+};
+
+/**
+ * @private
+ */
+export const localVideoCameraCycleButtonStyles: IButtonStyles = {
+  root: {
+    position: 'absolute',
+    right: '0.2rem',
+    top: '0.2rem',
+    color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
+    zIndex: 2, // shows the button directly over the local video feed.
+    background: 'transparent'
+  },
+  rootFocused: {
+    // styles to remove the unwanted white highlight and blue colour after tapping on button.
+    color: '#FFFFFF',
+    background: 'transparent'
+  }
 };
