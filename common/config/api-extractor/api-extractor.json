@@ -26,10 +26,6 @@
       "ae-forgotten-export": {
         "logLevel": "error",
         "addToApiReportFile": false
-      },
-      "ae-incompatible-release-tags": {
-        "logLevel": "warning",
-        "addToApiReportFile": false
       }
     },
     "tsdocMessageReporting": {
