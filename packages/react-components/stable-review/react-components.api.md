@@ -429,6 +429,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryLeftNavButton: string;
+    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
     participantButtonPeopleMenuItem: string;

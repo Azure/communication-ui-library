@@ -2,6 +2,73 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 23:18:56 GMT",
+      "tag": "@internal/storybook_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "e6663cb4ddd4a73f253c8aa5d00d272b5e9cf4fa",
+            "comment": "update node-forge version declared that has security fix"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "046c1df62687f6386458304f1294f629a9f205f0",
+            "comment": "updated CSS to fix the sbdocs-title class."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "4ab44b83d81e23dbace1e80173ba8fae9e04c0a3",
+            "comment": "Add flavor switch and build variant to the repo"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "630f03cc58eb8b730fc3fccbea46e6e59c5c1c8d",
+            "comment": "Bump package version to 1.0.1"
+          }
+        ],
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "49b6df0070d6bbbf8becd8ac0d3bba238150df7d",
+            "comment": "Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9ff29b02cc5ff791648ef84a2319b93ed2508344",
+            "comment": "Add manual documentation for adapters"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "909114e48f648bd83c3b9080d2e5697586611c48",
+            "comment": "Added entry for endpointUrl in appsettings.json instead of using connectionString twice"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.0.1",
+            "commit": "192c0fc9ba6a08e1877402d565545e3b2aa9d1ae"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8562048c56039b4a0e129098b6b337a5f3927c18",
+            "comment": "fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jan 2022 22:57:10 GMT",
       "tag": "@internal/storybook_v1.0.1",
       "version": "1.0.1",
