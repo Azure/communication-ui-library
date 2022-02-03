@@ -140,6 +140,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }, []);
 
   const toggleChat = useCallback(() => {
+    // When the chat pane is opened, mark all chat messages as read
     if (!showChat) {
       setUnreadChatMessagesCount(0);
     }
