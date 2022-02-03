@@ -44,6 +44,9 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
+export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
+export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
 
