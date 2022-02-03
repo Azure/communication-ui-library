@@ -6,6 +6,7 @@
  */
 export type TestCallingState = {
   remoteParticipants?: TestRemoteParticipant[];
+  isScreenSharing?: boolean;
 };
 
 /**
@@ -16,4 +17,5 @@ export type TestRemoteParticipant = {
   isMuted?: boolean;
   isSpeaking?: boolean;
   isVideoStreamAvailable?: boolean;
+  isScreenSharing?: boolean;
 };
