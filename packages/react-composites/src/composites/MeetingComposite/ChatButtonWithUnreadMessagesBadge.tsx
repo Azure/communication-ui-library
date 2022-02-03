@@ -14,24 +14,24 @@ import { NotificationIcon } from './NotificationIcon';
 /**
  * @private
  */
-export interface ChatButtonLogicWrapperProps extends ControlBarButtonProps {
+export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButtonProps {
   chatAdapter: ChatAdapter;
   isChatPaneVisible: boolean;
 }
 
 /**
+ * Helper function to determine if the message in the event is a valid one from a user.
+ * Display name is used since system messages will not have one.
+ */
+const validNewChatMessage = (message): boolean =>
+  !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
+
+/**
  * @private
  */
-export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonLogicWrapperProps): JSX.Element => {
+export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMessagesBadgeProps): JSX.Element => {
   const { chatAdapter, isChatPaneVisible } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
-
-  /**
-   * Helper function to determine if the message in the event is a valid one from a user.
-   * Display name is used since system messages will not have one.
-   */
-  const validNewChatMessage = (message): boolean =>
-    !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
 
   useEffect(() => {
     if (isChatPaneVisible) {

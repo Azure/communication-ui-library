@@ -15,6 +15,7 @@ import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+
 /**
  * @private
  */
