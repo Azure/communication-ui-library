@@ -3,19 +3,23 @@
 
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { createSelector } from 'reselect';
+import { FileUploadState } from '..';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { getFileUploads, getHaveAllFileUploadsCompleted } from './baseSelectors';
+import { getFileUploads } from './baseSelectors';
 
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @private
  */
-export const fileUploadsSelector = createSelector(
-  [getFileUploads, getHaveAllFileUploadsCompleted],
-  (fileUploads, haveAllFileUploadsCompleted) => {
-    return { files: fileUploads, completed: haveAllFileUploadsCompleted };
+export const fileUploadsSelector = createSelector([getFileUploads], (fileUploads) => {
+  let files: FileUploadState[] = [];
+  let haveAllFileUploadsCompleted: boolean | undefined = undefined;
+  if (fileUploads) {
+    files = Object.keys(fileUploads).map((key) => fileUploads[key]);
+    haveAllFileUploadsCompleted = Object.keys(fileUploads).every((key) => !!fileUploads[key].metadata);
   }
-);
+  return { files: files, completed: haveAllFileUploadsCompleted };
+});
 
 /**
  * Workaround to make this module compile under the `--isolatedModules` flag.

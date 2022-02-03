@@ -3,7 +3,7 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadState } from '../file-sharing';
+import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapter';
 
 /**
  * @private
@@ -14,22 +14,6 @@ export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind 
 /**
  * @private
  */
-export const getFileUploads = (state: ChatAdapterState): FileUploadState[] | undefined => {
-  const fileUploads = state?.fileUploads;
-  if (!fileUploads) {
-    return undefined;
-  }
-  return Object.keys(fileUploads).map((key) => fileUploads[key]);
-};
-
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-/**
- * @private
- */
-export const getHaveAllFileUploadsCompleted = (state: ChatAdapterState): boolean | undefined => {
-  const fileUploads = state?.fileUploads;
-  if (!fileUploads) {
-    return undefined;
-  }
-  return Object.keys(fileUploads).every((key) => !!fileUploads[key].metadata);
+export const getFileUploads = (state: ChatAdapterState): FileUploadsUiState | undefined => {
+  return state?.fileUploads;
 };
