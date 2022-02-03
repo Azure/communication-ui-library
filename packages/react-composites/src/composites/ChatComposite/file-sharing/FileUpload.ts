@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
+import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -110,7 +111,7 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   public id: string;
   public file: File;
 
-  constructor(file: File, maxListeners = 50) {
+  constructor(file: File, maxListeners = _MAX_EVENT_LISTENERS) {
     this.id = nanoid();
     this.file = file;
     this._emitter = new EventEmitter();
