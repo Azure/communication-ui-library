@@ -591,10 +591,10 @@ export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUpload
 
 // @beta
 export interface FileUploadManager {
-    completeUpload: (metadata: FileMetadata) => void;
-    failUpload: (message: string) => void;
     file: File;
-    progressUpload: (value: number) => void;
+    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressed: (value: number) => void;
 }
 
 // @beta

@@ -69,21 +69,20 @@ export interface FileUploadManager {
   file: File;
   /**
    * Update the progress of the upload.
-   *
    * @param value - number between 0 and 1
    */
-  progressUpload: (value: number) => void;
+  notifyUploadProgressed: (value: number) => void;
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
    * @param metadata - {@link FileMetadata}
    */
-  completeUpload: (metadata: FileMetadata) => void;
+  notifyUploadCompleted: (metadata: FileMetadata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
    */
-  failUpload: (message: string) => void;
+  notifyUploadFailed: (message: string) => void;
 }
 
 /**
@@ -118,15 +117,15 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.setMaxListeners(maxListeners);
   }
 
-  progressUpload(value: number): void {
+  notifyUploadProgressed(value: number): void {
     this._emitter.emit('uploadProgressed', value);
   }
 
-  completeUpload(metadata: FileMetadata): void {
+  notifyUploadCompleted(metadata: FileMetadata): void {
     this._emitter.emit('uploadCompleted', metadata);
   }
 
-  failUpload(message: string): void {
+  notifyUploadFailed(message: string): void {
     this._emitter.emit('uploadFailed', message);
   }
 
