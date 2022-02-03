@@ -284,6 +284,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 // @public
 export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff'>> & {
     LocalCameraSwitch?: JSX.Element;
+    ControlBarButtonBadgeIcon?: JSX.Element;
 };
 
 // @public
@@ -596,6 +597,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField' | false;
+    fileSharing?: FileSharingOptions;
 };
 
 // @public
@@ -852,6 +854,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
+    ControlBarButtonBadgeIcon: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
@@ -1044,6 +1047,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
+    ControlBarButtonBadgeIcon: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
@@ -1231,6 +1235,31 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @beta
+export interface FileMetaData {
+    extension: string;
+    name: string;
+    url: string;
+}
+
+// @beta
+export interface FileSharingOptions {
+    accept?: string;
+    multiple?: boolean;
+    uploadHandler: FileUploadHandler;
+}
+
+// @beta
+export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+
+// @beta
+export interface FileUploadManager {
+    completeUpload: (metaData: FileMetaData) => void;
+    failUpload: (message: string) => void;
+    file: File;
+    progressUpload: (value: number) => void;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -1291,6 +1320,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryLeftNavButton: string;
+    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
     participantButtonPeopleMenuItem: string;
@@ -1649,24 +1680,50 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
+export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
+    enableDeviceSelectionMenu?: boolean;
+    microphones?: OptionsDevice[];
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
+    styles?: Partial<MicrophoneButtonStyles>;
 }
 
 // @public
 export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
 };
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
     offLabel: string;
     onLabel: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+}
+
+// @public
+export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
 // @public
@@ -2115,6 +2172,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
+    showCamerSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
