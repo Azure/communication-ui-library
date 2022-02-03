@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Small code modifications for conditional build",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
