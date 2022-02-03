@@ -117,7 +117,7 @@ export class FileSharingAdapter implements FileUploadAdapter {
     this.deleteFileUpload(id);
   }
 
-  getFileSharingMetada(): FileSharingMetadata {
+  getFileSharingMetadata(): FileSharingMetadata {
     const fileMetadata: FileMetadata[] = [];
     const fileUploads = this.context.getFileUploads();
     if (fileUploads) {

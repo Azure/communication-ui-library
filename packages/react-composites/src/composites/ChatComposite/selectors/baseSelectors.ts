@@ -26,7 +26,7 @@ export const getFileUploads = (state: ChatAdapterState): FileUploadState[] | und
 /**
  * @private
  */
-export const getFileUploadsCompleted = (state: ChatAdapterState): boolean | undefined => {
+export const getHaveAllFileUploadsCompleted = (state: ChatAdapterState): boolean | undefined => {
   const fileUploads = state?.fileUploads;
   if (!fileUploads) {
     return undefined;

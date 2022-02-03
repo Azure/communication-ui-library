@@ -19,9 +19,11 @@ export interface FileUploadButtonProps {
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    */
   multiple?: boolean;
-
   /**
    * onChange handler for the file upload button.
+   * Similar to the `onChange` attribute of the `<input type="file" />` element.
+   * Called every time files are selected through the file upload button with a {@link FileList}
+   * of selected files.
    */
   onChange?: (files: FileList | null) => void;
 }

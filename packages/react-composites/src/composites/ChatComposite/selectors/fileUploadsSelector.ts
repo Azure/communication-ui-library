@@ -4,16 +4,16 @@
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { createSelector } from 'reselect';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { getFileUploads, getFileUploadsCompleted } from './baseSelectors';
+import { getFileUploads, getHaveAllFileUploadsCompleted } from './baseSelectors';
 
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @private
  */
 export const fileUploadsSelector = createSelector(
-  [getFileUploads, getFileUploadsCompleted],
-  (fileUploads, fileUploadsCompleted) => {
-    return { files: fileUploads, completed: fileUploadsCompleted };
+  [getFileUploads, getHaveAllFileUploadsCompleted],
+  (fileUploads, haveAllFileUploadsCompleted) => {
+    return { files: fileUploads, completed: haveAllFileUploadsCompleted };
   }
 );
 

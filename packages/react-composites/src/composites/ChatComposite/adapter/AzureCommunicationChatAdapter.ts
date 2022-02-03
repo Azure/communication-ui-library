@@ -191,7 +191,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove-from(stable): FILE_SHARING */
-      options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetada() };
+      options.metadata = { ...options.metadata, ...this.fileSharingAdapter.getFileSharingMetadata() };
 
       await this.handlers.onSendMessage(content, options);
 
