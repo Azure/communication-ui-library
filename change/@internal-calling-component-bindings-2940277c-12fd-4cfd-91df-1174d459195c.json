@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "upgrading calling sdk to use 1.4.1-beta.1",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
