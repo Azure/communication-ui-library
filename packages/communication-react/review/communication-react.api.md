@@ -1379,6 +1379,14 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
+// @beta (undocumented)
+export interface LocalVideoCameraCycleButtonProps {
+    cameras?: OptionsDevice[];
+    label?: string;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+}
+
 // @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
@@ -2160,6 +2168,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
+    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraSwitcherButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraSwitcherButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;

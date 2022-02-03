@@ -465,9 +465,7 @@ export type LocalizationProviderProps = {
 // @internal
 export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
 
-// Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
