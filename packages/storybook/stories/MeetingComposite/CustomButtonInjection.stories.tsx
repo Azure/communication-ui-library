@@ -1,0 +1,80 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { MeetingComposite } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useState, useEffect } from 'react';
+import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
+import { getDocs } from './MeetingCompositeDocs';
+import {
+  MeetingCustomButtonExperience,
+  MeetingCustomButtonExampleProps
+} from './snippets/CustomButtonInjection.snippet';
+import { createCallLocator } from './snippets/Server.snippet';
+import { ConfigHintBanner } from './Utils';
+
+const CustomButtonInjection = (args, context): JSX.Element => {
+  const [meetingProps, setMeetingProps] = useState<MeetingCustomButtonExampleProps>();
+
+  useEffect(() => {
+    const fetchToken = async (): Promise<void> => {
+      if (args.token && args.userId && args.endpointUrl && args.displayName) {
+        const newProps = await createCallLocator(
+          args.token,
+          args.userId,
+          args.endpointUrl,
+          args.displayName,
+          args.meetingCallControlOptions
+        );
+        setMeetingProps(newProps);
+      } else {
+        setMeetingProps(undefined);
+      }
+    };
+    fetchToken();
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.meetingCallControlOptions]);
+
+  return (
+    <>
+      <FloatingSingleLineBetaBanner />
+      <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
+        {meetingProps ? (
+          <MeetingCustomButtonExperience
+            fluentTheme={context.theme}
+            displayCustomButton={args.customButton}
+            {...meetingProps}
+          />
+        ) : (
+          <ConfigHintBanner />
+        )}
+      </Stack>
+    </>
+  );
+};
+
+export const CustomButtonInjectionExample = CustomButtonInjection.bind({});
+
+export default {
+  id: `${COMPOSITE_FOLDER_PREFIX}-meeting-custombuttoninjection`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Custom Button Injection Example`,
+  component: MeetingComposite,
+  argTypes: {
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    endpointUrl: controlsToAdd.endpointUrl,
+    displayName: controlsToAdd.displayName,
+    customButton: controlsToAdd.customButton,
+    // Hiding auto-generated controls
+    ...defaultMeetingCompositeHiddenControls
+  },
+  parameters: {
+    useMaxHeightParent: true,
+    useMaxWidthParent: true,
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;

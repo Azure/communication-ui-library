@@ -8,6 +8,7 @@ import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
+const customButtonInjectionText = require('!!raw-loader!./snippets/CustomButtonInjection.snippet.tsx').default;
 
 const formFactorSnippet = `
 <MeetingComposite formFactor="mobile" />
@@ -63,6 +64,15 @@ export const getDocs: () => JSX.Element = () => {
         theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
         [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
         UI library.
+      </Description>
+
+      <Heading>Custom Button Injection</Heading>
+      <Description>Custom Buttons can be injected into CallComposite using the built in...</Description>
+      <Description>TEXT 2</Description>
+      <Source code={customButtonInjectionText} />
+      <Description>
+        See the [Custom button injection documentation](./?path=/docs/custombuttoninjection--page) to understand how
+        custom buttons can be injected for the related components in this UI library.
       </Description>
 
       <Heading>Joining an existing Meeting</Heading>
