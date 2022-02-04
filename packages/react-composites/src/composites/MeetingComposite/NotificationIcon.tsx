@@ -22,7 +22,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
       return <></>;
     } else {
       return (
-        <Stack aria-label={label} styles={notificationTextStyles(theme)}>
+        <Stack aria-label={label} role={'alert'} styles={notificationTextStyles(theme)}>
           {numberOfMessages < 9 ? <>{numberOfMessages}</> : <>9+</>}
         </Stack>
       );
