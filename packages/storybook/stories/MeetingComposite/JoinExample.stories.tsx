@@ -23,7 +23,7 @@ const JoinExistingMeetingStory = (args, context): JSX.Element => {
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          meetingArgs: { meetingLink: args.teamsMeetingLink }
+          meetingLocator: { meetingLink: args.teamsMeetingLink }
         });
       } else {
         setMeetingProps(undefined);

@@ -43,7 +43,7 @@ function App(): JSX.Element {
         displayName,
         credential,
         endpoint,
-        meetingArgs: {
+        meetingLocator: {
           callLocator: { groupId: groupId },
           chatThreadId: threadId
         }

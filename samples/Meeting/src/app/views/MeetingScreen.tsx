@@ -6,7 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   createAzureCommunicationMeetingAdapter,
   toFlatCommunicationIdentifier,
-  CallAndChatMeetingArgs,
+  CallAndChatLocator,
   MeetingAdapter,
   MeetingAdapterState,
   MeetingComposite
@@ -25,11 +25,11 @@ export interface MeetingScreenProps {
   displayName: string;
   webAppTitle: string;
   endpoint: string;
-  meetingArgs: CallAndChatMeetingArgs | TeamsMeetingLinkLocator;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
 export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, displayName, webAppTitle, endpoint, meetingArgs } = props;
+  const { token, userId, displayName, webAppTitle, endpoint, meetingLocator } = props;
   const [adapter, setAdapter] = useState<MeetingAdapter>();
   const callIdRef = useRef<string>();
   const adapterRef = useRef<MeetingAdapter>();
@@ -45,7 +45,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      if (!userId || !displayName || !meetingArgs || !token || !endpoint) {
+      if (!userId || !displayName || !meetingLocator || !token || !endpoint) {
         return;
       }
 
@@ -54,7 +54,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         endpoint,
-        meetingArgs
+        meetingLocator
       });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
@@ -72,7 +72,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [displayName, token, userId, meetingArgs]);
+  }, [displayName, token, userId, meetingLocator]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

@@ -393,7 +393,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
  *
  * @beta
  */
-export interface CallAndChatMeetingArgs {
+export interface CallAndChatLocator {
   chatThreadId: string;
   callLocator: GroupCallLocator;
 }
@@ -408,7 +408,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  meetingArgs: CallAndChatMeetingArgs | TeamsMeetingLinkLocator;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
@@ -422,9 +422,9 @@ export const createAzureCommunicationMeetingAdapter = async ({
   displayName,
   credential,
   endpoint,
-  meetingArgs
+  meetingLocator
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const locator = 'meetingLink' in meetingArgs ? meetingArgs : meetingArgs.callLocator;
+  const locator = 'meetingLink' in meetingLocator ? meetingLocator : meetingLocator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
@@ -433,7 +433,9 @@ export const createAzureCommunicationMeetingAdapter = async ({
   });
 
   const threadId =
-    'meetingLink' in meetingArgs ? getChatThreadFromTeamsLink(meetingArgs.meetingLink) : meetingArgs.chatThreadId;
+    'meetingLink' in meetingLocator
+      ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
+      : meetingLocator.chatThreadId;
   const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,

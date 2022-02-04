@@ -12,7 +12,7 @@ export type {
 
 export type {
   AzureCommunicationMeetingAdapterArgs,
-  CallAndChatMeetingArgs
+  CallAndChatLocator
 } from './adapter/AzureCommunicationMeetingAdapter';
 export { createAzureCommunicationMeetingAdapter } from './adapter/AzureCommunicationMeetingAdapter';
 
