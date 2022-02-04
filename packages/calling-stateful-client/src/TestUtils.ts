@@ -17,10 +17,10 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  CallFeature,
-  CollectionUpdatedEvent,
-  RecordingInfo
+  CallFeature
 } from '@azure/communication-calling';
+/* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates */
+import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
@@ -95,11 +95,16 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public recordings;
   public emitter = new EventEmitter();
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
+
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates */
+  /** recordingsUpdated event from @azure/communication-calling1.4.1-beta.1 */
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
+
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates */
   off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);

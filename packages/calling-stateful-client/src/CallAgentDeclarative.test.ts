@@ -13,11 +13,10 @@ import {
   RecordingCallFeature,
   StartCallOptions,
   TranscriptionCallFeature,
-  CallFeatureFactory,
-  GroupChatCallLocator,
-  MeetingLocator,
-  RoomLocator
+  CallFeatureFactory
 } from '@azure/communication-calling';
+// @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
+import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -80,9 +79,12 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
@@ -131,9 +133,12 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  // @conditional-compile-remove-from(stable) @azure/communication-calling1.4.1-beta.1 sdk updates
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
