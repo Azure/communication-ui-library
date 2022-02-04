@@ -9,6 +9,10 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
+/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
+/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+import { LocalVideoCameraCycleButton } from '@internal/react-components';
 
 const VideoGalleryStyles = {
   root: {
@@ -44,6 +48,18 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const cameraSwitcherProps = useMemo(() => {
+    return {
+      ...cameraSwitcherCallback,
+      ...cameraSwitcherCameras
+    };
+  }, [cameraSwitcherCallback, cameraSwitcherCameras]);
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -53,8 +69,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
-        /* @conditional-compile-remove-from(stable) */
+        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
         showCamerSwitcherInLocalPreview={props.isMobile}
+        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={(userId, options) => (
           <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
@@ -62,7 +80,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         )}
       />
     );
-  }, [props.isMobile, props.onFetchAvatarPersonaData, videoGalleryProps]);
+  }, [
+    videoGalleryProps,
+    props.isMobile,
+    props.onFetchAvatarPersonaData,
+    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+    cameraSwitcherProps
+  ]);
 
   return VideoGalleryMemoized;
 };
