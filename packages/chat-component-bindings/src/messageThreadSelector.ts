@@ -76,7 +76,8 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     readReceipts: convertedReadReceipts,
-    numParticipants: numParticipants
+    numParticipants: numParticipants,
+    metadata: message.metadata
   };
 };
 

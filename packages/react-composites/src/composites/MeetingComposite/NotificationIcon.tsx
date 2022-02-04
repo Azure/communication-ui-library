@@ -8,20 +8,20 @@ import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useThe
  * @private
  */
 export type NotificationIconProps = {
-  numberOfMessages: number;
+  chatMessagesCount: number;
 };
 /**
  * @private
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
-  const { numberOfMessages } = props;
+  const { chatMessagesCount } = props;
   const theme = useTheme();
   const renderNumber = (numberOfMessages): JSX.Element => {
     if (numberOfMessages < 1) {
       return <></>;
     } else {
       return (
-        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>+9</>}</Stack>
+        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>9+</>}</Stack>
       );
     }
   };
@@ -29,7 +29,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
       <Icon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
-      {renderNumber(numberOfMessages)}
+      {renderNumber(chatMessagesCount)}
     </Stack>
   );
 };

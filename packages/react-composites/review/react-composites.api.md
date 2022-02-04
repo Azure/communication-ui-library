@@ -37,6 +37,7 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberKind } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import type { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -192,10 +193,7 @@ export type CallAdapterUiState = {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff'>> & {
-    LocalCameraSwitch?: JSX.Element;
-    ControlBarButtonBadgeIcon?: JSX.Element;
-};
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
 
 // @public
 export type CallCompositeOptions = {
@@ -288,9 +286,10 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
+// Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
+//
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
-}
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -319,7 +318,7 @@ export interface ChatAdapterThreadManagement {
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
@@ -329,6 +328,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
+    fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -343,9 +343,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>> & {
-    SendBoxAttachFile?: JSX.Element;
-};
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
 
 // @public
 export type ChatCompositeOptions = {
@@ -550,7 +548,7 @@ export interface Disposable {
 }
 
 // @beta
-export interface FileMetaData {
+export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
@@ -563,16 +561,48 @@ export interface FileSharingOptions {
     uploadHandler: FileUploadHandler;
 }
 
+// @beta (undocumented)
+export interface FileUploadAdapter {
+    // (undocumented)
+    cancelFileUpload?: (id: string) => void;
+    // (undocumented)
+    clearFileUploads?: () => void;
+    // (undocumented)
+    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadEventEmitter {
+    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    off(event: 'uploadFailed', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+}
+
 // @beta
 export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    completeUpload: (metaData: FileMetaData) => void;
-    failUpload: (message: string) => void;
     file: File;
-    progressUpload: (value: number) => void;
+    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressed: (value: number) => void;
 }
+
+// @beta
+export interface FileUploadState {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    metadata?: FileMetadata;
+    progress: number;
+}
+
+// @beta
+export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
@@ -710,6 +740,7 @@ export interface MeetingCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    pictureInPictureTileAriaLabel: string;
 }
 
 // @beta
@@ -755,6 +786,12 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
     type: 'network';
 };
 
+// @beta
+export interface ObservableFileUpload extends FileUploadEventEmitter {
+    file: File;
+    id: string;
+}
+
 // @public
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
@@ -781,6 +818,15 @@ export type ParticipantsRemovedListener = (event: {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta
+export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+
+// @beta
+export type UploadFailedListener = (id: string, message: string) => void;
+
+// @beta
+export type UploadProgressListener = (id: string, value: number) => void;
 
 // (No @packageDocumentation comment for this package)
 

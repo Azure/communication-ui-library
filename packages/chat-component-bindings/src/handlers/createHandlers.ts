@@ -5,7 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 /**
@@ -17,7 +17,7 @@ import memoizeOne from 'memoize-one';
  * @public
  */
 export type ChatHandlers = {
-  onSendMessage: (content: string) => Promise<void>;
+  onSendMessage: (content: string, options?: SendMessageOptions) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -41,12 +41,12 @@ export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatHandlers => {
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     return {
-      onSendMessage: async (content: string) => {
+      onSendMessage: async (content: string, options?: SendMessageOptions) => {
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        await chatThreadClient.sendMessage(sendMessageRequest);
+        await chatThreadClient.sendMessage(sendMessageRequest, options);
       },
       onUpdateMessage: async (messageId: string, content: string) => {
         await chatThreadClient.updateMessage(messageId, { content });
