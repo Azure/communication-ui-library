@@ -35,6 +35,9 @@ export class MockCallAdapter implements CallAdapter {
         initialState.call.localVideoStreams = [screenShareStream];
       }
     }
+    if (testState.page) {
+      initialState.page = testState.page;
+    }
 
     this.state = initialState;
   }
