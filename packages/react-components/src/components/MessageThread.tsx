@@ -51,8 +51,6 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     first.status === second.status
   );
 };
-// maintain an array of latest message ids: key value pairs: sender: id
-// getlatestchatmessage to update id
 
 /**
  * Get the latest message from the message array.
@@ -60,7 +58,6 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  * @param messages
  */
 const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
-  // from the messages logged we can see readreceipt is not getting correct info
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -71,7 +68,7 @@ const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMes
 };
 
 /**
- * Get the latest message from the message array.
+ * Get the latest participant number from the message array.
  *
  * @param messages
  */
@@ -86,16 +83,15 @@ const getLatestParticipantNum = (messages: (ChatMessage | SystemMessage | Custom
 };
 
 /**
- * Get the latest message from the message array.
+ * Get the latest read number for my last sent message from the message array.
  *
  * @param messages
  */
 const getLatestReadNum = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): number => {
-  // read receipt is only getting updated if it's my message
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && message.mine && message.status === 'seen') {
-      // first find latest message that belongs to me, update readreceipt for that message
+      // first find latest message that belongs to me, return read number for that message
       return message.readReceipts ? message.readReceipts.length + 1 : 1;
     }
   }
