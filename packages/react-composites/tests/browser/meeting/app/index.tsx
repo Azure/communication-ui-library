@@ -42,9 +42,11 @@ function App(): JSX.Element {
         userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName,
         credential,
-        callLocator: { groupId: groupId },
         endpoint,
-        chatThreadId: threadId
+        meetingLocator: {
+          callLocator: { groupId: groupId },
+          chatThreadId: threadId
+        }
       });
       setMeetingAdapter(wrapAdapterForTests(adapter));
     };
