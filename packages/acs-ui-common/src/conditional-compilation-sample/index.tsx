@@ -4,7 +4,7 @@
 import React from 'react';
 
 /**
- * This folder contains some easy to understand conditional compilation directive samples.
+ * This folder contains some simple examples using conditional compilation directive.
  *
  * They are intended to be a cheet-sheat when you're trying to figure out how to make conditional compilation work for you.
  *
@@ -28,9 +28,10 @@ import React from 'react';
  *
  * General guidelines:
  * 1. Keep conditional compilation as small as possible.
- * 2. Keep conditional compilation ecapsulated.
+ * 2. Keep conditional compilation encapsulated.
  * 3. Keep conditional compilation near package boundary.
  *   a. If the conditional compilation is in our exported API, try to quickly convert to a type that is not conditional.
+ *      This will often simplify implementation.
  *   b. If the conditional compilation is to deal with a dependency, try to quickly fill in a default value so that you
  *      don't need conditional compilation at point-of-use.
  *
