@@ -1,17 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import produce from 'immer';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { ChatContext } from './AzureCommunicationChatAdapter';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { ChatAdapterState } from './ChatAdapter';
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
  */
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @beta
  */
@@ -21,6 +27,7 @@ export interface FileUploadAdapter {
   cancelFileUpload?: (id: string) => void;
 }
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @internal
  */
@@ -31,12 +38,12 @@ class FileUploadContext {
     this.chatContext = chatContext;
   }
 
-  public getFileUploads(): Record<string, FileUploadState> | undefined {
+  public getFileUploads(): FileUploadsUiState | undefined {
     return this.chatContext.getState().fileUploads;
   }
 
   public setFileUploads(fileUploads: ObservableFileUpload[]): void {
-    const fileUploadsMap = fileUploads.reduce((map: Record<string, FileUploadState>, fileUpload) => {
+    const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
       map[fileUpload.id] = {
         id: fileUpload.id,
         filename: fileUpload.file.name,
@@ -77,6 +84,7 @@ class FileUploadContext {
   }
 }
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @internal
  */
@@ -142,6 +150,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 }
 
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private
@@ -159,3 +168,9 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
 };
+
+/**
+ * Workaround to make this module compile under the `--isolatedModules` flag.
+ * @internal
+ */
+export {};
