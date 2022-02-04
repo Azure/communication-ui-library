@@ -67,12 +67,22 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Custom Button Injection</Heading>
-      <Description>Custom Buttons can be injected into CallComposite using the built in...</Description>
-      <Description>TEXT 2</Description>
+      <Description>
+        MeetingComposite supports injecting custom buttons into the control bar. The [MeetingComposite Custom Button
+        Injection Example](./?path=/story/composites-meeting-custombuttoninjection--custom-button-injection-example)
+        provides a quick preview of custom buttons injection with the option to display or hide them. Look at
+        [CallComposite Custom Button Injection
+        example](./?path=/story/composites-call-custombuttoninjectionexample--custom-button-injection-example) if you
+        would like to see how CallComposite and MeetingComposite differ.
+      </Description>
+      <Description>
+        A key thing to note is that custom buttons are injected in options as `callControls` as the example code below
+        shows.
+      </Description>
       <Source code={customButtonInjectionText} />
       <Description>
         See the [Custom button injection documentation](./?path=/docs/custombuttoninjection--page) to understand how
-        custom buttons can be injected for the related components in this UI library.
+        custom buttons are created and injected.
       </Description>
 
       <Heading>Joining an existing Meeting</Heading>
