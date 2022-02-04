@@ -90,12 +90,8 @@ export interface B2 {
 /**
  * Conditionally add variants to a type union
  *
+ * Watchout: A common pitfall here is adding the conditional directive before the binary operator.
  */
-// A common pitfall here is adding the conditional directive before the binary operator:
-// ```ts
-// export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
-// ```
-// will not work!
 export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
 export type Impossible = number & /* @conditional-compile-remove-from(stable) */ boolean;
 
@@ -212,14 +208,6 @@ function dummyCreateSelector(
     (state: DummyState, props: DummyProps) => boolean,
     (state: DummyState, props: DummyProps) => boolean
   ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean }
-): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean };
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
   func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean }
 ): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean };
 function dummyCreateSelector(
@@ -228,7 +216,15 @@ function dummyCreateSelector(
     (state: DummyState, props: DummyProps) => boolean,
     (state: DummyState, props: DummyProps) => boolean
   ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean; memoizedC?: boolean }
+  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean }
+): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean };
+function dummyCreateSelector(
+  dependencySelectors: [
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean
+  ],
+  func: (a: boolean, b: boolean, c: boolean) => unknown
 ) {
   return (state: DummyState, props: DummyProps) => {
     return func(
