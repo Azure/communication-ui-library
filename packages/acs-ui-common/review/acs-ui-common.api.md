@@ -46,6 +46,9 @@ export interface _IObjectMap<T> {
     [key: string]: T;
 }
 
+// @internal
+export const _MAX_EVENT_LISTENERS = 50;
+
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];
 

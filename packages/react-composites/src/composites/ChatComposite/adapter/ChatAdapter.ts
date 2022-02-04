@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
+import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
+import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -15,6 +17,14 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Files being uploaded by a user in the current thread.
+   * Should be set to null once the upload is complete.
+   * Array of type {@link FileUploadsUiState}
+   * @beta
+   */
+  fileUploads?: FileUploadsUiState;
 };
 
 /**
@@ -54,7 +64,7 @@ export interface ChatAdapterThreadManagement {
   /**
    * Send a message in the thread.
    */
-  sendMessage(content: string): Promise<void>;
+  sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -159,11 +169,12 @@ export interface ChatAdapterSubscribers {
  *
  * @public
  */
-export interface ChatAdapter
-  extends ChatAdapterThreadManagement,
-    AdapterState<ChatAdapterState>,
-    Disposable,
-    ChatAdapterSubscribers {}
+export type ChatAdapter = ChatAdapterThreadManagement &
+  AdapterState<ChatAdapterState> &
+  Disposable &
+  ChatAdapterSubscribers &
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  FileUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.
