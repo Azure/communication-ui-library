@@ -14,10 +14,12 @@ import {
   CallEnd20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable) */
-import { CameraSwitch24Filled } from '@fluentui/react-icons';
+import { CameraSwitch24Regular } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
+import { Circle20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { Attach20Regular } from '@fluentui/react-icons';
 
@@ -47,7 +49,9 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   /* @conditional-compile-remove-from(stable) */
-  LocalCameraSwitch: <CameraSwitch24Filled />,
+  LocalCameraSwitch: <CameraSwitch24Regular />,
+  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
+  ControlBarButtonBadgeIcon: <Circle20Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
@@ -97,11 +101,9 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
-> & {
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  SendBoxAttachFile?: JSX.Element;
-};
+>;
 
 /**
  * Icons that can be overridden for {@link CallComposite}.
@@ -152,8 +154,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
+    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
   >
-> & {
-  /* @conditional-compile-remove-from(stable) */
-  LocalCameraSwitch?: JSX.Element;
-};
+>;

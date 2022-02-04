@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added entry for endpointUrl in appsettings.json instead of using connectionString twice",
-  "packageName": "@internal/storybook",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

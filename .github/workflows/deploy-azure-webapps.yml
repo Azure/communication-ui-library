@@ -59,3 +59,14 @@ jobs:
           app-name: acs-ui-dev-web-chat-hero
           publish-profile: ${{ secrets.AZURE_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
+
+      - name: Package Meeting Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Meeting
+
+      - name: 'Deploy Meeting Sample WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-meeting-hero
+          publish-profile: ${{ secrets.AZURE_MEETING_WEBAPP_PUBLISH_PROFILE }}
+          package: ./samples/Meeting/dist

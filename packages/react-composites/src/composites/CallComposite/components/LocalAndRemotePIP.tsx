@@ -10,13 +10,7 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-/* @conditional-compile-remove-from(stable) MeetingComposite */
-import { useLocale } from '../../localization';
-
-// ariaLabel is remove in stable builds by beta compile, remove when MeetingComposite
-// is added to stable builds.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare let ariaLabel;
+import { CompositeLocale, useLocale } from '../../localization';
 
 /**
  * @private
@@ -86,8 +80,8 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [props.dominantRemoteParticipant]
   );
 
-  /* @conditional-compile-remove-from(stable) MeetingComposite */
-  const ariaLabel = useLocale().strings.meeting.pictureInPictureTileAriaLabel;
+  const locale = useLocale();
+  const ariaLabel = safeGetArialLabel(locale);
   const strings = useMemo(
     () => ({
       rootAriaLabel: ariaLabel
@@ -105,6 +99,14 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       secondaryTile={remoteVideoTile ? localVideoTile : undefined}
     />
   );
+};
+
+const safeGetArialLabel = (locale: CompositeLocale): string => {
+  // eslint-disable-next-line prefer-const
+  let ariaLabel = '';
+  /* @conditional-compile-remove-from(stable) meeting-composite */
+  ariaLabel = locale.strings.meeting.pictureInPictureTileAriaLabel;
+  return ariaLabel;
 };
 
 const localVideoViewOptions: VideoStreamOptions = {
