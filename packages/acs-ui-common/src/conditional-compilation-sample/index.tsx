@@ -61,6 +61,12 @@ interface B {
 }
 
 /**
+ * Conditionally import from a package.
+ */
+/* @conditional-compile-remove-from(stable) */
+import { Dir } from 'fs';
+
+/**
  * Conditionally export from a module.
  */
 /* @conditional-compile-remove-from(stable) */
@@ -68,6 +74,30 @@ export interface C {
   a: A;
   b: B;
 }
+
+/* @conditional-compile-remove-from(stable) */
+export type MyDir = Dir;
+
+/**
+ * Conditionally add fields to an interface
+ */
+export interface B2 {
+  sameOld: number;
+  /* @conditional-compile-remove-from(stable) */
+  somethingNew: number;
+}
+
+/**
+ * Conditionally add variants to a type union
+ *
+ */
+// A common pitfall here is adding the conditional directive before the binary operator:
+// ```ts
+// export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
+// ```
+// will not work!
+export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
+export type Impossible = number & /* @conditional-compile-remove-from(stable) */ boolean;
 
 /**
  * Add a parameter to an existing function
