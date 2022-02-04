@@ -168,6 +168,7 @@ export const controlsToAdd = {
     defaultValue: 'floatingBottom',
     name: 'Layout'
   },
+  customButton: { control: 'boolean', defaultValue: true, name: 'Enable custom button injection' },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },

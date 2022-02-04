@@ -8,6 +8,7 @@ import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
+const customButtonInjectionText = require('!!raw-loader!./snippets/CustomButtonInjection.snippet.tsx').default;
 
 const formFactorSnippet = `
 <MeetingComposite formFactor="mobile" />
@@ -63,6 +64,25 @@ export const getDocs: () => JSX.Element = () => {
         theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
         [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
         UI library.
+      </Description>
+
+      <Heading>Custom Button Injection</Heading>
+      <Description>
+        MeetingComposite supports injecting custom buttons into the control bar. The [MeetingComposite Custom Button
+        Injection Example](./?path=/story/composites-meeting-custombuttoninjection--custom-button-injection-example)
+        provides a quick preview of custom buttons injection with the option to display or hide them. Look at
+        [CallComposite Custom Button Injection
+        example](./?path=/story/composites-call-custombuttoninjectionexample--custom-button-injection-example) if you
+        would like to see how CallComposite and MeetingComposite differ.
+      </Description>
+      <Description>
+        A key thing to note is that custom buttons are injected in options as `callControls` as the example code below
+        shows.
+      </Description>
+      <Source code={customButtonInjectionText} />
+      <Description>
+        See the [Custom button injection documentation](./?path=/docs/custombuttoninjection--page) to understand how
+        custom buttons are created and injected.
       </Description>
 
       <Heading>Joining an existing Meeting</Heading>

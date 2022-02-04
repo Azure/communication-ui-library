@@ -70,6 +70,7 @@ export const parameters = {
           'Localization',
           'Accessibility',
           'Custom User Data Model',
+          'Custom Button Injection',
           'Error Handling',
           'Troubleshooting',
           'Identity'

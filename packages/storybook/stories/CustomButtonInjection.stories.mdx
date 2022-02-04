@@ -1,0 +1,130 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  id="custombuttoninjection"
+  title="Concepts/Custom Button Injection"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Custom Buttom Injection
+
+Azure Communication Services allows developers to inject their own custom buttons.
+A developers custom button most likely includes information such as a button label and an icon.
+The UI Library makes it simple for developers to inject their own custom buttons by providing a set of icons and the ability to designate a specific placement in the control bar.
+Below, we will introduce the patterns to customize and inject custom buttons.
+
+## Placements
+
+Custom buttons can be placed before or after default buttons in the Control Bar for both Call Composite and Meeting Composite. Multiple custom buttons placed
+in the same position will be appended in order. For example, if two buttons are placed 'afterCameraButton', they'll both appear on the right of the camera button in the order provided (left of the camera button if in left to right view).
+
+A list of placements is provided below:
+
+<table>
+  <tr>
+    <th>Placement</th>
+    <th>Call Composite</th>
+    <th>Meeting Composite</th>
+  </tr>
+  <tr>
+    <td>"afterCameraButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterEndCallButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterMicrophoneButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterOptionsButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterParticipantsButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterScreenShareButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"beforeMicrophoneButton"</td>
+    <td>✓</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterChatButton"</td>
+    <td></td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"afterPeopleButton"</td>
+    <td></td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>"beforeChatButton"</td>
+    <td></td>
+    <td>✓</td>
+  </tr>
+</table>
+
+## Icons
+
+Custom Icons and default icons can be used for custom buttons. Please refer to [Icons](./?path=/docs/icons--page) for further details and examples.
+
+## Injecting your own custom button
+
+To inject custom buttons, import `CustomCallControlButtonCallback`, `CustomCallControlButtonCallbackArgs`, and `CustomCallControlButtonProps` from `@azure/communication-react`.
+Default icons are available with a list provided in [Icons](./?path=/docs/icons--page). But if you wish to use your own custom icons,
+you can provide a custom react element as shown in [Icons](./?path=/docs/icons--page).
+Custom buttons also allow setting a custom label with different onRenderOffIcon and onRenderOnIcon icons.
+Insert a placement into `placement`, a table of placements is provided in the section above.
+
+Below is an example of how to create a custom button.
+
+```typescript
+import {
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs,
+  CustomCallControlButtonProps
+} from '@azure/communication-react';
+
+const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
+      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
+      strings: {
+        label: 'custom #1'
+      },
+      placement: 'beforeMicrophoneButton'
+    };
+  }
+];
+```
+
+Note: More than one button can be injected. If more than one button is injected in the same placement, they will be displayed in the order entered.
+
+## Composites
+
+For Composites, custom button injection can be customized at a composite level.
+As turn-key experience, developers can provide a custom button injection mapping to the composite and the composite takes care of rendering the correct information.
+Composites support custom button injection for display label and icon across both calling and meeting composites.
+
+| Composite                                                                                                     | Label                                                                                                           | Icon                                                                          |
+| ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [CallComposite](./?path=/story/composites-call-custombuttoninjectionexample--custom-button-injection-example) | [onRenderText](./?path=/story/composites-call-custombuttoninjectionexample--custom-button-injection-example)    | [onRenderIcon](./?path=/story/ui-components-controlbar-buttons-base--default) |
+| [MeetingComposite](./?path=/story/composites-meeting-custombuttoninjection--custom-button-injection-example)  | [onRenderText](./?path=/story/composites-meeting-custombuttoninjectionexample--custom-button-injection-example) | [onRenderIcon](./?path=/story/ui-components-controlbar-buttons-base--default) |
+
+For additional examples on how this custom button injection pattern works, visit the individual composite pages.
