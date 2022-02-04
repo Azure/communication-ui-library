@@ -9,7 +9,6 @@
  * @returns The current threadId as String
  *
  */
-
 export const getExistingThreadIdFromURL = (): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
   const threadId = urlParams.get('threadId');
