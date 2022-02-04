@@ -26,6 +26,7 @@ import { FileCard } from './file-sharing/FileCard';
 import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { truncatedFileName, extension } from './file-sharing/index';
 
 import {
   chatArea,
@@ -136,22 +137,26 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   const uploadedFilesSelector = useSelector(fileUploadsSelector);
 
-  const onRenderAttachedFiles = () => {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  const onRenderAttachedFiles = (): JSX.Element => {
     const uploadedFiles = uploadedFilesSelector.files;
-    const files: FileUpload[] = [];
-    files.push(new FileUpload(new File([], 'abc.pdf')));
+    const truncateLength = 15;
     return (
       <FileCardGroup>
         {uploadedFiles &&
           uploadedFiles.map((file) => (
             <FileCard
-              fileName={file.filename}
+              fileName={truncatedFileName(file.filename, truncateLength)}
               progress={file.progress}
               key={file.id}
-              fileExtension={file.filename}
+              fileExtension={extension(file.filename)}
               actionIcon={<Icon iconName="Cancel" />}
+              actionHandler={() => {
+                adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
+              }}
             />
           ))}
       </FileCardGroup>
@@ -195,6 +200,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
+              /* @conditional-compile-remove-from(stable): FILE_SHARING */
               onRenderAttachedFiles={onRenderAttachedFiles}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}

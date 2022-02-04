@@ -62,17 +62,16 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
       fontSize: '8.25rem'
     },
     wrapper: {},
+    /**
+     * Border of the field group is set to none, there is a wrapper div that encloses text field and
+     * uploaded files.
+     */
     fieldGroup: {
       outline: 'none',
       border: 'none',
       height: 'auto',
       minHeight: '0',
-      borderRadius: '0.25rem',
-      borderColor: borderColor,
-      borderWidth: disabled ? '0px' : '1px',
-      ':hover': { borderColor: borderColor },
-      ':active': { borderColor: borderColor },
-      ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
+      ':after': { border: 'none' }
     },
     field: {
       borderRadius: '0.25rem'
