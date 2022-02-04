@@ -1555,6 +1555,7 @@ export interface MeetingCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    pictureInPictureTileAriaLabel: string;
 }
 
 // @beta
