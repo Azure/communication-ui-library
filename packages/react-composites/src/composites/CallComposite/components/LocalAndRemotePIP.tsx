@@ -12,11 +12,6 @@ import {
 
 import { CompositeLocale, useLocale } from '../../localization';
 
-// ariaLabel is remove in stable builds by beta compile, remove when meeting-composite
-// is added to stable builds.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare let ariaLabel;
-
 /**
  * @private
  */
