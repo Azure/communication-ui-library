@@ -114,7 +114,7 @@ export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: n
  */
 
 /**
- * Add a parameter to an existing function
+ * Call a function with conditional parameters.
  *
  * FIXME: This doesn't yet work. `f` is not removed from the function signature, although it is removed from the function call in the body.
  */
@@ -134,6 +134,7 @@ export function GottaHaveAnExtraStackItem(props: {}): JSX.Element {
     </ul>
   );
 }
+
 /**
  * Conditionally modify props passed to JSX components.
  *
@@ -191,11 +192,13 @@ export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
   }
 );
 
-/**
- * Dummy types and functions needed for the selector example.
+/******************************************************************************
  *
- * No conditional compilation here.
+ * Some helpers needed for examples above.
+ *
+ * No conditional compilation examples below this.
  */
+
 type DummyState = {};
 type DummyProps = {};
 function memoizedBoolean(state: DummyState, props: DummyProps) {
