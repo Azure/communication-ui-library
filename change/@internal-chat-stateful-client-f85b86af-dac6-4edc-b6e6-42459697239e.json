@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "comment": "Getting and filtering the right read receipt data",
   "packageName": "@internal/chat-stateful-client",
   "email": "96077406+carocao-msft@users.noreply.github.com",
