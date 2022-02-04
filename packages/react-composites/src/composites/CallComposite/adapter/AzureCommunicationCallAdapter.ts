@@ -205,6 +205,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.disposeStreamView.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    this.processNewCall.bind(this);
   }
 
   public dispose(): void {
@@ -240,32 +241,25 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public joinCall(microphoneOn?: boolean): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
-    } else {
-      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
-      // TODO: find a way to expose stream to here
-      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
-      const isTeamsMeeting = !('groupId' in this.locator);
-
-      if (isTeamsMeeting) {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
-      } else {
-        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
-      }
-
-      this.context.setCallId(this.call.id);
-      // Resync state after callId is set
-      this.context.updateClientState(this.callClient.getState());
-      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
-      this.subscribeCallEvents();
-      return this.call;
     }
+
+    const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
+    // TODO: find a way to expose stream to here
+    const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+
+    const isTeamsMeeting = !('groupId' in this.locator);
+    const call = isTeamsMeeting
+      ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        })
+      : this.callAgent.join(this.locator as GroupCallLocator, {
+          audioOptions,
+          videoOptions
+        });
+
+    this.processNewCall(call);
+    return call;
   }
 
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
@@ -368,6 +362,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
+    if (_isInCall(this.getState().call?.state ?? 'None')) {
+      throw new Error('You are already in the call.');
+    }
+
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
@@ -375,7 +373,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return backendId;
     });
 
-    return this.handlers.onStartCall(idsToAdd);
+    const call = this.handlers.onStartCall(idsToAdd);
+    if (!call) {
+      throw new Error('Unable to start call.');
+    }
+    this.processNewCall(call);
+
+    return this.call;
+  }
+
+  private processNewCall(call: Call): void {
+    this.call = call;
+    this.context.setCallId(call.id);
+
+    // Resync state after callId is set
+    this.context.updateClientState(this.callClient.getState());
+    this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
+    this.subscribeCallEvents();
   }
 
   public async removeParticipant(userId: string): Promise<void> {
