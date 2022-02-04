@@ -25,6 +25,28 @@ import React from 'react';
  * ```
  *
  * In the latter case, you can see the transformed code in `packages/acs-ui-common/preprocessed/conditional-compilation-sample/`.
+ *
+ * General guidelines:
+ * 1. Keep conditional compilation as small as possible.
+ * 2. Keep conditional compilation ecapsulated.
+ * 3. Keep conditional compilation near package boundary.
+ *   a. If the conditional compilation is in our exported API, try to quickly convert to a type that is not conditional.
+ *   b. If the conditional compilation is to deal with a dependency, try to quickly fill in a default value so that you
+ *      don't need conditional compilation at point-of-use.
+ *
+ * (1) is not always possible (depends on the feature you're working on), but (3) can help you make the footprint smaller, and
+ * (2) can help you keep the footprint sane.
+ *
+ * Organization of this file:
+ * - First let's talk types
+ * - Then let's talk conditional business logic
+ * - Finally, let's bring those together in some repeated patterns we see in this code-base.
+ */
+
+/******************************************************************************
+ *
+ * Conditional types
+ *
  */
 
 /**
@@ -56,18 +78,23 @@ export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: n
   console.log(e);
   /* @conditional-compile-remove-from(stable) */
   console.log(f);
-  // Similarly, call the function with conditional parameters:
-  // FIXME: Doesn't yet work, because `f` was not removed from the function signature.
-  // d(e, /* @conditional-compile-remove-from(stable) */ f);
 }
 
-/** ****************************************************************** */
+/******************************************************************************
+ *
+ * Conditional business logic
+ *
+ */
 
 /**
- * Add conditional statements for logical differences between build flavors.
+ * Add a parameter to an existing function
  *
- * Usually, it is cleaner to extract out a helper function that houses the conditional logic. Some common examples.
+ * FIXME: This doesn't yet work. `f` is not removed from the function signature, although it is removed from the function call in the body.
  */
+export function dCaller() {
+  // FIXME: Doesn't yet work, because `f` was not removed from the function signature.
+  // d(1, /* @conditional-compile-remove-from(stable) */ 2);
+}
 
 /**
  * Conditional inclusion of JSX components can be a bit tricky, because we must remove partial expressions.
@@ -96,7 +123,11 @@ function propTrampoline() {
   return propValue;
 }
 
-/** ****************************************************************** */
+/******************************************************************************
+ *
+ * Common complex patterns
+ *
+ */
 
 /**
  * A common example where a combination of some of the examples above is required is extending a selector.
