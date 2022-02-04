@@ -7,6 +7,7 @@
 export type TestCallingState = {
   remoteParticipants?: TestRemoteParticipant[];
   isScreenSharing?: boolean;
+  page?: TestPageState;
 };
 
 /**
@@ -19,3 +20,15 @@ export type TestRemoteParticipant = {
   isVideoStreamAvailable?: boolean;
   isScreenSharing?: boolean;
 };
+
+/**
+ * Page state used in {@link TestCallingState}
+ */
+export type TestPageState =
+  | 'accessDeniedTeamsMeeting'
+  | 'call'
+  | 'configuration'
+  | 'joinCallFailedDueToNoNetwork'
+  | 'leftCall'
+  | 'lobby'
+  | 'removedFromCall';
