@@ -7,8 +7,8 @@ import { test } from './fixture';
 import { buildUrlWithMockAdapter } from './utils';
 import { DiagnosticQuality } from './TestCallingState';
 
-test.describe('UFD tests', async () => {
-  test('UFD test when speaking while muted ', async ({ pages, serverUrl }) => {
+test.describe('User Facing Diagnostics tests', async () => {
+  test('A banner is shown when user is speaking while muted', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
@@ -19,10 +19,10 @@ test.describe('UFD tests', async () => {
     await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('ufd-speaking-while-muted.png');
+    expect(await page.screenshot()).toMatchSnapshot('banner-when-speaking-while-muted.png');
   });
 
-  test('UFD test when network reconnect is bad ', async ({ pages, serverUrl }) => {
+  test('Tile should be showing when network reconnect is bad ', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
@@ -33,10 +33,10 @@ test.describe('UFD tests', async () => {
     await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('ufd-network-reconnect-is-bad.png');
+    expect(await page.screenshot()).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
   });
 
-  test('UFD test when camera freezes ', async ({ pages, serverUrl }) => {
+  test('Error bar should be showing when camera freezes ', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
@@ -47,6 +47,6 @@ test.describe('UFD tests', async () => {
     await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('ufd-camera-freezes.png');
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-when-camera-freezes.png');
   });
 });
