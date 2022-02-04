@@ -85,14 +85,14 @@ export interface VideoTileProps {
   /**
    * Minimum size of the persona avatar in px.
    * The persona avatar is the default placeholder shown when no video stream is available.
-   * For more information see <https://developer.microsoft.com/en-us/fluentui#/controls/web/persona>
+   * For more information see https://developer.microsoft.com/en-us/fluentui#/controls/web/persona
    * @defaultValue 32px
    */
   personaMinSize?: number;
   /**
    * Maximum size of the personal avatar in px.
    * The persona avatar is the default placeholder shown when no video stream is available.
-   * For more information see <https://developer.microsoft.com/en-us/fluentui#/controls/web/persona>
+   * For more information see https://developer.microsoft.com/en-us/fluentui#/controls/web/persona
    * @defaultValue 100px
    */
   personaMaxSize?: number;
