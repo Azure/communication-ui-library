@@ -41,9 +41,9 @@ exports.default = babelHelper.declare((_api, opts) => {
       ExportAllDeclaration(path) {
         Handle(path, annotations);
       },
-      
+
       JSXAttribute(path) {
-      	Handle(path, annotations);
+        Handle(path, annotations);
       },
 
       TSPropertySignature(path) {
@@ -55,6 +55,10 @@ exports.default = babelHelper.declare((_api, opts) => {
       },
 
       ClassMethod(path) {
+        Handle(path, annotations);
+      },
+
+      ClassProperty(path) {
         Handle(path, annotations);
       },
     }
