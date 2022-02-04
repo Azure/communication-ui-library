@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
+import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
 import {
   sendBoxStyle,
   sendBoxStyleSet,
@@ -16,7 +16,6 @@ import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
-// import {FileCardGroup} from '@in';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -189,6 +188,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const mergedStyles = useMemo(() => concatStyleSets(sendBoxStyleSet, styles), [styles]);
 
+  const borderAndBoxShadowStyle = {
+    borderRadius: theme.effects.roundedCorner6,
+    borderColor: theme.palette.neutralLight,
+    ':hover': { borderColor: theme.palette.blue },
+    ':active': { borderColor: theme.palette.blue },
+    ':focus': { borderColor: theme.palette.blue }
+  };
+
   const hasText = !!textValue;
   const mergedSendIconStyle = useMemo(
     () =>
@@ -213,7 +220,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <div className={sendBoxStyleMain}>
+    <Stack className={mergeStyles(borderAndBoxShadowStyle, sendBoxStyleMain)}>
       <InputBoxComponent
         autoFocus={autoFocus}
         data-ui-id={ids.sendboxTextField}
@@ -249,12 +256,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           ariaLabel={localeStrings.sendButtonAriaLabel}
         />
       </InputBoxComponent>
-      <div className={fileCardBoxStyle}>
+      <Stack className={fileCardBoxStyle}>
         {
           /* @conditional-compile-remove-from(stable): FILE_SHARING */
           props.onRenderAttachedFiles && props.onRenderAttachedFiles()
         }
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 };

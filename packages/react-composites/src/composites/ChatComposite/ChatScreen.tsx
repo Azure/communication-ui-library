@@ -26,7 +26,6 @@ import { FileCard } from './file-sharing/FileCard';
 import { FileCardGroup } from './file-sharing/FileCardGroup';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { FileUpload } from './file-sharing/FileUpload';
 
 import {
   chatArea,
@@ -45,7 +44,8 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
 import { FileUpload, FileUploadHandler } from './file-sharing';
-
+import { fileUploadsSelector } from './selectors/fileUploadsSelector';
+import { useSelector } from './hooks/useSelector';
 /**
  * @private
  */
@@ -136,46 +136,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  // const uploadedFilesSelector = useSelector(uploadedFilesSelector); files and completed(status)
+  const uploadedFilesSelector = useSelector(fileUploadsSelector);
+
   const onRenderAttachedFiles = () => {
+    const uploadedFiles = uploadedFilesSelector.files;
     const files: FileUpload[] = [];
     files.push(new FileUpload(new File([], 'abc.pdf')));
     return (
       <FileCardGroup>
-        <FileCard
-          fileName={'abc.pdf'}
-          progress={0.5}
-          fileExtension={'abc.pdf'}
-          actionIcon={<Icon iconName="Cancel" />}
-        />
-        <FileCard
-          fileName={'abc.pdf'}
-          progress={0.5}
-          fileExtension={'abc.pdf'}
-          actionIcon={<Icon iconName="Cancel" />}
-        />
-        <FileCard
-          fileName={'abc.pdf'}
-          progress={0.5}
-          fileExtension={'abc.pdf'}
-          actionIcon={<Icon iconName="Cancel" />}
-        />
-        <FileCard
-          fileName={'abc.pdf'}
-          progress={0.5}
-          fileExtension={'abc.pdf'}
-          actionIcon={<Icon iconName="Cancel" />}
-        />
-        <FileCard
-          fileName={'abc.pdf'}
-          progress={0.5}
-          fileExtension={'abc.pdf'}
-          actionIcon={<Icon iconName="Cancel" />}
-        />
-        <FileCard fileName={'abc.pdf'} progress={0.5} fileExtension={'.png'} actionIcon={<Icon iconName="Cancel" />} />
+        {uploadedFiles &&
+          uploadedFiles.map((file) => (
+            <FileCard
+              fileName={file.filename}
+              progress={file.progress}
+              key={file.id}
+              fileExtension={file.filename}
+              actionIcon={<Icon iconName="Cancel" />}
+            />
+          ))}
       </FileCardGroup>
     );
   };
+
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
