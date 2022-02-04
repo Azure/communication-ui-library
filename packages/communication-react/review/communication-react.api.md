@@ -60,6 +60,7 @@ import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -508,9 +509,10 @@ export interface CameraButtonStrings {
     tooltipVideoLoadingContent?: string;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
+//
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
-}
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -539,7 +541,7 @@ export interface ChatAdapterThreadManagement {
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    sendMessage(content: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
@@ -549,6 +551,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
+    fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -636,7 +639,7 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -662,6 +665,7 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     messageType: 'chat';
+    metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
     // (undocumented)
@@ -1236,7 +1240,7 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export interface FileMetaData {
+export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
@@ -1249,16 +1253,48 @@ export interface FileSharingOptions {
     uploadHandler: FileUploadHandler;
 }
 
+// @beta (undocumented)
+export interface FileUploadAdapter {
+    // (undocumented)
+    cancelFileUpload?: (id: string) => void;
+    // (undocumented)
+    clearFileUploads?: () => void;
+    // (undocumented)
+    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadEventEmitter {
+    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    off(event: 'uploadFailed', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+}
+
 // @beta
 export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    completeUpload: (metaData: FileMetaData) => void;
-    failUpload: (message: string) => void;
     file: File;
-    progressUpload: (value: number) => void;
+    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressed: (value: number) => void;
 }
+
+// @beta
+export interface FileUploadState {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    metadata?: FileMetadata;
+    progress: number;
+}
+
+// @beta
+export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -1745,6 +1781,12 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export interface ObservableFileUpload extends FileUploadEventEmitter {
+    file: File;
+    id: string;
+}
+
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
@@ -2121,6 +2163,15 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @beta
+export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+
+// @beta
+export type UploadFailedListener = (id: string, message: string) => void;
+
+// @beta
+export type UploadProgressListener = (id: string, value: number) => void;
 
 // @public
 export const useCall: () => Call | undefined;
