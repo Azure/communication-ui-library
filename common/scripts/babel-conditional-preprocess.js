@@ -50,6 +50,22 @@ exports.default = babelHelper.declare((_api, opts) => {
         Handle(path, annotations);
       },
 
+      // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
+      // In other words, support this fairly common situation:
+      //
+      // stable build:
+      //   type SomeType = StableTypeA & StableTypeB;
+      //   type AwesomeType = StableTypeA | StableTypeB;
+      // beta build:
+      //   type SomeType = StableTypeA & StableTypeB & BetaTypeC;
+      //   type AwesomeType = StableTypeA | StableTypeB | BetaTypeC;
+      //
+      // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
+      // conditional business logic flows.
+      TSType(path) {
+        Handle(path, annotations);
+      },
+
       Expression(path) {
         Handle(path, annotations);
       },
