@@ -3,7 +3,8 @@
 
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { createSelector } from 'reselect';
-import { FileUploadState } from '..';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { getFileUploads } from './baseSelectors';
 
