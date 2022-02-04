@@ -29,4 +29,12 @@ export interface MeetingCompositeStrings {
    * Side pane Chat screen title.
    */
   chatPaneTitle: string;
+  /**
+   * Aria label for the picture in picture in picture tile that.
+   * This feature currently only shows on mobileView when the chat or people pane is expanded.
+   * @remarks
+   * This component displays the local and most-dominant remote participant and when clicked
+   * returns the user to the call screen.
+   */
+  pictureInPictureTileAriaLabel: string;
 }

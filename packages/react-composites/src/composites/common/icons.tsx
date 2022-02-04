@@ -101,11 +101,9 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
-> & {
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  SendBoxAttachFile?: JSX.Element;
-};
+>;
 
 /**
  * Icons that can be overridden for {@link CallComposite}.
@@ -156,10 +154,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
+    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
   >
-> & {
-  /* @conditional-compile-remove-from(stable) */
-  LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
-  ControlBarButtonBadgeIcon?: JSX.Element;
-};
+>;

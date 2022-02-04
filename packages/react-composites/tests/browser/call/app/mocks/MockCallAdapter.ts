@@ -41,6 +41,9 @@ export class MockCallAdapter implements CallAdapter {
         };
       }
     }
+    if (testState.page) {
+      initialState.page = testState.page;
+    }
 
     this.state = initialState;
   }

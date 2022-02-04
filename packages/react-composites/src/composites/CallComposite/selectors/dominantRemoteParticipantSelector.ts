@@ -1,0 +1,40 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import * as reselect from 'reselect';
+import { getDominantSpeakers, getRemoteParticipants } from './baseSelectors';
+
+/**
+ * Get the most dominant remote participant, if no dominant speaker IDs exist, this uses
+ * one of the remote participants with no bias towards which one.
+ *
+ * @private
+ */
+export const dominantRemoteParticipantSelector = reselect.createSelector(
+  [getRemoteParticipants, getDominantSpeakers],
+  (remoteParticipants, dominantSpeakers) => {
+    const dominantRemoteParticipant =
+      remoteParticipants && Object.keys(remoteParticipants).length > 0
+        ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
+        : undefined;
+    return dominantRemoteParticipant ? _videoGalleryRemoteParticipantsMemo(dominantRemoteParticipant)[0] : undefined;
+  }
+);
+
+const findDominantRemoteParticipant = (
+  remoteParticipants: { [keys: string]: RemoteParticipantState },
+  dominantSpeakerIds: string[]
+): { dominantRemoteParticipantId: RemoteParticipantState } => {
+  let dominantRemoteParticipantId = dominantSpeakerIds[0];
+
+  // Fallback to using the first remote participant if there are no dominant speaker IDs
+  // or if the dominant speaker is no longer available in the list of remoteParticipantIds
+  const remoteParticipantIds = Object.keys(remoteParticipants);
+  if (!dominantRemoteParticipantId || !remoteParticipantIds.includes(dominantRemoteParticipantId)) {
+    dominantRemoteParticipantId = remoteParticipantIds[0];
+  }
+
+  return { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] };
+};
