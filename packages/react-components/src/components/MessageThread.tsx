@@ -51,13 +51,8 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     first.status === second.status
   );
 };
-// potential issue
-// 1. we are only sending read receipt to the last message, we should send read receipt to all unread messages in the thread
-// 2. each person is only getting read receipt for their own messages, if we can be getting and updating read receipt for everyone
-// we can implement this logic: 1. find my latest message and get read number 2. find the messages sent after my message,check read number, if read number is larger, update my read number to this larger number
-// Assumption we made here: if user read the last message, they have read all messages in the thread.
-
-// Another issue: do not update until status is seen
+// maintain an array of latest message ids: key value pairs: sender: id
+// getlatestchatmessage to update id
 
 /**
  * Get the latest message from the message array.
@@ -657,9 +652,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage
   } = props;
+  // maintain an array containing every participant's last message sent
+  type lastMessageForEach = { senderId: string; messageId: string };
+  const [lastMessageList, setLastMessageList] = useState<lastMessageForEach[]>([]);
+
   const [latestReadNum, setLatestReadNum] = useState(1);
   const [latestParticipantNum, setLatestParticipantNum] = useState(1);
-
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -737,15 +735,24 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         lastMessage.messageId &&
         lastMessage.messageId !== messageIdSeenByMeRef.current
       ) {
-        // we are only sending read receipt for the last message
-        console.log(`sending on message seen for last message ${lastMessage.content}`);
-        await onMessageSeen(lastMessage.messageId);
+        // lastMessageList contains every participant's last sent messages
+        // Go through the list and send a read receipt to all last sent messages
+        // Assumption: if user has seen the last message, he/she has seen it all
+        if (lastMessageList) {
+          for (let i = lastMessageList.length - 1; i >= 0; i--) {
+            const info = lastMessageList[i].messageId;
+            // if info is not the default value 000, send a read receipt. Info is the message id for everyone's last sent message
+            if (info !== '000') {
+              await onMessageSeen(info);
+            }
+          }
+        }
         messageIdSeenByMeRef.current = lastMessage.messageId;
       }
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }
-  }, [showMessageStatus, onMessageSeen]);
+  }, [showMessageStatus, onMessageSeen, lastMessageList]);
 
   const scrollToBottom = useCallback((): void => {
     if (chatScrollDivRef.current) {
@@ -796,6 +803,48 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
     fetchNewMessageWhenAtTop();
   }, [fetchNewMessageWhenAtTop]);
+
+  useEffect(() => {
+    // setting and updating lastMessageList
+    // push in the array if this is the first message
+    // get the last element of new message --> this is the latest message
+    const m = messagesRef.current.filter((message) => {
+      return message.messageType === 'chat' && !!message.messageId;
+    });
+    const curr: ChatMessage = m[m.length - 1] as ChatMessage;
+
+    if (curr) {
+      if (!lastMessageList || lastMessageList?.length === 0) {
+        setLastMessageList([
+          { senderId: curr?.senderId ? curr?.senderId : '000', messageId: curr?.messageId ? curr?.messageId : '000' }
+        ]);
+      }
+      // push in the array if can't find the sender id in the array
+      // if can find the sender id, update corresponding messageid to the new message id
+      else {
+        for (let i = 0; i <= lastMessageList.length - 1; i++) {
+          const info = lastMessageList[i];
+          if (info.senderId === curr?.senderId) {
+            const tempcopy = lastMessageList;
+            info.messageId = curr?.messageId;
+            tempcopy[i] = info;
+            setLastMessageList(tempcopy);
+            break;
+          }
+          if (i === lastMessageList.length - 1 && info.senderId !== curr?.senderId) {
+            setLastMessageList([
+              ...lastMessageList,
+              {
+                senderId: curr?.senderId ? curr?.senderId : '000',
+                messageId: curr?.messageId ? curr?.messageId : '000'
+              }
+            ]);
+            break;
+          }
+        }
+      }
+    }
+  }, [messagesRef.current]);
 
   // The below 2 of useEffects are design for fixing infinite scrolling problem
   // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
@@ -864,18 +913,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
-  useEffect(() => {
-    // set new num read and num participants
-    setLatestParticipantNum(getLatestParticipantNum(newMessages));
-    setLatestReadNum(getLatestReadNum(newMessages));
-    // console.log(`updating read num here to be ${latestReadNum} for message`)
-    // console.log(newMessages)
-  });
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
    * These two states are used to manipulate scrollbar
    */
   useEffect(() => {
+    // set new num read and num participants
+    setLatestParticipantNum(getLatestParticipantNum(newMessages));
+    setLatestReadNum(getLatestReadNum(newMessages));
+
     setLatestPreviousChatMessage(getLatestChatMessage(messagesRef.current));
     setLatestCurrentChatMessage(getLatestChatMessage(newMessages));
     setMessagesRef(newMessages);

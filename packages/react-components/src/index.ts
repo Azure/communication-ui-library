@@ -12,7 +12,6 @@ export * from './theming';
 export type {
   BaseCustomStyles,
   CallParticipantListParticipant,
-  ReadReceipt,
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
@@ -26,6 +25,7 @@ export type {
   ParticipantAddedSystemMessage,
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
+  ReadReceipt,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,

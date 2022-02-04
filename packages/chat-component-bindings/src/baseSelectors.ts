@@ -45,9 +45,6 @@ export const getParticipants = (
  * @private
  */
 export const getReadInformation = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] => {
-  // problem is that each person is only getting their own readreceipt
-  console.log('readreceipt for user is');
-  console.log(state.threads[props?.threadId]?.readReceipts);
   return state.threads[props?.threadId]?.readReceipts;
 };
 
