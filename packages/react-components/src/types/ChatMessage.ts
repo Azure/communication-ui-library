@@ -75,7 +75,10 @@ export interface ChatMessage extends MessageCommon {
   clientMessageId?: string;
   contentType: MessageContentType;
   readReceipts?: ReadReceipt[];
-  numParticipants?: number;
+  /**
+   * Total number of participants in the message thread. This is used to display how many participants out of a total have read a message.
+   */
+  messageThreadParticipantCount?: number;
   /**
    * A metadata field for the message.
    * {@link @azure/communication-chat#ChatMessage.metadata}

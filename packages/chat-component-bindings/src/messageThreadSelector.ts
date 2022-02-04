@@ -33,7 +33,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isSeen: boolean,
     isLargeGroup: boolean,
     readReceipts: ChatMessageReadReceipt[],
-    numParticipants: number
+    messageThreadParticipantCount: number
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -41,7 +41,14 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readReceipts, numParticipants);
+      return convertToUiChatMessage(
+        chatMessage,
+        userId,
+        isSeen,
+        isLargeGroup,
+        readReceipts,
+        messageThreadParticipantCount
+      );
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -54,7 +61,7 @@ const convertToUiChatMessage = (
   isSeen: boolean,
   isLargeGroup: boolean,
   readReceipts: ChatMessageReadReceipt[],
-  numParticipants: number
+  messageThreadParticipantCount: number
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   const convertedReadReceipts = readReceipts.map((receipt) => ({
@@ -76,7 +83,7 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     readReceipts: convertedReadReceipts,
-    numParticipants: numParticipants,
+    messageThreadParticipantCount: messageThreadParticipantCount,
     metadata: message.metadata
   };
 };
@@ -142,7 +149,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadInformation, getParticipants],
   (userId, chatMessages, latestReadTime, isLargeGroup, readInformation, participants) => {
     // get number of participants
-    const numParticipants = Object.values(participants).length - 1;
+    const messageThreadParticipantCount = Object.values(participants).length - 1;
     // for each chat message, add read receipt information when readInformation.id === chatmessage.id
     const convertedChatMessages = Object.values(chatMessages).map(function (message) {
       const readReceipt = Object.values(readInformation).filter((info) => info.chatMessageId === message.id);
@@ -182,7 +189,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             message.message.createdOn <= latestReadTime,
             isLargeGroup,
             message.readReceipt,
-            numParticipants
+            messageThreadParticipantCount
           )
         )
     );

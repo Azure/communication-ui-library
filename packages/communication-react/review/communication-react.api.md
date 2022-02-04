@@ -658,13 +658,12 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    messageThreadParticipantCount?: number;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // (undocumented)
-    numParticipants?: number;
     // (undocumented)
     readReceipts?: ReadReceipt[];
     // (undocumented)
@@ -1635,9 +1634,9 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 // @public
 export interface MessageStatusIndicatorProps {
     // (undocumented)
-    numParticipants?: number;
+    messageThreadParticipantCount?: number;
     // (undocumented)
-    numRead?: number;
+    messageThreadReadCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;

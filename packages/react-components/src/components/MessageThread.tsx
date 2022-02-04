@@ -76,7 +76,7 @@ const getLatestParticipantNum = (messages: (ChatMessage | SystemMessage | Custom
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat') {
-      return message.numParticipants ? message.numParticipants : 1;
+      return message.messageThreadParticipantCount ? message.messageThreadParticipantCount : 1;
     }
   }
   return 1;
@@ -323,13 +323,17 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
-    defaultStatusRenderer: (status: MessageStatus, numRead: number, numParticipants: number) => JSX.Element,
+    defaultStatusRenderer: (
+      status: MessageStatus,
+      messageThreadReadCount: number,
+      messageThreadParticipantCount: number
+    ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
-    numRead?: number,
-    numParticipants?: number,
+    messageThreadReadCount?: number,
+    messageThreadParticipantCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>
@@ -395,8 +399,8 @@ const memoizeAllMessages = memoizeFnAll(
                     ) : (
                       defaultStatusRenderer(
                         statusToRender,
-                        numRead ? numRead : 0,
-                        numParticipants ? numParticipants : 0
+                        messageThreadReadCount ? messageThreadReadCount : 0,
+                        messageThreadParticipantCount ? messageThreadParticipantCount : 0
                       )
                     )
                   ) : (
@@ -967,13 +971,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const defaultStatusRenderer: (status: MessageStatus, numRead: number, numParticipants: number) => JSX.Element =
-    useCallback(
-      (status: MessageStatus, numRead: number, numParticipants: number) => (
-        <MessageStatusIndicator status={status} numRead={numRead} numParticipants={numParticipants} />
-      ),
-      []
-    );
+  const defaultStatusRenderer: (
+    status: MessageStatus,
+    messageThreadReadCount: number,
+    messageThreadParticipantCount: number
+  ) => JSX.Element = useCallback(
+    (status: MessageStatus, messageThreadReadCount: number, messageThreadParticipantCount: number) => (
+      <MessageStatusIndicator
+        status={status}
+        messageThreadReadCount={messageThreadReadCount}
+        messageThreadParticipantCount={messageThreadParticipantCount}
+      />
+    ),
+    []
+  );
 
   const messagesToDisplay = useMemo(
     () =>
