@@ -1,8 +1,27 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Tue, 04 Jan 2022 22:57:09 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.1)
+
+Mon, 24 Jan 2022 23:18:54 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.1...@internal/react-components_v1.0.1)
+
+### Minor changes
+
+- Added strings to the side pane from locale context. ([PR #1278](https://github.com/azure/communication-ui-library/pull/1278) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Fixed inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost. ([PR #1293](https://github.com/azure/communication-ui-library/pull/1293) by kaurprabhjot@microsoft.com)
+- Fixed ScreenShareButton style to allow custom styles ([PR #1286](https://github.com/azure/communication-ui-library/pull/1286) by edwardlee@microsoft.com)
+- Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite ([PR #1284](https://github.com/azure/communication-ui-library/pull/1284) by jinan@microsoft.com)
+- Horizontal gallery button height fixed ([PR #1285](https://github.com/azure/communication-ui-library/pull/1285) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fixed alignment of typing indicator in chat composite by reducing minHeight. ([PR #1297](https://github.com/azure/communication-ui-library/pull/1297) by kaurprabhjot@microsoft.com)
+- Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks ([PR #1277](https://github.com/azure/communication-ui-library/pull/1277) by anjulgarg@live.com)
+- Bump @internal/acs-ui-common to v1.0.1 ([PR #1335](https://github.com/azure/communication-ui-library/pull/1335) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.1)
 

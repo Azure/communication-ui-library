@@ -44,6 +44,9 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
+export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
+export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
 
@@ -58,6 +61,8 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';
 export type {

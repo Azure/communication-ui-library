@@ -47,6 +47,8 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -65,6 +67,9 @@ export interface VideoGalleryStrings {
   screenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  /** String for local video camera switcher */
+  localVideoCameraSwitcherLabel: string;
 }
 
 /**
@@ -121,7 +126,11 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+  /**
+   * Whether to display the local video camera switcher button
+   */
+  showCamerSwitcherInLocalPreview?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -134,6 +143,11 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite Local_Camera_switcher */
+  /**
+   * Camera control information for button to switch cameras.
+   */
+  localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -165,7 +179,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar,
     showMuteIndicator,
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+    showCamerSwitcherInLocalPreview,
+    /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+    localVideoCameraCycleButtonProps
   } = props;
 
   const ids = useIdentifiers();
@@ -197,6 +215,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
+    return (
+      <>
+        {showCamerSwitcherInLocalPreview &&
+          localVideoCameraCycleButtonProps?.cameras !== undefined &&
+          localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
+          localVideoCameraCycleButtonProps?.onSelectCamera !== undefined && (
+            <LocalVideoCameraCycleButton
+              cameras={localVideoCameraCycleButtonProps.cameras}
+              selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
+              onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
+              label={strings.localVideoCameraSwitcherLabel}
+            />
+          )}
+      </>
+    );
+  };
+
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -220,14 +257,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
-
     return (
       <VideoTile
         key={localParticipant.userId}
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
-            <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            <>
+              {
+                /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+                localCameraCycleButton(localVideoCameraCycleButtonProps)
+              }
+              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+            </>
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}

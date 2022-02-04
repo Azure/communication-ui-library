@@ -149,14 +149,55 @@ export interface DevicesButtonProps extends ControlBarButtonProps {
 }
 
 /**
- * Generates default menuprops for an DevicesButton if the props contain device
- * information and device change handlers.
- * @param props DevicesButtonProps
- * @returns MenuProps
+ * Subset props for various buttons that show device selection menus.
+ *
+ * @private
  */
-const generateDefaultMenuProps = (
-  props: DevicesButtonProps,
-  strings: DevicesButtonStrings
+export interface DeviceMenuProps {
+  microphones?: OptionsDevice[];
+  speakers?: OptionsDevice[];
+  cameras?: OptionsDevice[];
+  selectedMicrophone?: OptionsDevice;
+  selectedSpeaker?: OptionsDevice;
+  selectedCamera?: OptionsDevice;
+  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+  onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+  onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+  styles?: Partial<DeviceMenuStyles>;
+}
+
+/**
+ * Subset of strings for various buttons that show device selection menus.
+ *
+ * @private
+ */
+export interface DeviceMenuStrings {
+  cameraMenuTitle?: string;
+  microphoneMenuTitle?: string;
+  speakerMenuTitle?: string;
+  cameraMenuTooltip?: string;
+  microphoneMenuTooltip?: string;
+  speakerMenuTooltip?: string;
+}
+
+/**
+ * Styles for flyouts used by various buttons for device selection flyouts.
+ *
+ * @private
+ */
+export interface DeviceMenuStyles extends IContextualMenuStyles {
+  menuItemStyles?: IContextualMenuItemStyles;
+}
+
+/**
+ * Generates default {@link IContextualMenuProps} for buttons that
+ * show a drop-down to select devices to use.
+ *
+ * @private
+ */
+export const generateDefaultDeviceMenuProps = (
+  props: DeviceMenuProps,
+  strings: DeviceMenuStrings
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -172,7 +213,7 @@ const generateDefaultMenuProps = (
 
   const defaultMenuProps: IContextualMenuProps = {
     items: [],
-    styles: props.styles?.menuStyles,
+    styles: props.styles,
     calloutProps: {
       styles: {
         root: {
@@ -197,7 +238,7 @@ const generateDefaultMenuProps = (
     }
   };
 
-  const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuStyles?.menuItemStyles ?? {});
+  const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuItemStyles ?? {});
 
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps.items.push({
@@ -303,7 +344,8 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const devicesButtonMenu = props.menuProps ?? generateDefaultMenuProps(props, strings);
+  const devicesButtonMenu =
+    props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
   const onRenderOptionsIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
