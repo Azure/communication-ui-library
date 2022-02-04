@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Showing how many people have read the message, sending read receipt to all previous messages ",
+  "packageName": "@internal/react-components",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
