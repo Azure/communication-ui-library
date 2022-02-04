@@ -17,6 +17,7 @@ import { NotificationIcon } from './NotificationIcon';
 export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButtonProps {
   chatAdapter: ChatAdapter;
   isChatPaneVisible: boolean;
+  newMessageLabel?: string;
 }
 
 /**
@@ -30,17 +31,19 @@ const validNewChatMessage = (message): boolean =>
  * @private
  */
 export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMessagesBadgeProps): JSX.Element => {
-  const { chatAdapter, isChatPaneVisible } = props;
+  const { chatAdapter, isChatPaneVisible, newMessageLabel } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
 
   const notificationOnIcon = useCallback((): JSX.Element => {
     return (
       <Stack styles={chatNotificationContainerStyles}>
-        {unreadChatMessagesCount > 0 && <NotificationIcon chatMessagesCount={unreadChatMessagesCount} />}
+        {unreadChatMessagesCount > 0 && (
+          <NotificationIcon chatMessagesCount={unreadChatMessagesCount} label={newMessageLabel} />
+        )}
         <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
       </Stack>
     );
-  }, [unreadChatMessagesCount]);
+  }, [unreadChatMessagesCount, newMessageLabel]);
 
   useEffect(() => {
     if (isChatPaneVisible) {

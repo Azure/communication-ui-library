@@ -132,6 +132,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               onClick={props.onChatButtonClicked}
               disabled={props.disableButtonsForLobbyPage}
               label={meetingStrings.chatButtonLabel}
+              newMessageLabel={meetingStrings.newMessage}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}

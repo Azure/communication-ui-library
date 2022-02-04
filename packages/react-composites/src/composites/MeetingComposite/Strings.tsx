@@ -29,4 +29,8 @@ export interface MeetingCompositeStrings {
    * Side pane Chat screen title.
    */
   chatPaneTitle: string;
+  /**
+   * New Message label
+   */
+  newMessage: string;
 }

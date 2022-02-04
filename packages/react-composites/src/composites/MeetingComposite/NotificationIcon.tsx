@@ -9,19 +9,22 @@ import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useThe
  */
 export type NotificationIconProps = {
   chatMessagesCount: number;
+  label?: string;
 };
 /**
  * @private
  */
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
-  const { chatMessagesCount } = props;
+  const { chatMessagesCount, label } = props;
   const theme = useTheme();
   const renderNumber = (numberOfMessages): JSX.Element => {
     if (numberOfMessages < 1) {
       return <></>;
     } else {
       return (
-        <Stack styles={notificationTextStyles(theme)}>{numberOfMessages < 9 ? <>{numberOfMessages}</> : <>9+</>}</Stack>
+        <Stack aria-label={label} styles={notificationTextStyles(theme)}>
+          {numberOfMessages < 9 ? <>{numberOfMessages}</> : <>9+</>}
+        </Stack>
       );
     }
   };

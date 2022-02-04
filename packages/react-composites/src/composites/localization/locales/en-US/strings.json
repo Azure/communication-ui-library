@@ -47,6 +47,7 @@
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "People",
     "peoplePaneSubTitle": "In this call",
-    "chatPaneTitle": "Chat"
+    "chatPaneTitle": "Chat",
+    "newMessage": "New Message"
   }
 }
