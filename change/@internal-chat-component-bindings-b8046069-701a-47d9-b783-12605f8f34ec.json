@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add options param to sendMessage for sending metadata",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

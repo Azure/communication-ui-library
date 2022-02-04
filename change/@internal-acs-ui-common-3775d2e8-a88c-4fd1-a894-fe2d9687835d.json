@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exporting a _MAX_EVENT_LISTENERS internal constant",
+  "packageName": "@internal/acs-ui-common",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
