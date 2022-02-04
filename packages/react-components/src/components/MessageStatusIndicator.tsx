@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
-import { MessageStatus } from '@internal/acs-ui-common';
+import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -107,7 +107,12 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'seen':
       return (
-        <TooltipHost content={`Read by ${messageThreadReadCount} of ${messageThreadParticipantCount}`}>
+        <TooltipHost
+          content={_formatString(strings.seenTooltipText, {
+            messageThreadReadCount: `${messageThreadReadCount}`,
+            messageThreadParticipantCount: `${messageThreadParticipantCount}`
+          })}
+        >
           <Icon
             role="status"
             aria-label={strings.seenAriaLabel}
