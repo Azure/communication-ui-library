@@ -394,8 +394,10 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
  * @beta
  */
 export interface CallAndChatLocator {
-  chatThreadId: string;
+  /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
   callLocator: GroupCallLocator;
+  /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
+  chatThreadId: string;
 }
 
 /**
@@ -424,7 +426,7 @@ export const createAzureCommunicationMeetingAdapter = async ({
   endpoint,
   meetingLocator
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const locator = 'meetingLink' in meetingLocator ? meetingLocator : meetingLocator.callLocator;
+  const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
@@ -432,10 +434,9 @@ export const createAzureCommunicationMeetingAdapter = async ({
     locator
   });
 
-  const threadId =
-    'meetingLink' in meetingLocator
-      ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
-      : meetingLocator.chatThreadId;
+  const threadId = isTeamsMeetingLinkLocator(meetingLocator)
+    ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
+    : meetingLocator.chatThreadId;
   const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,
@@ -446,4 +447,10 @@ export const createAzureCommunicationMeetingAdapter = async ({
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
 };
