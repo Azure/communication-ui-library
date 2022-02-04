@@ -173,13 +173,8 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
   ChatAdapterSubscribers &
-  {
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    /**
-     * @TODO: Extend FileUploadAdapter directly once we have a stable version of the adapter.
-     */
-    [property in keyof FileUploadAdapter]: FileUploadAdapter[property];
-  };
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  FileUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.
