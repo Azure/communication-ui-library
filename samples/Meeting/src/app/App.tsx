@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, CallAndChatLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CallAndChatLocator } from '@azure/communication-react';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
