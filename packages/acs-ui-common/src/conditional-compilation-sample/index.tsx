@@ -49,12 +49,16 @@ export interface C {
 
 /**
  * Add a parameter to an existing function
+ *
+ * FIXME: This doesn't yet work. `f` is not removed from the function signature, although it is removed from the function call in the body.
  */
 export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number) {
   console.log(e);
-  // Also conditionally log the new variable to keep lint happy on both flavors.
   /* @conditional-compile-remove-from(stable) */
   console.log(f);
+  // Similarly, call the function with conditional parameters:
+  // FIXME: Doesn't yet work, because `f` was not removed from the function signature.
+  // d(e, /* @conditional-compile-remove-from(stable) */ f);
 }
 
 /** ****************************************************************** */
@@ -140,6 +144,23 @@ function memoizedBoolean(state: DummyState, props: DummyProps) {
   console.log(state, props);
   return true;
 }
+
+function dummyCreateSelector(
+  dependencySelectors: [
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean
+  ],
+  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean }
+): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean };
+function dummyCreateSelector(
+  dependencySelectors: [
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean,
+    (state: DummyState, props: DummyProps) => boolean
+  ],
+  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean }
+): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean };
 function dummyCreateSelector(
   dependencySelectors: [
     (state: DummyState, props: DummyProps) => boolean,
