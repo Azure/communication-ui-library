@@ -45,7 +45,11 @@
     "offLabel": "取消靜音",
     "tooltipDisabledContent": "麥克風已停用",
     "tooltipOnContent": "將麥克風設為靜音",
-    "tooltipOffContent": "取消麥克風靜音"
+    "tooltipOffContent": "取消麥克風靜音",
+    "microphoneMenuTitle": "麥克風",
+    "microphoneMenuTooltip": "選擇麥克風",
+    "speakerMenuTitle": "揚聲器",
+    "speakerMenuTooltip": "選擇揚聲器"
   },
   "devicesButton": {
     "label": "裝置",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
-    "localVideoLabel": "您"
+    "localVideoLabel": "您",
+    "localVideoCameraSwitcherLabel": "自行車相機按鈕"
   }
 }

@@ -45,7 +45,11 @@
     "offLabel": "Включить звук",
     "tooltipDisabledContent": "Микрофон отключен",
     "tooltipOnContent": "Отключить микрофон",
-    "tooltipOffContent": "Включить микрофон"
+    "tooltipOffContent": "Включить микрофон",
+    "microphoneMenuTitle": "Микрофон",
+    "microphoneMenuTooltip": "Выбрать микрофон",
+    "speakerMenuTitle": "Динамик",
+    "speakerMenuTooltip": "Выбрать динамик"
   },
   "devicesButton": {
     "label": "Устройства",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
-    "localVideoLabel": "Вы"
+    "localVideoLabel": "Вы",
+    "localVideoCameraSwitcherLabel": "Кнопка \"Циклическая камера\""
   }
 }

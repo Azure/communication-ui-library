@@ -45,7 +45,11 @@
     "offLabel": "Dempen opheffen",
     "tooltipDisabledContent": "Microfoon is uitgeschakeld",
     "tooltipOnContent": "Microfoon uitschakelen",
-    "tooltipOffContent": "Microfoon inschakelen"
+    "tooltipOffContent": "Microfoon inschakelen",
+    "microphoneMenuTitle": "Microfoon",
+    "microphoneMenuTooltip": "Microfoon kiezen",
+    "speakerMenuTitle": "Luidspreker",
+    "speakerMenuTooltip": "Luidspreker kiezen"
   },
   "devicesButton": {
     "label": "Apparaten",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
-    "localVideoLabel": "U"
+    "localVideoLabel": "U",
+    "localVideoCameraSwitcherLabel": "Cameraknop voor cyclus"
   }
 }

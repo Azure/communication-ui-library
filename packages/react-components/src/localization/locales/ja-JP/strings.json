@@ -45,7 +45,11 @@
     "offLabel": "ミュート解除",
     "tooltipDisabledContent": "マイクが無効になっています",
     "tooltipOnContent": "マイクをミュートにする",
-    "tooltipOffContent": "マイクのミュートを解除する"
+    "tooltipOffContent": "マイクのミュートを解除する",
+    "microphoneMenuTitle": "マイク",
+    "microphoneMenuTooltip": "マイクの選択",
+    "speakerMenuTitle": "スピーカー",
+    "speakerMenuTooltip": "スピーカーの選択"
   },
   "devicesButton": {
     "label": "デバイス",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
-    "localVideoLabel": "自分"
+    "localVideoLabel": "自分",
+    "localVideoCameraSwitcherLabel": "Cycle camera button"
   }
 }

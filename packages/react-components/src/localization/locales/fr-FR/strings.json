@@ -45,7 +45,11 @@
     "offLabel": "Réactiver le son",
     "tooltipDisabledContent": "Le microphone est désactivé.",
     "tooltipOnContent": "Désactiver le micro",
-    "tooltipOffContent": "Activer le micro"
+    "tooltipOffContent": "Activer le micro",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choisissez le micro",
+    "speakerMenuTitle": "Haut-parleur",
+    "speakerMenuTooltip": "Choisissez le haut-parleur"
   },
   "devicesButton": {
     "label": "Appareils",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
     "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
-    "localVideoLabel": "Vous"
+    "localVideoLabel": "Vous",
+    "localVideoCameraSwitcherLabel": "Bouton Cycle de l’appareil photo"
   }
 }

@@ -45,7 +45,11 @@
     "offLabel": "Stummschaltung aufheben",
     "tooltipDisabledContent": "Mikrofon ist deaktiviert",
     "tooltipOnContent": "Mikrofon stummschalten",
-    "tooltipOffContent": "Mikrofonstummschaltung aufheben"
+    "tooltipOffContent": "Mikrofonstummschaltung aufheben",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Mikrofon auswählen",
+    "speakerMenuTitle": "Lautsprecher",
+    "speakerMenuTooltip": "Lautsprecher auswählen"
   },
   "devicesButton": {
     "label": "Geräte",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
     "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen",
-    "localVideoLabel": "Sie"
+    "localVideoLabel": "Sie",
+    "localVideoCameraSwitcherLabel": "Schaltfläche \"Kamera wechseln\""
   }
 }

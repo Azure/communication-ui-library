@@ -45,7 +45,11 @@
     "offLabel": "Riattiva audio",
     "tooltipDisabledContent": "Il microfono è disabilitato",
     "tooltipOnContent": "Disattiva microfono",
-    "tooltipOffContent": "Riattiva microfono"
+    "tooltipOffContent": "Riattiva microfono",
+    "microphoneMenuTitle": "Microfono",
+    "microphoneMenuTooltip": "Scegli il microfono",
+    "speakerMenuTitle": "Altoparlante",
+    "speakerMenuTooltip": "Scegli l’altoparlante"
   },
   "devicesButton": {
     "label": "Dispositivi",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
     "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
-    "localVideoLabel": "Tu"
+    "localVideoLabel": "Tu",
+    "localVideoCameraSwitcherLabel": "Cycle camera button"
   }
 }

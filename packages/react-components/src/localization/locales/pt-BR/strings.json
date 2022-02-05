@@ -45,7 +45,11 @@
     "offLabel": "Desativar mudo",
     "tooltipDisabledContent": "O microfone está desabilitado",
     "tooltipOnContent": "Ativar mudo do microfone",
-    "tooltipOffContent": "Desativar mudo do microfone"
+    "tooltipOffContent": "Desativar mudo do microfone",
+    "microphoneMenuTitle": "Microfone",
+    "microphoneMenuTooltip": "Escolher Microfone",
+    "speakerMenuTitle": "Alto-falante",
+    "speakerMenuTooltip": "Escolher Alto-falante"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
-    "localVideoLabel": "Você"
+    "localVideoLabel": "Você",
+    "localVideoCameraSwitcherLabel": "Botão de ciclo da câmera"
   }
 }

@@ -45,7 +45,11 @@
     "offLabel": "Sesi aç",
     "tooltipDisabledContent": "Mikrofon devre dışı",
     "tooltipOnContent": "Mikrofonun sesini kapat",
-    "tooltipOffContent": "Mikrofonun sesini aç"
+    "tooltipOffContent": "Mikrofonun sesini aç",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Mikrofon Seç",
+    "speakerMenuTitle": "Hoparlör",
+    "speakerMenuTooltip": "Hoparlör Seç"
   },
   "devicesButton": {
     "label": "Cihazlar",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
-    "localVideoLabel": "Siz"
+    "localVideoLabel": "Siz",
+    "localVideoCameraSwitcherLabel": "Kamerayı değiştir düğmesi"
   }
 }

@@ -45,7 +45,11 @@
     "offLabel": "음소거 해제",
     "tooltipDisabledContent": "마이크가 비활성화되었습니다",
     "tooltipOnContent": "마이크 음소거",
-    "tooltipOffContent": "마이크 음소거 해제"
+    "tooltipOffContent": "마이크 음소거 해제",
+    "microphoneMenuTitle": "마이크",
+    "microphoneMenuTooltip": "마이크 선택",
+    "speakerMenuTitle": "발언자",
+    "speakerMenuTooltip": "스피커 선택"
   },
   "devicesButton": {
     "label": "장치",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
-    "localVideoLabel": "나"
+    "localVideoLabel": "나",
+    "localVideoCameraSwitcherLabel": "주기 카메라 단추"
   }
 }

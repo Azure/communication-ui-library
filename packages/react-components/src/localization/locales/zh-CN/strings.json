@@ -45,7 +45,11 @@
     "offLabel": "取消静音",
     "tooltipDisabledContent": "已禁用麦克风",
     "tooltipOnContent": "将麦克风静音",
-    "tooltipOffContent": "取消麦克风静音"
+    "tooltipOffContent": "取消麦克风静音",
+    "microphoneMenuTitle": "麦克风",
+    "microphoneMenuTooltip": "选择“麦克风”",
+    "speakerMenuTitle": "扬声器",
+    "speakerMenuTooltip": "选择“扬声器”"
   },
   "devicesButton": {
     "label": "设备",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
-    "localVideoLabel": "你"
+    "localVideoLabel": "你",
+    "localVideoCameraSwitcherLabel": "循环照相机按钮"
   }
 }

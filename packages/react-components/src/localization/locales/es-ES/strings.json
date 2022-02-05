@@ -45,7 +45,11 @@
     "offLabel": "Reactivar audio",
     "tooltipDisabledContent": "El micrófono está deshabilitado",
     "tooltipOnContent": "Silenciar micrófono",
-    "tooltipOffContent": "Reactivar micrófono"
+    "tooltipOffContent": "Reactivar micrófono",
+    "microphoneMenuTitle": "Micrófono",
+    "microphoneMenuTooltip": "Elegir micrófono",
+    "speakerMenuTitle": "Altavoz",
+    "speakerMenuTooltip": "Elegir altavoz"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -123,6 +127,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
     "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
-    "localVideoLabel": "Tú"
+    "localVideoLabel": "Tú",
+    "localVideoCameraSwitcherLabel": "Botón de cámara cíclica"
   }
 }
