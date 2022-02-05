@@ -46,7 +46,8 @@
     "peopleButtonLabel": "Contactos",
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "Contactos",
-    "peoplePaneSubTitle": "En esta reunión",
-    "chatPaneTitle": "Chat"
+    "peoplePaneSubTitle": "En esta llamada",
+    "chatPaneTitle": "Chat",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }

@@ -46,7 +46,8 @@
     "peopleButtonLabel": "人員",
     "chatButtonLabel": "聊天",
     "peoplePaneTitle": "人員",
-    "peoplePaneSubTitle": "在這個會議",
-    "chatPaneTitle": "聊天"
+    "peoplePaneSubTitle": "在此通話中",
+    "chatPaneTitle": "聊天",
+    "pictureInPictureTileAriaLabel": "影片摘要。按一下以返回通話畫面。"
   }
 }

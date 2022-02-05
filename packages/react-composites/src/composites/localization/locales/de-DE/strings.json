@@ -46,7 +46,8 @@
     "peopleButtonLabel": "Personen",
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "Personen",
-    "peoplePaneSubTitle": "In dieser Besprechung",
-    "chatPaneTitle": "Chat"
+    "peoplePaneSubTitle": "In diesem Anruf",
+    "chatPaneTitle": "Chat",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }

@@ -46,7 +46,8 @@
     "peopleButtonLabel": "Kişiler",
     "chatButtonLabel": "Sohbet",
     "peoplePaneTitle": "Kişiler",
-    "peoplePaneSubTitle": "Bu toplantıda",
-    "chatPaneTitle": "Sohbet"
+    "peoplePaneSubTitle": "Bu aramada",
+    "chatPaneTitle": "Sohbet",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }

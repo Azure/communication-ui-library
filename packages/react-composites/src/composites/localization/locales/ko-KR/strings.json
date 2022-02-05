@@ -46,7 +46,8 @@
     "peopleButtonLabel": "사용자",
     "chatButtonLabel": "채팅",
     "peoplePaneTitle": "사용자",
-    "peoplePaneSubTitle": "이 모임 참가자",
-    "chatPaneTitle": "채팅"
+    "peoplePaneSubTitle": "이 통화에서",
+    "chatPaneTitle": "채팅",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }

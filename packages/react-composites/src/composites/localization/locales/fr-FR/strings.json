@@ -46,7 +46,8 @@
     "peopleButtonLabel": "Personnes",
     "chatButtonLabel": "Clavardage",
     "peoplePaneTitle": "Personnes",
-    "peoplePaneSubTitle": "Dans cette réunion",
-    "chatPaneTitle": "Clavardage"
+    "peoplePaneSubTitle": "Pendant cet appel",
+    "chatPaneTitle": "Clavardage",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }
