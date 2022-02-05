@@ -101,12 +101,25 @@ export type Impossible = number & /* @conditional-compile-remove-from(stable) */
 /**
  * Add a parameter to an existing function
  *
- * FIXME: This doesn't yet work. `f` is not removed from the function signature, although it is removed from the function call in the body.
+ * We do not support adding a parameter to a function _implementation_ signature.
+ * But we do support conditional parameters in function overload signature.
+ *
+ * So there are two ways to achieve this:
+ * - Add a single overload signature with conditional parameter: `f` in the example.
+ * - Add a new overload signature with conditional paramter: `f` and `g` in the example.
+ *
+ * In each case, you must modify the implementation signature to satisfy all the overloads.
+ * The example does this by adding `f` and `g` as optional parameters.
+ *
+ * cf: https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads.
  */
-export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number) {
+export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number): void;
+/* @conditional-compile-remove-from(stable) */
+export function d(e: number, f: number, g: number): void;
+export function d(e: number, f?: number, g?: number) {
   console.log(e);
   /* @conditional-compile-remove-from(stable) */
-  console.log(f);
+  console.log(f, g);
 }
 
 /******************************************************************************
@@ -117,12 +130,14 @@ export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: n
 
 /**
  * Call a function with conditional parameters.
- *
- * FIXME: This doesn't yet work. `f` is not removed from the function signature, although it is removed from the function call in the body.
  */
 export function dCaller() {
-  // FIXME: Doesn't yet work, because `f` was not removed from the function signature.
-  // d(1, /* @conditional-compile-remove-from(stable) */ 2);
+  d(1, /* @conditional-compile-remove-from(stable) */ 2);
+  d(1, /* @conditional-compile-remove-from(stable) */ 2, /* @conditional-compile-remove-from(stable) */ 3);
+
+  // The following would stable flavor build because the function overload signature for `d` only allows one
+  // argument in stable flavor.
+  // d(1, 2, 3);
 }
 
 /**
