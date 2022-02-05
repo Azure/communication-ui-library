@@ -44,6 +44,8 @@ import React from 'react';
  * - Finally, let's bring those together in some repeated patterns we see in this code-base.
  */
 
+/* eslint-disable jsdoc/require-jsdoc */
+
 /******************************************************************************
  *
  * Conditional types
@@ -126,7 +128,7 @@ export function dCaller() {
 /**
  * Conditional inclusion of JSX components can be a bit tricky, because we must remove partial expressions.
  */
-export function GottaHaveAnExtraStackItem(props: {}): JSX.Element {
+export function GottaHaveAnExtraStackItem(): JSX.Element {
   return (
     <ul>
       <li>Old kid</li>
@@ -140,7 +142,7 @@ export function GottaHaveAnExtraStackItem(props: {}): JSX.Element {
  *
  * It's best to recast this as a conditional variable assignment.
  */
-export function OverrideSomePropInBeta(props: {}): JSX.Element {
+export function OverrideSomePropInBeta(): JSX.Element {
   const flavorDependentProp = propTrampoline();
   return <h1 className={flavorDependentProp}>Nothing to see here!</h1>;
 }
@@ -175,11 +177,6 @@ export type MyExtensibleSelector = (
   memoizedC: boolean;
 };
 
-/**
- * Selector for {@link MicrophoneButton} component.
- *
- * @public
- */
 export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
   [memoizedBoolean, memoizedBoolean, memoizedBoolean],
   (a, b, c) => {
@@ -199,8 +196,8 @@ export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
  * No conditional compilation examples below this.
  */
 
-type DummyState = {};
-type DummyProps = {};
+type DummyState = unknown;
+type DummyProps = unknown;
 function memoizedBoolean(state: DummyState, props: DummyProps) {
   console.log(state, props);
   return true;
