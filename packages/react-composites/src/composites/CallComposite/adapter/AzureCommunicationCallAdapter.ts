@@ -131,7 +131,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private callAgent: CallAgent;
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
-  private locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: Call;
   private context: CallContext;
@@ -152,7 +152,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   constructor(
     callClient: StatefulCallClient,
-    locator: TeamsMeetingLinkLocator | GroupCallLocator,
+    locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
@@ -526,6 +526,33 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 /**
+ * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
+ *
+ * @remarks
+ * This is currently in beta and only supports calling one Teams User.
+ *
+ * @example
+ * ```
+ * ['8:orgid:ab220efe-5725-4742-9792-9fba7c9ac458']
+ * ```
+ *
+ * @beta
+ */
+export type CallParticipantLocator = {
+  participantIDs: [string];
+};
+
+/**
+ * Locator used by {@link createAzureCommunicationCallAdapter} to locate the call to join
+ *
+ * @public
+ */
+export type CallAdapterLocator =
+  | TeamsMeetingLinkLocator
+  | GroupCallLocator
+  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
+
+/**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
  * Note: `displayName` can be a maximum of 256 characters.
@@ -536,7 +563,7 @@ export type AzureCommunicationCallAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  locator: CallAdapterLocator;
 };
 
 /**
@@ -571,7 +598,7 @@ export const createAzureCommunicationCallAdapter = async ({
 export const createAzureCommunicationCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: TeamsMeetingLinkLocator | GroupCallLocator
+  locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
