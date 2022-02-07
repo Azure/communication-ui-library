@@ -811,7 +811,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField' | false;
     disabled?: boolean;
-    // @beta (undocumented)
+    // @beta
     onRenderAttachedFiles?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
