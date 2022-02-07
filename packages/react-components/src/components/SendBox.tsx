@@ -114,6 +114,8 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField' | false;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
+   * Optional callback to render uploaded files in the SendBox.
+   *
    * @beta
    *
    */
@@ -256,12 +258,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           ariaLabel={localeStrings.sendButtonAriaLabel}
         />
       </InputBoxComponent>
-      <Stack className={fileCardBoxStyle}>
-        {
-          /* @conditional-compile-remove-from(stable): FILE_SHARING */
-          props.onRenderAttachedFiles && props.onRenderAttachedFiles()
-        }
-      </Stack>
+      {
+        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        props.onRenderAttachedFiles && <Stack className={fileCardBoxStyle}>{props.onRenderAttachedFiles()}</Stack>
+      }
     </Stack>
   );
 };

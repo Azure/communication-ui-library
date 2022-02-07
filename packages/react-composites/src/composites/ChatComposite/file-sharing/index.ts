@@ -15,6 +15,8 @@ export type FileSharingMetadata = {
 };
 
 /**
+ * @private
+ *
  * @param fileName
  * @param length
  * @returns string
@@ -24,6 +26,8 @@ export const truncatedFileName = (fileName: string, length: number): string => {
 };
 
 /**
+ * @private
+ *
  * @param fileName
  * @returns string
  */

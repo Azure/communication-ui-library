@@ -21,9 +21,8 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/FileUploadButton';
-import { FileCard } from './file-sharing/FileCard';
-import { FileCardGroup } from './file-sharing/FileCardGroup';
+import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
+import { FileCard, FileCardGroup } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { truncatedFileName, extension } from './file-sharing/index';

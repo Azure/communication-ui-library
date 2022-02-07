@@ -53,8 +53,7 @@ export const textContainerStyle: IStyle = {
 /**
  * @private
  */
-export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
-  const borderColor = hasErrorMessage ? errorColor : 'none';
+export const textFieldStyle = (errorColor: string): IStyle => {
   return {
     root: {
       width: '100%',
@@ -62,15 +61,15 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
       fontSize: '8.25rem'
     },
     wrapper: {},
-    /**
-     * Border of the field group is set to none, there is a wrapper div that encloses text field and
-     * uploaded files.
-     */
     fieldGroup: {
       outline: 'none',
       border: 'none',
       height: 'auto',
       minHeight: '0',
+      /**
+       * Border of the field group is set to none as there is a wrapper stack that encloses text field and
+       * uploaded files and border is added to the parent stack.
+       */
       ':after': { border: 'none' }
     },
     field: {
