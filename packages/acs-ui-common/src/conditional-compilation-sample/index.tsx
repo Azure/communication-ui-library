@@ -168,6 +168,19 @@ function propTrampoline() {
   return propValue;
 }
 
+/**
+ * Conditionally return different value (with complex change to business logic).
+ */
+export function oldFunctionToBeUpdated(): number {
+  /* @conditional-compile-remove-from(stable) */
+  return newPossiblyMoreComplexValue();
+  // Used to return 4 on stable build.
+  return 4;
+}
+/* @conditional-compile-remove-from(stable) */
+function newPossiblyMoreComplexValue(): number {
+  return 5;
+}
 /******************************************************************************
  *
  * Common complex patterns
