@@ -128,6 +128,6 @@
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
     "localVideoLabel": "自分",
-    "localVideoCameraSwitcherLabel": "Cycle camera button"
+    "localVideoCameraSwitcherLabel": "サイクル カメラ ボタン"
   }
 }
