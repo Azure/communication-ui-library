@@ -713,7 +713,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // key value pairs are stored in lastMessageList
   const setLastMessageListContent = (): void => {
     // get all exisiting chat messages and set last message for each participant
-    const exisitingChat = messagesRef.current.filter((message) => {
+    const exisitingChat = newMessages.filter((message) => {
       return message.messageType === 'chat' && !!message.messageId;
     });
     // helper is an array of key value pairs senderId: messageid, where messageID is the last message sent by each participant
@@ -729,7 +729,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   useEffect(() => {
     setLastMessageListContent();
-  }, [messagesRef.current]);
+  }, [newMessages]);
 
   // we try to only send those message status if user is scrolled to the bottom.
   const sendMessageStatusIfAtBottom = useCallback(async (): Promise<void> => {
