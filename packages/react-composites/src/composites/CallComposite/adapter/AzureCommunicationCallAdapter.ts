@@ -243,6 +243,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
+    /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+    // Check if we should be starting a new call or joining an existing call
+    if (isAdhocCall(this.locator)) {
+      return this.startCall(this.locator.participantIDs);
+    }
+
     const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
     // TODO: find a way to expose stream to here
     const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
@@ -525,6 +531,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -606,4 +613,9 @@ export const createAzureCommunicationCallAdapterFromClient = async (
 
 const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
+};
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantLocator => {
+  return 'participantIDs' in callLocator;
 };

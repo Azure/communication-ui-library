@@ -198,8 +198,10 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantLocator" which is marked as @beta
+//
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -252,7 +254,7 @@ export interface CallAgentState {
 
 // @beta
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
     chatThreadId: string;
 }
 
@@ -450,6 +452,11 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+};
+
+// @beta
+export type CallParticipantLocator = {
+    participantIDs: [string];
 };
 
 // @public
@@ -1094,7 +1101,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemMicOff: JSX.Element; /**
+    * Icons that can be overridden for {@link CallComposite}.
+    *
+    * @public
+    */
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;

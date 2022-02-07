@@ -155,8 +155,10 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantLocator" which is marked as @beta
+//
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -193,7 +195,7 @@ export type CallAdapterUiState = {
 
 // @beta
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
     chatThreadId: string;
 }
 
@@ -293,6 +295,11 @@ export type CallEndedListener = (event: {
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
+
+// @beta
+export type CallParticipantLocator = {
+    participantIDs: [string];
+};
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
 //
