@@ -456,7 +456,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 
 // @beta
 export type CallParticipantLocator = {
-    participantIDs: [string];
+    participantIDs: string[];
 };
 
 // @public

@@ -298,7 +298,7 @@ export type CallIdChangedListener = (event: {
 
 // @beta
 export type CallParticipantLocator = {
-    participantIDs: [string];
+    participantIDs: string[];
 };
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta

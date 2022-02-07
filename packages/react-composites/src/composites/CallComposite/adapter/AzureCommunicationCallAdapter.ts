@@ -546,7 +546,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
  * @beta
  */
 export type CallParticipantLocator = {
-  participantIDs: [string];
+  participantIDs: string[];
 };
 
 /**
