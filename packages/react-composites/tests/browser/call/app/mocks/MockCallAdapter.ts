@@ -38,6 +38,9 @@ export class MockCallAdapter implements CallAdapter {
     if (testState.page) {
       initialState.page = testState.page;
     }
+    if (testState.latestErrors) {
+      initialState.latestErrors = testState.latestErrors;
+    }
 
     this.state = initialState;
   }

@@ -8,6 +8,7 @@ export type TestCallingState = {
   remoteParticipants?: TestRemoteParticipant[];
   isScreenSharing?: boolean;
   page?: TestPageState;
+  latestErrors?: AdapterErrors;
 };
 
 /**
@@ -32,3 +33,28 @@ export type TestPageState =
   | 'leftCall'
   | 'lobby'
   | 'removedFromCall';
+
+/**
+ * Map of errors to represent latest errors state used in {@link TestCallingState}
+ */
+export type AdapterErrors = {
+  [target: string]: AdapterError;
+};
+
+/**
+ * Error value used in {@link AdapterErrors}
+ */
+export interface AdapterError extends Error {
+  /**
+   * The operation that failed.
+   */
+  target: string;
+  /**
+   * Error thrown by the failed operation.
+   */
+  innerError: Error;
+  /**
+   * Timestamp added to the error in the adapter implementation.
+   */
+  timestamp: Date;
+}
