@@ -653,8 +653,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage
   } = props;
   // maintain an array containing every participant's last message sent
-  type lastMessageForEach = { senderId: string; messageId: string };
-  const [lastMessageList, setLastMessageList] = useState<lastMessageForEach[]>([]);
+  type lastMessageForEach = { [id: string]: string };
+  const [lastMessageList, setLastMessageList] = useState<lastMessageForEach>({ '000': '000' });
 
   const [latestReadNum, setLatestReadNum] = useState(1);
   const [latestParticipantNum, setLatestParticipantNum] = useState(1);
@@ -709,6 +709,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setChatMessagesInitialized(chatMessagesInitialized);
   };
 
+  useEffect(() => {
+    // get all exisiting chat messages and set last message for each participant
+    const exisitingChat = messagesRef.current.filter((message) => {
+      return message.messageType === 'chat' && !!message.messageId;
+    });
+    let helper = lastMessageList;
+    // result is an array of key value pairs senderId: messageid, where messageID is the last message sent by each participant
+    exisitingChat.forEach((c) => {
+      if (c.messageType === 'chat' && c.senderId) {
+        helper[c.senderId] = c.messageId;
+      }
+    });
+    setLastMessageList(helper);
+  }, [messagesRef.current]);
+
   // we try to only send those message status if user is scrolled to the bottom.
   const sendMessageStatusIfAtBottom = useCallback(async (): Promise<void> => {
     if (
@@ -727,7 +742,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     const lastMessage: ChatMessage = messagesWithId[messagesWithId.length - 1] as ChatMessage;
-
     try {
       if (
         onMessageSeen &&
@@ -739,8 +753,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         // Go through the list and send a read receipt to all last sent messages
         // Assumption: if user has seen the last message, he/she has seen it all
         if (lastMessageList) {
-          for (let i = lastMessageList.length - 1; i >= 0; i--) {
-            const info = lastMessageList[i].messageId;
+          let messages = Object.values(lastMessageList);
+          for (let i = 0; i <= messages.length - 1; i++) {
+            const info = messages[i];
             // if info is not the default value 000, send a read receipt. Info is the message id for everyone's last sent message
             if (info !== '000') {
               await onMessageSeen(info);
@@ -803,48 +818,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
     fetchNewMessageWhenAtTop();
   }, [fetchNewMessageWhenAtTop]);
-
-  useEffect(() => {
-    // setting and updating lastMessageList
-    // push in the array if this is the first message
-    // get the last element of new message --> this is the latest message
-    const m = messagesRef.current.filter((message) => {
-      return message.messageType === 'chat' && !!message.messageId;
-    });
-    const curr: ChatMessage = m[m.length - 1] as ChatMessage;
-
-    if (curr) {
-      if (!lastMessageList || lastMessageList?.length === 0) {
-        setLastMessageList([
-          { senderId: curr?.senderId ? curr?.senderId : '000', messageId: curr?.messageId ? curr?.messageId : '000' }
-        ]);
-      }
-      // push in the array if can't find the sender id in the array
-      // if can find the sender id, update corresponding messageid to the new message id
-      else {
-        for (let i = 0; i <= lastMessageList.length - 1; i++) {
-          const info = lastMessageList[i];
-          if (info.senderId === curr?.senderId) {
-            const tempcopy = lastMessageList;
-            info.messageId = curr?.messageId;
-            tempcopy[i] = info;
-            setLastMessageList(tempcopy);
-            break;
-          }
-          if (i === lastMessageList.length - 1 && info.senderId !== curr?.senderId) {
-            setLastMessageList([
-              ...lastMessageList,
-              {
-                senderId: curr?.senderId ? curr?.senderId : '000',
-                messageId: curr?.messageId ? curr?.messageId : '000'
-              }
-            ]);
-            break;
-          }
-        }
-      }
-    }
-  }, [messagesRef.current]);
 
   // The below 2 of useEffects are design for fixing infinite scrolling problem
   // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
