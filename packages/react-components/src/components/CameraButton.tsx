@@ -1,13 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
-import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { OptionsDevice } from './DevicesButton';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+import { ControlBarButtonStyles } from './ControlBarButton';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -161,6 +167,28 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'cameraButtonLabel'}
+      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
+      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
+      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
     />
   );
+};
+
+const generateDefaultDeviceMenuPropsTrampoline = (
+  props: CameraButtonProps,
+  strings: CameraButtonStrings
+): IContextualMenuProps | undefined => {
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  if (props.enableDeviceSelectionMenu) {
+    return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
+  }
+  return undefined;
+};
+
+const enableDeviceSelectionMenuTrampoline = (props: CameraButtonProps): boolean => {
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  if (props.enableDeviceSelectionMenu) {
+    return true;
+  }
+  return false;
 };
