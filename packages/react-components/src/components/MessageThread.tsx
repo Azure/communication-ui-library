@@ -709,19 +709,26 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setChatMessagesInitialized(chatMessagesInitialized);
   };
 
-  useEffect(() => {
+  // this function filter al existing chat messages, and find everyone's last sent message and save them as key:value pair (senderid: messageid)
+  // key value pairs are stored in lastMessageList
+  const setLastMessageListContent = (): void => {
     // get all exisiting chat messages and set last message for each participant
     const exisitingChat = messagesRef.current.filter((message) => {
       return message.messageType === 'chat' && !!message.messageId;
     });
+    // helper is an array of key value pairs senderId: messageid, where messageID is the last message sent by each participant
     let helper = lastMessageList;
-    // result is an array of key value pairs senderId: messageid, where messageID is the last message sent by each participant
     exisitingChat.forEach((c) => {
       if (c.messageType === 'chat' && c.senderId) {
         helper[c.senderId] = c.messageId;
       }
     });
+    // set the variable lastMessageList to be helper
     setLastMessageList(helper);
+  };
+
+  useEffect(() => {
+    setLastMessageListContent();
   }, [messagesRef.current]);
 
   // we try to only send those message status if user is scrolled to the bottom.
@@ -753,6 +760,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         // Go through the list and send a read receipt to all last sent messages
         // Assumption: if user has seen the last message, he/she has seen it all
         if (lastMessageList) {
+          // this is run when user join the chat
+          if (Object.keys(lastMessageList).length === 1 && lastMessageList['000'] === '000') {
+            setLastMessageListContent();
+          }
           let messages = Object.values(lastMessageList);
           for (let i = 0; i <= messages.length - 1; i++) {
             const info = messages[i];
