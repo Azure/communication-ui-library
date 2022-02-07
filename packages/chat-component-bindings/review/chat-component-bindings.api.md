@@ -20,6 +20,7 @@ import { ParticipantListParticipant } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { SendBox } from '@internal/react-components';
+import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TypingIndicator } from '@internal/react-components';
 
@@ -39,7 +40,7 @@ export type ChatClientProviderProps = {
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;

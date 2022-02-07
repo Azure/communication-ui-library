@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed alignment of typing indicator in chat composite by reducing minHeight.",
-  "packageName": "@internal/react-components",
-  "email": "kaurprabhjot@microsoft.com",
-  "dependentChangeType": "patch"
-}
