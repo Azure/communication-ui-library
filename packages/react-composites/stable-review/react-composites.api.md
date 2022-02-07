@@ -140,7 +140,7 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
-// @public (undocumented)
+// @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator;
 
 // @public

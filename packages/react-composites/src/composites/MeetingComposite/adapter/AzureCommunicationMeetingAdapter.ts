@@ -38,6 +38,8 @@ import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
 import { CallParticipantLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;

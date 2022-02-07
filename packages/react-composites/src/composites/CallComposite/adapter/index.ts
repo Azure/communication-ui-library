@@ -5,11 +5,10 @@ export {
   createAzureCommunicationCallAdapter,
   createAzureCommunicationCallAdapterFromClient
 } from './AzureCommunicationCallAdapter';
-export type {
-  AzureCommunicationCallAdapterArgs,
-  CallAdapterLocator,
-  /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator
-} from './AzureCommunicationCallAdapter';
+export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+export type { CallParticipantLocator } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
