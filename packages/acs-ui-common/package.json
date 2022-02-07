@@ -31,7 +31,8 @@
     "@azure/communication-common": "1.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0 <18.0.0"
+    "react": ">=16.8.0 <18.0.0",
+    "@types/react": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
     "@babel/cli": "~7.16.0",
