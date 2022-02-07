@@ -48,7 +48,12 @@ export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
 export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 
 export { CameraButton } from './CameraButton';
-export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
+export type {
+  CameraButtonContextualMenuStyles,
+  CameraButtonProps,
+  CameraButtonStrings,
+  CameraButtonStyles
+} from './CameraButton';
 
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayout } from './ControlBar';
