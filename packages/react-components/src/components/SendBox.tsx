@@ -203,6 +203,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     ':focus': {
       border: '2px solid',
       borderColor: theme.palette.blue
+    },
+    ':focus-within': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
     }
   };
 
