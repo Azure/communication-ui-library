@@ -151,6 +151,19 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                         Turn off
                       </span>
                     </span>
+                    <i
+                      aria-hidden={true}
+                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-19"
+                      data-icon-name="ChevronDown"
+                      hidden={true}
+                      style={
+                        Object {
+                          "fontFamily": "\\"FabricMDL2Icons\\"",
+                        }
+                      }
+                    >
+                      
+                    </i>
                   </span>
                 </button>
               </div>

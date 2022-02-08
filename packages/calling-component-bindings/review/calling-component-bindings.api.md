@@ -102,6 +102,8 @@ export interface CallProviderProps {
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    cameras: VideoDeviceInfo[];
+    selectedCamera?: VideoDeviceInfo;
 };
 
 // @public

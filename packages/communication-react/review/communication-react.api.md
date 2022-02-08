@@ -499,26 +499,45 @@ export interface CallState {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
+export interface CameraButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface CameraButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
+    selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
+    styles?: Partial<CameraButtonStyles>;
 }
 
 // @public
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    cameras: VideoDeviceInfo[];
+    selectedCamera?: VideoDeviceInfo;
 };
 
 // @public
 export interface CameraButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
     offLabel: string;
     onLabel: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+}
+
+// @public
+export interface CameraButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
