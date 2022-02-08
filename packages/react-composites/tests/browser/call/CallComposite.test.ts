@@ -142,7 +142,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-camera-button'));
     await waitForFunction(page, () => {
-      return document.querySelectorAll('video').length === 1;
+      return document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
   });
@@ -270,7 +270,7 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   }
   for (const page of pages) {
     await waitForFunction(page, () => {
-      return document.querySelectorAll('video').length === 0;
+      return document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video').length === 0;
     });
   }
 };

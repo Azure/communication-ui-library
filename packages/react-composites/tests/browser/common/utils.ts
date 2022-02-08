@@ -172,7 +172,8 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       page,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (args: any) => {
-        const videoNodes = document.querySelectorAll('video');
+        const videoNodes = document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video');
+        console.log(videoNodes.length);
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
         const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
         return correctNoOfVideos && allVideosLoaded;
