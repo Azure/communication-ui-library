@@ -46,7 +46,7 @@ export interface CompositeStrings {
 
   /* @conditional-compile-remove-from(stable) */
   /**
-   * Strings used by {@link MeetingComptosite}.
+   * Strings used by {@link MeetingComposite}.
    */
   meeting: MeetingCompositeStrings;
 }

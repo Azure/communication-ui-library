@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CameraButton } from '@azure/communication-react';
+import { CameraButton, CameraButtonProps } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
+import { controlsToAdd, defaultControlsCameras, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
 import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -78,7 +78,21 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const CameraStory = (args): JSX.Element => {
-  return <CameraButton {...args} />;
+  return <CameraButtonWithDevices {...args} />;
+};
+
+const CameraButtonWithDevices = (props: CameraButtonProps): JSX.Element => {
+  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(defaultControlsCameras[0]);
+  const deviceProps: CameraButtonProps = {
+    selectedCamera,
+    onSelectCamera: async (device: { id: string; name: string }) => {
+      setSelectedCamera(device);
+    },
+    onToggleCamera: async (): Promise<void> => {
+      /* Need a defined callback to show split button */
+    }
+  };
+  return <CameraButton {...props} {...deviceProps} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -92,10 +106,14 @@ export default {
   argTypes: {
     checked: controlsToAdd.checked,
     showLabel: controlsToAdd.showLabel,
+    cameras: controlsToAdd.cameras,
     // Hiding auto-generated controls
     onToggleCamera: hiddenControl,
     localVideoViewOptions: hiddenControl,
-    strings: hiddenControl
+    selectedCamera: hiddenControl,
+    onSelectCamera: hiddenControl,
+    strings: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

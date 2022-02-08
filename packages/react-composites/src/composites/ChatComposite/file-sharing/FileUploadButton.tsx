@@ -1,28 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
-import { FileUploadHandler } from './FileUploadHandler';
-import { UploadedFile } from './UploadedFile';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { fileUploadButtonSelector } from '../selectors/fileUploadButtonSelector';
 
 /**
  * Props for {@link FileUploadButton} component.
  * @internal
  */
 export interface FileUploadButtonProps {
-  /**
-   * The ACS user ID of the user uploading the file.
-   */
-  userId: CommunicationIdentifierKind;
-  /**
-   * The function of type {@link FileUploadHandler} for handling file uploads.
-   */
-  fileUploadHandler?: FileUploadHandler;
   /**
    * A string containing the comma separated list of accepted file types.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
@@ -34,6 +19,13 @@ export interface FileUploadButtonProps {
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    */
   multiple?: boolean;
+  /**
+   * onChange handler for the file upload button.
+   * Similar to the `onChange` attribute of the `<input type="file" />` element.
+   * Called every time files are selected through the file upload button with a {@link FileList}
+   * of selected files.
+   */
+  onChange?: (files: FileList | null) => void;
 }
 
 /**
@@ -42,16 +34,7 @@ export interface FileUploadButtonProps {
 export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
-  const { userId, fileUploadHandler, accept, multiple = false } = props;
-
-  const onChange = (files: FileList | null): void => {
-    if (!files) {
-      return;
-    }
-
-    const uploadedFiles = Array.from(files).map((file) => new UploadedFile(file));
-    fileUploadHandler && fileUploadHandler(userId, uploadedFiles);
-  };
+  const { accept, multiple = false, onChange } = props;
 
   const fileUploadButtonClassName = mergeStyles({
     width: '1.5rem',
@@ -80,7 +63,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         accept={accept}
         type="file"
         onChange={(e) => {
-          onChange(e.currentTarget.files);
+          onChange && onChange(e.currentTarget.files);
         }}
       />
     </>
@@ -92,14 +75,17 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
  * It will return `<></>` for stable builds.
  * @internal
  */
-export const FileUploadButtonWrapper = (): JSX.Element => {
-  return <div>{FileUploadConditionalCode()}</div>;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FileUploadConditionalCode = (): any => {
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  const fileUploadButtonProps = useSelector(fileUploadButtonSelector);
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  return <FileUploadButton {...fileUploadButtonProps} />;
+export const FileUploadButtonWrapper = (
+  // To make conditional compilation not throw errors.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  props: Pick<FileUploadButtonProps, 'accept' | 'multiple' | 'onChange'>
+): JSX.Element => {
+  return (
+    <>
+      {
+        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        <FileUploadButton {...props} />
+      }
+    </>
+  );
 };

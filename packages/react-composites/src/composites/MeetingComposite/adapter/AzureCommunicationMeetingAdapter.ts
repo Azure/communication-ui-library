@@ -6,11 +6,11 @@
 
 import {
   AudioDeviceInfo,
-  VideoDeviceInfo,
-  PermissionConstraints,
+  Call,
   GroupCallLocator,
+  PermissionConstraints,
   TeamsMeetingLinkLocator,
-  Call
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
@@ -37,6 +37,10 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -388,6 +392,20 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 }
 
 /**
+ * Arguments for use in {@link createAzureCommunicationMeetingAdapter} to join a Call with an associated Chat thread.
+ *
+ * @beta
+ */
+export interface CallAndChatLocator {
+  /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
+  callLocator:
+    | GroupCallLocator
+    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+  /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
+  chatThreadId: string;
+}
+
+/**
  * Arguments for {@link createAzureCommunicationMeetingAdapter}
  *
  * @beta
@@ -397,8 +415,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  chatThreadId: string;
-  callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
@@ -412,23 +429,33 @@ export const createAzureCommunicationMeetingAdapter = async ({
   displayName,
   credential,
   endpoint,
-  chatThreadId,
-  callLocator
+  meetingLocator
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const callAdapter = await createAzureCommunicationCallAdapter({
+  const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
+  const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callLocator
+    locator
   });
 
-  const chatAdapter = await createAzureCommunicationChatAdapter({
+  const threadId = isTeamsMeetingLinkLocator(meetingLocator)
+    ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
+    : meetingLocator.chatThreadId;
+  const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,
     displayName,
     credential,
-    threadId: chatThreadId
+    threadId
   });
 
+  const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
 };

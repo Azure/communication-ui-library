@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  CallAdapterLocator,
   CallAdapter,
   CallAdapterState,
   CallComposite,
@@ -21,7 +21,7 @@ const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.u
 export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  callLocator: CallAdapterLocator;
   displayName: string;
   webAppTitle: string;
   onCallEnded: () => void;
@@ -34,13 +34,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
-
-  useEffect(() => {
-    if (!callIdRef.current) {
-      return;
-    }
-    console.log(`Call Id: ${callIdRef.current}`);
-  }, [callIdRef.current]);
 
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
@@ -69,7 +62,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
 
-        callIdRef.current = state?.call?.id;
+        if (state?.call?.id && callIdRef.current !== state?.call?.id) {
+          callIdRef.current = state?.call?.id;
+          console.log(`Call Id: ${callIdRef.current}`);
+        }
       });
       setAdapter(adapter);
       adapterRef.current = adapter;

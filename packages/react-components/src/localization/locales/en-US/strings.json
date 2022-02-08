@@ -38,14 +38,20 @@
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
-    "tooltipVideoLoadingContent": "Video is loading"
+    "tooltipVideoLoadingContent": "Video is loading",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose Camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
     "offLabel": "Unmute",
     "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
-    "tooltipOffContent": "Unmute microphone"
+    "tooltipOffContent": "Unmute microphone",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose Microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose Speaker"
   },
   "devicesButton": {
     "label": "Devices",
@@ -123,6 +129,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
-    "localVideoLabel": "You"
+    "localVideoLabel": "You",
+    "localVideoCameraSwitcherLabel": "Cycle camera button"
   }
 }

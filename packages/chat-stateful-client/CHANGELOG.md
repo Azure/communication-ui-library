@@ -1,8 +1,19 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Tue, 04 Jan 2022 22:57:09 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.1)
+
+Mon, 24 Jan 2022 23:18:54 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.1...@internal/chat-stateful-client_v1.0.1)
+
+### Patches
+
+- Small code modifications for conditional build ([PR #1284](https://github.com/azure/communication-ui-library/pull/1284) by jinan@microsoft.com)
+- Move @azure/communication-chat to peer dependency ([PR #1294](https://github.com/azure/communication-ui-library/pull/1294) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.0.1 ([PR #1335](https://github.com/azure/communication-ui-library/pull/1335) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.1)
 

@@ -44,8 +44,13 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
+export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
+export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+export type { CameraButtonContextualMenuStyles, CameraButtonStyles } from './CameraButton';
 
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayout } from './ControlBar';
@@ -58,6 +63,8 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';
 export type {
@@ -83,7 +90,10 @@ export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
-export type { _PictureInPictureInPictureProps } from './PictureInPictureInPicture/PictureInPictureInPicture';
+export type {
+  _PictureInPictureInPictureProps,
+  _PictureInPictureInPictureStrings
+} from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {
   _PictureInPictureInPictureTileProps,
   _TileOrientation

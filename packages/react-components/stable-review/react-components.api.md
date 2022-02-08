@@ -91,6 +91,7 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     messageType: 'chat';
+    metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
     // (undocumented)
@@ -427,6 +428,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryLeftNavButton: string;
+    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
     participantButtonPeopleMenuItem: string;
@@ -457,6 +460,19 @@ export type LocalizationProviderProps = {
     locale: ComponentLocale;
     children: React_2.ReactNode;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButton" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface LocalVideoCameraCycleButtonProps {
+    cameras?: OptionsDevice[];
+    label?: string;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -732,7 +748,14 @@ export interface _PictureInPictureInPictureProps {
     // (undocumented)
     primaryTile: _PictureInPictureInPictureTileProps;
     // (undocumented)
-    secondaryTile: _PictureInPictureInPictureTileProps;
+    secondaryTile?: _PictureInPictureInPictureTileProps;
+    // (undocumented)
+    strings: _PictureInPictureInPictureStrings;
+}
+
+// @internal
+export interface _PictureInPictureInPictureStrings {
+    rootAriaLabel: string;
 }
 
 // @internal (undocumented)
@@ -936,6 +959,8 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    personaMaxSize?: number;
+    personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
