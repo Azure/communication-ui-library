@@ -545,7 +545,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
  *
  * @beta
  */
-export type CallParticipantLocator = {
+export type CallParticipantsLocator = {
   participantIDs: string[];
 };
 
@@ -557,7 +557,7 @@ export type CallParticipantLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
+  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -616,6 +616,6 @@ const isCallError = (e: Error): e is CallError => {
 };
 
 /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantLocator => {
+const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };

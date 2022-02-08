@@ -40,7 +40,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 
 /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-import { CallParticipantLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -400,7 +400,7 @@ export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
   callLocator:
     | GroupCallLocator
-    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantLocator;
+    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
