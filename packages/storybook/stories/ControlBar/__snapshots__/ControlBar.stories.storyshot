@@ -91,6 +91,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                       </svg>
                     </span>
                   </i>
+                  <i
+                    aria-hidden={true}
+                    className="ms-Icon root-94 css-15 ms-Button-menuIcon menuIcon-10"
+                    data-icon-name="ChevronDown"
+                    hidden={true}
+                    style={
+                      Object {
+                        "fontFamily": "\\"FabricMDL2Icons\\"",
+                      }
+                    }
+                  >
+                    
+                  </i>
                 </span>
               </button>
             </div>

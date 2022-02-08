@@ -6,11 +6,11 @@
 
 import {
   AudioDeviceInfo,
-  VideoDeviceInfo,
-  PermissionConstraints,
+  Call,
   GroupCallLocator,
+  PermissionConstraints,
   TeamsMeetingLinkLocator,
-  Call
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
@@ -38,6 +38,9 @@ import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -395,7 +398,9 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
-  callLocator: GroupCallLocator;
+  callLocator:
+    | GroupCallLocator
+    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
