@@ -1,12 +1,16 @@
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import {
+  CallAdapter,
+  CallComposite,
+  createAzureCommunicationCallAdapter,
+  CallAdapterLocator
+} from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
 type CallAdapterExampleProps = {
   userId: CommunicationUserIdentifier;
   accessToken: string;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  callLocator: CallAdapterLocator;
   displayName: string;
 };
 
