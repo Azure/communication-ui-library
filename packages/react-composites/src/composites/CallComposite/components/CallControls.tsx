@@ -294,6 +294,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...cameraButtonProps}
       showLabel={!compactMode}
       styles={commonButtonStyles}
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
 
