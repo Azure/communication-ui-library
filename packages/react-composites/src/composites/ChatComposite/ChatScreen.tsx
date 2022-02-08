@@ -43,8 +43,11 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileUpload, FileUploadHandler } from './file-sharing';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from './hooks/useSelector';
 /**
  * @private

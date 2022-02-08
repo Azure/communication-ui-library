@@ -8,8 +8,7 @@ import {
   sendBoxStyleSet,
   sendButtonStyle,
   sendIconStyle,
-  fileCardBoxStyle,
-  sendBoxStyleMain
+  sendBoxWrapperStyles
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -114,10 +113,10 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField' | false;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
-   * Optional callback to render uploaded files in the SendBox.
-   *
+   * Optional callback to render uploaded files in the SendBox. The sendbox will grow
+   * veritcally to accomodate the height of injected filecard component. Injected component will
+   * be rendered below the text area in sendbox.
    * @beta
-   *
    */
   onRenderAttachedFiles?: () => JSX.Element;
 }
@@ -192,10 +191,19 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const borderAndBoxShadowStyle = {
     borderRadius: theme.effects.roundedCorner6,
-    borderColor: theme.palette.neutralLight,
-    ':hover': { borderColor: theme.palette.blue },
-    ':active': { borderColor: theme.palette.blue },
-    ':focus': { borderColor: theme.palette.blue }
+    border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+    ':hover': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    },
+    ':active': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    },
+    ':focus': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    }
   };
 
   const hasText = !!textValue;
@@ -222,7 +230,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack className={mergeStyles(borderAndBoxShadowStyle, sendBoxStyleMain)}>
+    <Stack className={mergeStyles(borderAndBoxShadowStyle, sendBoxWrapperStyles)}>
       <InputBoxComponent
         autoFocus={autoFocus}
         data-ui-id={ids.sendboxTextField}
@@ -260,7 +268,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       </InputBoxComponent>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        props.onRenderAttachedFiles && <Stack className={fileCardBoxStyle}>{props.onRenderAttachedFiles()}</Stack>
+        props.onRenderAttachedFiles && props.onRenderAttachedFiles()
       }
     </Stack>
   );

@@ -23,9 +23,8 @@ export const sendBoxStyleSet = {
 /**
  * @private
  */
-export const sendBoxStyleMain = mergeStyles({
+export const sendBoxWrapperStyles = mergeStyles({
   padding: '0rem',
-  border: '1px solid',
   overflowX: 'hidden'
 });
 

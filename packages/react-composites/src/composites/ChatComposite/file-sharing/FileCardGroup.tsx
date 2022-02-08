@@ -18,8 +18,7 @@ export interface FileCardGroupProps {
 const fileCardGroupClassName = mergeStyles({
   flexFlow: 'row wrap',
   '& > *': {
-    marginRight: '0.5rem',
-    marginTop: '0.5rem'
+    margin: '0.5rem'
   }
 });
 
