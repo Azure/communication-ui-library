@@ -7,7 +7,7 @@ import { buildUrlWithMockAdapter } from './utils';
 import { dataUiId, clickOutsideOfPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
 import { IDS } from '../common/constants';
 
-test.describe('Error Bar tests', async () => {
+test.describe('Error bar tests', async () => {
   test('Failure to start video should be shown on error bar', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
