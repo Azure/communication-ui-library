@@ -14,15 +14,6 @@ export const suppressIconStyle = {
 /**
  * @private
  */
-export const sendBoxStyleSet = {
-  root: {
-    padding: '0.25rem'
-  }
-};
-
-/**
- * @private
- */
 export const sendBoxWrapperStyles = mergeStyles({
   padding: '0rem',
   overflowX: 'hidden'

@@ -3,13 +3,7 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import {
-  sendBoxStyle,
-  sendBoxStyleSet,
-  sendButtonStyle,
-  sendIconStyle,
-  sendBoxWrapperStyles
-} from './styles/SendBox.styles';
+import { sendBoxStyle, sendButtonStyle, sendIconStyle, sendBoxWrapperStyles } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -187,7 +181,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [styles?.sendMessageIconContainer]
   );
 
-  const mergedStyles = useMemo(() => concatStyleSets(sendBoxStyleSet, styles), [styles]);
+  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const borderAndBoxShadowStyle = {
     borderRadius: theme.effects.roundedCorner6,
