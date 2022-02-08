@@ -46,13 +46,16 @@ const inferMeetingCallControlOptions = (
 };
 
 const inferCallControlOptions = (
+  mobileView: boolean,
   callControls?: boolean | CallControlOptions
 ): CallControlOptions | false | undefined => {
   const callControlOverrides: Partial<CallControlOptions> = {
     // Participants button is shown separately on the side.
     participantsButton: false,
     // Device dropdowns are shown via split buttons.
-    devicesButton: false
+    // TODO: Remove the devicesButton for mobile view as well once
+    // the overflow button has been added for device selection.
+    devicesButton: mobileView
   };
   if (callControls === false) {
     return false;
@@ -74,7 +77,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const meetingStrings = useMeetingCompositeStrings();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
-  let callControlOptions = inferCallControlOptions(props.callControls);
+  let callControlOptions = inferCallControlOptions(props.mobileView, props.callControls);
 
   /**
    * Helper function to determine if a meeting control bar button is enabled or not.
