@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
-    "tooltipVideoLoadingContent": "Video is loading"
+    "tooltipVideoLoadingContent": "Video is loading",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose Camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",

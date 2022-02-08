@@ -47,7 +47,7 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       if (mockCallState) {
-        setCallAdapter(wrapAdapterForTests(new MockCallAdapter(mockCallState)));
+        setCallAdapter(new MockCallAdapter(mockCallState));
       } else {
         setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials()));
       }
