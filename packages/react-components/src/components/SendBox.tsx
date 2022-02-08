@@ -184,8 +184,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const borderAndBoxShadowStyle = {
-    borderRadius: theme.effects.roundedCorner6,
-    border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+    borderRadius: theme.effects.roundedCorner4,
+    border: `1px solid ${theme.palette.neutralTertiary}`,
     ':hover': {
       border: '2px solid',
       borderColor: theme.palette.blue
