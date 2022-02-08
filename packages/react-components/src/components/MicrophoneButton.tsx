@@ -60,7 +60,7 @@ export interface MicrophoneButtonStrings {
  */
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
   /**
-   * Styles for the {@link DevicesButton} menu.
+   * Styles for the {@link MicrophoneButton} menu.
    */
   menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }

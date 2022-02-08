@@ -8,6 +8,7 @@ export type TestCallingState = {
   remoteParticipants?: TestRemoteParticipant[];
   isScreenSharing?: boolean;
   page?: TestPageState;
+  diagnostics?: TestDiagnostics;
   latestErrors?: AdapterErrors;
 };
 
@@ -35,7 +36,43 @@ export type TestPageState =
   | 'removedFromCall';
 
 /**
- * Map of errors to represent latest errors state used in {@link TestCallingState}
+ * Diagnostics state used in {@link TestCallingState}
+ */
+export type TestDiagnostics = {
+  /**
+   * Stores diagnostics related to network conditions.
+   */
+  network?: { networkReconnect?: DiagnosticValue };
+  /**
+   * Stores diagnostics related to media quality.
+   */
+  media?: { speakingWhileMicrophoneIsMuted?: DiagnosticValue; cameraFreeze?: DiagnosticValue };
+};
+
+/**
+ * Diagnostic value used for a child property in {@link TestDiagnostics}
+ */
+export type DiagnosticValue = {
+  value: DiagnosticQuality | boolean;
+  valueType: DiagnosticValueType;
+};
+
+/**
+ * Enum for value in {@link DiagnosticValue}
+ */
+export enum DiagnosticQuality {
+  Good = 1,
+  Poor = 2,
+  Bad = 3
+}
+
+/**
+ * Value types for {@link DiagnosticValue}
+ */
+export type DiagnosticValueType = 'DiagnosticQuality' | 'DiagnosticFlag';
+
+/**
+ * Record of errors to represent latest errors state in {@link TestCallingState}
  */
 export type AdapterErrors = {
   [target: string]: AdapterError;
