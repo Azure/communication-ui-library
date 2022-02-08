@@ -16,6 +16,7 @@ import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { initializeIcons } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -28,6 +29,9 @@ const userId = verifyParamExists(params.userId, 'userId');
 const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
 
+// Needed to initialize default icons used by Fluent components.
+initializeIcons();
+
 function App(): JSX.Element {
   const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);
 
@@ -38,9 +42,11 @@ function App(): JSX.Element {
         userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName,
         credential,
-        callLocator: { groupId: groupId },
         endpoint,
-        chatThreadId: threadId
+        meetingLocator: {
+          callLocator: { groupId: groupId },
+          chatThreadId: threadId
+        }
       });
       setMeetingAdapter(wrapAdapterForTests(adapter));
     };

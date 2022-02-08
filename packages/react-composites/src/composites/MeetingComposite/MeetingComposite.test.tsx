@@ -20,6 +20,8 @@ function createMockMeetingAdapter(): MeetingAdapter {
   meetingAdapter.queryCameras = jest.fn();
   meetingAdapter.queryMicrophones = jest.fn();
   meetingAdapter.querySpeakers = jest.fn();
+  meetingAdapter.on = jest.fn(); // allow for direct subscription to the state of the meeting adapter
+  meetingAdapter.off = jest.fn(); // Allow for direct un-subscription to the state of the meeting adapter
   meetingAdapter.getState = jest.fn((): MeetingAdapterState => {
     return {
       page: 'lobby',

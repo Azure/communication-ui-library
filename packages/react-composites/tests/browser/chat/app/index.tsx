@@ -15,7 +15,7 @@ import {
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Stack } from '@fluentui/react';
+import { initializeIcons, Stack } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -30,6 +30,9 @@ const userId = verifyParamExists(params.userId, 'userId');
 // Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
+
+// Needed to initialize default icons used by Fluent components.
+initializeIcons();
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
