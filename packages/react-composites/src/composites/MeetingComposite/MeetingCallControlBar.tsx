@@ -48,18 +48,20 @@ const inferMeetingCallControlOptions = (
 const inferCallControlOptions = (
   callControls?: boolean | CallControlOptions
 ): CallControlOptions | false | undefined => {
-  if (typeof callControls !== 'boolean') {
-    callControls === undefined
-      ? (callControls = { participantsButton: false })
-      : (callControls.participantsButton = false);
-    return callControls;
+  const callControlOverrides: Partial<CallControlOptions> = {
+    // Participants button is shown separately on the side.
+    participantsButton: false,
+    // Device dropdowns are shown via split buttons.
+    devicesButton: false
+  };
+  if (callControls === false) {
+    return false;
   }
   if (callControls === true) {
-    // Return object with just participant button to false so that the default is that all the buttons will be present for meeting composite.
-    return { participantsButton: false };
+    return callControlOverrides;
   }
-  // callControls === false
-  return false;
+  callControls = callControls ?? {};
+  return { ...callControls, ...callControlOverrides };
 };
 
 /**
