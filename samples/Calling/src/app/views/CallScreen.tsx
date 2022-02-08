@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  CallAdapterLocator,
   CallAdapter,
   CallAdapterState,
   CallComposite,
@@ -21,7 +21,7 @@ const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.u
 export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  callLocator: CallAdapterLocator;
   displayName: string;
   webAppTitle: string;
   onCallEnded: () => void;

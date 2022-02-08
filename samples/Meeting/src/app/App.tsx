@@ -26,6 +26,7 @@ import { getEndpointUrl } from './utils/getEndpointUrl';
 import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
+import { WEB_APP_TITLE } from './utils/constants';
 
 initializeIcons();
 
@@ -40,8 +41,6 @@ interface MeetingArgs {
   meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 type AppPages = 'home' | 'meeting' | 'error';
-
-const webAppTitle = document.title;
 
 const App = (): JSX.Element => {
   console.log(
@@ -60,7 +59,7 @@ const App = (): JSX.Element => {
 
   switch (page) {
     case 'home': {
-      document.title = `home - ${webAppTitle}`;
+      document.title = `home - ${WEB_APP_TITLE}`;
       return (
         <HomeScreen
           // Show a simplified join home screen if joining an existing call
@@ -86,7 +85,7 @@ const App = (): JSX.Element => {
         !meetingArgs.meetingLocator ||
         !meetingArgs.endpointUrl
       ) {
-        document.title = `credentials - ${webAppTitle}`;
+        document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
@@ -95,13 +94,12 @@ const App = (): JSX.Element => {
           userId={meetingArgs.credentials.userId}
           displayName={meetingArgs.displayName}
           meetingLocator={meetingArgs.meetingLocator}
-          webAppTitle={webAppTitle}
           endpoint={meetingArgs.endpointUrl}
         />
       );
     }
     default:
-      document.title = `error - ${webAppTitle}`;
+      document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
 };
