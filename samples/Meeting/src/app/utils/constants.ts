@@ -7,3 +7,5 @@ export enum StatusCode {
 }
 
 export const ENTER_KEY = 13;
+
+export const WEB_APP_TITLE = document.title;
