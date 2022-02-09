@@ -1,7 +1,7 @@
 {
-  "type": "patch",
+  "type": "none",
   "comment": "Log StatefulCallClient state changes when verbose logging is enabled",
   "packageName": "@internal/calling-stateful-client",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
