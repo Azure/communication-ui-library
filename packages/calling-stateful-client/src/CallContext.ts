@@ -25,7 +25,6 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
-import { CallStateModifier } from './StatefulCallClient';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
