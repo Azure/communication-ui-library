@@ -67,7 +67,6 @@ const inferCallControlOptions = (
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   const theme = useTheme();
-  console.log(theme);
 
   const meetingStrings = useMeetingCompositeStrings();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
