@@ -16,10 +16,12 @@ import {
 import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
 import { MicrophoneButtonExample } from './snippets/Default.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
+import { MicrophoneButtonWithDevicesMenuExample } from './snippets/WithDevicesMenu.snippet';
 
 const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
+const ButtonWithDevicesMenuExampleText = require('!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx').default;
 
 const importStatement = `
 import { MicrophoneButton } from '@azure/communication-react';
@@ -56,6 +58,16 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={MicrophoneButtonWithLabelExampleText}>
         <MicrophoneButtonWithLabelExample />
+      </Canvas>
+
+      <Heading>Microphone with device selection menu</Heading>
+      <Description>
+        `MicrophoneButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
+        where users can select the audio devices to use. To render `MicrophoneButton` in this mode, set the
+        `enableDeviceSelectionMenu` prop to `true`.
+      </Description>
+      <Canvas mdxSource={ButtonWithDevicesMenuExampleText}>
+        <MicrophoneButtonWithDevicesMenuExample />
       </Canvas>
 
       <Heading>Custom MicrophoneButton Styles</Heading>
