@@ -36,7 +36,8 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
         unparentedViews: []
       },
       isTeamsCall: true,
-      meeting: undefined
+      call: undefined,
+      chat: undefined
     };
   });
   return callAndChatAdapter;

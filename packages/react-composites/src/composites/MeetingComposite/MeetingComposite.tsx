@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallControlOptions } from '../CallComposite';
+import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { CallAndChatCallControlBar } from './MeetingCallControlBar';
@@ -12,13 +12,13 @@ import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
 import { CallAndChatAdapter } from './adapter/MeetingAdapter';
 import { CallAndChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { CallAndChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
-import { hasJoinedCall as hasJoinedCallFn, CallAndChatCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
+import { CallAndChatAdapterState } from './state/MeetingAdapterState';
 
 /**
  * Props required for the {@link CallAndChatComposite}
@@ -96,7 +96,7 @@ type CallAndChatScreenProps = {
 const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
   const { callAndChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   if (!callAndChatAdapter) {
-    throw 'Call-And-Chat Composite adapter is undefined';
+    throw new Error('CallAndChatAdapter is undefined');
   }
 
   const callAdapter: CallAdapter = useMemo(
@@ -104,15 +104,15 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
     [callAndChatAdapter]
   );
 
-  const [currentCallAndChatState, setCurrentCallAndChatState] = useState<CallState>();
-  const [currentPage, setCurrentPage] = useState<CallAndChatCompositePage>();
+  const [currentCallState, setCurrentCallState] = useState<CallState>();
+  const [currentPage, setCurrentPage] = useState<CallCompositePage>();
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
   useEffect(() => {
-    const updateCallAndChatPage = (newState): void => {
+    const updateCallAndChatPage = (newState: CallAndChatAdapterState): void => {
       setCurrentPage(newState.page);
-      setCurrentCallAndChatState(newState.meeting?.state);
+      setCurrentCallState(newState.call?.state);
     };
     callAndChatAdapter.onStateChange(updateCallAndChatPage);
     return () => {
@@ -142,7 +142,7 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
   }, [callAndChatAdapter]);
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
-  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallAndChatState ?? 'None'));
+  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
@@ -218,3 +218,6 @@ export const CallAndChatComposite = (props: CallAndChatCompositeProps): JSX.Elem
     </BaseComposite>
   );
 };
+
+const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
+  page === 'call' && callStatus === 'Connected';

@@ -41,7 +41,7 @@ export const CallAndChatExperience = (props: CallAndChatExampleProps): JSX.Eleme
             userId: props.userId,
             displayName: props.displayName,
             credential,
-            callAndChatLocator: props.callAndChatLocator,
+            callAndChatLocators: props.callAndChatLocator,
             endpoint: props.endpointUrl
           })
         );

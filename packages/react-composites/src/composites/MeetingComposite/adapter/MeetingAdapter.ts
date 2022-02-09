@@ -20,18 +20,19 @@ import {
   ChatAdapterThreadManagement,
   MessageReadListener,
   MessageReceivedListener,
-  MessageSentListener
+  MessageSentListener,
+  ParticipantsAddedListener,
+  ParticipantsRemovedListener
 } from '../../ChatComposite';
-import { MeetingAdapterState } from '../state/MeetingAdapterState';
+import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
 
 import type { AdapterState, Disposable } from '../../common/adapters';
-import { Call } from '@azure/communication-calling';
 
 /**
- * Functionality for managing the current meeting.
+ * Functionality for managing the current call with chat.
  * @beta
  */
-export interface MeetingAdapterMeetingManagement
+export interface CallAndChatAdapterManagement
   extends Pick<
       CallAdapterCallManagement,
       | 'startCamera'
@@ -42,6 +43,9 @@ export interface MeetingAdapterMeetingManagement
       | 'stopScreenShare'
       | 'createStreamView'
       | 'disposeStreamView'
+      | 'joinCall'
+      | 'leaveCall'
+      | 'startCall'
     >,
     Pick<
       CallAdapterDeviceManagement,
@@ -64,93 +68,79 @@ export interface MeetingAdapterMeetingManagement
       | 'deleteMessage'
     > {
   /**
-   * Join an existing Meeting
-   * @returns The underlying Call object of the meeting.
-   */
-  joinMeeting(microphoneOn?: boolean): Call | undefined;
-
-  /**
-   * Leave the current Meeting
-   */
-  leaveMeeting(): Promise<void>;
-
-  /**
-   * Start a new Meeting
-   * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
-   * @returns The underlying Call object of the meeting.
-   */
-  startMeeting(participants: string[]): Call | undefined;
-
-  /**
-   * Remove a participant from a Meeting
+   * Remove a participant from a Call
    * @param userId - UserId of the participant to remove.
    */
   removeParticipant(userId: string): Promise<void>;
 }
 
 /**
- * Meeting events that can be subscribed to.
+ * Call and Chat events that can be subscribed to in the {@link CallAndChatAdapter}.
  * @beta
  */
-export interface MeetingAdapterSubscriptions {
-  // Meeting specific subscriptions
-  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-  on(event: 'meetingEnded', listener: CallEndedListener): void;
+export interface CallAndChatAdapterSubscriptions {
   on(event: 'error', listener: (e: Error) => void): void;
-
-  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-  off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 
   // Call subscriptions
+  on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
 
+  off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
+  on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+  on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
+  off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+  off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
 }
 
 /**
- * Meeting Composite Adapter interface.
+ * {@link CallAndChatComposite} Adapter interface.
  * @beta
  */
-export interface MeetingAdapter
-  extends MeetingAdapterMeetingManagement,
-    AdapterState<MeetingAdapterState>,
+export interface CallAndChatAdapter
+  extends CallAndChatAdapterManagement,
+    AdapterState<CallAndChatAdapterState>,
     Disposable,
-    MeetingAdapterSubscriptions {}
+    CallAndChatAdapterSubscriptions {}
 
 /**
- * Events fired off by the Meeting Adapter
+ * Events fired off by the {@link ChatAndCallAdapter}
  * @beta
  */
-export type MeetingEvent =
-  | 'participantsJoined'
-  | 'participantsLeft'
-  | 'meetingEnded'
+export type CallAndChatEvent =
+  | 'error'
+  | 'callEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'
   | 'displayNameChanged'
   | 'isSpeakingChanged'
+  | 'callParticipantsJoined'
+  | 'callParticipantsLeft'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'
-  | 'error';
+  | 'chatParticipantsAdded'
+  | 'chatParticipantsRemoved';
