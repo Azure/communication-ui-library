@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import EventEmitter from 'events';
-import produce from 'immer';
+import produce, { enableMapSet, enablePatches, Patch } from 'immer';
 import {
   ChatClientState,
   ChatErrors,
@@ -12,15 +12,16 @@ import {
   ChatError
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
+import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { ChatStateModifier } from './StatefulChatClient';
 
 enableMapSet();
+// Needed to generate state diff for verbose logging.
+enablePatches();
 
 /**
  * @private
@@ -33,10 +34,12 @@ export class ChatContext {
     latestErrors: {} as ChatErrors
   };
   private _batchMode = false;
+  private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
 
   constructor(maxListeners?: number) {
+    this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -54,14 +57,16 @@ export class ChatContext {
     return this._state;
   }
 
-  public modifyState(modifier: ChatStateModifier): void {
-    this.batch(() => {
-      this.setState(
-        produce(this._state, (draft: ChatClientState) => {
-          modifier(draft);
-        })
-      );
+  public modifyState(modifier: (draft: ChatClientState) => void): void {
+    this._state = produce(this._state, modifier, (patches: Patch[]) => {
+      if (getLogLevel() === 'verbose') {
+        // Log to `info` because AzureLogger.verbose() doesn't show up in console.
+        this._logger.info(`State change: ${JSON.stringify(patches)}`);
+      }
     });
+    if (!this._batchMode) {
+      this._emitter.emit('stateChanged', this._state);
+    }
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
