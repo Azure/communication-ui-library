@@ -185,7 +185,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const borderAndBoxShadowStyle = {
     borderRadius: theme.effects.roundedCorner4,
-    border: `1px solid ${theme.palette.neutralTertiary}`,
+    border: `1px solid ${theme.palette.neutralSecondary}`,
     ':hover': {
       border: '2px solid',
       borderColor: theme.palette.blue
