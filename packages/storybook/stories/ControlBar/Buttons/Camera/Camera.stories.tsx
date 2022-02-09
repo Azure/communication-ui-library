@@ -11,10 +11,12 @@ import { controlsToAdd, defaultControlsCameras, hiddenControl } from '../../../c
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
 import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
+import { CameraButtonWithDevicesMenuExample } from './snippets/WithDevicesMenu.snippet';
 
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
+const ButtonWithDevicesMenuExampleText = require('!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx').default;
 
 const importStatement = `
 import { CameraButton } from '@azure/communication-ui';
@@ -51,6 +53,16 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={ButtonWithLabelExampleText}>
         <CameraButtonWithLabelExample />
+      </Canvas>
+
+      <Heading>Camera with device selection menu</Heading>
+      <Description>
+        `CameraButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
+        where users can select the camera to use. To render `CameraButton` in this mode, set the
+        `enableDeviceSelectionMenu` prop to `true`.
+      </Description>
+      <Canvas mdxSource={ButtonWithDevicesMenuExampleText}>
+        <CameraButtonWithDevicesMenuExample />
       </Canvas>
 
       <Heading>Custom CameraButton Styles</Heading>
