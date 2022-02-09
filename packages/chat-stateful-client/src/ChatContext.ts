@@ -50,21 +50,15 @@ export class ChatContext {
     return this._state;
   }
 
-  public setState(state: ChatClientState): void {
-    this._state = state;
-    if (!this._batchMode) {
-      this._emitter.emit('stateChanged', this._state);
-    }
-  }
-
   public modifyState(modifier: (draft: ChatClientState) => void): void {
+    const priorState = this._state;
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
         // Log to `info` because AzureLogger.verbose() doesn't show up in console.
         this._logger.info(`State change: ${JSON.stringify(patches)}`);
       }
     });
-    if (!this._batchMode) {
+    if (!this._batchMode && this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
@@ -243,36 +237,32 @@ export class ChatContext {
   }
 
   private startTypingIndicatorCleanUp(): void {
-    if (!this.typingIndicatorInterval) {
-      this.typingIndicatorInterval = window.setInterval(() => {
-        let isTypingActive = false;
-        let isStateChanged = false;
-        const newState = produce(this._state, (draft: ChatClientState) => {
-          for (const thread of Object.values(draft.threads)) {
-            const filteredTypingIndicators = thread.typingIndicators.filter((typingIndicator) => {
-              const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
-              return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
-            });
-
-            if (thread.typingIndicators.length !== filteredTypingIndicators.length) {
-              isStateChanged = true;
-              thread.typingIndicators = filteredTypingIndicators;
-            }
-            if (thread.typingIndicators.length > 0) {
-              isTypingActive = true;
-            }
-          }
-        });
-
-        if (isStateChanged) {
-          this.setState(newState);
-        }
-        if (!isTypingActive && this.typingIndicatorInterval) {
-          window.clearInterval(this.typingIndicatorInterval);
-          this.typingIndicatorInterval = undefined;
-        }
-      }, 1000);
+    if (this.typingIndicatorInterval) {
+      return;
     }
+    this.typingIndicatorInterval = window.setInterval(() => {
+      let isTypingActive = false;
+      this.modifyState((draft: ChatClientState) => {
+        for (const thread of Object.values(draft.threads)) {
+          const filteredTypingIndicators = thread.typingIndicators.filter((typingIndicator) => {
+            const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
+            return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
+          });
+
+          if (thread.typingIndicators.length !== filteredTypingIndicators.length) {
+            thread.typingIndicators = filteredTypingIndicators;
+          }
+          if (thread.typingIndicators.length > 0) {
+            isTypingActive = true;
+          }
+        }
+      });
+
+      if (!isTypingActive && this.typingIndicatorInterval) {
+        window.clearInterval(this.typingIndicatorInterval);
+        this.typingIndicatorInterval = undefined;
+      }
+    }, 1000);
   }
 
   public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void {
