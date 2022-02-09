@@ -47,7 +47,7 @@ export class CallContext {
   private _batchMode: boolean;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
-    this._logger = createClientLogger('uilib:calling:context');
+    this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
       calls: {},
       callsEnded: {},
@@ -77,7 +77,8 @@ export class CallContext {
   public modifyState(modifier: (draft: CallClientState) => void): void {
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
-        this._logger.verbose(`State change: ${JSON.stringify(patches)}`);
+        // Log to `info` because AzureLogger.verbose() doesn't show up in console.
+        this._logger.info(`State change: ${JSON.stringify(patches)}`);
       }
     });
     if (!this._batchMode) {
