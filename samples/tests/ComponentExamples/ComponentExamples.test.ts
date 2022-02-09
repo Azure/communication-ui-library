@@ -43,7 +43,7 @@ test.describe('Component Examples Test', () => {
     // Start local video using custom start button
     await page.click(dataUiId('custom-start-button'));
     await page.waitForFunction(() => {
-      const videoNode = document.querySelector<HTMLVideoElement>('[data-ui-id="video-tile"] video');
+      const videoNode = document.querySelector<HTMLMediaElement>('[data-ui-id="video-tile"] video');
       // HTMLMediaElement.HAVE_ENOUGH_DATA means media is ready for play
       return (
         document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video').length === 1 &&
@@ -56,7 +56,7 @@ test.describe('Component Examples Test', () => {
     await page.click('[id="camera-button"]');
 
     await page.waitForFunction(() => {
-      return document.querySelectorAll('video').length === 0;
+      return document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video').length === 0;
     });
     // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
     await page.mouse.move(0, 0);
