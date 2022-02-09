@@ -563,6 +563,9 @@ export interface Disposable {
 }
 
 // @beta
+export type FileDownloadHandler = (userId: CommunicationIdentifierKind, fileData: FileMetadata) => Promise<string>;
+
+// @beta
 export interface FileMetadata {
     extension: string;
     name: string;
@@ -572,6 +575,7 @@ export interface FileMetadata {
 // @beta
 export interface FileSharingOptions {
     accept?: string;
+    downloadHandler?: FileDownloadHandler;
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
