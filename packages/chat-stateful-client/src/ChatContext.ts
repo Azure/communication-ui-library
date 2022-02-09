@@ -412,7 +412,6 @@ export class ChatContext {
    *
    * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
    * - No `stateChanged` event is emitted if the state did not change through the operations.
-   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
    *
    * All operations finished in this batch should be synchronous.
    * This function is not reentrant -- do not call batch() from within another batch().
@@ -422,18 +421,15 @@ export class ChatContext {
       throw new Error('batch() called from within another batch()');
     }
 
-    this._batchMode = true;
     const priorState = this._state;
+    this._batchMode = true;
     try {
       operations();
-      if (this._state !== priorState) {
-        this._emitter.emit('stateChanged', this._state);
-      }
-    } catch (e) {
-      this._state = priorState;
-      throw e;
     } finally {
       this._batchMode = false;
+    }
+    if (this._state !== priorState) {
+      this._emitter.emit('stateChanged', this._state);
     }
   }
 
