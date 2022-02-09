@@ -79,3 +79,4 @@ npx playwright install
 
 # to install specific browser
 npx playwright install chrome
+```
