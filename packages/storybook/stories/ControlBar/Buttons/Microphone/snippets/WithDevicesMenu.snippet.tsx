@@ -15,7 +15,7 @@ export const MicrophoneButtonWithDevicesMenuExample: () => JSX.Element = () => {
         ]}
         selectedSpeaker={{ id: 'speaker2', name: 'Headphones' }}
         onSelectSpeaker={async () => {
-          /* onSelectMicrophone is needed to enable opening the device menu */
+          /* onSelectSpeaker is needed to enable opening the device menu */
         }}
         microphones={[{ id: 'microphone1', name: 'Internal Microphone' }]}
         selectedMicrophone={{ id: 'microphone1', name: 'Internal Microphone' }}
