@@ -496,7 +496,11 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-
+  /**
+   * Optional callback to render uploaded files in the message component.
+   * @beta
+   */
+  onRenderUploadedFiles?: () => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -609,7 +613,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onDeleteMessage
+    onDeleteMessage,
+    onRenderUploadedFiles
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);

@@ -133,6 +133,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
+  const onRenderUploadedFiles = (): JSX.Element => {
+    return <div></div>;
+  };
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
@@ -157,6 +160,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
+            // onRenderUploadedFiles={onRenderUploadedFiles}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

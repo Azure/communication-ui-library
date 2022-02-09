@@ -22,6 +22,11 @@ type ChatMessageComponentProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineAcceptRejectEditButtons: boolean;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   * @beta
+   */
+  onRenderUploadedFiles?: () => JSX.Element;
 };
 
 /**
@@ -46,6 +51,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       <ChatMessageComponentAsEditBox
         initialValue={props.message.content ?? ''}
         inlineEditButtons={props.inlineAcceptRejectEditButtons}
+        // onRenderUploadedFiles={props.onRenderUploadedFiles}
         strings={props.strings}
         onSubmit={async (text) => {
           props.onUpdateMessage &&
