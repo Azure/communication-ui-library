@@ -34,7 +34,7 @@
     "events": "~3.3.0",
     "immer": "9.0.6",
     "nanoid": "~3.1.20",
-    "@azure/communication-common": "1.0.0"
+    "@azure/communication-common": "1.1.0"
   },
   "peerDependencies": {
     "@azure/communication-chat": "1.1.0"
