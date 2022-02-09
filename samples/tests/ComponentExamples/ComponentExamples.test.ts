@@ -43,10 +43,11 @@ test.describe('Component Examples Test', () => {
     // Start local video using custom start button
     await page.click(dataUiId('custom-start-button'));
     await page.waitForFunction(() => {
-      const videoNode = document.querySelector('video');
+      const videoNode = document.querySelector<HTMLVideoElement>('[data-ui-id="video-tile"] video');
       // HTMLMediaElement.HAVE_ENOUGH_DATA means media is ready for play
       return (
-        document.querySelectorAll('video').length === 1 && videoNode?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
+        document.querySelectorAll<HTMLVideoElement>('[data-ui-id="video-tile"] video').length === 1 &&
+        videoNode?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
       );
     });
 
