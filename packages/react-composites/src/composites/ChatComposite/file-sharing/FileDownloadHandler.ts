@@ -30,7 +30,7 @@ import { FileMetadata } from './FileUpload';
  * )
  *
  * ```
- * @param userId: The {@link CommunicationIdentifierKind} ID of the user uploading the file.
- * @param fileData: The {@link FileMetadata} containing file `url`, `extension` and `name`.
+ * @param userId - The {@link CommunicationIdentifierKind} ID of the user uploading the file.
+ * @param fileData - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
 export type FileDownloadHandler = (userId: CommunicationIdentifierKind, fileData: FileMetadata) => Promise<string>;
