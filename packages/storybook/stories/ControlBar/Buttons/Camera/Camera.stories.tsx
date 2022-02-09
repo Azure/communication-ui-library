@@ -6,18 +6,18 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, defaultControlsCameras, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
-import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
 import { CameraButtonWithDevicesMenuExample } from './snippets/WithDevicesMenu.snippet';
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
-const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 const ButtonWithDevicesMenuExampleText = require('!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx').default;
+const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
 import { CameraButton } from '@azure/communication-ui';
