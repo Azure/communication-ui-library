@@ -65,3 +65,17 @@ We have not listed the required params as they may change as further parameters 
 * In a call composite test, mark the test as `.only` and inside the test console log the URL
 * Run the tests `rushx test:e2e:call`
 * Copy the URL from the test output.
+
+### Known Playwright issues
+
+If you are having issues with playwright detecting a browser platform try the following commands
+
+```sh
+# to install with dependancies
+npx playwright install --with-deps
+
+# to install without dependancies
+npx playwright install
+
+# to install specific browser
+npx playwright install chrome
