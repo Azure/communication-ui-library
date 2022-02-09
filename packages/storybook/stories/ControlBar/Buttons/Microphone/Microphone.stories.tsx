@@ -17,6 +17,7 @@ import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
 import { MicrophoneButtonExample } from './snippets/Default.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
 import { MicrophoneButtonWithDevicesMenuExample } from './snippets/WithDevicesMenu.snippet';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 
 const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
@@ -61,6 +62,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Microphone with device selection menu</Heading>
+      <SingleLineBetaBanner />
       <Description>
         `MicrophoneButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
         where users can select the audio devices to use. To render `MicrophoneButton` in this mode, set the
