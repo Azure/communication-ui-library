@@ -5,11 +5,11 @@ import { CallState } from '@azure/communication-calling';
 import { CallCompositePage } from '../../CallComposite';
 
 /**
- * Page state the Meeting composite could be in.
+ * Page state the {@link CallAndChatComposite} could be in.
  *
  * @beta
  */
-export type MeetingCompositePage =
+export type CallAndChatCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'configuration'
   | 'joinMeetingFailedDueToNoNetwork'
@@ -21,7 +21,7 @@ export type MeetingCompositePage =
 /**
  * @private
  */
-export function callPageToMeetingPage(page: CallCompositePage): MeetingCompositePage {
+export function callPageToCallAndChatPage(page: CallCompositePage): CallAndChatCompositePage {
   switch (page) {
     case 'call':
       return 'meeting';
@@ -39,7 +39,7 @@ export function callPageToMeetingPage(page: CallCompositePage): MeetingComposite
 /**
  * @private
  */
-export function meetingPageToCallPage(page: MeetingCompositePage): CallCompositePage {
+export function callAndChatPageToCallPage(page: CallAndChatCompositePage): CallCompositePage {
   switch (page) {
     case 'meeting':
       return 'call';
@@ -57,5 +57,5 @@ export function meetingPageToCallPage(page: MeetingCompositePage): CallComposite
 /**
  * @private
  */
-export const hasJoinedCall = (page: MeetingCompositePage, callStatus: CallState): boolean =>
+export const hasJoinedCall = (page: CallAndChatCompositePage, callStatus: CallState): boolean =>
   page === 'meeting' && callStatus === 'Connected';

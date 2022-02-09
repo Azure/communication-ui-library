@@ -1,8 +1,8 @@
 {
-  "name": "meeting",
+  "name": "callandchat",
   "version": "0.0.1",
   "private": true,
-  "description": "This is a sample application to show how the UI Library can be used to build a meeting experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
+  "description": "This is a sample application to show how the UI Library can be used to build a call with chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "rushx clean && concurrently --kill-others-on-fail \"tsc\" \"webpack --mode=production --env production\"",
     "build:stable": "cross-env FLAVOR=stable rushx build",

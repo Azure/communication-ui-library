@@ -2,16 +2,16 @@
 // Licensed under the MIT license.
 
 import { useLocale } from '../../localization/LocalizationProvider';
-import { MeetingCompositeStrings } from '../Strings';
+import { CallAndChatCompositeStrings } from '../Strings';
 
 /**
- * The hook to bypass limitation of conditional build for meetingComposite
- * Remove this and use useLocale() instead when merge meeting composite from beta
+ * The hook to bypass limitation of conditional build for call-and-chat composite
+ * Remove this and use useLocale() instead when merge call-and-chat composite from beta
  *
  * @private
  */
-export const useMeetingCompositeStrings = (): MeetingCompositeStrings => {
+export const useCallAndChatCompositeStrings = (): CallAndChatCompositeStrings => {
   const locale = useLocale();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (locale.strings as any).meeting as MeetingCompositeStrings;
+  return (locale.strings as any).callAndChat as CallAndChatCompositeStrings;
 };

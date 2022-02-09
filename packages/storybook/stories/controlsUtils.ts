@@ -292,7 +292,7 @@ export const controlsToAdd = {
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
-  meetingCallControlOptions: {
+  CallAndChatControlOptions: {
     control: 'object',
     defaultValue: {
       microphoneButton: true,
@@ -302,7 +302,7 @@ export const controlsToAdd = {
       peopleButton: true,
       chatButton: true
     },
-    name: 'Meeting Call UI Controls'
+    name: 'CallAndChat Composite UI Controls'
   }
 };
 
@@ -333,10 +333,10 @@ export const defaultChatCompositeHiddenControls = {
   rtl: hiddenControl
 };
 
-export const defaultMeetingCompositeHiddenControls = {
-  meetingAdapter: hiddenControl,
+export const defaultCallAndChatCompositeHiddenControls = {
+  callAndChatAdapter: hiddenControl,
   fluentTheme: hiddenControl,
-  meetingInvitationURL: hiddenControl,
+  joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
   formFactor: hiddenControl

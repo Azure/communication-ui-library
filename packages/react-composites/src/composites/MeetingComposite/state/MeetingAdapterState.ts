@@ -4,7 +4,7 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
+import { callPageToCallAndChatPage, CallAndChatCompositePage } from './MeetingCompositePage';
 import {
   meetingStateFromBackingStates,
   MeetingState,

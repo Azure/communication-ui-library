@@ -42,7 +42,7 @@
   "chat": {
     "chatListHeader": "En este chat"
   },
-  "meeting": {
+  "callAndChat": {
     "peopleButtonLabel": "Contactos",
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "Contactos",

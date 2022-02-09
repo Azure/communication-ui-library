@@ -24,19 +24,19 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startMeetingHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
   joiningExistingCall: boolean;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
-  const { startMeetingHandler } = props;
+  const { startCallHandler } = props;
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = props.joiningExistingCall ? 'Join Meeting' : 'Start or join a Meeting';
-  const callOptionsGroupLabel = 'Select a Meeting option';
+  const headerTitle = props.joiningExistingCall ? 'Join Call with Chat' : 'Start or join a Call with Chat';
+  const callOptionsGroupLabel = 'Select an option';
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
-    { key: 'ACSMeeting', text: 'Start a ACS Meeting' },
-    { key: 'TeamsMeeting', text: 'Join a Teams meeting' }
+    { key: 'ACSCallAndChat', text: 'Start a ACS Call with Chat' },
+    { key: 'TeamsMeeting', text: 'Join a Teams Meeting' }
   ];
 
   // Get display name from local storage if available
@@ -58,7 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       tokens={containerTokens}
       className={containerStyle}
     >
-      <Image alt="Welcome to the ACS Meeting sample app" className={imgStyle} {...imageProps} />
+      <Image alt="Welcome to the ACS Call and Chat sample app" className={imgStyle} {...imageProps} />
       <Stack className={infoContainerStyle}>
         <Text role={'heading'} aria-level={1} className={headerStyle}>
           {headerTitle}
@@ -69,7 +69,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               <ChoiceGroup
                 styles={callOptionsGroupStyles}
                 label={callOptionsGroupLabel}
-                defaultSelectedKey="ACSMeeting"
+                defaultSelectedKey="ACSCallAndChat"
                 options={callOptions}
                 required={true}
                 onChange={(_, option) => option && setChosenCallOption(option)}
@@ -93,7 +93,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                startMeetingHandler({ displayName, teamsLink });
+                startCallHandler({ displayName, teamsLink });
               }
             }}
           />

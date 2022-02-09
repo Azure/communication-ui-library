@@ -63,7 +63,7 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
     <ChatButton
       {...props}
       showLabel={true}
-      data-ui-id="meeting-composite-chat-button"
+      data-ui-id="call-and-chat-composite-chat-button"
       onRenderOffIcon={notificationOnIcon}
     />
   );

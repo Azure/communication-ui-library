@@ -10,8 +10,8 @@ import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { MeetingCallControlOptions } from './MeetingComposite';
-import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { CallAndChatControlOptions } from './MeetingComposite';
+import { useCallAndChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
@@ -19,7 +19,7 @@ import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-compon
 /**
  * @private
  */
-export interface MeetingCallControlBarProps {
+export interface CallAndChatCallControlBarProps {
   callAdapter: CallAdapter;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
@@ -27,18 +27,18 @@ export interface MeetingCallControlBarProps {
   onPeopleButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | CallAndChatControlOptions;
   chatAdapter: ChatAdapter;
 }
 
-const inferMeetingCallControlOptions = (
-  meetingControls?: boolean | MeetingCallControlOptions
-): MeetingCallControlOptions | false | undefined => {
-  if (typeof meetingControls !== 'boolean') {
-    return meetingControls;
+const inferCallAndChatControlOptions = (
+  callAndChatCallControls?: boolean | CallAndChatControlOptions
+): CallAndChatControlOptions | false | undefined => {
+  if (typeof callAndChatCallControls !== 'boolean') {
+    return callAndChatCallControls;
   }
-  if (meetingControls === true) {
-    // return empty object so buttons in the meetingCallControlOptions set render in their defualt behaviors.
+  if (callAndChatCallControls === true) {
+    // return empty object so buttons in the callAndChatControlOptions set render in their defualt behaviors.
     return undefined;
   }
   // callControls === false
@@ -55,7 +55,7 @@ const inferCallControlOptions = (
     return callControls;
   }
   if (callControls === true) {
-    // Return object with just participant button to false so that the default is that all the buttons will be present for meeting composite.
+    // Return object with just participant button to false so that the default is that all the buttons will be present for call-and-chat composite.
     return { participantsButton: false };
   }
   // callControls === false
@@ -65,17 +65,17 @@ const inferCallControlOptions = (
 /**
  * @private
  */
-export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+export const CallAndChatCallControlBar = (props: CallAndChatCallControlBarProps): JSX.Element => {
   const theme = useTheme();
   console.log(theme);
 
-  const meetingStrings = useMeetingCompositeStrings();
-  // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
+  const callAndChatStrings = useCallAndChatCompositeStrings();
+  // Set the desired control buttons from the call-and-chat composite. participantsButton is always false since there is the peopleButton.
+  const callAndChatControlOptions = inferCallAndChatControlOptions(props.callControls);
   let callControlOptions = inferCallControlOptions(props.callControls);
 
   /**
-   * Helper function to determine if a meeting control bar button is enabled or not.
+   * Helper function to determine if a call-and-chat control bar button is enabled or not.
    * @private
    */
   const isEnabled = (option: boolean | undefined): boolean => !(option === false);
@@ -86,17 +86,21 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   }
 
   /**
-   * Until mobile meetings is worked on, statically set the width of the
+   * Until mobile call-and-chat is worked on, statically set the width of the
    * control bar such that all controls can be accessed.
    */
-  const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const temporaryCallAndChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
   const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
   const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
 
   return (
     <Stack
       horizontal
-      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
+      className={mergeStyles(
+        temporaryCallAndChatControlBarStyles,
+        callControlsContainerStyles,
+        controlBarContainerStyles
+      )}
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
@@ -110,20 +114,20 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           />
         </CallAdapterProvider>
       </Stack.Item>
-      {meetingCallControlOptions !== false && (
+      {callAndChatControlOptions !== false && (
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-          {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
+          {isEnabled(callAndChatControlOptions?.peopleButton) !== false && (
             <PeopleButton
               checked={props.peopleButtonChecked}
               showLabel={true}
               onClick={props.onPeopleButtonClicked}
-              data-ui-id="meeting-composite-people-button"
+              data-ui-id="call-and-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.peopleButtonLabel}
+              label={callAndChatStrings.peopleButtonLabel}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}
-          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
+          {isEnabled(callAndChatControlOptions?.chatButton) !== false && (
             <ChatButtonWithUnreadMessagesBadge
               chatAdapter={props.chatAdapter}
               checked={props.chatButtonChecked}
@@ -131,7 +135,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               isChatPaneVisible={props.chatButtonChecked}
               onClick={props.onChatButtonClicked}
               disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
+              label={callAndChatStrings.chatButtonLabel}
               styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
             />
           )}

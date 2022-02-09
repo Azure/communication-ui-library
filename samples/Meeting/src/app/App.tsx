@@ -19,7 +19,7 @@ import {
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { MeetingScreen } from './views/MeetingScreen';
+import { CallAndChatScreen } from './views/MeetingScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';
@@ -34,27 +34,27 @@ interface Credentials {
   userId: CommunicationUserIdentifier;
   token: string;
 }
-interface MeetingArgs {
+interface CallAndChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
-type AppPages = 'home' | 'meeting' | 'error';
+type AppPages = 'home' | 'call' | 'error';
 
 const App = (): JSX.Element => {
   console.log(
-    `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
+    `ACS sample Call and Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
   );
 
   const [page, setPage] = useState<AppPages>('home');
-  const [meetingArgs, setMeetingArgs] = useState<MeetingArgs | undefined>(undefined);
+  const [callAndChatArgs, setCallAndChatArgs] = useState<CallAndChatArgs | undefined>(undefined);
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
   }
 
-  const joiningExistingMeeting: boolean =
+  const joiningExistingCallAndChat: boolean =
     (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) || !!getTeamsLinkFromUrl();
 
   switch (page) {
@@ -63,12 +63,15 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           // Show a simplified join home screen if joining an existing call
-          joiningExistingCall={joiningExistingMeeting}
-          startMeetingHandler={async (meetingDetails) => {
-            setPage('meeting');
+          joiningExistingCall={joiningExistingCallAndChat}
+          startCallHandler={async (homeScreenDetails) => {
+            setPage('call');
             try {
-              const meetingArgs = await generateMeetingArgs(meetingDetails.displayName, meetingDetails?.teamsLink);
-              setMeetingArgs(meetingArgs);
+              const callAndChatArgs = await generateCallAndChatArgs(
+                homeScreenDetails.displayName,
+                homeScreenDetails?.teamsLink
+              );
+              setCallAndChatArgs(callAndChatArgs);
             } catch (e) {
               console.log(e);
               setPage('error');
@@ -77,24 +80,24 @@ const App = (): JSX.Element => {
         />
       );
     }
-    case 'meeting': {
+    case 'call': {
       if (
-        !meetingArgs?.credentials?.token ||
-        !meetingArgs.credentials?.userId ||
-        !meetingArgs.displayName ||
-        !meetingArgs.meetingLocator ||
-        !meetingArgs.endpointUrl
+        !callAndChatArgs?.credentials?.token ||
+        !callAndChatArgs.credentials?.userId ||
+        !callAndChatArgs.displayName ||
+        !callAndChatArgs.locator ||
+        !callAndChatArgs.endpointUrl
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <MeetingScreen
-          token={meetingArgs.credentials.token}
-          userId={meetingArgs.credentials.userId}
-          displayName={meetingArgs.displayName}
-          meetingLocator={meetingArgs.meetingLocator}
-          endpoint={meetingArgs.endpointUrl}
+        <CallAndChatScreen
+          token={callAndChatArgs.credentials.token}
+          userId={callAndChatArgs.credentials.userId}
+          displayName={callAndChatArgs.displayName}
+          locator={callAndChatArgs.locator}
+          endpoint={callAndChatArgs.endpointUrl}
         />
       );
     }
@@ -106,17 +109,20 @@ const App = (): JSX.Element => {
 
 export default App;
 
-const generateMeetingArgs = async (displayName: string, teamsLink?: TeamsMeetingLinkLocator): Promise<MeetingArgs> => {
+const generateCallAndChatArgs = async (
+  displayName: string,
+  teamsLink?: TeamsMeetingLinkLocator
+): Promise<CallAndChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  let locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 
   // Check if we should join a teams meeting, or an ACS CallAndChat
   teamsLink = teamsLink ?? getTeamsLinkFromUrl();
   if (teamsLink) {
-    meetingLocator = teamsLink;
+    locator = teamsLink;
     ensureJoinableTeamsLinkPushedToUrl(teamsLink);
   } else {
     const callLocator: GroupCallLocator = getGroupIdFromUrl() || createGroupId();
@@ -126,7 +132,7 @@ const generateMeetingArgs = async (displayName: string, teamsLink?: TeamsMeeting
     await joinThread(chatThreadId, credentials.userId.communicationUserId, displayName);
     ensureJoinableChatThreadPushedToUrl(chatThreadId);
 
-    meetingLocator = {
+    locator = {
       callLocator,
       chatThreadId
     };
@@ -136,6 +142,6 @@ const generateMeetingArgs = async (displayName: string, teamsLink?: TeamsMeeting
     displayName,
     endpointUrl,
     credentials,
-    meetingLocator
+    locator
   };
 };

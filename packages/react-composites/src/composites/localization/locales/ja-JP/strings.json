@@ -42,7 +42,7 @@
   "chat": {
     "chatListHeader": "このチャット内"
   },
-  "meeting": {
+  "callAndChat": {
     "peopleButtonLabel": "ユーザー",
     "chatButtonLabel": "チャット",
     "peoplePaneTitle": "ユーザー",

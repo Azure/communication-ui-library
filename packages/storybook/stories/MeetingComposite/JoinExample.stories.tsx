@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingComposite } from '@azure/communication-react';
+import { CallAndChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
+import { controlsToAdd, defaultCallAndChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
-import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
+import { CallAndChatExperience, CallAndChatExampleProps } from './snippets/Meeting.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
 
-const JoinExistingMeetingStory = (args, context): JSX.Element => {
-  const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
+const JoinTeamsMeetingStory = (args, context): JSX.Element => {
+  const [meetingProps, setMeetingProps] = useState<CallAndChatExampleProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
@@ -37,7 +37,7 @@ const JoinExistingMeetingStory = (args, context): JSX.Element => {
       <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {meetingProps ? (
-          <MeetingExperience fluentTheme={context.theme} {...meetingProps} />
+          <CallAndChatExperience fluentTheme={context.theme} {...meetingProps} />
         ) : (
           <ConfigJoinMeetingHintBanner />
         )}
@@ -46,12 +46,12 @@ const JoinExistingMeetingStory = (args, context): JSX.Element => {
   );
 };
 
-export const JoinExample = JoinExistingMeetingStory.bind({});
+export const JoinTeamsMeeting = JoinTeamsMeetingStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-meeting-joinexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Join Example`,
-  component: MeetingComposite,
+  id: `${COMPOSITE_FOLDER_PREFIX}-meeting-jointeamsmeeting`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Join Teams Meeting`,
+  component: CallAndChatComposite,
   argTypes: {
     token: controlsToAdd.token,
     userId: controlsToAdd.userId,
@@ -59,7 +59,7 @@ export default {
     displayName: controlsToAdd.displayName,
     teamsMeetingLink: controlsToAdd.teamsMeetingLink,
     // Hiding auto-generated controls
-    ...defaultMeetingCompositeHiddenControls
+    ...defaultCallAndChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

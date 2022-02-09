@@ -6,13 +6,13 @@ import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
-import { MeetingCallControlBar } from './MeetingCallControlBar';
+import { CallAndChatCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
-import { MeetingAdapter } from './adapter/MeetingAdapter';
-import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
-import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
-import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
+import { CallAndChatAdapter } from './adapter/MeetingAdapter';
+import { CallAndChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
+import { CallAndChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
+import { hasJoinedCall as hasJoinedCallFn, CallAndChatCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
@@ -21,12 +21,12 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 
 /**
- * Props required for the {@link MeetingComposite}
+ * Props required for the {@link CallAndChatComposite}
  *
  * @beta
  */
-export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
-  meetingAdapter: MeetingAdapter;
+export interface CallAndChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+  callAndChatAdapter: CallAndChatAdapter;
   /**
    * Fluent theme for the composite.
    *
@@ -41,81 +41,84 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    */
   formFactor?: 'desktop' | 'mobile';
   /**
-   * URL that can be used to copy a meeting invite to the Users clipboard.
+   * URL that can be used to copy a call-and-chat invite to the Users clipboard.
    */
-  meetingInvitationURL?: string;
+  joinInvitationURL?: string;
   /**
-   * Flags to enable/disable or customize UI elements of the {@link MeetingComposite}
+   * Flags to enable/disable or customize UI elements of the {@link CallAndChatComposite}
    */
-  options?: MeetingCompositeOptions;
+  options?: CallAndChatCompositeOptions;
 }
 
 /**
- * Optional features of the {@link MeetingComposite}.
+ * Optional features of the {@link CallAndChatComposite}.
  *
  * @beta
  */
-export type MeetingCompositeOptions = {
+export type CallAndChatCompositeOptions = {
   /**
-   * Call control options to change what buttons show on the meeting composite control bar.
+   * Call control options to change what buttons show on the call-and-chat composite control bar.
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
-  callControls?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | CallAndChatControlOptions;
 };
 /**
- * Meeting Call controls to show or hide buttons on the calling control bar.
+ * Call-And-Chat Composite Call controls to show or hide buttons on the calling control bar.
  *
  * @beta
  */
-export interface MeetingCallControlOptions
+export interface CallAndChatControlOptions
   extends Pick<
     CallControlOptions,
     'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
   > {
   /**
-   * Show or hide the chat button in the meeting control bar.
+   * Show or hide the chat button in the call-and-chat composite control bar.
    * @defaultValue true
    */
   chatButton?: boolean;
   /**
-   * Show or hide the people button in the meeting control bar.
+   * Show or hide the people button in the call-and-chat composite control bar.
    * @defaultValue true
    */
   peopleButton?: boolean;
 }
 
-type MeetingScreenProps = {
-  meetingAdapter: MeetingAdapter;
+type CallAndChatScreenProps = {
+  callAndChatAdapter: CallAndChatAdapter;
   fluentTheme?: PartialTheme | Theme;
   formFactor?: 'desktop' | 'mobile';
-  meetingInvitationURL?: string;
-  callControls?: boolean | MeetingCallControlOptions;
+  joinInvitationURL?: string;
+  callControls?: boolean | CallAndChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
-const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  if (!meetingAdapter) {
-    throw 'Meeting adapter is undefined';
+const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
+  const { callAndChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  if (!callAndChatAdapter) {
+    throw 'Call-And-Chat Composite adapter is undefined';
   }
 
-  const callAdapter: CallAdapter = useMemo(() => new MeetingBackedCallAdapter(meetingAdapter), [meetingAdapter]);
+  const callAdapter: CallAdapter = useMemo(
+    () => new CallAndChatBackedCallAdapter(callAndChatAdapter),
+    [callAndChatAdapter]
+  );
 
-  const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
-  const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
+  const [currentCallAndChatState, setCurrentCallAndChatState] = useState<CallState>();
+  const [currentPage, setCurrentPage] = useState<CallAndChatCompositePage>();
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
 
   useEffect(() => {
-    const updateMeetingPage = (newState): void => {
+    const updateCallAndChatPage = (newState): void => {
       setCurrentPage(newState.page);
-      setCurrentMeetingState(newState.meeting?.state);
+      setCurrentCallAndChatState(newState.meeting?.state);
     };
-    meetingAdapter.onStateChange(updateMeetingPage);
+    callAndChatAdapter.onStateChange(updateCallAndChatPage);
     return () => {
-      meetingAdapter.offStateChange(updateMeetingPage);
+      callAndChatAdapter.offStateChange(updateCallAndChatPage);
     };
-  }, [meetingAdapter]);
+  }, [callAndChatAdapter]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
@@ -134,12 +137,12 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
-      adapter: new MeetingBackedChatAdapter(meetingAdapter)
+      adapter: new CallAndChatBackedChatAdapter(callAndChatAdapter)
     };
-  }, [meetingAdapter]);
+  }, [callAndChatAdapter]);
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
-  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
+  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallAndChatState ?? 'None'));
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
@@ -167,7 +170,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
           <CallAdapterProvider adapter={callAdapter}>
             <EmbeddedPeoplePane
               hidden={!showPeople}
-              inviteLink={props.meetingInvitationURL}
+              inviteLink={props.joinInvitationURL}
               onClose={closePane}
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
@@ -178,7 +181,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
       </Stack>
       {(isInLobbyOrConnecting || hasJoinedCall) && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
-          <MeetingCallControlBar
+          <CallAndChatCallControlBar
             callAdapter={callAdapter}
             chatAdapter={chatProps.adapter}
             chatButtonChecked={showChat}
@@ -196,22 +199,22 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 };
 
 /**
- * Meeting Composite brings together key components to provide a full meeting experience out of the box.
+ * Call-And-Chat Composite brings together key components to provide a full call with chat experience out of the box.
  *
  * @beta
  */
-export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, options } = props;
+export const CallAndChatComposite = (props: CallAndChatCompositeProps): JSX.Element => {
+  const { callAndChatAdapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
   return (
     <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
-      <MeetingScreen
+      <CallAndChatScreen
         {...props}
-        meetingAdapter={meetingAdapter}
+        callAndChatAdapter={callAndChatAdapter}
         formFactor={formFactor}
         callControls={options?.callControls}
-        meetingInvitationURL={meetingInvitationURL}
+        joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
-      ></MeetingScreen>
+      />
     </BaseComposite>
   );
 };

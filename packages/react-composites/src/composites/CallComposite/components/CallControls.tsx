@@ -44,7 +44,7 @@ export type CallControlsProps = {
   increaseFlyoutItemSize?: boolean;
   /**
    * Whether to use split buttons to show device selection drop-downs
-   * Used by {@link MeetingComposite}.
+   * Used by {@link CallAndChatComposite}.
    */
   splitButtonsForDeviceSelection?: boolean;
   /**

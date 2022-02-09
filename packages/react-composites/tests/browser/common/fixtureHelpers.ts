@@ -8,7 +8,7 @@ import { Browser, ConsoleMessage, Page } from '@playwright/test';
 import { v1 } from 'uuid';
 import { CHAT_TOPIC_NAME } from './constants';
 import { CONNECTION_STRING } from './nodeConstants';
-import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
+import { ChatUserType, CallUserType, CallAndChatUserType } from './fixtureTypes';
 import { buildUrl } from './utils';
 
 /**
@@ -136,7 +136,7 @@ export const createCallUsers =
     await use(users);
   };
 
-export const createMeetingObjectsAndUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
+export const createCallAndChatObjectsAndUsers = async (displayNames: string[]): Promise<Array<CallAndChatUserType>> => {
   const callId = v1();
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
@@ -168,14 +168,14 @@ export const createMeetingObjectsAndUsers = async (displayNames: string[]): Prom
 };
 
 /**
- * Creates a set of meeting test users.
+ * Creates a set of call-and-chat test users.
  * To be used in a playwright fixture 'users'.
  */
-export const createMeetingUsers =
+export const createCallAndChatUsers =
   (testParticipants: string[]) =>
   // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-  async ({}, use: (r: MeetingUserType[]) => Promise<void>) => {
-    const users = await createMeetingObjectsAndUsers(testParticipants);
+  async ({}, use: (r: CallAndChatUserType[]) => Promise<void>) => {
+    const users = await createCallAndChatObjectsAndUsers(testParticipants);
     await use(users);
   };
 
