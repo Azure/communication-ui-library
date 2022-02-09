@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove ChatContext error recovery flow that leaked intermittent state",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
