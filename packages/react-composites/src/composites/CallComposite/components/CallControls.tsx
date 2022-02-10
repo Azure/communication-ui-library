@@ -11,19 +11,18 @@ import {
   ControlBarButtonStyles,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import React, { useMemo } from 'react';
-import {
-  CallControlOptions,
-  CustomCallControlButtonPlacement,
-  CustomCallControlButtonProps
-} from '../types/CallControlOptions';
+import React from 'react';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
-
+/* @conditional-compile-remove-from(stable): custom button injection */
+import { useMemo } from 'react';
+/* @conditional-compile-remove-from(stable): custom button injection */
+import { CustomCallControlButtonPlacement, CustomCallControlButtonProps } from '../types/CallControlOptions';
 /**
  * @private
  */
