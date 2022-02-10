@@ -40,39 +40,24 @@ export interface MeetingCallControlBarProps {
 }
 
 const inferMeetingCallControlOptions = (
-  meetingControls?: boolean | MeetingCallControlOptions
-): MeetingCallControlOptions | false | undefined => {
-  if (typeof meetingControls !== 'boolean') {
-    return meetingControls;
-  }
-  if (meetingControls === true) {
-    // return empty object so buttons in the meetingCallControlOptions set render in their defualt behaviors.
-    return undefined;
-  }
-  // callControls === false
-  return false;
-};
-
-const inferCallControlOptions = (
   mobileView: boolean,
-  callControls?: boolean | CallControlOptions
-): CallControlOptions | false | undefined => {
-  const callControlOverrides: Partial<CallControlOptions> = {
-    // Participants button is shown separately on the side.
-    participantsButton: false,
-    // Device dropdowns are shown via split buttons.
-    // TODO: Remove the devicesButton for mobile view as well once
-    // the overflow button has been added for device selection.
-    devicesButton: mobileView
-  };
-  if (callControls === false) {
+  meetingControls?: boolean | MeetingCallControlOptions
+): MeetingCallControlOptions | false => {
+  if (meetingControls === false) {
     return false;
   }
-  if (callControls === true) {
-    return callControlOverrides;
+
+  const options = meetingControls === true || meetingControls === undefined ? {} : meetingControls;
+  if (mobileView) {
+    // Set to compressed mode when composite is optimized for mobile
+    options.displayType = 'compact';
+    // Do not show screen share button when composite is optimized for mobile unless the developer
+    // has explicitly opted in.
+    if (options.screenShareButton !== true) {
+      options.screenShareButton = false;
+    }
   }
-  callControls = callControls ?? {};
-  return { ...callControls, ...callControlOverrides };
+  return options;
 };
 
 /**
@@ -80,31 +65,23 @@ const inferCallControlOptions = (
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   const theme = useTheme();
-  console.log(theme);
-
   const meetingStrings = useMeetingCompositeStrings();
-  // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
-  let callControlOptions = inferCallControlOptions(props.mobileView, props.callControls);
-
-  /**
-   * Helper function to determine if a meeting control bar button is enabled or not.
-   * @private
-   */
-  const isEnabled = (option: boolean | undefined): boolean => !(option === false);
-
-  // Reduce the controls shown when mobile view is enabled.
-  if (props.mobileView) {
-    callControlOptions = reduceCallControlsForMobile(callControlOptions);
-  }
+  const options = inferMeetingCallControlOptions(props.mobileView, props.callControls);
 
   /**
    * Until mobile meetings is worked on, statically set the width of the
    * control bar such that all controls can be accessed.
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
-  const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
-  const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
+  const commonButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+
+  // when options is false then we want to hide the whole control bar.
+  if (options === false) {
+    return <></>;
+  }
 
   return (
     <Stack
@@ -113,43 +90,112 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <XKCDCallControls
-            options={callControlOptions}
-            increaseFlyoutItemSize={props.mobileView}
-            splitButtonsForDeviceSelection={!props.mobileView}
-            controlBarStyles={!props.mobileView ? desktopControlBarStyles : undefined}
-            commonButtonStyles={!props.mobileView ? desktopCommonButtonStyles : undefined}
-            endCallButtonStyles={!props.mobileView ? desktopEndCallButtonStyles : undefined}
-          />
+          <CenteredControls mobileView={props.mobileView} options={options} increaseFlyoutItemSize={props.mobileView} />
         </CallAdapterProvider>
       </Stack.Item>
-      {meetingCallControlOptions !== false && (
-        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-          {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
-            <PeopleButton
-              checked={props.peopleButtonChecked}
-              showLabel={true}
-              onClick={props.onPeopleButtonClicked}
-              data-ui-id="meeting-composite-people-button"
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.peopleButtonLabel}
-              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
+      <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+        {isEnabled(options?.peopleButton) !== false && (
+          <PeopleButton
+            checked={props.peopleButtonChecked}
+            showLabel={true}
+            onClick={props.onPeopleButtonClicked}
+            data-ui-id="meeting-composite-people-button"
+            disabled={props.disableButtonsForLobbyPage}
+            label={meetingStrings.peopleButtonLabel}
+            styles={commonButtonStyles}
+          />
+        )}
+        {isEnabled(options?.chatButton) !== false && (
+          <ChatButtonWithUnreadMessagesBadge
+            chatAdapter={props.chatAdapter}
+            checked={props.chatButtonChecked}
+            showLabel={true}
+            isChatPaneVisible={props.chatButtonChecked}
+            onClick={props.onChatButtonClicked}
+            disabled={props.disableButtonsForLobbyPage}
+            label={meetingStrings.chatButtonLabel}
+            styles={commonButtonStyles}
+          />
+        )}
+      </Stack>
+    </Stack>
+  );
+};
+
+type CenteredControlProps = {
+  mobileView: boolean;
+  options: MeetingCallControlOptions;
+  /**
+   * Option to increase the height of the button flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  increaseFlyoutItemSize?: boolean;
+};
+
+const CenteredControls = (props: CenteredControlProps): JSX.Element => {
+  const theme = useTheme();
+  const containerStyles = useMemo(() => (!props.mobileView ? desktopControlBarStyles : undefined), [props.mobileView]);
+  const commonButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+  const endCallButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+
+  return (
+    <Stack horizontalAlign="center">
+      <Stack.Item>
+        {/*
+            Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
+            control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
+            set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
+            dockedBottom it has position absolute and would therefore float on top of the media gallery,
+            occluding some of its content.
+         */}
+        <ControlBar layout="horizontal" styles={containerStyles}>
+          {isEnabled(props.options.microphoneButton) && (
+            <Microphone
+              displayType={props.options?.displayType}
+              styles={commonButtonStyles}
+              splitButtonsForDeviceSelection
             />
           )}
-          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButtonWithUnreadMessagesBadge
-              chatAdapter={props.chatAdapter}
-              checked={props.chatButtonChecked}
-              showLabel={true}
-              isChatPaneVisible={props.chatButtonChecked}
-              onClick={props.onChatButtonClicked}
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
-              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
+          {props.options.cameraButton !== false && (
+            <Camera
+              displayType={props.options.displayType}
+              styles={commonButtonStyles}
+              splitButtonsForDeviceSelection
             />
           )}
-        </Stack>
-      )}
+          {props.options.screenShareButton !== false && (
+            <ScreenShare
+              option={props.options.screenShareButton}
+              displayType={props.options.displayType}
+              styles={commonButtonStyles}
+            />
+          )}
+          <Participants
+            displayType={props.options.displayType}
+            increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+            styles={commonButtonStyles}
+          />
+          {
+            // Device dropdowns are shown via split buttons.
+            // TODO: Remove the devicesButton for mobile view as well once
+            // the overflow button has been added for device selection.
+            props.mobileView && (
+              <Devices
+                displayType={props.options.displayType}
+                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+                styles={commonButtonStyles}
+              />
+            )
+          }
+          <EndCall displayType={props.options.displayType} styles={endCallButtonStyles} />
+        </ControlBar>
+      </Stack.Item>
     </Stack>
   );
 };
@@ -202,120 +248,5 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
 };
 
-/**
- * @private
- */
-export type CallControlsProps = {
-  callInvitationURL?: string;
-  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  options?: boolean | CallControlOptions;
-  /**
-   * Option to increase the height of the button flyout menu items from 36px to 48px.
-   * Recommended for mobile devices.
-   */
-  increaseFlyoutItemSize?: boolean;
-  /**
-   * Whether to use split buttons to show device selection drop-downs
-   * Used by {@link MeetingComposite}.
-   */
-  splitButtonsForDeviceSelection?: boolean;
-  /**
-   * Styles for the {@link ControlBar}.
-   */
-  controlBarStyles?: BaseCustomStyles;
-  /**
-   * Styles for all buttons except {@link EndCallButton}.
-   */
-  commonButtonStyles?: ControlBarButtonStyles;
-  /**
-   * Styles for {@link EndCallButton}.
-   */
-  endCallButtonStyles?: ControlBarButtonStyles;
-};
-
-const XKCDCallControls = (props: CallControlsProps): JSX.Element => {
-  const options = typeof props.options === 'boolean' ? {} : props.options;
-  const customButtons = useMemo(
-    () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
-    [options]
-  );
-
-  // when props.options is false then we want to hide the whole control bar.
-  if (props.options === false) {
-    return <></>;
-  }
-
-  return (
-    <Stack horizontalAlign="center">
-      <Stack.Item>
-        {/*
-            Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
-            control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
-            set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
-            dockedBottom it has position absolute and would therefore float on top of the media gallery,
-            occluding some of its content.
-         */}
-        <ControlBar layout="horizontal" styles={props.controlBarStyles}>
-          {customButtons['first']}
-          {options?.microphoneButton !== false && (
-            <Microphone
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
-            />
-          )}
-          {customButtons['afterMicrophoneButton']}
-          {options?.cameraButton !== false && (
-            <Camera
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
-            />
-          )}
-          {customButtons['afterCameraButton']}
-          {options?.screenShareButton !== false && (
-            <ScreenShare
-              option={options?.screenShareButton}
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-            />
-          )}
-          {customButtons['afterScreenShareButton']}
-          {options?.participantsButton !== false && (
-            <Participants
-              option={options?.participantsButton}
-              callInvitationURL={props.callInvitationURL}
-              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              displayType={options?.displayType}
-              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-              styles={props.commonButtonStyles}
-            />
-          )}
-          {customButtons['afterParticipantsButton']}
-          {options?.devicesButton !== false && (
-            <Devices
-              displayType={options?.displayType}
-              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-              styles={props.commonButtonStyles}
-            />
-          )}
-          {customButtons['afterOptionsButton']}
-          {options?.endCallButton !== false && (
-            <EndCall displayType={options?.displayType} styles={props.endCallButtonStyles} />
-          )}
-          {customButtons['afterEndCallButton']}
-          {customButtons['last']}
-        </ControlBar>
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove-from(stable): custom button injection */
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isEnabled = (option: any): boolean => option !== false;
