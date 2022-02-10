@@ -32,6 +32,7 @@ import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
+import { ScreenShare } from './buttons/ScreenShare';
 
 /**
  * @private
@@ -69,14 +70,6 @@ export type CallControlsProps = {
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const options = typeof props.options === 'boolean' ? {} : props.options;
-  const compactMode = options?.displayType === 'compact';
-
-  const screenShareButtonProps = usePropsFor(ScreenShareButton);
-
-  const commonButtonStyles = useMemo(
-    () => concatButtonBaseStyles(props.commonButtonStyles ?? {}),
-    [props.commonButtonStyles]
-  );
 
   /* @conditional-compile-remove-from(stable): custom button injection */
   const customButtonProps = useMemo(() => {
@@ -90,16 +83,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   if (props.options === false) {
     return <></>;
   }
-
-  const screenShareButton = options?.screenShareButton !== false && (
-    <ScreenShareButton
-      data-ui-id="call-composite-screenshare-button"
-      {...screenShareButtonProps}
-      showLabel={!compactMode}
-      disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
-      styles={commonButtonStyles}
-    />
-  );
 
   return (
     <Stack horizontalAlign="center">
@@ -138,7 +121,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
           }
-          {screenShareButton}
+          {options?.screenShareButton !== false && (
+            <ScreenShare
+              option={options?.screenShareButton}
+              displayType={options?.displayType}
+              styles={props.commonButtonStyles}
+            />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
