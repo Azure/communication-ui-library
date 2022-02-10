@@ -90,7 +90,7 @@
     "participantJoined": "joined the chat.",
     "participantLeft": "left the chat.",
     "editMessage": "Edit",
-    "removeMessage": "Remove",
+    "removeMessage": "Delete",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
