@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme } from '@fluentui/react';
+import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
 
 /**
  * @private
@@ -22,13 +22,9 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
       return <></>;
     } else {
       return (
-        <Stack aria-label={label} role={'status'} styles={notificationTextStyles(theme)}>
-          {numberOfMessages < 9 ? (
-            <Stack.Item role={'status'}>{numberOfMessages}</Stack.Item>
-          ) : (
-            <Stack.Item role={'status'}>9+</Stack.Item>
-          )}
-        </Stack>
+        <Text aria-label={label} role={'status'} styles={notificationTextStyles(theme)}>
+          {numberOfMessages < 9 ? numberOfMessages : '9+'}
+        </Text>
       );
     }
   };
