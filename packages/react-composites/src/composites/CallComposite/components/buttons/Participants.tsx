@@ -5,7 +5,7 @@ import { ControlBarButtonStyles, ParticipantMenuItemsCallback, ParticipantsButto
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { concatButtonBaseStyles, participantButtonWithIncreasedTouchTargets } from './styles';
+import { concatButtonBaseStyles, participantButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
 
 /** @private */
 export const Participants = (props: {

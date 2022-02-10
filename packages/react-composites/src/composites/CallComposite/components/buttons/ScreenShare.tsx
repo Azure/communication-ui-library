@@ -5,7 +5,7 @@ import { ControlBarButtonStyles, ScreenShareButton } from '@internal/react-compo
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { concatButtonBaseStyles } from './styles';
+import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
 /** @private */
 export const ScreenShare = (props: {

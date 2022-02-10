@@ -9,7 +9,7 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { concatButtonBaseStyles } from './styles';
+import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
 /**
  * @private

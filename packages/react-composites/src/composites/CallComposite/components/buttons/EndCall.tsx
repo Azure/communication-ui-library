@@ -6,7 +6,7 @@ import { ControlBarButtonStyles, EndCallButton } from '@internal/react-component
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../../styles/Buttons.styles';
 
 /** @private */
 export const EndCall = (props: {

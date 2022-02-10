@@ -5,7 +5,7 @@ import { CameraButton, ControlBarButtonStyles } from '@internal/react-components
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { concatButtonBaseStyles } from './styles';
+import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
 /**
  * @private

@@ -5,7 +5,7 @@ import { ControlBarButtonStyles, DevicesButton } from '@internal/react-component
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
-import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from './styles';
+import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
 
 /** @private */
 export const Devices = (props: {
