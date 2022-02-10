@@ -7,7 +7,6 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButton } from '@internal/react-components';
 import {
   BaseCustomStyles,
-  CameraButton,
   ControlBar,
   ControlBarButtonStyles,
   DevicesButton,
@@ -28,6 +27,7 @@ import {
   CustomCallControlButtonPlacement,
   CustomCallControlButtonProps
 } from '../types/CallControlOptions';
+import { Camera } from './buttons/Camera';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 
@@ -69,7 +69,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const options = typeof props.options === 'boolean' ? {} : props.options;
   const compactMode = options?.displayType === 'compact';
 
-  const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -108,17 +107,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   if (props.options === false) {
     return <></>;
   }
-
-  const cameraButton = options?.cameraButton !== false && (
-    <CameraButton
-      data-ui-id="call-composite-camera-button"
-      {...cameraButtonProps}
-      showLabel={!compactMode}
-      styles={commonButtonStyles}
-      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-      enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-    />
-  );
 
   const screenShareButton = options?.screenShareButton !== false && (
     <ScreenShareButton
@@ -175,7 +163,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
           }
-          {cameraButton}
+          {options?.cameraButton !== false && (
+            <Camera
+              displayType={options?.displayType}
+              styles={props.commonButtonStyles}
+              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
+            />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
