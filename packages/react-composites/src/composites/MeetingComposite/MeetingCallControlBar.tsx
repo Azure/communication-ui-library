@@ -3,10 +3,9 @@
 
 import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter, CallControlOptions, CustomCallControlButtonCallback } from '../CallComposite';
+import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
-import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
@@ -14,7 +13,6 @@ import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
-import { generateCustomButtons } from '../CallComposite/components/buttons/Custom';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
@@ -22,7 +20,6 @@ import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { Participants } from '../CallComposite/components/buttons/Participants';
 import { Devices } from '../CallComposite/components/buttons/Devices';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
-import { ParticipantMenuItemsCallback } from '@internal/react-components';
 
 /**
  * @private
@@ -73,8 +70,16 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    * control bar such that all controls can be accessed.
    */
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const centerContainerStyles = useMemo(
+    () => (!props.mobileView ? desktopControlBarStyles : undefined),
+    [props.mobileView]
+  );
   const commonButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+  const endCallButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
     [props.mobileView, theme]
   );
 
@@ -90,7 +95,58 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CenteredControls mobileView={props.mobileView} options={options} increaseFlyoutItemSize={props.mobileView} />
+          <Stack horizontalAlign="center">
+            <Stack.Item>
+              {/*
+                  Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
+                  control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
+                  set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
+                  dockedBottom it has position absolute and would therefore float on top of the media gallery,
+                  occluding some of its content.
+                */}
+              <ControlBar layout="horizontal" styles={centerContainerStyles}>
+                {isEnabled(options.microphoneButton) && (
+                  <Microphone
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                    splitButtonsForDeviceSelection
+                  />
+                )}
+                {options.cameraButton !== false && (
+                  <Camera
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                    splitButtonsForDeviceSelection
+                  />
+                )}
+                {options.screenShareButton !== false && (
+                  <ScreenShare
+                    option={options.screenShareButton}
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                  />
+                )}
+                <Participants
+                  displayType={options.displayType}
+                  increaseFlyoutItemSize={props.mobileView}
+                  styles={commonButtonStyles}
+                />
+                {
+                  // Device dropdowns are shown via split buttons.
+                  // TODO: Remove the devicesButton for mobile view as well once
+                  // the overflow button has been added for device selection.
+                  props.mobileView && (
+                    <Devices
+                      displayType={options.displayType}
+                      increaseFlyoutItemSize={props.mobileView}
+                      styles={commonButtonStyles}
+                    />
+                  )
+                }
+                <EndCall displayType={options.displayType} styles={endCallButtonStyles} />
+              </ControlBar>
+            </Stack.Item>
+          </Stack>
         </CallAdapterProvider>
       </Stack.Item>
       <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
@@ -118,84 +174,6 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           />
         )}
       </Stack>
-    </Stack>
-  );
-};
-
-type CenteredControlProps = {
-  mobileView: boolean;
-  options: MeetingCallControlOptions;
-  /**
-   * Option to increase the height of the button flyout menu items from 36px to 48px.
-   * Recommended for mobile devices.
-   */
-  increaseFlyoutItemSize?: boolean;
-};
-
-const CenteredControls = (props: CenteredControlProps): JSX.Element => {
-  const theme = useTheme();
-  const containerStyles = useMemo(() => (!props.mobileView ? desktopControlBarStyles : undefined), [props.mobileView]);
-  const commonButtonStyles = useMemo(
-    () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
-    [props.mobileView, theme]
-  );
-  const endCallButtonStyles = useMemo(
-    () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
-    [props.mobileView, theme]
-  );
-
-  return (
-    <Stack horizontalAlign="center">
-      <Stack.Item>
-        {/*
-            Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
-            control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
-            set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
-            dockedBottom it has position absolute and would therefore float on top of the media gallery,
-            occluding some of its content.
-         */}
-        <ControlBar layout="horizontal" styles={containerStyles}>
-          {isEnabled(props.options.microphoneButton) && (
-            <Microphone
-              displayType={props.options?.displayType}
-              styles={commonButtonStyles}
-              splitButtonsForDeviceSelection
-            />
-          )}
-          {props.options.cameraButton !== false && (
-            <Camera
-              displayType={props.options.displayType}
-              styles={commonButtonStyles}
-              splitButtonsForDeviceSelection
-            />
-          )}
-          {props.options.screenShareButton !== false && (
-            <ScreenShare
-              option={props.options.screenShareButton}
-              displayType={props.options.displayType}
-              styles={commonButtonStyles}
-            />
-          )}
-          <Participants
-            displayType={props.options.displayType}
-            increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-            styles={commonButtonStyles}
-          />
-          {
-            // Device dropdowns are shown via split buttons.
-            // TODO: Remove the devicesButton for mobile view as well once
-            // the overflow button has been added for device selection.
-            props.mobileView && (
-              <Devices
-                displayType={props.options.displayType}
-                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-                styles={commonButtonStyles}
-              />
-            )
-          }
-          <EndCall displayType={props.options.displayType} styles={endCallButtonStyles} />
-        </ControlBar>
-      </Stack.Item>
     </Stack>
   );
 };
