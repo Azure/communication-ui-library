@@ -331,7 +331,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
       case 'error':
         this.callAdapter.on('error', listener);
         this.chatAdapter.on('error', listener);
-        // throw 'on(Error) not implemented yet.';
         break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
@@ -390,7 +389,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
       case 'error':
         this.callAdapter.off('error', listener);
         this.chatAdapter.off('error', listener);
-        // throw 'on(Error) not implemented yet.';
         break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
