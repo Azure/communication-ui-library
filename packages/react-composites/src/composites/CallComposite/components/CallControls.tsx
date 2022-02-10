@@ -3,8 +3,6 @@
 
 import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { ControlBarButton } from '@internal/react-components';
 import {
   BaseCustomStyles,
   ControlBar,
@@ -12,13 +10,9 @@ import {
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import {
-  CallControlDisplayType,
-  CallControlOptions,
-  CustomCallControlButtonCallback,
-  CustomCallControlButtonPlacement
-} from '../types/CallControlOptions';
+import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
+import { generateCustomButtons } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -143,40 +137,5 @@ const onFetchCustomButtonPropsTrampoline = (
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
   /* @conditional-compile-remove-from(stable): custom button injection */
   response = options?.onFetchCustomButtonProps;
-  return response;
-};
-
-type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
-
-const generateCustomButtons = (
-  onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
-  displayType?: CallControlDisplayType
-): CustomButtons => {
-  let response = {
-    first: undefined,
-    afterCameraButton: undefined,
-    afterEndCallButton: undefined,
-    afterMicrophoneButton: undefined,
-    afterOptionsButton: undefined,
-    afterParticipantsButton: undefined,
-    afterScreenShareButton: undefined,
-    last: undefined
-  };
-  if (!onFetchCustomButtonProps) {
-    return response;
-  }
-
-  const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
-  for (const key in response) {
-    response[key] = (
-      <>
-        {allButtonProps
-          .filter((buttonProps) => buttonProps.placement === key)
-          .map((buttonProps, i) => (
-            <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
-          ))}
-      </>
-    );
-  }
   return response;
 };
