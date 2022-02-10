@@ -10,7 +10,6 @@ import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallControlOptions } from './components/CallControls';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
@@ -18,6 +17,7 @@ import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import { CallControlOptions } from './types/CallControlOptions';
 
 /**
  * Props for {@link CallComposite}.
