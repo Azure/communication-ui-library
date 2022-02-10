@@ -13,7 +13,6 @@ import {
   DevicesButton,
   EndCallButton,
   ParticipantMenuItemsCallback,
-  ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -22,8 +21,7 @@ import {
   controlButtonBaseStyle,
   devicesButtonWithIncreasedTouchTargets,
   groupCallLeaveButtonCompressedStyle,
-  groupCallLeaveButtonStyle,
-  participantButtonWithIncreasedTouchTargets
+  groupCallLeaveButtonStyle
 } from '../styles/CallControls.styles';
 import {
   CallControlOptions,
@@ -31,6 +29,7 @@ import {
   CustomCallControlButtonProps
 } from '../types/CallControlOptions';
 import { Microphone } from './buttons/Microphone';
+import { Participants } from './buttons/Participants';
 
 /**
  * @private
@@ -67,13 +66,11 @@ export type CallControlsProps = {
  * @private
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, onFetchParticipantMenuItems } = props;
   const options = typeof props.options === 'boolean' ? {} : props.options;
   const compactMode = options?.displayType === 'compact';
 
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
-  const participantsButtonProps = usePropsFor(ParticipantsButton);
   const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
@@ -81,14 +78,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     () => concatButtonBaseStyles(props.commonButtonStyles ?? {}),
     [props.commonButtonStyles]
   );
-  const participantsButtonStyles = useMemo(
-    () =>
-      concatButtonBaseStyles(
-        props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {},
-        props.commonButtonStyles ?? {}
-      ),
-    [props.increaseFlyoutItemSize, props.commonButtonStyles]
-  );
+
   const devicesButtonStyles = useMemo(
     () =>
       concatButtonBaseStyles(
@@ -140,18 +130,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const participantButton = options?.participantsButton !== false && (
-    <ParticipantsButton
-      data-ui-id="call-composite-participants-button"
-      {...participantsButtonProps}
-      showLabel={!compactMode}
-      callInvitationURL={callInvitationURL}
-      onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-      disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
-      styles={participantsButtonStyles}
-    />
-  );
-
   const devicesButton = options?.devicesButton !== false && (
     <DevicesButton
       /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
@@ -189,7 +167,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {options?.microphoneButton !== false && (
             <Microphone
               displayType={options?.displayType}
-              styles={commonButtonStyles}
+              styles={props.commonButtonStyles}
               splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
             />
           )}
@@ -207,7 +185,16 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
           }
-          {participantButton}
+          {options?.participantsButton !== false && (
+            <Participants
+              option={options?.participantsButton}
+              callInvitationURL={props.callInvitationURL}
+              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              displayType={options?.displayType}
+              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              styles={props.commonButtonStyles}
+            />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />

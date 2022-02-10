@@ -3,12 +3,13 @@
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useLocale } from '../../../localization';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
+import { concatButtonBaseStyles } from './styles';
 /**
  * @private
  */
@@ -17,7 +18,6 @@ export const Microphone = (props: {
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
 }): JSX.Element => {
-  const { displayType, styles, splitButtonsForDeviceSelection } = props;
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -41,6 +41,7 @@ export const Microphone = (props: {
         }
       }
     : {};
+  const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
   // tab focus on MicrophoneButton on page load
   return (
@@ -48,11 +49,11 @@ export const Microphone = (props: {
       autoFocus
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
-      showLabel={displayType !== 'compact'}
+      showLabel={props.displayType !== 'compact'}
       styles={styles}
       {...microphoneButtonStrings}
       /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-      enableDeviceSelectionMenu={splitButtonsForDeviceSelection}
+      enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
 };
