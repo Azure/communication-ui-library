@@ -67,8 +67,7 @@ export const textFieldStyle = (errorColor: string): IStyle => {
       height: 'auto',
       minHeight: '0',
       /**
-       * Border of the field group is set to none as there is a wrapper stack that encloses text field and
-       * uploaded files and border is added to the parent stack.
+       * Removing fieldGroup border to make sure no border is rendered around the text area in sendbox.
        */
       ':after': { border: 'none' }
     },

@@ -22,12 +22,10 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
-/* @conditional-compile-remove-from(stable) */
-import { FileCard, FileCardGroup } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 /* @conditional-compile-remove-from(stable) */
-import { truncatedFileName, extension } from './file-sharing/index';
+import { FileCard, FileCardGroup, truncatedFileName, extension, FileUpload, FileUploadHandler } from './file-sharing';
 
 import {
   chatArea,
@@ -45,8 +43,6 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUpload, FileUploadHandler } from './file-sharing';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
