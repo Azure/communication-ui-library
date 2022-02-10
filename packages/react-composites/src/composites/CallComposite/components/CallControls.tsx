@@ -119,14 +119,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     return <></>;
   }
 
-  const microphoneButton = options?.microphoneButton !== false && (
-    <Microphone
-      displayType={options?.displayType}
-      styles={commonButtonStyles}
-      splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
-    />
-  );
-
   const cameraButton = options?.cameraButton !== false && (
     <CameraButton
       data-ui-id="call-composite-camera-button"
@@ -194,7 +186,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
           }
-          {microphoneButton}
+          {options?.microphoneButton !== false && (
+            <Microphone
+              displayType={options?.displayType}
+              styles={commonButtonStyles}
+              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
+            />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
