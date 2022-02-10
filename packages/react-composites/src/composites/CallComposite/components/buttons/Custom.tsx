@@ -17,7 +17,7 @@ export const generateCustomButtons = (
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomButtons => {
-  let response = {
+  const response = {
     first: undefined,
     afterCameraButton: undefined,
     afterEndCallButton: undefined,
