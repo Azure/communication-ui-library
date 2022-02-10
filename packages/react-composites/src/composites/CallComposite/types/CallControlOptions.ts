@@ -18,7 +18,7 @@ export type CallControlDisplayType = 'default' | 'compact';
  */
 export type CallControlOptions = {
   /**
-   * Options to change how the call controls are displayed.
+   * {@link CallControlDisplayType} to change how the call controls are displayed.
    * `'compact'` display type will decreases the size of buttons and hide the labels.
    *
    * @remarks
