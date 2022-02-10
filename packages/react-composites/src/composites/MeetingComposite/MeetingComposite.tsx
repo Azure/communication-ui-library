@@ -68,10 +68,7 @@ export type MeetingCompositeOptions = {
  * @beta
  */
 export interface MeetingCallControlOptions
-  extends Pick<
-    CallControlOptions,
-    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
-  > {
+  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
   /**
    * Show or hide the chat button in the meeting control bar.
    * @defaultValue true
