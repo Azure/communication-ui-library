@@ -647,7 +647,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     messageType: 'chat';
-    // (undocumented)
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
