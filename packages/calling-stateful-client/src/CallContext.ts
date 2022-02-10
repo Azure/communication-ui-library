@@ -44,7 +44,6 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
-  private _batchMode: boolean;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -66,7 +65,6 @@ export class CallContext {
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
-    this._batchMode = false;
     this._atomicId = 0;
   }
 
@@ -82,7 +80,7 @@ export class CallContext {
         this._logger.info(`State change: ${JSON.stringify(patches)}`);
       }
     });
-    if (!this._batchMode && this._state !== priorState) {
+    if (this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
