@@ -10,6 +10,7 @@ import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles } from './styles';
+
 /**
  * @private
  */

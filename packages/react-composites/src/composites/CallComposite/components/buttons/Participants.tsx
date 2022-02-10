@@ -7,6 +7,7 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles, participantButtonWithIncreasedTouchTargets } from './styles';
 
+/** @private */
 export const Participants = (props: {
   // The value of `CallControlOptions.participantsButton`.
   option?: boolean | { disabled: boolean };

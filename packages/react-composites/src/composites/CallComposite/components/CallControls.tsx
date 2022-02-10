@@ -28,6 +28,7 @@ import {
   CustomCallControlButtonProps
 } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
+import { Devices } from './buttons/Devices';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 
@@ -70,7 +71,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const compactMode = options?.displayType === 'compact';
 
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
-  const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const commonButtonStyles = useMemo(
@@ -78,14 +78,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     [props.commonButtonStyles]
   );
 
-  const devicesButtonStyles = useMemo(
-    () =>
-      concatButtonBaseStyles(
-        props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {},
-        props.commonButtonStyles ?? {}
-      ),
-    [props.increaseFlyoutItemSize, props.commonButtonStyles]
-  );
   const endCallButtonStyles = useMemo(
     () =>
       concatStyleSets(
@@ -115,16 +107,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
       styles={commonButtonStyles}
-    />
-  );
-
-  const devicesButton = options?.devicesButton !== false && (
-    <DevicesButton
-      /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
-      persistMenu={true}
-      {...devicesButtonProps}
-      showLabel={!compactMode}
-      styles={devicesButtonStyles}
     />
   );
 
@@ -193,7 +175,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
           }
-          {devicesButton}
+          {options?.devicesButton !== false && (
+            <Devices
+              displayType={options?.displayType}
+              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              styles={props.commonButtonStyles}
+            />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />

@@ -7,6 +7,9 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles } from './styles';
 
+/**
+ * @private
+ */
 export const Camera = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
