@@ -1269,7 +1269,7 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export type FileDownloadHandler = (userId: CommunicationIdentifierKind, fileData: FileMetadata) => Promise<string>;
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<string>;
 
 // @beta
 export interface FileMetadata {

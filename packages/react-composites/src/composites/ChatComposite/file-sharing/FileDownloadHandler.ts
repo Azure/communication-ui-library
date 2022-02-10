@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { FileMetadata } from './FileUpload';
 
 /**
@@ -33,4 +32,4 @@ import { FileMetadata } from './FileUpload';
  * @param userId - The {@link CommunicationIdentifierKind} ID of the user uploading the file.
  * @param fileData - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: CommunicationIdentifierKind, fileData: FileMetadata) => Promise<string>;
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<string>;

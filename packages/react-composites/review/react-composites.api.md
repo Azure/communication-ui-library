@@ -563,7 +563,7 @@ export interface Disposable {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: CommunicationIdentifierKind, fileData: FileMetadata) => Promise<string>;
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<string>;
 
 // @beta
 export interface FileMetadata {
