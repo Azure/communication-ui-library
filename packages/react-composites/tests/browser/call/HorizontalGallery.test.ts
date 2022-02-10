@@ -29,7 +29,7 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: testRemoteParticipants
       })
     );
-    // Click off page to turn away initial aria label
+    // Click outside of screen to turn away initial aria label
     await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);
@@ -80,7 +80,7 @@ test.describe('HorizontalGallery tests', async () => {
         remoteParticipants: testRemoteParticipants
       })
     );
-    // Click off page to turn away initial aria label
+    // Click outside of screen to turn away initial aria label
     await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForPageFontsLoaded(page);

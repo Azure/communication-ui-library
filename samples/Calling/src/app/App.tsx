@@ -3,6 +3,7 @@
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -22,6 +23,8 @@ import { CallScreen } from './views/CallScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
+
+setLogLevel('warning');
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}`
