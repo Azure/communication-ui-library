@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, IButtonStyles, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove-from(stable): custom button injection */
 import { ControlBarButton } from '@internal/react-components';
@@ -9,19 +9,9 @@ import {
   BaseCustomStyles,
   ControlBar,
   ControlBarButtonStyles,
-  DevicesButton,
-  EndCallButton,
-  ParticipantMenuItemsCallback,
-  ScreenShareButton
+  ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { usePropsFor } from '../hooks/usePropsFor';
-import {
-  controlButtonBaseStyle,
-  devicesButtonWithIncreasedTouchTargets,
-  groupCallLeaveButtonCompressedStyle,
-  groupCallLeaveButtonStyle
-} from '../styles/CallControls.styles';
 import {
   CallControlOptions,
   CustomCallControlButtonPlacement,
@@ -172,14 +162,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       </Stack.Item>
     </Stack>
   );
-};
-
-const concatButtonBaseStyles = (...styles: IButtonStyles[]): IButtonStyles => {
-  let result = controlButtonBaseStyle;
-  styles.forEach((style) => {
-    result = concatStyleSets(result, style);
-  });
-  return result;
 };
 
 /* @conditional-compile-remove-from(stable): custom button injection */
