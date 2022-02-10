@@ -7,6 +7,7 @@
 import {
   AudioDeviceInfo,
   Call,
+  CallAgent,
   GroupCallLocator,
   PermissionConstraints,
   TeamsMeetingLinkLocator,
@@ -34,13 +35,21 @@ import {
   mergeCallAdapterStateIntoMeetingAdapterState,
   mergeChatAdapterStateIntoMeetingAdapterState
 } from '../state/MeetingAdapterState';
-import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+import {
+  createAzureCommunicationChatAdapter,
+  createAzureCommunicationChatAdapterFromClient
+} from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 
 /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import {
+  CallParticipantsLocator,
+  createAzureCommunicationCallAdapterFromClient
+} from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import { StatefulCallClient } from '@internal/calling-stateful-client';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -450,6 +459,44 @@ export const createAzureCommunicationMeetingAdapter = async ({
     threadId
   });
 
+  const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
+  return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};
+
+/**
+ * Arguments for {@link createAzureCommunicationMeetingAdapterFromClient}
+ *
+ * @beta
+ */
+export type AzureCommunicationMeetingAdapterFromClientArgs = {
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  callAgent: CallAgent;
+  callClient: StatefulCallClient;
+  chatClient: StatefulChatClient;
+  threadId: string;
+};
+
+/**
+ * Create a {@link MeetingAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
+ *
+ * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Consider using {@link createAzureCommunicationMeetingAdapter} for a simpler API.
+ *
+ * @beta
+ */
+export const createAzureCommunicationMeetingAdapterFromClient = async ({
+  callClient,
+  callAgent,
+  meetingLocator,
+  chatClient,
+  threadId
+}: AzureCommunicationMeetingAdapterFromClientArgs): Promise<MeetingAdapter> => {
+  const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+
+  const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
 };
