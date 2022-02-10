@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack, Icon } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -22,9 +22,11 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
+/* @conditional-compile-remove-from(stable) */
 import { FileCard, FileCardGroup } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+/* @conditional-compile-remove-from(stable) */
 import { truncatedFileName, extension } from './file-sharing/index';
 
 import {
@@ -49,6 +51,9 @@ import { FileUpload, FileUploadHandler } from './file-sharing';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { Icon } from '@fluentui/react';
+
 /**
  * @private
  */
@@ -91,10 +96,12 @@ export interface FileSharingOptions {
    * @beta
    */
   multiple?: boolean;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * A function of type {@link FileUploadHandler} for handling file uploads.
    * @beta
    */
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   uploadHandler: FileUploadHandler;
 }
 
@@ -173,9 +180,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (!files) {
       return;
     }
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
     fileSharing?.uploadHandler(adapter.getState().userId, fileUploads);
   };
 
