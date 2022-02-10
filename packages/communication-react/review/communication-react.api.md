@@ -1699,6 +1699,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+    onRenderAttachedFiles?: () => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;

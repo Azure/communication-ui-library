@@ -500,7 +500,7 @@ export type MessageThreadProps = {
    * Optional callback to render uploaded files in the message component.
    * @beta
    */
-  onRenderUploadedFiles?: () => JSX.Element;
+  onRenderAttachedFiles?: (message) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -613,8 +613,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onDeleteMessage,
-    onRenderUploadedFiles
+    onDeleteMessage
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -859,6 +858,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return (
           <ChatMessageComponent
             {...messageProps}
+            onRenderAttachedFiles={props.onRenderAttachedFiles}
             message={messageProps.message}
             inlineAcceptRejectEditButtons={!isNarrow}
           />
