@@ -29,6 +29,7 @@ import {
 } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
+import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 
@@ -71,20 +72,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const compactMode = options?.displayType === 'compact';
 
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
-  const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const commonButtonStyles = useMemo(
     () => concatButtonBaseStyles(props.commonButtonStyles ?? {}),
     [props.commonButtonStyles]
-  );
-
-  const endCallButtonStyles = useMemo(
-    () =>
-      concatStyleSets(
-        compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle,
-        props.endCallButtonStyles ?? {}
-      ),
-    [props.endCallButtonStyles]
   );
 
   /* @conditional-compile-remove-from(stable): custom button injection */
@@ -107,15 +98,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
       styles={commonButtonStyles}
-    />
-  );
-
-  const endCallButton = options?.endCallButton !== false && (
-    <EndCallButton
-      data-ui-id="call-composite-hangup-button"
-      {...hangUpButtonProps}
-      styles={endCallButtonStyles}
-      showLabel={!compactMode}
     />
   );
 
@@ -186,7 +168,9 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />
           }
-          {endCallButton}
+          {options?.endCallButton !== false && (
+            <EndCall displayType={options?.displayType} styles={props.endCallButtonStyles} />
+          )}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterEndCallButton'} />
