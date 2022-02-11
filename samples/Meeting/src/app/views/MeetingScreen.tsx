@@ -16,6 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
+import { WEB_APP_TITLE } from '../utils/constants';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -23,13 +24,12 @@ export interface MeetingScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
-  webAppTitle: string;
   endpoint: string;
   meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
 export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, displayName, webAppTitle, endpoint, meetingLocator } = props;
+  const { token, userId, displayName, endpoint, meetingLocator } = props;
   const [adapter, setAdapter] = useState<MeetingAdapter>();
   const callIdRef = useRef<string>();
   const adapterRef = useRef<MeetingAdapter>();
@@ -56,9 +56,14 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         endpoint,
         meetingLocator
       });
+      adapter.on('error', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
-        document.title = `${pageTitle} - ${webAppTitle}`;
+        document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
         if (state?.meeting?.id && callIdRef.current !== state?.meeting?.id) {
           callIdRef.current = state?.meeting?.id;
@@ -72,7 +77,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [displayName, token, userId, meetingLocator]);
+  }, [displayName, token, userId, meetingLocator, endpoint]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

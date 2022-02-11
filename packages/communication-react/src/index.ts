@@ -201,7 +201,12 @@ export type { LocalVideoCameraCycleButtonProps } from '../../react-components/sr
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
-export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from '../../react-components/src';
+export type {
+  CameraButtonContextualMenuStyles,
+  CameraButtonStyles,
+  MicrophoneButtonContextualMenuStyles,
+  MicrophoneButtonStyles
+} from '../../react-components/src';
 
 export * from '../../calling-stateful-client/src';
 export * from '../../chat-stateful-client/src';
