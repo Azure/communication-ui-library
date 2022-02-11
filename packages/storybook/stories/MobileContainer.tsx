@@ -22,6 +22,6 @@ export const MobilePreviewContainer = (props: { children: React.ReactNode }): JS
   );
 };
 
-const mobilePreviewWidth = { width: '15rem' };
-const mobilePreviewImageWidth = { image: { width: '15rem' } };
-const mobileBodyHeight = { root: { height: '25rem' } };
+const mobilePreviewWidth = { width: '25rem' };
+const mobilePreviewImageWidth = { image: { width: '25rem' } };
+const mobileBodyHeight = { root: { height: '35rem' } };
