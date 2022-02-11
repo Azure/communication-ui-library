@@ -107,12 +107,12 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField' | false;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
-   * Optional callback to render uploaded files in the SendBox. The sendbox will grow
-   * veritcally to accomodate the height of injected filecard component. Injected component will
+   * Optional callback to render uploaded files in the SendBox. The sendbox will expand
+   * veritcally to accomodate the uploaded files. File uploads will
    * be rendered below the text area in sendbox.
    * @beta
    */
-  onRenderAttachedFiles?: () => JSX.Element;
+  onRenderFileUploads?: () => JSX.Element;
 }
 
 /**
@@ -185,7 +185,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const borderAndBoxShadowStyle = {
     borderRadius: theme.effects.roundedCorner4,
-    border: `1px solid ${theme.palette.neutralSecondary}`,
+    border: `0.0625rem solid ${theme.palette.neutralSecondary}`,
     ':hover': {
       border: '2px solid',
       borderColor: theme.palette.blue
@@ -266,7 +266,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       </InputBoxComponent>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        props.onRenderAttachedFiles && props.onRenderAttachedFiles()
+        props.onRenderFileUploads && props.onRenderFileUploads()
       }
     </Stack>
   );

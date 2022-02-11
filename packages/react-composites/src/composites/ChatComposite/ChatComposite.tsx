@@ -13,6 +13,7 @@ import { ChatScreen } from './ChatScreen';
 import { FileSharingOptions } from './ChatScreen';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
+// Needed to initialize default icons used by Fluent components.
 initializeFileTypeIcons();
 
 /**

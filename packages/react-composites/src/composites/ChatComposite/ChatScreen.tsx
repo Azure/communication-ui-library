@@ -97,7 +97,6 @@ export interface FileSharingOptions {
    * A function of type {@link FileUploadHandler} for handling file uploads.
    * @beta
    */
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   uploadHandler: FileUploadHandler;
 }
 
@@ -146,7 +145,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const uploadedFilesSelector = useSelector(fileUploadsSelector);
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  const onRenderAttachedFiles = (): JSX.Element => {
+  const onRenderFileUploads = (): JSX.Element => {
     const uploadedFiles = uploadedFilesSelector.files;
     const truncateLength = 15;
     return (
@@ -208,7 +207,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox
               {...sendBoxProps}
               /* @conditional-compile-remove-from(stable): FILE_SHARING */
-              onRenderAttachedFiles={onRenderAttachedFiles}
+              onRenderFileUploads={onRenderFileUploads}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
             />
