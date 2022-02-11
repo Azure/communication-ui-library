@@ -17,7 +17,6 @@ import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
-import { Participants } from '../CallComposite/components/buttons/Participants';
 import { Devices } from '../CallComposite/components/buttons/Devices';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 
@@ -126,11 +125,6 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
                     styles={commonButtonStyles}
                   />
                 )}
-                <Participants
-                  displayType={options.displayType}
-                  increaseFlyoutItemSize={props.mobileView}
-                  styles={commonButtonStyles}
-                />
                 {
                   // Device dropdowns are shown via split buttons.
                   // TODO: Remove the devicesButton for mobile view as well once
