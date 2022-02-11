@@ -28,7 +28,7 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-common": "1.0.0"
+    "@azure/communication-common": "1.1.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <18.0.0",
