@@ -1307,7 +1307,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
@@ -1586,6 +1586,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 // @public
 export interface MeetingCompositeStrings {
     chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
