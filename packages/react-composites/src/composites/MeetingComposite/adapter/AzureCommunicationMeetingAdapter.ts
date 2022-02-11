@@ -38,6 +38,7 @@ import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
 import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -281,7 +282,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'meetingEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -328,7 +329,9 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
         this.chatAdapter.on('messageRead', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.on('error', listener);
+        this.chatAdapter.on('error', listener);
+        break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
     }
@@ -337,7 +340,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'meetingEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -384,7 +387,9 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
         this.chatAdapter.off('messageRead', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.off('error', listener);
+        this.chatAdapter.off('error', listener);
+        break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
     }
