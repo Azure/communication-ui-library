@@ -21,9 +21,10 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
     if (numberOfMessages < 1) {
       return <></>;
     } else {
+      const textNumberOfMessages = numberOfMessages < 9 ? numberOfMessages : '9+';
       return (
-        <Text aria-label={label} role={'status'} styles={notificationTextStyles(theme)}>
-          {numberOfMessages < 9 ? numberOfMessages : '9+'}
+        <Text role={'status'} aria-label={textNumberOfMessages + label} styles={notificationTextStyles(theme)}>
+          {textNumberOfMessages}
         </Text>
       );
     }

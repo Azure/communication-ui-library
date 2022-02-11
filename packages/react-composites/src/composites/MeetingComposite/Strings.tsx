@@ -32,7 +32,7 @@ export interface MeetingCompositeStrings {
   /**
    * New Message label for chat button with notification icon component.
    */
-  newMessageNotificationLabel: string;
+  newChatMessageNotificationLabel: string;
   /**
    * Aria label for the picture in picture in picture tile that.
    * This feature currently only shows on mobileView when the chat or people pane is expanded.
