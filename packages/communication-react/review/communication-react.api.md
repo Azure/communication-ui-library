@@ -1303,7 +1303,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
@@ -1477,6 +1477,8 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 // @beta
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
     meeting: MeetingState | undefined;
     userId: CommunicationIdentifierKind;
 }
@@ -1502,7 +1504,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -1526,7 +1528,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
