@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
+import { CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter } from '../CallComposite';
+import { CallAdapter, CallControlOptions } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
