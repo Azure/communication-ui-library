@@ -563,7 +563,12 @@ export interface Disposable {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<string>;
+export interface FileDownloadErrorMessage {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
 
 // @beta
 export interface FileMetadata {

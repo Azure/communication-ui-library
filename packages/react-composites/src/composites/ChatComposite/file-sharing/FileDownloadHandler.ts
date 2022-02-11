@@ -7,7 +7,8 @@ import { FileMetadata } from './FileUpload';
  * A file download error returned via a {@link FileDownloadHandler}.
  * This error message is used to render an error message in the UI.
  */
-export interface FileDownloadError {
+export interface FileDownloadErrorMessage {
+  /** The error message to display in the UI */
   errorMessage: string;
 }
 
@@ -41,4 +42,4 @@ export interface FileDownloadError {
  * @param userId - The user ID of the user downloading the file.
  * @param fileData - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
