@@ -13151,13 +13151,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
-  /nanoid/3.1.25:
+  /nanoid/3.1.32:
     dev: false
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
     resolution:
-      integrity: sha512-rdwtIXaXCLFAQbnfqDRnI6jaRHp9fTcYBjtFKE8eezcZ7LuLjhUaQGNeMXf1HmRoCH32CLz6XwX0TtxEOS/A3Q==
+      integrity: sha512-F8mf7R3iT9bvThBoW4tGXhXFHCctyCiUUPrWF8WaTqa3h96d9QybkSeba43XVOOE3oiLfkVDe4bT8MeGmkrTxw==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -19069,7 +19069,7 @@ packages:
       if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
-      nanoid: 3.1.25
+      nanoid: 3.1.32
       prettier: 2.3.1
       rimraf: 2.7.1
       rollup: 2.42.4
@@ -19078,7 +19078,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-VpjCwvjnMD16NJgd8zwAxD72eGtPsZPEo0LG0yNBu0NMI23DJ6uixsl9Vq6ReBLQic1IONNosIC7yo2Xw5lfiw==
+      integrity: sha512-scSwmsQH15slmxqc8TpW1LOZTKIndWT2a8liNkpSSxeD1nz6WhxYi7cLGVqCz/Hl8426U609zzb0nfQxnfrCDw==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19222,7 +19222,7 @@ packages:
       jest: 26.6.0_ts-node@9.1.1
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
-      nanoid: 3.1.25
+      nanoid: 3.1.32
       node-forge: 1.2.1
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
@@ -19250,7 +19250,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-m2NgvoWYavgbvB5YR8t09yjTT/CQyg0Ytn9UuOpz+2vZ0aejbhrwyHwmhTXQUowRiJczmRlHVAwosmpjYhWmeA==
+      integrity: sha512-3FOpCOS9YraDScILi8nJHobTeGA8cYLU2E6n2qAbOUcNgCZz7wA1L40FlzeHRKlwDLwun1MGcrbsDnWZpcTd/Q==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19570,7 +19570,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nan: 2.15.0
-      nanoid: 3.1.25
+      nanoid: 3.1.32
       node-forge: 1.2.1
       playwright: 1.17.1
       prettier: 2.3.1
@@ -19600,11 +19600,12 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-2MfdsTEwDSYDCZ114I/IHjNdthiDkYvjISr/EAMfzZnoCQOWKmy2G8a08ADj9xCthKaU1Drf3KcJOpppzxg6LA==
+      integrity: sha512-LqZ0aKj/qIiDP/jcciAJzbJSU3Cs+xMMWKgab9rDahI/0c5AGjFqWbvNw7f0zRBec+9ot5LrO5D0Xd04jq11hQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
     dependencies:
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.1.0
       '@azure/communication-identity': 1.0.0
@@ -19623,7 +19624,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-vKDHUBhNLLauv6P3HgPdPZ9H1DxXG+b/BLBUwdqzr4dT12Um8bWwgH8rlanJQ6X0aP+yeLiL2UE285m1AbOFXQ==
+      integrity: sha512-9ypkYlbiRgGt9bMy/0dLuryXN7f2VoSUyARbtr7mareoiwZTuroiwrCOFCrRGBeH41RXzXfcXnLV/HKqdUshMQ==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19659,7 +19660,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-1y5fqplXmnA6dk+Itd5kHA11DasBQ14RwtubE9igbIAtSxbBiOGyWYT4sRqkdywlyCkcl54MDMpjZsBhSwXCyg==
+      integrity: sha512-sdSoVImmvrLAVHTqX8YEBtX+joRHd/ymiSXVfE/ZhX8YYPGeeJknO0vwd3wcXJOkQ6GMofrHcnqDmkwcGGVCkA==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
