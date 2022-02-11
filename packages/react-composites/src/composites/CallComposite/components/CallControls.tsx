@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { Icon, Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove-from(stable): custom button injection */
 import { ControlBarButton } from '@internal/react-components';
@@ -52,6 +52,8 @@ export type CallControlsProps = {
    * Styles for {@link EndCallButton}.
    */
   endCallButtonStyles?: ControlBarButtonStyles;
+
+  onParticipantButtonClick?: () => void;
 };
 
 /**
@@ -121,16 +123,23 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
           }
-          {options?.participantsButton !== false && (
-            <Participants
-              option={options?.participantsButton}
-              callInvitationURL={props.callInvitationURL}
-              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              displayType={options?.displayType}
-              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-              styles={props.commonButtonStyles}
-            />
-          )}
+          {options?.participantsButton !== false &&
+            (props.onParticipantButtonClick ? (
+              <ControlBarButton
+                onClick={props.onParticipantButtonClick}
+                onRenderIcon={(): JSX.Element => <Icon iconName="ControlButtonParticipants" />}
+                disabled={isDisabled(options?.participantsButton)}
+              />
+            ) : (
+              <Participants
+                option={options?.participantsButton}
+                callInvitationURL={props.callInvitationURL}
+                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+                displayType={options?.displayType}
+                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+                styles={props.commonButtonStyles}
+              />
+            ))}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
@@ -161,6 +170,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       </Stack.Item>
     </Stack>
   );
+};
+
+const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
+  if (option === undefined || option === true || option === false) {
+    return false;
+  }
+  return option.disabled;
 };
 
 /* @conditional-compile-remove-from(stable): custom button injection */

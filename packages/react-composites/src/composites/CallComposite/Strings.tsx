@@ -173,4 +173,12 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
+  /**
+   * Title used in pane showing all participants in call
+   */
+  peoplePaneTitle: string;
+  /**
+   * Sub title used in pane showing all participants in call
+   */
+  peoplePaneSubTitle: string;
 }

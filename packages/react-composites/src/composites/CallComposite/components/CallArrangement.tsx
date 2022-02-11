@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -15,6 +15,7 @@ import {
   galleryParentContainerStyles
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
+import { ParticipantPane } from './ParticipantPane';
 
 /**
  * @private
@@ -43,33 +44,46 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const [showPeople, setShowPeople] = useState(false);
+
   return (
-    <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-      <Stack.Item styles={notificationsContainerStyles}>
-        <Stack>
-          <ComplianceBanner {...props.complianceBannerProps} />
-        </Stack>
-        {props.errorBarProps !== false && (
+    <Stack className={mergeStyles({ width: '100%', height: '100%' })}>
+      <ParticipantPane hidden={!showPeople} closePane={() => setShowPeople(false)} />
+      <Stack
+        verticalFill
+        horizontalAlign="stretch"
+        className={showPeople ? mergeStyles(containerClassName, { display: 'none' }) : containerClassName}
+        data-ui-id={props.dataUiId}
+      >
+        <Stack.Item styles={notificationsContainerStyles}>
           <Stack>
-            <ErrorBar {...props.errorBarProps} />
+            <ComplianceBanner {...props.complianceBannerProps} />
           </Stack>
-        )}
-        {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
-      </Stack.Item>
-
-      <Stack.Item styles={callGalleryStyles} grow>
-        {props.onRenderGalleryContent && (
-          <Stack verticalFill styles={mediaGalleryContainerStyles}>
-            {props.onRenderGalleryContent()}
-          </Stack>
-        )}
-      </Stack.Item>
-
-      {props.callControlProps?.options !== false && (
-        <Stack.Item className={callControlsContainerStyles}>
-          <CallControls {...props.callControlProps} />
+          {props.errorBarProps !== false && (
+            <Stack>
+              <ErrorBar {...props.errorBarProps} />
+            </Stack>
+          )}
+          {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
         </Stack.Item>
-      )}
+
+        <Stack.Item styles={callGalleryStyles} grow>
+          {props.onRenderGalleryContent && (
+            <Stack verticalFill styles={mediaGalleryContainerStyles}>
+              {props.onRenderGalleryContent()}
+            </Stack>
+          )}
+        </Stack.Item>
+
+        {props.callControlProps?.options !== false && (
+          <Stack.Item className={callControlsContainerStyles}>
+            <CallControls
+              {...props.callControlProps}
+              onParticipantButtonClick={props.mobileView ? () => setShowPeople(true) : undefined}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
     </Stack>
   );
 };
