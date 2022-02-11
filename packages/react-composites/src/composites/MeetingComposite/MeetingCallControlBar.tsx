@@ -226,5 +226,4 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isEnabled = (option: any): boolean => option !== false;
+const isEnabled = (option: unknown): boolean => option !== false;

@@ -86,8 +86,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isEnabled = (option: any): boolean => option !== false;
+const isEnabled = (option: unknown): boolean => option !== false;
 
 const onFetchCustomButtonPropsTrampoline = (
   options?: CallControlOptions
