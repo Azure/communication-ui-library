@@ -1582,6 +1582,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 // @public
 export interface MeetingCompositeStrings {
     chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
