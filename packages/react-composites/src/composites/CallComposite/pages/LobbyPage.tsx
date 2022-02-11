@@ -10,7 +10,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
 import { reduceCallControlsForMobile } from '../utils';
-import { CallControlOptions } from '../components/CallControls';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { Icon } from '@fluentui/react';

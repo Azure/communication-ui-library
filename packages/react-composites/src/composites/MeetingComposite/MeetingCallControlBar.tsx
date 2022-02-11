@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
+import { CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter } from '../CallComposite';
+import { CallAdapter, CallControlOptions } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
@@ -46,20 +46,25 @@ const inferMeetingCallControlOptions = (
 };
 
 const inferCallControlOptions = (
+  mobileView: boolean,
   callControls?: boolean | CallControlOptions
 ): CallControlOptions | false | undefined => {
-  if (typeof callControls !== 'boolean') {
-    callControls === undefined
-      ? (callControls = { participantsButton: false })
-      : (callControls.participantsButton = false);
-    return callControls;
+  const callControlOverrides: Partial<CallControlOptions> = {
+    // Participants button is shown separately on the side.
+    participantsButton: false,
+    // Device dropdowns are shown via split buttons.
+    // TODO: Remove the devicesButton for mobile view as well once
+    // the overflow button has been added for device selection.
+    devicesButton: mobileView
+  };
+  if (callControls === false) {
+    return false;
   }
   if (callControls === true) {
-    // Return object with just participant button to false so that the default is that all the buttons will be present for meeting composite.
-    return { participantsButton: false };
+    return callControlOverrides;
   }
-  // callControls === false
-  return false;
+  callControls = callControls ?? {};
+  return { ...callControls, ...callControlOverrides };
 };
 
 /**
@@ -71,7 +76,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const meetingStrings = useMeetingCompositeStrings();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
-  let callControlOptions = inferCallControlOptions(props.callControls);
+  let callControlOptions = inferCallControlOptions(props.mobileView, props.callControls);
 
   /**
    * Helper function to determine if a meeting control bar button is enabled or not.

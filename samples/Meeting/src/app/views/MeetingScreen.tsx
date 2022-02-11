@@ -56,6 +56,11 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         endpoint,
         meetingLocator
       });
+      adapter.on('error', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;

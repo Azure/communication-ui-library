@@ -648,6 +648,8 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 // @beta
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
     meeting: MeetingState | undefined;
     userId: CommunicationIdentifierKind;
 }
@@ -673,7 +675,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -697,7 +699,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -722,7 +724,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 }
 
 // @beta
-export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
+export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
