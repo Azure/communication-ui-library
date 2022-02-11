@@ -165,7 +165,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
             disabled={props.disableButtonsForLobbyPage}
             label={meetingStrings.chatButtonLabel}
             styles={commonButtonStyles}
-            newMessageLabel={meetingStrings.newChatMessageNotificationLabel}
+            newMessageLabel={meetingStrings.chatButtonNewMessageNotificationLabel}
           />
         )}
       </Stack>
