@@ -50,6 +50,7 @@ import {
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatThreadClient } from '@azure/communication-chat';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -473,7 +474,7 @@ export type AzureCommunicationMeetingAdapterFromClientArgs = {
   callAgent: CallAgent;
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
-  threadId: string;
+  chatThreadClient: ChatThreadClient;
 };
 
 /**
@@ -484,17 +485,15 @@ export type AzureCommunicationMeetingAdapterFromClientArgs = {
  *
  * @beta
  */
-export const createAzureCommunicationMeetingAdapterFromClient = async ({
+export const createAzureCommunicationMeetingAdapterFromClients = async ({
   callClient,
   callAgent,
   meetingLocator,
   chatClient,
-  threadId
+  chatThreadClient
 }: AzureCommunicationMeetingAdapterFromClientArgs): Promise<MeetingAdapter> => {
   const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
-
-  const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
