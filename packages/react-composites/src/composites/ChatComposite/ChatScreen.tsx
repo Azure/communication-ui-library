@@ -43,12 +43,14 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
+
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { Icon } from '@fluentui/react';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -170,6 +172,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = (files: FileList | null): void => {
     if (!files) {
