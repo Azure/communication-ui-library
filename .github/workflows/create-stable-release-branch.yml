@@ -62,7 +62,7 @@ jobs:
 
       # Bump package versions
       - name: Bump package versions
-        run: node common/scripts/bump-stable-version.js ${{ github.event.inputs.branch }}
+        run: node common/scripts/bump-stable-version.js ${{ github.event.inputs.bump_type }}
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk
