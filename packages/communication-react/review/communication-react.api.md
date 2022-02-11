@@ -349,6 +349,8 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
@@ -1120,7 +1122,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemMicOff: JSX.Element; /**
+    * Icons that can be overridden for {@link CallComposite}.
+    *
+    * @public
+    */
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
