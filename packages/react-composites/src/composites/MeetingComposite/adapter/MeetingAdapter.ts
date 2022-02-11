@@ -24,7 +24,7 @@ import {
 } from '../../ChatComposite';
 import { MeetingAdapterState } from '../state/MeetingAdapterState';
 
-import type { AdapterState, Disposable } from '../../common/adapters';
+import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import { Call } from '@azure/communication-calling';
 
 /**
@@ -97,12 +97,12 @@ export interface MeetingAdapterSubscriptions {
   on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'meetingEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
 
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'meetingEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // Call subscriptions
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;

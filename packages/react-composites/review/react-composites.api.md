@@ -82,7 +82,7 @@ export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    locator: CallAdapterLocator;
 };
 
 // @public
@@ -155,6 +155,11 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
+//
+// @public
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
@@ -190,7 +195,7 @@ export type CallAdapterUiState = {
 
 // @beta
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -290,6 +295,11 @@ export type CallEndedListener = (event: {
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
+
+// @beta
+export type CallParticipantsLocator = {
+    participantIDs: string[];
+};
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
 //
@@ -453,7 +463,7 @@ export interface CompositeStrings {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -587,7 +597,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
@@ -638,6 +648,8 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 // @beta
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
     meeting: MeetingState | undefined;
     userId: CommunicationIdentifierKind;
 }
@@ -663,7 +675,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -687,7 +699,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -712,7 +724,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 }
 
 // @beta
-export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
+export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
