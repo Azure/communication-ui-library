@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove-from(stable): custom button injection */
 import { ControlBarButtonProps } from '@internal/react-components';
 
 /**
@@ -66,7 +65,6 @@ export type CallControlOptions = {
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
-/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Placement for a custom button injected in the {@link CallControls}.
  *
@@ -93,7 +91,6 @@ export type CustomCallControlButtonPlacement =
   | 'afterParticipantsButton'
   | 'afterScreenShareButton';
 
-/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton}.
  *
@@ -107,7 +104,6 @@ export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
 ) => CustomCallControlButtonProps;
 
-/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Arguments for {@link CustomCallControlButtonCallback}.
  *
@@ -122,7 +118,6 @@ export interface CustomCallControlButtonCallbackArgs {
   displayType?: CallControlDisplayType;
 }
 
-/* @conditional-compile-remove-from(stable): custom button injection */
 /**
  * Response from {@link CustomCallControlButtonCallback}.
  *
