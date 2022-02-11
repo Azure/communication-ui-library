@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { AnimationStyles, IStyle, mergeStyles, Stack, useTheme } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { BaseCustomStyles } from '../../types';
 
 /**
@@ -15,8 +15,7 @@ export const DrawerContentContainer = (props: {
   styles?: BaseCustomStyles;
 }): JSX.Element => {
   const backgroundColor = useTheme().palette.white;
-  const defaultStyles = useMemo(() => containerStyles(backgroundColor), [backgroundColor]);
-  const rootStyles = mergeStyles(defaultStyles, props.styles?.root);
+  const rootStyles = mergeStyles(containerStyles(backgroundColor), props.styles?.root);
 
   return <Stack className={rootStyles}>{props.children}</Stack>;
 };
@@ -24,11 +23,11 @@ export const DrawerContentContainer = (props: {
 const containerStyles = (backgroundColor: string): IStyle => ({
   background: backgroundColor,
 
-  borderTopRightRadius: '1rem',
-  borderTopLeftRadius: '1rem',
+  borderTopRightRadius: '0.375rem',
+  borderTopLeftRadius: '0.375rem',
   'div:first-child': {
-    borderTopRightRadius: '1rem',
-    borderTopLeftRadius: '1rem'
+    borderTopRightRadius: '0.375rem',
+    borderTopLeftRadius: '0.375rem'
   },
 
   ...AnimationStyles.slideUpIn10
