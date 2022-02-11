@@ -5,6 +5,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { CallComposite } from '../CallComposite/CallComposite';
+import { AdapterError } from '../common/adapters';
 import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
 import { MeetingAdapter } from './adapter/MeetingAdapter';
 import { MeetingComposite } from './MeetingComposite';
@@ -36,7 +37,9 @@ function createMockMeetingAdapter(): MeetingAdapter {
         unparentedViews: []
       },
       isTeamsCall: true,
-      meeting: undefined
+      meeting: undefined,
+      latestCallErrors: { test: new Error() as AdapterError },
+      latestChatErrors: { test: new Error() as AdapterError }
     };
   });
   return meetingAdapter;
