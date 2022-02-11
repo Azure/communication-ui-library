@@ -25,10 +25,6 @@ const containerStyles = (backgroundColor: string): IStyle => ({
 
   borderTopRightRadius: '0.375rem',
   borderTopLeftRadius: '0.375rem',
-  'div:first-child': {
-    borderTopRightRadius: '0.375rem',
-    borderTopLeftRadius: '0.375rem'
-  },
 
   ...AnimationStyles.slideUpIn10
 });
