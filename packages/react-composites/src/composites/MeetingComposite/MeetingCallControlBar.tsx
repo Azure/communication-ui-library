@@ -109,14 +109,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
                   <Microphone
                     displayType={options.displayType}
                     styles={commonButtonStyles}
-                    splitButtonsForDeviceSelection
+                    splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
                 {options.cameraButton !== false && (
                   <Camera
                     displayType={options.displayType}
                     styles={commonButtonStyles}
-                    splitButtonsForDeviceSelection
+                    splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
                 {options.screenShareButton !== false && (
