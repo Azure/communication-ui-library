@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
@@ -8,8 +9,10 @@ import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
-import { getThreadId } from './utils/getThreadId';
+import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { getBuildTime, getChatSDKVersion } from './utils/utils';
+
+setLogLevel('warning');
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
@@ -119,7 +122,7 @@ export default (): JSX.Element => {
     }
   };
 
-  if (getThreadId() && page === 'home') {
+  if (getExistingThreadIdFromURL() && page === 'home') {
     setPage('configuration');
   }
 

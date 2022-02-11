@@ -131,7 +131,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private callAgent: CallAgent;
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
-  private locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: Call;
   private context: CallContext;
@@ -152,7 +152,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   constructor(
     callClient: StatefulCallClient,
-    locator: TeamsMeetingLinkLocator | GroupCallLocator,
+    locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
@@ -205,6 +205,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.disposeStreamView.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    this.processNewCall.bind(this);
   }
 
   public dispose(): void {
@@ -240,32 +241,31 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public joinCall(microphoneOn?: boolean): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
-    } else {
-      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
-      // TODO: find a way to expose stream to here
-      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
-      const isTeamsMeeting = !('groupId' in this.locator);
-
-      if (isTeamsMeeting) {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
-      } else {
-        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
-      }
-
-      this.context.setCallId(this.call.id);
-      // Resync state after callId is set
-      this.context.updateClientState(this.callClient.getState());
-      this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
-      this.subscribeCallEvents();
-      return this.call;
     }
+
+    /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+    // Check if we should be starting a new call or joining an existing call
+    if (isAdhocCall(this.locator)) {
+      return this.startCall(this.locator.participantIDs);
+    }
+
+    const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
+    // TODO: find a way to expose stream to here
+    const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+
+    const isTeamsMeeting = !('groupId' in this.locator);
+    const call = isTeamsMeeting
+      ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        })
+      : this.callAgent.join(this.locator as GroupCallLocator, {
+          audioOptions,
+          videoOptions
+        });
+
+    this.processNewCall(call);
+    return call;
   }
 
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
@@ -368,6 +368,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   //TODO: a better way to expose option parameter
   public startCall(participants: string[]): Call | undefined {
+    if (_isInCall(this.getState().call?.state ?? 'None')) {
+      throw new Error('You are already in the call.');
+    }
+
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
@@ -375,7 +379,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return backendId;
     });
 
-    return this.handlers.onStartCall(idsToAdd);
+    const call = this.handlers.onStartCall(idsToAdd);
+    if (!call) {
+      throw new Error('Unable to start call.');
+    }
+    this.processNewCall(call);
+
+    return this.call;
+  }
+
+  private processNewCall(call: Call): void {
+    this.call = call;
+    this.context.setCallId(call.id);
+
+    // Resync state after callId is set
+    this.context.updateClientState(this.callClient.getState());
+    this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
+    this.subscribeCallEvents();
   }
 
   public async removeParticipant(userId: string): Promise<void> {
@@ -474,7 +494,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
-  private resetDiagnosticsForwarder(newCall?: Call) {
+  private resetDiagnosticsForwarder(newCall?: Call): void {
     if (this.diagnosticsForwarder) {
       this.diagnosticsForwarder.unsubscribe();
     }
@@ -511,6 +531,34 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/**
+ * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
+ *
+ * @remarks
+ * This is currently in beta and only supports calling one Teams User.
+ *
+ * @example
+ * ```
+ * ['8:orgid:ab220efe-5725-4742-9792-9fba7c9ac458']
+ * ```
+ *
+ * @beta
+ */
+export type CallParticipantsLocator = {
+  participantIDs: string[];
+};
+
+/**
+ * Locator used by {@link createAzureCommunicationCallAdapter} to locate the call to join
+ *
+ * @public
+ */
+export type CallAdapterLocator =
+  | TeamsMeetingLinkLocator
+  | GroupCallLocator
+  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
@@ -522,7 +570,7 @@ export type AzureCommunicationCallAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  locator: CallAdapterLocator;
 };
 
 /**
@@ -557,7 +605,7 @@ export const createAzureCommunicationCallAdapter = async ({
 export const createAzureCommunicationCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: TeamsMeetingLinkLocator | GroupCallLocator
+  locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
@@ -565,4 +613,9 @@ export const createAzureCommunicationCallAdapterFromClient = async (
 
 const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
+};
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
+  return 'participantIDs' in callLocator;
 };

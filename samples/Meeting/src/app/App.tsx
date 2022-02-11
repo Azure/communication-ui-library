@@ -1,168 +1,143 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CallAndChatLocator } from '@azure/communication-react';
+import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
   chatSDKVersion,
   createGroupId,
+  ensureJoinableCallLocatorPushedToUrl,
+  ensureJoinableChatThreadPushedToUrl,
+  ensureJoinableTeamsLinkPushedToUrl,
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
-  isOnIphoneAndNotSafari,
-  navigateToHomePage
+  isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { CallError } from './views/CallError';
 import { MeetingScreen } from './views/MeetingScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
-import { pushQSPUrl } from './utils/pushQSPUrl';
+import { getExistingThreadIdFromURL } from './utils/getThreadId';
+import { WEB_APP_TITLE } from './utils/constants';
 
-const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
+setLogLevel('warning');
+initializeIcons();
 
 interface Credentials {
   userId: CommunicationUserIdentifier;
   token: string;
 }
-
-interface CallArgs {
-  callLocator: GroupLocator | TeamsMeetingLinkLocator;
+interface MeetingArgs {
+  credentials: Credentials;
+  endpointUrl: string;
   displayName: string;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
+type AppPages = 'home' | 'meeting' | 'error';
 
 const App = (): JSX.Element => {
   console.log(
     `ACS sample Meeting app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
   );
 
-  initializeIcons();
-
-  type AppPages = 'home' | 'meeting' | 'error';
-
-  const webAppTitle = document.title;
   const [page, setPage] = useState<AppPages>('home');
-
-  // User credentials to join a call with - these are retrieved from the server
-  const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
-
-  // Call details to join a call - these are collected from the user on the home screen
-  const [callArgs, setCallArgs] = useState<CallArgs | undefined>({ displayName: '', callLocator: createGroupId() });
-
-  // Chat endpoint and thread id
-  const [endpointUrl, setEndpointUrl] = useState('');
-  const [threadId, setThreadId] = useState('');
-
-  // Get Azure Communications Service token from the server
-  useEffect(() => {
-    (async () => {
-      try {
-        const { token, user } = await fetchTokenResponse();
-        setCredentials({ userId: user, token: token });
-      } catch (e) {
-        console.error(e);
-        setPage('error');
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    const internalSetupAndJoinChatThread = async (): Promise<void> => {
-      if (callArgs?.displayName && credentials !== undefined) {
-        const newThreadId = await getThread();
-        const result = await joinThread(newThreadId, credentials.userId.communicationUserId, callArgs.displayName);
-        if (!result) {
-          alert(ALERT_TEXT_TRY_AGAIN);
-          return;
-        }
-        setEndpointUrl(await getEndpointUrl());
-        setThreadId(newThreadId);
-        pushQSPUrl({ name: 'threadId', value: newThreadId });
-      }
-    };
-    internalSetupAndJoinChatThread();
-  }, [callArgs?.displayName, credentials?.userId.communicationUserId]);
+  const [meetingArgs, setMeetingArgs] = useState<MeetingArgs | undefined>(undefined);
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
   }
 
+  const joiningExistingMeeting: boolean =
+    (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) || !!getTeamsLinkFromUrl();
+
   switch (page) {
     case 'home': {
-      document.title = `home - ${webAppTitle}`;
-      // Show a simplified join home screen if joining an existing call
-      const joiningExistingMeeting: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
+      document.title = `home - ${WEB_APP_TITLE}`;
       return (
         <HomeScreen
+          // Show a simplified join home screen if joining an existing call
           joiningExistingCall={joiningExistingMeeting}
-          startMeetingHandler={(callDetails) => {
-            const isTeamsMeeting = !!callDetails.teamsLink;
-            setCallArgs({
-              displayName: callDetails.displayName,
-              callLocator: callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId()
-            });
-
-            // Update window URL to have a joinable link
-
-            if (!joiningExistingMeeting) {
-              const joinParam = isTeamsMeeting
-                ? {
-                    name: 'teamsLink',
-                    value: encodeURIComponent((callArgs?.callLocator as TeamsMeetingLinkLocator).meetingLink)
-                  }
-                : { name: 'groupId', value: (callArgs?.callLocator as GroupCallLocator).groupId };
-              pushQSPUrl(joinParam);
-            }
+          startMeetingHandler={async (meetingDetails) => {
             setPage('meeting');
+            try {
+              const meetingArgs = await generateMeetingArgs(meetingDetails.displayName, meetingDetails?.teamsLink);
+              setMeetingArgs(meetingArgs);
+            } catch (e) {
+              console.log(e);
+              setPage('error');
+            }
           }}
         />
       );
     }
     case 'meeting': {
       if (
-        !credentials?.token ||
-        !credentials?.userId ||
-        !callArgs?.displayName ||
-        !callArgs.callLocator ||
-        !endpointUrl ||
-        !threadId
+        !meetingArgs?.credentials?.token ||
+        !meetingArgs.credentials?.userId ||
+        !meetingArgs.displayName ||
+        !meetingArgs.meetingLocator ||
+        !meetingArgs.endpointUrl
       ) {
-        document.title = `credentials - ${webAppTitle}`;
+        document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
         <MeetingScreen
-          token={credentials.token}
-          userId={credentials.userId}
-          displayName={callArgs.displayName}
-          callLocator={callArgs.callLocator}
-          webAppTitle={webAppTitle}
-          endpoint={endpointUrl}
-          threadId={threadId}
-        />
-      );
-    }
-    case 'error': {
-      document.title = `error - ${webAppTitle}`;
-      return (
-        <CallError
-          title="Error getting user credentials from server"
-          reason="Ensure the sample server is running."
-          rejoinHandler={() => setPage('meeting')}
-          homeHandler={navigateToHomePage}
+          token={meetingArgs.credentials.token}
+          userId={meetingArgs.credentials.userId}
+          displayName={meetingArgs.displayName}
+          meetingLocator={meetingArgs.meetingLocator}
+          endpoint={meetingArgs.endpointUrl}
         />
       );
     }
     default:
-      document.title = `error - ${webAppTitle}`;
+      document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
 };
 
 export default App;
+
+const generateMeetingArgs = async (displayName: string, teamsLink?: TeamsMeetingLinkLocator): Promise<MeetingArgs> => {
+  const { token, user } = await fetchTokenResponse();
+  const credentials = { userId: user, token: token };
+  const endpointUrl = await getEndpointUrl();
+
+  let meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+
+  // Check if we should join a teams meeting, or an ACS CallAndChat
+  teamsLink = teamsLink ?? getTeamsLinkFromUrl();
+  if (teamsLink) {
+    meetingLocator = teamsLink;
+    ensureJoinableTeamsLinkPushedToUrl(teamsLink);
+  } else {
+    const callLocator: GroupCallLocator = getGroupIdFromUrl() || createGroupId();
+    ensureJoinableCallLocatorPushedToUrl(callLocator);
+
+    const chatThreadId = await getThread();
+    await joinThread(chatThreadId, credentials.userId.communicationUserId, displayName);
+    ensureJoinableChatThreadPushedToUrl(chatThreadId);
+
+    meetingLocator = {
+      callLocator,
+      chatThreadId
+    };
+  }
+
+  return {
+    displayName,
+    endpointUrl,
+    credentials,
+    meetingLocator
+  };
+};

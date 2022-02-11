@@ -6,11 +6,11 @@
 
 import {
   AudioDeviceInfo,
-  VideoDeviceInfo,
-  PermissionConstraints,
+  Call,
   GroupCallLocator,
+  PermissionConstraints,
   TeamsMeetingLinkLocator,
-  Call
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
@@ -37,7 +37,11 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+import { AdapterError } from '../../common/adapters';
+
+/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -151,7 +155,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
-    await this.chatAdapter.removeParticipant(toFlatCommunicationIdentifier(this.chatAdapter.getState().userId));
+    // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
@@ -186,7 +190,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
-    await this.chatAdapter.removeParticipant(userId);
+    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.removeParticipant(userId);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
@@ -278,7 +282,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'meetingEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -325,7 +329,9 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
         this.chatAdapter.on('messageRead', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.on('error', listener);
+        this.chatAdapter.on('error', listener);
+        break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
     }
@@ -334,7 +340,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'meetingEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -381,11 +387,27 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
         this.chatAdapter.off('messageRead', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.off('error', listener);
+        this.chatAdapter.off('error', listener);
+        break;
       default:
         throw `Unknown MeetingEvent: ${event}`;
     }
   }
+}
+
+/**
+ * Arguments for use in {@link createAzureCommunicationMeetingAdapter} to join a Call with an associated Chat thread.
+ *
+ * @beta
+ */
+export interface CallAndChatLocator {
+  /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
+  callLocator:
+    | GroupCallLocator
+    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+  /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
+  chatThreadId: string;
 }
 
 /**
@@ -398,8 +420,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  chatThreadId: string;
-  callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
@@ -413,23 +434,33 @@ export const createAzureCommunicationMeetingAdapter = async ({
   displayName,
   credential,
   endpoint,
-  chatThreadId,
-  callLocator
+  meetingLocator
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const callAdapter = await createAzureCommunicationCallAdapter({
+  const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
+  const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callLocator
+    locator
   });
 
-  const chatAdapter = await createAzureCommunicationChatAdapter({
+  const threadId = isTeamsMeetingLinkLocator(meetingLocator)
+    ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
+    : meetingLocator.chatThreadId;
+  const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,
     displayName,
     credential,
-    threadId: chatThreadId
+    threadId
   });
 
+  const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
 };

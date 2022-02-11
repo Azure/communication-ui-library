@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
+import { getExistingThreadIdFromURL } from './getThreadId';
+import { pushQSPUrl } from './pushQSPUrl';
 
 /**
  * Get ACS user token from the Contoso server.
@@ -37,7 +39,25 @@ export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const teamsLink = urlParams.get('teamsLink');
-  return teamsLink ? { meetingLink: teamsLink } : undefined;
+  return teamsLink ? { meetingLink: decodeURIComponent(teamsLink) } : undefined;
+};
+
+export const ensureJoinableTeamsLinkPushedToUrl = (teamsLink: TeamsMeetingLinkLocator): void => {
+  if (!getTeamsLinkFromUrl()) {
+    pushQSPUrl({ name: 'teamsLink', value: encodeURIComponent(teamsLink.meetingLink) });
+  }
+};
+
+export const ensureJoinableCallLocatorPushedToUrl = (callLocator: GroupCallLocator): void => {
+  if (!getGroupIdFromUrl()) {
+    pushQSPUrl({ name: 'groupId', value: callLocator.groupId });
+  }
+};
+
+export const ensureJoinableChatThreadPushedToUrl = (chatThreadId: string): void => {
+  if (!getExistingThreadIdFromURL()) {
+    pushQSPUrl({ name: 'threadId', value: chatThreadId });
+  }
 };
 
 /*

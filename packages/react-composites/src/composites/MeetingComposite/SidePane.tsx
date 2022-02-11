@@ -2,23 +2,24 @@
 // Licensed under the MIT license.
 import React, { useMemo } from 'react';
 import { ChatComposite, ChatAdapter, ChatCompositeProps } from '../ChatComposite';
-import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack, concatStyleSets } from '@fluentui/react';
+import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
 import {
   sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
   sidePaneContainerTokens,
   sidePaneHeaderStyles,
   peoplePaneContainerTokens,
-  peopleSubheadingStyle,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
-} from './styles/SidePane.styles';
+} from '../common/styles/ParticipantContainer.styles';
 import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ParticipantContainer } from '../common/ParticipantContainer';
 
 const SidePane = (props: {
   headingText: string;
@@ -82,6 +83,7 @@ export const EmbeddedPeoplePane = (props: {
   hidden: boolean;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -97,13 +99,6 @@ export const EmbeddedPeoplePane = (props: {
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
-  const theme = useTheme();
-  const peopleSubheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
-    root: {
-      color: theme.palette.neutralSecondary
-    }
-  });
-
   return (
     <SidePane
       hidden={props.hidden}
@@ -115,8 +110,11 @@ export const EmbeddedPeoplePane = (props: {
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
-        <Stack.Item styles={peopleSubheadingStyleThemed}>{meetingStrings.peoplePaneSubTitle}</Stack.Item>
-        <ParticipantList {...participantListProps} />
+        <ParticipantContainer
+          participantListProps={participantListProps}
+          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+          title={meetingStrings.peoplePaneSubTitle}
+        />
       </Stack>
     </SidePane>
   );
@@ -131,6 +129,7 @@ export const EmbeddedChatPane = (props: {
   fluentTheme?: PartialTheme | Theme;
   hidden: boolean;
   onClose: () => void;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   const meetingStrings = useMeetingCompositeStrings();
 
@@ -146,6 +145,7 @@ export const EmbeddedChatPane = (props: {
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
         options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     </SidePane>
   );

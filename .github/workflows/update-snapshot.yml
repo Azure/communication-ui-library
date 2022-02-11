@@ -12,6 +12,11 @@ jobs:
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -51,10 +56,14 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -73,7 +82,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status samples/tests -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
@@ -83,7 +92,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests/ComponentExamples
+          git add samples/tests/*.png
           git commit -m 'Update js bundle automation snapshots'
           git push
 
@@ -92,6 +101,11 @@ jobs:
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -131,10 +145,14 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -153,7 +171,7 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status samples/tests -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
@@ -163,7 +181,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add samples/tests/StaticHtmlComposites
+          git add samples/tests/*.png
           git commit -m 'Update js bundle automation snapshots'
           git push
 
@@ -172,6 +190,11 @@ jobs:
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -210,12 +233,31 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build Test
         working-directory: ./packages/react-composites
         run: rushx build:e2e
-      - name: Update snapshot
-        id: updatesnapshots
-        run: rushx test:e2e:update
+      - name: Update chat snapshot
+        id: update-chat-snapshots
+        run: rushx test:e2e:chat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Update calling snapshot
+        id: update-calling-snapshots
+        run: rushx test:e2e:call:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Update meeting snapshot
+        id: update-meeting-snapshots
+        # Don't run meeting snapshot in stable, meeting is only working in beta
+        # TODO: Remove this while meeting is in stable
+        if: ${{ matrix.flavor != 'stable' }}
+        run: rushx test:e2e:meeting:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -230,16 +272,15 @@ jobs:
       - name: Check for snapshot changes
         id: changescheck
         run: |
-          if [[ -z $(git status -s) ]]
+          if [[ -z $(git status packages -s) ]]
           then
             echo "::set-output name=hasChanged::false"
           else
             echo "::set-output name=hasChanged::true"
-            exit
           fi
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add packages/react-composites/tests
+          git add packages/react-composites/*.png
           git commit -m 'Update composite automation snapshots'
           git push

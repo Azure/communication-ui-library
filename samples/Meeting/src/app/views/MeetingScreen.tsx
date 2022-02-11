@@ -1,43 +1,40 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { MeetingAdapterState, MeetingComposite, toFlatCommunicationIdentifier } from '@azure/communication-react';
+import {
+  createAzureCommunicationMeetingAdapter,
+  toFlatCommunicationIdentifier,
+  CallAndChatLocator,
+  MeetingAdapter,
+  MeetingAdapterState,
+  MeetingComposite
+} from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
-import { createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
-import { MeetingAdapter } from '@internal/react-composites';
+import { WEB_APP_TITLE } from '../utils/constants';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
 export interface MeetingScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
   displayName: string;
-  webAppTitle: string;
   endpoint: string;
-  threadId: string;
+  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
 export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, webAppTitle, threadId, endpoint } = props;
+  const { token, userId, displayName, endpoint, meetingLocator } = props;
   const [adapter, setAdapter] = useState<MeetingAdapter>();
   const callIdRef = useRef<string>();
   const adapterRef = useRef<MeetingAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
-
-  useEffect(() => {
-    if (!callIdRef.current) {
-      return;
-    }
-    console.log(`Call Id: ${callIdRef.current}`);
-  }, [callIdRef.current]);
 
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
@@ -48,22 +45,30 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      if (!userId || !displayName || !callLocator || !threadId || !token || !endpoint) {
+      if (!userId || !displayName || !meetingLocator || !token || !endpoint) {
         return;
       }
+
       const adapter = await createAzureCommunicationMeetingAdapter({
         userId,
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-        callLocator: callLocator,
         endpoint,
-        chatThreadId: threadId
+        meetingLocator
+      });
+      adapter.on('error', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
       });
       adapter.onStateChange((state: MeetingAdapterState) => {
         const pageTitle = convertPageStateToString(state);
-        document.title = `${pageTitle} - ${webAppTitle}`;
+        document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
-        callIdRef.current = state?.meeting?.id;
+        if (state?.meeting?.id && callIdRef.current !== state?.meeting?.id) {
+          callIdRef.current = state?.meeting?.id;
+          console.log(`Call Id: ${callIdRef.current}`);
+        }
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
@@ -72,7 +77,7 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [callLocator, displayName, token, userId]);
+  }, [displayName, token, userId, meetingLocator, endpoint]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

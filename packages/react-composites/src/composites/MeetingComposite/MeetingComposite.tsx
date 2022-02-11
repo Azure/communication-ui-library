@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -17,6 +17,8 @@ import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -66,10 +68,7 @@ export type MeetingCompositeOptions = {
  * @beta
  */
 export interface MeetingCallControlOptions
-  extends Pick<
-    CallControlOptions,
-    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
-  > {
+  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
   /**
    * Show or hide the chat button in the meeting control bar.
    * @defaultValue true
@@ -88,6 +87,7 @@ type MeetingScreenProps = {
   formFactor?: 'desktop' | 'mobile';
   meetingInvitationURL?: string;
   callControls?: boolean | MeetingCallControlOptions;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
 const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
@@ -100,13 +100,19 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
-  meetingAdapter.onStateChange((newState) => {
-    setCurrentPage(newState.page);
-    setCurrentMeetingState(newState.meeting?.state);
-  });
-
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
+
+  useEffect(() => {
+    const updateMeetingPage = (newState): void => {
+      setCurrentPage(newState.page);
+      setCurrentMeetingState(newState.meeting?.state);
+    };
+    meetingAdapter.onStateChange(updateMeetingPage);
+    return () => {
+      meetingAdapter.offStateChange(updateMeetingPage);
+    };
+  }, [meetingAdapter]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
@@ -151,6 +157,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             chatAdapter={chatProps.adapter}
             fluentTheme={fluentTheme}
             onClose={closePane}
+            onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -161,21 +168,25 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
               onClose={closePane}
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
+              onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
             />
           </CallAdapterProvider>
         )}
       </Stack>
       {(isInLobbyOrConnecting || hasJoinedCall) && (
-        <MeetingCallControlBar
-          callAdapter={callAdapter}
-          chatButtonChecked={showChat}
-          onChatButtonClicked={toggleChat}
-          peopleButtonChecked={showPeople}
-          onPeopleButtonClicked={togglePeople}
-          mobileView={props.formFactor === 'mobile'}
-          disableButtonsForLobbyPage={isInLobbyOrConnecting}
-          callControls={props.callControls}
-        />
+        <ChatAdapterProvider adapter={chatProps.adapter}>
+          <MeetingCallControlBar
+            callAdapter={callAdapter}
+            chatAdapter={chatProps.adapter}
+            chatButtonChecked={showChat}
+            onChatButtonClicked={toggleChat}
+            peopleButtonChecked={showPeople}
+            onPeopleButtonClicked={togglePeople}
+            mobileView={props.formFactor === 'mobile'}
+            disableButtonsForLobbyPage={isInLobbyOrConnecting}
+            callControls={props.callControls}
+          />
+        </ChatAdapterProvider>
       )}
     </Stack>
   );

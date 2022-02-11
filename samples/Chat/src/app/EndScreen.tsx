@@ -16,7 +16,7 @@ import {
 } from './styles/EndChat.styles';
 
 import { Chat20Filled } from '@fluentui/react-icons';
-import { getThreadId } from './utils/getThreadId';
+import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
 
 export interface EndCallProps {
@@ -38,7 +38,7 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
 
   const rejoinThread = useCallback(async (): Promise<void> => {
     if (!isRejoiningThread) {
-      const threadId = getThreadId();
+      const threadId = getExistingThreadIdFromURL();
       if (!threadId) {
         console.error('thread id is null');
         return;

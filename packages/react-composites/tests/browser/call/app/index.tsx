@@ -12,40 +12,45 @@ import {
   createAzureCommunicationCallAdapter,
   CallComposite,
   COMPOSITE_LOCALE_FR_FR,
-  COMPOSITE_LOCALE_EN_US
+  COMPOSITE_LOCALE_EN_US,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonProps,
+  CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
-import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { Icon, IContextualMenuItem, initializeIcons, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { MockCallAdapter } from './mocks/MockCallAdapter';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-// Required params
-const displayName = verifyParamExists(params.displayName, 'displayName');
-const token = verifyParamExists(params.token, 'token');
-const groupId = verifyParamExists(params.groupId, 'groupId');
-const userId = verifyParamExists(params.userId, 'userId');
-
-// Optional params
+let mockCallState = undefined;
+try {
+  mockCallState = JSON.parse(params.mockCallState);
+} catch (e) {
+  console.log('Query parameter mockCallState could not be parsed: ', params.mockCallState);
+}
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
+const injectCustomButtons = Boolean(params.injectCustomButtons);
+
+// Needed to initialize default icons used by Fluent components.
+initializeIcons();
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      const newAdapter = await createAzureCommunicationCallAdapter({
-        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-        displayName,
-        credential: new AzureCommunicationTokenCredential(token),
-        locator: { groupId: groupId }
-      });
-      setCallAdapter(wrapAdapterForTests(newAdapter));
+      if (mockCallState) {
+        setCallAdapter(new MockCallAdapter(mockCallState));
+      } else {
+        setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials()));
+      }
     };
 
     initialize();
@@ -71,6 +76,18 @@ function App(): JSX.Element {
               locale={locale}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
+              options={
+                injectCustomButtons
+                  ? {
+                      callControls: {
+                        onFetchCustomButtonProps,
+                        // Hide some buttons to keep the mobile-view control bar narrow
+                        devicesButton: false,
+                        endCallButton: false
+                      }
+                    }
+                  : undefined
+              }
             />
           </_IdentifierProvider>
         </div>
@@ -138,6 +155,22 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
 
+// Function to create call adapter using createAzureCommunicationCallAdapter
+const createCallAdapterWithCredentials = async (): Promise<CallAdapter> => {
+  const displayName = verifyParamExists(params.displayName, 'displayName');
+  const token = verifyParamExists(params.token, 'token');
+  const groupId = verifyParamExists(params.groupId, 'groupId');
+  const userId = verifyParamExists(params.userId, 'userId');
+
+  const callAdapter = await createAzureCommunicationCallAdapter({
+    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    displayName,
+    credential: new AzureCommunicationTokenCredential(token),
+    locator: { groupId: groupId }
+  });
+  return callAdapter;
+};
+
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {
   return [
     {
@@ -160,5 +193,44 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
+
+const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
+      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
+      strings: {
+        label: 'custom #1'
+      },
+      placement: 'first'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
+      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
+      strings: {
+        label: 'custom #2'
+      },
+      placement: 'afterMicrophoneButton'
+    };
+  },
+  (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
+    return {
+      showLabel: args.displayType !== 'compact',
+      // Some non-default icon that is already registered by the composites.
+      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
+      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
+      strings: {
+        label: 'custom #3'
+      },
+      placement: 'last'
+    };
+  }
+];
 
 ReactDOM.render(<App />, document.getElementById('root'));

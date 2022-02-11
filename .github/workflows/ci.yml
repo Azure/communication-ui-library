@@ -13,6 +13,11 @@ jobs:
   build_packages:
     name: Build Packages
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -34,6 +39,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Perform changelog check
       - name: Check the necessary change file has been submitted
         run: rush changelog:check
@@ -42,12 +51,12 @@ jobs:
         run: rush lint
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         run: |
           DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code **/review/**.md
+          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/**' ||  '**/stable-review/**'  }}.md
           DIFF_STATUS=$?
           echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
           if [$DIFF_STATUS -ne 0]
@@ -71,6 +80,11 @@ jobs:
   call_composite_automation_test:
     name: Call Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -92,6 +106,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Call Composite Test App
         run: |
@@ -126,6 +144,11 @@ jobs:
   chat_composite_automation_test:
     name: Chat Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -147,6 +170,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Chat Composite Test App
         run: |
@@ -181,6 +208,11 @@ jobs:
   meeting_composite_automation_test:
     name: Meeting Composite automation test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Meeting composite only work for beta
+          - flavor: 'beta'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -202,6 +234,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       # Tests
       - name: Build Meeting Composite Test App
         run: |
@@ -262,6 +298,11 @@ jobs:
   build_calling_sample:
     name: Build Calling Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -279,6 +320,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -287,6 +332,11 @@ jobs:
   build_chat_sample:
     name: Build Chat Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -304,14 +354,57 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
 
+  build_meeting_sample:
+    name: Build Meeting Sample
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build
+        run: rush build -o meeting
+      - name: Tests
+        run: rush test -o meeting
+
   build_static_html_composites_sample:
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -324,8 +417,12 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -355,6 +452,11 @@ jobs:
   build_component_examples:
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -367,8 +469,12 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+      # Switch flavor when necessary
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
