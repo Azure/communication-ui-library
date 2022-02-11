@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Full screen pane showing particpants when ParticipantsButton is clicked in Call Composite in mobile form factor.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
