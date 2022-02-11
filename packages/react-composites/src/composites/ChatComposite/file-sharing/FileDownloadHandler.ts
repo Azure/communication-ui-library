@@ -4,6 +4,15 @@ import { FileMetadata } from './FileUpload';
 
 /**
  * @beta
+ * A file download error returned via a {@link FileDownloadHandler}.
+ * This error message is used to render an error message in the UI.
+ */
+export interface FileDownloadError {
+  errorMessage: string;
+}
+
+/**
+ * @beta
  *
  * A callback function for handling file downloads.
  * The function needs to return a promise that resolves to a file download URL.
@@ -13,9 +22,9 @@ import { FileMetadata } from './FileUpload';
  * ```ts
  * const fileDownloadHandler: FileDownloadHandler = async (userId, fileData) => {
  *   if (isUnauthorizedUser(userId)) {
- *     throw new Error('You don’t have permission to download this file.');
+ *     return { errorMessage: 'You don’t have permission to download this file.' };
  *   } else {
- *     return fileData.url;
+ *     return new URL(fileData.url);
  *   }
  * }
  *
@@ -32,4 +41,4 @@ import { FileMetadata } from './FileUpload';
  * @param userId - The user ID of the user downloading the file.
  * @param fileData - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<string>;
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadError>;
