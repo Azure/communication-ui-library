@@ -565,6 +565,14 @@ export interface Disposable {
 }
 
 // @beta
+export interface FileDownloadErrorMessage {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+
+// @beta
 export interface FileMetadata {
     extension: string;
     name: string;
@@ -574,6 +582,7 @@ export interface FileMetadata {
 // @beta
 export interface FileSharingOptions {
     accept?: string;
+    downloadHandler?: FileDownloadHandler;
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -599,7 +608,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
@@ -755,6 +764,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 // @public
 export interface MeetingCompositeStrings {
     chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;

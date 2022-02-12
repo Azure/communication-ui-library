@@ -1,28 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) */
+import { Icon } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { ControlBarButton } from '@internal/react-components';
-import {
-  BaseCustomStyles,
-  ControlBar,
-  ControlBarButtonStyles,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
-import React from 'react';
-import { CallControlOptions } from '../types/CallControlOptions';
+import { ControlBar, ControlBarButton, ParticipantMenuItemsCallback } from '@internal/react-components';
+import React, { useMemo } from 'react';
+import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
+import { generateCustomButtons } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { useMemo } from 'react';
-/* @conditional-compile-remove-from(stable): custom button injection */
-import { CustomCallControlButtonPlacement, CustomCallControlButtonProps } from '../types/CallControlOptions';
+
 /**
  * @private
  */
@@ -35,24 +28,7 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
-  /**
-   * Whether to use split buttons to show device selection drop-downs
-   * Used by {@link MeetingComposite}.
-   */
-  splitButtonsForDeviceSelection?: boolean;
-  /**
-   * Styles for the {@link ControlBar}.
-   */
-  controlBarStyles?: BaseCustomStyles;
-  /**
-   * Styles for all buttons except {@link EndCallButton}.
-   */
-  commonButtonStyles?: ControlBarButtonStyles;
-  /**
-   * Styles for {@link EndCallButton}.
-   */
-  endCallButtonStyles?: ControlBarButtonStyles;
-  /* @conditional-compile-remove-from(stable): custom button injection */
+  /* @conditional-compile-remove-from(stable) */
   /**
    * Click handler for participants button. If defined, participant button will not show menu
    */
@@ -64,14 +40,10 @@ export type CallControlsProps = {
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const options = typeof props.options === 'boolean' ? {} : props.options;
-
-  /* @conditional-compile-remove-from(stable): custom button injection */
-  const customButtonProps = useMemo(() => {
-    if (!options || !options.onFetchCustomButtonProps) {
-      return [];
-    }
-    return options.onFetchCustomButtonProps.map((f) => f({ displayType: options.displayType }));
-  }, [options?.onFetchCustomButtonProps, options?.displayType]);
+  const customButtons = useMemo(
+    () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    [options]
+  );
 
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
@@ -93,7 +65,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
         displayType={options?.displayType}
         increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-        styles={props.commonButtonStyles}
       />
     );
     return (
@@ -103,7 +74,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
         onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
         displayType={options?.displayType}
         increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-        styles={props.commonButtonStyles}
       />
     );
   };
@@ -118,76 +88,32 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal" styles={props.controlBarStyles}>
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'first'} />
-          }
-          {options?.microphoneButton !== false && (
-            <Microphone
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
-            />
+        <ControlBar layout="horizontal">
+          {customButtons['first']}
+          {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
+          {customButtons['afterMicrophoneButton']}
+          {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
+          {customButtons['afterCameraButton']}
+          {isEnabled(options?.screenShareButton) && (
+            <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterMicrophoneButton'} />
-          }
-          {options?.cameraButton !== false && (
-            <Camera
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-              splitButtonsForDeviceSelection={props.splitButtonsForDeviceSelection}
-            />
+          {customButtons['afterScreenShareButton']}
+          {isEnabled(options?.participantsButton) && renderParticipantsButton()}
+          {customButtons['afterParticipantsButton']}
+          {isEnabled(options?.devicesButton) && (
+            <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterCameraButton'} />
-          }
-          {options?.screenShareButton !== false && (
-            <ScreenShare
-              option={options?.screenShareButton}
-              displayType={options?.displayType}
-              styles={props.commonButtonStyles}
-            />
-          )}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
-          }
-          {options?.participantsButton !== false && renderParticipantsButton()}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
-          }
-          {options?.devicesButton !== false && (
-            <Devices
-              displayType={options?.displayType}
-              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-              styles={props.commonButtonStyles}
-            />
-          )}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterOptionsButton'} />
-          }
-          {options?.endCallButton !== false && (
-            <EndCall displayType={options?.displayType} styles={props.endCallButtonStyles} />
-          )}
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterEndCallButton'} />
-          }
-          {
-            /* @conditional-compile-remove-from(stable): custom button injection */
-            <FilteredCustomButtons customButtonProps={customButtonProps} placement={'last'} />
-          }
+          {customButtons['afterOptionsButton']}
+          {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
+          {customButtons['afterEndCallButton']}
+          {customButtons['last']}
         </ControlBar>
       </Stack.Item>
     </Stack>
   );
 };
+
+const isEnabled = (option: unknown): boolean => option !== false;
 
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (option === undefined || option === true || option === false) {
@@ -196,18 +122,11 @@ const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   return option.disabled;
 };
 
-/* @conditional-compile-remove-from(stable): custom button injection */
-const FilteredCustomButtons = (props: {
-  customButtonProps: CustomCallControlButtonProps[];
-  placement: CustomCallControlButtonPlacement;
-}): JSX.Element => {
-  return (
-    <>
-      {props.customButtonProps
-        .filter((buttonProps) => buttonProps.placement === props.placement)
-        .map((buttonProps, i) => (
-          <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
-        ))}
-    </>
-  );
+const onFetchCustomButtonPropsTrampoline = (
+  options?: CallControlOptions
+): CustomCallControlButtonCallback[] | undefined => {
+  let response: CustomCallControlButtonCallback[] | undefined = undefined;
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  response = options?.onFetchCustomButtonProps;
+  return response;
 };
