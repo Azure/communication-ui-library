@@ -3,7 +3,9 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+/* @conditional-compile-remove-from(stable) */
+import { useState } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -15,6 +17,7 @@ import {
   galleryParentContainerStyles
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
+/* @conditional-compile-remove-from(stable) */
 import { ParticipantPane } from './ParticipantPane';
 
 /**
@@ -44,17 +47,27 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  /* @conditional-compile-remove-from(stable) */
   const [showPeople, setShowPeople] = useState(false);
+
+  /* @conditional-compile-remove-from(stable) */
+  const renderParticipantPane = (): JSX.Element => {
+    return <ParticipantPane hidden={!showPeople} closePane={() => setShowPeople(false)} />;
+  };
+
+  const callArrangementStyles = (): string => {
+    /* @conditional-compile-remove-from(stable) */
+    return showPeople ? mergeStyles(containerClassName, { display: 'none' }) : containerClassName;
+    return containerClassName;
+  };
 
   return (
     <Stack className={mergeStyles({ width: '100%', height: '100%' })}>
-      <ParticipantPane hidden={!showPeople} closePane={() => setShowPeople(false)} />
-      <Stack
-        verticalFill
-        horizontalAlign="stretch"
-        className={showPeople ? mergeStyles(containerClassName, { display: 'none' }) : containerClassName}
-        data-ui-id={props.dataUiId}
-      >
+      {
+        /* @conditional-compile-remove-from(stable) */
+        renderParticipantPane()
+      }
+      <Stack verticalFill horizontalAlign="stretch" className={callArrangementStyles()} data-ui-id={props.dataUiId}>
         <Stack.Item styles={notificationsContainerStyles}>
           <Stack>
             <ComplianceBanner {...props.complianceBannerProps} />
@@ -79,6 +92,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           <Stack.Item className={callControlsContainerStyles}>
             <CallControls
               {...props.callControlProps}
+              /* @conditional-compile-remove-from(stable) */
               onParticipantButtonClick={props.mobileView ? () => setShowPeople(true) : undefined}
             />
           </Stack.Item>

@@ -52,7 +52,10 @@ export type CallControlsProps = {
    * Styles for {@link EndCallButton}.
    */
   endCallButtonStyles?: ControlBarButtonStyles;
-
+  /* @conditional-compile-remove-from(stable): custom button injection */
+  /**
+   * Click handler for participants button. If defined, participant button will not show menu
+   */
   onParticipantButtonClick?: () => void;
 };
 
@@ -74,6 +77,36 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   if (props.options === false) {
     return <></>;
   }
+
+  const renderParticipantsButton = () => {
+    /* @conditional-compile-remove-from(stable) */
+    return props.onParticipantButtonClick ? (
+      <ControlBarButton
+        onClick={props.onParticipantButtonClick}
+        onRenderIcon={(): JSX.Element => <Icon iconName="ControlButtonParticipants" />}
+        disabled={isDisabled(options?.participantsButton)}
+      />
+    ) : (
+      <Participants
+        option={options?.participantsButton}
+        callInvitationURL={props.callInvitationURL}
+        onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+        displayType={options?.displayType}
+        increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+        styles={props.commonButtonStyles}
+      />
+    );
+    return (
+      <Participants
+        option={options?.participantsButton}
+        callInvitationURL={props.callInvitationURL}
+        onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+        displayType={options?.displayType}
+        increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+        styles={props.commonButtonStyles}
+      />
+    );
+  };
 
   return (
     <Stack horizontalAlign="center">
@@ -123,23 +156,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterScreenShareButton'} />
           }
-          {options?.participantsButton !== false &&
-            (props.onParticipantButtonClick ? (
-              <ControlBarButton
-                onClick={props.onParticipantButtonClick}
-                onRenderIcon={(): JSX.Element => <Icon iconName="ControlButtonParticipants" />}
-                disabled={isDisabled(options?.participantsButton)}
-              />
-            ) : (
-              <Participants
-                option={options?.participantsButton}
-                callInvitationURL={props.callInvitationURL}
-                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-                displayType={options?.displayType}
-                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-                styles={props.commonButtonStyles}
-              />
-            ))}
+          {options?.participantsButton !== false && renderParticipantsButton()}
           {
             /* @conditional-compile-remove-from(stable): custom button injection */
             <FilteredCustomButtons customButtonProps={customButtonProps} placement={'afterParticipantsButton'} />
