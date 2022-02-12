@@ -8,7 +8,7 @@ import { DrawerContentContainer } from './DrawerContentContainer';
 import { DrawerLightDismiss } from './DrawerLightDismiss';
 
 /**
- * Styles for the {@link ParticipantList}.
+ * Styles for the {@link _DrawerSurface}.
  *
  * @internal
  */
