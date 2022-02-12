@@ -67,7 +67,8 @@ const menuItemChildrenGap = { childrenGap: '0.5rem' };
 const drawerMenuItemRootStyles = (hoverBackground: string): IStyle => ({
   height: '3rem',
   lineHeight: '3rem',
-  padding: '0rem 0.5rem',
+  fontSize: '1rem',
+  padding: '0rem 0.75rem',
   cursor: 'pointer',
   ':hover, :focus': {
     background: hoverBackground
