@@ -208,7 +208,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
 
   return (
-    <Stack>
+    <Stack data-ui-id="error-bar-stack">
       {toShow.map((error) => (
         <MessageBar
           {...props}

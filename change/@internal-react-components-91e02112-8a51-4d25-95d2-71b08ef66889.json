@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduced new Aria strings and roles to chat notification and local camera switcher.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
