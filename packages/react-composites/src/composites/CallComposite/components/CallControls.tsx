@@ -50,7 +50,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     return <></>;
   }
 
-  const renderParticipantsButton = () => {
+  const renderParticipantsButton = (): JSX.Element => {
     /* @conditional-compile-remove-from(stable) */
     return props.onParticipantButtonClick ? (
       <ControlBarButton

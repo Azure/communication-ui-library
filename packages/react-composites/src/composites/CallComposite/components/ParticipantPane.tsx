@@ -17,11 +17,21 @@ import {
   participantPaneHeaderTitleStyles
 } from '../styles/ParticipantPane.styles';
 
-export const ParticipantPane = (props: {
+/**
+ * Props of {@link ParticipantPane} component
+ */
+export type ParticipantPaneProps = {
   hidden: boolean;
   closePane: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-}): JSX.Element => {
+};
+
+/**
+ * ParticipantList component covering entire screen with a header and back button
+ * @param props - ParticipantPaneProps
+ * @private
+ */
+export const ParticipantPane = (props: ParticipantPaneProps): JSX.Element => {
   const { hidden, closePane, onFetchAvatarPersonaData } = props;
   const participantListProps = usePropsFor(ParticipantList);
   const locale = useLocale();
