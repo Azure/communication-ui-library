@@ -5,7 +5,9 @@ import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove-from(stable) */
 import { Icon } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { ControlBar, ControlBarButton, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove-from(stable) */
+import { ControlBarButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -115,6 +117,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
+/* @conditional-compile-remove-from(stable) */
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (option === undefined || option === true || option === false) {
     return false;
