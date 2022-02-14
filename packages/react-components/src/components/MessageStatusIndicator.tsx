@@ -47,7 +47,7 @@ export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
   messageThreadReadCount?: number;
-  messageThreadParticipantCount?: number;
+  participantCountNotIncludingSelf?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -70,7 +70,7 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, messageThreadReadCount, messageThreadParticipantCount } = props;
+  const { status, styles, messageThreadReadCount, participantCountNotIncludingSelf } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
@@ -110,11 +110,16 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost
           content={
-            messageThreadReadCount === 1 || messageThreadParticipantCount === 1
+            // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
+            // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
+            // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
+            (messageThreadReadCount === 1 && participantCountNotIncludingSelf === 1) ||
+            messageThreadReadCount === 0 ||
+            participantCountNotIncludingSelf === 0
               ? strings.seenTooltipText
               : _formatString(strings.readByTooltipText, {
                   messageThreadReadCount: `${messageThreadReadCount}`,
-                  messageThreadParticipantCount: `${messageThreadParticipantCount}`
+                  participantCountNotIncludingSelf: `${participantCountNotIncludingSelf}`
                 })
           }
         >

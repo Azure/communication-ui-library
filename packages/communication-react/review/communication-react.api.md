@@ -1664,9 +1664,9 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 // @public
 export interface MessageStatusIndicatorProps {
     // (undocumented)
-    messageThreadParticipantCount?: number;
-    // (undocumented)
     messageThreadReadCount?: number;
+    // (undocumented)
+    participantCountNotIncludingSelf?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -1693,7 +1693,6 @@ export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     messageThreadParticipantCount?: number;
-    messageThreadReadReceipt?: {};
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
