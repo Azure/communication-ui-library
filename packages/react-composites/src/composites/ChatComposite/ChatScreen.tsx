@@ -25,7 +25,7 @@ import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadCards, truncatedFileName, extension } from './file-sharing';
+import { FileUploadCards } from './file-sharing';
 import { FileUpload, FileUploadHandler } from './file-sharing';
 
 import {
@@ -153,9 +153,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   const onRenderFileUploads = (): JSX.Element => {
     const uploadedFiles = uploadedFilesSelector.files;
-    return (
-      <FileUploadCards uploadedFiles={uploadedFiles} truncatedFileName={truncatedFileName} extension={extension} />
-    );
+    return <FileUploadCards uploadedFiles={uploadedFiles} />;
   };
 
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);

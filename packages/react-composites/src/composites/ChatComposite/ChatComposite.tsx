@@ -11,10 +11,6 @@ import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileSharingOptions } from './ChatScreen';
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
-
-// Needed to initialize default icons used by Fluent components.
-initializeFileTypeIcons();
 
 /**
  * Props for {@link ChatComposite}.
