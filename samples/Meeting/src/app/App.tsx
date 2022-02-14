@@ -44,11 +44,11 @@ interface CallAndChatArgs {
 }
 type AppPages = 'home' | 'call' | 'error';
 
-const App = (): JSX.Element => {
-  console.log(
-    `ACS sample Call and Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
-  );
+console.log(
+  `ACS sample Call and Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
+);
 
+const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   const [callAndChatArgs, setCallAndChatArgs] = useState<CallAndChatArgs | undefined>(undefined);
 

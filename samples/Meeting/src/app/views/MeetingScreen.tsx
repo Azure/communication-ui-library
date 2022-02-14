@@ -56,8 +56,13 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         endpoint,
         locator: locator
       });
-      adapter.on('error', (e) => {
+      adapter.on('callError', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
+      adapter.on('chatError', (e) => {
+        // Error is already acted upon by the Chat composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
