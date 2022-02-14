@@ -1,4 +1,4 @@
-name: Deploy beta validation samples
+name: Deploy release validation samples
 
 on:
   push:
@@ -32,6 +32,11 @@ jobs:
 
       - name: Install Dependencies
         run: rush install
+
+      # Switch flavor to stable when it is release branch
+      - name: Switch flavor for stable build
+        if: ${{ !contains(github.ref, 'beta') }}
+        run: rush switch-flavor:stable
 
       - name: Build Projects
         run: rush build -v

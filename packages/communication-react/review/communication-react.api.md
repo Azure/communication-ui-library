@@ -268,7 +268,7 @@ export interface CallAndChatAdapterState extends CallAndChatAdapterUiState, Call
 // @beta
 export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
@@ -296,7 +296,7 @@ export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
@@ -334,6 +334,8 @@ export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'de
     call?: CallState;
     chat?: ChatThreadClientState;
     displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
     userId: CommunicationIdentifierKind;
 }
 
@@ -358,6 +360,7 @@ export interface CallAndChatCompositeProps extends BaseCompositeProps<CallCompos
 // @public
 export interface CallAndChatCompositeStrings {
     chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
@@ -366,7 +369,7 @@ export interface CallAndChatCompositeStrings {
 }
 
 // @beta
-export interface CallAndChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
+export interface CallAndChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
@@ -1395,6 +1398,14 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
+export interface FileDownloadErrorMessage {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+
+// @beta
 export interface FileMetadata {
     extension: string;
     name: string;
@@ -1404,6 +1415,7 @@ export interface FileMetadata {
 // @beta
 export interface FileSharingOptions {
     accept?: string;
+    downloadHandler?: FileDownloadHandler;
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -1429,7 +1441,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {

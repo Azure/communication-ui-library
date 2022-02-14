@@ -5,6 +5,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { CallComposite } from '../CallComposite/CallComposite';
+import { AdapterError } from '../common/adapters';
 import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
 import { CallAndChatAdapter } from './adapter/MeetingAdapter';
 import { CallAndChatComposite } from './MeetingComposite';
@@ -22,8 +23,8 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
   callAndChatAdapter.querySpeakers = jest.fn();
   callAndChatAdapter.on = jest.fn(); // allow for direct subscription to the state of the call-and-chat adapter
   callAndChatAdapter.off = jest.fn(); // Allow for direct un-subscription to the state of the call-and-chat adapter
-  callAndChatAdapter.getState = jest.fn((): CallAndChatAdapterState => {
-    return {
+  callAndChatAdapter.getState = jest.fn(
+    (): CallAndChatAdapterState => ({
       page: 'lobby',
       isLocalPreviewMicrophoneEnabled: false,
       userId: { kind: 'communicationUser', communicationUserId: 'test' },
@@ -37,9 +38,11 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
       },
       isTeamsCall: true,
       call: undefined,
-      chat: undefined
-    };
-  });
+      chat: undefined,
+      latestCallErrors: { test: new Error() as AdapterError },
+      latestChatErrors: { test: new Error() as AdapterError }
+    })
+  );
   return callAndChatAdapter;
 }
 

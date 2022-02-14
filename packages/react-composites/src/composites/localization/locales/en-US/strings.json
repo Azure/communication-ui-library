@@ -48,6 +48,7 @@
     "peoplePaneTitle": "People",
     "peoplePaneSubTitle": "In this call",
     "chatPaneTitle": "Chat",
+    "chatButtonNewMessageNotificationLabel": "New Message",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }

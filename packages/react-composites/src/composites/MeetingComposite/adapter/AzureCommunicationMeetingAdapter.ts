@@ -7,6 +7,7 @@
 import {
   AudioDeviceInfo,
   Call,
+  CallAgent,
   GroupCallLocator,
   PermissionConstraints,
   TeamsMeetingLinkLocator,
@@ -41,13 +42,24 @@ import {
   mergeCallAdapterStateIntoCallAndChatAdapterState,
   mergeChatAdapterStateIntoCallAndChatAdapterState
 } from '../state/MeetingAdapterState';
-import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+import {
+  createAzureCommunicationChatAdapter,
+  createAzureCommunicationChatAdapterFromClient
+} from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
+import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
-import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import {
+  CallAdapterLocator,
+  CallParticipantsLocator,
+  createAzureCommunicationCallAdapterFromClient
+} from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import { StatefulCallClient } from '@internal/calling-stateful-client';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatThreadClient } from '@azure/communication-chat';
 
 type CallAndChatAdapterStateChangedHandler = (newState: CallAndChatAdapterState) => void;
 
@@ -289,7 +301,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -344,7 +356,9 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
         this.chatAdapter.on('participantsRemoved', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.on('error', listener);
+        this.chatAdapter.on('error', listener);
+        break;
       default:
         throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
     }
@@ -353,7 +367,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -408,7 +422,9 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
         this.chatAdapter.off('participantsRemoved', listener);
         break;
       case 'error':
-        throw 'on(Error) not implemented yet.';
+        this.callAdapter.off('error', listener);
+        this.chatAdapter.off('error', listener);
+        break;
       default:
         throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
     }
@@ -476,6 +492,41 @@ export const createAzureCommunicationCallAndChatAdapter = async ({
     threadId
   });
 
+  const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
+  return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
+};
+
+/**
+ * Arguments for {@link createAzureCommunicationCallAndChatAdapterFromClient}
+ *
+ * @beta
+ */
+export type AzureCommunicationCallAndChatAdapterFromClientArgs = {
+  callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
+  callAgent: CallAgent;
+  callClient: StatefulCallClient;
+  chatClient: StatefulChatClient;
+  chatThreadClient: ChatThreadClient;
+};
+
+/**
+ * Create a {@link CallAndChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
+ *
+ * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Consider using {@link createAzureCommunicationCallAndChatAdapter} for a simpler API.
+ *
+ * @beta
+ */
+export const createAzureCommunicationCallAndChatAdapterFromClients = async ({
+  callClient,
+  callAgent,
+  callLocator,
+  chatClient,
+  chatThreadClient
+}: AzureCommunicationCallAndChatAdapterFromClientArgs): Promise<CallAndChatAdapter> => {
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
+
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
 };

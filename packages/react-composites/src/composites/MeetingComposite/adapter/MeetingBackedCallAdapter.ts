@@ -11,7 +11,7 @@ import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /**
- * Facade around the MeetingAdapter to satisfy the call adapter interface.
+ * Facade around the CallAndChatAdapter to satisfy the call adapter interface.
  *
  * @private
  */

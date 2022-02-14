@@ -25,8 +25,7 @@ import {
   ParticipantsRemovedListener
 } from '../../ChatComposite';
 import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
-
-import type { AdapterState, Disposable } from '../../common/adapters';
+import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 
 /**
  * Functionality for managing the current call with chat.
@@ -79,8 +78,8 @@ export interface CallAndChatAdapterManagement
  * @beta
  */
 export interface CallAndChatAdapterSubscriptions {
-  on(event: 'error', listener: (e: Error) => void): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // Call subscriptions
   on(event: 'callEnded', listener: CallEndedListener): void;

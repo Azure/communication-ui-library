@@ -6,6 +6,7 @@ import { CallState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState, ChatAdapterUiState } from '../../ChatComposite';
+import { AdapterErrors } from '../../common/adapters';
 
 /**
  * UI state pertaining to the {@link CallAndChatComposite}.
@@ -28,6 +29,10 @@ export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'de
   call?: CallState;
   /** State of the current chat. */
   chat?: ChatThreadClientState;
+  /** Latest call error encountered for each operation performed via the adapter. */
+  latestCallErrors: AdapterErrors;
+  /** Latest chat error encountered for each operation performed via the adapter. */
+  latestChatErrors: AdapterErrors;
 }
 
 /**
@@ -50,13 +55,15 @@ export function callAndChatAdapterStateFromBackingStates(
 
   return {
     call: callAdapterState.call,
+    chat: chatAdapterState.thread,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
-    chat: chatAdapterState.thread,
+    latestCallErrors: callAdapterState.latestErrors,
+    latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     fileUploads: chatAdapterState.fileUploads
   };
@@ -72,6 +79,7 @@ export function mergeChatAdapterStateIntoCallAndChatAdapterState(
   return {
     ...existingCallAndChatAdapterState,
     chat: chatAdapterState.thread,
+    latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     fileUploads: chatAdapterState.fileUploads
   };
@@ -92,6 +100,7 @@ export function mergeCallAdapterStateIntoCallAndChatAdapterState(
     devices: callAdapterState.devices,
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
-    isTeamsCall: callAdapterState.isTeamsCall
+    isTeamsCall: callAdapterState.isTeamsCall,
+    latestCallErrors: callAdapterState.latestErrors
   };
 }

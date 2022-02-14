@@ -68,10 +68,7 @@ export type CallAndChatCompositeOptions = {
  * @beta
  */
 export interface CallAndChatControlOptions
-  extends Pick<
-    CallControlOptions,
-    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
-  > {
+  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
   /**
    * Show or hide the chat button in the call-and-chat composite control bar.
    * @defaultValue true
