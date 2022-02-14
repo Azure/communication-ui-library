@@ -664,6 +664,10 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
+    // Warning: (ae-incompatible-release-tags) The symbol "readReceipts" is marked as @public, but its signature references "ReadReceipt" which is marked as @beta
+    //
+    // (undocumented)
+    readReceipts?: ReadReceipt[];
     // (undocumented)
     readReceipts?: ReadReceipt[];
     // (undocumented)
@@ -1955,6 +1959,13 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @beta
+export interface ReadReceipt {
+    chatMessageId: string;
+    readOn: Date;
+    senderId: string;
+}
 
 // @public
 export interface ReadReceipt {

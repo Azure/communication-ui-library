@@ -233,6 +233,7 @@ export const controlsToAdd = {
     name: 'Failed to send icon tooltip text'
   },
   messageSeenTooltipText: { control: 'text', defaultValue: 'Seen', name: 'Seen icon tooltip text' },
+  messageReadByTooltipText: { control: 'text', defaultValue: 'Read by 2 of 2', name: 'Read by icon tooltip text' },
   messageSendingTooltipText: { control: 'text', defaultValue: 'Sending', name: 'Sending icon tooltip text' },
   messageStatus: {
     control: 'select',

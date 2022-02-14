@@ -24,8 +24,10 @@ export interface MessageStatusIndicatorStrings {
   deliveredTooltipText: string;
   /** Aria label to notify user when their message has been seen by others. */
   seenAriaLabel?: string;
-  /** Text to display in the seen message icon tooltip. */
+  /** Text to display in the seen message icon tooltip if read number/ participant number is 1 */
   seenTooltipText: string;
+  /** Text to display in the seen message icon tooltip if read number logic is working correctly (more than 1 read number and more than 1 particiants)*/
+  readByTooltipText: string;
   /** Aria label to notify user when their message is being sent. */
   sendingAriaLabel?: string;
   /** Text to display in the sending message icon tooltip. */
@@ -69,7 +71,6 @@ export interface MessageStatusIndicatorProps {
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
   const { status, styles, messageThreadReadCount, messageThreadParticipantCount } = props;
-
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
@@ -108,10 +109,14 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost
-          content={_formatString(strings.seenTooltipText, {
-            messageThreadReadCount: `${messageThreadReadCount}`,
-            messageThreadParticipantCount: `${messageThreadParticipantCount}`
-          })}
+          content={
+            messageThreadReadCount === 1 || messageThreadParticipantCount === 1
+              ? strings.seenTooltipText
+              : _formatString(strings.readByTooltipText, {
+                  messageThreadReadCount: `${messageThreadReadCount}`,
+                  messageThreadParticipantCount: `${messageThreadParticipantCount}`
+                })
+          }
         >
           <Icon
             role="status"

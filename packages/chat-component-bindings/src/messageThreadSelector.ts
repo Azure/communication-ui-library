@@ -7,7 +7,7 @@ import {
   getIsLargeGroup,
   getLatestReadTime,
   getParticipants,
-  getReadInformation,
+  getReadReceipts,
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -23,7 +23,6 @@ import {
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
-import { ChatMessageReadReceipt } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -32,8 +31,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     userId: string,
     isSeen: boolean,
     isLargeGroup: boolean,
-    readReceipts: ChatMessageReadReceipt[],
-    messageThreadParticipantCount: number
+    readNumber: number
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -41,14 +39,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(
-        chatMessage,
-        userId,
-        isSeen,
-        isLargeGroup,
-        readReceipts,
-        messageThreadParticipantCount
-      );
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -60,15 +51,9 @@ const convertToUiChatMessage = (
   userId: string,
   isSeen: boolean,
   isLargeGroup: boolean,
-  readReceipts: ChatMessageReadReceipt[],
-  messageThreadParticipantCount: number
+  readNumber: number
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
-  const convertedReadReceipts = readReceipts.map((receipt) => ({
-    senderId: toFlatCommunicationIdentifier(receipt.sender),
-    chatMessageId: receipt.chatMessageId,
-    readOn: receipt.readOn
-  }));
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
@@ -82,8 +67,7 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    readReceipts: convertedReadReceipts,
-    messageThreadParticipantCount: messageThreadParticipantCount,
+    readNumber,
     metadata: message.metadata
   };
 };
@@ -146,59 +130,86 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  * @public
  */
 export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadInformation, getParticipants],
-  (userId, chatMessages, latestReadTime, isLargeGroup, readInformation, participants) => {
+  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
     // get number of participants
     const messageThreadParticipantCount = Object.values(participants).length - 1;
-    // for each chat message, add read receipt information when readInformation.id === chatmessage.id
-    const convertedChatMessages = Object.values(chatMessages).map(function (message) {
-      const readReceipt = Object.values(readInformation).filter((info) => info.chatMessageId === message.id);
-      // readReceipt is getting duplicate information, remove duplicate here
-      const uniqueReadReceipt = readReceipt.filter(
-        (value, index, self) =>
-          index ===
-          self.findIndex(
-            (t) =>
-              toFlatCommunicationIdentifier(t.sender) === toFlatCommunicationIdentifier(value.sender) &&
-              t.chatMessageId === value.chatMessageId
-          )
-      );
-      const convertedMessage = { message, readReceipt: uniqueReadReceipt };
-      return convertedMessage;
+    // readReceipt is getting duplicate information, remove duplicate here
+    const uniqueReadReceipt = readReceipts.filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            toFlatCommunicationIdentifier(t.sender) === toFlatCommunicationIdentifier(value.sender) &&
+            t.chatMessageId === value.chatMessageId
+        )
+    );
+    // creating a key value pair of senderID: last read message information
+    const readReceiptForEachMessage = {};
+
+    uniqueReadReceipt.forEach((r) => {
+      readReceiptForEachMessage[toFlatCommunicationIdentifier(r.sender)] = {
+        lastReadMessage: r.chatMessageId,
+        readOn: r.readOn
+      };
     });
+
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Object.values(convertedChatMessages)
+      Object.values(chatMessages)
         .filter(
           (message) =>
-            message.message.type.toLowerCase() === ACSKnownMessageType.text ||
-            message.message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
-            message.message.type.toLowerCase() === ACSKnownMessageType.html ||
-            (message.message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message.message)) ||
-            (message.message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message.message)) ||
+            message.type.toLowerCase() === ACSKnownMessageType.text ||
+            message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
+            message.type.toLowerCase() === ACSKnownMessageType.html ||
+            (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
+            (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
             // TODO: Add support for topicUpdated system messages in MessageThread component.
             // message.type === ACSKnownMessageType.topicUpdated ||
-            message.message.clientMessageId !== undefined
+            message.clientMessageId !== undefined
         )
-        .filter((message) => message.message.content && message.message.content.message !== '') // TODO: deal with deleted message and remove
-        .map((message) =>
-          memoizedFn(
-            message.message.id ?? message.message.clientMessageId,
-            message.message,
+        .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
+        .map((message) => {
+          /** logic: Looking at message A, how do we know it's read number?
+           * Assumption: if user read the latest message, user has read all messages before that
+           * ReadReceipt behaviour: read receipt is only sent to the last message
+           * if participant read a message that is sent later than message A, then the participant has read message A
+           * how do we check if the message is sent later than message A?
+           * we compare if the readon timestamp is later than the message A sent time
+           * if last read message id is not equal to message A's id, check the read on time stamp.
+           * if the last read message is read after the message A is sent, then user should have read message A as well */
+
+          let readNumber = 0;
+          for (const k in readReceiptForEachMessage) {
+            const messageid = readReceiptForEachMessage[k]['lastReadMessage'];
+            const readTime = readReceiptForEachMessage[k]['readOn'];
+            if (messageid === message.id) {
+              readNumber += 1;
+            } else {
+              if (new Date(readTime) >= new Date(message.createdOn)) {
+                readNumber += 1;
+              }
+            }
+          }
+
+          return memoizedFn(
+            message.id ?? message.clientMessageId,
+            message,
             userId,
-            message.message.createdOn <= latestReadTime,
+            message.createdOn <= latestReadTime,
             isLargeGroup,
-            message.readReceipt,
-            messageThreadParticipantCount
-          )
-        )
+            readNumber
+          );
+        })
     );
 
     updateMessagesWithAttached(convertedMessages, userId);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
-      messages: convertedMessages
+      messages: convertedMessages,
+      messageThreadParticipantCount,
+      messageThreadReadReceipt: readReceiptForEachMessage
     };
   }
 );

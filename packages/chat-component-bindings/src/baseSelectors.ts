@@ -44,7 +44,7 @@ export const getParticipants = (
 /**
  * @private
  */
-export const getReadInformation = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] => {
+export const getReadReceipts = (state: ChatClientState, props: ChatBaseSelectorProps): ChatMessageReadReceipt[] => {
   return state.threads[props?.threadId]?.readReceipts;
 };
 

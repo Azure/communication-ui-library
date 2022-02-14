@@ -89,14 +89,13 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
-    messageThreadParticipantCount?: number;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
     // (undocumented)
-    readReceipts?: ReadReceipt[];
+    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -528,6 +527,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -541,6 +541,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
+    messageThreadReadReceipt?: string[];
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -791,13 +793,6 @@ export interface _PictureInPictureInPictureStrings {
 export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps, 'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'> {
     // (undocumented)
     orientation: _TileOrientation;
-}
-
-// @public
-export interface ReadReceipt {
-    chatMessageId: string;
-    readOn: Date;
-    senderId: string;
 }
 
 // @public

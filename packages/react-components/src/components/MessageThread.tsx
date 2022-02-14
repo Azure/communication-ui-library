@@ -68,37 +68,6 @@ const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMes
 };
 
 /**
- * Get the latest participant number from the message array.
- *
- * @param messages
- */
-const getLatestParticipantNum = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): number => {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const message = messages[i];
-    if (message.messageType === 'chat') {
-      return message.messageThreadParticipantCount ? message.messageThreadParticipantCount : 1;
-    }
-  }
-  return 1;
-};
-
-/**
- * Get the latest read number for my last sent message from the message array.
- *
- * @param messages
- */
-const getLatestReadNum = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): number => {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const message = messages[i];
-    if (message.messageType === 'chat' && message.mine && message.status === 'seen') {
-      // first find latest message that belongs to me, return read number for that message
-      return message.readReceipts ? message.readReceipts.length + 1 : 1;
-    }
-  }
-  return 1;
-};
-
-/**
  * Compare latestMessageFromPreviousMessages & latestMessageFromNewMessages to see if the new message is not from
  * current user.
  */
@@ -399,8 +368,8 @@ const memoizeAllMessages = memoizeFnAll(
                     ) : (
                       defaultStatusRenderer(
                         statusToRender,
-                        messageThreadReadCount ? messageThreadReadCount : 0,
-                        messageThreadParticipantCount ? messageThreadParticipantCount : 0
+                        messageThreadReadCount ? messageThreadReadCount : 1,
+                        messageThreadParticipantCount ? messageThreadParticipantCount : 1
                       )
                     )
                   ) : (
@@ -465,6 +434,14 @@ export type MessageThreadProps = {
    * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
+  /**
+   * number of participants in the thread
+   */
+  messageThreadParticipantCount?: number;
+  /**
+   * number of participants in the thread
+   */
+  messageThreadReadReceipt?: string[];
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -638,6 +615,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
+    messageThreadParticipantCount,
     styles,
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
@@ -652,12 +630,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage
   } = props;
-  // maintain an array containing every participant's last message sent
-  type lastMessageForEach = { [id: string]: string };
-  const [lastMessageList, setLastMessageList] = useState<lastMessageForEach>({ '000': '000' });
 
-  const [latestReadNum, setLatestReadNum] = useState(1);
-  const [latestParticipantNum, setLatestParticipantNum] = useState(1);
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -709,28 +682,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setChatMessagesInitialized(chatMessagesInitialized);
   };
 
-  // this function filter al existing chat messages, and find everyone's last sent message and save them as key:value pair (senderid: messageid)
-  // key value pairs are stored in lastMessageList
-  const setLastMessageListContent = (): void => {
-    // get all exisiting chat messages and set last message for each participant
-    const exisitingChat = newMessages.filter((message) => {
-      return message.messageType === 'chat' && !!message.messageId;
-    });
-    // helper is an array of key value pairs senderId: messageid, where messageID is the last message sent by each participant
-    let helper = lastMessageList;
-    exisitingChat.forEach((c) => {
-      if (c.messageType === 'chat' && c.senderId) {
-        helper[c.senderId] = c.messageId;
-      }
-    });
-    // set the variable lastMessageList to be helper
-    setLastMessageList(helper);
-  };
-
-  useEffect(() => {
-    setLastMessageListContent();
-  }, [newMessages]);
-
   // we try to only send those message status if user is scrolled to the bottom.
   const sendMessageStatusIfAtBottom = useCallback(async (): Promise<void> => {
     if (
@@ -756,29 +707,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         lastMessage.messageId &&
         lastMessage.messageId !== messageIdSeenByMeRef.current
       ) {
-        // lastMessageList contains every participant's last sent messages
-        // Go through the list and send a read receipt to all last sent messages
-        // Assumption: if user has seen the last message, he/she has seen it all
-        if (lastMessageList) {
-          // this is run when user join the chat
-          if (Object.keys(lastMessageList).length === 1 && lastMessageList['000'] === '000') {
-            setLastMessageListContent();
-          }
-          let messages = Object.values(lastMessageList);
-          for (let i = 0; i <= messages.length - 1; i++) {
-            const info = messages[i];
-            // if info is not the default value 000, send a read receipt. Info is the message id for everyone's last sent message
-            if (info !== '000') {
-              await onMessageSeen(info);
-            }
-          }
-        }
+        await onMessageSeen(lastMessage.messageId);
         messageIdSeenByMeRef.current = lastMessage.messageId;
       }
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }
-  }, [showMessageStatus, onMessageSeen, lastMessageList]);
+  }, [showMessageStatus, onMessageSeen]);
 
   const scrollToBottom = useCallback((): void => {
     if (chatScrollDivRef.current) {
@@ -902,10 +837,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
    * These two states are used to manipulate scrollbar
    */
   useEffect(() => {
-    // set new num read and num participants
-    setLatestParticipantNum(getLatestParticipantNum(newMessages));
-    setLatestReadNum(getLatestReadNum(newMessages));
-
     setLatestPreviousChatMessage(getLatestChatMessage(messagesRef.current));
     setLatestCurrentChatMessage(getLatestChatMessage(newMessages));
     setMessagesRef(newMessages);
@@ -976,6 +907,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return messages.map((message: Message, index: number): ShorthandValue<ChatItemProps> => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
+          let readNumber = 0;
 
           if (message.messageType === 'chat') {
             if (!message.messageId || message.messageId === '') {
@@ -985,6 +917,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               switch (message.messageId) {
                 case lastSeenChatMessage: {
                   statusToRender = 'seen';
+                  // only update read number when status is seen
+                  readNumber = message.readNumber ? message.readNumber + 1 : 1;
                   break;
                 }
                 case lastSendingChatMessage: {
@@ -1018,8 +952,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
-            latestReadNum,
-            latestParticipantNum,
+            readNumber,
+            messageThreadParticipantCount,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage
