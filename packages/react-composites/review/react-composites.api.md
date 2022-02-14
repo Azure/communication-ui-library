@@ -188,6 +188,108 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
+// @public
+export const CallComposite: (props: CallCompositeProps) => JSX.Element;
+
+// @public
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
+
+// @public
+export type CallCompositeOptions = {
+    errorBar?: boolean;
+    callControls?: boolean | CallControlOptions;
+};
+
+// @public
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+
+// @public
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
+    adapter: CallAdapter;
+    callInvitationUrl?: string;
+    formFactor?: 'desktop' | 'mobile';
+    options?: CallCompositeOptions;
+}
+
+// @public
+export interface CallCompositeStrings {
+    cameraLabel: string;
+    cameraPermissionDenied: string;
+    cameraTurnedOff: string;
+    close: string;
+    complianceBannerNowOnlyRecording: string;
+    complianceBannerNowOnlyTranscription: string;
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    complianceBannerRecordingSaving: string;
+    complianceBannerRecordingStarted: string;
+    complianceBannerRecordingStopped: string;
+    complianceBannerTranscriptionConsent: string;
+    complianceBannerTranscriptionSaving: string;
+    complianceBannerTranscriptionStarted: string;
+    complianceBannerTranscriptionStopped: string;
+    configurationPageCallDetails?: string;
+    configurationPageTitle: string;
+    defaultPlaceHolder: string;
+    failedToJoinCallDueToNoNetworkMoreDetails?: string;
+    failedToJoinCallDueToNoNetworkTitle: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    learnMore: string;
+    leftCallMoreDetails?: string;
+    leftCallTitle: string;
+    lobbyScreenConnectingToCallMoreDetails?: string;
+    lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
+    lobbyScreenWaitingToBeAdmittedTitle: string;
+    microphonePermissionDenied: string;
+    microphoneToggleInLobbyNotAllowed: string;
+    mutedMessage: string;
+    networkReconnectMoreDetails: string;
+    networkReconnectTitle: string;
+    privacyPolicy: string;
+    rejoinCallButtonLabel: string;
+    removedFromCallMoreDetails?: string;
+    removedFromCallTitle: string;
+    soundLabel: string;
+    startCallButtonLabel: string;
+}
+
+// @public
+export type CallControlDisplayType = 'default' | 'compact';
+
+// @public
+export type CallControlOptions = {
+    displayType?: CallControlDisplayType;
+    cameraButton?: boolean;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    devicesButton?: boolean;
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+};
+
+// @public
+export type CallEndedListener = (event: {
+    callId: string;
+}) => void;
+
+// @public
+export type CallIdChangedListener = (event: {
+    callId: string;
+}) => void;
+
+// @beta
+export type CallParticipantsLocator = {
+    participantIDs: string[];
+};
+
 // @beta
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
@@ -322,108 +424,6 @@ export interface CallWithChatLocator {
     callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
     chatThreadId: string;
 }
-
-// @public
-export const CallComposite: (props: CallCompositeProps) => JSX.Element;
-
-// @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
-
-// @public
-export type CallCompositeOptions = {
-    errorBar?: boolean;
-    callControls?: boolean | CallControlOptions;
-};
-
-// @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
-
-// @public
-export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
-    callInvitationUrl?: string;
-    formFactor?: 'desktop' | 'mobile';
-    options?: CallCompositeOptions;
-}
-
-// @public
-export interface CallCompositeStrings {
-    cameraLabel: string;
-    cameraPermissionDenied: string;
-    cameraTurnedOff: string;
-    close: string;
-    complianceBannerNowOnlyRecording: string;
-    complianceBannerNowOnlyTranscription: string;
-    complianceBannerRecordingAndTranscriptionSaved: string;
-    complianceBannerRecordingAndTranscriptionStarted: string;
-    complianceBannerRecordingAndTranscriptionStopped: string;
-    complianceBannerRecordingSaving: string;
-    complianceBannerRecordingStarted: string;
-    complianceBannerRecordingStopped: string;
-    complianceBannerTranscriptionConsent: string;
-    complianceBannerTranscriptionSaving: string;
-    complianceBannerTranscriptionStarted: string;
-    complianceBannerTranscriptionStopped: string;
-    configurationPageCallDetails?: string;
-    configurationPageTitle: string;
-    defaultPlaceHolder: string;
-    failedToJoinCallDueToNoNetworkMoreDetails?: string;
-    failedToJoinCallDueToNoNetworkTitle: string;
-    failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
-    failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
-    learnMore: string;
-    leftCallMoreDetails?: string;
-    leftCallTitle: string;
-    lobbyScreenConnectingToCallMoreDetails?: string;
-    lobbyScreenConnectingToCallTitle: string;
-    lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
-    lobbyScreenWaitingToBeAdmittedTitle: string;
-    microphonePermissionDenied: string;
-    microphoneToggleInLobbyNotAllowed: string;
-    mutedMessage: string;
-    networkReconnectMoreDetails: string;
-    networkReconnectTitle: string;
-    privacyPolicy: string;
-    rejoinCallButtonLabel: string;
-    removedFromCallMoreDetails?: string;
-    removedFromCallTitle: string;
-    soundLabel: string;
-    startCallButtonLabel: string;
-}
-
-// @public
-export type CallControlDisplayType = 'default' | 'compact';
-
-// @public
-export type CallControlOptions = {
-    displayType?: CallControlDisplayType;
-    cameraButton?: boolean;
-    endCallButton?: boolean;
-    microphoneButton?: boolean;
-    devicesButton?: boolean;
-    participantsButton?: boolean | {
-        disabled: boolean;
-    };
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
-    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
-};
-
-// @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
-
-// @public
-export type CallIdChangedListener = (event: {
-    callId: string;
-}) => void;
-
-// @beta
-export type CallParticipantsLocator = {
-    participantIDs: string[];
-};
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
 //

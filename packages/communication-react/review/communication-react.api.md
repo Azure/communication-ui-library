@@ -252,141 +252,6 @@ export interface CallAgentState {
     displayName?: string;
 }
 
-// @beta
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
-}
-
-// @beta
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
-    removeParticipant(userId: string): Promise<void>;
-}
-
-// @beta
-export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
-}
-
-// @beta
-export interface CallWithChatAdapterSubscriptions {
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    off(event: 'callError', listener: (e: AdapterError) => void): void;
-    // (undocumented)
-    off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
-    off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
-    off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
-    off(event: 'chatError', listener: (e: AdapterError) => void): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    on(event: 'callError', listener: (e: AdapterError) => void): void;
-    // (undocumented)
-    on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    on(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
-    on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
-    on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
-    on(event: 'chatError', listener: (e: AdapterError) => void): void;
-}
-
-// @beta
-export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
-}
-
-// @beta
-export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
-    call?: CallState;
-    chat?: ChatThreadClientState;
-    displayName: string | undefined;
-    latestCallErrors: AdapterErrors;
-    latestChatErrors: AdapterErrors;
-    userId: CommunicationIdentifierKind;
-}
-
-// @beta
-export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
-
-// @beta
-export type CallWithChatCompositeOptions = {
-    callControls?: boolean | CallWithChatControlOptions;
-};
-
-// @beta
-export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
-    // (undocumented)
-    callWithChatAdapter: CallWithChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    formFactor?: 'desktop' | 'mobile';
-    joinInvitationURL?: string;
-    options?: CallWithChatCompositeOptions;
-}
-
-// @public
-export interface CallWithChatCompositeStrings {
-    chatButtonLabel: string;
-    chatButtonNewMessageNotificationLabel: string;
-    chatPaneTitle: string;
-    peopleButtonLabel: string;
-    peoplePaneSubTitle: string;
-    peoplePaneTitle: string;
-    pictureInPictureTileAriaLabel: string;
-}
-
-// @beta
-export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
-    chatButton?: boolean;
-    peopleButton?: boolean;
-}
-
-// @beta
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
-
-// @beta
-export interface CallWithChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
-    chatThreadId: string;
-}
-
 // @public
 export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
 
@@ -622,6 +487,141 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+}
+
+// @beta
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+}
+
+// @beta
+export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+    removeParticipant(userId: string): Promise<void>;
+}
+
+// @beta
+export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
+}
+
+// @beta
+export interface CallWithChatAdapterSubscriptions {
+    // (undocumented)
+    off(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+    // (undocumented)
+    off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    off(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    off(event: 'chatError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+    // (undocumented)
+    on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    on(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    on(event: 'chatError', listener: (e: AdapterError) => void): void;
+}
+
+// @beta
+export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
+}
+
+// @beta
+export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+    call?: CallState;
+    chat?: ChatThreadClientState;
+    displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
+    userId: CommunicationIdentifierKind;
+}
+
+// @beta
+export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
+
+// @beta
+export type CallWithChatCompositeOptions = {
+    callControls?: boolean | CallWithChatControlOptions;
+};
+
+// @beta
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+    // (undocumented)
+    callWithChatAdapter: CallWithChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    formFactor?: 'desktop' | 'mobile';
+    joinInvitationURL?: string;
+    options?: CallWithChatCompositeOptions;
+}
+
+// @public
+export interface CallWithChatCompositeStrings {
+    chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
+    chatPaneTitle: string;
+    peopleButtonLabel: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
+    pictureInPictureTileAriaLabel: string;
+}
+
+// @beta
+export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+    chatButton?: boolean;
+    peopleButton?: boolean;
+}
+
+// @beta
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+
+// @beta
+export interface CallWithChatLocator {
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    chatThreadId: string;
 }
 
 // @public
@@ -1249,7 +1249,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemMicOff: JSX.Element; /**
+    * Icons that can be overridden for {@link CallComposite}.
+    *
+    * @public
+    */
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
