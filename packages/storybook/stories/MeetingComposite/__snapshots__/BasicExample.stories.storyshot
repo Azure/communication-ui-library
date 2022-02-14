@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots Composites/MeetingComposite/Basic E
       }
     >
       <div
-        className="ms-Stack css-174 css-1"
+        className="ms-Stack css-175 css-1"
       >
         <div
           className="ms-Stack css-4"
