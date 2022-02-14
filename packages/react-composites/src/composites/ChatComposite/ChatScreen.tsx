@@ -24,8 +24,6 @@ import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileUploadCards } from './file-sharing';
 import { FileUpload, FileUploadHandler } from './file-sharing';
 
 import {
@@ -44,11 +42,10 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { fileUploadsSelector } from './selectors/fileUploadsSelector';
-import { useSelector } from './hooks/useSelector';
 import { FileDownloadHandler } from './file-sharing';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadCards } from './FileUploadCards';
 
 /**
  * @private
@@ -147,15 +144,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  const uploadedFilesSelector = useSelector(fileUploadsSelector);
-
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
-  const onRenderFileUploads = (): JSX.Element => {
-    const uploadedFiles = uploadedFilesSelector.files;
-    return <FileUploadCards uploadedFiles={uploadedFiles} />;
-  };
-
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
@@ -195,7 +183,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox
               {...sendBoxProps}
               /* @conditional-compile-remove-from(stable): FILE_SHARING */
-              onRenderFileUploads={onRenderFileUploads}
+              onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
             />
