@@ -1122,11 +1122,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element; /**
-    * Icons that can be overridden for {@link CallComposite}.
-    *
-    * @public
-    */
+    ParticipantItemMicOff: JSX.Element;
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
