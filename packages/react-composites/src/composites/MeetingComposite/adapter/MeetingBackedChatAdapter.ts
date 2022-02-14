@@ -100,8 +100,8 @@ function chatAdapterStateFromCallWithChatAdapterState(
     userId: callWithChatAdapterState.userId,
     displayName: callWithChatAdapterState.displayName || '',
     thread: callWithChatAdapterState.chat,
+    latestErrors: callWithChatAdapterState.latestChatErrors,
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    fileUploads: callWithChatAdapterState.fileUploads,
-    latestErrors: {} //@TODO: latest errors not supported in CallWithChatComposite composite yet.
+    fileUploads: callWithChatAdapterState.fileUploads
   };
 }

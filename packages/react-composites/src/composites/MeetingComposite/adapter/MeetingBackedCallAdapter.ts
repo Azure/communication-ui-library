@@ -107,6 +107,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
-    latestErrors: {} //@TODO: latest errors not supported in CallWithChatComposite yet.
+    latestErrors: callWithChatAdapterState.latestCallErrors
   };
 }
