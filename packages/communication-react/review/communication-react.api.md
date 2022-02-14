@@ -120,7 +120,7 @@ export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    locator: CallAdapterLocator;
 };
 
 // @public
@@ -138,8 +138,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    chatThreadId: string;
-    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+    meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 // @public
@@ -199,6 +198,11 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
+//
+// @public
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
@@ -246,6 +250,12 @@ export interface CallAgentProviderProps {
 // @public
 export interface CallAgentState {
     displayName?: string;
+}
+
+// @beta
+export interface CallAndChatLocator {
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    chatThreadId: string;
 }
 
 // @public
@@ -444,6 +454,11 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
 };
 
+// @beta
+export type CallParticipantsLocator = {
+    participantIDs: string[];
+};
+
 // @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
 
@@ -484,26 +499,45 @@ export interface CallState {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
+export interface CameraButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface CameraButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
+    selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
+    styles?: Partial<CameraButtonStyles>;
 }
 
 // @public
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    cameras: VideoDeviceInfo[];
+    selectedCamera?: VideoDeviceInfo;
 };
 
 // @public
 export interface CameraButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
     offLabel: string;
     onLabel: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+}
+
+// @public
+export interface CameraButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
@@ -934,7 +968,7 @@ export interface ControlBarProps {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -943,7 +977,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, meetingLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -1237,6 +1271,14 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
+export interface FileDownloadErrorMessage {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+
+// @beta
 export interface FileMetadata {
     extension: string;
     name: string;
@@ -1246,6 +1288,7 @@ export interface FileMetadata {
 // @beta
 export interface FileSharingOptions {
     accept?: string;
+    downloadHandler?: FileDownloadHandler;
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -1271,7 +1314,7 @@ export interface FileUploadEventEmitter {
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
@@ -1445,6 +1488,8 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 // @beta
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
     meeting: MeetingState | undefined;
     userId: CommunicationIdentifierKind;
 }
@@ -1470,7 +1515,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -1494,7 +1539,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
     // (undocumented)
@@ -1519,7 +1564,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 }
 
 // @beta
-export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
+export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
@@ -1548,6 +1593,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 // @public
 export interface MeetingCompositeStrings {
     chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
@@ -2306,6 +2352,8 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    personaMaxSize?: number;
+    personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

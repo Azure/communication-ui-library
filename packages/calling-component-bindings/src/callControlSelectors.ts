@@ -70,6 +70,10 @@ export type CameraButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  cameras: VideoDeviceInfo[];
+  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  selectedCamera?: VideoDeviceInfo;
 };
 
 /**
@@ -86,7 +90,11 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
 
     return {
       disabled: !deviceManager.selectedCamera || !permission,
-      checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn
+      checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      cameras: deviceManager.cameras,
+      /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+      selectedCamera: deviceManager.selectedCamera
     };
   }
 );

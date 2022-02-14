@@ -87,6 +87,7 @@ const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () 
 
 const tileContainerStyles: React.CSSProperties = {
   display: 'inline-block',
+  width: 'min-content',
   position: 'relative',
   cursor: 'pointer'
 };
