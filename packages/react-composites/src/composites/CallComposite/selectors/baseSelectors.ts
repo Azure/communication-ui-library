@@ -6,10 +6,16 @@ import {
   CallState,
   DeviceManagerState,
   DiagnosticsCallFeatureState,
-  LocalVideoStreamState
+  LocalVideoStreamState,
+  RemoteParticipantState
 } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-import { _isInCall, _isPreviewOn } from '@internal/calling-component-bindings';
+import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
+
+/**
+ * @private
+ */
+export const getDisplayName = (state: CallAdapterState): string | undefined => state.displayName;
 
 /**
  * @private
@@ -73,3 +79,20 @@ export const getIsRecordingActive = (state: CallAdapterState): boolean => !!stat
  */
 export const getUserFacingDiagnostics = (state: CallAdapterState): DiagnosticsCallFeatureState | undefined =>
   state.call?.diagnostics;
+
+/**
+ * @private
+ */
+export const getDominantSpeakers = (state: CallAdapterState): undefined | string[] =>
+  _dominantSpeakersWithFlatId(state.call?.dominantSpeakers);
+
+/**
+ * @private
+ */
+export const getRemoteParticipants = (
+  state: CallAdapterState
+):
+  | undefined
+  | {
+      [keys: string]: RemoteParticipantState;
+    } => state.call?.remoteParticipants;

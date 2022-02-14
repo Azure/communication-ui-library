@@ -73,7 +73,7 @@ export async function waitForFunction<R>(
  * Wait for page fonts to have loaded. This is because we sometimes see test failures due to
  * font differences where it looks like the Segoe UI font has not yet loaded.
  */
-const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
+export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
     await document.fonts.ready;
   });
@@ -145,6 +145,13 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 };
 
 /**
+ * Click outside of the Composite page
+ */
+export const clickOutsideOfPage = async (page: Page): Promise<void> => {
+  await page.mouse.click(-1, -1);
+};
+
+/**
  * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
  */
 export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<void> => {
@@ -187,7 +194,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   }, messageTimestampId);
 };
 
-const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
+export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
     qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));

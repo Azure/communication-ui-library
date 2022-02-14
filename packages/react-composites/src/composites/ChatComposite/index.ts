@@ -27,9 +27,21 @@ export type {
 
 export * from './Strings';
 
-/* @conditional-compile-remove-from(stable) */
-export type { FileUploadHandler } from './file-sharing/FileUploadHandler';
-/* @conditional-compile-remove-from(stable) */
-export type { FileUploadManager, FileMetaData } from './file-sharing/FileUpload';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+export type {
+  FileDownloadErrorMessage,
+  FileDownloadHandler,
+  FileMetadata,
+  FileUploadEventEmitter,
+  FileUploadHandler,
+  FileUploadManager,
+  FileUploadState,
+  ObservableFileUpload,
+  UploadCompleteListener,
+  UploadFailedListener,
+  UploadProgressListener
+} from './file-sharing';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
 export type { FileSharingOptions } from './ChatScreen';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+export type { FileUploadsUiState, FileUploadAdapter } from './adapter/AzureCommunicationFileUploadAdapter';

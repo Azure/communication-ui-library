@@ -19,7 +19,7 @@ import { useSelector } from '../hooks/useSelector';
 import { getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { localPreviewSelector } from '../selectors/localPreviewSelector';
-import { buttonFlyoutIncreasedSizeStyles } from '../styles/CallControls.styles';
+import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 import {
   cameraOffLabelStyle,
   localPreviewContainerStyleDesktop,
