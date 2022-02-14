@@ -35,7 +35,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptionsGroupLabel = 'Select an option';
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
-    { key: 'ACSCallAndChat', text: 'Start a ACS Call with Chat' },
+    { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
     { key: 'TeamsMeeting', text: 'Join a Teams Meeting' }
   ];
 
@@ -58,7 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       tokens={containerTokens}
       className={containerStyle}
     >
-      <Image alt="Welcome to the ACS Call and Chat sample app" className={imgStyle} {...imageProps} />
+      <Image alt="Welcome to the ACS Call with Chat sample app" className={imgStyle} {...imageProps} />
       <Stack className={infoContainerStyle}>
         <Text role={'heading'} aria-level={1} className={headerStyle}>
           {headerTitle}
@@ -69,7 +69,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               <ChoiceGroup
                 styles={callOptionsGroupStyles}
                 label={callOptionsGroupLabel}
-                defaultSelectedKey="ACSCallAndChat"
+                defaultSelectedKey="ACSCallWithChat"
                 options={callOptions}
                 required={true}
                 onChange={(_, option) => option && setChosenCallOption(option)}

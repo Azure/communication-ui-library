@@ -24,14 +24,14 @@ import {
   ParticipantsAddedListener,
   ParticipantsRemovedListener
 } from '../../ChatComposite';
-import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
+import { CallWithChatAdapterState } from '../state/MeetingAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 
 /**
  * Functionality for managing the current call with chat.
  * @beta
  */
-export interface CallAndChatAdapterManagement
+export interface CallWithChatAdapterManagement
   extends Pick<
       CallAdapterCallManagement,
       | 'startCamera'
@@ -74,10 +74,10 @@ export interface CallAndChatAdapterManagement
 }
 
 /**
- * Call and Chat events that can be subscribed to in the {@link CallAndChatAdapter}.
+ * Call and Chat events that can be subscribed to in the {@link CallWithChatAdapter}.
  * @beta
  */
-export interface CallAndChatAdapterSubscriptions {
+export interface CallWithChatAdapterSubscriptions {
   // Call subscriptions
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -116,20 +116,20 @@ export interface CallAndChatAdapterSubscriptions {
 }
 
 /**
- * {@link CallAndChatComposite} Adapter interface.
+ * {@link CallWithChatComposite} Adapter interface.
  * @beta
  */
-export interface CallAndChatAdapter
-  extends CallAndChatAdapterManagement,
-    AdapterState<CallAndChatAdapterState>,
+export interface CallWithChatAdapter
+  extends CallWithChatAdapterManagement,
+    AdapterState<CallWithChatAdapterState>,
     Disposable,
-    CallAndChatAdapterSubscriptions {}
+    CallWithChatAdapterSubscriptions {}
 
 /**
  * Events fired off by the {@link ChatAndCallAdapter}
  * @beta
  */
-export type CallAndChatEvent =
+export type CallWithChatEvent =
   | 'callError'
   | 'chatError'
   | 'callEnded'

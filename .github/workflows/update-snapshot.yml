@@ -252,12 +252,12 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Update call and chat snapshot
-        id: update-call-and-chat-snapshots
-        # Don't run CallAndChat snapshot in stable, CallAndChat is only working in beta
-        # TODO: Remove this while CallAndChat is in stable
+      - name: Update call with chat snapshot
+        id: update-call-with-chat-snapshots
+        # Don't run CallWithChat snapshot in stable, CallWithChat is only working in beta
+        # TODO: Remove this while CallWithChat is in stable
         if: ${{ matrix.flavor != 'stable' }}
-        run: rushx test:e2e:callandchat:update
+        run: rushx test:e2e:callwithchat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}

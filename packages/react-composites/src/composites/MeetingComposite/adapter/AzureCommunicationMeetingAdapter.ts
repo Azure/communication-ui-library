@@ -35,12 +35,12 @@ import {
   ParticipantsRemovedListener,
   ParticipantsAddedListener
 } from '../../ChatComposite';
-import { CallAndChatAdapter, CallAndChatEvent } from './MeetingAdapter';
+import { CallWithChatAdapter, CallWithChatEvent } from './MeetingAdapter';
 import {
-  callAndChatAdapterStateFromBackingStates,
-  CallAndChatAdapterState,
-  mergeCallAdapterStateIntoCallAndChatAdapterState,
-  mergeChatAdapterStateIntoCallAndChatAdapterState
+  callWithChatAdapterStateFromBackingStates,
+  CallWithChatAdapterState,
+  mergeCallAdapterStateIntoCallWithChatAdapterState,
+  mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/MeetingAdapterState';
 import {
   createAzureCommunicationChatAdapter,
@@ -61,55 +61,55 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 
-type CallAndChatAdapterStateChangedHandler = (newState: CallAndChatAdapterState) => void;
+type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
 /** Context of Call with Chat, which is a centralized context for all state updates */
-class CallAndChatContext {
+class CallWithChatContext {
   private emitter = new EventEmitter();
-  private state: CallAndChatAdapterState;
+  private state: CallWithChatAdapterState;
 
-  constructor(clientState: CallAndChatAdapterState) {
+  constructor(clientState: CallWithChatAdapterState) {
     this.state = clientState;
   }
 
-  public onStateChange(handler: CallAndChatAdapterStateChangedHandler): void {
+  public onStateChange(handler: CallWithChatAdapterStateChangedHandler): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: CallAndChatAdapterStateChangedHandler): void {
+  public offStateChange(handler: CallWithChatAdapterStateChangedHandler): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: CallAndChatAdapterState): void {
+  public setState(state: CallWithChatAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallAndChatAdapterState {
+  public getState(): CallWithChatAdapterState {
     return this.state;
   }
 
-  public updateClientState(clientState: CallAndChatAdapterState): void {
+  public updateClientState(clientState: CallWithChatAdapterState): void {
     this.setState(clientState);
   }
 
   public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
-    this.updateClientState(mergeChatAdapterStateIntoCallAndChatAdapterState(this.state, chatAdapterState));
+    this.updateClientState(mergeChatAdapterStateIntoCallWithChatAdapterState(this.state, chatAdapterState));
   }
 
   public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
-    this.updateClientState(mergeCallAdapterStateIntoCallAndChatAdapterState(this.state, callAdapterState));
+    this.updateClientState(mergeCallAdapterStateIntoCallWithChatAdapterState(this.state, callAdapterState));
   }
 }
 
 /**
- * CallAndChat adapter backed by Azure Communication Services.
- * Created for easy use with the {@link CallAndChatComposite}.
+ * CallWithChat adapter backed by Azure Communication Services.
+ * Created for easy use with the {@link CallWithChatComposite}.
  */
-export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter {
+export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
-  private context: CallAndChatContext;
+  private context: CallWithChatContext;
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
@@ -117,7 +117,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
-    this.context = new CallAndChatContext(callAndChatAdapterStateFromBackingStates(callAdapter, chatAdapter));
+    this.context = new CallWithChatContext(callWithChatAdapterStateFromBackingStates(callAdapter, chatAdapter));
 
     const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
       this.context.updateClientStateWithChatState(newChatAdapterState);
@@ -184,21 +184,21 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
    * Subscribe to state change events.
    * @param handler - handler to be called when the state changes. This is passed the new state.
    */
-  public onStateChange(handler: (state: CallAndChatAdapterState) => void): void {
+  public onStateChange(handler: (state: CallWithChatAdapterState) => void): void {
     this.context.onStateChange(handler);
   }
   /**
    * Unsubscribe to state change events.
    * @param handler - handler to be no longer called when state changes.
    */
-  public offStateChange(handler: (state: CallAndChatAdapterState) => void): void {
+  public offStateChange(handler: (state: CallWithChatAdapterState) => void): void {
     this.context.offStateChange(handler);
   }
   /** Get current Call and Chat state. */
-  public getState(): CallAndChatAdapterState {
+  public getState(): CallWithChatAdapterState {
     return this.context.getState();
   }
-  /** Dispose of the current CallAndChatAdapter. */
+  /** Dispose of the current CallWithChatAdapter. */
   public dispose(): void {
     this.chatAdapter.offStateChange(this.onChatStateChange);
     this.callAdapter.offStateChange(this.onCallStateChange);
@@ -315,7 +315,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  on(event: CallAndChatEvent, listener: any): void {
+  on(event: CallWithChatEvent, listener: any): void {
     switch (event) {
       case 'callParticipantsJoined':
         this.callAdapter.on('participantsJoined', listener);
@@ -363,7 +363,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
         this.chatAdapter.on('error', listener);
         break;
       default:
-        throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
+        throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
   }
 
@@ -384,7 +384,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  off(event: CallAndChatEvent, listener: any): void {
+  off(event: CallWithChatEvent, listener: any): void {
     switch (event) {
       case 'callParticipantsJoined':
         this.callAdapter.off('participantsJoined', listener);
@@ -432,51 +432,51 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
         this.chatAdapter.off('error', listener);
         break;
       default:
-        throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
+        throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
   }
 }
 
 /**
- * Arguments for use in {@link createAzureCommunicationCallAndChatAdapter} to join a Call with an associated Chat thread.
+ * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Call with an associated Chat thread.
  *
  * @beta
  */
-export interface CallAndChatLocator {
-  /** Locator used by {@link createAzureCommunicationCallAndChatAdapter} to locate the call to join */
+export interface CallWithChatLocator {
+  /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
   callLocator:
     | GroupCallLocator
     | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
-  /** Chat thread ID used by {@link createAzureCommunicationCallAndChatAdapter} to locate the chat thread to join */
+  /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
 
 /**
- * Arguments for {@link createAzureCommunicationCallAndChatAdapter}
+ * Arguments for {@link createAzureCommunicationCallWithChatAdapter}
  *
  * @beta
  */
-export type AzureCommunicationCallAndChatAdapterArgs = {
+export type AzureCommunicationCallWithChatAdapterArgs = {
   endpoint: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
- * Create a CallAndChatAdapter backed by Azure Communication services
- * to plug into the {@link CallAndChatComposite}.
+ * Create a CallWithChatAdapter backed by Azure Communication services
+ * to plug into the {@link CallWithChatComposite}.
  *
  * @beta
  */
-export const createAzureCommunicationCallAndChatAdapter = async ({
+export const createAzureCommunicationCallWithChatAdapter = async ({
   userId,
   displayName,
   credential,
   endpoint,
   locator
-}: AzureCommunicationCallAndChatAdapterArgs): Promise<CallAndChatAdapter> => {
+}: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
@@ -497,15 +497,15 @@ export const createAzureCommunicationCallAndChatAdapter = async ({
   });
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
-  return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
+  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
 
 /**
- * Arguments for {@link createAzureCommunicationCallAndChatAdapterFromClient}
+ * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *
  * @beta
  */
-export type AzureCommunicationCallAndChatAdapterFromClientArgs = {
+export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
   callAgent: CallAgent;
   callClient: StatefulCallClient;
@@ -514,29 +514,29 @@ export type AzureCommunicationCallAndChatAdapterFromClientArgs = {
 };
 
 /**
- * Create a {@link CallAndChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Create a {@link CallWithChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
- * Consider using {@link createAzureCommunicationCallAndChatAdapter} for a simpler API.
+ * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
  * @beta
  */
-export const createAzureCommunicationCallAndChatAdapterFromClients = async ({
+export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callClient,
   callAgent,
   callLocator,
   chatClient,
   chatThreadClient
-}: AzureCommunicationCallAndChatAdapterFromClientArgs): Promise<CallAndChatAdapter> => {
+}: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
 
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
-  return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
+  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
 
 const isTeamsMeetingLinkLocator = (
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator
+  locator: CallWithChatLocator | TeamsMeetingLinkLocator
 ): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };

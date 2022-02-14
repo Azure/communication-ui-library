@@ -4,22 +4,22 @@
 export * from './MeetingComposite';
 
 export type {
-  CallAndChatAdapter,
-  CallAndChatEvent,
-  CallAndChatAdapterManagement,
-  CallAndChatAdapterSubscriptions
+  CallWithChatAdapter,
+  CallWithChatEvent,
+  CallWithChatAdapterManagement,
+  CallWithChatAdapterSubscriptions
 } from './adapter/MeetingAdapter';
 
 export type {
-  AzureCommunicationCallAndChatAdapterArgs,
-  CallAndChatLocator
+  AzureCommunicationCallWithChatAdapterArgs,
+  CallWithChatLocator
 } from './adapter/AzureCommunicationMeetingAdapter';
-export { createAzureCommunicationCallAndChatAdapter } from './adapter/AzureCommunicationMeetingAdapter';
+export { createAzureCommunicationCallWithChatAdapter } from './adapter/AzureCommunicationMeetingAdapter';
 
 export type {
-  CallAndChatClientState,
-  CallAndChatAdapterUiState,
-  CallAndChatAdapterState
+  CallWithChatClientState,
+  CallWithChatAdapterUiState,
+  CallWithChatAdapterState
 } from './state/MeetingAdapterState';
 
-export type { CallAndChatCompositeStrings } from './Strings';
+export type { CallWithChatCompositeStrings } from './Strings';

@@ -1,7 +1,7 @@
 dependencies:
   '@azure/communication-calling': 1.3.2
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
-  '@rush-temp/callandchat': file:projects/callandchat.tgz
+  '@rush-temp/callwithchat': file:projects/callwithchat.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz
@@ -18879,7 +18879,7 @@ packages:
       integrity: sha512-lXd2fiEoVRoqBsDcP3ZajCt1BLY0GkSKoKYx7lI2RQHvkoYkhIe8ynUHJXWf7TMOnzkv6nKsv8h7u0d+vDW2/Q==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
-  file:projects/callandchat.tgz:
+  file:projects/callwithchat.tgz:
     dependencies:
       '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
@@ -18944,10 +18944,10 @@ packages:
       webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
       webpack-dev-server: 3.11.2_webpack-cli@4.7.2+webpack@5.38.1
     dev: false
-    name: '@rush-temp/callandchat'
+    name: '@rush-temp/callwithchat'
     resolution:
       integrity: sha512-eHaj6XmA8lO5YIX+sAilzbrdJhUUJ1g52GR63plca56r90JuzLwjgo/ZSyUVtQoNf/Ruh2vxeQ4oWTGqBMdINw==
-      tarball: file:projects/callandchat.tgz
+      tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
@@ -19858,7 +19858,7 @@ packages:
 specifiers:
   '@azure/communication-calling': 1.3.2
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
-  '@rush-temp/callandchat': file:./projects/callandchat.tgz
+  '@rush-temp/callwithchat': file:./projects/callwithchat.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz

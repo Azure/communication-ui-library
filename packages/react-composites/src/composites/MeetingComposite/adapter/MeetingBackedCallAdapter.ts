@@ -1,112 +1,112 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAndChatAdapter } from './MeetingAdapter';
+import { CallWithChatAdapter } from './MeetingAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
-import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
+import { CallWithChatAdapterState } from '../state/MeetingAdapterState';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /**
- * Facade around the CallAndChatAdapter to satisfy the call adapter interface.
+ * Facade around the CallWithChatAdapter to satisfy the call adapter interface.
  *
  * @private
  */
-export class CallAndChatBackedCallAdapter implements CallAdapter {
-  private callAndChatAdapter: CallAndChatAdapter;
+export class CallWithChatBackedCallAdapter implements CallAdapter {
+  private callWithChatAdapter: CallWithChatAdapter;
 
-  // For onStateChange we must convert CallAndChat state to chat state. This involves creating a new handler to be passed into the onStateChange.
+  // For onStateChange we must convert CallWithChat state to chat state. This involves creating a new handler to be passed into the onStateChange.
   // In order to unsubscribe the handler when offStateChange is called we must have a mapping of the original handler to the newly created handler.
-  private eventStore: Map<(state: CallAdapterState) => void, (state: CallAndChatAdapterState) => void> = new Map();
+  private eventStore: Map<(state: CallAdapterState) => void, (state: CallWithChatAdapterState) => void> = new Map();
 
-  constructor(callAndChatAdapter: CallAndChatAdapter) {
-    this.callAndChatAdapter = callAndChatAdapter;
+  constructor(callWithChatAdapter: CallWithChatAdapter) {
+    this.callWithChatAdapter = callWithChatAdapter;
   }
   public on = (event: any, listener: any): void => {
     switch (event) {
       case 'error':
-        return this.callAndChatAdapter.on('callError', listener);
+        return this.callWithChatAdapter.on('callError', listener);
       case 'participantsJoined':
-        return this.callAndChatAdapter.on('callParticipantsJoined', listener);
+        return this.callWithChatAdapter.on('callParticipantsJoined', listener);
       case 'participantsLeft':
-        return this.callAndChatAdapter.on('callParticipantsLeft', listener);
+        return this.callWithChatAdapter.on('callParticipantsLeft', listener);
       default:
-        return this.callAndChatAdapter.on(event, listener);
+        return this.callWithChatAdapter.on(event, listener);
     }
   };
   public off = (event: any, listener: any): void => {
     switch (event) {
       case 'error':
-        return this.callAndChatAdapter.off('callError', listener);
+        return this.callWithChatAdapter.off('callError', listener);
       case 'participantsJoined':
-        return this.callAndChatAdapter.off('callParticipantsJoined', listener);
+        return this.callWithChatAdapter.off('callParticipantsJoined', listener);
       case 'participantsLeft':
-        return this.callAndChatAdapter.off('callParticipantsLeft', listener);
+        return this.callWithChatAdapter.off('callParticipantsLeft', listener);
       default:
-        return this.callAndChatAdapter.off(event, listener);
+        return this.callWithChatAdapter.off(event, listener);
     }
   };
   public onStateChange = (handler: (state: CallAdapterState) => void): void => {
-    const convertedHandler = (state: CallAndChatAdapterState): void => {
-      handler(callAdapterStateFromCallAndChatAdapterState(state));
+    const convertedHandler = (state: CallWithChatAdapterState): void => {
+      handler(callAdapterStateFromCallWithChatAdapterState(state));
     };
-    this.callAndChatAdapter.onStateChange(convertedHandler);
+    this.callWithChatAdapter.onStateChange(convertedHandler);
     this.eventStore.set(handler, convertedHandler);
   };
   public offStateChange = (handler: (state: CallAdapterState) => void): void => {
     const convertedHandler = this.eventStore.get(handler);
-    convertedHandler && this.callAndChatAdapter.offStateChange(convertedHandler);
+    convertedHandler && this.callWithChatAdapter.offStateChange(convertedHandler);
   };
   public getState = (): CallAdapterState =>
-    callAdapterStateFromCallAndChatAdapterState(this.callAndChatAdapter.getState());
-  public dispose = (): void => this.callAndChatAdapter.dispose();
+    callAdapterStateFromCallWithChatAdapterState(this.callWithChatAdapter.getState());
+  public dispose = (): void => this.callWithChatAdapter.dispose();
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
-    return this.callAndChatAdapter.joinCall(microphoneOn);
+    return this.callWithChatAdapter.joinCall(microphoneOn);
   };
-  public leaveCall = async (): Promise<void> => await this.callAndChatAdapter.leaveCall();
+  public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
   public startCall = (participants: string[]): Call | undefined => {
-    return this.callAndChatAdapter.startCall(participants);
+    return this.callWithChatAdapter.startCall(participants);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
-    await this.callAndChatAdapter.setCamera(sourceId, options);
+    await this.callWithChatAdapter.setCamera(sourceId, options);
   public setMicrophone = async (sourceId: AudioDeviceInfo): Promise<void> =>
-    await this.callAndChatAdapter.setMicrophone(sourceId);
+    await this.callWithChatAdapter.setMicrophone(sourceId);
   public setSpeaker = async (sourceId: AudioDeviceInfo): Promise<void> =>
-    await this.callAndChatAdapter.setSpeaker(sourceId);
+    await this.callWithChatAdapter.setSpeaker(sourceId);
   public askDevicePermission = async (constraints: PermissionConstraints): Promise<void> =>
-    await this.callAndChatAdapter.askDevicePermission(constraints);
-  public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.callAndChatAdapter.queryCameras();
-  public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.callAndChatAdapter.queryMicrophones();
-  public querySpeakers = async (): Promise<AudioDeviceInfo[]> => await this.callAndChatAdapter.querySpeakers();
+    await this.callWithChatAdapter.askDevicePermission(constraints);
+  public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.callWithChatAdapter.queryCameras();
+  public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.callWithChatAdapter.queryMicrophones();
+  public querySpeakers = async (): Promise<AudioDeviceInfo[]> => await this.callWithChatAdapter.querySpeakers();
   public startCamera = async (options?: VideoStreamOptions): Promise<void> =>
-    await this.callAndChatAdapter.startCamera(options);
-  public stopCamera = async (): Promise<void> => await this.callAndChatAdapter.stopCamera();
-  public mute = async (): Promise<void> => await this.callAndChatAdapter.mute();
-  public unmute = async (): Promise<void> => await this.callAndChatAdapter.unmute();
-  public startScreenShare = async (): Promise<void> => await this.callAndChatAdapter.startScreenShare();
-  public stopScreenShare = async (): Promise<void> => await this.callAndChatAdapter.stopScreenShare();
+    await this.callWithChatAdapter.startCamera(options);
+  public stopCamera = async (): Promise<void> => await this.callWithChatAdapter.stopCamera();
+  public mute = async (): Promise<void> => await this.callWithChatAdapter.mute();
+  public unmute = async (): Promise<void> => await this.callWithChatAdapter.unmute();
+  public startScreenShare = async (): Promise<void> => await this.callWithChatAdapter.startScreenShare();
+  public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public removeParticipant = async (userId: string): Promise<void> =>
-    await this.callAndChatAdapter.removeParticipant(userId);
+    await this.callWithChatAdapter.removeParticipant(userId);
   public createStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
-    await this.callAndChatAdapter.createStreamView(remoteUserId, options);
+    await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
-    await this.callAndChatAdapter.disposeStreamView(remoteUserId, options);
+    await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
 }
 
-function callAdapterStateFromCallAndChatAdapterState(
-  callAndChatAdapterState: CallAndChatAdapterState
+function callAdapterStateFromCallWithChatAdapterState(
+  callWithChatAdapterState: CallWithChatAdapterState
 ): CallAdapterState {
   return {
-    isLocalPreviewMicrophoneEnabled: callAndChatAdapterState.isLocalPreviewMicrophoneEnabled,
-    page: callAndChatAdapterState.page,
-    userId: callAndChatAdapterState.userId,
-    displayName: callAndChatAdapterState.displayName,
-    call: callAndChatAdapterState.call,
-    devices: callAndChatAdapterState.devices,
-    isTeamsCall: callAndChatAdapterState.isTeamsCall,
-    latestErrors: {} //@TODO: latest errors not supported in CallAndChatComposite yet.
+    isLocalPreviewMicrophoneEnabled: callWithChatAdapterState.isLocalPreviewMicrophoneEnabled,
+    page: callWithChatAdapterState.page,
+    userId: callWithChatAdapterState.userId,
+    displayName: callWithChatAdapterState.displayName,
+    call: callWithChatAdapterState.call,
+    devices: callWithChatAdapterState.devices,
+    isTeamsCall: callWithChatAdapterState.isTeamsCall,
+    latestErrors: {} //@TODO: latest errors not supported in CallWithChatComposite yet.
   };
 }

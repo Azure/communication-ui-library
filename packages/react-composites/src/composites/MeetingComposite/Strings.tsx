@@ -2,19 +2,19 @@
 // Licensed under the MIT license.
 
 /**
- * Strings used by the {@link CallAndChatComposite} directly.
+ * Strings used by the {@link CallWithChatComposite} directly.
  *
  * This strings are in addition to those used by the components from the component library.
  *
  * @public
  */
-export interface CallAndChatCompositeStrings {
+export interface CallWithChatCompositeStrings {
   /**
-   * Call-and-chat composite Control bar People button label
+   * {@link CallWithChatComposite} control bar People button label
    */
   peopleButtonLabel: string;
   /**
-   * Call-and-chat composite Control bar Chat button label.
+   * {@link CallWithChatComposite} control bar Chat button label.
    */
   chatButtonLabel: string;
   /**

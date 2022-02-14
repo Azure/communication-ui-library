@@ -81,12 +81,12 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @beta
-export type AzureCommunicationCallAndChatAdapterArgs = {
+export type AzureCommunicationCallWithChatAdapterArgs = {
     endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CallWithChatLocator | TeamsMeetingLinkLocator;
 };
 
 // @public
@@ -189,20 +189,20 @@ export type CallAdapterUiState = {
 };
 
 // @beta
-export interface CallAndChatAdapter extends CallAndChatAdapterManagement, AdapterState<CallAndChatAdapterState>, Disposable, CallAndChatAdapterSubscriptions {
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
 // @beta
-export interface CallAndChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
     removeParticipant(userId: string): Promise<void>;
 }
 
 // @beta
-export interface CallAndChatAdapterState extends CallAndChatAdapterUiState, CallAndChatClientState {
+export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
 }
 
 // @beta
-export interface CallAndChatAdapterSubscriptions {
+export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
@@ -266,11 +266,11 @@ export interface CallAndChatAdapterSubscriptions {
 }
 
 // @beta
-export interface CallAndChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
+export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
 }
 
 // @beta
-export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     call?: CallState;
     chat?: ChatThreadClientState;
     displayName: string | undefined;
@@ -280,25 +280,25 @@ export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'de
 }
 
 // @beta
-export const CallAndChatComposite: (props: CallAndChatCompositeProps) => JSX.Element;
+export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
 // @beta
-export type CallAndChatCompositeOptions = {
-    callControls?: boolean | CallAndChatControlOptions;
+export type CallWithChatCompositeOptions = {
+    callControls?: boolean | CallWithChatControlOptions;
 };
 
 // @beta
-export interface CallAndChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
     // (undocumented)
-    callAndChatAdapter: CallAndChatAdapter;
+    callWithChatAdapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
-    options?: CallAndChatCompositeOptions;
+    options?: CallWithChatCompositeOptions;
 }
 
 // @public
-export interface CallAndChatCompositeStrings {
+export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
@@ -309,16 +309,16 @@ export interface CallAndChatCompositeStrings {
 }
 
 // @beta
-export interface CallAndChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
 
 // @beta
-export type CallAndChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
-export interface CallAndChatLocator {
+export interface CallWithChatLocator {
     callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
     chatThreadId: string;
 }
@@ -579,7 +579,7 @@ export interface CompositeLocale {
 // @public
 export interface CompositeStrings {
     call: CallCompositeStrings;
-    callAndChat: CallAndChatCompositeStrings;
+    callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
 }
 
@@ -590,7 +590,7 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @beta
-export const createAzureCommunicationCallAndChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallAndChatAdapterArgs) => Promise<CallAndChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;

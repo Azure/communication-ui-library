@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Rename Meeting Composite to Call and Chat Composite",
+  "comment": "Rename MeetingComposite to CallWithChatComposite",
   "packageName": "@internal/storybook",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

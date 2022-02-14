@@ -10,7 +10,7 @@ Following testing, you will received a compliance score, and bugs will be filled
 To onboard any new features, you will need to contact the accessibility team and prepare a demo and a list of detailed sceanrios.
 
 Our Calling and Chat composites are already onboarded in the 1ES accessibility pipeline.
-CallAndChat, which is still in Beta, will need to be onboarded too in the near future.
+CallWithChat, which is still in Beta, will need to be onboarded too in the near future.
 
 ### Testing scenarios
 

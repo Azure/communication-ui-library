@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAndChatLocator } from '@azure/communication-react';
+import { CallWithChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -20,7 +20,7 @@ import {
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { CallAndChatScreen } from './views/MeetingScreen';
+import { CallWithChatScreen } from './views/MeetingScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';
@@ -36,27 +36,27 @@ interface Credentials {
   userId: CommunicationUserIdentifier;
   token: string;
 }
-interface CallAndChatArgs {
+interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
 }
 type AppPages = 'home' | 'call' | 'error';
 
 console.log(
-  `ACS sample Call and Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
+  `ACS sample Call with Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and Using @azure/communication-chat:${chatSDKVersion}`
 );
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
-  const [callAndChatArgs, setCallAndChatArgs] = useState<CallAndChatArgs | undefined>(undefined);
+  const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
   }
 
-  const joiningExistingCallAndChat: boolean =
+  const joiningExistingCallWithChat: boolean =
     (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) || !!getTeamsLinkFromUrl();
 
   switch (page) {
@@ -65,15 +65,15 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           // Show a simplified join home screen if joining an existing call
-          joiningExistingCall={joiningExistingCallAndChat}
+          joiningExistingCall={joiningExistingCallWithChat}
           startCallHandler={async (homeScreenDetails) => {
             setPage('call');
             try {
-              const callAndChatArgs = await generateCallAndChatArgs(
+              const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
                 homeScreenDetails?.teamsLink
               );
-              setCallAndChatArgs(callAndChatArgs);
+              setCallWithChatArgs(callWithChatArgs);
             } catch (e) {
               console.log(e);
               setPage('error');
@@ -84,22 +84,22 @@ const App = (): JSX.Element => {
     }
     case 'call': {
       if (
-        !callAndChatArgs?.credentials?.token ||
-        !callAndChatArgs.credentials?.userId ||
-        !callAndChatArgs.displayName ||
-        !callAndChatArgs.locator ||
-        !callAndChatArgs.endpointUrl
+        !callWithChatArgs?.credentials?.token ||
+        !callWithChatArgs.credentials?.userId ||
+        !callWithChatArgs.displayName ||
+        !callWithChatArgs.locator ||
+        !callWithChatArgs.endpointUrl
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <CallAndChatScreen
-          token={callAndChatArgs.credentials.token}
-          userId={callAndChatArgs.credentials.userId}
-          displayName={callAndChatArgs.displayName}
-          locator={callAndChatArgs.locator}
-          endpoint={callAndChatArgs.endpointUrl}
+        <CallWithChatScreen
+          token={callWithChatArgs.credentials.token}
+          userId={callWithChatArgs.credentials.userId}
+          displayName={callWithChatArgs.displayName}
+          locator={callWithChatArgs.locator}
+          endpoint={callWithChatArgs.endpointUrl}
         />
       );
     }
@@ -111,17 +111,17 @@ const App = (): JSX.Element => {
 
 export default App;
 
-const generateCallAndChatArgs = async (
+const generateCallWithChatArgs = async (
   displayName: string,
   teamsLink?: TeamsMeetingLinkLocator
-): Promise<CallAndChatArgs> => {
+): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  let locator: CallWithChatLocator | TeamsMeetingLinkLocator;
 
-  // Check if we should join a teams meeting, or an ACS CallAndChat
+  // Check if we should join a teams meeting, or an ACS CallWithChat
   teamsLink = teamsLink ?? getTeamsLinkFromUrl();
   if (teamsLink) {
     locator = teamsLink;

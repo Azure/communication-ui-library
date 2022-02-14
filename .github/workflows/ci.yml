@@ -205,13 +205,13 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
 
-  call_and_chat_composite_automation_test:
-    name: Call And Chat Composite automation test
+  call_with_chat_composite_automation_test:
+    name: Call With Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
-          # Call and Chat composite only work for beta
+          # CallWithChatComposite is only in beta for now
           - flavor: 'beta'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
@@ -239,15 +239,15 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       # Tests
-      - name: Build Call And Chat Composite Test App
+      - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
-          rushx build:e2e:callandchat
-      - name: Call and Chat Composite Visual Regression Tests
+          rushx build:e2e:callwithchat
+      - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |
           cd packages/react-composites
-          rushx test:e2e:callandchat
+          rushx test:e2e:callwithchat
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
@@ -363,8 +363,8 @@ jobs:
       - name: Tests
         run: rush test -o chat
 
-  build_call_and_chat_sample:
-    name: Build Call and Chat Sample
+  build_call_with_chat_sample:
+    name: Build CallWithChat Sample
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -393,9 +393,9 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build
-        run: rush build -o callandchat
+        run: rush build -o callwithchat
       - name: Tests
-        run: rush test -o callandchat
+        run: rush test -o callwithchat
 
   build_static_html_composites_sample:
     name: Build And Test Static HTML Composites Sample

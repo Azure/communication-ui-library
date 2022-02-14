@@ -8,7 +8,7 @@ import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 
 ReactDOM.render(
-  <SwitchableFluentThemeProvider scopeId="SampleCallAndChatApp">
+  <SwitchableFluentThemeProvider scopeId="SampleCallWithChatApp">
     <div className="wrapper">
       <App />
     </div>

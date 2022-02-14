@@ -105,7 +105,7 @@ const safeGetArialLabel = (locale: CompositeLocale): string => {
   // eslint-disable-next-line prefer-const
   let ariaLabel = '';
   /* @conditional-compile-remove-from(stable) meeting-composite */
-  ariaLabel = locale.strings.callAndChat.pictureInPictureTileAriaLabel;
+  ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
   return ariaLabel;
 };
 

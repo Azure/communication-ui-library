@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAndChatComposite } from '@azure/communication-react';
+import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { controlsToAdd, defaultCallAndChatCompositeHiddenControls } from '../controlsUtils';
+import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
-import { CallAndChatExperience, CallAndChatExampleProps } from './snippets/Meeting.snippet';
+import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/Meeting.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
 const BasicStory = (args, context): JSX.Element => {
-  const [callAndChatProps, setCallAndChatProps] = useState<CallAndChatExampleProps>();
+  const [callWithChatProps, setCallWithChatProps] = useState<CallWithChatExampleProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
@@ -25,7 +25,7 @@ const BasicStory = (args, context): JSX.Element => {
           args.endpointUrl,
           args.displayName
         );
-        setCallAndChatProps({
+        setCallWithChatProps({
           userId: { communicationUserId: args.userId },
           token: args.token,
           displayName: args.displayName,
@@ -34,21 +34,21 @@ const BasicStory = (args, context): JSX.Element => {
             callLocator,
             chatThreadId
           },
-          callAndChatControlOptions: args.callAndChatControlOptions
+          callWithChatControlOptions: args.callWithChatControlOptions
         });
       } else {
-        setCallAndChatProps(undefined);
+        setCallWithChatProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.callAndChatControlOptions]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.callWithChatControlOptions]);
 
   return (
     <>
       <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-        {callAndChatProps ? (
-          <CallAndChatExperience fluentTheme={context.theme} {...callAndChatProps} />
+        {callWithChatProps ? (
+          <CallWithChatExperience fluentTheme={context.theme} {...callWithChatProps} />
         ) : (
           <ConfigHintBanner />
         )}
@@ -60,17 +60,17 @@ const BasicStory = (args, context): JSX.Element => {
 export const BasicExample = BasicStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-and-chat-basicexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallAndChatComposite/Basic Example`,
-  component: CallAndChatComposite,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-with-chat-basicexample`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Basic Example`,
+  component: CallWithChatComposite,
   argTypes: {
     token: controlsToAdd.token,
     userId: controlsToAdd.userId,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
-    callandChatControlOptions: controlsToAdd.callAndChatControlOptions,
+    callWithChatControlOptions: controlsToAdd.callWithChatControlOptions,
     // Hiding auto-generated controls
-    ...defaultCallAndChatCompositeHiddenControls
+    ...defaultCallWithChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

@@ -19,7 +19,7 @@ export type CallUserType = {
   token: string;
 };
 
-export type CallAndChatUserType = {
+export type CallWithChatUserType = {
   userId: string;
   endpointUrl: string;
   displayName: string;

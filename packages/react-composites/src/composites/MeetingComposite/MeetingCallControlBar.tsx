@@ -8,8 +8,8 @@ import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { CallAndChatControlOptions } from './MeetingComposite';
-import { useCallAndChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { CallWithChatControlOptions } from './MeetingComposite';
+import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
@@ -23,7 +23,7 @@ import { EndCall } from '../CallComposite/components/buttons/EndCall';
 /**
  * @private
  */
-export interface CallAndChatCallControlBarProps {
+export interface CallWithChatCallControlBarProps {
   callAdapter: CallAdapter;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
@@ -31,19 +31,19 @@ export interface CallAndChatCallControlBarProps {
   onPeopleButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | CallAndChatControlOptions;
+  callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
 }
 
-const inferCallAndChatControlOptions = (
+const inferCallWithChatControlOptions = (
   mobileView: boolean,
-  callAndChatControls?: boolean | CallAndChatControlOptions
-): CallAndChatControlOptions | false => {
-  if (callAndChatControls === false) {
+  callWithChatControls?: boolean | CallWithChatControlOptions
+): CallWithChatControlOptions | false => {
+  if (callWithChatControls === false) {
     return false;
   }
 
-  const options = callAndChatControls === true || callAndChatControls === undefined ? {} : callAndChatControls;
+  const options = callWithChatControls === true || callWithChatControls === undefined ? {} : callWithChatControls;
   if (mobileView) {
     // Set to compressed mode when composite is optimized for mobile
     options.displayType = 'compact';
@@ -59,16 +59,16 @@ const inferCallAndChatControlOptions = (
 /**
  * @private
  */
-export const CallAndChatCallControlBar = (props: CallAndChatCallControlBarProps): JSX.Element => {
+export const CallWithChatCallControlBar = (props: CallWithChatCallControlBarProps): JSX.Element => {
   const theme = useTheme();
-  const callAndChatStrings = useCallAndChatCompositeStrings();
-  const options = inferCallAndChatControlOptions(props.mobileView, props.callControls);
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
   /**
-   * Until mobile call-and-chat is worked on, statically set the width of the
+   * Until mobile call-with-chat is worked on, statically set the width of the
    * control bar such that all controls can be accessed.
    */
-  const temporaryCallAndChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const temporaryCallWithChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
     [props.mobileView]
@@ -91,7 +91,7 @@ export const CallAndChatCallControlBar = (props: CallAndChatCallControlBarProps)
     <Stack
       horizontal
       className={mergeStyles(
-        temporaryCallAndChatControlBarStyles,
+        temporaryCallWithChatControlBarStyles,
         callControlsContainerStyles,
         controlBarContainerStyles
       )}
@@ -153,9 +153,9 @@ export const CallAndChatCallControlBar = (props: CallAndChatCallControlBarProps)
             checked={props.peopleButtonChecked}
             showLabel={true}
             onClick={props.onPeopleButtonClicked}
-            data-ui-id="call-and-chat-composite-people-button"
+            data-ui-id="call-with-chat-composite-people-button"
             disabled={props.disableButtonsForLobbyPage}
-            label={callAndChatStrings.peopleButtonLabel}
+            label={callWithChatStrings.peopleButtonLabel}
             styles={commonButtonStyles}
           />
         )}
@@ -167,9 +167,9 @@ export const CallAndChatCallControlBar = (props: CallAndChatCallControlBarProps)
             isChatPaneVisible={props.chatButtonChecked}
             onClick={props.onChatButtonClicked}
             disabled={props.disableButtonsForLobbyPage}
-            label={callAndChatStrings.chatButtonLabel}
+            label={callWithChatStrings.chatButtonLabel}
             styles={commonButtonStyles}
-            newMessageLabel={callAndChatStrings.chatButtonNewMessageNotificationLabel}
+            newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
           />
         )}
       </Stack>

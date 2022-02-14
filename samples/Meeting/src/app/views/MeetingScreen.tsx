@@ -4,12 +4,12 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  createAzureCommunicationCallAndChatAdapter,
+  createAzureCommunicationCallWithChatAdapter,
   toFlatCommunicationIdentifier,
-  CallAndChatLocator,
-  CallAndChatAdapter,
-  CallAndChatAdapterState,
-  CallAndChatComposite
+  CallWithChatLocator,
+  CallWithChatAdapter,
+  CallWithChatAdapterState,
+  CallWithChatComposite
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,19 +20,19 @@ import { WEB_APP_TITLE } from '../utils/constants';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
-export interface CallAndChatScreenProps {
+export interface CallWithChatScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
 }
 
-export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
+export const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { token, userId, displayName, endpoint, locator } = props;
-  const [adapter, setAdapter] = useState<CallAndChatAdapter>();
+  const [adapter, setAdapter] = useState<CallWithChatAdapter>();
   const callIdRef = useRef<string>();
-  const adapterRef = useRef<CallAndChatAdapter>();
+  const adapterRef = useRef<CallWithChatAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
@@ -49,7 +49,7 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         return;
       }
 
-      const adapter = await createAzureCommunicationCallAndChatAdapter({
+      const adapter = await createAzureCommunicationCallWithChatAdapter({
         userId,
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -66,7 +66,7 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
-      adapter.onStateChange((state: CallAndChatAdapterState) => {
+      adapter.onStateChange((state: CallWithChatAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
@@ -89,8 +89,8 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
   }
 
   return (
-    <CallAndChatComposite
-      callAndChatAdapter={adapter}
+    <CallWithChatComposite
+      callWithChatAdapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
@@ -99,7 +99,7 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
   );
 };
 
-const convertPageStateToString = (state: CallAndChatAdapterState): string => {
+const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';

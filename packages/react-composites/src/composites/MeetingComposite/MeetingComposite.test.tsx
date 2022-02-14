@@ -7,24 +7,24 @@ import React from 'react';
 import { CallComposite } from '../CallComposite/CallComposite';
 import { AdapterError } from '../common/adapters';
 import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
-import { CallAndChatAdapter } from './adapter/MeetingAdapter';
-import { CallAndChatComposite } from './MeetingComposite';
-import { CallAndChatAdapterState } from './state/MeetingAdapterState';
+import { CallWithChatAdapter } from './adapter/MeetingAdapter';
+import { CallWithChatComposite } from './MeetingComposite';
+import { CallWithChatAdapterState } from './state/MeetingAdapterState';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-function createMockCallAndChatAdapter(): CallAndChatAdapter {
-  const callAndChatAdapter = {} as CallAndChatAdapter;
-  callAndChatAdapter.onStateChange = jest.fn();
-  callAndChatAdapter.offStateChange = jest.fn();
-  callAndChatAdapter.askDevicePermission = jest.fn();
-  callAndChatAdapter.queryCameras = jest.fn();
-  callAndChatAdapter.queryMicrophones = jest.fn();
-  callAndChatAdapter.querySpeakers = jest.fn();
-  callAndChatAdapter.on = jest.fn(); // allow for direct subscription to the state of the call-and-chat adapter
-  callAndChatAdapter.off = jest.fn(); // Allow for direct un-subscription to the state of the call-and-chat adapter
-  callAndChatAdapter.getState = jest.fn(
-    (): CallAndChatAdapterState => ({
+function createMockCallWithChatAdapter(): CallWithChatAdapter {
+  const callWithChatAdapter = {} as CallWithChatAdapter;
+  callWithChatAdapter.onStateChange = jest.fn();
+  callWithChatAdapter.offStateChange = jest.fn();
+  callWithChatAdapter.askDevicePermission = jest.fn();
+  callWithChatAdapter.queryCameras = jest.fn();
+  callWithChatAdapter.queryMicrophones = jest.fn();
+  callWithChatAdapter.querySpeakers = jest.fn();
+  callWithChatAdapter.on = jest.fn(); // allow for direct subscription to the state of the call-with-chat adapter
+  callWithChatAdapter.off = jest.fn(); // Allow for direct un-subscription to the state of the call-with-chat adapter
+  callWithChatAdapter.getState = jest.fn(
+    (): CallWithChatAdapterState => ({
       page: 'lobby',
       isLocalPreviewMicrophoneEnabled: false,
       userId: { kind: 'communicationUser', communicationUserId: 'test' },
@@ -43,10 +43,10 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
       latestChatErrors: { test: new Error() as AdapterError }
     })
   );
-  return callAndChatAdapter;
+  return callWithChatAdapter;
 }
 
-describe('CallAndChatComposite', () => {
+describe('CallWithChatComposite', () => {
   test('Should pass down BaseCompositeProps to internal CallComposite', async () => {
     const mockBaseCompositeProps = {
       fluentTheme: {},
@@ -57,13 +57,13 @@ describe('CallAndChatComposite', () => {
       onFetchParticipantMenuItems: jest.fn()
     };
 
-    const mockCallAndChatAdapter = createMockCallAndChatAdapter();
+    const mockCallWithChatAdapter = createMockCallWithChatAdapter();
 
-    const callAndChatComposite = Enzyme.mount(
-      <CallAndChatComposite callAndChatAdapter={mockCallAndChatAdapter} {...mockBaseCompositeProps} />
+    const callWithChatComposite = Enzyme.mount(
+      <CallWithChatComposite callWithChatAdapter={mockCallWithChatAdapter} {...mockBaseCompositeProps} />
     );
 
-    const callComposites = callAndChatComposite.find(CallComposite);
+    const callComposites = callWithChatComposite.find(CallComposite);
     expect(callComposites.length).toBe(1);
 
     const callComposite = callComposites.first();

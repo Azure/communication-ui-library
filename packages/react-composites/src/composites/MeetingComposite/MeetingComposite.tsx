@@ -6,27 +6,27 @@ import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
-import { CallAndChatCallControlBar } from './MeetingCallControlBar';
+import { CallWithChatCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
-import { CallAndChatAdapter } from './adapter/MeetingAdapter';
-import { CallAndChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
-import { CallAndChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
+import { CallWithChatAdapter } from './adapter/MeetingAdapter';
+import { CallWithChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
+import { CallWithChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
-import { CallAndChatAdapterState } from './state/MeetingAdapterState';
+import { CallWithChatAdapterState } from './state/MeetingAdapterState';
 
 /**
- * Props required for the {@link CallAndChatComposite}
+ * Props required for the {@link CallWithChatComposite}
  *
  * @beta
  */
-export interface CallAndChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
-  callAndChatAdapter: CallAndChatAdapter;
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+  callWithChatAdapter: CallWithChatAdapter;
   /**
    * Fluent theme for the composite.
    *
@@ -41,64 +41,64 @@ export interface CallAndChatCompositeProps extends BaseCompositeProps<CallCompos
    */
   formFactor?: 'desktop' | 'mobile';
   /**
-   * URL that can be used to copy a call-and-chat invite to the Users clipboard.
+   * URL that can be used to copy a call-with-chat invite to the Users clipboard.
    */
   joinInvitationURL?: string;
   /**
-   * Flags to enable/disable or customize UI elements of the {@link CallAndChatComposite}
+   * Flags to enable/disable or customize UI elements of the {@link CallWithChatComposite}
    */
-  options?: CallAndChatCompositeOptions;
+  options?: CallWithChatCompositeOptions;
 }
 
 /**
- * Optional features of the {@link CallAndChatComposite}.
+ * Optional features of the {@link CallWithChatComposite}.
  *
  * @beta
  */
-export type CallAndChatCompositeOptions = {
+export type CallWithChatCompositeOptions = {
   /**
-   * Call control options to change what buttons show on the call-and-chat composite control bar.
+   * Call control options to change what buttons show on the call-with-chat composite control bar.
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
-  callControls?: boolean | CallAndChatControlOptions;
+  callControls?: boolean | CallWithChatControlOptions;
 };
 /**
- * Call-And-Chat Composite Call controls to show or hide buttons on the calling control bar.
+ * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
  * @beta
  */
-export interface CallAndChatControlOptions
+export interface CallWithChatControlOptions
   extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
   /**
-   * Show or hide the chat button in the call-and-chat composite control bar.
+   * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true
    */
   chatButton?: boolean;
   /**
-   * Show or hide the people button in the call-and-chat composite control bar.
+   * Show or hide the people button in the call-with-chat composite control bar.
    * @defaultValue true
    */
   peopleButton?: boolean;
 }
 
-type CallAndChatScreenProps = {
-  callAndChatAdapter: CallAndChatAdapter;
+type CallWithChatScreenProps = {
+  callWithChatAdapter: CallWithChatAdapter;
   fluentTheme?: PartialTheme | Theme;
   formFactor?: 'desktop' | 'mobile';
   joinInvitationURL?: string;
-  callControls?: boolean | CallAndChatControlOptions;
+  callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
-const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
-  const { callAndChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  if (!callAndChatAdapter) {
-    throw new Error('CallAndChatAdapter is undefined');
+const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
+  const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  if (!callWithChatAdapter) {
+    throw new Error('CallWithChatAdapter is undefined');
   }
 
   const callAdapter: CallAdapter = useMemo(
-    () => new CallAndChatBackedCallAdapter(callAndChatAdapter),
-    [callAndChatAdapter]
+    () => new CallWithChatBackedCallAdapter(callWithChatAdapter),
+    [callWithChatAdapter]
   );
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
@@ -107,15 +107,15 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
   const [showPeople, setShowPeople] = useState(false);
 
   useEffect(() => {
-    const updateCallAndChatPage = (newState: CallAndChatAdapterState): void => {
+    const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
     };
-    callAndChatAdapter.onStateChange(updateCallAndChatPage);
+    callWithChatAdapter.onStateChange(updateCallWithChatPage);
     return () => {
-      callAndChatAdapter.offStateChange(updateCallAndChatPage);
+      callWithChatAdapter.offStateChange(updateCallWithChatPage);
     };
-  }, [callAndChatAdapter]);
+  }, [callWithChatAdapter]);
 
   const closePane = useCallback(() => {
     setShowChat(false);
@@ -134,9 +134,9 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
-      adapter: new CallAndChatBackedChatAdapter(callAndChatAdapter)
+      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
     };
-  }, [callAndChatAdapter]);
+  }, [callWithChatAdapter]);
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
@@ -178,7 +178,7 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
       </Stack>
       {(isInLobbyOrConnecting || hasJoinedCall) && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
-          <CallAndChatCallControlBar
+          <CallWithChatCallControlBar
             callAdapter={callAdapter}
             chatAdapter={chatProps.adapter}
             chatButtonChecked={showChat}
@@ -196,17 +196,17 @@ const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element => {
 };
 
 /**
- * Call-And-Chat Composite brings together key components to provide a full call with chat experience out of the box.
+ * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
  * @beta
  */
-export const CallAndChatComposite = (props: CallAndChatCompositeProps): JSX.Element => {
-  const { callAndChatAdapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
+export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
+  const { callWithChatAdapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
   return (
     <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
-      <CallAndChatScreen
+      <CallWithChatScreen
         {...props}
-        callAndChatAdapter={callAndChatAdapter}
+        callWithChatAdapter={callWithChatAdapter}
         formFactor={formFactor}
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}

@@ -1,28 +1,28 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallAndChatLocator,
-  CallAndChatControlOptions,
-  CallAndChatAdapter,
-  CallAndChatComposite,
-  createAzureCommunicationCallAndChatAdapter
+  CallWithChatLocator,
+  CallWithChatControlOptions,
+  CallWithChatAdapter,
+  CallWithChatComposite,
+  createAzureCommunicationCallWithChatAdapter
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
 
-export type CallAndChatExampleProps = {
+export type CallWithChatExampleProps = {
   userId: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
-  locator: TeamsMeetingLinkLocator | CallAndChatLocator;
+  locator: TeamsMeetingLinkLocator | CallWithChatLocator;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  callAndChatControlOptions?: boolean | CallAndChatControlOptions;
+  callWithChatControlOptions?: boolean | CallWithChatControlOptions;
 };
 
-export const CallAndChatExperience = (props: CallAndChatExampleProps): JSX.Element => {
-  const [callAndChatAdapter, setCallAndChatAdapter] = useState<CallAndChatAdapter>();
+export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Element => {
+  const [callWithChatAdapter, setCallWithChatAdapter] = useState<CallWithChatAdapter>();
 
   const credential = useMemo(() => {
     try {
@@ -36,8 +36,8 @@ export const CallAndChatExperience = (props: CallAndChatExampleProps): JSX.Eleme
   useEffect(() => {
     if (props && credential && props.locator && props.displayName && props.userId && props.endpointUrl) {
       const createAdapters = async (): Promise<void> => {
-        setCallAndChatAdapter(
-          await createAzureCommunicationCallAndChatAdapter({
+        setCallWithChatAdapter(
+          await createAzureCommunicationCallWithChatAdapter({
             userId: props.userId,
             displayName: props.displayName,
             credential,
@@ -50,10 +50,14 @@ export const CallAndChatExperience = (props: CallAndChatExampleProps): JSX.Eleme
     }
   }, [credential, props]);
 
-  if (callAndChatAdapter) {
-    const options = { callControls: props.callAndChatControlOptions };
+  if (callWithChatAdapter) {
+    const options = { callControls: props.callWithChatControlOptions };
     return (
-      <CallAndChatComposite callAndChatAdapter={callAndChatAdapter} fluentTheme={props.fluentTheme} options={options} />
+      <CallWithChatComposite
+        callWithChatAdapter={callWithChatAdapter}
+        fluentTheme={props.fluentTheme}
+        options={options}
+      />
     );
   }
 

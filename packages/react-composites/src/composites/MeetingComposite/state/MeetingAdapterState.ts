@@ -9,21 +9,21 @@ import { ChatAdapter, ChatAdapterState, ChatAdapterUiState } from '../../ChatCom
 import { AdapterErrors } from '../../common/adapters';
 
 /**
- * UI state pertaining to the {@link CallAndChatComposite}.
+ * UI state pertaining to the {@link CallWithChatComposite}.
  *
  * @beta
  */
-export interface CallAndChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
+export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
 
 /**
- * State from the backend services that drives {@link CallAndChatComposite}.
+ * State from the backend services that drives {@link CallWithChatComposite}.
  *
  * @beta
  */
-export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
-  /** ID of the call participant using this CallAndChatAdapter. */
+export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+  /** ID of the call participant using this CallWithChatAdapter. */
   userId: CommunicationIdentifierKind;
-  /** Display name of the participant using this CallAndChatAdapter. */
+  /** Display name of the participant using this CallWithChatAdapter. */
   displayName: string | undefined;
   /** State of the current call. */
   call?: CallState;
@@ -36,20 +36,20 @@ export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'de
 }
 
 /**
- * CallAndChat State is a combination of Stateful Chat and Stateful Calling clients with some
- * state specific to the CallAndChat Composite only.
+ * CallWithChat State is a combination of Stateful Chat and Stateful Calling clients with some
+ * state specific to the CallWithChat Composite only.
  *
  * @beta
  */
-export interface CallAndChatAdapterState extends CallAndChatAdapterUiState, CallAndChatClientState {}
+export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {}
 
 /**
  * @private
  */
-export function callAndChatAdapterStateFromBackingStates(
+export function callWithChatAdapterStateFromBackingStates(
   callAdapter: CallAdapter,
   chatAdapter: ChatAdapter
-): CallAndChatAdapterState {
+): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
   const chatAdapterState = chatAdapter.getState();
 
@@ -72,12 +72,12 @@ export function callAndChatAdapterStateFromBackingStates(
 /**
  * @private
  */
-export function mergeChatAdapterStateIntoCallAndChatAdapterState(
-  existingCallAndChatAdapterState: CallAndChatAdapterState,
+export function mergeChatAdapterStateIntoCallWithChatAdapterState(
+  existingCallWithChatAdapterState: CallWithChatAdapterState,
   chatAdapterState: ChatAdapterState
-): CallAndChatAdapterState {
+): CallWithChatAdapterState {
   return {
-    ...existingCallAndChatAdapterState,
+    ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
@@ -88,12 +88,12 @@ export function mergeChatAdapterStateIntoCallAndChatAdapterState(
 /**
  * @private
  */
-export function mergeCallAdapterStateIntoCallAndChatAdapterState(
-  existingCallAndChatAdapterState: CallAndChatAdapterState,
+export function mergeCallAdapterStateIntoCallWithChatAdapterState(
+  existingCallWithChatAdapterState: CallWithChatAdapterState,
   callAdapterState: CallAdapterState
-): CallAndChatAdapterState {
+): CallWithChatAdapterState {
   return {
-    ...existingCallAndChatAdapterState,
+    ...existingCallWithChatAdapterState,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,

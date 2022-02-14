@@ -17,7 +17,7 @@ import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
-import { useCallAndChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantContainer } from '../common/ParticipantContainer';
 
@@ -62,10 +62,10 @@ const SidePane = (props: {
 };
 
 /**
- * In a CallAndChat when a participant is removed, we must remove them from both
+ * In a CallWithChat when a participant is removed, we must remove them from both
  * the call and the chat thread.
  */
-const removeParticipantFromCallAndChat = async (
+const removeParticipantFromCallWithChat = async (
   callAdapter: CallAdapter,
   chatAdapter: ChatAdapter,
   participantId: string
@@ -88,11 +88,11 @@ export const EmbeddedPeoplePane = (props: {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
-  const callAndChatStrings = useCallAndChatCompositeStrings();
+  const callWithChatStrings = useCallWithChatCompositeStrings();
 
   const participantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
-      removeParticipantFromCallAndChat(callAdapter, chatAdapter, participantId);
+      removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
     return {
       ...participantListDefaultProps,
       onRemoveParticipant
@@ -102,9 +102,9 @@ export const EmbeddedPeoplePane = (props: {
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={callAndChatStrings.peoplePaneTitle}
+      headingText={callWithChatStrings.peoplePaneTitle}
       onClose={props.onClose}
-      dataUiId={'call-and-chat-composite-people-pane'}
+      dataUiId={'call-with-chat-composite-people-pane'}
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
@@ -113,7 +113,7 @@ export const EmbeddedPeoplePane = (props: {
         <ParticipantContainer
           participantListProps={participantListProps}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-          title={callAndChatStrings.peoplePaneSubTitle}
+          title={callWithChatStrings.peoplePaneSubTitle}
         />
       </Stack>
     </SidePane>
@@ -131,14 +131,14 @@ export const EmbeddedChatPane = (props: {
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
-  const callAndChatStrings = useCallAndChatCompositeStrings();
+  const callWithChatStrings = useCallWithChatCompositeStrings();
 
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={callAndChatStrings.chatPaneTitle}
+      headingText={callWithChatStrings.chatPaneTitle}
       onClose={props.onClose}
-      dataUiId={'call-and-chat-composite-chat-pane'}
+      dataUiId={'call-with-chat-composite-chat-pane'}
     >
       <ChatComposite
         {...props.chatCompositeProps}
