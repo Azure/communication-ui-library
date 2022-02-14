@@ -821,18 +821,13 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
-    messageThreadParticipantCount?: number;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // Warning: (ae-incompatible-release-tags) The symbol "readReceipts" is marked as @public, but its signature references "ReadReceipt" which is marked as @beta
-    //
     // (undocumented)
-    readReceipts?: ReadReceipt[];
-    // (undocumented)
-    readReceipts?: ReadReceipt[];
+    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -1683,6 +1678,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -1696,6 +1692,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
+    messageThreadReadReceipt?: {};
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -1990,20 +1988,6 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
-
-// @beta
-export interface ReadReceipt {
-    chatMessageId: string;
-    readOn: Date;
-    senderId: string;
-}
-
-// @public
-export interface ReadReceipt {
-    chatMessageId: string;
-    readOn: Date;
-    senderId: string;
-}
 
 // @public
 export interface RecordingCallFeature {

@@ -439,9 +439,9 @@ export type MessageThreadProps = {
    */
   messageThreadParticipantCount?: number;
   /**
-   * number of participants in the thread
+   * read receipt for each participant: senderID : {messageid, readon}
    */
-  messageThreadReadReceipt?: string[];
+  messageThreadReadReceipt?: {};
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
