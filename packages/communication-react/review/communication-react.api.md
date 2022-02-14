@@ -268,8 +268,6 @@ export interface CallAndChatAdapterState extends CallAndChatAdapterUiState, Call
 // @beta
 export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
-    off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -286,6 +284,8 @@ export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
     // (undocumented)
+    off(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -296,7 +296,7 @@ export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: AdapterError) => void): void;
+    off(event: 'chatError', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
@@ -314,6 +314,8 @@ export interface CallAndChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
     // (undocumented)
+    on(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
@@ -323,6 +325,8 @@ export interface CallAndChatAdapterSubscriptions {
     on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
     // (undocumented)
     on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    on(event: 'chatError', listener: (e: AdapterError) => void): void;
 }
 
 // @beta
@@ -375,7 +379,7 @@ export interface CallAndChatControlOptions extends Pick<CallControlOptions, 'cam
 }
 
 // @beta
-export type CallAndChatEvent = 'error' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallAndChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export interface CallAndChatLocator {

@@ -78,9 +78,6 @@ export interface CallAndChatAdapterManagement
  * @beta
  */
 export interface CallAndChatAdapterSubscriptions {
-  on(event: 'error', listener: (e: AdapterError) => void): void;
-  off(event: 'error', listener: (e: AdapterError) => void): void;
-
   // Call subscriptions
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -90,6 +87,7 @@ export interface CallAndChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'callError', listener: (e: AdapterError) => void): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -99,6 +97,7 @@ export interface CallAndChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'callError', listener: (e: AdapterError) => void): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -106,12 +105,14 @@ export interface CallAndChatAdapterSubscriptions {
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'chatError', listener: (e: AdapterError) => void): void;
 }
 
 /**
@@ -129,7 +130,8 @@ export interface CallAndChatAdapter
  * @beta
  */
 export type CallAndChatEvent =
-  | 'error'
+  | 'callError'
+  | 'chatError'
   | 'callEnded'
   | 'isMutedChanged'
   | 'callIdChanged'

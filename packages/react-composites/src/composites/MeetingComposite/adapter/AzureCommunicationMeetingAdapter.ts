@@ -301,7 +301,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: AdapterError) => void): void;
+  on(event: 'callError', listener: (e: AdapterError) => void): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -312,6 +312,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallAndChatEvent, listener: any): void {
@@ -355,8 +356,10 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
       case 'chatParticipantsRemoved':
         this.chatAdapter.on('participantsRemoved', listener);
         break;
-      case 'error':
+      case 'callError':
         this.callAdapter.on('error', listener);
+        break;
+      case 'chatError':
         this.chatAdapter.on('error', listener);
         break;
       default:
@@ -367,7 +370,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: AdapterError) => void): void;
+  off(event: 'callError', listener: (e: AdapterError) => void): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -378,6 +381,7 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallAndChatEvent, listener: any): void {
@@ -421,8 +425,10 @@ export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter 
       case 'chatParticipantsRemoved':
         this.chatAdapter.off('participantsRemoved', listener);
         break;
-      case 'error':
+      case 'callError':
         this.callAdapter.off('error', listener);
+        break;
+      case 'chatError':
         this.chatAdapter.off('error', listener);
         break;
       default:
@@ -471,12 +477,12 @@ export const createAzureCommunicationCallAndChatAdapter = async ({
   endpoint,
   locator
 }: AzureCommunicationCallAndChatAdapterArgs): Promise<CallAndChatAdapter> => {
-  const locator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
+  const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator
+    locator: callAdapterLocator
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
