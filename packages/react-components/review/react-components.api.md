@@ -542,7 +542,7 @@ export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     messageThreadParticipantCount?: number;
-    messageThreadReadReceipt?: string[];
+    messageThreadReadReceipt?: {};
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
