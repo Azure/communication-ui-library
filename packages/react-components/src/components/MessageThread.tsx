@@ -368,8 +368,8 @@ const memoizeAllMessages = memoizeFnAll(
                     ) : (
                       defaultStatusRenderer(
                         statusToRender,
-                        messageThreadReadCount ? messageThreadReadCount : 1,
-                        messageThreadParticipantCount ? messageThreadParticipantCount : 1
+                        messageThreadReadCount ? messageThreadReadCount : 0,
+                        messageThreadParticipantCount ? messageThreadParticipantCount : 0
                       )
                     )
                   ) : (
@@ -438,10 +438,6 @@ export type MessageThreadProps = {
    * number of participants in the thread
    */
   messageThreadParticipantCount?: number;
-  /**
-   * read receipt for each participant: senderID : {messageid, readon}
-   */
-  messageThreadReadReceipt?: {};
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -895,7 +891,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       <MessageStatusIndicator
         status={status}
         messageThreadReadCount={messageThreadReadCount}
-        messageThreadParticipantCount={messageThreadParticipantCount}
+        // if messageThreadParticipantCount is less than 0, we have a bug, set it to 0
+        // -1 because participant count does not include myself
+        participantCountNotIncludingSelf={messageThreadParticipantCount >= 0 ? messageThreadParticipantCount - 1 : 0}
       />
     ),
     []
@@ -918,7 +916,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
                 case lastSeenChatMessage: {
                   statusToRender = 'seen';
                   // only update read number when status is seen
-                  readNumber = message.readNumber ? message.readNumber + 1 : 1;
+                  readNumber = message.readNumber ? message.readNumber : 0;
                   break;
                 }
                 case lastSendingChatMessage: {
@@ -973,6 +971,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
+      messageThreadParticipantCount,
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,

@@ -133,22 +133,14 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
   (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
     // get number of participants
+    // -1 because the first object in participants is not a valid participant (no display name)
     const messageThreadParticipantCount = Object.values(participants).length - 1;
-    // readReceipt is getting duplicate information, remove duplicate here
-    const uniqueReadReceipt = readReceipts.filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex(
-          (t) =>
-            toFlatCommunicationIdentifier(t.sender) === toFlatCommunicationIdentifier(value.sender) &&
-            t.chatMessageId === value.chatMessageId
-        )
-    );
     // creating a key value pair of senderID: last read message information
-    const readReceiptForEachMessage = {};
-
-    uniqueReadReceipt.forEach((r) => {
-      readReceiptForEachMessage[toFlatCommunicationIdentifier(r.sender)] = {
+    const readReceiptForEachSender = {};
+    // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
+    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+    readReceipts.forEach((r) => {
+      readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
         readOn: r.readOn
       };
@@ -180,9 +172,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
            * if the last read message is read after the message A is sent, then user should have read message A as well */
 
           let readNumber = 0;
-          for (const k in readReceiptForEachMessage) {
-            const messageid = readReceiptForEachMessage[k]['lastReadMessage'];
-            const readTime = readReceiptForEachMessage[k]['readOn'];
+          for (const k in readReceiptForEachSender) {
+            const messageid = readReceiptForEachSender[k]['lastReadMessage'];
+            const readTime = readReceiptForEachSender[k]['readOn'];
             if (messageid === message.id) {
               readNumber += 1;
             } else {
@@ -208,8 +200,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       userId,
       showMessageStatus: !isLargeGroup,
       messages: convertedMessages,
-      messageThreadParticipantCount,
-      messageThreadReadReceipt: readReceiptForEachMessage
+      messageThreadParticipantCount
     };
   }
 );

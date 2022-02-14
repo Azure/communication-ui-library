@@ -23,7 +23,7 @@
     "deliveredTooltipText": "Sent",
     "seenAriaLabel": "Message seen by others",
     "seenTooltipText": "Seen",
-    "readByTooltipText": "Read by {messageThreadReadCount} of {messageThreadParticipantCount}",
+    "readByTooltipText": "Read by {messageThreadReadCount} of {participantCountNotIncludingSelf}",
     "sendingAriaLabel": "Message sending",
     "sendingTooltipText": "Sending",
     "failedToSendAriaLabel": "Message failed to send",
