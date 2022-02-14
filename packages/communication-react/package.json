@@ -37,7 +37,7 @@
     "html-to-react": "~1.4.5",
     "immer": "9.0.6",
     "memoize-one": "~5.2.1",
-    "nanoid": "~3.1.31",
+    "nanoid": "3.1.32",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
