@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallWithChatLocator } from '@azure/communication-react';
+import { CallAndChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -40,7 +40,7 @@ interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 type AppPages = 'home' | 'call' | 'error';
 
@@ -119,7 +119,7 @@ const generateCallWithChatArgs = async (
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let locator: CallWithChatLocator | TeamsMeetingLinkLocator;
+  let locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 
   // Check if we should join a teams meeting, or an ACS CallWithChat
   teamsLink = teamsLink ?? getTeamsLinkFromUrl();

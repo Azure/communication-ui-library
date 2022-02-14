@@ -129,7 +129,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallWithChatLocator | TeamsMeetingLinkLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 // @public
@@ -250,6 +250,12 @@ export interface CallAgentProviderProps {
 // @public
 export interface CallAgentState {
     displayName?: string;
+}
+
+// @beta
+export interface CallAndChatLocator {
+    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    chatThreadId: string;
 }
 
 // @public
@@ -617,12 +623,6 @@ export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'ca
 
 // @beta
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
-
-// @beta
-export interface CallWithChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
-    chatThreadId: string;
-}
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;

@@ -442,7 +442,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
  *
  * @beta
  */
-export interface CallWithChatLocator {
+export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
   callLocator:
     | GroupCallLocator
@@ -461,7 +461,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
@@ -536,7 +536,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
 };
 
 const isTeamsMeetingLinkLocator = (
-  locator: CallWithChatLocator | TeamsMeetingLinkLocator
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator
 ): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };

@@ -1,7 +1,7 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallWithChatLocator,
+  CallAndChatLocator,
   CallWithChatControlOptions,
   CallWithChatAdapter,
   CallWithChatComposite,
@@ -15,7 +15,7 @@ export type CallWithChatExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
-  locator: TeamsMeetingLinkLocator | CallWithChatLocator;
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   callWithChatControlOptions?: boolean | CallWithChatControlOptions;

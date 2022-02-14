@@ -6,7 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   createAzureCommunicationCallWithChatAdapter,
   toFlatCommunicationIdentifier,
-  CallWithChatLocator,
+  CallAndChatLocator,
   CallWithChatAdapter,
   CallWithChatAdapterState,
   CallWithChatComposite
@@ -25,7 +25,7 @@ export interface CallWithChatScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CallWithChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
 export const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
