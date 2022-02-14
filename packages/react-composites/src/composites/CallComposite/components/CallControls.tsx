@@ -56,6 +56,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     /* @conditional-compile-remove-from(stable) */
     return props.onParticipantButtonClick ? (
       <ControlBarButton
+        data-ui-id="call-composite-participants-button"
         onClick={props.onParticipantButtonClick}
         onRenderIcon={(): JSX.Element => <Icon iconName="ControlButtonParticipants" />}
         disabled={isDisabled(options?.participantsButton)}
