@@ -51,9 +51,30 @@ export class CallAndChatBackedChatAdapter implements ChatAdapter {
     chatAdapterStateFromCallAndChatAdapterState(this.callAndChatAdapter.getState());
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-  public on = (event: any, listener: any): void => this.callAndChatAdapter.on(event, listener);
-  public off = (event: any, listener: any): void => this.callAndChatAdapter.off(event, listener);
-
+  public on = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.on('chatError', listener);
+      case 'participantsAdded':
+        return this.callAndChatAdapter.on('chatParticipantsAdded', listener);
+      case 'participantsRemoved':
+        return this.callAndChatAdapter.on('chatParticipantsRemoved', listener);
+      default:
+        return this.callAndChatAdapter.on(event, listener);
+    }
+  };
+  public off = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.off('chatError', listener);
+      case 'participantsAdded':
+        return this.callAndChatAdapter.off('chatParticipantsAdded', listener);
+      case 'participantsRemoved':
+        return this.callAndChatAdapter.off('chatParticipantsRemoved', listener);
+      default:
+        return this.callAndChatAdapter.off(event, listener);
+    }
+  };
   public updateMessage = async (messageId: string, content: string): Promise<void> =>
     await this.callAndChatAdapter.updateMessage(messageId, content);
   public deleteMessage = async (messageId: string): Promise<void> =>

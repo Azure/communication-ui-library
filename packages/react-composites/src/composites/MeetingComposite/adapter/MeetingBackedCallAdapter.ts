@@ -25,8 +25,30 @@ export class CallAndChatBackedCallAdapter implements CallAdapter {
   constructor(callAndChatAdapter: CallAndChatAdapter) {
     this.callAndChatAdapter = callAndChatAdapter;
   }
-  public on = (event: any, listener: any): void => this.callAndChatAdapter.on(event, listener);
-  public off = (event: any, listener: any): void => this.callAndChatAdapter.off(event, listener);
+  public on = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.on('callError', listener);
+      case 'participantsJoined':
+        return this.callAndChatAdapter.on('callParticipantsJoined', listener);
+      case 'participantsLeft':
+        return this.callAndChatAdapter.on('callParticipantsLeft', listener);
+      default:
+        return this.callAndChatAdapter.on(event, listener);
+    }
+  };
+  public off = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.off('callError', listener);
+      case 'participantsJoined':
+        return this.callAndChatAdapter.off('callParticipantsJoined', listener);
+      case 'participantsLeft':
+        return this.callAndChatAdapter.off('callParticipantsLeft', listener);
+      default:
+        return this.callAndChatAdapter.off(event, listener);
+    }
+  };
   public onStateChange = (handler: (state: CallAdapterState) => void): void => {
     const convertedHandler = (state: CallAndChatAdapterState): void => {
       handler(callAdapterStateFromCallAndChatAdapterState(state));
