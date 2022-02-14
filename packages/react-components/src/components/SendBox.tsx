@@ -16,6 +16,8 @@ import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
+import { isDarkThemed } from '../theming/themeUtils';
+
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -213,7 +215,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack className={mergeStyles(borderAndBoxShadowStyle(theme), sendBoxWrapperStyles)}>
+    <Stack
+      className={mergeStyles(
+        borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
+        sendBoxWrapperStyles
+      )}
+    >
       <InputBoxComponent
         autoFocus={autoFocus}
         data-ui-id={ids.sendboxTextField}

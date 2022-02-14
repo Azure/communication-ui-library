@@ -58,25 +58,33 @@ export const fileCardBoxStyle = mergeStyles({
 /**
  * @private
  */
-export const borderAndBoxShadowStyle = (theme: Theme): IStyle => {
+export const borderAndBoxShadowStyle = (
+  theme: Theme,
+  errorColor: string,
+  hasErrorMessage: boolean,
+  disabled: boolean
+): IStyle => {
+  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.blue;
+  const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
   return {
     borderRadius: theme.effects.roundedCorner4,
-    border: `0.0625rem solid ${theme.palette.neutralSecondary}`,
+    borderWidth: disabled ? '0px' : '1px',
+    border: `0.0625rem solid ${borderColor}`,
     ':hover': {
       border: '2px solid',
-      borderColor: theme.palette.blue
+      borderColor: borderColorActive
     },
     ':active': {
       border: '2px solid',
-      borderColor: theme.palette.blue
+      borderColor: borderColorActive
     },
     ':focus': {
       border: '2px solid',
-      borderColor: theme.palette.blue
+      borderColor: borderColorActive
     },
     ':focus-within': {
       border: '2px solid',
-      borderColor: theme.palette.blue
+      borderColor: borderColorActive
     }
   };
 };
