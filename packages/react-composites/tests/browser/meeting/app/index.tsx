@@ -43,7 +43,7 @@ function App(): JSX.Element {
         displayName,
         credential,
         endpoint,
-        callAndChatAdapter: {
+        locator: {
           callLocator: { groupId: groupId },
           chatThreadId: threadId
         }
@@ -127,14 +127,14 @@ class ProxyCallAndChatAdapter implements ProxyHandler<CallAndChatAdapter> {
 // This diagnostic gets flakily set to true only in our test harness.
 // The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
 const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAndChatAdapterState): CallAndChatAdapterState => {
-  if (state.meeting?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
+  if (state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
     return {
       ...state,
-      meeting: {
-        ...state.meeting,
+      call: {
+        ...state.call,
         diagnostics: {
-          ...state.meeting.diagnostics,
-          media: { latest: { ...state.meeting.diagnostics.media.latest, speakingWhileMicrophoneIsMuted: undefined } }
+          ...state.call.diagnostics,
+          media: { latest: { ...state.call.diagnostics.media.latest, speakingWhileMicrophoneIsMuted: undefined } }
         }
       }
     };

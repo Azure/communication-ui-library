@@ -1,93 +1,107 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingAdapter } from './MeetingAdapter';
+import { CallAndChatAdapter } from './MeetingAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ErrorBarStrings } from '@internal/react-components';
-import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { MeetingAdapterState, MeetingState } from '..';
+import { CallAndChatAdapterState } from '../state/MeetingAdapterState';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-function chatThreadStateFromMeetingState(meetingState: MeetingState): ChatThreadClientState {
-  return {
-    chatMessages: meetingState.chatMessages,
-    participants: meetingState.participants,
-    threadId: meetingState.threadId,
-    properties: meetingState.properties,
-    readReceipts: meetingState.readReceipts,
-    typingIndicators: meetingState.typingIndicators,
-    latestReadTime: meetingState.latestReadTime
-  };
-}
-
-function ChatAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): ChatAdapterState {
-  if (!meetingState.meeting) {
-    throw 'Cannot get chat adapter state. Meeting state is undefined.';
-  }
-
-  return {
-    userId: meetingState.userId,
-    displayName: meetingState.displayName || '',
-    thread: chatThreadStateFromMeetingState(meetingState.meeting),
-    latestErrors: {} //@TODO: latest errors not supported in meeting composite yet.
-  };
-}
-
 /**
- * Facade around the MeetingAdapter to satisfy the chat adapter interface.
+ * Facade around the CallAndChatAdapter to satisfy the chat adapter interface.
  *
  * @private
  */
-export class MeetingBackedChatAdapter implements ChatAdapter {
-  private meetingAdapter: MeetingAdapter;
+export class CallAndChatBackedChatAdapter implements ChatAdapter {
+  private callAndChatAdapter: CallAndChatAdapter;
 
-  // For onStateChange we must convert meeting state to chat state. This involves creating a new handler to be passed into the onStateChange.
+  // For onStateChange we must convert CallAndChat state to chat state. This involves creating a new handler to be passed into the onStateChange.
   // In order to unsubscribe the handler when offStateChange is called we must have a mapping of the original handler to the newly created handler.
-  private eventStore: Map<(state: ChatAdapterState) => void, (state: MeetingAdapterState) => void> = new Map();
+  private eventStore: Map<(state: ChatAdapterState) => void, (state: CallAndChatAdapterState) => void> = new Map();
 
-  constructor(meetingAdapter: MeetingAdapter) {
-    this.meetingAdapter = meetingAdapter;
+  constructor(callAndChatAdapter: CallAndChatAdapter) {
+    this.callAndChatAdapter = callAndChatAdapter;
   }
 
-  public fetchInitialData = async (): Promise<void> => await this.meetingAdapter.fetchInitialData();
-  public sendMessage = async (content: string): Promise<void> => await this.meetingAdapter.sendMessage(content);
+  public fetchInitialData = async (): Promise<void> => await this.callAndChatAdapter.fetchInitialData();
+  public sendMessage = async (content: string): Promise<void> => await this.callAndChatAdapter.sendMessage(content);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
-    await this.meetingAdapter.sendReadReceipt(chatMessageId);
-  public sendTypingIndicator = async (): Promise<void> => await this.meetingAdapter.sendTypingIndicator();
+    await this.callAndChatAdapter.sendReadReceipt(chatMessageId);
+  public sendTypingIndicator = async (): Promise<void> => await this.callAndChatAdapter.sendTypingIndicator();
   public removeParticipant = async (userId: string): Promise<void> =>
-    await this.meetingAdapter.removeParticipant(userId);
+    await this.callAndChatAdapter.removeParticipant(userId);
   public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> =>
-    await this.meetingAdapter.loadPreviousChatMessages(messagesToLoad);
-  public dispose = (): void => this.meetingAdapter.dispose();
+    await this.callAndChatAdapter.loadPreviousChatMessages(messagesToLoad);
+  public dispose = (): void => this.callAndChatAdapter.dispose();
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
-    const convertedHandler = (state: MeetingAdapterState): void => {
-      handler(ChatAdapterStateFromMeetingAdapterState(state));
+    const convertedHandler = (state: CallAndChatAdapterState): void => {
+      handler(chatAdapterStateFromCallAndChatAdapterState(state));
     };
-    this.meetingAdapter.onStateChange(convertedHandler);
+    this.callAndChatAdapter.onStateChange(convertedHandler);
     this.eventStore.set(handler, convertedHandler);
   };
   public offStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = this.eventStore.get(handler);
-    convertedHandler && this.meetingAdapter.offStateChange(convertedHandler);
+    convertedHandler && this.callAndChatAdapter.offStateChange(convertedHandler);
   };
-  public getState = (): ChatAdapterState => ChatAdapterStateFromMeetingAdapterState(this.meetingAdapter.getState());
+  public getState = (): ChatAdapterState =>
+    chatAdapterStateFromCallAndChatAdapterState(this.callAndChatAdapter.getState());
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-  public on = (event: any, listener: any): void => this.meetingAdapter.on(event, listener);
-  public off = (event: any, listener: any): void => this.meetingAdapter.off(event, listener);
-
+  public on = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.on('chatError', listener);
+      case 'participantsAdded':
+        return this.callAndChatAdapter.on('chatParticipantsAdded', listener);
+      case 'participantsRemoved':
+        return this.callAndChatAdapter.on('chatParticipantsRemoved', listener);
+      default:
+        return this.callAndChatAdapter.on(event, listener);
+    }
+  };
+  public off = (event: any, listener: any): void => {
+    switch (event) {
+      case 'error':
+        return this.callAndChatAdapter.off('chatError', listener);
+      case 'participantsAdded':
+        return this.callAndChatAdapter.off('chatParticipantsAdded', listener);
+      case 'participantsRemoved':
+        return this.callAndChatAdapter.off('chatParticipantsRemoved', listener);
+      default:
+        return this.callAndChatAdapter.off(event, listener);
+    }
+  };
   public updateMessage = async (messageId: string, content: string): Promise<void> =>
-    await this.meetingAdapter.updateMessage(messageId, content);
-  public deleteMessage = async (messageId: string): Promise<void> => await this.meetingAdapter.deleteMessage(messageId);
+    await this.callAndChatAdapter.updateMessage(messageId, content);
+  public deleteMessage = async (messageId: string): Promise<void> =>
+    await this.callAndChatAdapter.deleteMessage(messageId);
 
   public clearErrors = (errorTypes: (keyof ErrorBarStrings)[]): void => {
-    throw `Method not supported in meetings.`;
+    throw new Error(`Method not supported in CallAndChatComposite.`);
   };
 
   public setTopic = async (topicName: string): Promise<void> => {
-    throw `Chat Topics are not supported in meetings.`;
+    throw new Error(`Chat Topics are not supported in CallAndChatComposite.`);
+  };
+}
+
+function chatAdapterStateFromCallAndChatAdapterState(
+  callAndChatAdapterState: CallAndChatAdapterState
+): ChatAdapterState {
+  if (!callAndChatAdapterState.chat) {
+    throw new Error('Chat thread state id undefined.');
+  }
+
+  return {
+    userId: callAndChatAdapterState.userId,
+    displayName: callAndChatAdapterState.displayName || '',
+    thread: callAndChatAdapterState.chat,
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    fileUploads: callAndChatAdapterState.fileUploads,
+    latestErrors: {} //@TODO: latest errors not supported in CallAndChatComposite composite yet.
   };
 }

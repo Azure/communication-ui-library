@@ -27,13 +27,20 @@ import {
   createAzureCommunicationCallAdapter,
   CallEndedListener
 } from '../../CallComposite';
-import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
 import {
-  meetingAdapterStateFromBackingStates,
-  MeetingAdapterState,
-  mergeCallAdapterStateIntoMeetingAdapterState,
-  mergeChatAdapterStateIntoMeetingAdapterState
+  MessageReceivedListener,
+  MessageReadListener,
+  ChatAdapter,
+  ChatAdapterState,
+  ParticipantsRemovedListener,
+  ParticipantsAddedListener
+} from '../../ChatComposite';
+import { CallAndChatAdapter, CallAndChatEvent } from './MeetingAdapter';
+import {
+  callAndChatAdapterStateFromBackingStates,
+  CallAndChatAdapterState,
+  mergeCallAdapterStateIntoCallAndChatAdapterState,
+  mergeChatAdapterStateIntoCallAndChatAdapterState
 } from '../state/MeetingAdapterState';
 import {
   createAzureCommunicationChatAdapter,
@@ -54,55 +61,55 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 
-type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
+type CallAndChatAdapterStateChangedHandler = (newState: CallAndChatAdapterState) => void;
 
-/** Context of meeting, which is a centralized context for all state updates */
-class MeetingContext {
+/** Context of Call with Chat, which is a centralized context for all state updates */
+class CallAndChatContext {
   private emitter = new EventEmitter();
-  private state: MeetingAdapterState;
+  private state: CallAndChatAdapterState;
 
-  constructor(clientState: MeetingAdapterState) {
+  constructor(clientState: CallAndChatAdapterState) {
     this.state = clientState;
   }
 
-  public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
+  public onStateChange(handler: CallAndChatAdapterStateChangedHandler): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: MeetingAdapterStateChangedHandler): void {
+  public offStateChange(handler: CallAndChatAdapterStateChangedHandler): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: MeetingAdapterState): void {
+  public setState(state: CallAndChatAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): MeetingAdapterState {
+  public getState(): CallAndChatAdapterState {
     return this.state;
   }
 
-  public updateClientState(clientState: MeetingAdapterState): void {
+  public updateClientState(clientState: CallAndChatAdapterState): void {
     this.setState(clientState);
   }
 
   public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
-    this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(this.state, chatAdapterState));
+    this.updateClientState(mergeChatAdapterStateIntoCallAndChatAdapterState(this.state, chatAdapterState));
   }
 
   public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
-    this.updateClientState(mergeCallAdapterStateIntoMeetingAdapterState(this.state, callAdapterState));
+    this.updateClientState(mergeCallAdapterStateIntoCallAndChatAdapterState(this.state, callAdapterState));
   }
 }
 
 /**
- * Meeting adapter backed by Azure Communication Services.
- * Created for easy use with the Meeting Composite.
+ * CallAndChat adapter backed by Azure Communication Services.
+ * Created for easy use with the {@link CallAndChatComposite}.
  */
-export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
+export class AzureCommunicationCallAndChatAdapter implements CallAndChatAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
-  private context: MeetingContext;
+  private context: CallAndChatContext;
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
@@ -110,7 +117,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
-    this.context = new MeetingContext(meetingAdapterStateFromBackingStates(callAdapter, chatAdapter));
+    this.context = new CallAndChatContext(callAndChatAdapterStateFromBackingStates(callAdapter, chatAdapter));
 
     const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
       this.context.updateClientStateWithChatState(newChatAdapterState);
@@ -126,9 +133,9 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
 
   private bindPublicMethods(): void {
-    this.joinMeeting.bind(this);
-    this.leaveMeeting.bind(this);
-    this.startMeeting.bind(this);
+    this.joinCall.bind(this);
+    this.leaveCall.bind(this);
+    this.startCall.bind(this);
     this.onStateChange.bind(this);
     this.offStateChange.bind(this);
     this.getState.bind(this);
@@ -160,38 +167,38 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.off.bind(this);
   }
 
-  /** Join existing Meeting. */
-  public joinMeeting(microphoneOn?: boolean): Call | undefined {
+  /** Join existing Call. */
+  public joinCall(microphoneOn?: boolean): Call | undefined {
     return this.callAdapter.joinCall(microphoneOn);
   }
-  /** Leave current Meeting. */
-  public async leaveMeeting(): Promise<void> {
+  /** Leave current Call. */
+  public async leaveCall(): Promise<void> {
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall();
   }
-  /** Start a new Meeting. */
-  public startMeeting(participants: string[]): Call | undefined {
+  /** Start a new Call. */
+  public startCall(participants: string[]): Call | undefined {
     return this.callAdapter.startCall(participants);
   }
   /**
    * Subscribe to state change events.
    * @param handler - handler to be called when the state changes. This is passed the new state.
    */
-  public onStateChange(handler: (state: MeetingAdapterState) => void): void {
+  public onStateChange(handler: (state: CallAndChatAdapterState) => void): void {
     this.context.onStateChange(handler);
   }
   /**
    * Unsubscribe to state change events.
    * @param handler - handler to be no longer called when state changes.
    */
-  public offStateChange(handler: (state: MeetingAdapterState) => void): void {
+  public offStateChange(handler: (state: CallAndChatAdapterState) => void): void {
     this.context.offStateChange(handler);
   }
-  /** Get current Meeting state. */
-  public getState(): MeetingAdapterState {
+  /** Get current Call and Chat state. */
+  public getState(): CallAndChatAdapterState {
     return this.context.getState();
   }
-  /** Dispose of the current Meeting Adapter. */
+  /** Dispose of the current CallAndChatAdapter. */
   public dispose(): void {
     this.chatAdapter.offStateChange(this.onChatStateChange);
     this.callAdapter.offStateChange(this.onCallStateChange);
@@ -199,7 +206,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.chatAdapter.dispose();
     this.callAdapter.dispose();
   }
-  /** Remove a participant from the Meeting. */
+  /** Remove a participant from the Call only. */
   public async removeParticipant(userId: string): Promise<void> {
     // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.removeParticipant(userId);
@@ -207,11 +214,11 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.setCamera(device, options);
   }
-  /** Set the microphone to be used in the meeting. */
+  /** Set the microphone to be used in the Call. */
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setMicrophone(device);
   }
-  /** Set the speaker to be used in the meeting. */
+  /** Set the speaker to be used in the Call. */
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setSpeaker(device);
   }
@@ -230,19 +237,19 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.callAdapter.querySpeakers();
   }
-  /** Start the camera for the user in the Meeting. */
+  /** Start the camera for the user in the Call. */
   public async startCamera(options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.startCamera(options);
   }
-  /** Stop the camera for the user in the Meeting. */
+  /** Stop the camera for the user in the Call. */
   public async stopCamera(): Promise<void> {
     await this.callAdapter.stopCamera();
   }
-  /** Mute the user in the Meeting. */
+  /** Mute the user in the Call. */
   public async mute(): Promise<void> {
     await this.callAdapter.mute();
   }
-  /** Unmute the user in the Meeting. */
+  /** Unmute the user in the Call. */
   public async unmute(): Promise<void> {
     await this.callAdapter.unmute();
   }
@@ -262,7 +269,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
-  /** Fetch initial Meeting data such as chat messages. */
+  /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
     await this.chatAdapter.fetchInitialData();
   }
@@ -278,7 +285,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async sendTypingIndicator(): Promise<void> {
     await this.chatAdapter.sendTypingIndicator();
   }
-  /** Load previous Meeting chat messages. */
+  /** Load previous Chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
@@ -290,10 +297,11 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
   }
-  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-  on(event: 'meetingEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: AdapterError) => void): void;
+
+  on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'callEnded', listener: CallEndedListener): void;
+  on(event: 'callError', listener: (e: AdapterError) => void): void;
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -302,17 +310,20 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageReceivedListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
+  on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+  on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  on(event: MeetingEvent, listener: any): void {
+  on(event: CallAndChatEvent, listener: any): void {
     switch (event) {
-      case 'participantsJoined':
-        this.callAdapter.on(event, listener);
+      case 'callParticipantsJoined':
+        this.callAdapter.on('participantsJoined', listener);
         break;
-      case 'participantsLeft':
+      case 'callParticipantsLeft':
         this.callAdapter.on('participantsLeft', listener);
         break;
-      case 'meetingEnded':
+      case 'callEnded':
         this.callAdapter.on('callEnded', listener);
         break;
       case 'isMutedChanged':
@@ -339,19 +350,27 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
       case 'messageRead':
         this.chatAdapter.on('messageRead', listener);
         break;
-      case 'error':
+      case 'chatParticipantsAdded':
+        this.chatAdapter.on('participantsAdded', listener);
+        break;
+      case 'chatParticipantsRemoved':
+        this.chatAdapter.on('participantsRemoved', listener);
+        break;
+      case 'callError':
         this.callAdapter.on('error', listener);
+        break;
+      case 'chatError':
         this.chatAdapter.on('error', listener);
         break;
       default:
-        throw `Unknown MeetingEvent: ${event}`;
+        throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
     }
   }
 
-  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-  off(event: 'meetingEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: AdapterError) => void): void;
+  off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'callEnded', listener: CallEndedListener): void;
+  off(event: 'callError', listener: (e: AdapterError) => void): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
@@ -360,17 +379,20 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
+  off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+  off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  off(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  off(event: MeetingEvent, listener: any): void {
+  off(event: CallAndChatEvent, listener: any): void {
     switch (event) {
-      case 'participantsJoined':
-        this.callAdapter.off(event, listener);
+      case 'callParticipantsJoined':
+        this.callAdapter.off('participantsJoined', listener);
         break;
-      case 'participantsLeft':
+      case 'callParticipantsLeft':
         this.callAdapter.off('participantsLeft', listener);
         break;
-      case 'meetingEnded':
+      case 'callEnded':
         this.callAdapter.off('callEnded', listener);
         break;
       case 'isMutedChanged':
@@ -397,67 +419,75 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
       case 'messageRead':
         this.chatAdapter.off('messageRead', listener);
         break;
-      case 'error':
+      case 'chatParticipantsAdded':
+        this.chatAdapter.off('participantsAdded', listener);
+        break;
+      case 'chatParticipantsRemoved':
+        this.chatAdapter.off('participantsRemoved', listener);
+        break;
+      case 'callError':
         this.callAdapter.off('error', listener);
+        break;
+      case 'chatError':
         this.chatAdapter.off('error', listener);
         break;
       default:
-        throw `Unknown MeetingEvent: ${event}`;
+        throw `Unknown AzureCommunicationCallAndChatAdapter Event: ${event}`;
     }
   }
 }
 
 /**
- * Arguments for use in {@link createAzureCommunicationMeetingAdapter} to join a Call with an associated Chat thread.
+ * Arguments for use in {@link createAzureCommunicationCallAndChatAdapter} to join a Call with an associated Chat thread.
  *
  * @beta
  */
 export interface CallAndChatLocator {
-  /** Locator used by {@link createAzureCommunicationMeetingAdapter} to locate the call to join */
+  /** Locator used by {@link createAzureCommunicationCallAndChatAdapter} to locate the call to join */
   callLocator:
     | GroupCallLocator
     | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
-  /** Chat thread ID used by {@link createAzureCommunicationMeetingAdapter} to locate the chat thread to join */
+  /** Chat thread ID used by {@link createAzureCommunicationCallAndChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
 
 /**
- * Arguments for {@link createAzureCommunicationMeetingAdapter}
+ * Arguments for {@link createAzureCommunicationCallAndChatAdapter}
  *
  * @beta
  */
-export type AzureCommunicationMeetingAdapterArgs = {
+export type AzureCommunicationCallAndChatAdapterArgs = {
   endpoint: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 /**
- * Create a meeting adapter backed by Azure Communication services
- * to plug into the Meeting Composite.
+ * Create a CallAndChatAdapter backed by Azure Communication services
+ * to plug into the {@link CallAndChatComposite}.
  *
  * @beta
  */
-export const createAzureCommunicationMeetingAdapter = async ({
+export const createAzureCommunicationCallAndChatAdapter = async ({
   userId,
   displayName,
   credential,
   endpoint,
-  meetingLocator
-}: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
-  const locator = isTeamsMeetingLinkLocator(meetingLocator) ? meetingLocator : meetingLocator.callLocator;
+  locator
+}: AzureCommunicationCallAndChatAdapterArgs): Promise<CallAndChatAdapter> => {
+  const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator
+    locator: callAdapterLocator
   });
 
-  const threadId = isTeamsMeetingLinkLocator(meetingLocator)
-    ? getChatThreadFromTeamsLink(meetingLocator.meetingLink)
-    : meetingLocator.chatThreadId;
+  const threadId = isTeamsMeetingLinkLocator(locator)
+    ? getChatThreadFromTeamsLink(locator.meetingLink)
+    : locator.chatThreadId;
   const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
     userId,
@@ -467,15 +497,15 @@ export const createAzureCommunicationMeetingAdapter = async ({
   });
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
-  return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+  return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
 };
 
 /**
- * Arguments for {@link createAzureCommunicationMeetingAdapterFromClient}
+ * Arguments for {@link createAzureCommunicationCallAndChatAdapterFromClient}
  *
  * @beta
  */
-export type AzureCommunicationMeetingAdapterFromClientArgs = {
+export type AzureCommunicationCallAndChatAdapterFromClientArgs = {
   callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
   callAgent: CallAgent;
   callClient: StatefulCallClient;
@@ -484,25 +514,25 @@ export type AzureCommunicationMeetingAdapterFromClientArgs = {
 };
 
 /**
- * Create a {@link MeetingAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Create a {@link CallAndChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
- * Consider using {@link createAzureCommunicationMeetingAdapter} for a simpler API.
+ * Consider using {@link createAzureCommunicationCallAndChatAdapter} for a simpler API.
  *
  * @beta
  */
-export const createAzureCommunicationMeetingAdapterFromClients = async ({
+export const createAzureCommunicationCallAndChatAdapterFromClients = async ({
   callClient,
   callAgent,
   callLocator,
   chatClient,
   chatThreadClient
-}: AzureCommunicationMeetingAdapterFromClientArgs): Promise<MeetingAdapter> => {
+}: AzureCommunicationCallAndChatAdapterFromClientArgs): Promise<CallAndChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
 
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
-  return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+  return new AzureCommunicationCallAndChatAdapter(callAdapter, chatAdapter);
 };
 
 const isTeamsMeetingLinkLocator = (

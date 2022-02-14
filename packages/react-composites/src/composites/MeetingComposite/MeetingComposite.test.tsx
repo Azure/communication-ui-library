@@ -23,8 +23,8 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
   callAndChatAdapter.querySpeakers = jest.fn();
   callAndChatAdapter.on = jest.fn(); // allow for direct subscription to the state of the call-and-chat adapter
   callAndChatAdapter.off = jest.fn(); // Allow for direct un-subscription to the state of the call-and-chat adapter
-  callAndChatAdapter.getState = jest.fn((): CallAndChatAdapterState => {
-    return {
+  callAndChatAdapter.getState = jest.fn(
+    (): CallAndChatAdapterState => ({
       page: 'lobby',
       isLocalPreviewMicrophoneEnabled: false,
       userId: { kind: 'communicationUser', communicationUserId: 'test' },
@@ -37,11 +37,12 @@ function createMockCallAndChatAdapter(): CallAndChatAdapter {
         unparentedViews: []
       },
       isTeamsCall: true,
-      meeting: undefined,
+      call: undefined,
+      chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },
       latestChatErrors: { test: new Error() as AdapterError }
-    };
-  });
+    })
+  );
   return callAndChatAdapter;
 }
 

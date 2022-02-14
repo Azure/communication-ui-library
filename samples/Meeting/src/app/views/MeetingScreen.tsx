@@ -54,10 +54,15 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         endpoint,
-        callAndChat: locator
+        locator: locator
       });
-      adapter.on('error', (e) => {
+      adapter.on('callError', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
+      adapter.on('chatError', (e) => {
+        // Error is already acted upon by the Chat composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
@@ -65,8 +70,8 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
-        if (state?.meeting?.id && callIdRef.current !== state?.meeting?.id) {
-          callIdRef.current = state?.meeting?.id;
+        if (state?.call?.id && callIdRef.current !== state?.call?.id) {
+          callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
       });
@@ -98,10 +103,10 @@ const convertPageStateToString = (state: CallAndChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';
-    case 'leftMeeting':
-      return 'end meeting';
-    case 'removedFromMeeting':
-      return 'end meeting';
+    case 'leftCall':
+      return 'end call';
+    case 'removedFromCall':
+      return 'end call';
     default:
       return `${state.page}`;
   }

@@ -2,39 +2,33 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CallState } from '@internal/calling-stateful-client';
+import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
-import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+import { ChatAdapter, ChatAdapterState, ChatAdapterUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
-import { callPageToCallAndChatPage, CallAndChatCompositePage } from './MeetingCompositePage';
-import {
-  meetingStateFromBackingStates,
-  MeetingState,
-  mergeCallStateIntoMeetingState,
-  mergeChatStateIntoMeetingState
-} from './MeetingState';
 
 /**
- * UI state pertaining to the Meeting Composite.
+ * UI state pertaining to the {@link CallAndChatComposite}.
  *
  * @beta
  */
-export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
-  /** Current page in the meeting composite. */
-  page: MeetingCompositePage;
-}
+export interface CallAndChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
 
 /**
- * State from the backend services that drives Meeting Composite.
+ * State from the backend services that drives {@link CallAndChatComposite}.
  *
  * @beta
  */
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
-  /** ID of the meeting participant using this Meeting Adapter. */
+export interface CallAndChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+  /** ID of the call participant using this CallAndChatAdapter. */
   userId: CommunicationIdentifierKind;
-  /** Display name of the meeting participant using this Meeting Adapter. */
+  /** Display name of the participant using this CallAndChatAdapter. */
   displayName: string | undefined;
-  /** State of the current Meeting. */
-  meeting: MeetingState | undefined;
+  /** State of the current call. */
+  call?: CallState;
+  /** State of the current chat. */
+  chat?: ChatThreadClientState;
   /** Latest call error encountered for each operation performed via the adapter. */
   latestCallErrors: AdapterErrors;
   /** Latest chat error encountered for each operation performed via the adapter. */
@@ -42,79 +36,71 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
 }
 
 /**
- * Meeting State is a combination of Stateful Chat and Stateful Calling clients with some
- * state specific to meetings only.
- * Stateful items like Participants that apply to both calling and chat are intelligently
- * combined into one to suit the purpose of a Meeting.
+ * CallAndChat State is a combination of Stateful Chat and Stateful Calling clients with some
+ * state specific to the CallAndChat Composite only.
  *
  * @beta
  */
-export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
+export interface CallAndChatAdapterState extends CallAndChatAdapterUiState, CallAndChatClientState {}
 
 /**
  * @private
  */
-export function meetingAdapterStateFromBackingStates(
+export function callAndChatAdapterStateFromBackingStates(
   callAdapter: CallAdapter,
   chatAdapter: ChatAdapter
-): MeetingAdapterState {
+): CallAndChatAdapterState {
   const callAdapterState = callAdapter.getState();
   const chatAdapterState = chatAdapter.getState();
 
-  const meeting = callAdapterState.call
-    ? meetingStateFromBackingStates(callAdapterState.call, chatAdapterState.thread)
-    : undefined;
-
   return {
-    meeting,
+    call: callAdapterState.call,
+    chat: chatAdapterState.thread,
     userId: callAdapterState.userId,
-    page: callPageToMeetingPage(callAdapterState.page),
+    page: callAdapterState.page,
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: chatAdapterState.latestErrors
+    latestChatErrors: chatAdapterState.latestErrors,
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    fileUploads: chatAdapterState.fileUploads
   };
 }
 
 /**
  * @private
  */
-export function mergeChatAdapterStateIntoMeetingAdapterState(
-  meetingAdapterState: MeetingAdapterState,
+export function mergeChatAdapterStateIntoCallAndChatAdapterState(
+  existingCallAndChatAdapterState: CallAndChatAdapterState,
   chatAdapterState: ChatAdapterState
-): MeetingAdapterState {
-  const newMeetingState = meetingAdapterState.meeting
-    ? mergeChatStateIntoMeetingState(meetingAdapterState.meeting, chatAdapterState.thread)
-    : undefined;
-
+): CallAndChatAdapterState {
   return {
-    ...meetingAdapterState,
-    meeting: newMeetingState
+    ...existingCallAndChatAdapterState,
+    chat: chatAdapterState.thread,
+    latestChatErrors: chatAdapterState.latestErrors,
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    fileUploads: chatAdapterState.fileUploads
   };
 }
 
 /**
  * @private
  */
-export function mergeCallAdapterStateIntoMeetingAdapterState(
-  meetingAdapterState: MeetingAdapterState,
+export function mergeCallAdapterStateIntoCallAndChatAdapterState(
+  existingCallAndChatAdapterState: CallAndChatAdapterState,
   callAdapterState: CallAdapterState
-): MeetingAdapterState {
-  const newMeetingState = callAdapterState.call
-    ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
-    : undefined;
-
+): CallAndChatAdapterState {
   return {
+    ...existingCallAndChatAdapterState,
     userId: callAdapterState.userId,
-    page: callPageToMeetingPage(callAdapterState.page),
+    page: callAdapterState.page,
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
-    meeting: newMeetingState,
+    call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
-    latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: meetingAdapterState.latestChatErrors
+    latestCallErrors: callAdapterState.latestErrors
   };
 }
