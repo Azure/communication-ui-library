@@ -41,7 +41,7 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-import { FileUpload, FileUploadHandler } from './file-sharing';
+import { FileDownloadHandler, FileUpload, FileUploadHandler } from './file-sharing';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
@@ -91,6 +91,12 @@ export interface FileSharingOptions {
    * @beta
    */
   uploadHandler: FileUploadHandler;
+  /**
+   * A function of type {@link FileDownloadHandler} for handling file downloads.
+   * If the function is not specified, the file's `url` will be opened in a new tab to
+   * initiate the download.
+   */
+  downloadHandler?: FileDownloadHandler;
 }
 
 /**
