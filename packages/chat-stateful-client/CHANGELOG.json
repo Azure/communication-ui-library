@@ -2,6 +2,55 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 23:50:06 GMT",
+      "tag": "@internal/chat-stateful-client_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common and nanoid per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51",
+            "comment": "updating nanoid to 3.1.32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:54 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.1",
       "version": "1.0.1",

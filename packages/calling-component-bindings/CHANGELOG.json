@@ -2,6 +2,79 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 23:50:05 GMT",
+      "tag": "@internal/calling-component-bindings_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common dependency per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "2a03f36b4c0102bf858e79c9e869fedf53932724",
+            "comment": "expose participant conversion functions"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Add audio devices to MicrophoneButton selector"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Include cameras in CameraButton selector"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Camera Logic added for local camera switcher button"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:53 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.1",
       "version": "1.0.1",

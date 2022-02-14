@@ -1,8 +1,52 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Mon, 24 Jan 2022 23:18:55 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 23:50:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.1.0)
+
+Mon, 14 Feb 2022 23:50:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.1...@internal/react-composites_v1.1.0)
+
+### Minor changes
+
+- Exposed Chat and Call latestErrors in MeetingComposite ([PR #1456](https://github.com/azure/communication-ui-library/pull/1456) by edwardlee@microsoft.com)
+- Added new constructor that accepts stateful client arguments in MeetingComposite ([PR #1457](https://github.com/azure/communication-ui-library/pull/1457) by edwardlee@microsoft.com)
+- Created component for ParticipantList and heading ([PR #1440](https://github.com/azure/communication-ui-library/pull/1440) by miguelgamis@microsoft.com)
+- Updated calling composite icons to include new icon for local video feed camera switcher ([PR #1367](https://github.com/azure/communication-ui-library/pull/1367) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Fix CallComposite being stuck on the configuration page when using adapter.startCall ([PR #1403](https://github.com/azure/communication-ui-library/pull/1403) by 2684369+JamesBurnside@users.noreply.github.com)
+- Upgrade @azure/communication-signaling to 1.0.0.beta.12 ([PR #1352](https://github.com/azure/communication-ui-library/pull/1352) by anjulgarg@live.com)
+- Bump @internal/acs-ui-common to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/calling-component-bindings to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/calling-stateful-client to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/chat-component-bindings to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/chat-stateful-client to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/react-components to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+
+### Changes
+
+- Add File upload button to Chat Composite ([PR #1368](https://github.com/azure/communication-ui-library/pull/1368) by anjulgarg@live.com)
+- Add adapter ui state and selectors for file sharing ([PR #1374](https://github.com/azure/communication-ui-library/pull/1374) by anjulgarg@live.com)
+- Notification Icon for the chat button in the meeting composite. ([PR #1378](https://github.com/azure/communication-ui-library/pull/1378) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add FileCard component to chat composite ([PR #1353](https://github.com/azure/communication-ui-library/pull/1353) by anjulgarg@live.com)
+- Add FileDownloadHandler for handling file downloads ([PR #1444](https://github.com/azure/communication-ui-library/pull/1444) by anjulgarg@live.com)
+- Show device selection menu in MirophoneButton in MeetingComposite on desktop ([PR #1392](https://github.com/azure/communication-ui-library/pull/1392) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Logic introduced to media gallery to allow for mobile detection for local camera switcher. ([PR #1391](https://github.com/azure/communication-ui-library/pull/1391) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Use split CameraButton in MeetingComposite control bar ([PR #1436](https://github.com/azure/communication-ui-library/pull/1436) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Initial Call and Meeting adapter support for making Adhoc calls directly to participants (i.e. without use of a groupID) ([PR #1431](https://github.com/azure/communication-ui-library/pull/1431) by 2684369+JamesBurnside@users.noreply.github.com)
+- [BREAKING CHANGE] Update createAzureCommunicationMeetingAdapter arguments to enable accepting just a teams link without having to provide an extracted chat thread ID. ([PR #1423](https://github.com/azure/communication-ui-library/pull/1423) by 2684369+JamesBurnside@users.noreply.github.com)
+- MeetingComposite: store messages since last time ChatPane was opened ([PR #1386](https://github.com/azure/communication-ui-library/pull/1386) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add file sharing option props to ChatComposite ([PR #1389](https://github.com/azure/communication-ui-library/pull/1389) by anjulgarg@live.com)
+- Changing userId to string in FileUploadHandler ([PR #1455](https://github.com/azure/communication-ui-library/pull/1455) by anjulgarg@live.com)
+- Update visuals of MeetingComposite control bar ([PR #1388](https://github.com/azure/communication-ui-library/pull/1388) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Passes Camera logic from call composite to the local camera switcher button. ([PR #1393](https://github.com/azure/communication-ui-library/pull/1393) by 94866715+dmceachernmsft@users.noreply.github.com)
+- introduced aria roles and strings to chat notifaction icon ([PR #1429](https://github.com/azure/communication-ui-library/pull/1429) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Remove DevicesButton from MeetingComposite ([PR #1438](https://github.com/azure/communication-ui-library/pull/1438) by 82062616+prprabhu-ms@users.noreply.github.com)
+- upgrading nanoid to 3.1.32 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.1)
 

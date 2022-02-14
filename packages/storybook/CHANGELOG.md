@@ -1,8 +1,24 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Mon, 24 Jan 2022 23:18:56 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 23:50:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.1.0)
+
+Mon, 14 Feb 2022 23:50:08 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.1...@internal/storybook_v1.1.0)
+
+### Patches
+
+- Update CameraButton story to show device flyout ([PR #1436](https://github.com/azure/communication-ui-library/pull/1436) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Upgrade @azure/communication-signaling to 1.0.0.beta.12 ([PR #1352](https://github.com/azure/communication-ui-library/pull/1352) by anjulgarg@live.com)
+- Bump @azure/communication-react to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+
+### Changes
+
+- Update MicrophoneButton story to showcase device selection menu ([PR #1392](https://github.com/azure/communication-ui-library/pull/1392) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add docs for split camera and microphone buttons ([PR #1441](https://github.com/azure/communication-ui-library/pull/1441) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.1)
 

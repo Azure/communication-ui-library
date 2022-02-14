@@ -1,8 +1,24 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 23:50:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.1.0)
+
+Mon, 14 Feb 2022 23:50:06 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.1...@internal/chat-component-bindings_v1.1.0)
+
+### Minor changes
+
+- Add options param to sendMessage for sending metadata ([PR #1374](https://github.com/azure/communication-ui-library/pull/1374) by anjulgarg@live.com)
+
+### Patches
+
+- Upgrade @azure/communication-signaling to 1.0.0.beta.12 ([PR #1352](https://github.com/azure/communication-ui-library/pull/1352) by anjulgarg@live.com)
+- Bump @internal/acs-ui-common to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/chat-stateful-client to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+- Bump @internal/react-components to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.1)
 
