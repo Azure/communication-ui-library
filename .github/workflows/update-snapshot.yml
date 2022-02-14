@@ -257,7 +257,7 @@ jobs:
         # Don't run CallAndChat snapshot in stable, CallAndChat is only working in beta
         # TODO: Remove this while CallAndChat is in stable
         if: ${{ matrix.flavor != 'stable' }}
-        run: rushx test:e2e:callAndChat:update
+        run: rushx test:e2e:callandchat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}

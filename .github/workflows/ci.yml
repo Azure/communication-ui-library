@@ -242,12 +242,12 @@ jobs:
       - name: Build Call And Chat Composite Test App
         run: |
           cd packages/react-composites
-          rushx build:e2e:callAndChat
+          rushx build:e2e:callandchat
       - name: Call and Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
           cd packages/react-composites
-          rushx test:e2e:callAndChat
+          rushx test:e2e:callandchat
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
