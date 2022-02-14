@@ -17,6 +17,9 @@ export const suppressIconStyle = {
 export const sendBoxWrapperStyles = mergeStyles({
   margin: '0.25rem',
   overflow: 'hidden',
+  /**
+   * margin-top set for all the child components of sendbox except first
+   */
   ':not(:first-child)': {
     marginTop: '0.25rem'
   }

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add a prop onRenderAttachedFiles for rendering uploaded files in sendbox",
+  "comment": "Add a prop onRenderFileUploads for rendering uploaded files in sendbox",
   "packageName": "@internal/react-components",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
