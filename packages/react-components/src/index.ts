@@ -25,7 +25,6 @@ export type {
   ParticipantAddedSystemMessage,
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
-  ReadReceipt,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,

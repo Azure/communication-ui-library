@@ -173,7 +173,6 @@ export type {
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
   ParticipantsButtonStyles,
-  ReadReceipt,
   ScreenShareButtonProps,
   ScreenShareButtonStrings,
   SendBoxProps,
