@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Created component for ParticipantList and heading",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

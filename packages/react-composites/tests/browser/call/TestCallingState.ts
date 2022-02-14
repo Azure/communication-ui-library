@@ -9,6 +9,7 @@ export type TestCallingState = {
   isScreenSharing?: boolean;
   page?: TestPageState;
   diagnostics?: TestDiagnostics;
+  latestErrors?: AdapterErrors;
 };
 
 /**
@@ -69,3 +70,28 @@ export enum DiagnosticQuality {
  * Value types for {@link DiagnosticValue}
  */
 export type DiagnosticValueType = 'DiagnosticQuality' | 'DiagnosticFlag';
+
+/**
+ * Record of errors to represent latest errors state in {@link TestCallingState}
+ */
+export type AdapterErrors = {
+  [target: string]: AdapterError;
+};
+
+/**
+ * Error value used in {@link AdapterErrors}
+ */
+export interface AdapterError extends Error {
+  /**
+   * The operation that failed.
+   */
+  target: string;
+  /**
+   * Error thrown by the failed operation.
+   */
+  innerError: Error;
+  /**
+   * Timestamp added to the error in the adapter implementation.
+   */
+  timestamp: Date;
+}

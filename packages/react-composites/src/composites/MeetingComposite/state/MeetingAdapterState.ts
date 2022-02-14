@@ -4,6 +4,7 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+import { AdapterErrors } from '../../common/adapters';
 import { callPageToCallAndChatPage, CallAndChatCompositePage } from './MeetingCompositePage';
 import {
   meetingStateFromBackingStates,
@@ -34,6 +35,10 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
   displayName: string | undefined;
   /** State of the current Meeting. */
   meeting: MeetingState | undefined;
+  /** Latest call error encountered for each operation performed via the adapter. */
+  latestCallErrors: AdapterErrors;
+  /** Latest chat error encountered for each operation performed via the adapter. */
+  latestChatErrors: AdapterErrors;
 }
 
 /**
@@ -67,7 +72,9 @@ export function meetingAdapterStateFromBackingStates(
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
-    isTeamsCall: callAdapterState.isTeamsCall
+    isTeamsCall: callAdapterState.isTeamsCall,
+    latestCallErrors: callAdapterState.latestErrors,
+    latestChatErrors: chatAdapterState.latestErrors
   };
 }
 
@@ -106,6 +113,8 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
     devices: callAdapterState.devices,
     meeting: newMeetingState,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
-    isTeamsCall: callAdapterState.isTeamsCall
+    isTeamsCall: callAdapterState.isTeamsCall,
+    latestCallErrors: callAdapterState.latestErrors,
+    latestChatErrors: meetingAdapterState.latestChatErrors
   };
 }

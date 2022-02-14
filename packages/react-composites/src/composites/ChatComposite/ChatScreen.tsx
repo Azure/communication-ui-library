@@ -41,7 +41,8 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-import { FileUpload, FileUploadHandler } from './file-sharing';
+import { FileDownloadHandler, FileUpload, FileUploadHandler } from './file-sharing';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -90,6 +91,12 @@ export interface FileSharingOptions {
    * @beta
    */
   uploadHandler: FileUploadHandler;
+  /**
+   * A function of type {@link FileDownloadHandler} for handling file downloads.
+   * If the function is not specified, the file's `url` will be opened in a new tab to
+   * initiate the download.
+   */
+  downloadHandler?: FileDownloadHandler;
 }
 
 /**
@@ -136,6 +143,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = (files: FileList | null): void => {
     if (!files) {
@@ -144,7 +152,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
-    fileSharing?.uploadHandler(adapter.getState().userId, fileUploads);
+    fileSharing?.uploadHandler(userId, fileUploads);
   };
 
   return (

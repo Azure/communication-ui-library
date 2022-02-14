@@ -4,7 +4,7 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  createAzureCommunicationMeetingAdapter,
+  createAzureCommunicationCallAndChatAdapter,
   toFlatCommunicationIdentifier,
   CallAndChatLocator,
   CallAndChatAdapter,
@@ -55,6 +55,11 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         endpoint,
         callAndChat: locator
+      });
+      adapter.on('error', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
       });
       adapter.onStateChange((state: CallAndChatAdapterState) => {
         const pageTitle = convertPageStateToString(state);
