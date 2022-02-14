@@ -54,7 +54,7 @@ export const CallAndChatScreen = (props: CallAndChatScreenProps): JSX.Element =>
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         endpoint,
-        callAndChatLocators: locator
+        locator: locator
       });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could

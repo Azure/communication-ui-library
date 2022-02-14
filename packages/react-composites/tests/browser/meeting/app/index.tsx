@@ -43,7 +43,7 @@ function App(): JSX.Element {
         displayName,
         credential,
         endpoint,
-        callAndChatLocators: {
+        locator: {
           callLocator: { groupId: groupId },
           chatThreadId: threadId
         }

@@ -15,7 +15,7 @@ export type CallAndChatExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
-  callAndChatLocator: TeamsMeetingLinkLocator | CallAndChatLocator;
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   callAndChatControlOptions?: boolean | CallAndChatControlOptions;
@@ -34,14 +34,14 @@ export const CallAndChatExperience = (props: CallAndChatExampleProps): JSX.Eleme
   }, [props.token]);
 
   useEffect(() => {
-    if (props && credential && props.callAndChatLocator && props.displayName && props.userId && props.endpointUrl) {
+    if (props && credential && props.locator && props.displayName && props.userId && props.endpointUrl) {
       const createAdapters = async (): Promise<void> => {
         setCallAndChatAdapter(
           await createAzureCommunicationCallAndChatAdapter({
             userId: props.userId,
             displayName: props.displayName,
             credential,
-            callAndChatLocators: props.callAndChatLocator,
+            locator: props.locator,
             endpoint: props.endpointUrl
           })
         );

@@ -30,7 +30,7 @@ const BasicStory = (args, context): JSX.Element => {
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          callAndChatLocator: {
+          locator: {
             callLocator,
             chatThreadId
           },

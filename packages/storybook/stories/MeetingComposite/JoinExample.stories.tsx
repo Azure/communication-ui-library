@@ -23,7 +23,7 @@ const JoinTeamsMeetingStory = (args, context): JSX.Element => {
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          callAndChatLocator: { meetingLink: args.teamsMeetingLink }
+          locator: { meetingLink: args.teamsMeetingLink }
         });
       } else {
         setMeetingProps(undefined);
