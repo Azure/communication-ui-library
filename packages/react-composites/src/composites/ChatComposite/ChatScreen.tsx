@@ -24,8 +24,9 @@ import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-/* @conditional-compile-remove-from(stable) */
-import { FileCard, FileCardGroup, truncatedFileName, extension, FileUpload, FileUploadHandler } from './file-sharing';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadCards } from './file-sharing';
+import { FileUpload, FileUploadHandler } from './file-sharing';
 
 import {
   chatArea,
@@ -45,10 +46,7 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ParticipantList } from '@internal/react-components';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { Icon } from '@fluentui/react';
 import { FileDownloadHandler } from './file-sharing';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -155,24 +153,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   const onRenderFileUploads = (): JSX.Element => {
     const uploadedFiles = uploadedFilesSelector.files;
-    const truncateLength = 15;
-    return (
-      <FileCardGroup>
-        {uploadedFiles &&
-          uploadedFiles.map((file) => (
-            <FileCard
-              fileName={truncatedFileName(file.filename, truncateLength)}
-              progress={file.progress}
-              key={file.id}
-              fileExtension={extension(file.filename)}
-              actionIcon={<Icon iconName="Cancel" />}
-              actionHandler={() => {
-                adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
-              }}
-            />
-          ))}
-      </FileCardGroup>
-    );
+    return <FileUploadCards uploadedFiles={uploadedFiles} />;
   };
 
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);

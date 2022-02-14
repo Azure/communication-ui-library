@@ -3,7 +3,13 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import { sendBoxStyle, sendButtonStyle, sendIconStyle, sendBoxWrapperStyles } from './styles/SendBox.styles';
+import {
+  sendBoxStyle,
+  sendButtonStyle,
+  sendIconStyle,
+  sendBoxWrapperStyles,
+  borderAndBoxShadowStyle
+} from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -183,27 +189,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
-  const borderAndBoxShadowStyle = {
-    borderRadius: theme.effects.roundedCorner4,
-    border: `0.0625rem solid ${theme.palette.neutralSecondary}`,
-    ':hover': {
-      border: '2px solid',
-      borderColor: theme.palette.blue
-    },
-    ':active': {
-      border: '2px solid',
-      borderColor: theme.palette.blue
-    },
-    ':focus': {
-      border: '2px solid',
-      borderColor: theme.palette.blue
-    },
-    ':focus-within': {
-      border: '2px solid',
-      borderColor: theme.palette.blue
-    }
-  };
-
   const hasText = !!textValue;
   const mergedSendIconStyle = useMemo(
     () =>
@@ -228,7 +213,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack className={mergeStyles(borderAndBoxShadowStyle, sendBoxWrapperStyles)}>
+    <Stack className={mergeStyles(borderAndBoxShadowStyle(theme), sendBoxWrapperStyles)}>
       <InputBoxComponent
         autoFocus={autoFocus}
         data-ui-id={ids.sendboxTextField}

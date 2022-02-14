@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, IStyle, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -54,3 +54,29 @@ export const fileCardBoxStyle = mergeStyles({
   width: '100%',
   padding: '0.50rem'
 });
+
+/**
+ * @private
+ */
+export const borderAndBoxShadowStyle = (theme: Theme): IStyle => {
+  return {
+    borderRadius: theme.effects.roundedCorner4,
+    border: `0.0625rem solid ${theme.palette.neutralSecondary}`,
+    ':hover': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    },
+    ':active': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    },
+    ':focus': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    },
+    ':focus-within': {
+      border: '2px solid',
+      borderColor: theme.palette.blue
+    }
+  };
+};
