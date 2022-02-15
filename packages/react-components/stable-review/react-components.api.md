@@ -339,7 +339,7 @@ export interface _DrawerMenuItemProps {
     // (undocumented)
     iconProps?: IIconProps;
     // (undocumented)
-    key: string;
+    itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
     // (undocumented)

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FocusZone, FocusZoneTabbableElements, merge, Stack } from '@fluentui/react';
+import { merge, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
 import { useTheme } from '../../theming/FluentThemeProvider';
@@ -86,7 +86,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
       styles={props.styles?.drawerSurfaceStyles}
       onLightDismiss={props.onLightDismiss}
     >
-      <Stack styles={props.styles}>
+      <Stack styles={props.styles} role="menu">
         {menuItems.slice(0, 1).map((item) => (
           <DrawerMenuItem {...item} key={0} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
         ))}
