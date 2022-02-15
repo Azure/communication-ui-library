@@ -525,7 +525,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
-    readByTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
