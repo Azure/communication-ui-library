@@ -27,7 +27,7 @@ export interface MessageStatusIndicatorStrings {
   /** Text to display in the seen message icon tooltip if read number/ participant number is 1 */
   seenTooltipText: string;
   /** Text to display in the seen message icon tooltip if read number logic is working correctly (more than 1 read number and more than 1 particiants)*/
-  readByTooltipText: string;
+  readByTooltipText?: string;
   /** Aria label to notify user when their message is being sent. */
   sendingAriaLabel?: string;
   /** Text to display in the sending message icon tooltip. */
@@ -119,7 +119,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             messageThreadReadCount === 0 ||
             (participantCountNotIncludingSelf && participantCountNotIncludingSelf <= 0) ||
             !messageThreadReadCount ||
-            !participantCountNotIncludingSelf
+            !participantCountNotIncludingSelf ||
+            strings.readByTooltipText === undefined
               ? strings.seenTooltipText
               : _formatString(strings.readByTooltipText, {
                   messageThreadReadCount: `${messageThreadReadCount}`,

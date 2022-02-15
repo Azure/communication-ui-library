@@ -512,9 +512,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    // (undocumented)
     messageThreadReadCount?: number;
-    // (undocumented)
     participantCountNotIncludingSelf?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
