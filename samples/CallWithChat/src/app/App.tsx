@@ -94,7 +94,7 @@ const App = (): JSX.Element => {
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <CallWithChatScreen
+        <CallScreen
           token={callWithChatArgs.credentials.token}
           userId={callWithChatArgs.credentials.userId}
           displayName={callWithChatArgs.displayName}
