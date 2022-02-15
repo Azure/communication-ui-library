@@ -48,6 +48,7 @@
     "peoplePaneTitle": "Люди",
     "peoplePaneSubTitle": "В этом звонке",
     "chatPaneTitle": "Чат",
+    "chatButtonNewMessageNotificationLabel": "Новое сообщение",
     "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова."
   }
 }

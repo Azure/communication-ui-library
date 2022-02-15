@@ -48,6 +48,7 @@
     "peoplePaneTitle": "Personnes",
     "peoplePaneSubTitle": "Pendant cet appel",
     "chatPaneTitle": "Clavardage",
+    "chatButtonNewMessageNotificationLabel": "Nouveau message",
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel."
   }
 }

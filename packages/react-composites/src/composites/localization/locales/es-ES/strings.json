@@ -48,6 +48,7 @@
     "peoplePaneTitle": "Contactos",
     "peoplePaneSubTitle": "En esta llamada",
     "chatPaneTitle": "Chat",
+    "chatButtonNewMessageNotificationLabel": "Nuevo mensaje",
     "pictureInPictureTileAriaLabel": "Fuentes de vídeo. Hacer clic para volver a la pantalla de la llamada."
   }
 }

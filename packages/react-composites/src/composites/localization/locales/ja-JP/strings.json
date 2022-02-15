@@ -48,6 +48,7 @@
     "peoplePaneTitle": "ユーザー",
     "peoplePaneSubTitle": "この通話で",
     "chatPaneTitle": "チャット",
+    "chatButtonNewMessageNotificationLabel": "新規メッセージ",
     "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。"
   }
 }
