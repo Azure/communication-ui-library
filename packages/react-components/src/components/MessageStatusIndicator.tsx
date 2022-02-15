@@ -115,7 +115,9 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
             (messageThreadReadCount === 1 && participantCountNotIncludingSelf === 1) ||
             messageThreadReadCount === 0 ||
-            participantCountNotIncludingSelf === 0
+            participantCountNotIncludingSelf === 0 ||
+            !messageThreadReadCount ||
+            !participantCountNotIncludingSelf
               ? strings.seenTooltipText
               : _formatString(strings.readByTooltipText, {
                   messageThreadReadCount: `${messageThreadReadCount}`,
