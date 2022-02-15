@@ -6,6 +6,7 @@ export * from './FileDownloadHandler';
 export * from './FileUpload';
 export * from './FileUploadButton';
 export * from './FileUploadHandler';
+export * from './utils';
 
 /**
  * Metadata used for setting uploaded files by a user using chat composite in a group call.
