@@ -134,7 +134,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
   (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
     // get number of participants
     // filter out the non valid participants (no display name)
-    const messageThreadParticipantCount = Object.values(participants).filter((p) => p.displayName !== undefined).length;
+    const messageThreadParticipantCount = Object.values(participants).filter(
+      (p) => p.displayName && p.displayName !== ''
+    ).length;
 
     // creating a key value pair of senderID: last read message information
     const readReceiptForEachSender = {};
