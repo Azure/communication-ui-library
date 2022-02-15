@@ -21,7 +21,12 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/FileUploadButton';
+import {
+  FileUploadButtonWrapper as FileUploadButton,
+  FileUpload,
+  FileUploadHandler,
+  FileDownloadHandler
+} from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -44,7 +49,9 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-import { FileUpload, FileUploadHandler } from './file-sharing';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadCards } from './FileUploadCards';
 
 /**
  * @private
@@ -93,6 +100,12 @@ export interface FileSharingOptions {
    * @beta
    */
   uploadHandler: FileUploadHandler;
+  /**
+   * A function of type {@link FileDownloadHandler} for handling file downloads.
+   * If the function is not specified, the file's `url` will be opened in a new tab to
+   * initiate the download.
+   */
+  downloadHandler?: FileDownloadHandler;
 }
 
 /**
@@ -178,15 +191,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = (files: FileList | null): void => {
     if (!files) {
       return;
     }
+
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
     adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
-    fileSharing?.uploadHandler(adapter.getState().userId, fileUploads);
+    fileSharing?.uploadHandler(userId, fileUploads);
   };
 
   return (
@@ -211,7 +226,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
+            <SendBox
+              {...sendBoxProps}
+              /* @conditional-compile-remove-from(stable): FILE_SHARING */
+              onRenderFileUploads={() => <FileUploadCards />}
+              autoFocus={options?.autoFocus}
+              styles={sendBoxStyles}
+            />
+
             <FileUploadButton
               accept={fileSharing?.accept}
               multiple={fileSharing?.multiple}

@@ -4,12 +4,12 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  createAzureCommunicationMeetingAdapter,
+  createAzureCommunicationCallWithChatAdapter,
   toFlatCommunicationIdentifier,
   CallAndChatLocator,
-  MeetingAdapter,
-  MeetingAdapterState,
-  MeetingComposite
+  CallWithChatAdapter,
+  CallWithChatAdapterState,
+  CallWithChatComposite
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,19 +20,19 @@ import { WEB_APP_TITLE } from '../utils/constants';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
-export interface MeetingScreenProps {
+export interface CallWithChatScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
-export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
-  const { token, userId, displayName, endpoint, meetingLocator } = props;
-  const [adapter, setAdapter] = useState<MeetingAdapter>();
+export const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
+  const { token, userId, displayName, endpoint, locator } = props;
+  const [adapter, setAdapter] = useState<CallWithChatAdapter>();
   const callIdRef = useRef<string>();
-  const adapterRef = useRef<MeetingAdapter>();
+  const adapterRef = useRef<CallWithChatAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
@@ -45,23 +45,33 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      if (!userId || !displayName || !meetingLocator || !token || !endpoint) {
+      if (!userId || !displayName || !locator || !token || !endpoint) {
         return;
       }
 
-      const adapter = await createAzureCommunicationMeetingAdapter({
+      const adapter = await createAzureCommunicationCallWithChatAdapter({
         userId,
         displayName,
         credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         endpoint,
-        meetingLocator
+        locator: locator
       });
-      adapter.onStateChange((state: MeetingAdapterState) => {
+      adapter.on('callError', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
+      adapter.on('chatError', (e) => {
+        // Error is already acted upon by the Chat composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
+      adapter.onStateChange((state: CallWithChatAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
-        if (state?.meeting?.id && callIdRef.current !== state?.meeting?.id) {
-          callIdRef.current = state?.meeting?.id;
+        if (state?.call?.id && callIdRef.current !== state?.call?.id) {
+          callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
       });
@@ -72,31 +82,31 @@ export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [displayName, token, userId, meetingLocator, endpoint]);
+  }, [displayName, token, userId, locator, endpoint]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
   return (
-    <MeetingComposite
-      meetingAdapter={adapter}
+    <CallWithChatComposite
+      callWithChatAdapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      meetingInvitationURL={window.location.href}
+      joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
 };
 
-const convertPageStateToString = (state: MeetingAdapterState): string => {
+const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';
-    case 'leftMeeting':
-      return 'end meeting';
-    case 'removedFromMeeting':
-      return 'end meeting';
+    case 'leftCall':
+      return 'end call';
+    case 'removedFromCall':
+      return 'end call';
     default:
       return `${state.page}`;
   }

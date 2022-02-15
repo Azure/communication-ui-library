@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@azure/communication-chat": "1.1.0",
-    "@azure/communication-common": "1.0.0",
+    "@azure/communication-common": "1.1.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.0.1-beta.2",
     "@azure/communication-signaling": "1.0.0-beta.12",
@@ -41,7 +41,8 @@
     "react-aria-live": "^2.0.5",
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
-    "reselect": "~4.0.0"
+    "reselect": "~4.0.0",
+    "@fluentui/react-file-type-icons": "~8.5.8"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
