@@ -1,10 +1,10 @@
 dependencies:
   '@azure/communication-calling': 1.3.2-beta.1
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
-  '@rush-temp/callwithchat': file:projects/callwithchat.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz
+  '@rush-temp/callwithchat': file:projects/callwithchat.tgz
   '@rush-temp/chat': file:projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
@@ -18886,76 +18886,6 @@ packages:
       integrity: sha512-lXd2fiEoVRoqBsDcP3ZajCt1BLY0GkSKoKYx7lI2RQHvkoYkhIe8ynUHJXWf7TMOnzkv6nKsv8h7u0d+vDW2/Q==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
-  file:projects/callwithchat.tgz:
-    dependencies:
-      '@azure/communication-calling': 1.3.2
-      '@azure/communication-chat': 1.1.0
-      '@azure/communication-common': 1.1.0
-      '@azure/communication-identity': 1.0.0
-      '@azure/core-http': 1.2.4
-      '@azure/logger': 1.0.3
-      '@babel/core': 7.16.5
-      '@babel/preset-env': 7.13.10_@babel+core@7.16.5
-      '@babel/preset-react': 7.14.5_@babel+core@7.16.5
-      '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
-      '@fluentui/react-icons': 1.1.137
-      '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
-      '@types/jest': 26.0.24
-      '@types/node': 14.17.9
-      '@types/react': 16.14.13
-      '@types/react-dom': 16.9.14
-      '@types/uuid': 8.3.1
-      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
-      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
-      ajv: 6.12.6
-      babel-eslint: 10.1.0_eslint@7.32.0
-      babel-jest: 26.6.3_@babel+core@7.16.5
-      babel-loader: 8.1.0_d2cf782a6a3ef7f12832dd3c8e9943a9
-      concurrently: 5.3.0
-      copyfiles: 2.4.1
-      cross-env: 7.0.3
-      css-loader: 4.3.0_webpack@5.38.1
-      eslint: 7.32.0
-      eslint-config-prettier: 6.15.0_eslint@7.32.0
-      eslint-config-react-app: 6.0.0_82666de81919be5d252925df007529ed
-      eslint-plugin-flowtype: 5.9.0_eslint@7.32.0
-      eslint-plugin-header: 3.1.1_eslint@7.32.0
-      eslint-plugin-import: 2.22.1_eslint@7.32.0
-      eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
-      eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
-      eslint-plugin-react: 7.24.0_eslint@7.32.0
-      eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
-      html-webpack-plugin: 5.3.2_webpack@5.38.1
-      husky: 4.3.8
-      jest: 26.6.0
-      jest-junit: 12.2.0
-      jquery: 3.6.0
-      merge: 2.1.1
-      mobile-detect: 1.4.5
-      prettier: 2.3.1
-      pretty-quick: 3.1.1_prettier@2.3.1
-      react: 16.14.0
-      react-dom: 16.13.1_react@16.14.0
-      react-router-dom: 5.2.0_react@16.14.0
-      react-test-renderer: 16.14.0_react@16.14.0
-      reactstrap: 8.9.0_react-dom@16.13.1+react@16.14.0
-      reselect: 4.0.0
-      rimraf: 2.7.1
-      source-map-explorer: 2.5.2
-      style-loader: 2.0.0_webpack@5.38.1
-      ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
-      typescript: 4.3.5
-      url-loader: 4.1.1_webpack@5.38.1
-      uuid: 8.3.2
-      webpack: 5.38.1_webpack-cli@4.7.2
-      webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
-      webpack-dev-server: 3.11.2_webpack-cli@4.7.2+webpack@5.38.1
-    dev: false
-    name: '@rush-temp/callwithchat'
-    resolution:
-      integrity: sha512-eHaj6XmA8lO5YIX+sAilzbrdJhUUJ1g52GR63plca56r90JuzLwjgo/ZSyUVtQoNf/Ruh2vxeQ4oWTGqBMdINw==
-      tarball: file:projects/callwithchat.tgz
-    version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
       '@azure/communication-calling': 1.3.2
@@ -19111,6 +19041,76 @@ packages:
       integrity: sha512-OFXxugcdWdE+Uq/IWr5P5oa1PZ84sTR0SeI+pBdl4CoicLZsE6y9NiXdPwCohpxTm3G8bGwlSxQkUhs2lPp+Sg==
       tarball: file:projects/calling.tgz
     version: 0.0.0
+  file:projects/callwithchat.tgz:
+    dependencies:
+      '@azure/communication-calling': 1.3.2
+      '@azure/communication-chat': 1.1.0
+      '@azure/communication-common': 1.1.0
+      '@azure/communication-identity': 1.0.0
+      '@azure/core-http': 1.2.4
+      '@azure/logger': 1.0.3
+      '@babel/core': 7.16.5
+      '@babel/preset-env': 7.13.10_@babel+core@7.16.5
+      '@babel/preset-react': 7.14.5_@babel+core@7.16.5
+      '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-icons': 1.1.137
+      '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/jest': 26.0.24
+      '@types/node': 14.17.9
+      '@types/react': 16.14.13
+      '@types/react-dom': 16.9.14
+      '@types/uuid': 8.3.1
+      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
+      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      ajv: 6.12.6
+      babel-eslint: 10.1.0_eslint@7.32.0
+      babel-jest: 26.6.3_@babel+core@7.16.5
+      babel-loader: 8.1.0_d2cf782a6a3ef7f12832dd3c8e9943a9
+      concurrently: 5.3.0
+      copyfiles: 2.4.1
+      cross-env: 7.0.3
+      css-loader: 4.3.0_webpack@5.38.1
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0_eslint@7.32.0
+      eslint-config-react-app: 6.0.0_82666de81919be5d252925df007529ed
+      eslint-plugin-flowtype: 5.9.0_eslint@7.32.0
+      eslint-plugin-header: 3.1.1_eslint@7.32.0
+      eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
+      eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      eslint-plugin-react: 7.24.0_eslint@7.32.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
+      html-webpack-plugin: 5.3.2_webpack@5.38.1
+      husky: 4.3.8
+      jest: 26.6.0
+      jest-junit: 12.2.0
+      jquery: 3.6.0
+      merge: 2.1.1
+      mobile-detect: 1.4.5
+      prettier: 2.3.1
+      pretty-quick: 3.1.1_prettier@2.3.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      react-router-dom: 5.2.0_react@16.14.0
+      react-test-renderer: 16.14.0_react@16.14.0
+      reactstrap: 8.9.0_react-dom@16.13.1+react@16.14.0
+      reselect: 4.0.0
+      rimraf: 2.7.1
+      source-map-explorer: 2.5.2
+      style-loader: 2.0.0_webpack@5.38.1
+      ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
+      typescript: 4.3.5
+      url-loader: 4.1.1_webpack@5.38.1
+      uuid: 8.3.2
+      webpack: 5.38.1_webpack-cli@4.7.2
+      webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
+      webpack-dev-server: 3.11.2_webpack-cli@4.7.2+webpack@5.38.1
+    dev: false
+    name: '@rush-temp/callwithchat'
+    resolution:
+      integrity: sha512-sMzcgul4yzaK5+huVMS6Q+73zFnN0tzyjOpaFlwBYSbOwpBx6symWE+WQO9HReNRzJHO4zEsaf/sEz/WRY94BQ==
+      tarball: file:projects/callwithchat.tgz
+    version: 0.0.0
   file:projects/chat-component-bindings.tgz:
     dependencies:
       '@azure/communication-chat': 1.1.0
@@ -19201,6 +19201,7 @@ packages:
       '@azure/logger': 1.0.3
       '@babel/core': 7.16.5
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
@@ -19256,7 +19257,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-gGCq0C++mkl6mGZDRJzgXqJKcT3PV1sajBKtPmCBShWEM1fM4klHQluxDZSBxtC0FdZXn4Zt1BjNiOUHA1mmiA==
+      integrity: sha512-0sDSKNEuUV4uq0mc8kOG5IGrNziM6FRUFzeUeydnudguUFZzeh2nq1w+ECGRlShKq99ToqpJPTn0R3J0LZS48w==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19865,10 +19866,10 @@ packages:
 specifiers:
   '@azure/communication-calling': 1.3.2-beta.1
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
-  '@rush-temp/callwithchat': file:./projects/callwithchat.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz
+  '@rush-temp/callwithchat': file:./projects/callwithchat.tgz
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:./projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
