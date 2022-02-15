@@ -46,7 +46,9 @@
     "peopleButtonLabel": "Personen",
     "chatButtonLabel": "Chatten",
     "peoplePaneTitle": "Personen",
-    "peoplePaneSubTitle": "In deze vergadering",
-    "chatPaneTitle": "Chatten"
+    "peoplePaneSubTitle": "In dit gesprek",
+    "chatPaneTitle": "Chatten",
+    "chatButtonNewMessageNotificationLabel": "Nieuw bericht",
+    "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm."
   }
 }

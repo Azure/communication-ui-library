@@ -46,7 +46,9 @@
     "peopleButtonLabel": "人员",
     "chatButtonLabel": "聊天",
     "peoplePaneTitle": "人员",
-    "peoplePaneSubTitle": "在此会议中",
-    "chatPaneTitle": "聊天"
+    "peoplePaneSubTitle": "在此通话中",
+    "chatPaneTitle": "聊天",
+    "chatButtonNewMessageNotificationLabel": "新建消息",
+    "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。"
   }
 }

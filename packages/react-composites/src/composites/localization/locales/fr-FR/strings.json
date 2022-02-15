@@ -46,7 +46,9 @@
     "peopleButtonLabel": "Personnes",
     "chatButtonLabel": "Clavardage",
     "peoplePaneTitle": "Personnes",
-    "peoplePaneSubTitle": "Dans cette réunion",
-    "chatPaneTitle": "Clavardage"
+    "peoplePaneSubTitle": "Pendant cet appel",
+    "chatPaneTitle": "Clavardage",
+    "chatButtonNewMessageNotificationLabel": "Nouveau message",
+    "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel."
   }
 }
