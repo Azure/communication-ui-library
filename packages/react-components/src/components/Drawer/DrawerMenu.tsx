@@ -85,16 +85,21 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
 const bindSubmenuHandlerToItemIfApplicable = (
   item: _DrawerMenuItemProps,
   subMenuCallback: (newItems: _DrawerMenuItemProps[]) => void
-): (() => void) | undefined => {
+):
+  | ((
+      ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey?: string | undefined
+    ) => void)
+  | undefined => {
   if (!item.subMenuProps) {
     return item.onItemClick;
   }
 
-  return () => {
+  return (ev, itemKey) => {
     if (item.subMenuProps) {
       subMenuCallback(item.subMenuProps);
     }
     // Still perform any onItemClick in addition to handling transform into sub menu
-    item.onItemClick && item.onItemClick();
+    item.onItemClick && item.onItemClick(ev, itemKey);
   };
 };
