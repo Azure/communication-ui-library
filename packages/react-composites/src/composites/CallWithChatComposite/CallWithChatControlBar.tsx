@@ -23,7 +23,7 @@ import { EndCall } from '../CallComposite/components/buttons/EndCall';
 /**
  * @private
  */
-export interface CallWithChatCallControlBarProps {
+export interface CallWithChatControlBarProps {
   callAdapter: CallAdapter;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
@@ -59,7 +59,7 @@ const inferCallWithChatControlOptions = (
 /**
  * @private
  */
-export const CallWithChatCallControlBar = (props: CallWithChatCallControlBarProps): JSX.Element => {
+export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.Element => {
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);

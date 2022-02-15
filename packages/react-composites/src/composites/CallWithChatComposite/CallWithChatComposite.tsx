@@ -6,7 +6,7 @@ import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
-import { CallWithChatCallControlBar } from './CallWithChatCallControlBar';
+import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
@@ -178,7 +178,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       </Stack>
       {(isInLobbyOrConnecting || hasJoinedCall) && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
-          <CallWithChatCallControlBar
+          <CallWithChatControlBar
             callAdapter={callAdapter}
             chatAdapter={chatProps.adapter}
             chatButtonChecked={showChat}

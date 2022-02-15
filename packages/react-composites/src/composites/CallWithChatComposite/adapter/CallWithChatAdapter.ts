@@ -126,7 +126,7 @@ export interface CallWithChatAdapter
     CallWithChatAdapterSubscriptions {}
 
 /**
- * Events fired off by the {@link ChatAndCallAdapter}
+ * Events fired off by the {@link CallWithChatAdapter}
  * @beta
  */
 export type CallWithChatEvent =
