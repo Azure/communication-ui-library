@@ -16,8 +16,6 @@ import { ChatAdapterState } from './ChatAdapter';
  * @beta
  */
 export type FileUploadsUiState = Record<string, FileUploadState>;
-
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * @beta
  */
