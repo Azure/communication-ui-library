@@ -9,6 +9,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { Stack } from '@fluentui/react';
+import { chatMessageWrapperStyle } from '../styles/ChatMessageComponent.styles';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -27,7 +28,8 @@ type ChatMessageComponentProps = {
    * Optional callback to render uploaded files in the message component.
    * @beta
    */
-  onRenderAttachedFiles?: (message) => JSX.Element;
+  onRenderAttachedFiles?: (userID, message) => JSX.Element;
+  userId?: string;
 };
 
 /**
@@ -67,11 +69,11 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     );
   } else {
     return (
-      <Stack>
+      <Stack className={chatMessageWrapperStyle}>
         <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />
         {
           /* @conditional-compile-remove-from(stable): FILE_SHARING */
-          props.onRenderAttachedFiles && props.onRenderAttachedFiles(props.message)
+          props.onRenderAttachedFiles && props.onRenderAttachedFiles(props.userId, props.message)
         }
       </Stack>
     );

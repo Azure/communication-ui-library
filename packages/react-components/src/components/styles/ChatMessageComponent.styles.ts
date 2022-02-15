@@ -81,3 +81,12 @@ export const menuIconStyleSet = {
     width: '1.25rem'
   }
 };
+
+/**
+ * @private
+ */
+export const chatMessageWrapperStyle = mergeStyles({
+  minWidth: 'auto',
+  background: '#C7E0F4',
+  padding: '0.25rem'
+});

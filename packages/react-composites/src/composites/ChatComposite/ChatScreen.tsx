@@ -25,6 +25,9 @@ import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing/File
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
+/* @conditional-compile-remove-from(stable) */
+import { FileCard, FileCardGroup } from './file-sharing';
+
 import {
   chatArea,
   chatContainer,
@@ -134,9 +137,43 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onRenderUploadedFiles = (userId, message): JSX.Element => {
-    console.log(userId);
-    console.log(message);
-    return <div>abcc</div>;
+    const uploadedFiles = [
+      {
+        filename: 'abc.pdf',
+        extension: 'pdf',
+        id: 0,
+        progress: 1
+      },
+      {
+        filename: 'abc.pdf',
+        extension: 'pdf',
+        id: 0,
+        progress: 1
+      },
+      {
+        filename: 'abc.pdf',
+        extension: 'pdf',
+        id: 0,
+        progress: 1
+      }
+    ];
+    return (
+      <FileCardGroup>
+        {uploadedFiles &&
+          uploadedFiles.map((file) => (
+            <FileCard
+              fileName={file.filename}
+              progress={file.progress}
+              key={file.id}
+              fileExtension={file.extension}
+              // actionIcon={<Icon iconName="Cancel" />}
+              // actionHandler={() => {
+              //   adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
+              // }}
+            />
+          ))}
+      </FileCardGroup>
+    );
   };
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
