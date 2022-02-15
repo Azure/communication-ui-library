@@ -214,7 +214,7 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
  * Following the general guidelines stated above, we achieve this as follows:
  * - Unconditionally add the new type
  *   - Conditionally export the new type in the public API.
- * - Conditionally adding the new class method that uses the conditionally exposed type.
+ * - Conditionally add the new class method that uses the conditionally exposed type.
  * - In the @public method, extract a simple helper function that detects whether the @beta method should be called.
  *   The implementation of this function uses conditional compilation.
  *   - Call the method if needed. Because the method and type are defined unconditionally, no conditional
