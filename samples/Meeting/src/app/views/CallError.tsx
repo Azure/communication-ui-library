@@ -23,10 +23,10 @@ export interface CallErrorProps {
   homeHandler(): void;
 }
 
-export const CallError = (props: CallErrorProps): JSX.Element => {
-  const goHomePage = 'Go to Homepage';
-  const rejoinMeeting = 'Retry Meeting';
+const GO_TO_HOMEPAGE_TEXT = 'Go to Homepage';
+const REJOIN_CALL_BUTTON_LABEL = 'Retry Call';
 
+export const CallError = (props: CallErrorProps): JSX.Element => {
   return (
     <Stack
       horizontal
@@ -44,14 +44,14 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
           <PrimaryButton
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={rejoinMeeting}
+            text={REJOIN_CALL_BUTTON_LABEL}
             onClick={props.rejoinHandler}
             onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />}
           />
           <DefaultButton
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={goHomePage}
+            text={GO_TO_HOMEPAGE_TEXT}
             onClick={props.homeHandler}
           />
         </Stack>

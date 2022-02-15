@@ -60,11 +60,11 @@ jobs:
           publish-profile: ${{ secrets.AZURE_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
 
-      - name: Package Meeting Sample Artifact
+      - name: Package CallWithChat Sample Artifact
         run: rushx package
         working-directory: ./samples/Meeting
 
-      - name: 'Deploy Meeting Sample WebApp'
+      - name: 'Deploy CallWithChat Sample WebApp'
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-meeting-hero
