@@ -891,9 +891,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       <MessageStatusIndicator
         status={status}
         messageThreadReadCount={messageThreadReadCount}
-        // if messageThreadParticipantCount is less than or equal to 0, we have a bug, set it to 0
         // -1 because participant count does not include myself
-        participantCountNotIncludingSelf={messageThreadParticipantCount > 0 ? messageThreadParticipantCount - 1 : 0}
+        participantCountNotIncludingSelf={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
       />
     ),
     []
