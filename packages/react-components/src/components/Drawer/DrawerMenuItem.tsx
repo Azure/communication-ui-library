@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IIconProps, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
+import { Icon, IIconProps, IRawStyle, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -29,7 +29,7 @@ export interface _DrawerMenuItemProps {
  * @private
  */
 export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
-  const palette = useTheme().palette;
+  const theme = useTheme();
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
     props.onItemClick && props.onItemClick(ev, props.key);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
@@ -38,7 +38,10 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     <Stack
       tabIndex={0}
       horizontal
-      className={mergeStyles(drawerMenuItemRootStyles(palette.neutralLight), props.styles?.root)}
+      className={mergeStyles(
+        drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
+        props.styles?.root
+      )}
       onKeyPress={onKeyPress}
       onClick={onClick}
       tokens={menuItemChildrenGap}
@@ -65,10 +68,10 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
 
 const menuItemChildrenGap = { childrenGap: '0.5rem' };
 
-const drawerMenuItemRootStyles = (hoverBackground: string): IStyle => ({
+const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle): IStyle => ({
+  ...fontSize,
   height: '3rem',
   lineHeight: '3rem',
-  fontSize: '1rem',
   padding: '0rem 0.75rem',
   cursor: 'pointer',
   ':hover, :focus': {
