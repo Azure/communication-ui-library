@@ -46,7 +46,9 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
+  /** how many people have read the message */
   messageThreadReadCount?: number;
+  /** number of participants not including myself */
   participantCountNotIncludingSelf?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.

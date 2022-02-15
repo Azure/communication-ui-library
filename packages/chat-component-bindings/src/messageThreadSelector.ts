@@ -180,10 +180,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             const readTime = readReceiptForEachSender[k]['readOn'];
             if (messageid === message.id) {
               readNumber += 1;
-            } else {
-              if (new Date(readTime) >= new Date(message.createdOn)) {
-                readNumber += 1;
-              }
+            } else if (new Date(readTime) >= new Date(message.createdOn)) {
+              readNumber += 1;
             }
           }
 
