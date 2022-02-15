@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { Icon, IIconProps, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -13,7 +13,7 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
  * @internal
  */
 export interface _DrawerMenuItemProps {
-  onItemClick?: () => void;
+  onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
   key: string;
   text?: string;
   iconProps?: IIconProps;
@@ -30,26 +30,27 @@ export interface _DrawerMenuItemProps {
  */
 export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const palette = useTheme().palette;
-  const rootStyles = mergeStyles(drawerMenuItemRootStyles(palette.neutralLight), props.styles?.root);
-  const onClick = (): void => props.onItemClick && props.onItemClick();
-  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void =>
-    props.onItemClick && submitWithKeyboard(e, props.onItemClick);
+  const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
+    props.onItemClick && props.onItemClick(ev, props.key);
+  const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
 
   return (
     <Stack
       tabIndex={0}
       horizontal
-      className={rootStyles}
+      className={mergeStyles(drawerMenuItemRootStyles(palette.neutralLight), props.styles?.root)}
       onKeyPress={onKeyPress}
       onClick={onClick}
       tokens={menuItemChildrenGap}
     >
       {props.iconProps && (
-        <Stack.Item>
+        <Stack.Item role="presentation">
           <Icon {...props.iconProps} />
         </Stack.Item>
       )}
-      <Stack.Item grow>{props.text}</Stack.Item>
+      <Stack.Item grow>
+        <Text>{props.text}</Text>
+      </Stack.Item>
       {/*
       // Support for submenu coming in follow up PR
       {props.subMenuProps && (

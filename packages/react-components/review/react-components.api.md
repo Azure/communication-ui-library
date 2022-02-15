@@ -358,7 +358,7 @@ export interface _DrawerMenuItemProps {
     // (undocumented)
     key: string;
     // (undocumented)
-    onItemClick?: () => void;
+    onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
