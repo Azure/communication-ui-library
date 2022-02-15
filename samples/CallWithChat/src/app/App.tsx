@@ -20,7 +20,7 @@ import {
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-import { CallWithChatScreen } from './views/CallWithChatScreen';
+import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';

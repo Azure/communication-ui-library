@@ -20,7 +20,7 @@ import { WEB_APP_TITLE } from '../utils/constants';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
-export interface CallWithChatScreenProps {
+export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
@@ -28,7 +28,7 @@ export interface CallWithChatScreenProps {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 }
 
-export const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
+export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, displayName, endpoint, locator } = props;
   const [adapter, setAdapter] = useState<CallWithChatAdapter>();
   const callIdRef = useRef<string>();
