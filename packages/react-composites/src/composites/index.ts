@@ -14,4 +14,4 @@ export type { BaseCompositeProps } from './common/BaseComposite';
 /* @conditional-compile-remove-from(stable) */
 export * from './MeetingComposite';
 /* @conditional-compile-remove-from(stable) */
-export { createAzureCommunicationMeetingAdapter } from './MeetingComposite';
+export { createAzureCommunicationCallWithChatAdapter } from './MeetingComposite';

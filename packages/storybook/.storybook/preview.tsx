@@ -42,7 +42,7 @@ export const parameters = {
         COMPOSITE_FOLDER_PREFIX,
         [
           'Get Started',
-          'MeetingComposite',
+          'ChatAndCallComposite',
           'CallComposite',
           'ChatComposite',
           'Adapters',

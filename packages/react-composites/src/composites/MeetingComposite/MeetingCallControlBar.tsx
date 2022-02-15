@@ -2,24 +2,28 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter, CallControlOptions } from '../CallComposite';
+import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
-import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { MeetingCallControlOptions } from './MeetingComposite';
-import { useMeetingCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { CallWithChatControlOptions } from './MeetingComposite';
+import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+import { ControlBar } from '@internal/react-components';
+import { Microphone } from '../CallComposite/components/buttons/Microphone';
+import { Camera } from '../CallComposite/components/buttons/Camera';
+import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
+import { Devices } from '../CallComposite/components/buttons/Devices';
+import { EndCall } from '../CallComposite/components/buttons/EndCall';
 
 /**
  * @private
  */
-export interface MeetingCallControlBarProps {
+export interface CallWithChatCallControlBarProps {
   callAdapter: CallAdapter;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
@@ -27,121 +31,148 @@ export interface MeetingCallControlBarProps {
   onPeopleButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
 }
 
-const inferMeetingCallControlOptions = (
-  meetingControls?: boolean | MeetingCallControlOptions
-): MeetingCallControlOptions | false | undefined => {
-  if (typeof meetingControls !== 'boolean') {
-    return meetingControls;
-  }
-  if (meetingControls === true) {
-    // return empty object so buttons in the meetingCallControlOptions set render in their defualt behaviors.
-    return undefined;
-  }
-  // callControls === false
-  return false;
-};
-
-const inferCallControlOptions = (
+const inferCallWithChatControlOptions = (
   mobileView: boolean,
-  callControls?: boolean | CallControlOptions
-): CallControlOptions | false | undefined => {
-  const callControlOverrides: Partial<CallControlOptions> = {
-    // Participants button is shown separately on the side.
-    participantsButton: false,
-    // Device dropdowns are shown via split buttons.
-    // TODO: Remove the devicesButton for mobile view as well once
-    // the overflow button has been added for device selection.
-    devicesButton: mobileView
-  };
-  if (callControls === false) {
+  callWithChatControls?: boolean | CallWithChatControlOptions
+): CallWithChatControlOptions | false => {
+  if (callWithChatControls === false) {
     return false;
   }
-  if (callControls === true) {
-    return callControlOverrides;
+
+  const options = callWithChatControls === true || callWithChatControls === undefined ? {} : callWithChatControls;
+  if (mobileView) {
+    // Set to compressed mode when composite is optimized for mobile
+    options.displayType = 'compact';
+    // Do not show screen share button when composite is optimized for mobile unless the developer
+    // has explicitly opted in.
+    if (options.screenShareButton !== true) {
+      options.screenShareButton = false;
+    }
   }
-  callControls = callControls ?? {};
-  return { ...callControls, ...callControlOverrides };
+  return options;
 };
 
 /**
  * @private
  */
-export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+export const CallWithChatCallControlBar = (props: CallWithChatCallControlBarProps): JSX.Element => {
   const theme = useTheme();
-  console.log(theme);
-
-  const meetingStrings = useMeetingCompositeStrings();
-  // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  const meetingCallControlOptions = inferMeetingCallControlOptions(props.callControls);
-  let callControlOptions = inferCallControlOptions(props.mobileView, props.callControls);
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
   /**
-   * Helper function to determine if a meeting control bar button is enabled or not.
-   * @private
-   */
-  const isEnabled = (option: boolean | undefined): boolean => !(option === false);
-
-  // Reduce the controls shown when mobile view is enabled.
-  if (props.mobileView) {
-    callControlOptions = reduceCallControlsForMobile(callControlOptions);
-  }
-
-  /**
-   * Until mobile meetings is worked on, statically set the width of the
+   * Until mobile call-with-chat is worked on, statically set the width of the
    * control bar such that all controls can be accessed.
    */
-  const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
-  const desktopCommonButtonStyles = useMemo(() => getDesktopCommonButtonStyles(theme), [theme]);
-  const desktopEndCallButtonStyles = useMemo(() => getDesktopEndCallButtonStyles(theme), [theme]);
+  const temporaryCallWithChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const centerContainerStyles = useMemo(
+    () => (!props.mobileView ? desktopControlBarStyles : undefined),
+    [props.mobileView]
+  );
+  const commonButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+  const endCallButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
+
+  // when options is false then we want to hide the whole control bar.
+  if (options === false) {
+    return <></>;
+  }
 
   return (
     <Stack
       horizontal
-      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
+      className={mergeStyles(
+        temporaryCallWithChatControlBarStyles,
+        callControlsContainerStyles,
+        controlBarContainerStyles
+      )}
     >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls
-            options={callControlOptions}
-            increaseFlyoutItemSize={props.mobileView}
-            splitButtonsForDeviceSelection={!props.mobileView}
-            controlBarStyles={!props.mobileView ? desktopControlBarStyles : undefined}
-            commonButtonStyles={!props.mobileView ? desktopCommonButtonStyles : undefined}
-            endCallButtonStyles={!props.mobileView ? desktopEndCallButtonStyles : undefined}
-          />
+          <Stack horizontalAlign="center">
+            <Stack.Item>
+              {/*
+                  Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
+                  control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
+                  set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
+                  dockedBottom it has position absolute and would therefore float on top of the media gallery,
+                  occluding some of its content.
+                */}
+              <ControlBar layout="horizontal" styles={centerContainerStyles}>
+                {isEnabled(options.microphoneButton) && (
+                  <Microphone
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                    splitButtonsForDeviceSelection={!props.mobileView}
+                  />
+                )}
+                {options.cameraButton !== false && (
+                  <Camera
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                    splitButtonsForDeviceSelection={!props.mobileView}
+                  />
+                )}
+                {options.screenShareButton !== false && (
+                  <ScreenShare
+                    option={options.screenShareButton}
+                    displayType={options.displayType}
+                    styles={commonButtonStyles}
+                  />
+                )}
+                {
+                  // Device dropdowns are shown via split buttons.
+                  // TODO: Remove the devicesButton for mobile view as well once
+                  // the overflow button has been added for device selection.
+                  props.mobileView && (
+                    <Devices
+                      displayType={options.displayType}
+                      increaseFlyoutItemSize={props.mobileView}
+                      styles={commonButtonStyles}
+                    />
+                  )
+                }
+                <EndCall displayType={options.displayType} styles={endCallButtonStyles} />
+              </ControlBar>
+            </Stack.Item>
+          </Stack>
         </CallAdapterProvider>
       </Stack.Item>
-      {meetingCallControlOptions !== false && (
-        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-          {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
-            <PeopleButton
-              checked={props.peopleButtonChecked}
-              showLabel={true}
-              onClick={props.onPeopleButtonClicked}
-              data-ui-id="meeting-composite-people-button"
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.peopleButtonLabel}
-              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
-            />
-          )}
-          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-            <ChatButtonWithUnreadMessagesBadge
-              chatAdapter={props.chatAdapter}
-              checked={props.chatButtonChecked}
-              showLabel={true}
-              isChatPaneVisible={props.chatButtonChecked}
-              onClick={props.onChatButtonClicked}
-              disabled={props.disableButtonsForLobbyPage}
-              label={meetingStrings.chatButtonLabel}
-              styles={!props.mobileView ? desktopCommonButtonStyles : undefined}
-            />
-          )}
-        </Stack>
-      )}
+      <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+        {isEnabled(options?.peopleButton) !== false && (
+          <PeopleButton
+            checked={props.peopleButtonChecked}
+            showLabel={true}
+            onClick={props.onPeopleButtonClicked}
+            data-ui-id="call-with-chat-composite-people-button"
+            disabled={props.disableButtonsForLobbyPage}
+            label={callWithChatStrings.peopleButtonLabel}
+            styles={commonButtonStyles}
+          />
+        )}
+        {isEnabled(options?.chatButton) !== false && (
+          <ChatButtonWithUnreadMessagesBadge
+            chatAdapter={props.chatAdapter}
+            checked={props.chatButtonChecked}
+            showLabel={true}
+            isChatPaneVisible={props.chatButtonChecked}
+            onClick={props.onChatButtonClicked}
+            disabled={props.disableButtonsForLobbyPage}
+            label={callWithChatStrings.chatButtonLabel}
+            styles={commonButtonStyles}
+            newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
+          />
+        )}
+      </Stack>
     </Stack>
   );
 };
@@ -193,3 +224,5 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
   };
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
 };
+
+const isEnabled = (option: unknown): boolean => option !== false;

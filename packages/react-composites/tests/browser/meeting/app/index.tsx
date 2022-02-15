@@ -7,10 +7,10 @@ import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import {
-  MeetingAdapter,
-  MeetingAdapterState,
-  createAzureCommunicationMeetingAdapter,
-  MeetingComposite
+  CallWithChatAdapter,
+  CallWithChatAdapterState,
+  createAzureCommunicationCallWithChatAdapter,
+  CallWithChatComposite
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
@@ -33,28 +33,28 @@ const threadId = verifyParamExists(params.threadId, 'threadId');
 initializeIcons();
 
 function App(): JSX.Element {
-  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);
+  const [callWithChatAdapter, setCallWithChatAdapter] = useState<CallWithChatAdapter>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const credential = new AzureCommunicationTokenCredential(token);
-      const adapter = await createAzureCommunicationMeetingAdapter({
+      const adapter = await createAzureCommunicationCallWithChatAdapter({
         userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName,
         credential,
         endpoint,
-        meetingLocator: {
+        locator: {
           callLocator: { groupId: groupId },
           chatThreadId: threadId
         }
       });
-      setMeetingAdapter(wrapAdapterForTests(adapter));
+      setCallWithChatAdapter(wrapAdapterForTests(adapter));
     };
 
     initialize();
 
     return () => {
-      meetingAdapter && meetingAdapter.dispose();
+      callWithChatAdapter && callWithChatAdapter.dispose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,17 +71,20 @@ function App(): JSX.Element {
     return <h3>ERROR: No endpoint set.</h3>;
   } else if (!threadId) {
     return <h3>ERROR: No threadId set.</h3>;
-  } else if (!meetingAdapter) {
-    return <h3>Initializing meeting adapters...</h3>;
+  } else if (!callWithChatAdapter) {
+    return <h3>Initializing call and chat adapters...</h3>;
   }
 
   return (
     <>
-      {!meetingAdapter && 'Initializing meeting adapter...'}
-      {meetingAdapter && (
+      {!callWithChatAdapter && 'Initializing call-with-chat adapter...'}
+      {callWithChatAdapter && (
         <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
           <_IdentifierProvider identifiers={IDS}>
-            <MeetingComposite meetingAdapter={meetingAdapter} formFactor={isMobile() ? 'mobile' : 'desktop'} />
+            <CallWithChatComposite
+              callWithChatAdapter={callWithChatAdapter}
+              formFactor={isMobile() ? 'mobile' : 'desktop'}
+            />
           </_IdentifierProvider>
         </div>
       )}
@@ -89,28 +92,28 @@ function App(): JSX.Element {
   );
 }
 
-const wrapAdapterForTests = (adapter: MeetingAdapter): MeetingAdapter => {
-  return new Proxy(adapter, new ProxyMeetingAdapter());
+const wrapAdapterForTests = (adapter: CallWithChatAdapter): CallWithChatAdapter => {
+  return new Proxy(adapter, new ProxyCallWithChatAdapter());
 };
 
-class ProxyMeetingAdapter implements ProxyHandler<MeetingAdapter> {
+class ProxyCallWithChatAdapter implements ProxyHandler<CallWithChatAdapter> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get<P extends keyof MeetingAdapter>(target: MeetingAdapter, prop: P): any {
+  public get<P extends keyof CallWithChatAdapter>(target: CallWithChatAdapter, prop: P): any {
     switch (prop) {
       case 'getState': {
-        return (...args: Parameters<MeetingAdapter['getState']>) => {
+        return (...args: Parameters<CallWithChatAdapter['getState']>) => {
           const state = target.getState(...args);
           return memoizedUnsetSpeakingWhileMicrophoneIsMuted(state);
         };
       }
       case 'onStateChange': {
-        return (...args: Parameters<MeetingAdapter['onStateChange']>) => {
+        return (...args: Parameters<CallWithChatAdapter['onStateChange']>) => {
           const [handler] = args;
           return target.onStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
       }
       case 'offStateChange': {
-        return (...args: Parameters<MeetingAdapter['offStateChange']>) => {
+        return (...args: Parameters<CallWithChatAdapter['offStateChange']>) => {
           const [handler] = args;
           return target.offStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
@@ -123,15 +126,15 @@ class ProxyMeetingAdapter implements ProxyHandler<MeetingAdapter> {
 
 // This diagnostic gets flakily set to true only in our test harness.
 // The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
-const unsetSpeakingWhileMicrophoneIsMuted = (state: MeetingAdapterState): MeetingAdapterState => {
-  if (state.meeting?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
+const unsetSpeakingWhileMicrophoneIsMuted = (state: CallWithChatAdapterState): CallWithChatAdapterState => {
+  if (state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
     return {
       ...state,
-      meeting: {
-        ...state.meeting,
+      call: {
+        ...state.call,
         diagnostics: {
-          ...state.meeting.diagnostics,
-          media: { latest: { ...state.meeting.diagnostics.media.latest, speakingWhileMicrophoneIsMuted: undefined } }
+          ...state.call.diagnostics,
+          media: { latest: { ...state.call.diagnostics.media.latest, speakingWhileMicrophoneIsMuted: undefined } }
         }
       }
     };

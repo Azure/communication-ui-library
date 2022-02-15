@@ -130,6 +130,6 @@
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
-    "localVideoCameraSwitcherLabel": "Cycle camera button"
+    "localVideoCameraSwitcherLabel": "Cycle camera"
   }
 }
