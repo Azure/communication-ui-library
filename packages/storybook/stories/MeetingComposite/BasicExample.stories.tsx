@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingComposite } from '@azure/communication-react';
+import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
+import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
-import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
+import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/Meeting.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
 const BasicStory = (args, context): JSX.Element => {
-  const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
+  const [callWithChatProps, setCallWithChatProps] = useState<CallWithChatExampleProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
@@ -25,29 +25,33 @@ const BasicStory = (args, context): JSX.Element => {
           args.endpointUrl,
           args.displayName
         );
-        setMeetingProps({
+        setCallWithChatProps({
           userId: { communicationUserId: args.userId },
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          meetingLocator: {
+          locator: {
             callLocator,
             chatThreadId
           },
-          meetingCallControlOptions: args.meetingCallControlOptions
+          callWithChatControlOptions: args.callWithChatControlOptions
         });
       } else {
-        setMeetingProps(undefined);
+        setCallWithChatProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.meetingCallControlOptions]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.callWithChatControlOptions]);
 
   return (
     <>
       <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-        {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
+        {callWithChatProps ? (
+          <CallWithChatExperience fluentTheme={context.theme} {...callWithChatProps} />
+        ) : (
+          <ConfigHintBanner />
+        )}
       </Stack>
     </>
   );
@@ -56,17 +60,17 @@ const BasicStory = (args, context): JSX.Element => {
 export const BasicExample = BasicStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-meeting-basicexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Basic Example`,
-  component: MeetingComposite,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-with-chat-basicexample`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Basic Example`,
+  component: CallWithChatComposite,
   argTypes: {
     token: controlsToAdd.token,
     userId: controlsToAdd.userId,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
-    meetingCallControlOptions: controlsToAdd.meetingCallControlOptions,
+    callWithChatControlOptions: controlsToAdd.callWithChatControlOptions,
     // Hiding auto-generated controls
-    ...defaultMeetingCompositeHiddenControls
+    ...defaultCallWithChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

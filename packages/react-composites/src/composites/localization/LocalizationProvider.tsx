@@ -9,7 +9,7 @@ import { COMPOSITE_LOCALE_EN_US } from './locales';
 import { CallCompositeStrings } from '../CallComposite';
 import { ChatCompositeStrings } from '../ChatComposite';
 /* @conditional-compile-remove-from(stable) */
-import { MeetingCompositeStrings } from '../MeetingComposite/Strings';
+import { CallWithChatCompositeStrings } from '../MeetingComposite/Strings';
 
 /**
  * Locale information for all composites exported from this library.
@@ -46,9 +46,9 @@ export interface CompositeStrings {
 
   /* @conditional-compile-remove-from(stable) */
   /**
-   * Strings used by {@link MeetingComposite}.
+   * Strings used by {@link CallWithChatComposite}.
    */
-  meeting: MeetingCompositeStrings;
+  callWithChat: CallWithChatCompositeStrings;
 }
 
 /**

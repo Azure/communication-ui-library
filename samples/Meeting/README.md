@@ -1,11 +1,10 @@
-# Meeting Sample
-
+# Call with Chat Sample
 
 🚧 Be advised we are currently working on polishing the samples in this repo. 🚧
 
 ## Overview
 
-This is a sample application to show how we can use the `@azure/communication-react` package to build a Meeting experience.
+This is a sample application to show how we can use the `@azure/communication-react` package to build a Call with chat experience.
 The client-side application is a React based user interface. Alongside this front-end is a NodeJS web application powered by ExpressJS that performs functionality like minting new user tokens for each call participant.
 
 ## Prerequisites
@@ -48,7 +47,7 @@ The client-side application is a React based user interface. Alongside this fron
 
 - [Azure Communication Services - UI Library](https://azure.github.io/communication-ui-library/) - To learn more about what the `@azure/communication-react` package offers.
 - [Azure Communication Calling SDK](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) - To learn more about the calling web sdk
-- [Azure Communication Chat SDK](https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features) - to learn more about the chat features needed for the meeting composite.
+- [Azure Communication Chat SDK](https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features) - to learn more about the chat features needed for the CallWithChatComposite.
 - [FluentUI](https://developer.microsoft.com/fluentui#/) - Microsoft powered UI library
 - [React](https://reactjs.org/) - Library for building user interfaces
 - [Create-React-App](https://create-react-app.dev/) - Boilerplate React code to help with a majority of React style single page applications.
