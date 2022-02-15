@@ -89,7 +89,6 @@ export interface FileSharingOptions {
    * @beta
    */
   multiple?: boolean;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * A function of type {@link FileUploadHandler} for handling file uploads.
    * @beta
