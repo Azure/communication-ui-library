@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallWithChatAdapter } from './MeetingAdapter';
+import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
-import { CallWithChatAdapterState } from '../state/MeetingAdapterState';
+import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */

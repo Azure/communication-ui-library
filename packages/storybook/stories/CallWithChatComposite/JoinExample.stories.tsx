@@ -8,8 +8,8 @@ import React, { useState, useEffect } from 'react';
 import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
-import { getDocs } from './MeetingCompositeDocs';
-import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/Meeting.snippet';
+import { getDocs } from './CallWithChatCompositeDocs';
+import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
 
 const JoinTeamsMeetingStory = (args, context): JSX.Element => {

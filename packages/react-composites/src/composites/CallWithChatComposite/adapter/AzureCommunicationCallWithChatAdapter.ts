@@ -35,13 +35,13 @@ import {
   ParticipantsRemovedListener,
   ParticipantsAddedListener
 } from '../../ChatComposite';
-import { CallWithChatAdapter, CallWithChatEvent } from './MeetingAdapter';
+import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
   CallWithChatAdapterState,
   mergeCallAdapterStateIntoCallWithChatAdapterState,
   mergeChatAdapterStateIntoCallWithChatAdapterState
-} from '../state/MeetingAdapterState';
+} from '../state/CallWithChatAdapterState';
 import {
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient

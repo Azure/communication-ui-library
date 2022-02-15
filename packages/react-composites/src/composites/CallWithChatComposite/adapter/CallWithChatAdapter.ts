@@ -24,7 +24,7 @@ import {
   ParticipantsAddedListener,
   ParticipantsRemovedListener
 } from '../../ChatComposite';
-import { CallWithChatAdapterState } from '../state/MeetingAdapterState';
+import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 
 /**

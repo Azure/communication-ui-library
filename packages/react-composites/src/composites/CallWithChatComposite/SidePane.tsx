@@ -17,7 +17,7 @@ import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
-import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantContainer } from '../common/ParticipantContainer';
 

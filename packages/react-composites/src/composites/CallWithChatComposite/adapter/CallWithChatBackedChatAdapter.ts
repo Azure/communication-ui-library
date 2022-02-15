@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallWithChatAdapter } from './MeetingAdapter';
+import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ErrorBarStrings } from '@internal/react-components';
-import { CallWithChatAdapterState } from '../state/MeetingAdapterState';
+import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */

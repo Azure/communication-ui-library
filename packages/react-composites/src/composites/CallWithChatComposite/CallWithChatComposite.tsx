@@ -6,19 +6,19 @@ import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
-import { CallWithChatCallControlBar } from './MeetingCallControlBar';
+import { CallWithChatCallControlBar } from './CallWithChatCallControlBar';
 import { CallState } from '@azure/communication-calling';
-import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
-import { CallWithChatAdapter } from './adapter/MeetingAdapter';
-import { CallWithChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
-import { CallWithChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
+import { compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
+import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
+import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
+import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
-import { CallWithChatAdapterState } from './state/MeetingAdapterState';
+import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 
 /**
  * Props required for the {@link CallWithChatComposite}

@@ -1,25 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './MeetingComposite';
+export * from './CallWithChatComposite';
 
 export type {
   CallWithChatAdapter,
   CallWithChatEvent,
   CallWithChatAdapterManagement,
   CallWithChatAdapterSubscriptions
-} from './adapter/MeetingAdapter';
+} from './adapter/CallWithChatAdapter';
 
 export type {
   AzureCommunicationCallWithChatAdapterArgs,
   CallAndChatLocator
-} from './adapter/AzureCommunicationMeetingAdapter';
-export { createAzureCommunicationCallWithChatAdapter } from './adapter/AzureCommunicationMeetingAdapter';
+} from './adapter/AzureCommunicationCallWithChatAdapter';
+export { createAzureCommunicationCallWithChatAdapter } from './adapter/AzureCommunicationCallWithChatAdapter';
 
 export type {
   CallWithChatClientState,
   CallWithChatAdapterUiState,
   CallWithChatAdapterState
-} from './state/MeetingAdapterState';
+} from './state/CallWithChatAdapterState';
 
 export type { CallWithChatCompositeStrings } from './Strings';

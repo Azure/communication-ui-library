@@ -7,9 +7,9 @@ import React from 'react';
 import { CallComposite } from '../CallComposite/CallComposite';
 import { AdapterError } from '../common/adapters';
 import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
-import { CallWithChatAdapter } from './adapter/MeetingAdapter';
-import { CallWithChatComposite } from './MeetingComposite';
-import { CallWithChatAdapterState } from './state/MeetingAdapterState';
+import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
+import { CallWithChatComposite } from './CallWithChatComposite';
+import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 
 Enzyme.configure({ adapter: new Adapter() });
 

@@ -6,7 +6,7 @@ import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
-const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
+const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 const formFactorSnippet = `
@@ -54,7 +54,7 @@ export const getDocs: () => JSX.Element = () => {
       </MessageBar>
       <Description>
         You can try out the form factor property in the [CallWithChatComposite Basic
-        Example](./?path=/story/composites-meeting-basicexample--basic-example).
+        Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
       </Description>
 
       <Heading>Theming</Heading>
@@ -67,8 +67,9 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Joining a Teams Meeting</Heading>
       <Description>
-        The [join Teams meeting](./?path=/story/composites-meeting-jointeamsmeeting) provides an easy playground to join
-        an existing Teams meeting. This is useful if you want to explore the composite in a Teams interop scenario.
+        The [join Teams meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) provides an easy playground
+        to join an existing Teams meeting. This is useful if you want to explore the composite in a Teams interop
+        scenario.
       </Description>
     </>
   );
