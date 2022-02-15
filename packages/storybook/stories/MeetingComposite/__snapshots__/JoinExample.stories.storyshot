@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/MeetingComposite/Join Example Join Example 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallWithChatComposite/Join Teams Meeting Join Teams Meeting 1`] = `
 <div
   className="css-117 body-0"
   dir="ltr"
