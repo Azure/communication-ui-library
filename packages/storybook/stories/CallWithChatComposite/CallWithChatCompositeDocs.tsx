@@ -67,9 +67,9 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Joining a Teams Meeting</Heading>
       <Description>
-        The [join Teams meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) provides an easy playground
-        to join an existing Teams meeting. This is useful if you want to explore the composite in a Teams interop
-        scenario.
+        The [Joining a Teams Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) preview provides an
+        easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
+        Teams interop scenario.
       </Description>
     </>
   );
