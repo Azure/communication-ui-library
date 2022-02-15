@@ -38,7 +38,12 @@ export const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element 
 
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
-    const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
+    const updateIsMobile = (): void => {
+      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
+      setImmediate(() => {
+        setIsMobileSession(detectMobileSession());
+      });
+    };
     window.addEventListener('resize', updateIsMobile);
     return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
