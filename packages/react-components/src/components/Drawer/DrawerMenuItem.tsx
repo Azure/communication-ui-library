@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { FontIcon, Icon, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -18,9 +18,7 @@ export interface _DrawerMenuItemProps {
   text?: string;
   iconProps?: IIconProps;
   styles?: BaseCustomStyles;
-
-  // Support for submenu coming in follow up PR
-  // subMenuProps?: _DrawerMenuItemProps[];
+  subMenuProps?: _DrawerMenuItemProps[];
 }
 
 /**
@@ -32,8 +30,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const palette = useTheme().palette;
   const rootStyles = mergeStyles(drawerMenuItemRootStyles(palette.neutralLight), props.styles?.root);
   const onClick = (): void => props.onItemClick && props.onItemClick();
-  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void =>
-    props.onItemClick && submitWithKeyboard(e, props.onItemClick);
+  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(e, onClick);
 
   return (
     <Stack
@@ -50,14 +47,11 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
         </Stack.Item>
       )}
       <Stack.Item grow>{props.text}</Stack.Item>
-      {/*
-      // Support for submenu coming in follow up PR
       {props.subMenuProps && (
         <Stack.Item>
-          <ChevronRight20Regular primaryFill="currentColor" />
+          <FontIcon iconName="ChevronRight" />
         </Stack.Item>
       )}
-      */}
     </Stack>
   );
 };

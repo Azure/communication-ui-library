@@ -28,7 +28,39 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
       key: 'speaker',
       text: 'Speaker',
       iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
-      onItemClick: () => setIsDrawerShowing(false)
+      subMenuProps: [
+        {
+          key: 'speaker1',
+          text: 'Default Speaker 1',
+          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          onItemClick: () => setIsDrawerShowing(false)
+        },
+        {
+          key: 'speaker2',
+          text: 'Default Speaker 2',
+          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          onItemClick: () => setIsDrawerShowing(false)
+        },
+        {
+          key: 'speaker3',
+          text: 'Choose from more speakers',
+          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          subMenuProps: [
+            {
+              key: 'speakerMore1',
+              text: 'Another Speaker',
+              iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+              onItemClick: () => setIsDrawerShowing(false)
+            },
+            {
+              key: 'speakerMore2',
+              text: 'Another another Speaker',
+              iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+              onItemClick: () => setIsDrawerShowing(false)
+            }
+          ]
+        }
+      ]
     },
     {
       key: 'people',
