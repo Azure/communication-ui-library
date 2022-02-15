@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "相機已停用",
     "tooltipOnContent": "關閉攝影機",
     "tooltipOffContent": "開啟相機",
-    "tooltipVideoLoadingContent": "正在載入影片"
+    "tooltipVideoLoadingContent": "正在載入影片",
+    "cameraMenuTitle": "相機",
+    "cameraMenuTooltip": "選擇攝影機"
   },
   "microphoneButton": {
     "onLabel": "靜音",
@@ -88,7 +90,7 @@
     "participantJoined": "已加入聊天。",
     "participantLeft": "已離開聊天。",
     "editMessage": "編輯",
-    "removeMessage": "移除",
+    "removeMessage": "刪除",
     "editedTag": "已編輯",
     "liveAuthorIntro": "{author} 說",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
     "localVideoLabel": "您",
-    "localVideoCameraSwitcherLabel": "自行車相機按鈕"
+    "localVideoCameraSwitcherLabel": "迴圈相機"
   }
 }

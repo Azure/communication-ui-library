@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "La caméra est désactivée.",
     "tooltipOnContent": "Désactiver la caméra",
     "tooltipOffContent": "Activer la caméra",
-    "tooltipVideoLoadingContent": "Chargement de la vidéo"
+    "tooltipVideoLoadingContent": "Chargement de la vidéo",
+    "cameraMenuTitle": "Caméra",
+    "cameraMenuTooltip": "Choisissez l'appareil photo"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
     "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
     "localVideoLabel": "Vous",
-    "localVideoCameraSwitcherLabel": "Bouton Cycle de l’appareil photo"
+    "localVideoCameraSwitcherLabel": "Faire un cycle de caméra"
   }
 }

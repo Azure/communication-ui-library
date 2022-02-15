@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "카메라가 비활성화되었습니다",
     "tooltipOnContent": "카메라 끄기",
     "tooltipOffContent": "카메라 켜기",
-    "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다."
+    "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다.",
+    "cameraMenuTitle": "카메라",
+    "cameraMenuTooltip": "카메라 선택"
   },
   "microphoneButton": {
     "onLabel": "음소거",
@@ -88,7 +90,7 @@
     "participantJoined": "채팅에 참여했습니다.",
     "participantLeft": "이 채팅을 나갔습니다.",
     "editMessage": "편집",
-    "removeMessage": "제거",
+    "removeMessage": "삭제",
     "editedTag": "편집됨",
     "liveAuthorIntro": "{author} 님이 말합니다.",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
     "localVideoLabel": "나",
-    "localVideoCameraSwitcherLabel": "주기 카메라 단추"
+    "localVideoCameraSwitcherLabel": "카메라 주기"
   }
 }

@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "Kamera devre dışı",
     "tooltipOnContent": "Kamerayı kapat",
     "tooltipOffContent": "Kamerayı aç",
-    "tooltipVideoLoadingContent": "Video yükleniyor"
+    "tooltipVideoLoadingContent": "Video yükleniyor",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Kamera Seç"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
@@ -88,7 +90,7 @@
     "participantJoined": "sohbete katıldı.",
     "participantLeft": "sohbetten ayrıldı.",
     "editMessage": "Düzenle",
-    "removeMessage": "Kaldır",
+    "removeMessage": "Sil",
     "editedTag": "Düzenlendi",
     "liveAuthorIntro": "{author} şöyle diyor:",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
     "localVideoLabel": "Siz",
-    "localVideoCameraSwitcherLabel": "Kamerayı değiştir düğmesi"
+    "localVideoCameraSwitcherLabel": "Kamerayı değiştir"
   }
 }

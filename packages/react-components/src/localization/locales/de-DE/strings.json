@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "Kamera ist deaktiviert",
     "tooltipOnContent": "Kamera ausschalten",
     "tooltipOffContent": "Kamera einschalten",
-    "tooltipVideoLoadingContent": "Video wird geladen"
+    "tooltipVideoLoadingContent": "Video wird geladen",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Kamera auswählen"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",
@@ -88,7 +90,7 @@
     "participantJoined": "ist dem Chat beigetreten.",
     "participantLeft": "hat den Chat verlassen.",
     "editMessage": "Bearbeiten",
-    "removeMessage": "Entfernen",
+    "removeMessage": "Löschen",
     "editedTag": "Bearbeitet",
     "liveAuthorIntro": "{author} sagt",
     "editBoxTextLimit": "Ihre Nachricht überschreitet das Limit von {limitNumber} Zeichen.",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
     "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen",
     "localVideoLabel": "Sie",
-    "localVideoCameraSwitcherLabel": "Schaltfläche \"Kamera wechseln\""
+    "localVideoCameraSwitcherLabel": "Fahrrad-/Motorrad-Kamera"
   }
 }

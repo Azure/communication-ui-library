@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
     "tooltipOffContent": "Включить камеру",
-    "tooltipVideoLoadingContent": "Видео загружается"
+    "tooltipVideoLoadingContent": "Видео загружается",
+    "cameraMenuTitle": "Камера",
+    "cameraMenuTooltip": "Выбор камеры"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
     "localVideoLabel": "Вы",
-    "localVideoCameraSwitcherLabel": "Кнопка \"Циклическая камера\""
+    "localVideoCameraSwitcherLabel": "Циклически переключать камеру"
   }
 }

@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
     "tooltipOffContent": "Camera inschakelen",
-    "tooltipVideoLoadingContent": "Video wordt geladen"
+    "tooltipVideoLoadingContent": "Video wordt geladen",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Camera kiezen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
     "localVideoLabel": "U",
-    "localVideoCameraSwitcherLabel": "Cameraknop voor cyclus"
+    "localVideoCameraSwitcherLabel": "Camera wisselen"
   }
 }

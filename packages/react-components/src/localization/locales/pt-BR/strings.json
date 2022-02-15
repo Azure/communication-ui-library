@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "A câmera está desabilitada",
     "tooltipOnContent": "Desabilitar a câmera",
     "tooltipOffContent": "Ligar a câmera",
-    "tooltipVideoLoadingContent": "O vídeo está carregando"
+    "tooltipVideoLoadingContent": "O vídeo está carregando",
+    "cameraMenuTitle": "Câmera",
+    "cameraMenuTooltip": "Escolher Câmera"
   },
   "microphoneButton": {
     "onLabel": "Mudo",
@@ -88,7 +90,7 @@
     "participantJoined": "ingressou no chat.",
     "participantLeft": "saiu do chat.",
     "editMessage": "Editar",
-    "removeMessage": "Remover",
+    "removeMessage": "Excluir",
     "editedTag": "Editado",
     "liveAuthorIntro": "{author} disse",
     "editBoxTextLimit": "Sua mensagem está acima do limite de {limitNumber} caracteres",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
     "localVideoLabel": "Você",
-    "localVideoCameraSwitcherLabel": "Botão de ciclo da câmera"
+    "localVideoCameraSwitcherLabel": "Câmera de ciclo"
   }
 }

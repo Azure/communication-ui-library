@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "已禁用照相机",
     "tooltipOnContent": "关闭摄像头",
     "tooltipOffContent": "打开摄像头",
-    "tooltipVideoLoadingContent": "正在加载视频"
+    "tooltipVideoLoadingContent": "正在加载视频",
+    "cameraMenuTitle": "相机",
+    "cameraMenuTooltip": "选择“相机”"
   },
   "microphoneButton": {
     "onLabel": "静音",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
     "localVideoLabel": "你",
-    "localVideoCameraSwitcherLabel": "循环照相机按钮"
+    "localVideoCameraSwitcherLabel": "循环照相机"
   }
 }

@@ -38,7 +38,9 @@
     "tooltipDisabledContent": "カメラが無効になっています",
     "tooltipOnContent": "カメラをオフ",
     "tooltipOffContent": "カメラをオンにする",
-    "tooltipVideoLoadingContent": "ビデオの読み込み中です"
+    "tooltipVideoLoadingContent": "ビデオの読み込み中です",
+    "cameraMenuTitle": "カメラ",
+    "cameraMenuTooltip": "カメラの選択"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
@@ -128,6 +130,6 @@
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
     "localVideoLabel": "自分",
-    "localVideoCameraSwitcherLabel": "サイクル カメラ ボタン"
+    "localVideoCameraSwitcherLabel": "サイクル カメラ"
   }
 }
