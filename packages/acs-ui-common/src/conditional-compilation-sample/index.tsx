@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import * as utils from './utils';
 
 /**
  * This folder contains some simple examples using conditional compilation directive.
@@ -116,7 +117,7 @@ export type Impossible = number & /* @conditional-compile-remove-from(stable) */
 export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number): void;
 /* @conditional-compile-remove-from(stable) */
 export function d(e: number, f: number, g: number): void;
-export function d(e: number, f?: number, g?: number) {
+export function d(e: number, f?: number, g?: number): void {
   console.log(e);
   /* @conditional-compile-remove-from(stable) */
   console.log(f, g);
@@ -131,7 +132,7 @@ export function d(e: number, f?: number, g?: number) {
 /**
  * Call a function with conditional parameters.
  */
-export function dCaller() {
+export function dCaller(): void {
   d(1, /* @conditional-compile-remove-from(stable) */ 2);
   d(1, /* @conditional-compile-remove-from(stable) */ 2, /* @conditional-compile-remove-from(stable) */ 3);
 
@@ -161,7 +162,7 @@ export function OverrideSomePropInBeta(): JSX.Element {
   const flavorDependentProp = propTrampoline();
   return <h1 className={flavorDependentProp}>Nothing to see here!</h1>;
 }
-function propTrampoline() {
+function propTrampoline(): string {
   let propValue = 'general';
   /* @conditional-compile-remove-from(stable) */
   propValue = 'II class';
@@ -183,8 +184,8 @@ function propTrampoline() {
  * but there is no reason that the internal argument list can't contain the extra (and unused) dependency on a new selector.
  */
 export type MyExtensibleSelector = (
-  state: DummyState,
-  props: DummyProps
+  state: utils.DummyState,
+  props: utils.DummyProps
 ) => {
   memoizedA: boolean;
   memoizedB: boolean;
@@ -192,8 +193,8 @@ export type MyExtensibleSelector = (
   memoizedC: boolean;
 };
 
-export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
-  [memoizedBoolean, memoizedBoolean, memoizedBoolean],
+export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelector(
+  [utils.memoizedBoolean, utils.memoizedBoolean, utils.memoizedBoolean],
   (a, b, c) => {
     return {
       memoizedA: a,
@@ -203,50 +204,3 @@ export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
     };
   }
 );
-
-/******************************************************************************
- *
- * Some helpers needed for examples above.
- *
- * No conditional compilation examples below this.
- */
-
-type DummyState = unknown;
-type DummyProps = unknown;
-function memoizedBoolean(state: DummyState, props: DummyProps) {
-  console.log(state, props);
-  return true;
-}
-
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean }
-): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean };
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean }
-): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean };
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => unknown
-) {
-  return (state: DummyState, props: DummyProps) => {
-    return func(
-      dependencySelectors[0](state, props),
-      dependencySelectors[1](state, props),
-      dependencySelectors[2](state, props)
-    );
-  };
-}
