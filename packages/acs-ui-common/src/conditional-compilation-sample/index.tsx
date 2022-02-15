@@ -204,3 +204,48 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
     };
   }
 );
+
+/**
+ * Adding a new feature conditionally often involves a few operations together:
+ * - Introduce a new @beta type
+ * - Introduce a new internal class method that uses the @beta type
+ * - Call the new @beta class method from @public API, but only in beta flavored build.
+ *
+ * Following the general guidelines stated above, we achieve this as follows:
+ * - Unconditionally add the new type
+ *   - Conditionally export the new type in the public API.
+ * - Conditionally adding the new class method that uses the conditionally exposed type.
+ * - In the @public method, extract a simple helper function that detects whether the @beta method should be called.
+ *   The implementation of this function uses conditional compilation.
+ *   - Call the method if needed. Because the method and type are defined unconditionally, no conditional
+ *     compliation is needed here.
+ */
+
+type ThisIsUnstableType = string;
+/* @conditional-compile-remove-from(stable) */
+export type { ThisIsUnstableType };
+
+class InternalImplementation {
+  public goodOldTestedFunctionality(): void {
+    /* Been doing this in stable flavor build for a decade */
+  }
+  public newMethodForUnstableFunctionality(arg: ThisIsUnstableType): string {
+    /* Unstable, but amazingly awesome magic happens here */
+    return arg;
+  }
+}
+
+export function StableAPIThatGainsNewUnstableBehavior(): void {
+  const impl = new InternalImplementation();
+  impl.goodOldTestedFunctionality();
+  if (shouldIncludeUnstableFeature()) {
+    const arg: ThisIsUnstableType = 'getThisFromUser';
+    impl.newMethodForUnstableFunctionality(arg);
+  }
+}
+
+function shouldIncludeUnstableFeature(): boolean {
+  /* @conditional-compile-remove-from(stable) */
+  return true;
+  return false;
+}
