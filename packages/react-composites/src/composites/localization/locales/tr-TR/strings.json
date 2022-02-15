@@ -46,7 +46,9 @@
     "peopleButtonLabel": "Kişiler",
     "chatButtonLabel": "Sohbet",
     "peoplePaneTitle": "Kişiler",
-    "peoplePaneSubTitle": "Bu toplantıda",
-    "chatPaneTitle": "Sohbet"
+    "peoplePaneSubTitle": "Bu aramada",
+    "chatPaneTitle": "Sohbet",
+    "chatButtonNewMessageNotificationLabel": "Yeni İleti",
+    "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın."
   }
 }
