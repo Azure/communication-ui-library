@@ -46,7 +46,9 @@
     "peopleButtonLabel": "Personen",
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "Personen",
-    "peoplePaneSubTitle": "In dieser Besprechung",
-    "chatPaneTitle": "Chat"
+    "peoplePaneSubTitle": "In diesem Anruf",
+    "chatPaneTitle": "Chat",
+    "chatButtonNewMessageNotificationLabel": "Neue Nachricht",
+    "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren."
   }
 }
