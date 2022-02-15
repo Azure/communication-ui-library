@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-117 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-117"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -28,85 +28,89 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-116 css-5"
+          className="ms-Stack css-112 css-3"
         >
           <div
-            className="css-3"
+            className="ms-Stack css-118 css-6"
           >
             <div
-              className="ms-TextField ms-TextField--multiline root-7"
+              className="css-4"
             >
               <div
-                className="ms-TextField-wrapper wrapper-8"
+                className="ms-TextField ms-TextField--multiline root-8"
               >
                 <div
-                  className="ms-TextField-fieldGroup fieldGroup-9"
+                  className="ms-TextField-wrapper wrapper-9"
                 >
-                  <textarea
-                    aria-invalid={false}
-                    autoFocus={false}
-                    className="ms-TextField-field ms-TextField--unresizable css-117 css-112 field-10"
-                    data-ui-id="sendbox-textfield"
-                    disabled={false}
-                    id="sendbox"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    onInput={[Function]}
-                    onKeyDown={[Function]}
-                    placeholder="Enter a message"
-                    value=""
-                  />
+                  <div
+                    className="ms-TextField-fieldGroup fieldGroup-10"
+                  >
+                    <textarea
+                      aria-invalid={false}
+                      autoFocus={false}
+                      className="ms-TextField-field ms-TextField--unresizable css-119 css-113 field-11"
+                      data-ui-id="sendbox-textfield"
+                      disabled={false}
+                      id="sendbox"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      onInput={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Enter a message"
+                      value=""
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="ms-Stack css-19"
-            >
-              <button
-                aria-label="Send message"
-                className="ms-Button ms-Button--icon css-118 css-113 root-20"
-                data-is-focusable={true}
-                id="sendIconWrapper"
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                onKeyPress={[Function]}
-                onKeyUp={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseUp={[Function]}
-                type="button"
+              <div
+                className="ms-Stack css-20"
               >
-                <span
-                  className="ms-Button-flexContainer flexContainer-21"
-                  data-automationid="splitbuttonprimary"
+                <button
+                  aria-label="Send message"
+                  className="ms-Button ms-Button--icon css-120 css-114 root-21"
+                  data-is-focusable={true}
+                  id="sendIconWrapper"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyPress={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onMouseUp={[Function]}
+                  type="button"
                 >
-                  <i
-                    aria-hidden={true}
-                    className="root-94 css-114 root-28"
-                    data-icon-name="SendBoxSend"
+                  <span
+                    className="ms-Button-flexContainer flexContainer-22"
+                    data-automationid="splitbuttonprimary"
                   >
-                    <span
+                    <i
                       aria-hidden={true}
-                      className="root-span"
+                      className="root-94 css-115 root-29"
+                      data-icon-name="SendBoxSend"
                     >
-                      <svg
-                        className="svg"
-                        fill="currentColor"
-                        height={20}
-                        viewBox="0 0 20 20"
-                        width={20}
-                        xmlns="http://www.w3.org/2000/svg"
+                      <span
+                        aria-hidden={true}
+                        className="root-span"
                       >
-                        <path
-                          d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
-                        />
-                      </svg>
-                    </span>
-                  </i>
-                </span>
-              </button>
+                        <svg
+                          className="svg"
+                          fill="currentColor"
+                          height={20}
+                          viewBox="0 0 20 20"
+                          width={20}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
+                          />
+                        </svg>
+                      </span>
+                    </i>
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
