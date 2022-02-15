@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant Item Participant Item 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-117 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-117"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -28,7 +28,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
         }
       >
         <div
-          className="css-133"
+          className="css-135"
           data-is-focusable={true}
           onClick={[Function]}
           onMouseEnter={[Function]}
@@ -147,7 +147,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
           >
             <i
               aria-hidden={true}
-              className="root-94 css-134"
+              className="root-94 css-136"
               data-icon-name="ParticipantItemOptions"
             >
               <span

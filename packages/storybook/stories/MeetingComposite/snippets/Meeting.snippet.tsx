@@ -2,27 +2,27 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAndChatLocator,
-  MeetingCallControlOptions,
-  MeetingAdapter,
-  MeetingComposite,
-  createAzureCommunicationMeetingAdapter
+  CallWithChatControlOptions,
+  CallWithChatAdapter,
+  CallWithChatComposite,
+  createAzureCommunicationCallWithChatAdapter
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
 
-export type MeetingExampleProps = {
+export type CallWithChatExampleProps = {
   userId: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
-  meetingLocator: TeamsMeetingLinkLocator | CallAndChatLocator;
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  callWithChatControlOptions?: boolean | CallWithChatControlOptions;
 };
 
-export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
-  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>();
+export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Element => {
+  const [callWithChatAdapter, setCallWithChatAdapter] = useState<CallWithChatAdapter>();
 
   const credential = useMemo(() => {
     try {
@@ -34,14 +34,14 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [props.token]);
 
   useEffect(() => {
-    if (props && credential && props.meetingLocator && props.displayName && props.userId && props.endpointUrl) {
+    if (props && credential && props.locator && props.displayName && props.userId && props.endpointUrl) {
       const createAdapters = async (): Promise<void> => {
-        setMeetingAdapter(
-          await createAzureCommunicationMeetingAdapter({
+        setCallWithChatAdapter(
+          await createAzureCommunicationCallWithChatAdapter({
             userId: props.userId,
             displayName: props.displayName,
             credential,
-            meetingLocator: props.meetingLocator,
+            locator: props.locator,
             endpoint: props.endpointUrl
           })
         );
@@ -50,9 +50,15 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
     }
   }, [credential, props]);
 
-  if (meetingAdapter) {
-    const options = { callControls: props.meetingCallControlOptions };
-    return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} options={options} />;
+  if (callWithChatAdapter) {
+    const options = { callControls: props.callWithChatControlOptions };
+    return (
+      <CallWithChatComposite
+        callWithChatAdapter={callWithChatAdapter}
+        fluentTheme={props.fluentTheme}
+        options={options}
+      />
+    );
   }
 
   if (credential === undefined) {
