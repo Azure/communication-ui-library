@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { merge, Stack } from '@fluentui/react';
+import { FocusZone, FocusZoneTabbableElements, merge, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
 import { useTheme } from '../../theming/FluentThemeProvider';
@@ -49,9 +49,21 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   // item, a re-render will be triggered with the updated onItemClick callback.
   const [onItemClicks, setOnItemClicks] = useState(props.items.map((item) => item.onItemClick));
 
+  // When menu items update the user focus goes into the ether. To workaround this we force the
+  // FocusTrapZone to re-render. This effectively resets the focus trap zone allowing the newly
+  // rendered menu items to correctly inherit focus (i.e. the topmost menu item gets focus).
+  const [forceUpdateValue, forceUpdate] = React.useReducer((bool) => !bool, false);
+
   // Bind submenu handler to all items that have subMenuProps
   useEffect(() => {
-    setOnItemClicks(menuItems.map((item) => bindSubmenuHandlerToItemIfApplicable(item, setMenuItems)));
+    setOnItemClicks(
+      menuItems.map((item) =>
+        bindSubmenuHandlerToItemIfApplicable(item, (newItems: _DrawerMenuItemProps[]) => {
+          setMenuItems(newItems);
+          forceUpdate();
+        })
+      )
+    );
   }, [menuItems]);
 
   // Ensure the first item has a border radius that matches the DrawerSurface
@@ -69,13 +81,17 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   );
 
   return (
-    <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
+    <_DrawerSurface
+      key={+forceUpdateValue}
+      styles={props.styles?.drawerSurfaceStyles}
+      onLightDismiss={props.onLightDismiss}
+    >
       <Stack styles={props.styles}>
         {menuItems.slice(0, 1).map((item) => (
-          <DrawerMenuItem {...item} key={item.key} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
+          <DrawerMenuItem {...item} key={0} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
         ))}
         {menuItems.slice(1).map((item, i) => (
-          <DrawerMenuItem {...item} key={item.key} onItemClick={onItemClicks[i + 1]} />
+          <DrawerMenuItem {...item} key={i + 1} onItemClick={onItemClicks[i + 1]} />
         ))}
       </Stack>
     </_DrawerSurface>

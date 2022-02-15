@@ -14,7 +14,7 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
  */
 export interface _DrawerMenuItemProps {
   onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
-  key: string;
+  itemKey: string;
   text?: string;
   iconProps?: IIconProps;
   styles?: BaseCustomStyles;
@@ -29,12 +29,13 @@ export interface _DrawerMenuItemProps {
 export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const theme = useTheme();
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
-    props.onItemClick && props.onItemClick(ev, props.key);
+    props.onItemClick && props.onItemClick(ev, props.itemKey);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
 
   return (
     <Stack
       tabIndex={0}
+      role="button"
       horizontal
       className={mergeStyles(
         drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
