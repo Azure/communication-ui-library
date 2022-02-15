@@ -53,8 +53,7 @@ export const textContainerStyle: IStyle = {
 /**
  * @private
  */
-export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
-  const borderColor = hasErrorMessage ? errorColor : 'none';
+export const textFieldStyle = (errorColor: string): IStyle => {
   return {
     root: {
       width: '100%',
@@ -63,14 +62,14 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
     },
     wrapper: {},
     fieldGroup: {
+      outline: 'none',
+      border: 'none',
       height: 'auto',
       minHeight: '0',
-      borderRadius: '0.25rem',
-      borderColor: borderColor,
-      borderWidth: disabled ? '0px' : '1px',
-      ':hover': { borderColor: borderColor },
-      ':active': { borderColor: borderColor },
-      ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
+      /**
+       * Removing fieldGroup border to make sure no border is rendered around the text area in sendbox.
+       */
+      ':after': { border: 'none' }
     },
     field: {
       borderRadius: '0.25rem'
