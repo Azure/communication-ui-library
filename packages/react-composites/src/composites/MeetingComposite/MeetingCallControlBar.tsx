@@ -141,7 +141,7 @@ export const CallWithChatCallControlBar = (props: CallWithChatCallControlBarProp
                     />
                   )
                 }
-                <EndCall displayType={options.displayType} styles={endCallButtonStyles} />
+                <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>
           </Stack>
