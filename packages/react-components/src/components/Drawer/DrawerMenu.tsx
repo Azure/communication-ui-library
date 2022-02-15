@@ -4,6 +4,7 @@
 import { merge, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
+import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
 import { DrawerMenuItem, _DrawerMenuItemProps } from './DrawerMenuItem';
 import { _DrawerSurface, _DrawerSurfaceStyles } from './DrawerSurface';
@@ -54,13 +55,17 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   }, [menuItems]);
 
   // Ensure the first item has a border radius that matches the DrawerSurface
+  const borderRadius = useTheme().effects.roundedCorner4;
   const firstItemStyle = menuItems[0]?.styles;
   const modifiedFirstItemStyle = useMemo(
     () =>
       merge(firstItemStyle ?? {}, {
-        root: { borderTopRightRadius: '0.375rem', borderTopLeftRadius: '0.375rem' }
+        root: {
+          borderTopRightRadius: borderRadius,
+          borderTopLeftRadius: borderRadius
+        }
       }),
-    [firstItemStyle]
+    [firstItemStyle, borderRadius]
   );
 
   return (

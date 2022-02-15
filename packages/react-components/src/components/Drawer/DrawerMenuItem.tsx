@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontIcon, Icon, IIconProps, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { FontIcon, Icon, IIconProps, IRawStyle, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -13,7 +13,7 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
  * @internal
  */
 export interface _DrawerMenuItemProps {
-  onItemClick?: () => void;
+  onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
   key: string;
   text?: string;
   iconProps?: IIconProps;
@@ -27,26 +27,31 @@ export interface _DrawerMenuItemProps {
  * @private
  */
 export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
-  const palette = useTheme().palette;
-  const rootStyles = mergeStyles(drawerMenuItemRootStyles(palette.neutralLight), props.styles?.root);
-  const onClick = (): void => props.onItemClick && props.onItemClick();
-  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(e, onClick);
+  const theme = useTheme();
+  const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
+    props.onItemClick && props.onItemClick(ev, props.key);
+  const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
 
   return (
     <Stack
       tabIndex={0}
       horizontal
-      className={rootStyles}
+      className={mergeStyles(
+        drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
+        props.styles?.root
+      )}
       onKeyPress={onKeyPress}
       onClick={onClick}
       tokens={menuItemChildrenGap}
     >
       {props.iconProps && (
-        <Stack.Item>
+        <Stack.Item role="presentation">
           <Icon {...props.iconProps} />
         </Stack.Item>
       )}
-      <Stack.Item grow>{props.text}</Stack.Item>
+      <Stack.Item grow>
+        <Text>{props.text}</Text>
+      </Stack.Item>
       {props.subMenuProps && (
         <Stack.Item>
           <FontIcon iconName="ChevronRight" />
@@ -58,10 +63,10 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
 
 const menuItemChildrenGap = { childrenGap: '0.5rem' };
 
-const drawerMenuItemRootStyles = (hoverBackground: string): IStyle => ({
+const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle): IStyle => ({
+  ...fontSize,
   height: '3rem',
   lineHeight: '3rem',
-  fontSize: '1rem',
   padding: '0rem 0.75rem',
   cursor: 'pointer',
   ':hover, :focus': {

@@ -6,8 +6,11 @@
  *
  * @private
  */
-export const submitWithKeyboard = (e: React.KeyboardEvent<HTMLElement>, onSubmit: () => void): void => {
+export const submitWithKeyboard = (
+  e: React.KeyboardEvent<HTMLElement>,
+  onSubmit: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void
+): void => {
   if (e.key === 'Enter' || e.key === ' ') {
-    onSubmit();
+    onSubmit(e);
   }
 };
