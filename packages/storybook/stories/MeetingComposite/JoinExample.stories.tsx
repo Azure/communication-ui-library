@@ -49,8 +49,8 @@ const JoinTeamsMeetingStory = (args, context): JSX.Element => {
 export const JoinTeamsMeeting = JoinTeamsMeetingStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-meeting-jointeamsmeeting`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Join Teams Meeting`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-with-chat-jointeamsmeeting`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Join Teams Meeting`,
   component: CallWithChatComposite,
   argTypes: {
     token: controlsToAdd.token,

@@ -292,7 +292,7 @@ export const controlsToAdd = {
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
-  CallWithChatControlOptions: {
+  callWithChatControlOptions: {
     control: 'object',
     defaultValue: {
       microphoneButton: true,
