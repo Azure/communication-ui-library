@@ -66,7 +66,6 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  numParticipants?: number;
 }
 /**
  * A system message notifying that a participant was added to the chat thread.
