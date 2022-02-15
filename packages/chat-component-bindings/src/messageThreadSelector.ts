@@ -133,8 +133,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
   (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
     // get number of participants
-    // -1 because the first object in participants is not a valid participant (no display name)
-    const messageThreadParticipantCount = Object.values(participants).length - 1;
+    // filter out the non valid participants (no display name)
+    const messageThreadParticipantCount = Object.values(participants).filter((p) => p.displayName !== undefined).length;
+
     // creating a key value pair of senderID: last read message information
     const readReceiptForEachSender = {};
     // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
