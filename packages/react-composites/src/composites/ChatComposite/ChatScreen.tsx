@@ -21,10 +21,14 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
+import {
+  FileUploadButtonWrapper as FileUploadButton,
+  FileUpload,
+  FileUploadHandler,
+  FileDownloadHandler
+} from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { FileUpload, FileUploadHandler } from './file-sharing';
 
 import {
   chatArea,
@@ -42,7 +46,6 @@ import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove-from(stable) */
 import { ParticipantList } from '@internal/react-components';
-import { FileDownloadHandler } from './file-sharing';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileUploadCards } from './FileUploadCards';
@@ -154,6 +157,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
     adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
