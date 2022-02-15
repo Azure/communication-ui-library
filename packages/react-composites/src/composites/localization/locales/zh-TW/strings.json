@@ -42,7 +42,7 @@
   "chat": {
     "chatListHeader": "在此聊天中"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "人員",
     "chatButtonLabel": "聊天",
     "peoplePaneTitle": "人員",
