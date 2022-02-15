@@ -42,7 +42,7 @@
   "chat": {
     "chatListHeader": "채팅 참가자"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "사용자",
     "chatButtonLabel": "채팅",
     "peoplePaneTitle": "사용자",
