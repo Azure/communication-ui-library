@@ -19,6 +19,7 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { Devices } from '../CallComposite/components/buttons/Devices';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
+import { MoreButton } from './MoreButton';
 
 /**
  * @private
@@ -29,6 +30,7 @@ export interface CallWithChatControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
@@ -144,6 +146,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     styles={commonButtonStyles}
                   />
                 )}
+                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
                 {
                   // Device dropdowns are shown via split buttons.
                   // TODO: Remove the devicesButton for mobile view as well once

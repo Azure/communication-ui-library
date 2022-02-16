@@ -8,7 +8,12 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
-import { compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
+import {
+  callCompositeContainerStyles,
+  compositeOuterContainerStyles,
+  controlBarContainerStyles,
+  drawerContainerStyles
+} from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
@@ -19,6 +24,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
+import { MoreDrawer } from './MoreDrawer';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -132,6 +138,19 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
+  const [showDrawer, setShowDrawer] = useState(false);
+  const onMoreButtonClicked = useCallback(() => {
+    closePane();
+    setShowDrawer(true);
+  }, []);
+  const closeDrawer = useCallback(() => {
+    setShowDrawer(false);
+  }, []);
+  const onMoreDrawerPeopleClicked = useCallback(() => {
+    setShowDrawer(false);
+    togglePeople();
+  }, []);
+
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
       adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
@@ -140,11 +159,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
+  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        <Stack.Item grow>
+        <Stack.Item grow styles={callCompositeContainerStyles}>
           <CallComposite
             {...props}
             formFactor={formFactor}
@@ -176,19 +196,31 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </CallAdapterProvider>
         )}
       </Stack>
-      {(isInLobbyOrConnecting || hasJoinedCall) && (
+      {showControlBar && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
-          <CallWithChatControlBar
-            callAdapter={callAdapter}
-            chatAdapter={chatProps.adapter}
-            chatButtonChecked={showChat}
-            onChatButtonClicked={toggleChat}
-            peopleButtonChecked={showPeople}
-            onPeopleButtonClicked={togglePeople}
-            mobileView={props.formFactor === 'mobile'}
-            disableButtonsForLobbyPage={isInLobbyOrConnecting}
-            callControls={props.callControls}
-          />
+          <Stack.Item styles={controlBarContainerStyles}>
+            <CallWithChatControlBar
+              callAdapter={callAdapter}
+              chatAdapter={chatProps.adapter}
+              chatButtonChecked={showChat}
+              onChatButtonClicked={toggleChat}
+              peopleButtonChecked={showPeople}
+              onPeopleButtonClicked={togglePeople}
+              onMoreButtonClicked={onMoreButtonClicked}
+              mobileView={props.formFactor === 'mobile'}
+              disableButtonsForLobbyPage={isInLobbyOrConnecting}
+              callControls={props.callControls}
+            />
+          </Stack.Item>
+        </ChatAdapterProvider>
+      )}
+      {showControlBar && showDrawer && (
+        <ChatAdapterProvider adapter={chatProps.adapter}>
+          <CallAdapterProvider adapter={callAdapter}>
+            <Stack styles={drawerContainerStyles}>
+              <MoreDrawer onLightDismiss={closeDrawer} onPeopleButtonClicked={onMoreDrawerPeopleClicked} />
+            </Stack>
+          </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
     </Stack>
