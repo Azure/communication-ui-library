@@ -14,7 +14,6 @@ export interface MoreDrawerProps {
 /** @private */
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const strings = useCallWithChatCompositeStrings();
-  // xkcd: FIXME.
   const drawerMenuItems: DrawerMenuItemProps[] = [
     {
       key: 'people',
