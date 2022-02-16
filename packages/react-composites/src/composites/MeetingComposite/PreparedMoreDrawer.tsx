@@ -4,6 +4,9 @@
 import React, { useMemo } from 'react';
 import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 import { MoreDrawer, MoreDrawerStrings } from './components/MoreDrawer';
+import { moreDrawerSelector } from './selectors/moreDrawerSelector';
+import { useSelector } from '../CallComposite/hooks/useSelector';
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -16,9 +19,12 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
   const strings = useCallWithChatCompositeStrings();
   const moreDrawerStrings: MoreDrawerStrings = useMemo(
     () => ({
-      peopleButtonLabel: strings.peopleButtonLabel
+      peopleButtonLabel: strings.peopleButtonLabel,
+      speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle
     }),
     [strings]
   );
-  return <MoreDrawer {...props} strings={moreDrawerStrings} />;
+  const deviceProps = useSelector(moreDrawerSelector);
+  const callHandlers = useHandlers(MoreDrawer);
+  return <MoreDrawer {...props} {...deviceProps} {...callHandlers} strings={moreDrawerStrings} />;
 };
