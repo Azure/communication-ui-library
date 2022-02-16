@@ -3,18 +3,13 @@
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { concatStyleSets } from '@fluentui/react';
-
-const filledIcon = (): JSX.Element => <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
-const regularIcon = (): JSX.Element => <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />;
 
 /**
  * @private
  */
 export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
   const strings = { label: props.label, ...props.strings };
-  const defaultIcon = useMemo(() => (props.showLabel ? regularIcon : filledIcon), [props.showLabel]);
   const theme = useTheme();
   const styles: ControlBarButtonStyles = useMemo(
     () =>
@@ -33,8 +28,6 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
       {...props}
       labelKey={'chatButtonLabelKey'}
       strings={strings}
-      onRenderOnIcon={props.onRenderOnIcon ?? defaultIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? defaultIcon}
       onClick={props.onClick}
       styles={styles}
     />
