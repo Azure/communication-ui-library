@@ -5,6 +5,7 @@ import { VideoGallery as VideoGalleryComponent } from '@azure/communication-reac
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -12,6 +13,7 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
@@ -116,6 +118,17 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={CustomStyleVideoGalleryExampleText}>
         <CustomStyleVideoGalleryExample />
+      </Canvas>
+
+      <Heading>Local Video Camera Button</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        The Video Gallery can take in customization to allow for the introduction of local camera controls where the
+        button will cycle through the different camera's in the users device. Typical usage is to trigger this button on
+        mobile devices.
+      </Description>
+      <Canvas>
+        <LocalCameraSwitcherExample />
       </Canvas>
 
       <Heading>Props</Heading>
