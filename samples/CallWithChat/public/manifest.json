@@ -1,0 +1,8 @@
+{
+  "name": "Azure Communication Call with Chat Sample",
+  "short_name": "AzureCommunicationCallWithChatSample",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
