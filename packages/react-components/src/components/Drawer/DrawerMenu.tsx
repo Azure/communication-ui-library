@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { merge, Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -41,10 +41,22 @@ export interface _DrawerMenuProps {
  * @internal
  */
 export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
-  const firstItemStyle = props.items[0]?.styles;
+  // This component breaks from a pure component pattern in order to internally support sub menus.
+  // When a sub menu item is clicked the menu items to display is updated to be that of the submenu.
+  const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>(props.items);
 
-  // Ensure the first item has a border radius that matches the DrawerContentContainer
+  // Here we store the itemCallbacks in state, so when the submenu handler is attached tp the menu
+  // item, a re-render will be triggered with the updated onItemClick callback.
+  const [onItemClicks, setOnItemClicks] = useState(props.items.map((item) => item.onItemClick));
+
+  // Bind submenu handler to all items that have subMenuProps
+  useEffect(() => {
+    setOnItemClicks(menuItems.map((item) => bindSubmenuHandlerToItemIfApplicable(item, setMenuItems)));
+  }, [menuItems]);
+
+  // Ensure the first item has a border radius that matches the DrawerSurface
   const borderRadius = useTheme().effects.roundedCorner4;
+  const firstItemStyle = menuItems[0]?.styles;
   const modifiedFirstItemStyle = useMemo(
     () =>
       merge(firstItemStyle ?? {}, {
@@ -59,13 +71,35 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   return (
     <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
       <Stack styles={props.styles}>
-        {props.items.slice(0, 1).map((item) => (
-          <DrawerMenuItem {...item} key={item.key} styles={modifiedFirstItemStyle} />
+        {menuItems.slice(0, 1).map((item) => (
+          <DrawerMenuItem {...item} key={item.key} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
         ))}
-        {props.items.slice(1).map((item) => (
-          <DrawerMenuItem {...item} key={item.key} />
+        {menuItems.slice(1).map((item, i) => (
+          <DrawerMenuItem {...item} key={item.key} onItemClick={onItemClicks[i + 1]} />
         ))}
       </Stack>
     </_DrawerSurface>
   );
+};
+
+const bindSubmenuHandlerToItemIfApplicable = (
+  item: _DrawerMenuItemProps,
+  subMenuCallback: (newItems: _DrawerMenuItemProps[]) => void
+):
+  | ((
+      ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey?: string | undefined
+    ) => void)
+  | undefined => {
+  if (!item.subMenuProps) {
+    return item.onItemClick;
+  }
+
+  return (ev, itemKey) => {
+    if (item.subMenuProps) {
+      subMenuCallback(item.subMenuProps);
+    }
+    // Still perform any onItemClick in addition to handling transform into sub menu
+    item.onItemClick && item.onItemClick(ev, itemKey);
+  };
 };
