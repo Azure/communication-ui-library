@@ -347,6 +347,8 @@ export interface _DrawerMenuItemProps {
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
+    subMenuProps?: _DrawerMenuItemProps[];
+    // (undocumented)
     text?: string;
 }
 
