@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { _DrawerMenu as DrawerMenu, _DrawerMenuItemProps as DrawerMenuItemProps } from '@internal/react-components';
-import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 
 /** @private */
 export interface MoreDrawerProps {
