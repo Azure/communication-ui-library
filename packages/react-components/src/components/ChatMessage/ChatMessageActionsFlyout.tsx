@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, DirectionalHint, IContextualMenuItem, Target } from '@fluentui/react';
+import {
+  concatStyleSets,
+  ContextualMenu,
+  DirectionalHint,
+  IContextualMenuItem,
+  Target,
+  useTheme
+} from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { MessageThreadStrings } from '../MessageThread';
@@ -19,6 +26,8 @@ export interface ChatMessageActionFlyoutProps {
   onEditClick?: () => void;
   onRemoveClick?: () => void;
   onDismiss: () => void;
+  messageThreadReadCount?: number;
+  participantCountNotIncludingSelf?: number;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
@@ -32,34 +41,93 @@ export interface ChatMessageActionFlyoutProps {
  * @private
  */
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
-  const menuItems = useMemo(
-    (): IContextualMenuItem[] => [
-      {
-        key: 'Edit',
-        text: props.strings.editMessage,
-        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-        iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
-        onClick: props.onEditClick
-      },
-      {
-        key: 'Remove',
-        text: props.strings.removeMessage,
-        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-        iconProps: {
-          iconName: 'MessageRemove',
-          styles: menuIconStyleSet
+  const theme = useTheme();
+  const menuItems = useMemo((): IContextualMenuItem[] => {
+    // only show read by x of x if more than 3 participants in total including myself
+    if (
+      props.participantCountNotIncludingSelf &&
+      props.messageThreadReadCount &&
+      props.participantCountNotIncludingSelf >= 2 &&
+      props.strings.messageReadCount
+    ) {
+      return [
+        {
+          key: 'Edit',
+          text: props.strings.editMessage,
+          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+          iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
+          onClick: props.onEditClick
         },
-        onClick: props.onRemoveClick
-      }
-    ],
-    [
-      props.increaseFlyoutItemSize,
-      props.onEditClick,
-      props.onRemoveClick,
-      props.strings.editMessage,
-      props.strings.removeMessage
-    ]
-  );
+        {
+          key: 'Remove',
+          text: props.strings.removeMessage,
+          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+          iconProps: {
+            iconName: 'MessageRemove',
+            styles: menuIconStyleSet
+          },
+          onClick: props.onRemoveClick
+        },
+        {
+          key: 'Read Count',
+          text: _formatString(props.strings.messageReadCount, {
+            messageThreadReadCount: `${props.messageThreadReadCount}`,
+            participantCountNotIncludingSelf: `${props.participantCountNotIncludingSelf}`
+          }),
+          itemProps: {
+            styles: concatStyleSets(
+              {
+                linkContent: {
+                  color: props.messageThreadReadCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
+                },
+                root: {
+                  borderTop: `1px solid ${theme.palette.neutralLighter}`
+                }
+              },
+              props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+            )
+          },
+          iconProps: {
+            iconName: 'MessageSeen',
+            styles: {
+              root: {
+                color: props.messageThreadReadCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
+              }
+            }
+          },
+          disabled: props.messageThreadReadCount <= 0
+        }
+      ];
+    } else {
+      return [
+        {
+          key: 'Edit',
+          text: props.strings.editMessage,
+          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+          iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
+          onClick: props.onEditClick
+        },
+        {
+          key: 'Remove',
+          text: props.strings.removeMessage,
+          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+          iconProps: {
+            iconName: 'MessageRemove',
+            styles: menuIconStyleSet
+          },
+          onClick: props.onRemoveClick
+        }
+      ];
+    }
+  }, [
+    props.increaseFlyoutItemSize,
+    props.onEditClick,
+    props.onRemoveClick,
+    props.strings.editMessage,
+    props.strings.removeMessage,
+    props.messageThreadReadCount,
+    props.participantCountNotIncludingSelf
+  ]);
 
   // gap space uses pixels
   return (

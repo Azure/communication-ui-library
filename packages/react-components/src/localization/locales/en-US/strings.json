@@ -99,7 +99,8 @@
     "newMessagesIndicator": "New messages",
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
-    "editBoxSubmitButton": "Submit"
+    "editBoxSubmitButton": "Submit",
+    "messageReadCount": "Read by {messageThreadReadCount} of {participantCountNotIncludingSelf}"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
