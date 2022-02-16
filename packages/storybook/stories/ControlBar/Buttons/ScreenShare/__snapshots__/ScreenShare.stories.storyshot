@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
         onMouseLeave={[Function]}
       >
         <button
-          aria-label="Share your screen"
+          aria-label="Present your screen"
           className="ms-Button ms-Button--default root-3"
           data-is-focusable={true}
           onClick={[Function]}
