@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, mergeStyles } from '@fluentui/react';
+import { IStackStyles, IStyle } from '@fluentui/react';
 
 /**
  * @private
@@ -33,9 +33,12 @@ export const ChatButtonContainerStyles: IStackStyles = {
 /**
  * @private
  */
-export const allHeightAndWidthStyle = mergeStyles({ width: '100%', height: '100%' });
+export const takeAvailableSpaceStyle: IStyle = { width: '100%', height: '100%' };
 
 /**
  * @private
  */
-export const hiddenStyle = mergeStyles(allHeightAndWidthStyle, { display: 'none' });
+export const hiddenStackStyle: IStyle = {
+  ...takeAvailableSpaceStyle,
+  display: 'none'
+};

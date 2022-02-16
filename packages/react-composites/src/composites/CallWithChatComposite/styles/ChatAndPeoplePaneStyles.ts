@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles } from '@fluentui/react';
 
 export const chatAndPeoplePaneStyle = mergeStyles({ width: '100%', height: '100%' });
 
@@ -40,6 +40,6 @@ export const chatAndPeoplePaneButtonStyles: IButtonStyles = {
   labelChecked: { fontWeight: 600 }
 };
 
-export const chatAndPeoplePaneContentStyle = mergeStyles({ height: 'calc(100% - 3rem)' });
+export const chatAndPeoplePaneContentStyle: IStyle = { height: 'calc(100% - 3rem)' };
 
-export const chatAndPeoplePaneContentHiddenStyle = mergeStyles(chatAndPeoplePaneContentStyle, { display: 'none' });
+export const chatAndPeoplePaneContentHiddenStyle: IStyle = { ...chatAndPeoplePaneContentStyle, display: 'none' };

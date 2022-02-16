@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, mergeStyles, Stack } from '@fluentui/react';
 import { ChevronLeft28Regular } from '@fluentui/react-icons';
 import { ParticipantList, useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -77,7 +77,11 @@ export const ChatAndPeoplePane = (props: {
         </DefaultButton>
       </Stack>
       <Stack.Item
-        className={activeTab === 'people' ? chatAndPeoplePaneContentStyle : chatAndPeoplePaneContentHiddenStyle}
+        className={
+          activeTab === 'people'
+            ? mergeStyles(chatAndPeoplePaneContentStyle)
+            : mergeStyles(chatAndPeoplePaneContentHiddenStyle)
+        }
       >
         <CallAdapterProvider adapter={callAdapter}>
           <CallWithChatParticipantListWithHeading
@@ -88,7 +92,11 @@ export const ChatAndPeoplePane = (props: {
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item
-        className={activeTab === 'chat' ? chatAndPeoplePaneContentStyle : chatAndPeoplePaneContentHiddenStyle}
+        className={
+          activeTab === 'chat'
+            ? mergeStyles(chatAndPeoplePaneContentStyle)
+            : mergeStyles(chatAndPeoplePaneContentHiddenStyle)
+        }
       >
         <ChatComposite
           adapter={chatAdapter}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { PartialTheme, Stack, Theme } from '@fluentui/react';
+import { PartialTheme, Stack, Theme, mergeStyles } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
@@ -10,8 +10,8 @@ import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import {
   compositeOuterContainerStyles,
-  allHeightAndWidthStyle,
-  hiddenStyle
+  takeAvailableSpaceStyle,
+  hiddenStackStyle
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -174,7 +174,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   if (isMobile) {
     return (
-      <Stack className={allHeightAndWidthStyle}>
+      <Stack className={mergeStyles(takeAvailableSpaceStyle)}>
         {callAdapter && chatProps.adapter && hasJoinedCall && (
           <ChatAndPeoplePane
             chatAdapter={chatProps.adapter}
@@ -192,7 +192,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             closePane={closePane}
           />
         )}
-        <Stack verticalFill grow className={showChat || showPeople ? hiddenStyle : allHeightAndWidthStyle}>
+        <Stack
+          verticalFill
+          grow
+          className={showChat || showPeople ? mergeStyles(hiddenStackStyle) : mergeStyles(takeAvailableSpaceStyle)}
+        >
           {callComposite}
           {(isInLobbyOrConnecting || hasJoinedCall) && (
             <ChatAdapterProvider adapter={chatProps.adapter}>{callWithChatControlBar}</ChatAdapterProvider>
