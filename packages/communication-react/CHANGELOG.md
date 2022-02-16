@@ -10,7 +10,7 @@ Mon, 14 Feb 2022 23:50:05 GMT
 
 This minor release contains general bug fixes and performance improvements.
 
-## Changes since 1.0.1-beta.2
+## Changes since 1.0.0
 [Compare changes](https://github.com/Azure/communication-ui-library/compare/1.0.0...1.1.0)
 
 
