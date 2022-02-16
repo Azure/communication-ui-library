@@ -10,6 +10,9 @@ Before we release a new version or beta version the following checklist should b
   * Ensure changelogs have been generated for the released packages
 * ✅ Manual and automated tests pass
   * See [Test Plan](#test-plan) below.
+* ✅ All translations have been updated
+  * Ensure that strings for both components and composites have complete translations.
+  * If necessary, merge translations into `main` and cherry-pick updated translations to release branch.
 * ✅ APIs
   * Ensure no breaking changes to the public APIs
   * Ensure new API changes have sign off from the Azure Review Board
