@@ -23,6 +23,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onEditClick: () => void;
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
+  remoteParticipantsCount?: number;
 };
 
 /** @private */
@@ -30,7 +31,16 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const { message, onRemoveClick, disableEditing, showDate, messageContainerStyle, strings, onEditClick } = props;
+  const {
+    message,
+    onRemoveClick,
+    disableEditing,
+    showDate,
+    messageContainerStyle,
+    strings,
+    onEditClick,
+    remoteParticipantsCount = 0
+  } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
@@ -104,6 +114,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
           strings={strings}
+          messageReadByCount={message.readNumber ?? 0}
+          remoteParticipantsCount={remoteParticipantsCount}
         />
       )}
     </>

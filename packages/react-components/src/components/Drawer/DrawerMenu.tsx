@@ -88,10 +88,10 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
     >
       <Stack styles={props.styles} role="menu">
         {menuItems.slice(0, 1).map((item) => (
-          <DrawerMenuItem {...item} key={0} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
+          <DrawerMenuItem {...item} key={'0'} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
         ))}
         {menuItems.slice(1).map((item, i) => (
-          <DrawerMenuItem {...item} key={i + 1} onItemClick={onItemClicks[i + 1]} />
+          <DrawerMenuItem {...item} key={`${i + 1}`} onItemClick={onItemClicks[i + 1]} />
         ))}
       </Stack>
     </_DrawerSurface>
