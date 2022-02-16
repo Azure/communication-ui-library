@@ -98,3 +98,5 @@ export type {
   _PictureInPictureInPictureTileProps,
   _TileOrientation
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
+
+export * from './Drawer';

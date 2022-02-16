@@ -332,6 +332,23 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
+
+// @internal
+export interface _DrawerSurfaceProps {
+    children: React_2.ReactNode;
+    onLightDismiss: () => void;
+    styles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export interface _DrawerSurfaceStyles extends BaseCustomStyles {
+    drawerContentContainer?: BaseCustomStyles;
+    drawerContentRoot?: BaseCustomStyles;
+    lightDismissRoot?: BaseCustomStyles;
+}
+
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
