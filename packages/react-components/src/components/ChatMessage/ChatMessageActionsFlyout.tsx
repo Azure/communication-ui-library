@@ -26,7 +26,7 @@ export interface ChatMessageActionFlyoutProps {
   onEditClick?: () => void;
   onRemoveClick?: () => void;
   onDismiss: () => void;
-  messageThreadReadCount?: number;
+  messageReadByCount?: number;
   participantCountNotIncludingSelf?: number;
   /**
    * Increase the height of the flyout items.
@@ -42,90 +42,73 @@ export interface ChatMessageActionFlyoutProps {
  */
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
+
   const menuItems = useMemo((): IContextualMenuItem[] => {
+    const items: IContextualMenuItem[] = [
+      {
+        key: 'Edit',
+        text: props.strings.editMessage,
+        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+        iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
+        onClick: props.onEditClick
+      },
+      {
+        key: 'Remove',
+        text: props.strings.removeMessage,
+        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+        iconProps: {
+          iconName: 'MessageRemove',
+          styles: menuIconStyleSet
+        },
+        onClick: props.onRemoveClick
+      }
+    ];
     // only show read by x of x if more than 3 participants in total including myself
     if (
       props.participantCountNotIncludingSelf &&
-      props.messageThreadReadCount !== undefined &&
+      props.messageReadByCount !== undefined &&
       props.participantCountNotIncludingSelf >= 2 &&
       props.strings.messageReadCount
     ) {
-      return [
-        {
-          key: 'Edit',
-          text: props.strings.editMessage,
-          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-          iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
-          onClick: props.onEditClick
-        },
-        {
-          key: 'Remove',
-          text: props.strings.removeMessage,
-          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-          iconProps: {
-            iconName: 'MessageRemove',
-            styles: menuIconStyleSet
-          },
-          onClick: props.onRemoveClick
-        },
-        {
-          key: 'Read Count',
-          text: _formatString(props.strings.messageReadCount, {
-            messageThreadReadCount: `${props.messageThreadReadCount}`,
-            participantCountNotIncludingSelf: `${props.participantCountNotIncludingSelf}`
-          }),
-          itemProps: {
-            styles: concatStyleSets(
-              {
-                linkContent: {
-                  color: props.messageThreadReadCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
-                },
-                root: {
-                  borderTop: `1px solid ${theme.palette.neutralLighter}`
-                }
+      items.push({
+        key: 'Read Count',
+        text: _formatString(props.strings.messageReadCount, {
+          messageReadByCount: `${props.messageReadByCount}`,
+          participantCountNotIncludingSelf: `${props.participantCountNotIncludingSelf}`
+        }),
+        itemProps: {
+          styles: concatStyleSets(
+            {
+              linkContent: {
+                color: props.messageReadByCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
               },
-              props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
-            )
-          },
-          iconProps: {
-            iconName: 'MessageSeen',
-            styles: {
               root: {
-                color: props.messageThreadReadCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
+                borderTop: `1px solid ${theme.palette.neutralLighter}`
               }
-            }
-          },
-          disabled: props.messageThreadReadCount <= 0
-        }
-      ];
-    } else {
-      return [
-        {
-          key: 'Edit',
-          text: props.strings.editMessage,
-          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-          iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
-          onClick: props.onEditClick
+            },
+            props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+          )
         },
-        {
-          key: 'Remove',
-          text: props.strings.removeMessage,
-          itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-          iconProps: {
-            iconName: 'MessageRemove',
-            styles: menuIconStyleSet
-          },
-          onClick: props.onRemoveClick
-        }
-      ];
+        iconProps: {
+          iconName: 'MessageSeen',
+          styles: {
+            root: {
+              color: props.messageReadByCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
+            }
+          }
+        },
+        disabled: props.messageReadByCount <= 0
+      });
     }
+
+    return items;
   }, [
     props.increaseFlyoutItemSize,
     props.onEditClick,
     props.onRemoveClick,
     props.strings.editMessage,
     props.strings.removeMessage,
-    props.messageThreadReadCount,
+    props.messageReadByCount,
     props.participantCountNotIncludingSelf
   ]);
 

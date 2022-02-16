@@ -114,7 +114,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
           strings={strings}
-          messageThreadReadCount={message.readNumber ? message.readNumber : 0}
+          messageReadByCount={message.readNumber ? message.readNumber : 0}
           participantCountNotIncludingSelf={participantCountNotIncludingSelf ? participantCountNotIncludingSelf : 0}
         />
       )}
