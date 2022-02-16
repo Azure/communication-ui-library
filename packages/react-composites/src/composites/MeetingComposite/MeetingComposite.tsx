@@ -24,7 +24,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/MeetingAdapterState';
-import { _DrawerMenu as DrawerMenu, _DrawerMenuItemProps as DrawerMenuItemProps } from '@internal/react-components';
+import { MoreDrawer } from './MoreDrawer';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -156,16 +156,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
 
-  // xkcd: FIXME.
-  const drawerMenuItems: DrawerMenuItemProps[] = [
-    {
-      key: 'raiseHand',
-      text: 'Raise hand',
-      iconProps: { iconName: 'RightHand' },
-      onItemClick: () => setShowDrawer(false)
-    }
-  ];
-
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
@@ -223,7 +213,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <CallAdapterProvider adapter={callAdapter}>
             <Stack styles={drawerContainerStyles}>
-              <DrawerMenu items={drawerMenuItems} onLightDismiss={closeDrawer} />
+              <MoreDrawer onLightDismiss={closeDrawer} />
             </Stack>
           </CallAdapterProvider>
         </ChatAdapterProvider>
