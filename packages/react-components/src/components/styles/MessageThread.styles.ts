@@ -105,7 +105,7 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
 export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginRight: '1rem',
+  marginRight: '0rem',
   ' img': {
     maxWidth: '100%',
     height: 'auto'
