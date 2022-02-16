@@ -73,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Copy invite link"
   },
   "screenShareButton": {
-    "onLabel": "Stop sharing",
-    "offLabel": "Share",
-    "tooltipDisabledContent": "Screen sharing is disabled",
-    "tooltipOnContent": "Stop sharing your screen",
-    "tooltipOffContent": "Share your screen"
+    "onLabel": "Stop presenting",
+    "offLabel": "Present",
+    "tooltipDisabledContent": "Presenting is disabled",
+    "tooltipOnContent": "Presenting your screen",
+    "tooltipOffContent": "Present your screen"
   },
   "messageThread": {
     "yesterday": "Yesterday",

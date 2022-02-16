@@ -43,7 +43,7 @@ export const DrawerSurface = DrawerSurfaceStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-drawersurface`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Drawer Surface`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Drawer/Drawer Surface`,
   component: DrawerSurfaceComponent,
   argTypes: {
     children: hiddenControl,
