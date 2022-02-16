@@ -61,6 +61,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       iconProps: { iconName: 'MoreDrawerSpeakers' },
       subMenuProps: props.speakers.map((speaker) => ({
         key: speaker.id,
+        itemKey: speaker.id,
         iconProps: {
           iconName: isSpeakerSelected(speaker, props.selectedSpeaker)
             ? 'MoreDrawerSelectedSpeaker'

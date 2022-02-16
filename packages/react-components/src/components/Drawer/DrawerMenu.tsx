@@ -72,10 +72,15 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
     <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
       <Stack styles={props.styles}>
         {menuItems.slice(0, 1).map((item) => (
-          <DrawerMenuItem {...item} key={item.key} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
+          <DrawerMenuItem
+            {...item}
+            itemKey={item.itemKey}
+            styles={modifiedFirstItemStyle}
+            onItemClick={onItemClicks[0]}
+          />
         ))}
         {menuItems.slice(1).map((item, i) => (
-          <DrawerMenuItem {...item} key={item.key} onItemClick={onItemClicks[i + 1]} />
+          <DrawerMenuItem {...item} itemKey={item.itemKey} onItemClick={onItemClicks[i + 1]} />
         ))}
       </Stack>
     </_DrawerSurface>
