@@ -96,6 +96,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    readNumber?: number;
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -561,6 +563,8 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    messageThreadReadCount?: number;
+    participantCountNotIncludingSelf?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -572,6 +576,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -585,6 +590,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;

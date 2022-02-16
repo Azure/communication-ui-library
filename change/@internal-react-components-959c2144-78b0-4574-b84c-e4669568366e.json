@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fixes issue where IME keyboards send messages before composition is complete.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
