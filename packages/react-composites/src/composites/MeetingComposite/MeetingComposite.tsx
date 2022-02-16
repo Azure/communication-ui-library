@@ -2,13 +2,18 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { IStackStyles, IStyle, PartialTheme, Stack, Theme } from '@fluentui/react';
+import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { CallWithChatCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
-import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
+import {
+  callCompositeContainerStyles,
+  compositeOuterContainerStyles,
+  controlBarContainerStyles,
+  drawerContainerStyles
+} from './styles/MeetingCompositeStyles';
 import { CallWithChatAdapter } from './adapter/MeetingAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
@@ -218,46 +223,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <CallAdapterProvider adapter={callAdapter}>
             <Stack styles={drawerContainerStyles}>
-              <DrawerOverlay items={drawerMenuItems} onLightDismiss={closeDrawer} />
+              <DrawerMenu items={drawerMenuItems} onLightDismiss={closeDrawer} />
             </Stack>
           </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
     </Stack>
   );
-};
-
-const callCompositeContainerStyles: IStackStyles = {
-  root: {
-    // Start a new stacking context so that any `position:absolute` elements
-    // inside the call composite do not compete with its siblings.
-    position: 'relative'
-  }
-};
-
-const controlBarContainerStyles: IStackStyles = {
-  root: {
-    // Start a new stacking context so that any `position:absolute` elements
-    // inside the control bar do not compete with its siblings.
-    position: 'relative'
-  }
-};
-
-const drawerContainerStyles: IStackStyles = {
-  root: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    // Any zIndex > 0 will work because this is the only absolutely
-    // positioned element in the container.
-    zIndex: 1
-  }
-};
-
-const DrawerOverlay = (props: { items: DrawerMenuItemProps[]; onLightDismiss: () => void }): JSX.Element => {
-  return <DrawerMenu items={props.items} onLightDismiss={props.onLightDismiss} />;
 };
 
 /**
