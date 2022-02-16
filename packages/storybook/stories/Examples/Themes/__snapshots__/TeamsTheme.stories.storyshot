@@ -207,7 +207,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
-                          aria-label="Share your screen"
+                          aria-label="Present your screen"
                           className="ms-Button ms-Button--default root-22"
                           data-is-focusable={true}
                           onClick={[Function]}
