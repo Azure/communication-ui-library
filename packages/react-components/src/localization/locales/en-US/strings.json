@@ -23,7 +23,7 @@
     "deliveredTooltipText": "Sent",
     "seenAriaLabel": "Message seen by others",
     "seenTooltipText": "Seen",
-    "readByTooltipText": "Read by {messageThreadReadCount} of {participantCountNotIncludingSelf}",
+    "readByTooltipText": "Read by {messageThreadReadCount} of {remoteParticipantsCount}",
     "sendingAriaLabel": "Message sending",
     "sendingTooltipText": "Sending",
     "failedToSendAriaLabel": "Message failed to send",
@@ -100,7 +100,7 @@
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
-    "messageReadCount": "Read by {messageReadByCount} of {participantCountNotIncludingSelf}"
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

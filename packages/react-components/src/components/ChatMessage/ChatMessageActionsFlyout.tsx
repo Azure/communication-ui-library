@@ -27,7 +27,7 @@ export interface ChatMessageActionFlyoutProps {
   onRemoveClick?: () => void;
   onDismiss: () => void;
   messageReadByCount?: number;
-  participantCountNotIncludingSelf?: number;
+  remoteParticipantsCount?: number;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
@@ -64,17 +64,18 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       }
     ];
     // only show read by x of x if more than 3 participants in total including myself
+    // TODO: change strings.messageReadCount to be required if we can fallback to our own en-us strings for anything that Contoso doesn't provide
     if (
-      props.participantCountNotIncludingSelf &&
+      props.remoteParticipantsCount &&
       props.messageReadByCount !== undefined &&
-      props.participantCountNotIncludingSelf >= 2 &&
+      props.remoteParticipantsCount >= 2 &&
       props.strings.messageReadCount
     ) {
       items.push({
         key: 'Read Count',
         text: _formatString(props.strings.messageReadCount, {
           messageReadByCount: `${props.messageReadByCount}`,
-          participantCountNotIncludingSelf: `${props.participantCountNotIncludingSelf}`
+          remoteParticipantsCount: `${props.remoteParticipantsCount}`
         }),
         itemProps: {
           styles: concatStyleSets(
@@ -109,7 +110,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     props.strings.editMessage,
     props.strings.removeMessage,
     props.messageReadByCount,
-    props.participantCountNotIncludingSelf
+    props.remoteParticipantsCount
   ]);
 
   // gap space uses pixels

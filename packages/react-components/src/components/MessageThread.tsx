@@ -871,7 +871,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           <ChatMessageComponent
             {...messageProps}
             message={messageProps.message}
-            participantCountNotIncludingSelf={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
+            remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
           />
         );
@@ -895,7 +895,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         status={status}
         messageThreadReadCount={messageThreadReadCount}
         // -1 because participant count does not include myself
-        participantCountNotIncludingSelf={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
+        remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
       />
     ),
     []
