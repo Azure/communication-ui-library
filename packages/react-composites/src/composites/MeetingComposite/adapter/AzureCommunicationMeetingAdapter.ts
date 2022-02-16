@@ -58,7 +58,6 @@ import {
   CallAdapterLocator,
   createAzureCommunicationCallAdapterFromClient
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
-
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
