@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { IStackStyles } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) */
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -29,3 +31,15 @@ export const ChatButtonContainerStyles: IStackStyles = {
     position: 'relative'
   }
 };
+
+/* @conditional-compile-remove-from(stable) */
+/**
+ * @private
+ */
+export const allHeightAndWidthStyle = mergeStyles({ width: '100%', height: '100%' });
+
+/* @conditional-compile-remove-from(stable) */
+/**
+ * @private
+ */
+export const hiddenStyle = mergeStyles(allHeightAndWidthStyle, { display: 'none' });

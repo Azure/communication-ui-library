@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { IButtonStyles, mergeStyles } from '@fluentui/react';
+
+export const chatAndPeoplePaneStyle = mergeStyles({ width: '100%', height: '100%' });
+
+export const chatAndPeoplePaneHiddenStyle = mergeStyles(chatAndPeoplePaneStyle, { display: 'none' });
+
+export const chatAndPeoplePaneControlBarStyle = mergeStyles({ height: '3rem' });
+
+export const chatAndPeoplePaneCloseButtonStyles: IButtonStyles = {
+  root: { border: 'none', minWidth: '2.5rem', height: '100%', background: 'none', padding: '0 1rem 0 0.5rem' },
+  rootChecked: { background: 'none' },
+  rootCheckedHovered: { background: 'none' }
+};
+
+export const chatAndPeoplePaneButtonStyles: IButtonStyles = {
+  root: {
+    border: 'none',
+    borderBottom: '0.125rem solid transparent',
+    minWidth: '8rem',
+    maxWidth: '8rem',
+    borderRadius: 'none',
+    height: '100%',
+    background: 'none',
+    padding: '0'
+  },
+  rootChecked: { background: 'none' },
+  rootCheckedHovered: { background: 'none' },
+  flexContainer: { flexFlow: 'column', display: 'contents' },
+  label: {
+    fontSize: '1rem',
+    fontWeight: 100,
+    lineHeight: '2rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  labelChecked: { fontWeight: 600 }
+};
+
+export const chatAndPeoplePaneContentStyle = mergeStyles({ height: 'calc(100% - 3rem)' });
+
+export const chatAndPeoplePaneContentHiddenStyle = mergeStyles(chatAndPeoplePaneContentStyle, { display: 'none' });
