@@ -63,12 +63,7 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   }, [chatAdapter, setUnreadChatMessagesCount, isChatPaneVisible, unreadChatMessagesCount]);
 
   return (
-    <ChatButton
-      {...props}
-      showLabel={true}
-      data-ui-id="call-with-chat-composite-chat-button"
-      onRenderOffIcon={notificationOnIcon}
-    />
+    <ChatButton {...props} data-ui-id="call-with-chat-composite-chat-button" onRenderOffIcon={notificationOnIcon} />
   );
 };
 
