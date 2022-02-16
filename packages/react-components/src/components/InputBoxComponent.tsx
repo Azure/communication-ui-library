@@ -92,6 +92,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTexFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (ev.nativeEvent.isComposing) {
+        return;
+      }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
