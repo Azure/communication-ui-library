@@ -122,6 +122,16 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
+  test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
+    // mobile check
+    const testName = testInfo.project.name.toLowerCase();
+    test.skip(testName.includes('desktop'));
+
+    const page = pages[0];
+    // click local video switcher
+    await pageClick(page, dataUiId('local-camera-switcher-button'));
+  });
+
   test('participant list loads correctly', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
