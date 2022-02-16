@@ -21,6 +21,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
+/* @conditional-compile-remove-from(stable) */
 import { ChatAndPeoplePane } from '../CallWithChatComposite/ChatAndPeoplePane';
 
 /**
