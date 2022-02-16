@@ -8,9 +8,11 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
-import { compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
-/* @conditional-compile-remove-from(stable) */
-import { allHeightAndWidthStyle, hiddenStyle } from './styles/CallWithChatCompositeStyles';
+import {
+  compositeOuterContainerStyles,
+  allHeightAndWidthStyle,
+  hiddenStyle
+} from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
@@ -21,7 +23,6 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-/* @conditional-compile-remove-from(stable) */
 import { ChatAndPeoplePane } from '../CallWithChatComposite/ChatAndPeoplePane';
 
 /**
@@ -171,7 +172,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     />
   );
 
-  /* @conditional-compile-remove-from(stable) */
   if (isMobile) {
     return (
       <Stack className={allHeightAndWidthStyle}>
