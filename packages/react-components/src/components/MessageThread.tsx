@@ -177,6 +177,8 @@ export interface MessageThreadStrings {
   editBoxPlaceholderText: string;
   /** String for new messages indicator*/
   newMessagesIndicator: string;
+  /** String for showing message read status in floating menu */
+  messageReadCount?: string;
   /** String for replacing display name when there is none*/
   noDisplayNameSub: string;
   /** String for Cancel button in EditBox*/
@@ -869,6 +871,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           <ChatMessageComponent
             {...messageProps}
             message={messageProps.message}
+            remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
           />
         );
@@ -876,7 +879,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return <></>;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString(), isNarrow]
+    [new Date().toDateString(), isNarrow, messageThreadParticipantCount]
   );
 
   const localeStrings = useLocale().strings.messageThread;
@@ -892,7 +895,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         status={status}
         messageThreadReadCount={messageThreadReadCount}
         // -1 because participant count does not include myself
-        participantCountNotIncludingSelf={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
+        remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
       />
     ),
     []

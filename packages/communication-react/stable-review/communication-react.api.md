@@ -1388,7 +1388,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 // @public
 export interface MessageStatusIndicatorProps {
     messageThreadReadCount?: number;
-    participantCountNotIncludingSelf?: number;
+    remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -1449,6 +1449,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     friday: string;
     liveAuthorIntro: string;
+    messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
