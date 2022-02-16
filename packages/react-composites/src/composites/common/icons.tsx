@@ -11,12 +11,10 @@ import {
   WifiWarning20Filled,
   Info20Filled,
   PersonDelete20Filled,
-  CallEnd20Filled,
-  People20Regular,
-  Speaker220Regular
+  CallEnd20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable) */
-import { CameraSwitch24Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable): meeting/calling-composite */
+import { CameraSwitch24Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
