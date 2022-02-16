@@ -48,9 +48,9 @@ export const lightTheme: PartialTheme & CallingTheme = {
     white: '#ffffff'
   },
   callingPalette: {
-    callRed: '#c4314b',
-    callRedDark: '#a42e43',
-    callRedDarker: '#8b2c3d',
+    callRed: '#a42e43',
+    callRedDark: '#8b2c3d',
+    callRedDarker: '#772a38',
     iconWhite: '#ffffff'
   }
 };
@@ -86,9 +86,9 @@ export const darkTheme: PartialTheme & CallingTheme = {
     white: '#252423'
   },
   callingPalette: {
-    callRed: '#a42e43',
-    callRedDark: '#8b2c3d',
-    callRedDarker: '#772a38',
+    callRed: '#c4314b',
+    callRedDark: '#a42e43',
+    callRedDarker: '#8b2c3d',
     iconWhite: '#ffffff'
   }
 };

@@ -5,7 +5,7 @@ import { ChatMessage } from '@azure/communication-chat';
 import { IStackStyles, Stack } from '@fluentui/react';
 import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { ControlBarButtonProps } from '@internal/react-components';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButton } from './ChatButton';
