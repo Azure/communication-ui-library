@@ -7,6 +7,7 @@ import {
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps
 } from '@internal/react-components';
+import { AudioDeviceInfo } from '@azure/communication-calling';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -26,8 +27,10 @@ export interface MoreDrawerDevicesMenuProps {
   selectedSpeaker?: OptionsDevice;
   /**
    * Speaker when a speaker is selected
+   *
+   * FIXME: This should really take OptionsDevice as argument, if only I can make useHandlers not hate it.
    */
-  onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+  onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
 
 /** @private */
@@ -44,8 +47,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const onSelectSpeaker = useCallback(
     (_ev, itemKey) => {
       const selected = props.speakers?.find((speaker) => speaker.id === itemKey);
-      if (selected && props.onSelectSpeaker) {
-        props.onSelectSpeaker(selected);
+      if (selected) {
+        props.onSelectSpeaker(selected as AudioDeviceInfo);
       }
     },
     [props.speakers, props.onSelectSpeaker]
