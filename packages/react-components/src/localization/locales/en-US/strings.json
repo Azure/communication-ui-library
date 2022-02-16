@@ -100,7 +100,7 @@
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
-    "messageReadCount": "Read by {messageThreadReadCount} of {participantCountNotIncludingSelf}"
+    "messageReadCount": "Read by {messageReadByCount} of {participantCountNotIncludingSelf}"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
