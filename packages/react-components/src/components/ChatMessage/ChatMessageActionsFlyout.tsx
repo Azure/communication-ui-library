@@ -46,7 +46,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     // only show read by x of x if more than 3 participants in total including myself
     if (
       props.participantCountNotIncludingSelf &&
-      props.messageThreadReadCount &&
+      props.messageThreadReadCount !== undefined &&
       props.participantCountNotIncludingSelf >= 2 &&
       props.strings.messageReadCount
     ) {
@@ -91,7 +91,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
             iconName: 'MessageSeen',
             styles: {
               root: {
-                color: props.messageThreadReadCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
+                color: props.messageThreadReadCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
               }
             }
           },
