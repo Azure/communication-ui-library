@@ -3,21 +3,24 @@
 
 import React from 'react';
 import { _DrawerMenu as DrawerMenu, _DrawerMenuItemProps as DrawerMenuItemProps } from '@internal/react-components';
+import { useCallWithChatCompositeStrings } from './hooks/useMeetingCompositeStrings';
 
 /** @private */
 export interface MoreDrawerProps {
   onLightDismiss: () => void;
+  onPeopleButtonClicked: () => void;
 }
 
 /** @private */
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
+  const strings = useCallWithChatCompositeStrings();
   // xkcd: FIXME.
   const drawerMenuItems: DrawerMenuItemProps[] = [
     {
-      key: 'raiseHand',
-      text: 'Raise hand',
-      iconProps: { iconName: 'RightHand' },
-      onItemClick: props.onLightDismiss
+      key: 'people',
+      text: strings.peopleButtonLabel,
+      iconProps: { iconName: 'MoreDrawerPeople' },
+      onItemClick: props.onPeopleButtonClicked
     }
   ];
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;

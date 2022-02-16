@@ -139,12 +139,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [showPeople]);
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const toggleDrawer = useCallback(() => {
+  const onMoreButtonClicked = useCallback(() => {
+    closePane();
     setShowDrawer(true);
-  }, [setShowDrawer]);
+  }, []);
   const closeDrawer = useCallback(() => {
     setShowDrawer(false);
-  }, [setShowDrawer]);
+  }, []);
+  const onMoreDrawerPeopleClicked = useCallback(() => {
+    setShowDrawer(false);
+    togglePeople();
+  }, []);
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
@@ -201,7 +206,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onChatButtonClicked={toggleChat}
               peopleButtonChecked={showPeople}
               onPeopleButtonClicked={togglePeople}
-              onMoreButtonClicked={toggleDrawer}
+              onMoreButtonClicked={onMoreButtonClicked}
               mobileView={props.formFactor === 'mobile'}
               disableButtonsForLobbyPage={isInLobbyOrConnecting}
               callControls={props.callControls}
@@ -213,7 +218,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <CallAdapterProvider adapter={callAdapter}>
             <Stack styles={drawerContainerStyles}>
-              <MoreDrawer onLightDismiss={closeDrawer} />
+              <MoreDrawer onLightDismiss={closeDrawer} onPeopleButtonClicked={onMoreDrawerPeopleClicked} />
             </Stack>
           </CallAdapterProvider>
         </ChatAdapterProvider>
