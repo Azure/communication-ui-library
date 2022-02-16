@@ -30,6 +30,7 @@ export interface CallWithChatCallControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
@@ -130,7 +131,7 @@ export const CallWithChatCallControlBar = (props: CallWithChatCallControlBarProp
                     styles={commonButtonStyles}
                   />
                 )}
-                {props.mobileView && <MoreButton />}
+                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
                 {
                   // Device dropdowns are shown via split buttons.
                   // TODO: Remove the devicesButton for mobile view as well once

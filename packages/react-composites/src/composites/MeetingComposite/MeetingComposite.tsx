@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { PartialTheme, Stack, Theme } from '@fluentui/react';
+import { IStackStyles, IStyle, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
@@ -19,6 +19,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/MeetingAdapterState';
+import { _DrawerMenu as DrawerMenu, _DrawerMenuItemProps as DrawerMenuItemProps } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -132,6 +133,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
+  const [showDrawer, setShowDrawer] = useState(false);
+  const toggleDrawer = useCallback(() => {
+    setShowDrawer(true);
+  }, [setShowDrawer]);
+  const closeDrawer = useCallback(() => {
+    setShowDrawer(false);
+  }, [setShowDrawer]);
+
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
       adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
@@ -140,11 +149,22 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
+  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
+
+  // xkcd: FIXME.
+  const drawerMenuItems: DrawerMenuItemProps[] = [
+    {
+      key: 'raiseHand',
+      text: 'Raise hand',
+      iconProps: { iconName: 'RightHand' },
+      onItemClick: () => setShowDrawer(false)
+    }
+  ];
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        <Stack.Item grow>
+        <Stack.Item grow styles={callCompositeContainerStyles}>
           <CallComposite
             {...props}
             formFactor={formFactor}
@@ -176,23 +196,68 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </CallAdapterProvider>
         )}
       </Stack>
-      {(isInLobbyOrConnecting || hasJoinedCall) && (
+      {showControlBar && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
-          <CallWithChatCallControlBar
-            callAdapter={callAdapter}
-            chatAdapter={chatProps.adapter}
-            chatButtonChecked={showChat}
-            onChatButtonClicked={toggleChat}
-            peopleButtonChecked={showPeople}
-            onPeopleButtonClicked={togglePeople}
-            mobileView={props.formFactor === 'mobile'}
-            disableButtonsForLobbyPage={isInLobbyOrConnecting}
-            callControls={props.callControls}
-          />
+          <Stack.Item styles={controlBarContainerStyles}>
+            <CallWithChatCallControlBar
+              callAdapter={callAdapter}
+              chatAdapter={chatProps.adapter}
+              chatButtonChecked={showChat}
+              onChatButtonClicked={toggleChat}
+              peopleButtonChecked={showPeople}
+              onPeopleButtonClicked={togglePeople}
+              onMoreButtonClicked={toggleDrawer}
+              mobileView={props.formFactor === 'mobile'}
+              disableButtonsForLobbyPage={isInLobbyOrConnecting}
+              callControls={props.callControls}
+            />
+          </Stack.Item>
+        </ChatAdapterProvider>
+      )}
+      {showControlBar && showDrawer && (
+        <ChatAdapterProvider adapter={chatProps.adapter}>
+          <CallAdapterProvider adapter={callAdapter}>
+            <Stack styles={drawerContainerStyles}>
+              <DrawerOverlay items={drawerMenuItems} onLightDismiss={closeDrawer} />
+            </Stack>
+          </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
     </Stack>
   );
+};
+
+const callCompositeContainerStyles: IStackStyles = {
+  root: {
+    // Start a new stacking context so that any `position:absolute` elements
+    // inside the call composite do not compete with its siblings.
+    position: 'relative'
+  }
+};
+
+const controlBarContainerStyles: IStackStyles = {
+  root: {
+    // Start a new stacking context so that any `position:absolute` elements
+    // inside the control bar do not compete with its siblings.
+    position: 'relative'
+  }
+};
+
+const drawerContainerStyles: IStackStyles = {
+  root: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    // Any zIndex > 0 will work because this is the only absolutely
+    // positioned element in the container.
+    zIndex: 1
+  }
+};
+
+const DrawerOverlay = (props: { items: DrawerMenuItemProps[]; onLightDismiss: () => void }): JSX.Element => {
+  return <DrawerMenu items={props.items} onLightDismiss={props.onLightDismiss} />;
 };
 
 /**

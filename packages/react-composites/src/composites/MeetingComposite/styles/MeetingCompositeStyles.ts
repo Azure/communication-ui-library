@@ -15,7 +15,10 @@ export const compositeOuterContainerStyles: IStackStyles = {
     // of the height of the child items.
     // If this css property is to be removed, test the participant pane correctly uses the scroll overflow when there a lot
     // of participants (i.e. beyond screen height) and where one participant is sharing their screen.
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+
+    // Create a new stacking context so that DrawerMenu can be positioned absolutely.
+    position: 'relative'
   }
 };
 
