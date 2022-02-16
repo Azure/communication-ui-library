@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
@@ -41,6 +41,16 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
+  const onSelectSpeaker = useCallback(
+    (_ev, itemKey) => {
+      const selected = props.speakers?.find((speaker) => speaker.id === itemKey);
+      if (selected && props.onSelectSpeaker) {
+        props.onSelectSpeaker(selected);
+      }
+    },
+    [props.speakers, props.onSelectSpeaker]
+  );
+
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
       key: 'speakers',
@@ -53,7 +63,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             ? 'MoreDrawerSelectedSpeaker'
             : 'MoreDrawerSpeakers'
         },
-        text: speaker.name
+        text: speaker.name,
+        onItemClick: onSelectSpeaker
       }))
     });
   }
