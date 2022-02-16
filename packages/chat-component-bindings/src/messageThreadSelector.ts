@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatBaseSelectorProps, getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import {
+  ChatBaseSelectorProps,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getParticipants,
+  getReadReceipts,
+  getUserId
+} from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
@@ -22,7 +30,8 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     chatMessage: ChatMessageWithStatus,
     userId: string,
     isSeen: boolean,
-    isLargeGroup: boolean
+    isLargeGroup: boolean,
+    readNumber: number
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -30,7 +39,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -41,7 +50,8 @@ const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
-  isLargeGroup: boolean
+  isLargeGroup: boolean,
+  readNumber: number
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -57,6 +67,7 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
+    readNumber,
     metadata: message.metadata
   };
 };
@@ -119,8 +130,25 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  * @public
  */
 export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
-  (userId, chatMessages, latestReadTime, isLargeGroup) => {
+  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    // get number of participants
+    // filter out the non valid participants (no display name)
+    const messageThreadParticipantCount = Object.values(participants).filter(
+      (p) => p.displayName && p.displayName !== ''
+    ).length;
+
+    // creating a key value pair of senderID: last read message information
+    const readReceiptForEachSender = {};
+    // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
+    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+    readReceipts.forEach((r) => {
+      readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
+        lastReadMessage: r.chatMessageId,
+        readOn: r.readOn
+      };
+    });
+
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Object.values(chatMessages)
@@ -136,22 +164,44 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             message.clientMessageId !== undefined
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
-        .map((message) =>
-          memoizedFn(
+        .map((message) => {
+          /** logic: Looking at message A, how do we know it's read number?
+           * Assumption: if user read the latest message, user has read all messages before that
+           * ReadReceipt behaviour: read receipt is only sent to the last message
+           * if participant read a message that is sent later than message A, then the participant has read message A
+           * how do we check if the message is sent later than message A?
+           * we compare if the readon timestamp is later than the message A sent time
+           * if last read message id is not equal to message A's id, check the read on time stamp.
+           * if the last read message is read after the message A is sent, then user should have read message A as well */
+
+          let readNumber = 0;
+          for (const k in readReceiptForEachSender) {
+            const messageid = readReceiptForEachSender[k]['lastReadMessage'];
+            const readTime = readReceiptForEachSender[k]['readOn'];
+            if (messageid === message.id) {
+              readNumber += 1;
+            } else if (new Date(readTime) >= new Date(message.createdOn)) {
+              readNumber += 1;
+            }
+          }
+
+          return memoizedFn(
             message.id ?? message.clientMessageId,
             message,
             userId,
             message.createdOn <= latestReadTime,
-            isLargeGroup
-          )
-        )
+            isLargeGroup,
+            readNumber
+          );
+        })
     );
 
     updateMessagesWithAttached(convertedMessages, userId);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
-      messages: convertedMessages
+      messages: convertedMessages,
+      messageThreadParticipantCount
     };
   }
 );

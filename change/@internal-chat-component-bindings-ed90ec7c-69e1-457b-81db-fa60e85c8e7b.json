@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added Feature to show how many people have read the message",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

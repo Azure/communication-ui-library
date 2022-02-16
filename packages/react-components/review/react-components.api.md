@@ -112,6 +112,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    readNumber?: number;
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -347,6 +349,23 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
+
+// @internal
+export interface _DrawerSurfaceProps {
+    children: React_2.ReactNode;
+    onLightDismiss: () => void;
+    styles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export interface _DrawerSurfaceStyles extends BaseCustomStyles {
+    drawerContentContainer?: BaseCustomStyles;
+    drawerContentRoot?: BaseCustomStyles;
+    lightDismissRoot?: BaseCustomStyles;
+}
+
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
@@ -527,6 +546,8 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    messageThreadReadCount?: number;
+    participantCountNotIncludingSelf?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -538,6 +559,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -551,6 +573,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
