@@ -87,6 +87,20 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     return <></>;
   }
 
+  const chatButton = (
+    <ChatButtonWithUnreadMessagesBadge
+      chatAdapter={props.chatAdapter}
+      checked={props.chatButtonChecked}
+      showLabel={options.displayType !== 'compact'}
+      isChatPaneVisible={props.chatButtonChecked}
+      onClick={props.onChatButtonClicked}
+      disabled={props.disableButtonsForLobbyPage}
+      label={callWithChatStrings.chatButtonLabel}
+      styles={commonButtonStyles}
+      newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
+    />
+  );
+
   return (
     <Stack
       horizontal
@@ -115,14 +129,15 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {options.cameraButton !== false && (
+                {isEnabled(options.cameraButton) && (
                   <Camera
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {options.screenShareButton !== false && (
+                {props.mobileView && isEnabled(options?.chatButton) && chatButton}
+                {isEnabled(options.screenShareButton) && (
                   <ScreenShare
                     option={options.screenShareButton}
                     displayType={options.displayType}
@@ -148,7 +163,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
         </CallAdapterProvider>
       </Stack.Item>
       <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-        {isEnabled(options?.peopleButton) !== false && (
+        {isEnabled(options?.peopleButton) && (
           <PeopleButton
             checked={props.peopleButtonChecked}
             showLabel={true}
@@ -159,19 +174,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
             styles={commonButtonStyles}
           />
         )}
-        {isEnabled(options?.chatButton) !== false && (
-          <ChatButtonWithUnreadMessagesBadge
-            chatAdapter={props.chatAdapter}
-            checked={props.chatButtonChecked}
-            showLabel={true}
-            isChatPaneVisible={props.chatButtonChecked}
-            onClick={props.onChatButtonClicked}
-            disabled={props.disableButtonsForLobbyPage}
-            label={callWithChatStrings.chatButtonLabel}
-            styles={commonButtonStyles}
-            newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
-          />
-        )}
+        {!props.mobileView && isEnabled(options?.chatButton) && chatButton}
       </Stack>
     </Stack>
   );
