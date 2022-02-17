@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import e from 'express';
 import { FileMetadata } from '.';
 
 /**
@@ -28,5 +29,12 @@ export const extension = (fileName: string): string => fileName.split('.').pop()
  * @param fileSharingMetadata
  * @returns FileMetadata[]
  */
-export const extractFileMetadata = (metadata: Record<string, string>): FileMetadata[] =>
-  JSON.parse(metadata.fileSharingMetadata);
+export const extractFileMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+  let fileMetadata: FileMetadata[] = [];
+  try {
+    fileMetadata = metadata.fileSharingMetadata ? JSON.parse(metadata.fileSharingMetadata) : [];
+  } catch {
+    throw e;
+  }
+  return fileMetadata;
+};

@@ -18,11 +18,11 @@ import { ChatMessage } from '@internal/react-components';
  */
 export interface FileDownloadCards {
   /**
-   * User id for the message
+   * User id of the local participant
    */
   userId: string;
   /**
-   * Extension of the file used for rendering the file icon.
+   * A chat message that inculdes file metadata
    */
   message: ChatMessage;
   /**

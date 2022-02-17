@@ -25,7 +25,6 @@ type ChatMessageComponentProps = {
   inlineAcceptRejectEditButtons: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
-   * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;

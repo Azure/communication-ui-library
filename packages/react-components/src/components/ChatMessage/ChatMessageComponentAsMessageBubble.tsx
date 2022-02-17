@@ -26,7 +26,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
   userId: string;
   /**
    * Optional callback to render uploaded files in the message component.
-   * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
@@ -116,7 +115,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}
           onClick={() => wasInteractionByTouch && setChatMessageActionFlyoutTarget(messageRef)}
-        ></Chat.Message>
+        />
       </div>
       {chatActionsEnabled && (
         <ChatMessageActionFlyout
