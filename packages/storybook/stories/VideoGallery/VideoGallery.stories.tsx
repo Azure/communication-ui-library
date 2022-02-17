@@ -124,7 +124,7 @@ const getDocs: () => JSX.Element = () => {
       <DetailedBetaBanner />
       <Description>
         The Video Gallery can take in customization to allow for the introduction of local camera controls where the
-        button will cycle through the different camera's in the users device. Typical usage is to trigger this button on
+        button will cycle through the different camera's in the users device. Typical usage is to enable this button on
         mobile devices.
       </Description>
       <Canvas>
