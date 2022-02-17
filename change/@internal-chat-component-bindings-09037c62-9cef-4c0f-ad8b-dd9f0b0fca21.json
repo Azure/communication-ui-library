@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "using messageid to check read info instead of readon time stamp",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
