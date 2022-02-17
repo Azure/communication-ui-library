@@ -159,7 +159,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 });
 
-/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
 /**
  * Mobile only tests for the call screen.
  * Each test should use the call:
@@ -184,6 +183,7 @@ test.describe('Call Composite E2E CallPage [Mobile Only]', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
   test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
     // mobile check
     test.skip(skipTestIfDesktop(testInfo));
