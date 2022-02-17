@@ -21,10 +21,9 @@ export const getParticipantsWhoHaveReadMessage = (
       // Filter to only read receipts that match the message OR the participant has read a different message after this message has been created
       .filter(
         ([_, readReceipt]) =>
-          readReceipt['lastReadMessage'] === message.id ||
-          new Date(readReceipt['readOn']) >= new Date(message.createdOn)
+          readReceipt.lastReadMessage === message.id || new Date(readReceipt.readOn) >= new Date(message.createdOn)
       )
       // Map properties to useful array
-      .map(([id, readReceipt]) => ({ id, name: readReceipt['name'] }))
+      .map(([id, readReceipt]) => ({ id, name: readReceipt.name }))
   );
 };
