@@ -36,7 +36,6 @@ export const mobilePaneButtonStyles: IButtonStyles = {
     borderBottom: '0.125rem solid transparent',
     minWidth: '8rem',
     maxWidth: '8rem',
-    borderRadius: 'none',
     height: '100%',
     background: 'none',
     padding: '0'

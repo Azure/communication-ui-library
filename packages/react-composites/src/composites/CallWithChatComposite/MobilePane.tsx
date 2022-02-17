@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, FontIcon, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, Icon, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React from 'react';
 import {
@@ -18,6 +18,8 @@ import {
 } from './styles/MobilePane.styles';
 
 /**
+ * This is a wrapper for Chat and People pane to cover the entire the screen and to have
+ * its own navigation bar
  * @private
  */
 export const MobilePane = (props: {
@@ -31,12 +33,16 @@ export const MobilePane = (props: {
 }): JSX.Element => {
   // We hide the mobile pane instead of not rendering the entire pane to persist certain elements
   // between renders. An example of this is composing a chat message - a chat message that has been
-  // typed but not sent should not be lost if the side panel is closed and then reopened.
+  // typed but not sent should not be lost if the mobile panel is closed and then reopened.
   const mobilePaneStyles = props.hidden ? hiddenMobilePaneStyle : mobilePaneStyle;
   const theme = useTheme();
-  const chatAndPeoplePaneButtonStylesThemed = concatStyleSets(mobilePaneButtonStyles, {
+  const mobilePaneButtonStylesThemed = concatStyleSets(mobilePaneButtonStyles, {
     rootChecked: {
       borderBottom: `0.125rem solid ${theme.palette.themePrimary}`
+    },
+    label: {
+      fontSize: theme.fonts.medium.fontSize,
+      fontWeight: theme.fonts.medium.fontWeight
     }
   });
   const strings = useCallWithChatCompositeStrings();
@@ -47,18 +53,18 @@ export const MobilePane = (props: {
         <DefaultButton
           onClick={props.onClose}
           styles={mobilePaneBackButtonStyles}
-          onRenderIcon={() => <FontIcon iconName="ChevronLeft" />}
+          onRenderIcon={() => <Icon iconName="ChevronLeft" />}
         ></DefaultButton>
         <DefaultButton
           onClick={props.onChatButtonClicked}
-          styles={chatAndPeoplePaneButtonStylesThemed}
+          styles={mobilePaneButtonStylesThemed}
           checked={props.activeTab === 'chat'}
         >
           {strings.chatButtonLabel}
         </DefaultButton>
         <DefaultButton
           onClick={props.onPeopleButtonClicked}
-          styles={chatAndPeoplePaneButtonStylesThemed}
+          styles={mobilePaneButtonStylesThemed}
           checked={props.activeTab === 'people'}
         >
           {strings.peopleButtonLabel}
@@ -75,4 +81,7 @@ export const MobilePane = (props: {
   );
 };
 
+/**
+ * Type used to define which tab is active in {@link MobilePane}
+ */
 type MobilePaneTab = 'chat' | 'people';
