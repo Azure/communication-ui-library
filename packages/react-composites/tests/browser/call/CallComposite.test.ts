@@ -11,7 +11,7 @@ import {
   waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
-import { expect, Page } from '@playwright/test';
+import { expect, Page, TestInfo } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 import { IDS } from '../common/constants';
 
@@ -28,6 +28,17 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
       element.innerHTML = element.innerHTML.replace(/C:.*?y4m/g, 'Fake Camera');
     }
   });
+};
+
+/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
+const isMobile = (testInfo: TestInfo): boolean => {
+  const testName = testInfo.project.name.toLowerCase();
+  return testName.includes('desktop') ? true : false;
 };
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
@@ -122,13 +133,11 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
-  test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
+  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+  test.only('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
     // mobile check
-    const testName = testInfo.project.name.toLowerCase();
-    test.skip(testName.includes('desktop'));
-
+    test.skip(isMobile(testInfo));
     const page = pages[0];
-    // click local video switcher
     await pageClick(page, dataUiId('local-camera-switcher-button'));
   });
 
