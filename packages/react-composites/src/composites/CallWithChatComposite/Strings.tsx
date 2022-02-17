@@ -18,6 +18,18 @@ export interface CallWithChatCompositeStrings {
    */
   chatButtonLabel: string;
   /**
+   * Title for the microphone selection sub-menu in more buttton drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerMicrophoneMenuTitle: string;
+  /**
+   * Title for the speaker selection sub-menu in more buttton drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerSpeakerMenuTitle: string;
+  /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
