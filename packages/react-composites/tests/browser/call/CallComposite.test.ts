@@ -6,6 +6,7 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   PER_STEP_TIMEOUT_MS,
+  skipTestIfDesktop,
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector
@@ -28,17 +29,6 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
       element.innerHTML = element.innerHTML.replace(/C:.*?y4m/g, 'Fake Camera');
     }
   });
-};
-
-/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-/**
- *  Helper function to detect whether a test is for a mobile broswer or not.
- *  TestInfo comes from the playwright config which gives different information about what platform the
- *  test is being run on.
- * */
-const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
-  const testName = testInfo.project.name.toLowerCase();
-  return testName.includes('desktop') ? true : false;
 };
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
