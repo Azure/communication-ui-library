@@ -17,6 +17,9 @@ import {
   mobilePaneStyle
 } from './styles/MobilePane.styles';
 
+/**
+ * @private
+ */
 export const MobilePane = (props: {
   onClose: () => void;
   onChatButtonClicked: () => void;
