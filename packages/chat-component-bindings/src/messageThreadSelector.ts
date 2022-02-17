@@ -144,14 +144,13 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
 
     // creating key value pairs of senderID: last read message information
 
-    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; readOn: Date; name: string } } = {};
+    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } } = {};
 
     // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
     readReceipts.forEach((r) => {
       readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
-        readOn: r.readOn,
         name: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
       };
     });
