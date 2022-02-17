@@ -1,18 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  FontIcon,
-  Icon,
-  IIconProps,
-  IRawStyle,
-  IStackStyles,
-  IStyle,
-  ITextStyles,
-  mergeStyles,
-  Stack,
-  Text
-} from '@fluentui/react';
+import { FontIcon, Icon, IIconProps, IRawStyle, IStackStyles, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
