@@ -21,7 +21,8 @@ import {
   textContainerStyle,
   inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
-  inputBoxNewLineSpaceAffordance
+  inputBoxNewLineSpaceAffordance,
+  inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -168,7 +169,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
-    <TooltipHost content={tooltipContent}>
+    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent}>
       <IconButton
         className={mergedButtonStyle}
         ariaLabel={ariaLabel}
