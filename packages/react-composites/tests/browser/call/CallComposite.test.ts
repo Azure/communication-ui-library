@@ -36,7 +36,7 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
-const isMobile = (testInfo: TestInfo): boolean => {
+const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
 };
@@ -133,14 +133,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  test.only('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
-    // mobile check
-    test.skip(isMobile(testInfo));
-    const page = pages[0];
-    await pageClick(page, dataUiId('local-camera-switcher-button'));
-  });
-
   test('participant list loads correctly', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
@@ -164,6 +156,39 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       return document.querySelectorAll('video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
+  });
+});
+
+/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+/**
+ * Mobile only tests for the call screen.
+ * Each test should use the call:
+ * ${test.skip(skipTestIfDesktop(testInfo));}
+ * to ensure that the test is only run in the mobile project.
+ */
+test.describe('Call Composite E2E CallPage [Mobile Only]', () => {
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(buildUrl(serverUrl, user));
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test.only('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
+    // mobile check
+    test.skip(skipTestIfDesktop(testInfo));
+    const page = pages[0];
+    await pageClick(page, dataUiId('local-camera-switcher-button'));
   });
 });
 
