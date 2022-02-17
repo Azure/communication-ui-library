@@ -27,6 +27,7 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
     {
       key: 'speaker',
       text: 'Speaker',
+      secondaryText: 'Speaker1',
       iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
       subMenuProps: [
         {

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontIcon, Icon, IIconProps, IRawStyle, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
+import { FontIcon, Icon, IIconProps, IRawStyle, IStackStyles, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -15,7 +15,10 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
 export interface _DrawerMenuItemProps {
   onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
   itemKey: string;
+  /** Text that shows at the start of the menu item after any icon supplied */
   text?: string;
+  /** Text that shows at the end of the menu item before any secondaryIcon is supplied */
+  secondaryText?: string;
   iconProps?: IIconProps;
   styles?: BaseCustomStyles;
   subMenuProps?: _DrawerMenuItemProps[];
@@ -50,9 +53,14 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
           <Icon {...props.iconProps} />
         </Stack.Item>
       )}
-      <Stack.Item grow>
+      <Stack.Item styles={drawerMenuItemTextStyles} grow>
         <Text>{props.text}</Text>
       </Stack.Item>
+      {props.secondaryText && (
+        <Stack.Item styles={drawerMenuItemTextStyles}>
+          <Text>{props.secondaryText}</Text>
+        </Stack.Item>
+      )}
       {props.subMenuProps && (
         <Stack.Item>
           <FontIcon iconName="ChevronRight" />
@@ -74,3 +82,12 @@ const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle):
     background: hoverBackground
   }
 });
+
+/** Ensure long text entries appropriately show ellipsis instead of wrapping to a new line or showing a scrollbar */
+const drawerMenuItemTextStyles: IStackStyles = {
+  root: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  }
+};
