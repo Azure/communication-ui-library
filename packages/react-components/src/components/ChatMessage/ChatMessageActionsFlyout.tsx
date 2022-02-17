@@ -14,7 +14,7 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
-import { OnRenderAvatarCallback } from '../..';
+import { OnRenderAvatarCallback } from '../../types';
 import { MessageThreadStrings } from '../MessageThread';
 import {
   chatMessageMenuStyle,
@@ -66,13 +66,13 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         }
       }
     };
-
+    const { onRenderAvatar } = props;
     messageReadByList.push({
       key: person.name,
       text: person.name,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
       onRenderIcon: () =>
-        props.onRenderAvatar ? props.onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
+        onRenderAvatar ? onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
       iconProps: {
         styles: menuIconStyleSet
       }
