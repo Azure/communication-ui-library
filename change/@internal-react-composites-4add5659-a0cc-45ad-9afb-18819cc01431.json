@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "ChatAndPeoplePane added for mobile CallWithChat composite",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

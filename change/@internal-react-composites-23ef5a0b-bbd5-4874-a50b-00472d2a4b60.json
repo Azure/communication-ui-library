@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "People pane and chat pane take up entire screen on mobile view in CallWithChatComposite",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
