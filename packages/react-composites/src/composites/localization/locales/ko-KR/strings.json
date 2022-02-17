@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "사용자",
     "chatButtonLabel": "채팅",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "사용자",
     "peoplePaneSubTitle": "이 통화에서",
     "chatPaneTitle": "채팅",
