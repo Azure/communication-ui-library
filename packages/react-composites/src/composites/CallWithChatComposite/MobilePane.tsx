@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { concatStyleSets, DefaultButton, Icon, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   paneBodyContainer,
   scrollableContainer,
@@ -36,15 +36,17 @@ export const MobilePane = (props: {
   // typed but not sent should not be lost if the mobile panel is closed and then reopened.
   const mobilePaneStyles = props.hidden ? hiddenMobilePaneStyle : mobilePaneStyle;
   const theme = useTheme();
-  const mobilePaneButtonStylesThemed = concatStyleSets(mobilePaneButtonStyles, {
-    rootChecked: {
-      borderBottom: `0.125rem solid ${theme.palette.themePrimary}`
-    },
-    label: {
-      fontSize: theme.fonts.medium.fontSize,
-      fontWeight: theme.fonts.medium.fontWeight
-    }
-  });
+  const mobilePaneButtonStylesThemed = useMemo(() => {
+    return concatStyleSets(mobilePaneButtonStyles, {
+      rootChecked: {
+        borderBottom: `0.125rem solid ${theme.palette.themePrimary}`
+      },
+      label: {
+        fontSize: theme.fonts.medium.fontSize,
+        fontWeight: theme.fonts.medium.fontWeight
+      }
+    });
+  }, [theme]);
   const strings = useCallWithChatCompositeStrings();
 
   return (
