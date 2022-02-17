@@ -558,6 +558,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerPeople: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
@@ -607,7 +608,7 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
 
 // @beta
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
@@ -624,6 +625,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerPeople: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;

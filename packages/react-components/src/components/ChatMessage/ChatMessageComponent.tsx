@@ -28,6 +28,7 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  remoteParticipantsCount?: number;
 };
 
 /**

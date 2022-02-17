@@ -12,6 +12,7 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -94,6 +95,8 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
+    // (undocumented)
+    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -330,6 +333,56 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
+
+// @internal
+export interface _DrawerMenuItemProps {
+    // (undocumented)
+    iconProps?: IIconProps;
+    // (undocumented)
+    key: string;
+    // (undocumented)
+    onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    // (undocumented)
+    styles?: BaseCustomStyles;
+    // (undocumented)
+    subMenuProps?: _DrawerMenuItemProps[];
+    // (undocumented)
+    text?: string;
+}
+
+// @internal
+export interface _DrawerMenuProps {
+    // (undocumented)
+    items: _DrawerMenuItemProps[];
+    onLightDismiss: () => void;
+    // (undocumented)
+    styles?: _DrawerMenuStyles;
+}
+
+// @internal
+export interface _DrawerMenuStyles extends BaseCustomStyles {
+    drawerSurfaceStyles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
+
+// @internal
+export interface _DrawerSurfaceProps {
+    children: React_2.ReactNode;
+    onLightDismiss: () => void;
+    styles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export interface _DrawerSurfaceStyles extends BaseCustomStyles {
+    drawerContentContainer?: BaseCustomStyles;
+    drawerContentRoot?: BaseCustomStyles;
+    lightDismissRoot?: BaseCustomStyles;
+}
+
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
@@ -510,6 +563,8 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    messageThreadReadCount?: number;
+    remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -521,6 +576,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -534,6 +590,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -561,6 +618,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     friday: string;
     liveAuthorIntro: string;
+    messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
