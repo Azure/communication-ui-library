@@ -23,6 +23,8 @@ export const getParticipantsWhoHaveReadMessage = (
         ([_, readReceipt]) =>
           readReceipt.lastReadMessage === message.id || new Date(readReceipt.readOn) >= new Date(message.createdOn)
       )
+      // make sure the person is not removed from chat
+      .filter(([_, readReceipt]) => readReceipt.name && readReceipt.name !== '')
       // Map properties to useful array
       .map(([id, readReceipt]) => ({ id, name: readReceipt.name }))
   );
