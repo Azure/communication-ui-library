@@ -69,11 +69,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
-      key: 'speakers',
+      itemKey: 'speakers',
       text: props.strings.speakerMenuTitle,
       iconProps: { iconName: 'MoreDrawerSpeakers' },
       subMenuProps: props.speakers.map((speaker) => ({
-        key: speaker.id,
         itemKey: speaker.id,
         iconProps: {
           iconName: isDeviceSelected(speaker, props.selectedSpeaker)
@@ -100,11 +99,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   if (props.microphones && props.microphones.length > 0) {
     drawerMenuItems.push({
-      key: 'microphones',
+      itemKey: 'microphones',
       text: props.strings.microphoneMenuTitle,
       iconProps: { iconName: 'MoreDrawerMicrophones' },
       subMenuProps: props.microphones.map((mic) => ({
-        key: mic.id,
         itemKey: mic.id,
         iconProps: {
           iconName: isDeviceSelected(mic, props.selectedMicrophone)
@@ -118,7 +116,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }
 
   drawerMenuItems.push({
-    key: 'people',
+    itemKey: 'people',
     text: props.strings.peopleButtonLabel,
     iconProps: { iconName: 'MoreDrawerPeople' },
     onItemClick: props.onPeopleButtonClicked
