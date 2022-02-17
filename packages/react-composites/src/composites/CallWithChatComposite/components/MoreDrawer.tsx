@@ -27,8 +27,6 @@ export interface MoreDrawerDevicesMenuProps {
   selectedSpeaker?: OptionsDevice;
   /**
    * Speaker when a speaker is selected
-   *
-   * FIXME: This should really take OptionsDevice as argument, if only I can make useHandlers not hate it.
    */
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
@@ -48,6 +46,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     (_ev, itemKey) => {
       const selected = props.speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
+        // This is unsafe - we're only passing in part of the argument to the handler.
+        // But this is a known issue in our state.
         props.onSelectSpeaker(selected as AudioDeviceInfo);
       }
     },
