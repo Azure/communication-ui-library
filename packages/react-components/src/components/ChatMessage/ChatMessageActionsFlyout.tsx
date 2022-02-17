@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
+import { OnRenderAvatarCallback } from '../..';
 import { MessageThreadStrings } from '../MessageThread';
 import {
   chatMessageMenuStyle,
@@ -30,13 +31,19 @@ export interface ChatMessageActionFlyoutProps {
   onRemoveClick?: () => void;
   onDismiss: () => void;
   messageReadByCount?: number;
-  messageReadByNames?: string[];
+  messageReadByNames?: { id: string; name: string }[];
   remoteParticipantsCount?: number;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
    */
   increaseFlyoutItemSize: boolean;
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 /**
@@ -48,11 +55,11 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   const theme = useTheme();
   const messageReadByList: IContextualMenuItem[] = [];
 
-  props.messageReadByNames?.forEach((name) => {
+  props.messageReadByNames?.forEach((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
-      text: name,
+      text: person.name,
       styles: {
         root: {
           margin: '0.25rem'
@@ -61,10 +68,11 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
 
     messageReadByList.push({
-      key: name,
-      text: name,
+      key: person.name,
+      text: person.name,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-      onRenderIcon: () => <Persona {...personaOptions} />,
+      onRenderIcon: () =>
+        props.onRenderAvatar ? props.onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
       iconProps: {
         styles: menuIconStyleSet
       }

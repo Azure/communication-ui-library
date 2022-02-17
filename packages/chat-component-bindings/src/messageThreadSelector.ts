@@ -32,7 +32,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isSeen: boolean,
     isLargeGroup: boolean,
     readNumber: number,
-    messageReadByNames: string[]
+    messageReadByNames: { id: string; name: string }[]
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -53,7 +53,7 @@ const convertToUiChatMessage = (
   isSeen: boolean,
   isLargeGroup: boolean,
   readNumber: number,
-  messageReadByNames: string[]
+  messageReadByNames: { id: string; name: string }[]
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -178,14 +178,14 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
            * we compare if the readon timestamp is later than the message A sent time
            * if last read message id is not equal to message A's id, check the read on time stamp.
            * if the last read message is read after the message A is sent, then user should have read message A as well */
-          const messageReadByNames: string[] = [];
+          const messageReadByNames: { id: string; name: string }[] = [];
           for (const k in readReceiptForEachSender) {
             const messageid = readReceiptForEachSender[k]['lastReadMessage'];
             const readTime = readReceiptForEachSender[k]['readOn'];
             if (messageid === message.id) {
-              messageReadByNames.push(readReceiptForEachSender[k]['name']);
+              messageReadByNames.push({ id: k, name: readReceiptForEachSender[k]['name'] });
             } else if (new Date(readTime) >= new Date(message.createdOn)) {
-              messageReadByNames.push(readReceiptForEachSender[k]['name']);
+              messageReadByNames.push({ id: k, name: readReceiptForEachSender[k]['name'] });
             }
           }
 

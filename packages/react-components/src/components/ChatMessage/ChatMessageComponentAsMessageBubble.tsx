@@ -14,6 +14,7 @@ import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
+import { OnRenderAvatarCallback } from '../../types';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -24,6 +25,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
   remoteParticipantsCount?: number;
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 };
 
 /** @private */
@@ -39,7 +46,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     messageContainerStyle,
     strings,
     onEditClick,
-    remoteParticipantsCount = 0
+    remoteParticipantsCount = 0,
+    onRenderAvatar
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -117,6 +125,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           messageReadByCount={message.readNumber ?? 0}
           messageReadByNames={message.messageReadByNames ?? []}
           remoteParticipantsCount={remoteParticipantsCount}
+          onRenderAvatar={onRenderAvatar}
         />
       )}
     </>
