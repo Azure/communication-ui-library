@@ -3,7 +3,7 @@
 
 import { ChatMessage } from '@azure/communication-chat';
 import { IStackStyles, Stack } from '@fluentui/react';
-import { Chat20Regular } from '@fluentui/react-icons';
+import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
 import { ControlBarButtonProps } from '@internal/react-components';
 import React, { useCallback, useState } from 'react';
 import { useEffect } from 'react';
@@ -27,6 +27,9 @@ export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButton
 const validNewChatMessage = (message): boolean =>
   !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
 
+const filledIcon = <Chat20Filled key={'chatIconKey'} primaryFill="currentColor" />;
+const regularIcon = <Chat20Regular key={'chatIconKey'} primaryFill="currentColor" />;
+
 /**
  * @private
  */
@@ -34,13 +37,15 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const { chatAdapter, isChatPaneVisible, newMessageLabel } = props;
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
 
+  const baseIcon = props.showLabel ? regularIcon : filledIcon;
+  const onRenderOnIcon = useCallback(() => baseIcon, [baseIcon]);
   const notificationOnIcon = useCallback((): JSX.Element => {
     return (
       <Stack styles={chatNotificationContainerStyles}>
         {unreadChatMessagesCount > 0 && (
           <NotificationIcon chatMessagesCount={unreadChatMessagesCount} label={newMessageLabel} />
         )}
-        <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
+        {baseIcon}
       </Stack>
     );
   }, [unreadChatMessagesCount, newMessageLabel]);
@@ -65,9 +70,9 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   return (
     <ChatButton
       {...props}
-      showLabel={true}
       data-ui-id="call-with-chat-composite-chat-button"
       onRenderOffIcon={notificationOnIcon}
+      onRenderOnIcon={onRenderOnIcon}
     />
   );
 };
