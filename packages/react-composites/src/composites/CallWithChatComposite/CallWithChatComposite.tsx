@@ -194,7 +194,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               setShowPeople(true);
               setShowChat(false);
             }}
-            isMobile={isMobile}
+            mobileView={isMobile}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -214,7 +214,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 setShowPeople(true);
                 setShowChat(false);
               }}
-              isMobile={isMobile}
+              mobileView={isMobile}
             />
           </CallAdapterProvider>
         )}

@@ -87,7 +87,7 @@ export const EmbeddedPeoplePane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
-  isMobile?: boolean;
+  mobileView?: boolean;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -111,7 +111,7 @@ export const EmbeddedPeoplePane = (props: {
     />
   );
 
-  if (props.isMobile) {
+  if (props.mobileView) {
     return (
       <MobilePane
         hidden={props.hidden}
@@ -155,7 +155,7 @@ export const EmbeddedChatPane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
-  isMobile?: boolean;
+  mobileView?: boolean;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
@@ -169,7 +169,7 @@ export const EmbeddedChatPane = (props: {
     />
   );
 
-  if (props.isMobile) {
+  if (props.mobileView) {
     return (
       <MobilePane
         hidden={props.hidden}
