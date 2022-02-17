@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "人員",
     "chatButtonLabel": "聊天",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "人員",
     "peoplePaneSubTitle": "在此通話中",
     "chatPaneTitle": "聊天",
