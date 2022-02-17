@@ -39,7 +39,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   useEffect(() => {
     const updateIsMobile = (): void => {
       // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
-      setImmediate(() => {
+      setTimeout(() => {
         setIsMobileSession(detectMobileSession());
       });
     };
