@@ -1,7 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontIcon, Icon, IIconProps, IRawStyle, IStackStyles, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
+import {
+  FontIcon,
+  Icon,
+  IIconProps,
+  IRawStyle,
+  IStackStyles,
+  IStyle,
+  ITextStyles,
+  mergeStyles,
+  Stack,
+  Text
+} from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -58,7 +69,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
       </Stack.Item>
       {props.secondaryText && (
         <Stack.Item styles={drawerMenuItemTextStyles}>
-          <Text>{props.secondaryText}</Text>
+          <Text className={mergeStyles({ color: theme.palette.neutralSecondary })}>{props.secondaryText}</Text>
         </Stack.Item>
       )}
       {props.subMenuProps && (
