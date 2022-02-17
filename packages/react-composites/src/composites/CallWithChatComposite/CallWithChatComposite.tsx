@@ -152,6 +152,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowDrawer(false);
     togglePeople();
   }, []);
+  const selectPeople = useCallback(() => {
+    setShowPeople(true);
+    setShowChat(false);
+  }, []);
+  const selectChat = useCallback(() => {
+    setShowChat(true);
+    setShowPeople(false);
+  }, []);
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
@@ -186,14 +194,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             fluentTheme={fluentTheme}
             onClose={closePane}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClick={() => {
-              setShowChat(true);
-              setShowPeople(false);
-            }}
-            onPeopleButtonClick={() => {
-              setShowPeople(true);
-              setShowChat(false);
-            }}
+            onChatButtonClick={selectChat}
+            onPeopleButtonClick={selectPeople}
             mobileView={isMobile}
           />
         )}
@@ -206,14 +208,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
               onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-              onChatButtonClick={() => {
-                setShowChat(true);
-                setShowPeople(false);
-              }}
-              onPeopleButtonClick={() => {
-                setShowPeople(true);
-                setShowChat(false);
-              }}
+              onChatButtonClick={selectChat}
+              onPeopleButtonClick={selectPeople}
               mobileView={isMobile}
             />
           </CallAdapterProvider>
