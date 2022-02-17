@@ -21,11 +21,12 @@
   },
   "dependencies": {
     "@azure/communication-chat": "1.1.0",
-    "@azure/communication-common": "1.0.0",
+    "@azure/communication-common": "1.1.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.0.1-beta.2",
     "@azure/communication-signaling": "1.0.0-beta.12",
     "@azure/core-http": "1.2.4",
+    "@azure/logger": "1.0.3",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
     "@internal/acs-ui-common": "1.0.1-beta.2",
@@ -40,7 +41,8 @@
     "react-aria-live": "^2.0.5",
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
-    "reselect": "~4.0.0"
+    "reselect": "~4.0.0",
+    "@fluentui/react-file-type-icons": "~8.5.8"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
@@ -72,7 +74,7 @@
     "husky": "^4.3.0",
     "if-env": "~1.0.4",
     "jest-fetch-mock": "^3.0.3",
-    "jest-junit": "^12.0.0",
+    "jest-junit": "~13.0.0",
     "jest": "26.6.0",
     "prettier": "2.3.1",
     "pretty-quick": "^3.1.0",

@@ -95,16 +95,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
-  const mergedTextFieldStyle = concatStyleSets(
-    textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-    {
-      fieldGroup: styles?.textField,
-      errorMessage: styles?.systemMessage
-    }
-  );
+  const mergedTextFieldStyle = concatStyleSets(textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000'), {
+    fieldGroup: styles?.textField,
+    errorMessage: styles?.systemMessage
+  });
 
   const onTexFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (ev.nativeEvent.isComposing) {
+        return;
+      }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();

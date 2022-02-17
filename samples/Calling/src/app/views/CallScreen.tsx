@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  CallAdapterLocator,
   CallAdapter,
   CallAdapterState,
   CallComposite,
@@ -21,7 +21,7 @@ const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.u
 export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  callLocator: CallAdapterLocator;
   displayName: string;
   webAppTitle: string;
   onCallEnded: () => void;
@@ -37,7 +37,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
-    const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
+    const updateIsMobile = (): void => {
+      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
+      setTimeout(() => {
+        setIsMobileSession(detectMobileSession());
+      });
+    };
     window.addEventListener('resize', updateIsMobile);
     return () => window.removeEventListener('resize', updateIsMobile);
   }, []);

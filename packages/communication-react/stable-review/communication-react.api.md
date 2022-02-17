@@ -120,7 +120,7 @@ export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    locator: CallAdapterLocator;
 };
 
 // @public
@@ -188,6 +188,9 @@ export interface CallAdapterDeviceManagement {
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
+
+// @public
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -648,6 +651,13 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    readBy?: {
+        id: string;
+        name: string;
+    }[];
+    // (undocumented)
+    readNumber?: number;
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -912,7 +922,7 @@ export interface ControlBarProps {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -1382,6 +1392,8 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    messageThreadReadCount?: number;
+    remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -1393,6 +1405,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -1406,6 +1419,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -1440,6 +1454,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     friday: string;
     liveAuthorIntro: string;
+    messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;

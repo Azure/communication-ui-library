@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Sent",
     "seenAriaLabel": "Message seen by others",
     "seenTooltipText": "Seen",
+    "readByTooltipText": "Read by {messageThreadReadCount} of {remoteParticipantsCount}",
     "sendingAriaLabel": "Message sending",
     "sendingTooltipText": "Sending",
     "failedToSendAriaLabel": "Message failed to send",
@@ -38,7 +39,9 @@
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
-    "tooltipVideoLoadingContent": "Video is loading"
+    "tooltipVideoLoadingContent": "Video is loading",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose Camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -70,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Copy invite link"
   },
   "screenShareButton": {
-    "onLabel": "Stop sharing",
-    "offLabel": "Share",
-    "tooltipDisabledContent": "Screen sharing is disabled",
-    "tooltipOnContent": "Stop sharing your screen",
-    "tooltipOffContent": "Share your screen"
+    "onLabel": "Stop presenting",
+    "offLabel": "Present",
+    "tooltipDisabledContent": "Presenting is disabled",
+    "tooltipOnContent": "Presenting your screen",
+    "tooltipOffContent": "Present your screen"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -88,7 +91,7 @@
     "participantJoined": "joined the chat.",
     "participantLeft": "left the chat.",
     "editMessage": "Edit",
-    "removeMessage": "Remove",
+    "removeMessage": "Delete",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
@@ -96,7 +99,8 @@
     "newMessagesIndicator": "New messages",
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
-    "editBoxSubmitButton": "Submit"
+    "editBoxSubmitButton": "Submit",
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -128,6 +132,6 @@
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
-    "localVideoCameraSwitcherLabel": "Cycle camera button"
+    "localVideoCameraSwitcherLabel": "Cycle camera"
   }
 }

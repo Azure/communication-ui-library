@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added new constructor that accepts stateful client arguments in MeetingComposite",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

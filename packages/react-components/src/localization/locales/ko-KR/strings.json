@@ -38,14 +38,20 @@
     "tooltipDisabledContent": "카메라가 비활성화되었습니다",
     "tooltipOnContent": "카메라 끄기",
     "tooltipOffContent": "카메라 켜기",
-    "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다."
+    "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다.",
+    "cameraMenuTitle": "카메라",
+    "cameraMenuTooltip": "카메라 선택"
   },
   "microphoneButton": {
     "onLabel": "음소거",
     "offLabel": "음소거 해제",
     "tooltipDisabledContent": "마이크가 비활성화되었습니다",
     "tooltipOnContent": "마이크 음소거",
-    "tooltipOffContent": "마이크 음소거 해제"
+    "tooltipOffContent": "마이크 음소거 해제",
+    "microphoneMenuTitle": "마이크",
+    "microphoneMenuTooltip": "마이크 선택",
+    "speakerMenuTitle": "발언자",
+    "speakerMenuTooltip": "스피커 선택"
   },
   "devicesButton": {
     "label": "장치",
@@ -84,7 +90,7 @@
     "participantJoined": "채팅에 참여했습니다.",
     "participantLeft": "이 채팅을 나갔습니다.",
     "editMessage": "편집",
-    "removeMessage": "제거",
+    "removeMessage": "삭제",
     "editedTag": "편집됨",
     "liveAuthorIntro": "{author} 님이 말합니다.",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
@@ -123,6 +129,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
-    "localVideoLabel": "나"
+    "localVideoLabel": "나",
+    "localVideoCameraSwitcherLabel": "카메라 주기"
   }
 }

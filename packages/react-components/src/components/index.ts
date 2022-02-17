@@ -49,6 +49,8 @@ export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton'
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
+/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+export type { CameraButtonContextualMenuStyles, CameraButtonStyles } from './CameraButton';
 
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayout } from './ControlBar';
@@ -96,3 +98,5 @@ export type {
   _PictureInPictureInPictureTileProps,
   _TileOrientation
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
+
+export * from './Drawer';
