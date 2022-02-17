@@ -105,12 +105,12 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
     this.fileUploads = this.fileUploads.concat(fileUploads);
     this.context.setFileUploads(this.fileUploads);
-    this.fileUploads.forEach(this.subscribeAllEvents);
+    this.fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
   }
 
   clearFileUploads(): void {
     this.context.setFileUploads([]);
-    this.fileUploads.forEach(this.unsubscribeAllEvents);
+    this.fileUploads.forEach((fileUpload) => this.unsubscribeAllEvents(fileUpload));
   }
 
   cancelFileUpload(id: string): void {
@@ -131,9 +131,9 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     this.context.updateFileUpload(id, { errorMessage });
   }
 
-  private fileUploadCompletedListener(id: string, metadata: FileMetadata): void {
+  private fileUploadCompletedListener = (id: string, metadata: FileMetadata): void => {
     this.context.updateFileUpload(id, { progress: 1, metadata });
-  }
+  };
 
   private subscribeAllEvents(fileUpload: ObservableFileUpload): void {
     fileUpload.on('uploadProgressed', this.fileUploadProgressListener);

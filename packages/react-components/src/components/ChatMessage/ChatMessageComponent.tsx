@@ -8,11 +8,10 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { Stack } from '@fluentui/react';
-import { chatMessageWrapperStyle } from '../styles/ChatMessageComponent.styles';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
+  userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -28,8 +27,7 @@ type ChatMessageComponentProps = {
    * Optional callback to render uploaded files in the message component.
    * @beta
    */
-  onRenderAttachedFiles?: (userID, message) => JSX.Element;
-  userId?: string;
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
 };
 
 /**
@@ -54,7 +52,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       <ChatMessageComponentAsEditBox
         initialValue={props.message.content ?? ''}
         inlineEditButtons={props.inlineAcceptRejectEditButtons}
-        // onRenderUploadedFiles={props.onRenderUploadedFiles}
         strings={props.strings}
         onSubmit={async (text) => {
           props.onUpdateMessage &&
@@ -68,14 +65,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       />
     );
   } else {
-    return (
-      <Stack className={chatMessageWrapperStyle}>
-        <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />
-        {
-          /* @conditional-compile-remove-from(stable): FILE_SHARING */
-          props.onRenderAttachedFiles && props.onRenderAttachedFiles(props.userId, props.message)
-        }
-      </Stack>
-    );
+    return <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />;
   }
 };

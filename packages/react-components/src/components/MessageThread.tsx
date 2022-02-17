@@ -500,7 +500,7 @@ export type MessageThreadProps = {
    * Optional callback to render uploaded files in the message component.
    * @beta
    */
-  onRenderAttachedFiles?: (userId: string, message: ChatMessage | CustomMessage) => JSX.Element;
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -858,7 +858,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return (
           <ChatMessageComponent
             {...messageProps}
-            onRenderAttachedFiles={props.onRenderAttachedFiles}
+            onRenderFileDownloads={props.onRenderFileDownloads}
             message={messageProps.message}
             userId={props.userId}
             inlineAcceptRejectEditButtons={!isNarrow}

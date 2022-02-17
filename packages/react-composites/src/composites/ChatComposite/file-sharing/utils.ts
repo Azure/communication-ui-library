@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FileMetadata } from '.';
+
 /**
  * @private
  *
@@ -19,3 +21,12 @@ export const truncatedFileName = (fileName: string, length: number): string => {
  * @returns string
  */
 export const extension = (fileName: string): string => fileName.split('.').pop() || '';
+
+/**
+ * @private
+ *
+ * @param fileSharingMetadata
+ * @returns FileMetadata[]
+ */
+export const extractFileMetadata = (metadata: Record<string, string>): FileMetadata[] =>
+  JSON.parse(metadata.fileSharingMetadata);

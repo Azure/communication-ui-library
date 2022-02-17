@@ -123,7 +123,7 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   }
 
   notifyUploadCompleted(metadata: FileMetadata): void {
-    this._emitter.emit('uploadCompleted', metadata);
+    this._emitter.emit('uploadCompleted', this.id, metadata);
   }
 
   notifyUploadFailed(message: string): void {

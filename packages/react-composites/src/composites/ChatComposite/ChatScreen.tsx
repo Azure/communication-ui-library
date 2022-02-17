@@ -30,9 +30,6 @@ import {
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
-/* @conditional-compile-remove-from(stable) */
-import { FileCard, FileCardGroup } from './file-sharing';
-
 import {
   chatArea,
   chatContainer,
@@ -52,6 +49,8 @@ import { ParticipantList } from '@internal/react-components';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileUploadCards } from './FileUploadCards';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileDownloadCards } from './FileDownloadCards';
 
 /**
  * @private
@@ -149,45 +148,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const onRenderUploadedFiles = (userId, message): JSX.Element => {
-    const uploadedFiles = [
-      {
-        filename: 'abc.pdf',
-        extension: 'pdf',
-        id: 0,
-        progress: 1
-      },
-      {
-        filename: 'abc.pdf',
-        extension: 'pdf',
-        id: 0,
-        progress: 1
-      },
-      {
-        filename: 'abc.pdf',
-        extension: 'pdf',
-        id: 0,
-        progress: 1
-      }
-    ];
-    return (
-      <FileCardGroup>
-        {uploadedFiles &&
-          uploadedFiles.map((file) => (
-            <FileCard
-              fileName={file.filename}
-              progress={file.progress}
-              key={file.id}
-              fileExtension={file.extension}
-              // actionIcon={<Icon iconName="Cancel" />}
-              // actionHandler={() => {
-              //   adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
-              // }}
-            />
-          ))}
-      </FileCardGroup>
-    );
-  };
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
@@ -200,7 +160,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 
@@ -214,7 +174,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
-            onRenderAttachedFiles={onRenderUploadedFiles}
+            /* @conditional-compile-remove-from(stable): FILE_SHARING */
+            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

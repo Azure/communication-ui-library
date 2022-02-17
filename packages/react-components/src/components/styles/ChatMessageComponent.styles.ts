@@ -85,8 +85,8 @@ export const menuIconStyleSet = {
 /**
  * @private
  */
-export const chatMessageWrapperStyle = mergeStyles({
-  minWidth: 'auto',
-  background: '#C7E0F4',
-  padding: '0.25rem'
-});
+// export const chatMessageWrapperStyle = mergeStyles({
+//   minWidth: 'auto',
+//   background: '#C7E0F4',
+//   padding: '0.25rem'
+// });
