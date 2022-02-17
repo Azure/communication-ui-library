@@ -49,7 +49,7 @@ export interface MessageStatusIndicatorProps {
   /** how many people have read the message */
   messageThreadReadCount?: number;
   /** number of participants not including myself */
-  participantCountNotIncludingSelf?: number;
+  remoteParticipantsCount?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -72,7 +72,7 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, messageThreadReadCount, participantCountNotIncludingSelf } = props;
+  const { status, styles, messageThreadReadCount, remoteParticipantsCount } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
@@ -115,16 +115,16 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
             // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
-            (messageThreadReadCount === 1 && participantCountNotIncludingSelf === 1) ||
+            (messageThreadReadCount === 1 && remoteParticipantsCount === 1) ||
             messageThreadReadCount === 0 ||
-            (participantCountNotIncludingSelf && participantCountNotIncludingSelf <= 0) ||
+            (remoteParticipantsCount && remoteParticipantsCount <= 0) ||
             !messageThreadReadCount ||
-            !participantCountNotIncludingSelf ||
+            !remoteParticipantsCount ||
             strings.readByTooltipText === undefined
               ? strings.seenTooltipText
               : _formatString(strings.readByTooltipText, {
                   messageThreadReadCount: `${messageThreadReadCount}`,
-                  participantCountNotIncludingSelf: `${participantCountNotIncludingSelf}`
+                  remoteParticipantsCount: `${remoteParticipantsCount}`
                 })
           }
         >

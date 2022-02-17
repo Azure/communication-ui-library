@@ -15,7 +15,42 @@ export const compositeOuterContainerStyles: IStackStyles = {
     // of the height of the child items.
     // If this css property is to be removed, test the participant pane correctly uses the scroll overflow when there a lot
     // of participants (i.e. beyond screen height) and where one participant is sharing their screen.
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+
+    // Create a new stacking context so that DrawerMenu can be positioned absolutely.
+    position: 'relative'
+  }
+};
+
+/** @private */
+export const callCompositeContainerStyles: IStackStyles = {
+  root: {
+    // Start a new stacking context so that any `position:absolute` elements
+    // inside the call composite do not compete with its siblings.
+    position: 'relative'
+  }
+};
+
+/** @private */
+export const controlBarContainerStyles: IStackStyles = {
+  root: {
+    // Start a new stacking context so that any `position:absolute` elements
+    // inside the control bar do not compete with its siblings.
+    position: 'relative'
+  }
+};
+
+/** @private */
+export const drawerContainerStyles: IStackStyles = {
+  root: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    // Any zIndex > 0 will work because this is the only absolutely
+    // positioned element in the container.
+    zIndex: 1
   }
 };
 
