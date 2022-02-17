@@ -14,7 +14,7 @@ import {
   CallEnd20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable): meeting/calling-composite */
-import { CameraSwitch24Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
+import { CameraSwitch24Regular, MicOn20Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
@@ -53,9 +53,13 @@ export const COMPOSITE_ONLY_ICONS = {
   /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerMicrophones: <MicOn20Regular />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
   MoreDrawerPeople: <People20Regular />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
   MoreDrawerSpeakers: <Speaker220Regular />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerSelectedMicrophone: <MicOn20Filled />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
   MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
