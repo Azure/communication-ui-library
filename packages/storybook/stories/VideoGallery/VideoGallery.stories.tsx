@@ -22,6 +22,8 @@ const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/Cus
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const LocalVideoCameraCycleButtonExampleText =
+  require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
@@ -125,9 +127,9 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The Video Gallery can take in customization to allow for the introduction of local camera controls where the
         button will cycle through the different camera's in the users device. Typical usage is to trigger this button on
-        mobile devices.
+        mobile devices. This button is enabled through the use of the `showCamerSwitcherInLocalPreview` prop.
       </Description>
-      <Canvas>
+      <Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
         <LocalCameraSwitcherExample />
       </Canvas>
 
