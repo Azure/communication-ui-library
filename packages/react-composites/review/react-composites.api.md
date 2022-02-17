@@ -558,6 +558,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerPeople: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
@@ -624,6 +625,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerPeople: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
