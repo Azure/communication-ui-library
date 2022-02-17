@@ -47,7 +47,11 @@
         token: token
       },
       document.getElementById('chat-container'),
-      { options: { participantPane: true, topic: false }, key: new Date() }
+      {
+        options: { participantPane: true, topic: false },
+        // To prevent stale composite issues we are using a unique value (e.g the date) as a key for this component
+        key: new Date()
+      }
     );
 
     await chatAdapter.sendMessage('Hello to you! 👋');
