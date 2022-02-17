@@ -66,7 +66,7 @@ const SidePane = (props: {
  * In a CallWithChat when a participant is removed, we must remove them from both
  * the call and the chat thread.
  */
-export const removeParticipantFromCallWithChat = async (
+const removeParticipantFromCallWithChat = async (
   callAdapter: CallAdapter,
   chatAdapter: ChatAdapter,
   participantId: string
