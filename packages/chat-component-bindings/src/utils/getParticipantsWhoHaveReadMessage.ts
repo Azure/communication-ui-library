@@ -21,7 +21,7 @@ export const getParticipantsWhoHaveReadMessage = (
   return (
     Object.entries(readReceiptForEachSender)
       // Filter to only read receipts that match the message OR the participant has read a different message after this message has been created
-      .filter(([_, readReceipt]) => parseInt(readReceipt.lastReadMessage, 10) >= parseInt(message.id, 10))
+      .filter(([_, readReceipt]) => readReceipt.lastReadMessage >= message.id)
       // make sure the person is not removed from chat
       .filter(([_, readReceipt]) => readReceipt.name && readReceipt.name !== '')
       // Map properties to useful array
