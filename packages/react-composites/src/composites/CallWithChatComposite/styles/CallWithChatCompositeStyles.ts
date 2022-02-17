@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStyle } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -28,17 +28,4 @@ export const ChatButtonContainerStyles: IStackStyles = {
   root: {
     position: 'relative'
   }
-};
-
-/**
- * @private
- */
-export const takeAvailableSpaceStyle: IStyle = { width: '100%', height: '100%' };
-
-/**
- * @private
- */
-export const hiddenStackStyle: IStyle = {
-  ...takeAvailableSpaceStyle,
-  display: 'none'
 };

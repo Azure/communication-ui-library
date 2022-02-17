@@ -19,7 +19,8 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { ParticipantContainer } from '../common/ParticipantContainer';
+import { ParticipantListWithHeading } from '../common/ParticipantContainer';
+import { MobilePane } from './MobilePane';
 
 const SidePane = (props: {
   headingText: string;
@@ -84,6 +85,9 @@ export const EmbeddedPeoplePane = (props: {
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onChatButtonClick: () => void;
+  onPeopleButtonClick: () => void;
+  isMobile?: boolean;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -99,6 +103,29 @@ export const EmbeddedPeoplePane = (props: {
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
+  const participantList = (
+    <ParticipantListWithHeading
+      participantListProps={participantListProps}
+      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      title={callWithChatStrings.peoplePaneSubTitle}
+    />
+  );
+
+  if (props.isMobile) {
+    return (
+      <MobilePane
+        hidden={props.hidden}
+        dataUiId={'call-with-chat-composite-people-pane'}
+        onClose={props.onClose}
+        activeTab="people"
+        onChatButtonClicked={props.onChatButtonClick}
+        onPeopleButtonClicked={props.onPeopleButtonClick}
+      >
+        {participantList}
+      </MobilePane>
+    );
+  }
+
   return (
     <SidePane
       hidden={props.hidden}
@@ -110,11 +137,7 @@ export const EmbeddedPeoplePane = (props: {
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
-        <ParticipantContainer
-          participantListProps={participantListProps}
-          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-          title={callWithChatStrings.peoplePaneSubTitle}
-        />
+        {participantList}
       </Stack>
     </SidePane>
   );
@@ -130,9 +153,36 @@ export const EmbeddedChatPane = (props: {
   hidden: boolean;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onChatButtonClick: () => void;
+  onPeopleButtonClick: () => void;
+  isMobile?: boolean;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
+  const chatComposite = (
+    <ChatComposite
+      {...props.chatCompositeProps}
+      adapter={props.chatAdapter}
+      fluentTheme={props.fluentTheme}
+      options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
+      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+    />
+  );
+
+  if (props.isMobile) {
+    return (
+      <MobilePane
+        hidden={props.hidden}
+        dataUiId={'call-with-chat-composite-people-pane'}
+        onClose={props.onClose}
+        activeTab="chat"
+        onChatButtonClicked={props.onChatButtonClick}
+        onPeopleButtonClicked={props.onPeopleButtonClick}
+      >
+        {chatComposite}
+      </MobilePane>
+    );
+  }
   return (
     <SidePane
       hidden={props.hidden}
@@ -140,13 +190,7 @@ export const EmbeddedChatPane = (props: {
       onClose={props.onClose}
       dataUiId={'call-with-chat-composite-chat-pane'}
     >
-      <ChatComposite
-        {...props.chatCompositeProps}
-        adapter={props.chatAdapter}
-        fluentTheme={props.fluentTheme}
-        options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
-        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      />
+      {chatComposite}
     </SidePane>
   );
 };

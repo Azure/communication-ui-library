@@ -2,17 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { PartialTheme, Stack, Theme, mergeStyles } from '@fluentui/react';
+import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
-import {
-  compositeOuterContainerStyles,
-  takeAvailableSpaceStyle,
-  hiddenStackStyle
-} from './styles/CallWithChatCompositeStyles';
+import { compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
@@ -23,7 +19,6 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-import { ChatAndPeoplePane } from '../CallWithChatComposite/ChatAndPeoplePane';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -159,57 +154,27 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const callWithChatControlBar = (
-    <CallWithChatControlBar
-      callAdapter={callAdapter}
-      chatAdapter={chatProps.adapter}
-      chatButtonChecked={showChat}
-      onChatButtonClicked={toggleChat}
-      peopleButtonChecked={showPeople}
-      onPeopleButtonClicked={togglePeople}
-      mobileView={isMobile}
-      disableButtonsForLobbyPage={isInLobbyOrConnecting}
-      callControls={props.callControls}
-    />
+    <ChatAdapterProvider adapter={chatProps.adapter}>
+      <CallWithChatControlBar
+        callAdapter={callAdapter}
+        chatAdapter={chatProps.adapter}
+        chatButtonChecked={showChat}
+        onChatButtonClicked={toggleChat}
+        peopleButtonChecked={showPeople}
+        onPeopleButtonClicked={togglePeople}
+        mobileView={isMobile}
+        disableButtonsForLobbyPage={isInLobbyOrConnecting}
+        callControls={props.callControls}
+      />
+    </ChatAdapterProvider>
   );
 
-  if (isMobile) {
-    return (
-      <Stack className={mergeStyles(takeAvailableSpaceStyle)}>
-        {callAdapter && chatProps.adapter && hasJoinedCall && (
-          <ChatAndPeoplePane
-            chatAdapter={chatProps.adapter}
-            callAdapter={callAdapter}
-            onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            activeTab={showChat ? 'chat' : showPeople ? 'people' : undefined}
-            onChatButtonClicked={() => {
-              setShowChat(true);
-              setShowPeople(false);
-            }}
-            onPeopleButtonClicked={() => {
-              setShowPeople(true);
-              setShowChat(false);
-            }}
-            closePane={closePane}
-          />
-        )}
-        <Stack
-          verticalFill
-          grow
-          className={showChat || showPeople ? mergeStyles(hiddenStackStyle) : mergeStyles(takeAvailableSpaceStyle)}
-        >
-          {callComposite}
-          {(isInLobbyOrConnecting || hasJoinedCall) && (
-            <ChatAdapterProvider adapter={chatProps.adapter}>{callWithChatControlBar}</ChatAdapterProvider>
-          )}
-        </Stack>
-      </Stack>
-    );
-  }
+  const isMobilePaneShowing = isMobile && (showChat || showPeople);
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        <Stack.Item grow>{callComposite}</Stack.Item>
+        {!isMobilePaneShowing && <Stack.Item grow>{callComposite}</Stack.Item>}
         {chatProps.adapter && hasJoinedCall && (
           <EmbeddedChatPane
             chatCompositeProps={chatProps}
@@ -218,6 +183,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             fluentTheme={fluentTheme}
             onClose={closePane}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+            onChatButtonClick={() => {
+              setShowChat(true);
+              setShowPeople(false);
+            }}
+            onPeopleButtonClick={() => {
+              setShowPeople(true);
+              setShowChat(false);
+            }}
+            isMobile={isMobile}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -229,13 +203,20 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
               onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+              onChatButtonClick={() => {
+                setShowChat(true);
+                setShowPeople(false);
+              }}
+              onPeopleButtonClick={() => {
+                setShowPeople(true);
+                setShowChat(false);
+              }}
+              isMobile={isMobile}
             />
           </CallAdapterProvider>
         )}
       </Stack>
-      {(isInLobbyOrConnecting || hasJoinedCall) && (
-        <ChatAdapterProvider adapter={chatProps.adapter}>{callWithChatControlBar}</ChatAdapterProvider>
-      )}
+      {(isInLobbyOrConnecting || hasJoinedCall) && !isMobilePaneShowing && callWithChatControlBar}
     </Stack>
   );
 };

@@ -1,21 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStyle, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, IStackStyles } from '@fluentui/react';
 
-export const chatAndPeoplePaneStyle = mergeStyles({ width: '100%', height: '100%' });
+export const mobilePaneStyle = { root: { width: '100%', height: '100%' } };
 
-export const chatAndPeoplePaneHiddenStyle = mergeStyles(chatAndPeoplePaneStyle, { display: 'none' });
+export const hiddenMobilePaneStyle: IStackStyles = concatStyleSets(mobilePaneStyle, { root: { display: 'none' } });
 
-export const chatAndPeoplePaneControlBarStyle = mergeStyles({ height: '3rem' });
+export const mobilePaneControlBarStyle: IStackStyles = { root: { height: '3rem' } };
 
-export const chatAndPeoplePaneCloseButtonStyles: IButtonStyles = {
+export const mobilePaneBackButtonStyles: IButtonStyles = {
   root: { border: 'none', minWidth: '2.5rem', height: '100%', background: 'none', padding: '0 1rem 0 0.5rem' },
   rootChecked: { background: 'none' },
   rootCheckedHovered: { background: 'none' }
 };
 
-export const chatAndPeoplePaneButtonStyles: IButtonStyles = {
+export const mobilePaneButtonStyles: IButtonStyles = {
   root: {
     border: 'none',
     borderBottom: '0.125rem solid transparent',
@@ -39,7 +39,3 @@ export const chatAndPeoplePaneButtonStyles: IButtonStyles = {
   },
   labelChecked: { fontWeight: 600 }
 };
-
-export const chatAndPeoplePaneContentStyle: IStyle = { height: 'calc(100% - 3rem)' };
-
-export const chatAndPeoplePaneContentHiddenStyle: IStyle = { ...chatAndPeoplePaneContentStyle, display: 'none' };
