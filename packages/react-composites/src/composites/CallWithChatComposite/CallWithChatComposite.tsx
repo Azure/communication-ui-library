@@ -162,12 +162,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const isMobilePaneShowing = isMobile && (showChat || showPeople);
+  const showMobilePane = isMobile && (showChat || showPeople);
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        {!isMobilePaneShowing && (
+        {!showMobilePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
             <CallComposite
               {...props}
@@ -219,7 +219,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </CallAdapterProvider>
         )}
       </Stack>
-      {showControlBar && !isMobilePaneShowing && (
+      {showControlBar && !showMobilePane && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <Stack.Item styles={controlBarContainerStyles}>
             <CallWithChatControlBar
