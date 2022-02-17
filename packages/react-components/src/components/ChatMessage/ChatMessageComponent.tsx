@@ -22,6 +22,7 @@ type ChatMessageComponentProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineAcceptRejectEditButtons: boolean;
+  remoteParticipantsCount?: number;
 };
 
 /**

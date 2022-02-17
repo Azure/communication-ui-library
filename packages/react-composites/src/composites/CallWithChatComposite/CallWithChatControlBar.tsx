@@ -19,6 +19,7 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { Devices } from '../CallComposite/components/buttons/Devices';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
+import { MoreButton } from './MoreButton';
 
 /**
  * @private
@@ -29,6 +30,7 @@ export interface CallWithChatControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
@@ -87,6 +89,20 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     return <></>;
   }
 
+  const chatButton = (
+    <ChatButtonWithUnreadMessagesBadge
+      chatAdapter={props.chatAdapter}
+      checked={props.chatButtonChecked}
+      showLabel={options.displayType !== 'compact'}
+      isChatPaneVisible={props.chatButtonChecked}
+      onClick={props.onChatButtonClicked}
+      disabled={props.disableButtonsForLobbyPage}
+      label={callWithChatStrings.chatButtonLabel}
+      styles={commonButtonStyles}
+      newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
+    />
+  );
+
   return (
     <Stack
       horizontal
@@ -115,20 +131,22 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {options.cameraButton !== false && (
+                {isEnabled(options.cameraButton) && (
                   <Camera
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {options.screenShareButton !== false && (
+                {props.mobileView && isEnabled(options?.chatButton) && chatButton}
+                {isEnabled(options.screenShareButton) && (
                   <ScreenShare
                     option={options.screenShareButton}
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                   />
                 )}
+                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
                 {
                   // Device dropdowns are shown via split buttons.
                   // TODO: Remove the devicesButton for mobile view as well once
@@ -141,14 +159,14 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     />
                   )
                 }
-                <EndCall displayType={options.displayType} styles={endCallButtonStyles} />
+                <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>
           </Stack>
         </CallAdapterProvider>
       </Stack.Item>
       <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-        {isEnabled(options?.peopleButton) !== false && (
+        {isEnabled(options?.peopleButton) && (
           <PeopleButton
             checked={props.peopleButtonChecked}
             showLabel={true}
@@ -159,19 +177,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
             styles={commonButtonStyles}
           />
         )}
-        {isEnabled(options?.chatButton) !== false && (
-          <ChatButtonWithUnreadMessagesBadge
-            chatAdapter={props.chatAdapter}
-            checked={props.chatButtonChecked}
-            showLabel={true}
-            isChatPaneVisible={props.chatButtonChecked}
-            onClick={props.onChatButtonClicked}
-            disabled={props.disableButtonsForLobbyPage}
-            label={callWithChatStrings.chatButtonLabel}
-            styles={commonButtonStyles}
-            newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
-          />
-        )}
+        {!props.mobileView && isEnabled(options?.chatButton) && chatButton}
       </Stack>
     </Stack>
   );

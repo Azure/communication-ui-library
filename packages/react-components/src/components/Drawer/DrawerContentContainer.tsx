@@ -14,17 +14,19 @@ export const DrawerContentContainer = (props: {
   children: React.ReactNode;
   styles?: BaseCustomStyles;
 }): JSX.Element => {
-  const backgroundColor = useTheme().palette.white;
-  const rootStyles = mergeStyles(containerStyles(backgroundColor), props.styles?.root);
+  const theme = useTheme();
+  const backgroundColor = theme.palette.white;
+  const borderRadius = theme.effects.roundedCorner4;
+  const rootStyles = mergeStyles(containerStyles(backgroundColor, borderRadius), props.styles?.root);
 
   return <Stack className={rootStyles}>{props.children}</Stack>;
 };
 
-const containerStyles = (backgroundColor: string): IStyle => ({
+const containerStyles = (backgroundColor: string, borderRadius: string): IStyle => ({
   background: backgroundColor,
 
-  borderTopRightRadius: '0.375rem',
-  borderTopLeftRadius: '0.375rem',
+  borderTopRightRadius: borderRadius,
+  borderTopLeftRadius: borderRadius,
 
   ...AnimationStyles.slideUpIn10
 });
