@@ -6,6 +6,9 @@ import {
   ContextualMenu,
   DirectionalHint,
   IContextualMenuItem,
+  IPersona,
+  Persona,
+  PersonaSize,
   Target,
   useTheme
 } from '@fluentui/react';
@@ -27,6 +30,7 @@ export interface ChatMessageActionFlyoutProps {
   onRemoveClick?: () => void;
   onDismiss: () => void;
   messageReadByCount?: number;
+  messageReadByNames?: string[];
   remoteParticipantsCount?: number;
   /**
    * Increase the height of the flyout items.
@@ -42,6 +46,30 @@ export interface ChatMessageActionFlyoutProps {
  */
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
+  const messageReadByList: IContextualMenuItem[] = [];
+
+  props.messageReadByNames?.forEach((name) => {
+    const personaOptions: IPersona = {
+      hidePersonaDetails: true,
+      size: PersonaSize.size24,
+      text: name,
+      styles: {
+        root: {
+          margin: '0.25rem'
+        }
+      }
+    };
+
+    messageReadByList.push({
+      key: name,
+      text: name,
+      itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+      onRenderIcon: () => <Persona {...personaOptions} />,
+      iconProps: {
+        styles: menuIconStyleSet
+      }
+    });
+  });
 
   const menuItems = useMemo((): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [
@@ -90,6 +118,9 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
             props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
           )
         },
+        subMenuProps: {
+          items: messageReadByList
+        },
         iconProps: {
           iconName: 'MessageSeen',
           styles: {
@@ -97,6 +128,10 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
               color: props.messageReadByCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
             }
           }
+        },
+        submenuIconProps: {
+          iconName: 'HorizontalGalleryRightButton',
+          styles: menuIconStyleSet
         },
         disabled: props.messageReadByCount <= 0
       });

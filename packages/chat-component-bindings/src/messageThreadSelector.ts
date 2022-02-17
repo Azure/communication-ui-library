@@ -31,7 +31,8 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     userId: string,
     isSeen: boolean,
     isLargeGroup: boolean,
-    readNumber: number
+    readNumber: number,
+    messageReadByNames: string[]
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -39,7 +40,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, messageReadByNames);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -51,7 +52,8 @@ const convertToUiChatMessage = (
   userId: string,
   isSeen: boolean,
   isLargeGroup: boolean,
-  readNumber: number
+  readNumber: number,
+  messageReadByNames: string[]
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -68,6 +70,7 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     readNumber,
+    messageReadByNames,
     metadata: message.metadata
   };
 };
@@ -140,12 +143,14 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
 
     // creating a key value pair of senderID: last read message information
     const readReceiptForEachSender = {};
+
     // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
     readReceipts.forEach((r) => {
       readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
-        readOn: r.readOn
+        readOn: r.readOn,
+        name: participants[toFlatCommunicationIdentifier(r.sender)].displayName
       };
     });
 
@@ -173,15 +178,14 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
            * we compare if the readon timestamp is later than the message A sent time
            * if last read message id is not equal to message A's id, check the read on time stamp.
            * if the last read message is read after the message A is sent, then user should have read message A as well */
-
-          let readNumber = 0;
+          const messageReadByNames: string[] = [];
           for (const k in readReceiptForEachSender) {
             const messageid = readReceiptForEachSender[k]['lastReadMessage'];
             const readTime = readReceiptForEachSender[k]['readOn'];
             if (messageid === message.id) {
-              readNumber += 1;
+              messageReadByNames.push(readReceiptForEachSender[k]['name']);
             } else if (new Date(readTime) >= new Date(message.createdOn)) {
-              readNumber += 1;
+              messageReadByNames.push(readReceiptForEachSender[k]['name']);
             }
           }
 
@@ -191,7 +195,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             userId,
             message.createdOn <= latestReadTime,
             isLargeGroup,
-            readNumber
+            messageReadByNames.length,
+            messageReadByNames
           );
         })
     );

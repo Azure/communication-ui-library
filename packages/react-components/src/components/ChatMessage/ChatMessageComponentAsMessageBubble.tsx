@@ -115,6 +115,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onRemoveClick={onRemoveClick}
           strings={strings}
           messageReadByCount={message.readNumber ?? 0}
+          messageReadByNames={message.messageReadByNames ?? []}
           remoteParticipantsCount={remoteParticipantsCount}
         />
       )}
