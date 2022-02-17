@@ -152,7 +152,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
         readOn: r.readOn,
-        name: participants[toFlatCommunicationIdentifier(r.sender)].displayName ?? ''
+        name: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
       };
     });
 
