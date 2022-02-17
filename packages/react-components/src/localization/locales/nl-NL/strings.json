@@ -38,14 +38,20 @@
     "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
     "tooltipOffContent": "Camera inschakelen",
-    "tooltipVideoLoadingContent": "Video wordt geladen"
+    "tooltipVideoLoadingContent": "Video wordt geladen",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Camera kiezen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
     "offLabel": "Dempen opheffen",
     "tooltipDisabledContent": "Microfoon is uitgeschakeld",
     "tooltipOnContent": "Microfoon uitschakelen",
-    "tooltipOffContent": "Microfoon inschakelen"
+    "tooltipOffContent": "Microfoon inschakelen",
+    "microphoneMenuTitle": "Microfoon",
+    "microphoneMenuTooltip": "Microfoon kiezen",
+    "speakerMenuTitle": "Luidspreker",
+    "speakerMenuTooltip": "Luidspreker kiezen"
   },
   "devicesButton": {
     "label": "Apparaten",
@@ -123,6 +129,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
-    "localVideoLabel": "U"
+    "localVideoLabel": "U",
+    "localVideoCameraSwitcherLabel": "Camera wisselen"
   }
 }

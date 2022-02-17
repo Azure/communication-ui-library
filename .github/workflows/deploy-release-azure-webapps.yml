@@ -63,13 +63,13 @@ jobs:
           publish-profile: ${{ secrets.AZURE_BETA_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
 
-      - name: Package Meeting Sample Artifact
+      - name: Package CallWithChat Sample Artifact
         run: rushx package
-        working-directory: ./samples/Meeting
+        working-directory: ./samples/CallWithChat
 
-      - name: 'Deploy Meeting Sample WebApp'
+      - name: 'Deploy CallWithChat Sample WebApp'
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-meeting-hero-beta-validation2
           publish-profile: ${{ secrets.AZURE_BETA_MEETING_WEBAPP_PUBLISH_PROFILE }}
-          package: ./samples/Meeting/dist
+          package: ./samples/CallWithChat/dist

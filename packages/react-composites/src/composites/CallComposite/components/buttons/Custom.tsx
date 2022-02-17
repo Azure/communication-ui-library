@@ -22,7 +22,7 @@ export const generateCustomButtons = (
     afterCameraButton: undefined,
     afterEndCallButton: undefined,
     afterMicrophoneButton: undefined,
-    afterOptionsButton: undefined,
+    afterDevicesButton: undefined,
     afterParticipantsButton: undefined,
     afterScreenShareButton: undefined,
     last: undefined

@@ -38,14 +38,20 @@
     "tooltipDisabledContent": "Kamera devre dışı",
     "tooltipOnContent": "Kamerayı kapat",
     "tooltipOffContent": "Kamerayı aç",
-    "tooltipVideoLoadingContent": "Video yükleniyor"
+    "tooltipVideoLoadingContent": "Video yükleniyor",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Kamera Seç"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
     "offLabel": "Sesi aç",
     "tooltipDisabledContent": "Mikrofon devre dışı",
     "tooltipOnContent": "Mikrofonun sesini kapat",
-    "tooltipOffContent": "Mikrofonun sesini aç"
+    "tooltipOffContent": "Mikrofonun sesini aç",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Mikrofon Seç",
+    "speakerMenuTitle": "Hoparlör",
+    "speakerMenuTooltip": "Hoparlör Seç"
   },
   "devicesButton": {
     "label": "Cihazlar",
@@ -84,7 +90,7 @@
     "participantJoined": "sohbete katıldı.",
     "participantLeft": "sohbetten ayrıldı.",
     "editMessage": "Düzenle",
-    "removeMessage": "Kaldır",
+    "removeMessage": "Sil",
     "editedTag": "Düzenlendi",
     "liveAuthorIntro": "{author} şöyle diyor:",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
@@ -123,6 +129,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
-    "localVideoLabel": "Siz"
+    "localVideoLabel": "Siz",
+    "localVideoCameraSwitcherLabel": "Kamerayı değiştir"
   }
 }

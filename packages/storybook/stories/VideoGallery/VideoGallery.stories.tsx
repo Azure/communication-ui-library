@@ -5,6 +5,7 @@ import { VideoGallery as VideoGalleryComponent } from '@azure/communication-reac
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -12,6 +13,7 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
@@ -20,6 +22,8 @@ const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/Cus
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const LocalVideoCameraCycleButtonExampleText =
+  require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
@@ -116,6 +120,17 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={CustomStyleVideoGalleryExampleText}>
         <CustomStyleVideoGalleryExample />
+      </Canvas>
+
+      <Heading>Local Video Camera Button</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        The Video Gallery can take in customization to allow for the introduction of local camera controls where the
+        button will cycle through the different camera's in the users device. Typical usage is to enable this button on
+        mobile devices. This button is enabled through the use of the `showCamerSwitcherInLocalPreview` prop.
+      </Description>
+      <Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
+        <LocalCameraSwitcherExample />
       </Canvas>
 
       <Heading>Props</Heading>
