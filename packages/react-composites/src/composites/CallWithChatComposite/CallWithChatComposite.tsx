@@ -19,7 +19,7 @@ import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallA
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
@@ -235,7 +235,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
+    <BaseProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
         callWithChatAdapter={callWithChatAdapter}
@@ -244,7 +244,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
       />
-    </BaseComposite>
+    </BaseProvider>
   );
 };
 
