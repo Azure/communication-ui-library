@@ -873,13 +873,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message={messageProps.message}
             remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
+            onRenderAvatar={onRenderAvatar}
           />
         );
       }
       return <></>;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString(), isNarrow, messageThreadParticipantCount]
+    [new Date().toDateString(), isNarrow, messageThreadParticipantCount, onRenderAvatar]
   );
 
   const localeStrings = useLocale().strings.messageThread;
