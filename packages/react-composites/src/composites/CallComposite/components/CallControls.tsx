@@ -76,7 +76,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {customButtons['afterOptionsButton']}
+          {customButtons['afterDevicesButton']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
           {customButtons['afterEndCallButton']}
           {customButtons['last']}
