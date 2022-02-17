@@ -111,6 +111,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   clearFileUploads(): void {
     this.context.setFileUploads([]);
     this.fileUploads.forEach((fileUpload) => this.unsubscribeAllEvents(fileUpload));
+    this.fileUploads = [];
   }
 
   cancelFileUpload(id: string): void {
@@ -131,20 +132,20 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     this.context.updateFileUpload(id, { errorMessage });
   }
 
-  private fileUploadCompletedListener = (id: string, metadata: FileMetadata): void => {
+  private fileUploadCompletedListener(id: string, metadata: FileMetadata): void {
     this.context.updateFileUpload(id, { progress: 1, metadata });
-  };
+  }
 
   private subscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload.on('uploadProgressed', this.fileUploadProgressListener);
-    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener);
-    fileUpload.on('uploadFailed', this.fileUploadFailedListener);
+    fileUpload.on('uploadProgressed', this.fileUploadProgressListener.bind(this));
+    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener.bind(this));
+    fileUpload.on('uploadFailed', this.fileUploadFailedListener.bind(this));
   }
 
   private unsubscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener);
-    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener);
-    fileUpload?.off('uploadFailed', this.fileUploadFailedListener);
+    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener.bind(this));
+    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener.bind(this));
+    fileUpload?.off('uploadFailed', this.fileUploadFailedListener.bind(this));
   }
 }
 
