@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "TODO: Remove this changefile. Pulls in a bug fix to DrawerMenu from another PR",
+  "packageName": "@internal/react-components",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
