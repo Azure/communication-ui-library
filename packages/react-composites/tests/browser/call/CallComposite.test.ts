@@ -184,7 +184,7 @@ test.describe('Call Composite E2E CallPage [Mobile Only]', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test.only('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
+  test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
     // mobile check
     test.skip(skipTestIfDesktop(testInfo));
     const page = pages[0];
