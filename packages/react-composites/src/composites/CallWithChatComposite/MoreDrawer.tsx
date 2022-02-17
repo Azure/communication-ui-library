@@ -16,7 +16,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const strings = useCallWithChatCompositeStrings();
   const drawerMenuItems: DrawerMenuItemProps[] = [
     {
-      key: 'people',
+      itemKey: 'people',
       text: strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
       onItemClick: props.onPeopleButtonClicked
