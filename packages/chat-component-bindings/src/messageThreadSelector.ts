@@ -23,6 +23,7 @@ import {
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
+import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -32,7 +33,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isSeen: boolean,
     isLargeGroup: boolean,
     readNumber: number,
-    messageReadByNames: { id: string; name: string }[]
+    readBy: { id: string; name: string }[]
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -40,7 +41,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, messageReadByNames);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, readBy);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -53,7 +54,7 @@ const convertToUiChatMessage = (
   isSeen: boolean,
   isLargeGroup: boolean,
   readNumber: number,
-  messageReadByNames: { id: string; name: string }[]
+  readBy: { id: string; name: string }[]
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -70,7 +71,7 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     readNumber,
-    messageReadByNames,
+    readBy,
     metadata: message.metadata
   };
 };
@@ -141,8 +142,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       (p) => p.displayName && p.displayName !== ''
     ).length;
 
-    // creating a key value pair of senderID: last read message information
-    const readReceiptForEachSender = {};
+    // creating key value pairs of senderID: last read message information
+
+    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; readOn: Date; name: string } } = {};
 
     // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
@@ -150,7 +152,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
         readOn: r.readOn,
-        name: participants[toFlatCommunicationIdentifier(r.sender)].displayName
+        name: participants[toFlatCommunicationIdentifier(r.sender)].displayName ?? ''
       };
     });
 
@@ -170,24 +172,10 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) => {
-          /** logic: Looking at message A, how do we know it's read number?
-           * Assumption: if user read the latest message, user has read all messages before that
-           * ReadReceipt behaviour: read receipt is only sent to the last message
-           * if participant read a message that is sent later than message A, then the participant has read message A
-           * how do we check if the message is sent later than message A?
-           * we compare if the readon timestamp is later than the message A sent time
-           * if last read message id is not equal to message A's id, check the read on time stamp.
-           * if the last read message is read after the message A is sent, then user should have read message A as well */
-          const messageReadByNames: { id: string; name: string }[] = [];
-          for (const k in readReceiptForEachSender) {
-            const messageid = readReceiptForEachSender[k]['lastReadMessage'];
-            const readTime = readReceiptForEachSender[k]['readOn'];
-            if (messageid === message.id) {
-              messageReadByNames.push({ id: k, name: readReceiptForEachSender[k]['name'] });
-            } else if (new Date(readTime) >= new Date(message.createdOn)) {
-              messageReadByNames.push({ id: k, name: readReceiptForEachSender[k]['name'] });
-            }
-          }
+          const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
+            message,
+            readReceiptForEachSender
+          );
 
           return memoizedFn(
             message.id ?? message.clientMessageId,
@@ -195,8 +183,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             userId,
             message.createdOn <= latestReadTime,
             isLargeGroup,
-            messageReadByNames.length,
-            messageReadByNames
+            readBy.length,
+            readBy
           );
         })
     );

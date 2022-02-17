@@ -646,15 +646,15 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     editedOn?: Date;
     // (undocumented)
-    messageReadByNames?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
+    // (undocumented)
+    readBy?: {
+        id: string;
+        name: string;
+    }[];
     // (undocumented)
     readNumber?: number;
     // (undocumented)

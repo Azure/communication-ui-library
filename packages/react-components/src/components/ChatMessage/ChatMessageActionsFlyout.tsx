@@ -30,8 +30,7 @@ export interface ChatMessageActionFlyoutProps {
   onEditClick?: () => void;
   onRemoveClick?: () => void;
   onDismiss: () => void;
-  messageReadByCount?: number;
-  messageReadByNames?: { id: string; name: string }[];
+  messageReadBy?: { id: string; name: string }[];
   remoteParticipantsCount?: number;
   /**
    * Increase the height of the flyout items.
@@ -53,9 +52,8 @@ export interface ChatMessageActionFlyoutProps {
  */
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
-  const messageReadByList: IContextualMenuItem[] = [];
-
-  props.messageReadByNames?.forEach((person) => {
+  const messageReadByCount = props.messageReadBy?.length;
+  const messageReadByList: IContextualMenuItem[] | undefined = props.messageReadBy?.map((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
@@ -67,7 +65,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       }
     };
     const { onRenderAvatar } = props;
-    messageReadByList.push({
+    return {
       key: person.name,
       text: person.name,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
@@ -76,7 +74,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       iconProps: {
         styles: menuIconStyleSet
       }
-    });
+    };
   });
 
   const menuItems = useMemo((): IContextualMenuItem[] => {
@@ -103,21 +101,21 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     // TODO: change strings.messageReadCount to be required if we can fallback to our own en-us strings for anything that Contoso doesn't provide
     if (
       props.remoteParticipantsCount &&
-      props.messageReadByCount !== undefined &&
+      messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
       props.strings.messageReadCount
     ) {
       items.push({
         key: 'Read Count',
         text: _formatString(props.strings.messageReadCount, {
-          messageReadByCount: `${props.messageReadByCount}`,
+          messageReadByCount: `${messageReadByCount}`,
           remoteParticipantsCount: `${props.remoteParticipantsCount}`
         }),
         itemProps: {
           styles: concatStyleSets(
             {
               linkContent: {
-                color: props.messageReadByCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
+                color: messageReadByCount > 0 ? theme.palette.neutralPrimary : theme.palette.neutralTertiary
               },
               root: {
                 borderTop: `1px solid ${theme.palette.neutralLighter}`
@@ -127,13 +125,13 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
           )
         },
         subMenuProps: {
-          items: messageReadByList
+          items: messageReadByList ?? []
         },
         iconProps: {
           iconName: 'MessageSeen',
           styles: {
             root: {
-              color: props.messageReadByCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
+              color: messageReadByCount > 0 ? theme.palette.themeDarkAlt : theme.palette.neutralTertiary
             }
           }
         },
@@ -141,7 +139,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
           iconName: 'HorizontalGalleryRightButton',
           styles: menuIconStyleSet
         },
-        disabled: props.messageReadByCount <= 0
+        disabled: messageReadByCount <= 0
       });
     }
 
@@ -152,8 +150,9 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     props.onRemoveClick,
     props.strings.editMessage,
     props.strings.removeMessage,
-    props.messageReadByCount,
-    props.remoteParticipantsCount
+    props.remoteParticipantsCount,
+    messageReadByList,
+    messageReadByCount
   ]);
 
   // gap space uses pixels
