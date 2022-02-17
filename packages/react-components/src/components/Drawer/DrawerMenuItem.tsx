@@ -35,6 +35,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   return (
     <Stack
       tabIndex={0}
+      role="menuitem"
       horizontal
       className={mergeStyles(
         drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
