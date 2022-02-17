@@ -32,7 +32,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
       <div className={paneButtonContainerStyle}>
         {
-          /* @conditional-compile-remove-from(stable) meeting composite */
+          /* @conditional-compile-remove-from(stable) chat-composite-participant-pane*/
           <IconButton
             onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
             className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
