@@ -31,11 +31,14 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
       <div className={paneButtonContainerStyle}>
-        <IconButton
-          onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
-          className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
-          onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
-        />
+        {
+          /* @conditional-compile-remove-from(stable) chat-composite-participant-pane*/
+          <IconButton
+            onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
+            className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
+            onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
+          />
+        }
       </div>
       <DefaultButton
         className={mergeStyles(largeLeaveButtonContainerStyle, leaveButtonStyle, {

@@ -609,6 +609,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
+    moreDrawerMicrophoneMenuTitle: string;
+    moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
@@ -827,6 +829,11 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    readBy?: {
+        id: string;
+        name: string;
+    }[];
+    // (undocumented)
     readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
@@ -1019,7 +1026,11 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
+    MoreDrawerSpeakers: JSX.Element;
+    MoreDrawerSelectedMicrophone: JSX.Element;
+    MoreDrawerSelectedSpeaker: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
@@ -1213,7 +1224,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
+    MoreDrawerSpeakers: JSX.Element;
+    MoreDrawerSelectedMicrophone: JSX.Element;
+    MoreDrawerSelectedSpeaker: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     NoticePageAccessDeniedTeamsMeeting: JSX.Element;
