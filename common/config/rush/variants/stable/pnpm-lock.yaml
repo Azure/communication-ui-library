@@ -18943,6 +18943,7 @@ packages:
       '@azure/communication-calling': 1.3.2
       '@azure/communication-common': 1.1.0
       '@azure/core-auth': 1.3.2
+      '@azure/logger': 1.0.3
       '@babel/cli': 7.16.0_@babel+core@7.16.5
       '@babel/core': 7.16.5
       '@microsoft/api-documenter': 7.12.22
@@ -18974,7 +18975,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-R+GP8sP9jmW2ec1bI+frbxB8yjazpBpCjL+q0DOJ9AyaGqyfuY4gdonNaGGgW9SXPWGh7cfTZpjxZgjU0uuDYA==
+      integrity: sha512-46mik7/pzvWuhTF9hpJudpNZHXGPXtQVnhfRk9EmK6s1DU2m8oRhprmc3C+4+y1o3miCX9XTI+/M22fsoZTCvg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
