@@ -228,3 +228,17 @@ export const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
 };
+
+/**
+ * Helper function to determine whether to skip a test for a beta feature in stable test run.
+ */
+export const skipTestInStableFlavor = (): boolean => {
+  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
+  if (flavor === 'stable') {
+    return true;
+  } else if (flavor === 'beta') {
+    return false;
+  } else {
+    throw 'Faled to find Communication React env variable';
+  }
+};
