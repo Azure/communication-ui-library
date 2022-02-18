@@ -23,6 +23,7 @@
     "deliveredTooltipText": "已发送",
     "seenAriaLabel": "其他人已查看消息",
     "seenTooltipText": "已查看",
+    "readByTooltipText": "按 {participantCountNotIncludingSelf} 的 {messageThreadReadCount} 读取",
     "sendingAriaLabel": "消息发送",
     "sendingTooltipText": "正在发送",
     "failedToSendAriaLabel": "消息发送失败",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "已禁用照相机",
     "tooltipOnContent": "关闭摄像头",
     "tooltipOffContent": "打开摄像头",
-    "tooltipVideoLoadingContent": "正在加载视频"
+    "tooltipVideoLoadingContent": "正在加载视频",
+    "cameraMenuTitle": "相机",
+    "cameraMenuTooltip": "选择“相机”"
   },
   "microphoneButton": {
     "onLabel": "静音",
     "offLabel": "取消静音",
     "tooltipDisabledContent": "已禁用麦克风",
     "tooltipOnContent": "将麦克风静音",
-    "tooltipOffContent": "取消麦克风静音"
+    "tooltipOffContent": "取消麦克风静音",
+    "microphoneMenuTitle": "麦克风",
+    "microphoneMenuTooltip": "选择“麦克风”",
+    "speakerMenuTitle": "扬声器",
+    "speakerMenuTooltip": "选择“扬声器”"
   },
   "devicesButton": {
     "label": "设备",
@@ -66,11 +73,11 @@
     "copyInviteLinkButtonLabel": "复制邀请链接"
   },
   "screenShareButton": {
-    "onLabel": "停止共享",
-    "offLabel": "共享",
-    "tooltipDisabledContent": "已禁用屏幕共享",
-    "tooltipOnContent": "停止共享屏幕",
-    "tooltipOffContent": "共享屏幕"
+    "onLabel": "停止演示",
+    "offLabel": "演示",
+    "tooltipDisabledContent": "已禁用演示。",
+    "tooltipOnContent": "演示屏幕",
+    "tooltipOffContent": "演示您的屏幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "新消息",
     "noDisplayNameSub": "无名称",
     "editBoxCancelButton": "取消",
-    "editBoxSubmitButton": "提交"
+    "editBoxSubmitButton": "提交",
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
-    "localVideoLabel": "你"
+    "localVideoLabel": "你",
+    "localVideoCameraSwitcherLabel": "循环照相机"
   }
 }

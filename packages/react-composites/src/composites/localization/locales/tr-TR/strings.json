@@ -45,8 +45,12 @@
   "callWithChat": {
     "peopleButtonLabel": "Kişiler",
     "chatButtonLabel": "Sohbet",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "Kişiler",
-    "peoplePaneSubTitle": "Bu toplantıda",
-    "chatPaneTitle": "Sohbet"
+    "peoplePaneSubTitle": "Bu aramada",
+    "chatPaneTitle": "Sohbet",
+    "chatButtonNewMessageNotificationLabel": "Yeni İleti",
+    "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın."
   }
 }

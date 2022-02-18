@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Enviado",
     "seenAriaLabel": "Mensagem vista por outras pessoas",
     "seenTooltipText": "Visto",
+    "readByTooltipText": "Lido por {messageThreadReadCount} de {remoteParticipantsCount}",
     "sendingAriaLabel": "Envio de mensagem",
     "sendingTooltipText": "Enviando",
     "failedToSendAriaLabel": "Falha ao enviar mensagem",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "A câmera está desabilitada",
     "tooltipOnContent": "Desabilitar a câmera",
     "tooltipOffContent": "Ligar a câmera",
-    "tooltipVideoLoadingContent": "O vídeo está carregando"
+    "tooltipVideoLoadingContent": "O vídeo está carregando",
+    "cameraMenuTitle": "Câmera",
+    "cameraMenuTooltip": "Escolher Câmera"
   },
   "microphoneButton": {
     "onLabel": "Mudo",
     "offLabel": "Desativar mudo",
     "tooltipDisabledContent": "O microfone está desabilitado",
     "tooltipOnContent": "Ativar mudo do microfone",
-    "tooltipOffContent": "Desativar mudo do microfone"
+    "tooltipOffContent": "Desativar mudo do microfone",
+    "microphoneMenuTitle": "Microfone",
+    "microphoneMenuTooltip": "Escolher Microfone",
+    "speakerMenuTitle": "Alto-falante",
+    "speakerMenuTooltip": "Escolher Alto-falante"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -66,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Copiar o link de convite"
   },
   "screenShareButton": {
-    "onLabel": "Parar de compartilhar",
-    "offLabel": "Compartilhar",
-    "tooltipDisabledContent": "O compartilhamento de tela está desabilitado",
-    "tooltipOnContent": "Parar de compartilhar sua tela",
-    "tooltipOffContent": "Compartilhar sua tela"
+    "onLabel": "Interromper apresentação",
+    "offLabel": "Apresentação",
+    "tooltipDisabledContent": "A apresentação está desabilitada.",
+    "tooltipOnContent": "Apresentando sua tela",
+    "tooltipOffContent": "Apresentar sua tela"
   },
   "messageThread": {
     "yesterday": "Ontem",
@@ -84,7 +91,7 @@
     "participantJoined": "ingressou no chat.",
     "participantLeft": "saiu do chat.",
     "editMessage": "Editar",
-    "removeMessage": "Remover",
+    "removeMessage": "Excluir",
     "editedTag": "Editado",
     "liveAuthorIntro": "{author} disse",
     "editBoxTextLimit": "Sua mensagem está acima do limite de {limitNumber} caracteres",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "Novas mensagens",
     "noDisplayNameSub": "Sem nome",
     "editBoxCancelButton": "Cancelar",
-    "editBoxSubmitButton": "Enviar"
+    "editBoxSubmitButton": "Enviar",
+    "messageReadCount": "Lido por {messageReadByCount} de {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
-    "localVideoLabel": "Você"
+    "localVideoLabel": "Você",
+    "localVideoCameraSwitcherLabel": "Câmera de ciclo"
   }
 }

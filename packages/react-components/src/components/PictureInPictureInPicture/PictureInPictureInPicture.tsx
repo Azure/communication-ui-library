@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { ReactChild } from 'react';
+import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import {
   PictureInPictureInPicturePrimaryTile,
   PictureInPictureInPictureSecondaryTile,
@@ -63,26 +64,21 @@ const PictureInPictureInPictureContainer = (props: {
   secondaryView?: ReactChild;
   onClick?: () => void;
   ariaLabel: string;
-}): JSX.Element => (
-  <aside
-    style={tileContainerStyles}
-    onClick={props.onClick}
-    onKeyPress={(e) => props.onClick && handleKeyDown(e, props.onClick)}
-    aria-label={props.ariaLabel}
-    tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
-  >
-    {props.primaryView}
-    <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
-  </aside>
-);
-
-/**
- * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as mouse click.
- */
-const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClickCallback: () => void): void => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    onClickCallback();
-  }
+}): JSX.Element => {
+  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void =>
+    props.onClick && submitWithKeyboard(e, props.onClick);
+  return (
+    <aside
+      style={tileContainerStyles}
+      onClick={props.onClick}
+      onKeyPress={onKeyPress}
+      aria-label={props.ariaLabel}
+      tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
+    >
+      {props.primaryView}
+      <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
+    </aside>
+  );
 };
 
 const tileContainerStyles: React.CSSProperties = {

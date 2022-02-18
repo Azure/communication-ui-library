@@ -45,8 +45,12 @@
   "callWithChat": {
     "peopleButtonLabel": "Pessoas",
     "chatButtonLabel": "Chat",
+    "moreDrawerMicrophoneMenuTitle": "Microfone",
+    "moreDrawerSpeakerMenuTitle": "Alto-falante",
     "peoplePaneTitle": "Pessoas",
-    "peoplePaneSubTitle": "Nesta reunião",
-    "chatPaneTitle": "Chat"
+    "peoplePaneSubTitle": "Nesta chamada",
+    "chatPaneTitle": "Chat",
+    "chatButtonNewMessageNotificationLabel": "Nova mensagem",
+    "pictureInPictureTileAriaLabel": "Feeds de vídeo. Clique para retornar à tela de chamada."
   }
 }

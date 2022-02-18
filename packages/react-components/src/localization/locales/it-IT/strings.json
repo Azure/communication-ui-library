@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Inviato",
     "seenAriaLabel": "Messaggio visualizzato da altri utenti",
     "seenTooltipText": "Visualizzato",
+    "readByTooltipText": "Letto da {messageThreadReadCount} di {remoteParticipantsCount}",
     "sendingAriaLabel": "Invio del messaggio",
     "sendingTooltipText": "Invio in corso",
     "failedToSendAriaLabel": "Invio messaggio non riuscito",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "La videocamera è disabilitata",
     "tooltipOnContent": "Spegni la videocamera",
     "tooltipOffContent": "Accendi la videocamera",
-    "tooltipVideoLoadingContent": "Il video è in corso di caricamento"
+    "tooltipVideoLoadingContent": "Il video è in corso di caricamento",
+    "cameraMenuTitle": "Fotocamera",
+    "cameraMenuTooltip": "Scegli la fotocamera"
   },
   "microphoneButton": {
     "onLabel": "Disattiva audio",
     "offLabel": "Riattiva audio",
     "tooltipDisabledContent": "Il microfono è disabilitato",
     "tooltipOnContent": "Disattiva microfono",
-    "tooltipOffContent": "Riattiva microfono"
+    "tooltipOffContent": "Riattiva microfono",
+    "microphoneMenuTitle": "Microfono",
+    "microphoneMenuTooltip": "Scegli il microfono",
+    "speakerMenuTitle": "Altoparlante",
+    "speakerMenuTooltip": "Scegli l’altoparlante"
   },
   "devicesButton": {
     "label": "Dispositivi",
@@ -66,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito"
   },
   "screenShareButton": {
-    "onLabel": "Interrompi condivisione",
-    "offLabel": "Condividi",
-    "tooltipDisabledContent": "La condivisione del video è disabilitata",
-    "tooltipOnContent": "Interrompi condivisione dello schermo",
-    "tooltipOffContent": "Condividi lo schermo"
+    "onLabel": "Interrompi presentazione",
+    "offLabel": "Presentazione",
+    "tooltipDisabledContent": "La presentazione è disabilitata.",
+    "tooltipOnContent": "Presentazione dello schermo",
+    "tooltipOffContent": "Presenta lo schermo"
   },
   "messageThread": {
     "yesterday": "Ieri",
@@ -84,7 +91,7 @@
     "participantJoined": "si è unito alla chat.",
     "participantLeft": "ha abbandonato la chat.",
     "editMessage": "Modifica",
-    "removeMessage": "Rimuovi",
+    "removeMessage": "Elimina",
     "editedTag": "Modificato",
     "liveAuthorIntro": "{author} dice",
     "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "Nuovi messaggi",
     "noDisplayNameSub": "Nessun nome",
     "editBoxCancelButton": "Annulla",
-    "editBoxSubmitButton": "Invia"
+    "editBoxSubmitButton": "Invia",
+    "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
     "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
-    "localVideoLabel": "Tu"
+    "localVideoLabel": "Tu",
+    "localVideoCameraSwitcherLabel": "Ciclo fotocamera"
   }
 }
