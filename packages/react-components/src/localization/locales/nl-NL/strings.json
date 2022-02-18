@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Verzonden",
     "seenAriaLabel": "Bericht gezien door anderen",
     "seenTooltipText": "Gezien",
+    "readByTooltipText": "Gelezen door {messageThreadReadCount} van {remoteParticipantsCount}",
     "sendingAriaLabel": "Bericht verzenden",
     "sendingTooltipText": "Verzenden",
     "failedToSendAriaLabel": "Het bericht is niet verzonden",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren"
   },
   "screenShareButton": {
-    "onLabel": "Delen stoppen",
-    "offLabel": "Delen",
-    "tooltipDisabledContent": "Scherm delen is uitgeschakeld",
-    "tooltipOnContent": "Delen van uw scherm stoppen",
-    "tooltipOffContent": "Uw scherm delen"
+    "onLabel": "Presenteren stoppen",
+    "offLabel": "Presenteren",
+    "tooltipDisabledContent": "Presenteren is uitgeschakeld",
+    "tooltipOnContent": "Uw scherm presenteren",
+    "tooltipOffContent": "Uw scherm presenteren"
   },
   "messageThread": {
     "yesterday": "Gisteren",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "Nieuwe berichten",
     "noDisplayNameSub": "Geen naam",
     "editBoxCancelButton": "Annuleren",
-    "editBoxSubmitButton": "Verzenden"
+    "editBoxSubmitButton": "Verzenden",
+    "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",

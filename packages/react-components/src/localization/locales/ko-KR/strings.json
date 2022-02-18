@@ -23,6 +23,7 @@
     "deliveredTooltipText": "보냄",
     "seenAriaLabel": "다른 사용자가 본 메시지",
     "seenTooltipText": "표시됨",
+    "readByTooltipText": "{messageThreadReadCount}/{remoteParticipantsCount}명이 읽음",
     "sendingAriaLabel": "메시지를 보내는 중",
     "sendingTooltipText": "보내는 중",
     "failedToSendAriaLabel": "메시지를 보내지 못함",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "초대 링크 복사"
   },
   "screenShareButton": {
-    "onLabel": "공유 중지",
-    "offLabel": "공유",
-    "tooltipDisabledContent": "화면 공유가 비활성화되었습니다",
-    "tooltipOnContent": "화면 공유 중지",
-    "tooltipOffContent": "화면 공유"
+    "onLabel": "프레젠테이션 중지",
+    "offLabel": "프레젠테이션",
+    "tooltipDisabledContent": "프레젠테이션 사용 안 함",
+    "tooltipOnContent": "화면을 프레젠테이션하는 중",
+    "tooltipOffContent": "화면 프레젠테이션"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "새 메시지",
     "noDisplayNameSub": "이름 없음",
     "editBoxCancelButton": "취소",
-    "editBoxSubmitButton": "제출"
+    "editBoxSubmitButton": "제출",
+    "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
