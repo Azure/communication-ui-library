@@ -19169,6 +19169,7 @@ packages:
       '@azure/communication-common': 1.1.0
       '@azure/communication-signaling': 1.0.0-beta.12
       '@azure/core-paging': 1.1.3
+      '@azure/logger': 1.0.3
       '@babel/cli': 7.16.0_@babel+core@7.16.5
       '@babel/core': 7.16.5
       '@microsoft/api-documenter': 7.12.22
@@ -19201,7 +19202,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-AXRuvlVFXucCZ7hAJKgUOAGMXfvxjV6fn43ZMzXlv6fPAyzT4yjZenyhuUGyMLRGSDatiq8kVXTpKLqPOA4RBA==
+      integrity: sha512-wPk2IRkBCzPbcirc9G54Uknb6adDm5lSIJWCjJ0rduWC9iWF0ciVUevtLuUb7LFDnba4z2g9yrCnTMMC/KnACQ==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
