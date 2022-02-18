@@ -119,15 +119,15 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   }
 
   notifyUploadProgressed(value: number): void {
-    this._emitter.emit('uploadProgressed', value);
+    this._emitter.emit('uploadProgressed', this.id, value);
   }
 
   notifyUploadCompleted(metadata: FileMetadata): void {
-    this._emitter.emit('uploadCompleted', metadata);
+    this._emitter.emit('uploadCompleted', this.id, metadata);
   }
 
   notifyUploadFailed(message: string): void {
-    this._emitter.emit('uploadFailed', message);
+    this._emitter.emit('uploadFailed', this.id, message);
   }
 
   on(event: 'uploadProgressed', listener: UploadProgressListener): void;

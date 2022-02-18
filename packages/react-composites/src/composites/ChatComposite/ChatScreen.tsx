@@ -49,6 +49,8 @@ import { ParticipantList } from '@internal/react-components';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { FileUploadCards } from './FileUploadCards';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileDownloadCards } from './FileDownloadCards';
 
 /**
  * @private
@@ -158,7 +160,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 
@@ -172,6 +174,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
+            /* @conditional-compile-remove-from(stable): FILE_SHARING */
+            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
