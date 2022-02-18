@@ -103,6 +103,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       <InputBoxButton
         className={editingButtonStyle}
         ariaLabel={strings.editBoxCancelButton}
+        tooltipContent={strings.editBoxCancelButton}
         onRenderIcon={onRenderThemedCancelIcon}
         onClick={() => {
           onCancel && onCancel();
@@ -112,6 +113,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       <InputBoxButton
         className={editingButtonStyle}
         ariaLabel={strings.editBoxSubmitButton}
+        tooltipContent={strings.editBoxSubmitButton}
         onRenderIcon={onRenderThemedSubmitIcon}
         onClick={(e) => {
           if (!textValueOverflow && textValue !== '') {
