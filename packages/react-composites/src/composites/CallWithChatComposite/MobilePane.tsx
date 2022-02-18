@@ -50,37 +50,35 @@ export const MobilePane = (props: {
   const strings = useCallWithChatCompositeStrings();
 
   return (
-    <Stack verticalFill styles={mobilePaneStyles}>
-      <Stack verticalFill grow data-ui-id={props.dataUiId}>
-        <Stack horizontal grow styles={mobilePaneControlBarStyle}>
-          <DefaultButton
-            onClick={props.onClose}
-            styles={mobilePaneBackButtonStyles}
-            onRenderIcon={() => <Icon iconName="ChevronLeft" />}
-          ></DefaultButton>
-          <DefaultButton
-            onClick={props.onChatButtonClicked}
-            styles={mobilePaneButtonStylesThemed}
-            checked={props.activeTab === 'chat'}
-          >
-            {strings.chatButtonLabel}
-          </DefaultButton>
-          <DefaultButton
-            onClick={props.onPeopleButtonClicked}
-            styles={mobilePaneButtonStylesThemed}
-            checked={props.activeTab === 'people'}
-          >
-            {strings.peopleButtonLabel}
-          </DefaultButton>
-        </Stack>
-        <Stack.Item verticalFill grow styles={paneBodyContainer}>
-          <Stack horizontal styles={scrollableContainer}>
-            <Stack.Item verticalFill styles={scrollableContainerContents}>
-              {props.children}
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
+    <Stack verticalFill grow styles={mobilePaneStyles} data-ui-id={props.dataUiId}>
+      <Stack horizontal grow styles={mobilePaneControlBarStyle}>
+        <DefaultButton
+          onClick={props.onClose}
+          styles={mobilePaneBackButtonStyles}
+          onRenderIcon={() => <Icon iconName="ChevronLeft" />}
+        ></DefaultButton>
+        <DefaultButton
+          onClick={props.onChatButtonClicked}
+          styles={mobilePaneButtonStylesThemed}
+          checked={props.activeTab === 'chat'}
+        >
+          {strings.chatButtonLabel}
+        </DefaultButton>
+        <DefaultButton
+          onClick={props.onPeopleButtonClicked}
+          styles={mobilePaneButtonStylesThemed}
+          checked={props.activeTab === 'people'}
+        >
+          {strings.peopleButtonLabel}
+        </DefaultButton>
       </Stack>
+      <Stack.Item verticalFill grow styles={paneBodyContainer}>
+        <Stack horizontal styles={scrollableContainer}>
+          <Stack.Item verticalFill styles={scrollableContainerContents}>
+            {props.children}
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
     </Stack>
   );
 };
