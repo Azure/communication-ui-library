@@ -349,11 +349,11 @@ export interface _DrawerMenuItemProps {
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
     secondaryIconProps?: IIconProps;
+    secondaryText?: string;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
     subMenuProps?: _DrawerMenuItemProps[];
-    // (undocumented)
     text?: string;
 }
 
