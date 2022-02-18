@@ -98,6 +98,8 @@ type CallWithChatScreenProps = {
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  const isMobile = formFactor === 'mobile';
+
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
   }
@@ -150,6 +152,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowDrawer(false);
     togglePeople();
   }, []);
+  const selectPeople = useCallback(() => {
+    setShowPeople(true);
+    setShowChat(false);
+  }, []);
+  const selectChat = useCallback(() => {
+    setShowChat(true);
+    setShowPeople(false);
+  }, []);
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
@@ -160,19 +170,22 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
+  const showMobilePane = isMobile && (showChat || showPeople);
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        <Stack.Item grow styles={callCompositeContainerStyles}>
-          <CallComposite
-            {...props}
-            formFactor={formFactor}
-            options={{ callControls: false }}
-            adapter={callAdapter}
-            fluentTheme={fluentTheme}
-          />
-        </Stack.Item>
+        {!showMobilePane && (
+          <Stack.Item grow styles={callCompositeContainerStyles}>
+            <CallComposite
+              {...props}
+              formFactor={formFactor}
+              options={{ callControls: false }}
+              adapter={callAdapter}
+              fluentTheme={fluentTheme}
+            />
+          </Stack.Item>
+        )}
         {chatProps.adapter && hasJoinedCall && (
           <EmbeddedChatPane
             chatCompositeProps={chatProps}
@@ -181,6 +194,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             fluentTheme={fluentTheme}
             onClose={closePane}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+            onChatButtonClick={selectChat}
+            onPeopleButtonClick={selectPeople}
+            mobileView={isMobile}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -192,11 +208,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
               onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+              onChatButtonClick={selectChat}
+              onPeopleButtonClick={selectPeople}
+              mobileView={isMobile}
             />
           </CallAdapterProvider>
         )}
       </Stack>
-      {showControlBar && (
+      {showControlBar && !showMobilePane && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <Stack.Item styles={controlBarContainerStyles}>
             <CallWithChatControlBar
