@@ -6,9 +6,17 @@ This log was last generated on Mon, 14 Feb 2022 23:50:05 GMT and should not be m
 
 ## [1.1.0](https://github.com/azure/communication-ui-library/tree/1.1.0)
 
-Mon, 14 Feb 2022 23:50:05 GMT
+With this minor release, @azure/communication-react's Azure Communication Service core SDKs have been moved to [peerDependencies](https://nodejs.org/en/blog/npm/peer-dependencies/).
+This change gives you a more consistent way to use the core SDKs in your application.
 
-This minor release contains general bug fixes and performance improvements.
+After upgrading to 1.1.0, you will need to install these core SDKs in your application:
+
+```bash
+npm i @azure/communication-calling@1.3.2
+npm i @azure/communication-chat@1.1.0
+```
+
+This minor release also contains general bug fixes and performance improvements.
 
 ## Changes since 1.0.0
 [Compare changes](https://github.com/Azure/communication-ui-library/compare/1.0.0...1.1.0)
@@ -24,7 +32,7 @@ This minor release contains general bug fixes and performance improvements.
 
 ## [1.0.1-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.1-beta.2)
 
-Mon, 24 Jan 2022 23:18:53 GMT 
+Mon, 24 Jan 2022 23:18:53 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.1-beta.1...1.0.1-beta.2)
 
 ### Changes
