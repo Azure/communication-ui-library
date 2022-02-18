@@ -152,20 +152,22 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
           </Stack>
         </CallAdapterProvider>
       </Stack.Item>
-      <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-        {isEnabled(options?.peopleButton) && (
-          <PeopleButton
-            checked={props.peopleButtonChecked}
-            showLabel={true}
-            onClick={props.onPeopleButtonClicked}
-            data-ui-id="call-with-chat-composite-people-button"
-            disabled={props.disableButtonsForLobbyPage}
-            label={callWithChatStrings.peopleButtonLabel}
-            styles={commonButtonStyles}
-          />
-        )}
-        {!props.mobileView && isEnabled(options?.chatButton) && chatButton}
-      </Stack>
+      {!props.mobileView && (
+        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+          {isEnabled(options?.peopleButton) && (
+            <PeopleButton
+              checked={props.peopleButtonChecked}
+              showLabel={true}
+              onClick={props.onPeopleButtonClicked}
+              data-ui-id="call-with-chat-composite-people-button"
+              disabled={props.disableButtonsForLobbyPage}
+              label={callWithChatStrings.peopleButtonLabel}
+              styles={commonButtonStyles}
+            />
+          )}
+          {isEnabled(options?.chatButton) && chatButton}
+        </Stack>
+      )}
     </Stack>
   );
 };

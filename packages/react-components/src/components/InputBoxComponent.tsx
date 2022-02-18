@@ -2,7 +2,16 @@
 // Licensed under the MIT license.
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
-import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets, IconButton } from '@fluentui/react';
+import {
+  Stack,
+  TextField,
+  mergeStyles,
+  IStyle,
+  ITextField,
+  concatStyleSets,
+  IconButton,
+  TooltipHost
+} from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
   inputBoxStyle,
@@ -12,7 +21,8 @@ import {
   textContainerStyle,
   inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
-  inputBoxNewLineSpaceAffordance
+  inputBoxNewLineSpaceAffordance,
+  inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -148,28 +158,31 @@ export type InputBoxButtonProps = {
   className?: string;
   id?: string;
   ariaLabel?: string;
+  tooltipContent?: string;
 };
 
 /**
  * @private
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, ariaLabel, className, id } = props;
+  const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
-    <IconButton
-      className={mergedButtonStyle}
-      ariaLabel={ariaLabel}
-      onClick={onClick}
-      id={id}
-      onMouseEnter={() => {
-        setIsHover(true);
-      }}
-      onMouseLeave={() => {
-        setIsHover(false);
-      }}
-      onRenderIcon={() => onRenderIcon(isHover)}
-    />
+    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent}>
+      <IconButton
+        className={mergedButtonStyle}
+        ariaLabel={ariaLabel}
+        onClick={onClick}
+        id={id}
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+        onRenderIcon={() => onRenderIcon(isHover)}
+      />
+    </TooltipHost>
   );
 };
