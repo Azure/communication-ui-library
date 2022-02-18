@@ -24,6 +24,11 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onEditClick: () => void;
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
+  userId: string;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
   /**
    * Optional callback to override render of the avatar.
@@ -90,7 +95,14 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         <Chat.Message
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
-          content={<ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />}
+          content={
+            <ChatMessageContent
+              message={message}
+              liveAuthorIntro={strings.liveAuthorIntro}
+              onRenderFileDownloads={props.onRenderFileDownloads}
+              userId={props.userId}
+            />
+          }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={

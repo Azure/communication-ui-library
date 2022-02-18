@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "Personen",
     "chatButtonLabel": "Chatten",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "Personen",
     "peoplePaneSubTitle": "In dit gesprek",
     "chatPaneTitle": "Chatten",
