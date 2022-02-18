@@ -6,7 +6,6 @@ import {
   buildUrl,
   dataUiId,
   isTestProfileDesktop,
-  isTestProfileStableFlavor,
   loadCallPageWithParticipantVideos,
   pageClick,
   stubMessageTimestamps,
