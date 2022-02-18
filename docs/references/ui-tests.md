@@ -26,7 +26,7 @@ rushx build:e2e:call
 
 # Set a connection string environment variable
 # Powershell Users
-$env:CONNECTION_STRING = 'resource <connection string>'
+$env:CONNECTION_STRING = '<resource connection string>'
 # Bash Users must create a .env file inside `tests/browser` directory.
 # Sample `tests/browser/.env` file:
 CONNECTION_STRING=<resource connection String>
@@ -68,7 +68,11 @@ cd packages/react-composites
 rushx build:e2e:call
 
 # Set a connection string environment variable
-$env:CONNECTION_STRING = '<connection string>' # This differs per development environment, this command is for powershell
+# Powershell Users
+$env:CONNECTION_STRING = '<resource connection string>'
+# Bash Users must create a .env file inside `tests/browser` directory.
+# Sample `tests/browser/.env` file:
+CONNECTION_STRING=<resource connection String>
 
 # Navigate to the web app directory
 cd tests\\browser\\call\\app
