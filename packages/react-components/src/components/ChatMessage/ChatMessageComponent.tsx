@@ -6,11 +6,12 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage } from '../../types';
+import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
+  userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -22,6 +23,17 @@ type ChatMessageComponentProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineAcceptRejectEditButtons: boolean;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  remoteParticipantsCount?: number;
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 };
 
 /**
@@ -59,6 +71,13 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       />
     );
   } else {
-    return <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />;
+    return (
+      <ChatMessageComponentAsMessageBubble
+        {...props}
+        onRemoveClick={onRemoveClick}
+        onEditClick={onEditClick}
+        onRenderAvatar={props.onRenderAvatar}
+      />
+    );
   }
 };

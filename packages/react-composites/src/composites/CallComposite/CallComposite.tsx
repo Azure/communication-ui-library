@@ -5,12 +5,11 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallControlOptions } from './components/CallControls';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
@@ -18,6 +17,7 @@ import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import { CallControlOptions } from './types/CallControlOptions';
 
 /**
  * Props for {@link CallComposite}.
@@ -182,7 +182,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   return (
     <div className={mainScreenContainerClassName}>
-      <BaseComposite {...props}>
+      <BaseProvider {...props}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
@@ -192,7 +192,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             options={options}
           />
         </CallAdapterProvider>
-      </BaseComposite>
+      </BaseProvider>
     </div>
   );
 };

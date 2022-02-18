@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Отправлено",
     "seenAriaLabel": "Сообщение просмотрено другими пользователями",
     "seenTooltipText": "Просмотрено",
+    "readByTooltipText": "Прочитали: {messageThreadReadCount} из {remoteParticipantsCount}",
     "sendingAriaLabel": "Отправка сообщения",
     "sendingTooltipText": "Отправка",
     "failedToSendAriaLabel": "Не удалось отправить сообщение",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
     "tooltipOffContent": "Включить камеру",
-    "tooltipVideoLoadingContent": "Видео загружается"
+    "tooltipVideoLoadingContent": "Видео загружается",
+    "cameraMenuTitle": "Камера",
+    "cameraMenuTooltip": "Выбор камеры"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
     "offLabel": "Включить звук",
     "tooltipDisabledContent": "Микрофон отключен",
     "tooltipOnContent": "Отключить микрофон",
-    "tooltipOffContent": "Включить микрофон"
+    "tooltipOffContent": "Включить микрофон",
+    "microphoneMenuTitle": "Микрофон",
+    "microphoneMenuTooltip": "Выбрать микрофон",
+    "speakerMenuTitle": "Динамик",
+    "speakerMenuTooltip": "Выбрать динамик"
   },
   "devicesButton": {
     "label": "Устройства",
@@ -66,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
   },
   "screenShareButton": {
-    "onLabel": "Отменить общий доступ",
-    "offLabel": "Поделиться",
-    "tooltipDisabledContent": "Демонстрация экрана отключена.",
-    "tooltipOnContent": "Отменить общий доступ к экрану",
-    "tooltipOffContent": "Общий доступ к экрану"
+    "onLabel": "Остановить демонстрацию",
+    "offLabel": "Демонстрировать",
+    "tooltipDisabledContent": "Демонстрация отключена",
+    "tooltipOnContent": "Демонстрация экрана",
+    "tooltipOffContent": "Демонстрировать экран"
   },
   "messageThread": {
     "yesterday": "Вчера",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "Новые сообщения",
     "noDisplayNameSub": "Без имени",
     "editBoxCancelButton": "Отмена",
-    "editBoxSubmitButton": "Отправить"
+    "editBoxSubmitButton": "Отправить",
+    "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
-    "localVideoLabel": "Вы"
+    "localVideoLabel": "Вы",
+    "localVideoCameraSwitcherLabel": "Циклически переключать камеру"
   }
 }

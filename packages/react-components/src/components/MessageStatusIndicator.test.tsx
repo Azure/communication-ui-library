@@ -15,6 +15,7 @@ describe('MessageStatusIndicator strings should be localizable and overridable',
     const testLocale = createTestLocale({
       messageStatusIndicator: {
         seenTooltipText: Math.random().toString(),
+        readByTooltipText: Math.random().toString(),
         deliveredTooltipText: Math.random().toString(),
         sendingTooltipText: Math.random().toString(),
         failedToSendTooltipText: Math.random().toString()
@@ -39,6 +40,7 @@ describe('MessageStatusIndicator strings should be localizable and overridable',
     const testLocale = createTestLocale({
       messageStatusIndicator: {
         seenTooltipText: Math.random().toString(),
+        readByTooltipText: Math.random().toString(),
         deliveredTooltipText: Math.random().toString(),
         sendingTooltipText: Math.random().toString(),
         failedToSendTooltipText: Math.random().toString()
@@ -46,6 +48,7 @@ describe('MessageStatusIndicator strings should be localizable and overridable',
     });
     const messageStatusIndicatorStrings = {
       seenTooltipText: Math.random().toString(),
+      readByTooltipText: Math.random().toString(),
       deliveredTooltipText: Math.random().toString(),
       sendingTooltipText: Math.random().toString(),
       failedToSendTooltipText: Math.random().toString()

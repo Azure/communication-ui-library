@@ -27,7 +27,7 @@ export interface FileCardProps {
    */
   fileExtension: string;
   /**
-   * File upload/download progress percentage between 0 and 1.
+   * File upload progress percentage between 0 and 1.
    * File transfer progress indicator is only shown when the value is greater than 0 and less than 1.
    */
   progress?: number;

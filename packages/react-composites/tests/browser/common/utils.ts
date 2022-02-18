@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page } from '@playwright/test';
-import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
+import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
+import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
@@ -109,10 +109,10 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
- * Wait for the MeetingComposite on a page to fully load.
+ * Wait for the CallWithChatComposite on a page to fully load.
  */
-export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> => {
-  // Meeting composite initial page is the same as call composite
+export const waitForCallWithChatCompositeToLoad = async (page: Page): Promise<void> => {
+  // CallWithChatComposite initial page is the same as call composite
   await waitForCallCompositeToLoad(page);
 };
 
@@ -211,10 +211,34 @@ export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
  */
 export const buildUrl = (
   serverUrl: string,
-  user: ChatUserType | CallUserType | MeetingUserType,
+  user: ChatUserType | CallUserType | CallWithChatUserType,
   qArgs?: { [key: string]: string }
 ): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
 
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
+export const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
+  const testName = testInfo.project.name.toLowerCase();
+  return testName.includes('desktop') ? true : false;
+};
+
+/**
+ * Helper function to determine whether to skip a test for a beta feature in stable test run.
+ */
+export const skipTestInStableFlavor = (): boolean => {
+  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
+  if (flavor === 'stable') {
+    return true;
+  } else if (flavor === 'beta') {
+    return false;
+  } else {
+    throw 'Faled to find Communication React Flavor env variable';
+  }
+};

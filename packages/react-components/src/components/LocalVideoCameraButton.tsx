@@ -29,9 +29,11 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
 
   return (
     <IconButton
+      data-ui-id={'local-camera-switcher-button'}
       styles={localVideoCameraCycleButtonStyles}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={label}
+      aria-live={'polite'}
       onClick={() => {
         if (cameras && cameras.length > 1 && selectedCamera !== undefined) {
           const index = cameras.findIndex((camera) => selectedCamera.id === camera.id);

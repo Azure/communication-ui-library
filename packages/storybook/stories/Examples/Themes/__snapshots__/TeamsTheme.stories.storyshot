@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-117 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-117"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-115 body-1"
+          className="css-117 body-1"
           dir="ltr"
         >
           <div
-            className="css-115"
+            className="css-117"
             data-uses-unhanded-props={true}
           >
             <div
@@ -207,7 +207,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
-                          aria-label="Share your screen"
+                          aria-label="Present your screen"
                           className="ms-Button ms-Button--default root-22"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -375,10 +375,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-136 css-51"
+                    className="ms-Stack css-138 css-51"
                   >
                     <div
-                      className="ms-Stack css-137 css-52"
+                      className="ms-Stack css-139 css-52"
                     >
                       <span
                         className="css-53"

@@ -3,6 +3,7 @@
 
 import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
+import { HandRight20Regular, Open20Regular, Record20Regular, People20Regular } from '@fluentui/react-icons';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import {
@@ -16,10 +17,18 @@ import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
 import { TOC } from './TOC';
 
+// icons used in stories that are not part of the default component icons
+const storyIcons = {
+  Open: <Open20Regular />,
+  Participants: <People20Regular />,
+  Record: <Record20Regular />,
+  RightHand: <HandRight20Regular />
+};
+
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
-registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+registerIcons({ icons: {...DEFAULT_COMPONENT_ICONS, ...storyIcons} });
 
 export const parameters = {
   layout: 'fullscreen',
@@ -42,9 +51,9 @@ export const parameters = {
         COMPOSITE_FOLDER_PREFIX,
         [
           'Get Started',
-          'MeetingComposite',
           'CallComposite',
           'ChatComposite',
+          'CallWithChatComposite',
           'Adapters',
           'Cross-Framework Support',
         ],
