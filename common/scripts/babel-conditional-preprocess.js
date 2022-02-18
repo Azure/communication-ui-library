@@ -62,6 +62,11 @@ exports.default = babelHelper.declare((_api, opts) => {
       //
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
+
+      TSDeclareMethod(path) {
+        Handle(path, annotations);
+      },
+
       TSType(path) {
         Handle(path, annotations);
       },
