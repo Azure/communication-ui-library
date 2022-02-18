@@ -87,7 +87,7 @@ export type CustomCallControlButtonPlacement =
   | 'afterCameraButton'
   | 'afterEndCallButton'
   | 'afterMicrophoneButton'
-  | 'afterOptionsButton'
+  | 'afterDevicesButton'
   | 'afterParticipantsButton'
   | 'afterScreenShareButton';
 

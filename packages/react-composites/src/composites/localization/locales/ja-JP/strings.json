@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "ユーザー",
     "chatButtonLabel": "チャット",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "ユーザー",
     "peoplePaneSubTitle": "この通話で",
     "chatPaneTitle": "チャット",

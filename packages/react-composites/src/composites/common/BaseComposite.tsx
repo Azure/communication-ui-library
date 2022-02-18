@@ -3,7 +3,7 @@
 
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -52,15 +52,26 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 /**
- * A base class for composites.
- * Provides common wrappers such as FluentThemeProvider and LocalizationProvider.
+ * A base provider {@link React.Context} to wrap components with other required providers
+ * (e.g. icons, FluentThemeProvider, LocalizationProvider).
+ *
+ * Required providers are only wrapped once, with all other instances only passing children.
  *
  * @private
  */
-export const BaseComposite = (
+export const BaseProvider = (
   props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
+
+  /**
+   * Pass only the children if we previously registered icons, and have previously wrapped the children in
+   * FluentThemeProvider and LocalizationProvider
+   */
+  const alreadyWrapped = useBase();
+  if (alreadyWrapped) {
+    return <>{props.children}</>;
+  }
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -74,5 +85,16 @@ export const BaseComposite = (
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  const localizedElement = locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return <BaseContext.Provider value={true}>{localizedElement}</BaseContext.Provider>;
 };
+
+/**
+ * @private
+ */
+const BaseContext = createContext<boolean>(false);
+
+/**
+ * @private
+ */
+const useBase = (): boolean => useContext(BaseContext);

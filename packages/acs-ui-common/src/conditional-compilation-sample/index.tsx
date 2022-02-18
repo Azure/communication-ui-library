@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import * as utils from './utils';
 
 /**
  * This folder contains some simple examples using conditional compilation directive.
@@ -116,7 +117,7 @@ export type Impossible = number & /* @conditional-compile-remove-from(stable) */
 export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number): void;
 /* @conditional-compile-remove-from(stable) */
 export function d(e: number, f: number, g: number): void;
-export function d(e: number, f?: number, g?: number) {
+export function d(e: number, f?: number, g?: number): void {
   console.log(e);
   /* @conditional-compile-remove-from(stable) */
   console.log(f, g);
@@ -131,7 +132,7 @@ export function d(e: number, f?: number, g?: number) {
 /**
  * Call a function with conditional parameters.
  */
-export function dCaller() {
+export function dCaller(): void {
   d(1, /* @conditional-compile-remove-from(stable) */ 2);
   d(1, /* @conditional-compile-remove-from(stable) */ 2, /* @conditional-compile-remove-from(stable) */ 3);
 
@@ -161,7 +162,7 @@ export function OverrideSomePropInBeta(): JSX.Element {
   const flavorDependentProp = propTrampoline();
   return <h1 className={flavorDependentProp}>Nothing to see here!</h1>;
 }
-function propTrampoline() {
+function propTrampoline(): string {
   let propValue = 'general';
   /* @conditional-compile-remove-from(stable) */
   propValue = 'II class';
@@ -183,8 +184,8 @@ function propTrampoline() {
  * but there is no reason that the internal argument list can't contain the extra (and unused) dependency on a new selector.
  */
 export type MyExtensibleSelector = (
-  state: DummyState,
-  props: DummyProps
+  state: utils.DummyState,
+  props: utils.DummyProps
 ) => {
   memoizedA: boolean;
   memoizedB: boolean;
@@ -192,8 +193,8 @@ export type MyExtensibleSelector = (
   memoizedC: boolean;
 };
 
-export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
-  [memoizedBoolean, memoizedBoolean, memoizedBoolean],
+export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelector(
+  [utils.memoizedBoolean, utils.memoizedBoolean, utils.memoizedBoolean],
   (a, b, c) => {
     return {
       memoizedA: a,
@@ -204,49 +205,47 @@ export const myExtensibleSelector: MyExtensibleSelector = dummyCreateSelector(
   }
 );
 
-/******************************************************************************
+/**
+ * Adding a new feature conditionally often involves a few operations together:
+ * - Introduce a new @beta type
+ * - Introduce a new internal class method that uses the @beta type
+ * - Call the new @beta class method from @public API, but only in beta flavored build.
  *
- * Some helpers needed for examples above.
- *
- * No conditional compilation examples below this.
+ * Following the general guidelines stated above, we achieve this as follows:
+ * - Unconditionally add the new type
+ *   - Conditionally export the new type in the public API.
+ * - Conditionally add the new class method that uses the conditionally exposed type.
+ * - In the @public method, extract a simple helper function that detects whether the @beta method should be called.
+ *   The implementation of this function uses conditional compilation.
+ *   - Call the method if needed. Because the method and type are defined unconditionally, no conditional
+ *     compliation is needed here.
  */
 
-type DummyState = unknown;
-type DummyProps = unknown;
-function memoizedBoolean(state: DummyState, props: DummyProps) {
-  console.log(state, props);
-  return true;
+type ThisIsUnstableType = string;
+/* @conditional-compile-remove-from(stable) */
+export type { ThisIsUnstableType };
+
+class InternalImplementation {
+  public goodOldTestedFunctionality(): void {
+    /* Been doing this in stable flavor build for a decade */
+  }
+  public newMethodForUnstableFunctionality(arg: ThisIsUnstableType): string {
+    /* Unstable, but amazingly awesome magic happens here */
+    return arg;
+  }
 }
 
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean }
-): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean; memoizedC: boolean };
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => { memoizedA: boolean; memoizedB: boolean }
-): (state: DummyState, props: DummyProps) => { memoizedA: boolean; memoizedB: boolean };
-function dummyCreateSelector(
-  dependencySelectors: [
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean,
-    (state: DummyState, props: DummyProps) => boolean
-  ],
-  func: (a: boolean, b: boolean, c: boolean) => unknown
-) {
-  return (state: DummyState, props: DummyProps) => {
-    return func(
-      dependencySelectors[0](state, props),
-      dependencySelectors[1](state, props),
-      dependencySelectors[2](state, props)
-    );
-  };
+export function StableAPIThatGainsNewUnstableBehavior(): void {
+  const impl = new InternalImplementation();
+  impl.goodOldTestedFunctionality();
+  if (shouldIncludeUnstableFeature()) {
+    const arg: ThisIsUnstableType = 'getThisFromUser';
+    impl.newMethodForUnstableFunctionality(arg);
+  }
+}
+
+function shouldIncludeUnstableFeature(): boolean {
+  /* @conditional-compile-remove-from(stable) */
+  return true;
+  return false;
 }
