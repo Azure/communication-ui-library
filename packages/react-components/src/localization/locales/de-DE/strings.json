@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Gesendet",
     "seenAriaLabel": "Nachricht von anderen gesehen",
     "seenTooltipText": "Gesehen",
+    "readByTooltipText": "Gelesen von {messageThreadReadCount} von {remoteParticipantsCount}",
     "sendingAriaLabel": "Nachricht wird gesendet",
     "sendingTooltipText": "Wird gesendet",
     "failedToSendAriaLabel": "Nachricht konnte nicht gesendet werden",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Einladungslink kopieren"
   },
   "screenShareButton": {
-    "onLabel": "Nicht mehr teilen",
-    "offLabel": "Teilen",
-    "tooltipDisabledContent": "Bildschirmfreigabe ist deaktiviert",
-    "tooltipOnContent": "Freigabe Ihres Bildschirms beenden",
-    "tooltipOffContent": "Ihren Bildschirm freigeben"
+    "onLabel": "Präsentation beenden",
+    "offLabel": "Präsentieren",
+    "tooltipDisabledContent": "Präsentieren ist deaktiviert",
+    "tooltipOnContent": "Ihr Bildschirm wird präsentiert",
+    "tooltipOffContent": "Präsentieren Sie Ihren Bildschirm"
   },
   "messageThread": {
     "yesterday": "Gestern",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "Neue Nachrichten",
     "noDisplayNameSub": "Kein Name",
     "editBoxCancelButton": "Abbrechen",
-    "editBoxSubmitButton": "Übermitteln"
+    "editBoxSubmitButton": "Übermitteln",
+    "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
