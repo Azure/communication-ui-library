@@ -1,9 +1,6 @@
 {
   "type": "none",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "Update peerdependencies documentation in preparation for stable release",
   "packageName": "@internal/storybook",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
   "dependentChangeType": "none"
