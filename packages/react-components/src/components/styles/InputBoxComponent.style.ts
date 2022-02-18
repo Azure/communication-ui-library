@@ -114,3 +114,10 @@ export const newLineButtonsContainerStyle: IStyle = {
   bottom: '0.8rem',
   gap: '1rem'
 };
+
+/**
+ * @private
+ */
+export const inputButtonTooltipStyle = mergeStyles({
+  display: 'flex'
+});
