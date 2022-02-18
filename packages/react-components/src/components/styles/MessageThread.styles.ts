@@ -109,6 +109,9 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
   ' img': {
     maxWidth: '100%',
     height: 'auto'
+  },
+  ' p': {
+    marginBlock: '0.125rem'
   }
 };
 
