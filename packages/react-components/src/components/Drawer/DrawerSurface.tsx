@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { FocusTrapZone, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React from 'react';
 import { BaseCustomStyles } from '../../types';
 import { DrawerContentContainer } from './DrawerContentContainer';
@@ -49,12 +49,17 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
   const rootStyles = mergeStyles(drawerSurfaceStyles, props.styles?.root);
 
   return (
-    // A11y TODO (followup PR): Add focus trap zone.
-    // A11y TODO (followup PR): Add navigator announcement.
-    // A11y TODO (followup PR): Ensure onLightDismiss is triggered by escape key.
     <Stack className={rootStyles}>
       <DrawerLightDismiss styles={props.styles?.lightDismissRoot} onDismiss={props.onLightDismiss} />
-      <DrawerContentContainer styles={props.styles?.drawerContentContainer}>{props.children}</DrawerContentContainer>
+      <FocusTrapZone
+        onKeyDown={(e) => {
+          if (e.key === 'Escape' || e.key === 'Esc') {
+            props.onLightDismiss && props.onLightDismiss();
+          }
+        }}
+      >
+        <DrawerContentContainer styles={props.styles?.drawerContentContainer}>{props.children}</DrawerContentContainer>
+      </FocusTrapZone>
     </Stack>
   );
 };

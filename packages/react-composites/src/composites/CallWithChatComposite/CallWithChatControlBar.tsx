@@ -17,8 +17,8 @@ import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
-import { Devices } from '../CallComposite/components/buttons/Devices';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
+import { MoreButton } from './MoreButton';
 
 /**
  * @private
@@ -29,6 +29,7 @@ export interface CallWithChatControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
@@ -144,18 +145,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     styles={commonButtonStyles}
                   />
                 )}
-                {
-                  // Device dropdowns are shown via split buttons.
-                  // TODO: Remove the devicesButton for mobile view as well once
-                  // the overflow button has been added for device selection.
-                  props.mobileView && (
-                    <Devices
-                      displayType={options.displayType}
-                      increaseFlyoutItemSize={props.mobileView}
-                      styles={commonButtonStyles}
-                    />
-                  )
-                }
+                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>

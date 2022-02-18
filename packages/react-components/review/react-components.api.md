@@ -113,6 +113,11 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    readBy?: {
+        id: string;
+        name: string;
+    }[];
+    // (undocumented)
     readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
@@ -355,17 +360,17 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
 export interface _DrawerMenuItemProps {
-    // (undocumented)
     iconProps?: IIconProps;
     // (undocumented)
-    key: string;
+    itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryIconProps?: IIconProps;
+    secondaryText?: string;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
     subMenuProps?: _DrawerMenuItemProps[];
-    // (undocumented)
     text?: string;
 }
 
