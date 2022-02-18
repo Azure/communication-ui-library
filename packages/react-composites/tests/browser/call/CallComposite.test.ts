@@ -6,8 +6,8 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   PER_STEP_TIMEOUT_MS,
-  skipTestIfDesktop,
-  skipTestInStableFlavor,
+  isTestProfileDesktop,
+  isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector
@@ -176,9 +176,9 @@ test.describe('Call Composite E2E CallPage [Mobile Only]', () => {
 
   test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
     // Mobile check
-    test.skip(skipTestIfDesktop(testInfo));
+    test.skip(isTestProfileDesktop(testInfo));
     // Build Flavor check
-    test.skip(skipTestInStableFlavor());
+    test.skip(isTestProfileStableFlavor());
 
     const page = pages[0];
     await pageClick(page, dataUiId('local-camera-switcher-button'));
