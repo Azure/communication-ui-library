@@ -360,17 +360,17 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
 export interface _DrawerMenuItemProps {
-    // (undocumented)
     iconProps?: IIconProps;
     // (undocumented)
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryIconProps?: IIconProps;
+    secondaryText?: string;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
     subMenuProps?: _DrawerMenuItemProps[];
-    // (undocumented)
     text?: string;
 }
 
@@ -624,6 +624,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;

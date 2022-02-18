@@ -11,6 +11,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
+  userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -22,6 +23,10 @@ type ChatMessageComponentProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineAcceptRejectEditButtons: boolean;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
   /**
    * Optional callback to override render of the avatar.

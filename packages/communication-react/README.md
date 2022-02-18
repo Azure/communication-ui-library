@@ -19,16 +19,12 @@ The environment is already setup if you use [Create React App](https://create-re
 npm i @azure/communication-react
 ```
 
-### Beta-channel setup
+`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
 
-`@azure/communication-react` is in the process of migrating the core Azure Communication Services dependencies to `peerDependencies` so that
-you can most consistently use the API from the core libraries in your application.
-
-If you are using a beta package (has a `beta` suffix) >= `@azure/communication-react@1.0.1-beta.2`, you need to install
-the low-level client libraries as well:
 
 ```bash
-npm i @azure/communication-calling@1.3.2-beta.1
+npm i @azure/communication-calling@1.3.2
 npm i @azure/communication-chat@1.1.0
 ```
 
