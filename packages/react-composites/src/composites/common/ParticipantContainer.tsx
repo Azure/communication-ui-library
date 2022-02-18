@@ -44,7 +44,7 @@ export const ParticipantListWithHeading = (props: {
   title?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-}) => {
+}): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
   const subheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
