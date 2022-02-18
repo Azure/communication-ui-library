@@ -173,7 +173,7 @@ export const EmbeddedChatPane = (props: {
     return (
       <MobilePane
         hidden={props.hidden}
-        dataUiId={'call-with-chat-composite-people-pane'}
+        dataUiId={'call-with-chat-composite-chat-pane'}
         onClose={props.onClose}
         activeTab="chat"
         onChatButtonClicked={props.onChatButtonClick}
