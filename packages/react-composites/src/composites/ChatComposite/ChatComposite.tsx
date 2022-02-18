@@ -3,7 +3,7 @@
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
@@ -110,7 +110,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
 
   return (
     <div className={chatScreenContainerStyle}>
-      <BaseComposite {...props}>
+      <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
             options={options}
@@ -121,7 +121,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             {...fileSharingOptions()}
           />
         </ChatAdapterProvider>
-      </BaseComposite>
+      </BaseProvider>
     </div>
   );
 };

@@ -19,41 +19,42 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
 
   const drawerMenuItems: _DrawerMenuItemProps[] = [
     {
-      key: 'raiseHand',
+      itemKey: 'raiseHand',
       text: 'Raise hand',
       iconProps: { iconName: 'RightHand', styles: iconStyles },
       onItemClick: () => setIsDrawerShowing(false)
     },
     {
-      key: 'speaker',
+      itemKey: 'speaker',
       text: 'Speaker',
+      secondaryText: 'Speaker1',
       iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
       subMenuProps: [
         {
-          key: 'speaker1',
+          itemKey: 'speaker1',
           text: 'Default Speaker 1',
           iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
           onItemClick: () => setIsDrawerShowing(false)
         },
         {
-          key: 'speaker2',
+          itemKey: 'speaker2',
           text: 'Default Speaker 2',
           iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
           onItemClick: () => setIsDrawerShowing(false)
         },
         {
-          key: 'speaker3',
+          itemKey: 'speaker3',
           text: 'Choose from more speakers',
           iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
           subMenuProps: [
             {
-              key: 'speakerMore1',
+              itemKey: 'speakerMore1',
               text: 'Another Speaker',
               iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
               onItemClick: () => setIsDrawerShowing(false)
             },
             {
-              key: 'speakerMore2',
+              itemKey: 'speakerMore2',
               text: 'Another another Speaker',
               iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
               onItemClick: () => setIsDrawerShowing(false)
@@ -63,13 +64,14 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
       ]
     },
     {
-      key: 'people',
+      itemKey: 'people',
       text: 'People',
       iconProps: { iconName: 'Participants', styles: iconStyles },
+      secondaryIconProps: { iconName: 'Open', styles: iconStyles },
       onItemClick: () => setIsDrawerShowing(false)
     },
     {
-      key: 'recording',
+      itemKey: 'recording',
       text: 'Start Recording',
       iconProps: { iconName: 'Record', styles: iconStyles },
       onItemClick: () => setIsDrawerShowing(false)

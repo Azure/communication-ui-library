@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated the message thread component to display attached files in a message.",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
