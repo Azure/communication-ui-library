@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@azure/communication-common": "1.1.0",
+    "@azure/logger": "1.0.3",
     "@internal/acs-ui-common": "1.0.1-beta.2",
     "events": "~3.3.0",
     "immer": "9.0.6"
