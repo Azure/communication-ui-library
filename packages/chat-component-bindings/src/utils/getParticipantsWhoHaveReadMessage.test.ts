@@ -21,7 +21,7 @@ const readReceiptForEachSender = {
 };
 
 describe('Get participants list who have read the message', () => {
-  test('', () => {
+  test('get read receipt for message id 1', () => {
     const message = chatMessage('1');
     const result = [
       { id: '11111', name: 'a' },
@@ -33,7 +33,7 @@ describe('Get participants list who have read the message', () => {
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('', () => {
+  test('get read receipt for message id 0', () => {
     const message = chatMessage('0');
     const result = [
       { id: '11111', name: 'a' },
@@ -45,13 +45,13 @@ describe('Get participants list who have read the message', () => {
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('', () => {
+  test('get read receipt for message id 9', () => {
     const message = chatMessage('9');
     const result = [];
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('', () => {
+  test('get read receipt for message id 3', () => {
     const message = chatMessage('3');
     const result = [
       { id: '11111', name: 'a' },
@@ -61,7 +61,7 @@ describe('Get participants list who have read the message', () => {
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('', () => {
+  test('get read receipt for message id 2', () => {
     const message = chatMessage('2');
     const result = [
       { id: '11111', name: 'a' },
