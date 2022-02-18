@@ -239,6 +239,6 @@ export const skipTestInStableFlavor = (): boolean => {
   } else if (flavor === 'beta') {
     return false;
   } else {
-    throw 'Faled to find Communication React env variable';
+    throw 'Faled to find Communication React Flavor env variable';
   }
 };
