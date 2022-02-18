@@ -5,7 +5,7 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
@@ -182,7 +182,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   return (
     <div className={mainScreenContainerClassName}>
-      <BaseComposite {...props}>
+      <BaseProvider {...props}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
@@ -192,7 +192,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             options={options}
           />
         </CallAdapterProvider>
-      </BaseComposite>
+      </BaseProvider>
     </div>
   );
 };
