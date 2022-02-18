@@ -14,6 +14,7 @@ import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
+import { OnRenderAvatarCallback } from '../../types';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -23,7 +24,18 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onEditClick: () => void;
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
+  userId: string;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 };
 
 /** @private */
@@ -39,7 +51,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     messageContainerStyle,
     strings,
     onEditClick,
-    remoteParticipantsCount = 0
+    remoteParticipantsCount = 0,
+    onRenderAvatar
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -82,7 +95,14 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         <Chat.Message
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
-          content={<ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />}
+          content={
+            <ChatMessageContent
+              message={message}
+              liveAuthorIntro={strings.liveAuthorIntro}
+              onRenderFileDownloads={props.onRenderFileDownloads}
+              userId={props.userId}
+            />
+          }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={
@@ -114,8 +134,9 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
           strings={strings}
-          messageReadByCount={message.readNumber ?? 0}
+          messageReadBy={message.readBy ?? []}
           remoteParticipantsCount={remoteParticipantsCount}
+          onRenderAvatar={onRenderAvatar}
         />
       )}
     </>
