@@ -15,8 +15,6 @@ import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 setLogLevel('warning');
 
-setLogLevel('warning');
-
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
 
