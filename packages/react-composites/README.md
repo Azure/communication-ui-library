@@ -79,3 +79,6 @@ test.only('Your test name here', async ({ pages }, testInfo) => {
 ```
 
 The `testInfo` parameter knows how to ask for the test project's platform which we use to check whether its desktop or not. Using this pattern will skip your desktop test.
+
+For more information on these see [ui-tests.md](../../docs/references/ui-tests.md)
+
