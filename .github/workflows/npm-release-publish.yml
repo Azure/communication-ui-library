@@ -38,7 +38,7 @@ jobs:
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         # If no param for release flavor, get it from branch name
-        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor === 'stable' }}
+        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
 
       # Builds
