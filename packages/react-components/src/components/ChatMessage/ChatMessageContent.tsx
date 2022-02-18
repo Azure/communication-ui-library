@@ -9,22 +9,48 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 
+type ChatMessageContentProps = {
+  message: ChatMessage;
+  liveAuthorIntro: string;
+  userId: string;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   * @beta
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+};
+
 /** @private */
-export const ChatMessageContent = (props: { message: ChatMessage; liveAuthorIntro: string }): JSX.Element => {
+export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   switch (props.message.contentType) {
     case 'text':
-      return MessageContentAsText(props.message, props.liveAuthorIntro);
+      return MessageContentAsText(props.message, props.liveAuthorIntro, props.userId, props.onRenderFileDownloads);
     case 'html':
-      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
+      return MessageContentAsRichTextHTML(
+        props.message,
+        props.liveAuthorIntro,
+        props.userId,
+        props.onRenderFileDownloads
+      );
     case 'richtext/html':
-      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
+      return MessageContentAsRichTextHTML(
+        props.message,
+        props.liveAuthorIntro,
+        props.userId,
+        props.onRenderFileDownloads
+      );
     default:
       console.warn('unknown message content type');
       return <></>;
   }
 };
 
-const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
+const MessageContentAsRichTextHTML = (
+  message: ChatMessage,
+  liveAuthorIntro: string,
+  userId: string,
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element
+): JSX.Element => {
   const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
@@ -34,11 +60,20 @@ const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: str
         aria-live="polite"
       />
       {htmlToReactParser.parse(message.content)}
+      {
+        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        onRenderFileDownloads && onRenderFileDownloads(userId, message)
+      }
     </div>
   );
 };
 
-const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
+const MessageContentAsText = (
+  message: ChatMessage,
+  liveAuthorIntro: string,
+  userId: string,
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element
+): JSX.Element => {
   const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
     <div data-ui-status={message.status}>
@@ -53,6 +88,10 @@ const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JS
         }}
       >
         {message.content}
+        {
+          /* @conditional-compile-remove-from(stable): FILE_SHARING */
+          onRenderFileDownloads && onRenderFileDownloads(userId, message)
+        }
       </Linkify>
     </div>
   );
