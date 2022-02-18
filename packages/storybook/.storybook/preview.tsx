@@ -3,7 +3,7 @@
 
 import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
-import { HandRight20Regular, Record20Regular, People20Regular } from '@fluentui/react-icons';
+import { HandRight20Regular, Open20Regular, Record20Regular, People20Regular } from '@fluentui/react-icons';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import {
@@ -19,6 +19,7 @@ import { TOC } from './TOC';
 
 // icons used in stories that are not part of the default component icons
 const storyIcons = {
+  Open: <Open20Regular />,
   Participants: <People20Regular />,
   Record: <Record20Regular />,
   RightHand: <HandRight20Regular />

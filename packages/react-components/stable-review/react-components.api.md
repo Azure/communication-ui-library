@@ -343,12 +343,12 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
 export interface _DrawerMenuItemProps {
-    // (undocumented)
     iconProps?: IIconProps;
     // (undocumented)
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryIconProps?: IIconProps;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)

@@ -16,7 +16,13 @@ export interface _DrawerMenuItemProps {
   onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
   itemKey: string;
   text?: string;
+  /** Icon shown at the start of the menu item (before the menu item text) */
   iconProps?: IIconProps;
+  /**
+   * Icon shown at the end of the menu item.
+   * By default if this component has subMenuProps, this icon is the RightChevron.
+   */
+  secondaryIconProps?: IIconProps;
   styles?: BaseCustomStyles;
   subMenuProps?: _DrawerMenuItemProps[];
 }
@@ -31,6 +37,12 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
     props.onItemClick && props.onItemClick(ev, props.itemKey);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
+
+  const secondaryIcon = props.secondaryIconProps ? (
+    <FontIcon {...props.secondaryIconProps} />
+  ) : props.subMenuProps ? (
+    <FontIcon iconName="ChevronRight" />
+  ) : undefined;
 
   return (
     <Stack
@@ -53,11 +65,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
       <Stack.Item grow>
         <Text>{props.text}</Text>
       </Stack.Item>
-      {props.subMenuProps && (
-        <Stack.Item>
-          <FontIcon iconName="ChevronRight" />
-        </Stack.Item>
-      )}
+      {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
     </Stack>
   );
 };
