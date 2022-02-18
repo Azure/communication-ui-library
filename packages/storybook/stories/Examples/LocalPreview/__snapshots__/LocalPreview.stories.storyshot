@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-117 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-117"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,11 +21,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-115 body-0"
+        className="css-117 body-0"
         dir="ltr"
       >
         <div
-          className="css-115"
+          className="css-117"
           data-uses-unhanded-props={true}
         >
           <div
@@ -116,6 +116,19 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                   </svg>
                                 </span>
                               </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-94 css-30 ms-Button-menuIcon menuIcon-25"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  }
+                                }
+                              >
+                                
+                              </i>
                             </span>
                           </button>
                         </div>
@@ -168,6 +181,19 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                     />
                                   </svg>
                                 </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-94 css-30 ms-Button-menuIcon menuIcon-25"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  }
+                                }
+                              >
+                                
                               </i>
                             </span>
                           </button>

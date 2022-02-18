@@ -13,9 +13,15 @@ import {
   PersonDelete20Filled,
   CallEnd20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable): meeting/calling-composite */
+import { CameraSwitch24Regular, MicOn20Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
+/* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
+import { Circle20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { Attach20Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
@@ -42,12 +48,28 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
+  /* @conditional-compile-remove-from(stable) */
+  LocalCameraSwitch: <CameraSwitch24Regular />,
+  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
+  ControlBarButtonBadgeIcon: <Circle20Filled />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerMicrophones: <MicOn20Regular />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerPeople: <People20Regular />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerSpeakers: <Speaker220Regular />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerSelectedMicrophone: <MicOn20Filled />,
+  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
   NoticePageAccessDeniedTeamsMeeting: <PersonDelete20Filled />,
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
-  NoticePageRemovedFromCall: <Info20Filled />
+  NoticePageRemovedFromCall: <Info20Filled />,
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  SendBoxAttachFile: <Attach20Regular />
 };
 
 /**
@@ -89,8 +111,10 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
+
 /**
  * Icons that can be overridden for {@link CallComposite}.
  *
@@ -140,5 +164,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
+    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
   >
 >;

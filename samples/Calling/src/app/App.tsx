@@ -3,6 +3,7 @@
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,9 +13,9 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
+  isLandscape,
   isMobileSession,
   isOnIphoneAndNotSafari,
-  isSmallScreen,
   navigateToHomePage
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
@@ -22,6 +23,8 @@ import { CallScreen } from './views/CallScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
+
+setLogLevel('warning');
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}`
@@ -64,8 +67,8 @@ const App = (): JSX.Element => {
     return <UnsupportedBrowserPage />;
   }
 
-  if (isMobileSession() || isSmallScreen()) {
-    console.log('ACS Calling sample: This is experimental behaviour');
+  if (isMobileSession() && isLandscape()) {
+    console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
   switch (page) {

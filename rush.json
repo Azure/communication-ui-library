@@ -74,6 +74,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "callwithchat",
+      "projectFolder": "samples/CallWithChat",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "component-examples",
       "projectFolder": "samples/ComponentExamples",
       "reviewCategory": "sample"

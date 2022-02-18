@@ -22,11 +22,21 @@ They expose both data for the UI Components to render such as a message list or 
 
 ## Installing Stateful Clients
 
-Stateful clients are found as part of the `@azure/communication-react` package.
+Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
 
 ```bash
 
-npm i --save @azure/communication-react
+npm install @azure/communication-react
+
+```
+
+`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
+
+```bash
+
+npm install @azure/communication-calling@1.3.2
+npm install @azure/communication-chat@1.1.0
 
 ```
 

@@ -177,6 +177,8 @@ export interface MessageThreadStrings {
   editBoxPlaceholderText: string;
   /** String for new messages indicator*/
   newMessagesIndicator: string;
+  /** String for showing message read status in floating menu */
+  messageReadCount?: string;
   /** String for replacing display name when there is none*/
   noDisplayNameSub: string;
   /** String for Cancel button in EditBox*/
@@ -292,11 +294,17 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
-    defaultStatusRenderer: (status: MessageStatus) => JSX.Element,
+    defaultStatusRenderer: (
+      status: MessageStatus,
+      messageThreadReadCount: number,
+      messageThreadParticipantCount: number
+    ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
+    messageThreadReadCount?: number,
+    messageThreadParticipantCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>
@@ -321,7 +329,7 @@ const memoizeAllMessages = memoizeFnAll(
             : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
         const personaOptions: IPersona = {
-          hidePersonalDetails: true,
+          hidePersonaDetails: true,
           size: PersonaSize.size32,
           text: message.senderDisplayName
         };
@@ -360,7 +368,11 @@ const memoizeAllMessages = memoizeFnAll(
                     onRenderMessageStatus ? (
                       onRenderMessageStatus({ status: statusToRender })
                     ) : (
-                      defaultStatusRenderer(statusToRender)
+                      defaultStatusRenderer(
+                        statusToRender,
+                        messageThreadReadCount ? messageThreadReadCount : 0,
+                        messageThreadParticipantCount ? messageThreadParticipantCount : 0
+                      )
                     )
                   ) : (
                     <div className={mergeStyles(noMessageStatusStyle)} />
@@ -424,6 +436,10 @@ export type MessageThreadProps = {
    * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
+  /**
+   * number of participants in the thread
+   */
+  messageThreadParticipantCount?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -496,7 +512,11 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-
+  /**
+   * Optional callback to render uploaded files in the message component.
+   * @beta
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -597,6 +617,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
+    messageThreadParticipantCount,
     styles,
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
@@ -681,7 +702,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     const lastMessage: ChatMessage = messagesWithId[messagesWithId.length - 1] as ChatMessage;
-
     try {
       if (
         onMessageSeen &&
@@ -854,22 +874,37 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return (
           <ChatMessageComponent
             {...messageProps}
+            onRenderFileDownloads={props.onRenderFileDownloads}
             message={messageProps.message}
+            userId={props.userId}
+            remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
+            onRenderAvatar={onRenderAvatar}
           />
         );
       }
       return <></>;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString(), isNarrow]
+    [new Date().toDateString(), isNarrow, messageThreadParticipantCount, onRenderAvatar]
   );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const defaultStatusRenderer: (status: MessageStatus) => JSX.Element = useCallback(
-    (status: MessageStatus) => <MessageStatusIndicator status={status} />,
+  const defaultStatusRenderer: (
+    status: MessageStatus,
+    messageThreadReadCount: number,
+    messageThreadParticipantCount: number
+  ) => JSX.Element = useCallback(
+    (status: MessageStatus, messageThreadReadCount: number, messageThreadParticipantCount: number) => (
+      <MessageStatusIndicator
+        status={status}
+        messageThreadReadCount={messageThreadReadCount}
+        // -1 because participant count does not include myself
+        remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
+      />
+    ),
     []
   );
 
@@ -879,6 +914,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return messages.map((message: Message, index: number): ShorthandValue<ChatItemProps> => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
+          let readNumber = 0;
 
           if (message.messageType === 'chat') {
             if (!message.messageId || message.messageId === '') {
@@ -888,6 +924,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               switch (message.messageId) {
                 case lastSeenChatMessage: {
                   statusToRender = 'seen';
+                  // only update read number when status is seen
+                  readNumber = message.readNumber ? message.readNumber : 0;
                   break;
                 }
                 case lastSendingChatMessage: {
@@ -921,6 +959,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
+            readNumber,
+            messageThreadParticipantCount,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage
@@ -940,6 +980,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
+      messageThreadParticipantCount,
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,

@@ -19,6 +19,6 @@
     ]
   },
   "typeRoots": ["./node_modules/@types"],
-  "include": ["preprocess-dist/**/*"],
+  "include": ["preprocess-dist/*/src/index.ts"],
   "exclude": ["dist", "node_modules"]
 }

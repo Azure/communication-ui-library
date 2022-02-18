@@ -3,12 +3,14 @@
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
+/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileSharingOptions } from './ChatScreen';
 
 /**
  * Props for {@link ChatComposite}.
@@ -67,6 +69,14 @@ export type ChatCompositeOptions = {
    * Set focus on the composite when the composite first mounts.
    */
   autoFocus?: 'sendBoxTextField' | false;
+
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Properties for configuring the File Sharing feature.
+   * If undefined, file sharing feature will be disabled.
+   * @beta
+   */
+  fileSharing?: FileSharingOptions;
 };
 
 /**
@@ -86,9 +96,21 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
+  /**
+   * @TODO Remove this function and pass the props directly when FILE_SHARING is promoted to stable.
+   * @private
+   */
+  const fileSharingOptions = () => {
+    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    return {
+      fileSharing: options?.fileSharing
+    };
+    return {};
+  };
+
   return (
     <div className={chatScreenContainerStyle}>
-      <BaseComposite {...props}>
+      <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
             options={options}
@@ -96,9 +118,10 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            {...fileSharingOptions()}
           />
         </ChatAdapterProvider>
-      </BaseComposite>
+      </BaseProvider>
     </div>
   );
 };

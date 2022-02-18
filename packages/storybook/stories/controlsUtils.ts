@@ -133,6 +133,12 @@ export const getControlledTheme = (choice: string): PartialTheme => {
 
 const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 
+export const orientationArg = {
+  options: ['landscape', 'portrait'],
+  control: { type: 'radio' },
+  defaultValue: 'landscape'
+};
+
 export const controlsToAdd = {
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
@@ -227,6 +233,7 @@ export const controlsToAdd = {
     name: 'Failed to send icon tooltip text'
   },
   messageSeenTooltipText: { control: 'text', defaultValue: 'Seen', name: 'Seen icon tooltip text' },
+  messageReadByTooltipText: { control: 'text', defaultValue: 'Read by 2 of 2', name: 'Read by icon tooltip text' },
   messageSendingTooltipText: { control: 'text', defaultValue: 'Sending', name: 'Sending icon tooltip text' },
   messageStatus: {
     control: 'select',
@@ -286,7 +293,7 @@ export const controlsToAdd = {
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
-  meetingCallControlOptions: {
+  callWithChatControlOptions: {
     control: 'object',
     defaultValue: {
       microphoneButton: true,
@@ -296,7 +303,7 @@ export const controlsToAdd = {
       peopleButton: true,
       chatButton: true
     },
-    name: 'Meeting Call UI Controls'
+    name: 'CallWithChat Composite UI Controls'
   }
 };
 
@@ -327,10 +334,10 @@ export const defaultChatCompositeHiddenControls = {
   rtl: hiddenControl
 };
 
-export const defaultMeetingCompositeHiddenControls = {
-  meetingAdapter: hiddenControl,
+export const defaultCallWithChatCompositeHiddenControls = {
+  callWithChatAdapter: hiddenControl,
   fluentTheme: hiddenControl,
-  meetingInvitationURL: hiddenControl,
+  joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
   formFactor: hiddenControl

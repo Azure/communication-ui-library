@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed ScreenShareButton style to allow custom styles",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

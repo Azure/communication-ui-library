@@ -12,6 +12,7 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -59,20 +60,37 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
+export interface CameraButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface CameraButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
+    selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
+    styles?: Partial<CameraButtonStyles>;
 }
 
 // @public
 export interface CameraButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
     offLabel: string;
     onLabel: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+}
+
+// @public
+export interface CameraButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
 // @public
@@ -91,8 +109,16 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     messageType: 'chat';
+    metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
+    // (undocumented)
+    readBy?: {
+        id: string;
+        name: string;
+    }[];
+    // (undocumented)
+    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -329,6 +355,56 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
+
+// @internal
+export interface _DrawerMenuItemProps {
+    iconProps?: IIconProps;
+    // (undocumented)
+    itemKey: string;
+    // (undocumented)
+    onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryIconProps?: IIconProps;
+    secondaryText?: string;
+    // (undocumented)
+    styles?: BaseCustomStyles;
+    // (undocumented)
+    subMenuProps?: _DrawerMenuItemProps[];
+    text?: string;
+}
+
+// @internal
+export interface _DrawerMenuProps {
+    // (undocumented)
+    items: _DrawerMenuItemProps[];
+    onLightDismiss: () => void;
+    // (undocumented)
+    styles?: _DrawerMenuStyles;
+}
+
+// @internal
+export interface _DrawerMenuStyles extends BaseCustomStyles {
+    drawerSurfaceStyles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
+
+// @internal
+export interface _DrawerSurfaceProps {
+    children: React_2.ReactNode;
+    onLightDismiss: () => void;
+    styles?: _DrawerSurfaceStyles;
+}
+
+// @internal
+export interface _DrawerSurfaceStyles extends BaseCustomStyles {
+    drawerContentContainer?: BaseCustomStyles;
+    drawerContentRoot?: BaseCustomStyles;
+    lightDismissRoot?: BaseCustomStyles;
+}
+
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
@@ -427,6 +503,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryLeftNavButton: string;
+    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
     participantButtonPeopleMenuItem: string;
@@ -457,6 +535,19 @@ export type LocalizationProviderProps = {
     locale: ComponentLocale;
     children: React_2.ReactNode;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButton" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface LocalVideoCameraCycleButtonProps {
+    cameras?: OptionsDevice[];
+    label?: string;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -494,6 +585,8 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    messageThreadReadCount?: number;
+    remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStyles;
@@ -505,6 +598,7 @@ export interface MessageStatusIndicatorStrings {
     deliveredTooltipText: string;
     failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
+    readByTooltipText?: string;
     seenAriaLabel?: string;
     seenTooltipText: string;
     sendingAriaLabel?: string;
@@ -518,6 +612,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messageThreadParticipantCount?: number;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -529,6 +624,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -545,6 +641,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     friday: string;
     liveAuthorIntro: string;
+    messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
@@ -576,18 +673,40 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
+export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
+    enableDeviceSelectionMenu?: boolean;
+    microphones?: OptionsDevice[];
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
+    styles?: Partial<MicrophoneButtonStyles>;
 }
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
     offLabel: string;
     onLabel: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+}
+
+// @public
+export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
 // @public
@@ -723,6 +842,31 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
+
+// @internal
+export interface _PictureInPictureInPictureProps {
+    onClick?: () => void;
+    // (undocumented)
+    primaryTile: _PictureInPictureInPictureTileProps;
+    // (undocumented)
+    secondaryTile?: _PictureInPictureInPictureTileProps;
+    // (undocumented)
+    strings: _PictureInPictureInPictureStrings;
+}
+
+// @internal
+export interface _PictureInPictureInPictureStrings {
+    rootAriaLabel: string;
+}
+
+// @internal (undocumented)
+export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps, 'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'> {
+    // (undocumented)
+    orientation: _TileOrientation;
+}
+
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
@@ -748,6 +892,8 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField' | false;
     disabled?: boolean;
+    // @beta
+    onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -794,6 +940,9 @@ export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     messageType: 'system';
 }
+
+// @internal (undocumented)
+export type _TileOrientation = 'portrait' | 'landscape';
 
 // @public
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
@@ -852,6 +1001,8 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
+    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
+    localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
@@ -863,6 +1014,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
+    showCamerSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
@@ -884,6 +1036,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
@@ -915,6 +1068,8 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    personaMaxSize?: number;
+    personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

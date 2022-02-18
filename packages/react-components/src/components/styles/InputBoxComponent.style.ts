@@ -14,7 +14,7 @@ export const inputBoxWrapperStyle = mergeStyles({
  */
 export const inputBoxStyle = mergeStyles({
   overflow: 'auto',
-  minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
+  minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the CallWithChatComposite chat pane is closed.
   maxHeight: '8.25rem',
   outline: 'red 5px',
   fontWeight: FontWeights.regular,
@@ -53,8 +53,7 @@ export const textContainerStyle: IStyle = {
 /**
  * @private
  */
-export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
-  const borderColor = hasErrorMessage ? errorColor : 'none';
+export const textFieldStyle = (errorColor: string): IStyle => {
   return {
     root: {
       width: '100%',
@@ -63,14 +62,14 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
     },
     wrapper: {},
     fieldGroup: {
+      outline: 'none',
+      border: 'none',
       height: 'auto',
       minHeight: '0',
-      borderRadius: '0.25rem',
-      borderColor: borderColor,
-      borderWidth: disabled ? '0px' : '1px',
-      ':hover': { borderColor: borderColor },
-      ':active': { borderColor: borderColor },
-      ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
+      /**
+       * Removing fieldGroup border to make sure no border is rendered around the text area in sendbox.
+       */
+      ':after': { border: 'none' }
     },
     field: {
       borderRadius: '0.25rem'
@@ -102,7 +101,8 @@ export const inlineButtonsContainerStyle: IStyle = {
   right: '0.3rem',
   top: '0',
   bottom: '0',
-  gap: '0.25rem'
+  gap: '0.25rem',
+  alignItems: 'center'
 };
 
 /**
@@ -114,3 +114,11 @@ export const newLineButtonsContainerStyle: IStyle = {
   bottom: '0.8rem',
   gap: '1rem'
 };
+
+/**
+ * @private
+ */
+export const inputButtonTooltipStyle = mergeStyles({
+  // The toolTip host container show be a flex box, so that alignItems: 'center' works for inside buttons
+  display: 'flex'
+});

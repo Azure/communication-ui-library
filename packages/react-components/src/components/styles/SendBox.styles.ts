@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, IStyle, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -14,11 +14,16 @@ export const suppressIconStyle = {
 /**
  * @private
  */
-export const sendBoxStyleSet = {
-  root: {
-    padding: '0.25rem'
+export const sendBoxWrapperStyles = mergeStyles({
+  margin: '0.25rem',
+  overflow: 'hidden',
+  /**
+   * margin-top set for all the child components of sendbox except first
+   */
+  ':not(:first-child)': {
+    marginTop: '0.25rem'
   }
-};
+});
 
 /**
  * @private
@@ -33,7 +38,6 @@ export const sendBoxStyle = mergeStyles({
 export const sendButtonStyle = mergeStyles({
   height: '1.25rem',
   width: '1.25rem',
-  marginTop: '0.563rem', // 9px
   marginRight: '0.313rem' // 5px
 });
 
@@ -45,3 +49,45 @@ export const sendIconStyle = mergeStyles({
   height: '1.25rem',
   margin: 'auto'
 });
+
+/**
+ * @private
+ */
+export const fileCardBoxStyle = mergeStyles({
+  width: '100%',
+  padding: '0.50rem'
+});
+
+/**
+ * @private
+ */
+export const borderAndBoxShadowStyle = (
+  theme: Theme,
+  errorColor: string,
+  hasErrorMessage: boolean,
+  disabled: boolean
+): IStyle => {
+  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.blue;
+  const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
+  return {
+    borderRadius: theme.effects.roundedCorner4,
+    borderWidth: disabled ? '0px' : '1px',
+    border: `0.0625rem solid ${borderColor}`,
+    ':hover': {
+      border: '2px solid',
+      borderColor: borderColorActive
+    },
+    ':active': {
+      border: '2px solid',
+      borderColor: borderColorActive
+    },
+    ':focus': {
+      border: '2px solid',
+      borderColor: borderColorActive
+    },
+    ':focus-within': {
+      border: '2px solid',
+      borderColor: borderColorActive
+    }
+  };
+};

@@ -60,8 +60,14 @@ export interface ChatMessage extends MessageCommon {
   mine?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
+  readNumber?: number;
+  readBy?: { id: string; name: string }[];
+  /**
+   * A metadata field for the message.
+   * {@link @azure/communication-chat#ChatMessage.metadata}
+   */
+  metadata?: Record<string, string>;
 }
-
 /**
  * A system message notifying that a participant was added to the chat thread.
  *

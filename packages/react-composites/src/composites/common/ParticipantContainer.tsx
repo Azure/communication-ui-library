@@ -29,6 +29,22 @@ type ParticipantContainerProps = {
  * @private
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
+  return (
+    <Stack className={participantListWrapper}>
+      <ParticipantListWithHeading {...props} />
+    </Stack>
+  );
+};
+
+/**
+ * @private
+ */
+export const ParticipantListWithHeading = (props: {
+  participantListProps: ParticipantListProps;
+  title?: string;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+}): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
   const subheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
@@ -38,26 +54,24 @@ export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Elem
   });
 
   return (
-    <Stack className={participantListWrapper}>
-      <Stack className={participantListStack}>
-        <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
-          {title}
-        </Stack.Item>
-        <FocusZone className={participantListStyle}>
-          <ParticipantList
-            {...participantListProps}
-            onRenderAvatar={(userId, options) => (
-              <AvatarPersona
-                data-ui-id="chat-composite-participant-custom-avatar"
-                userId={userId}
-                {...options}
-                dataProvider={onFetchAvatarPersonaData}
-              />
-            )}
-            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          />
-        </FocusZone>
-      </Stack>
+    <Stack className={participantListStack}>
+      <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
+        {title}
+      </Stack.Item>
+      <FocusZone className={participantListStyle}>
+        <ParticipantList
+          {...participantListProps}
+          onRenderAvatar={(userId, options) => (
+            <AvatarPersona
+              data-ui-id="chat-composite-participant-custom-avatar"
+              userId={userId}
+              {...options}
+              dataProvider={onFetchAvatarPersonaData}
+            />
+          )}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        />
+      </FocusZone>
     </Stack>
   );
 };

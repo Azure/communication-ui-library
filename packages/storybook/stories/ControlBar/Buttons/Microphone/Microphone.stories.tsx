@@ -1,19 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MicrophoneButton } from '@azure/communication-react';
+import { MicrophoneButton, MicrophoneButtonProps } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useState } from 'react';
 
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
+import {
+  controlsToAdd,
+  defaultControlsMicrophones,
+  defaultControlsSpeakers,
+  hiddenControl
+} from '../../../controlsUtils';
 import { CustomMicrophoneButtonExample } from './snippets/Custom.snippet';
 import { MicrophoneButtonExample } from './snippets/Default.snippet';
+import { MicrophoneButtonWithDevicesMenuExample } from './snippets/WithDevicesMenu.snippet';
 import { MicrophoneButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
 const CustomMicrophoneButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
 const MicrophoneButtonExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const ButtonWithDevicesMenuExampleText = require('!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx').default;
 const MicrophoneButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
@@ -53,6 +61,17 @@ const getDocs: () => JSX.Element = () => {
         <MicrophoneButtonWithLabelExample />
       </Canvas>
 
+      <Heading>Microphone with device selection menu</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        `MicrophoneButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
+        where users can select the audio devices to use. To render `MicrophoneButton` in this mode, set the
+        `enableDeviceSelectionMenu` prop to `true`.
+      </Description>
+      <Canvas mdxSource={ButtonWithDevicesMenuExampleText}>
+        <MicrophoneButtonWithDevicesMenuExample />
+      </Canvas>
+
       <Heading>Custom MicrophoneButton Styles</Heading>
       <Description>
         You can change the styles of the `MicrophoneButton` as you would customized any Button (styles, primary,
@@ -78,7 +97,30 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const MicrophoneStory = (args): JSX.Element => {
-  return <MicrophoneButton {...args} />;
+  return <MicrophoneButtonWithDevices {...args} />;
+};
+
+const MicrophoneButtonWithDevices = (props: MicrophoneButtonProps): JSX.Element => {
+  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
+    defaultControlsMicrophones[0]
+  );
+  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(defaultControlsSpeakers[0]);
+
+  const deviceProps: MicrophoneButtonProps = {
+    selectedMicrophone: selectedMicrophone,
+    selectedSpeaker: selectedSpeaker,
+    onSelectMicrophone: async (device: { id: string; name: string }) => {
+      setSelectedMicrophone(device);
+    },
+    onSelectSpeaker: async (device: { id: string; name: string }) => {
+      setSelectedSpeaker(device);
+    },
+    onToggleMicrophone: async (): Promise<void> => {
+      /* Need a defined callback to show split button */
+    }
+  };
+
+  return <MicrophoneButton {...props} {...deviceProps} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -92,9 +134,16 @@ export default {
   argTypes: {
     checked: controlsToAdd.checked,
     showLabel: controlsToAdd.showLabel,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
     // Hiding auto-generated controls
     onToggleMicrophone: hiddenControl,
-    strings: hiddenControl
+    selectedMicrophone: hiddenControl,
+    selectedSpeaker: hiddenControl,
+    onSelectMicrophone: hiddenControl,
+    onSelectSpeaker: hiddenControl,
+    strings: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

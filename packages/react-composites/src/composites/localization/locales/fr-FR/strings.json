@@ -42,11 +42,15 @@
   "chat": {
     "chatListHeader": "Dans cette conversation"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "Personnes",
     "chatButtonLabel": "Clavardage",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "Personnes",
-    "peoplePaneSubTitle": "Dans cette réunion",
-    "chatPaneTitle": "Clavardage"
+    "peoplePaneSubTitle": "Pendant cet appel",
+    "chatPaneTitle": "Clavardage",
+    "chatButtonNewMessageNotificationLabel": "Nouveau message",
+    "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel."
   }
 }

@@ -42,11 +42,15 @@
   "chat": {
     "chatListHeader": "채팅 참가자"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "사용자",
     "chatButtonLabel": "채팅",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "사용자",
-    "peoplePaneSubTitle": "이 모임 참가자",
-    "chatPaneTitle": "채팅"
+    "peoplePaneSubTitle": "이 통화에서",
+    "chatPaneTitle": "채팅",
+    "chatButtonNewMessageNotificationLabel": "새 메시지",
+    "pictureInPictureTileAriaLabel": "비디오 피드입니다. 클릭하면 통화 화면으로 돌아갑니다."
   }
 }

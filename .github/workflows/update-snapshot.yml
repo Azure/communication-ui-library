@@ -61,9 +61,9 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -150,9 +150,9 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -252,12 +252,12 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Update meeting snapshot
-        id: update-meeting-snapshots
-        # Don't run meeting snapshot in stable, meeting is only working in beta
-        # TODO: Remove this while meeting is in stable
+      - name: Update call with chat snapshot
+        id: update-call-with-chat-snapshots
+        # Don't run CallWithChat snapshot in stable, CallWithChat is only working in beta
+        # TODO: Remove this while CallWithChat is in stable
         if: ${{ matrix.flavor != 'stable' }}
-        run: rushx test:e2e:meeting:update
+        run: rushx test:e2e:callwithchat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}

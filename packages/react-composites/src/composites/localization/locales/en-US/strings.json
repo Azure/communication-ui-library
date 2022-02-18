@@ -42,11 +42,15 @@
   "chat": {
     "chatListHeader": "In this chat"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "People",
     "chatButtonLabel": "Chat",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "People",
     "peoplePaneSubTitle": "In this call",
-    "chatPaneTitle": "Chat"
+    "chatPaneTitle": "Chat",
+    "chatButtonNewMessageNotificationLabel": "New Message",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
   }
 }
