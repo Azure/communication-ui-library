@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       >
         <i
           aria-label="Message sent"
-          className="root-94 css-122 root-3"
+          className="root-94 css-123 root-3"
           data-icon-name="MessageDelivered"
           role="status"
         >
