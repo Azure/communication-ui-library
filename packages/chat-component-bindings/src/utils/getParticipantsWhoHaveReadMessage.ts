@@ -12,6 +12,8 @@ import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
  * How do we check if the message is sent later than message A?
  * We compare if the messageID of the last read message is larger than or equal to the message A's id
  * Because messageID is the creation timestamp of each message
+ * Timestamps are in epoch time so lecixographical ordering is the same as time ordering.
+ *
  * if MessageId of B is larger than message Id of A, then B is created after A
  * if the last read message is created after the message A is sent, then user should have read message A as well */
 export const getParticipantsWhoHaveReadMessage = (
