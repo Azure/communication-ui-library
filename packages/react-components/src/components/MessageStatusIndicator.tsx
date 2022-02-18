@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
-import { MessageStatus } from '@internal/acs-ui-common';
+import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -24,8 +24,10 @@ export interface MessageStatusIndicatorStrings {
   deliveredTooltipText: string;
   /** Aria label to notify user when their message has been seen by others. */
   seenAriaLabel?: string;
-  /** Text to display in the seen message icon tooltip. */
+  /** Text to display in the seen message icon tooltip if read number/ participant number is 1 */
   seenTooltipText: string;
+  /** Text to display in the seen message icon tooltip if read number logic is working correctly (more than 1 read number and more than 1 particiants)*/
+  readByTooltipText?: string;
   /** Aria label to notify user when their message is being sent. */
   sendingAriaLabel?: string;
   /** Text to display in the sending message icon tooltip. */
@@ -44,6 +46,10 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
+  /** how many people have read the message */
+  messageThreadReadCount?: number;
+  /** number of participants not including myself */
+  remoteParticipantsCount?: number;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -66,8 +72,7 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles } = props;
-
+  const { status, styles, messageThreadReadCount, remoteParticipantsCount } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
@@ -105,7 +110,24 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'seen':
       return (
-        <TooltipHost content={strings.seenTooltipText}>
+        <TooltipHost
+          content={
+            // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
+            // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
+            // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
+            (messageThreadReadCount === 1 && remoteParticipantsCount === 1) ||
+            messageThreadReadCount === 0 ||
+            (remoteParticipantsCount && remoteParticipantsCount <= 0) ||
+            !messageThreadReadCount ||
+            !remoteParticipantsCount ||
+            strings.readByTooltipText === undefined
+              ? strings.seenTooltipText
+              : _formatString(strings.readByTooltipText, {
+                  messageThreadReadCount: `${messageThreadReadCount}`,
+                  remoteParticipantsCount: `${remoteParticipantsCount}`
+                })
+          }
+        >
           <Icon
             role="status"
             aria-label={strings.seenAriaLabel}

@@ -11,6 +11,9 @@ import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { getBuildTime, getChatSDKVersion } from './utils/utils';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+
+setLogLevel('warning');
 
 setLogLevel('warning');
 
@@ -18,6 +21,7 @@ console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKV
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
+initializeFileTypeIcons();
 
 const ERROR_PAGE_TITLE_ERROR = 'Oops! You are no longer a participant for the chat thread.';
 const ERROR_PAGE_TITLE_REMOVED = 'You have been removed from the chat.';

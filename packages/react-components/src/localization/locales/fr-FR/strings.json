@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Envoyé",
     "seenAriaLabel": "Message vu par d’autres personnes",
     "seenTooltipText": "Vu",
+    "readByTooltipText": "Lu par {messageThreadReadCount} participants sur {remoteParticipantsCount}",
     "sendingAriaLabel": "Envoi du message",
     "sendingTooltipText": "Envoi",
     "failedToSendAriaLabel": "Échec d'envoi du message",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "La caméra est désactivée.",
     "tooltipOnContent": "Désactiver la caméra",
     "tooltipOffContent": "Activer la caméra",
-    "tooltipVideoLoadingContent": "Chargement de la vidéo"
+    "tooltipVideoLoadingContent": "Chargement de la vidéo",
+    "cameraMenuTitle": "Caméra",
+    "cameraMenuTooltip": "Choisissez l'appareil photo"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",
     "offLabel": "Réactiver le son",
     "tooltipDisabledContent": "Le microphone est désactivé.",
     "tooltipOnContent": "Désactiver le micro",
-    "tooltipOffContent": "Activer le micro"
+    "tooltipOffContent": "Activer le micro",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choisissez le micro",
+    "speakerMenuTitle": "Haut-parleur",
+    "speakerMenuTooltip": "Choisissez le haut-parleur"
   },
   "devicesButton": {
     "label": "Appareils",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "Nouveaux messages",
     "noDisplayNameSub": "Sans nom",
     "editBoxCancelButton": "Annuler",
-    "editBoxSubmitButton": "Envoyer"
+    "editBoxSubmitButton": "Envoyer",
+    "messageReadCount": "Lu par {messageReadByCount} participants sur {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
     "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
-    "localVideoLabel": "Vous"
+    "localVideoLabel": "Vous",
+    "localVideoCameraSwitcherLabel": "Faire un cycle de caméra"
   }
 }

@@ -23,6 +23,7 @@
     "deliveredTooltipText": "已傳送",
     "seenAriaLabel": "其他人已看到訊息",
     "seenTooltipText": "已讀",
+    "readByTooltipText": "讀取者為 {messageThreadReadCount} / {remoteParticipantsCount}",
     "sendingAriaLabel": "正在傳送訊息",
     "sendingTooltipText": "正在傳送",
     "failedToSendAriaLabel": "無法傳送訊息",
@@ -38,14 +39,20 @@
     "tooltipDisabledContent": "相機已停用",
     "tooltipOnContent": "關閉攝影機",
     "tooltipOffContent": "開啟相機",
-    "tooltipVideoLoadingContent": "正在載入影片"
+    "tooltipVideoLoadingContent": "正在載入影片",
+    "cameraMenuTitle": "相機",
+    "cameraMenuTooltip": "選擇攝影機"
   },
   "microphoneButton": {
     "onLabel": "靜音",
     "offLabel": "取消靜音",
     "tooltipDisabledContent": "麥克風已停用",
     "tooltipOnContent": "將麥克風設為靜音",
-    "tooltipOffContent": "取消麥克風靜音"
+    "tooltipOffContent": "取消麥克風靜音",
+    "microphoneMenuTitle": "麥克風",
+    "microphoneMenuTooltip": "選擇麥克風",
+    "speakerMenuTitle": "揚聲器",
+    "speakerMenuTooltip": "選擇揚聲器"
   },
   "devicesButton": {
     "label": "裝置",
@@ -66,11 +73,11 @@
     "copyInviteLinkButtonLabel": "複製邀請連結"
   },
   "screenShareButton": {
-    "onLabel": "停止分享",
-    "offLabel": "分享",
-    "tooltipDisabledContent": "視訊分享已停用",
-    "tooltipOnContent": "停止螢幕畫面分享",
-    "tooltipOffContent": "共用您的螢幕"
+    "onLabel": "停止簡報",
+    "offLabel": "存在",
+    "tooltipDisabledContent": "簡報已停用",
+    "tooltipOnContent": "展示您的螢幕",
+    "tooltipOffContent": "展示您的螢幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -84,7 +91,7 @@
     "participantJoined": "已加入聊天。",
     "participantLeft": "已離開聊天。",
     "editMessage": "編輯",
-    "removeMessage": "移除",
+    "removeMessage": "刪除",
     "editedTag": "已編輯",
     "liveAuthorIntro": "{author} 說",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
@@ -92,7 +99,8 @@
     "newMessagesIndicator": "新訊息",
     "noDisplayNameSub": "沒有名稱",
     "editBoxCancelButton": "取消",
-    "editBoxSubmitButton": "提交"
+    "editBoxSubmitButton": "提交",
+    "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -123,6 +131,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
-    "localVideoLabel": "您"
+    "localVideoLabel": "您",
+    "localVideoCameraSwitcherLabel": "迴圈相機"
   }
 }

@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatBaseSelectorProps, getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import {
+  ChatBaseSelectorProps,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getParticipants,
+  getReadReceipts,
+  getUserId
+} from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
@@ -15,6 +23,7 @@ import {
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
+import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -22,7 +31,9 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     chatMessage: ChatMessageWithStatus,
     userId: string,
     isSeen: boolean,
-    isLargeGroup: boolean
+    isLargeGroup: boolean,
+    readNumber: number,
+    readBy: { id: string; name: string }[]
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -30,7 +41,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, readBy);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -41,7 +52,9 @@ const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
-  isLargeGroup: boolean
+  isLargeGroup: boolean,
+  readNumber: number,
+  readBy: { id: string; name: string }[]
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -57,6 +70,8 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
+    readNumber,
+    readBy,
     metadata: message.metadata
   };
 };
@@ -119,8 +134,27 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  * @public
  */
 export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
-  (userId, chatMessages, latestReadTime, isLargeGroup) => {
+  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    // get number of participants
+    // filter out the non valid participants (no display name)
+    const messageThreadParticipantCount = Object.values(participants).filter(
+      (p) => p.displayName && p.displayName !== ''
+    ).length;
+
+    // creating key value pairs of senderID: last read message information
+
+    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } } = {};
+
+    // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
+    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+    readReceipts.forEach((r) => {
+      readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
+        lastReadMessage: r.chatMessageId,
+        name: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+      };
+    });
+
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Object.values(chatMessages)
@@ -136,22 +170,30 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             message.clientMessageId !== undefined
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
-        .map((message) =>
-          memoizedFn(
+        .map((message) => {
+          const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
+            message,
+            readReceiptForEachSender
+          );
+
+          return memoizedFn(
             message.id ?? message.clientMessageId,
             message,
             userId,
             message.createdOn <= latestReadTime,
-            isLargeGroup
-          )
-        )
+            isLargeGroup,
+            readBy.length,
+            readBy
+          );
+        })
     );
 
     updateMessagesWithAttached(convertedMessages, userId);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
-      messages: convertedMessages
+      messages: convertedMessages,
+      messageThreadParticipantCount
     };
   }
 );

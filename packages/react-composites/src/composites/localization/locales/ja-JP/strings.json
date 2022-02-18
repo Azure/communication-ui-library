@@ -42,11 +42,15 @@
   "chat": {
     "chatListHeader": "このチャット内"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "ユーザー",
     "chatButtonLabel": "チャット",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "ユーザー",
-    "peoplePaneSubTitle": "この会議で",
-    "chatPaneTitle": "チャット"
+    "peoplePaneSubTitle": "この通話で",
+    "chatPaneTitle": "チャット",
+    "chatButtonNewMessageNotificationLabel": "新規メッセージ",
+    "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。"
   }
 }
