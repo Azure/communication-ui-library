@@ -23,6 +23,7 @@
     "deliveredTooltipText": "已发送",
     "seenAriaLabel": "其他人已查看消息",
     "seenTooltipText": "已查看",
+    "readByTooltipText": "按 {participantCountNotIncludingSelf} 的 {messageThreadReadCount} 读取",
     "sendingAriaLabel": "消息发送",
     "sendingTooltipText": "正在发送",
     "failedToSendAriaLabel": "消息发送失败",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "复制邀请链接"
   },
   "screenShareButton": {
-    "onLabel": "停止共享",
-    "offLabel": "共享",
-    "tooltipDisabledContent": "已禁用屏幕共享",
-    "tooltipOnContent": "停止共享屏幕",
-    "tooltipOffContent": "共享屏幕"
+    "onLabel": "停止演示",
+    "offLabel": "演示",
+    "tooltipDisabledContent": "已禁用演示。",
+    "tooltipOnContent": "演示屏幕",
+    "tooltipOffContent": "演示您的屏幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "新消息",
     "noDisplayNameSub": "无名称",
     "editBoxCancelButton": "取消",
-    "editBoxSubmitButton": "提交"
+    "editBoxSubmitButton": "提交",
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

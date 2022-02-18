@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "Люди",
     "chatButtonLabel": "Чат",
+    "moreDrawerMicrophoneMenuTitle": "Микрофон",
+    "moreDrawerSpeakerMenuTitle": "Динамик",
     "peoplePaneTitle": "Люди",
     "peoplePaneSubTitle": "В этом звонке",
     "chatPaneTitle": "Чат",

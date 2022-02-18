@@ -23,6 +23,7 @@
     "deliveredTooltipText": "已傳送",
     "seenAriaLabel": "其他人已看到訊息",
     "seenTooltipText": "已讀",
+    "readByTooltipText": "讀取者為 {messageThreadReadCount} / {remoteParticipantsCount}",
     "sendingAriaLabel": "正在傳送訊息",
     "sendingTooltipText": "正在傳送",
     "failedToSendAriaLabel": "無法傳送訊息",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "複製邀請連結"
   },
   "screenShareButton": {
-    "onLabel": "停止分享",
-    "offLabel": "分享",
-    "tooltipDisabledContent": "視訊分享已停用",
-    "tooltipOnContent": "停止螢幕畫面分享",
-    "tooltipOffContent": "共用您的螢幕"
+    "onLabel": "停止簡報",
+    "offLabel": "存在",
+    "tooltipDisabledContent": "簡報已停用",
+    "tooltipOnContent": "展示您的螢幕",
+    "tooltipOffContent": "展示您的螢幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "新訊息",
     "noDisplayNameSub": "沒有名稱",
     "editBoxCancelButton": "取消",
-    "editBoxSubmitButton": "提交"
+    "editBoxSubmitButton": "提交",
+    "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",

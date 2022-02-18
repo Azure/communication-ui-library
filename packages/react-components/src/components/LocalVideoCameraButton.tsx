@@ -29,6 +29,7 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
 
   return (
     <IconButton
+      data-ui-id={'local-camera-switcher-button'}
       styles={localVideoCameraCycleButtonStyles}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={label}
