@@ -1,8 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ChatComposite, ChatAdapter, ChatCompositeProps } from '../ChatComposite';
-import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
+import {
+  CommandBarButton,
+  DefaultButton,
+  PartialTheme,
+  Theme,
+  Stack,
+  IContextualMenuItem,
+  IStackStyles
+} from '@fluentui/react';
 import {
   sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
@@ -13,7 +21,13 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
-import { ParticipantList, useTheme } from '@internal/react-components';
+import {
+  ParticipantList,
+  ParticipantItemProps,
+  useTheme,
+  _DrawerMenu,
+  _DrawerMenuItemProps
+} from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
@@ -94,6 +108,9 @@ export const EmbeddedPeoplePane = (props: {
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+
   const participantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
@@ -108,6 +125,26 @@ export const EmbeddedPeoplePane = (props: {
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       title={callWithChatStrings.peoplePaneSubTitle}
+      onParticipantClick={(props?: ParticipantItemProps) => {
+        if (props?.menuItems && !props?.me) {
+          setShowDrawer(true);
+          setMenuItems(
+            props.menuItems.map((menuItem: IContextualMenuItem): _DrawerMenuItemProps => {
+              return {
+                onItemClick: () => {
+                  menuItem.onClick?.();
+                  setShowDrawer(false);
+                },
+                itemKey: menuItem.key,
+                text: menuItem.text,
+                iconProps: {
+                  iconName: 'UserRemove'
+                }
+              };
+            })
+          );
+        }
+      }}
     />
   );
 
@@ -122,6 +159,11 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         {participantList}
+        {showDrawer && !!menuItems && (
+          <Stack styles={drawerContainerStyles}>
+            <_DrawerMenu onLightDismiss={() => setShowDrawer(false)} items={menuItems} />
+          </Stack>
+        )}
       </MobilePane>
     );
   }
@@ -141,6 +183,19 @@ export const EmbeddedPeoplePane = (props: {
       </Stack>
     </SidePane>
   );
+};
+
+const drawerContainerStyles: IStackStyles = {
+  root: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    // Any zIndex > 0 will work because this is the only absolutely
+    // positioned element in the container.
+    zIndex: 1
+  }
 };
 
 /**
