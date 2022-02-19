@@ -15,6 +15,8 @@ import {
   TranscriptionCallFeature,
   CallFeatureFactory
 } from '@azure/communication-calling';
+/* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -64,7 +66,7 @@ class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
   emitter = new EventEmitter();
-
+  feature;
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
@@ -77,7 +79,13 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
@@ -108,7 +116,7 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
   emitter = new EventEmitter();
-
+  feature;
   constructor(calls: MockCall[]) {
     this.calls = calls;
   }
@@ -125,7 +133,13 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);

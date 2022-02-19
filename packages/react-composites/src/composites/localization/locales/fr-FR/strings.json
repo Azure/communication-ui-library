@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "Personnes",
     "chatButtonLabel": "Clavardage",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "Personnes",
     "peoplePaneSubTitle": "Pendant cet appel",
     "chatPaneTitle": "Clavardage",

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page } from '@playwright/test';
+import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
@@ -218,3 +218,27 @@ export const buildUrl = (
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
+export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
+  const testName = testInfo.project.name.toLowerCase();
+  return testName.includes('desktop') ? true : false;
+};
+
+/**
+ * Helper function to determine whether to skip a test for a beta feature in stable test run.
+ */
+export const isTestProfileStableFlavor = (): boolean => {
+  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
+  if (flavor === 'stable') {
+    return true;
+  } else if (flavor === 'beta') {
+    return false;
+  } else {
+    throw 'Faled to find Communication React Flavor env variable';
+  }
+};
