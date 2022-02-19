@@ -13,8 +13,8 @@ import { usePropsFor } from './hooks/usePropsFor';
  * @private
  */
 type ChatScreenPeoplePaneProps = {
-  onFetchAvatarPersonaData: AvatarPersonaDataCallback | undefined;
-  onFetchParticipantMenuItems: ParticipantMenuItemsCallback | undefined;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 /**
