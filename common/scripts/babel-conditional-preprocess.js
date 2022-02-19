@@ -66,6 +66,10 @@ exports.default = babelHelper.declare((_api, opts) => {
         Handle(path, annotations);
       },
 
+      TSDeclareMethod(path) {
+        Handle(path, annotations);
+      },
+
       Expression(path) {
         Handle(path, annotations);
       },
