@@ -224,7 +224,7 @@ type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
-export const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
+export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
 };
@@ -232,7 +232,7 @@ export const skipTestIfDesktop = (testInfo: TestInfo): boolean => {
 /**
  * Helper function to determine whether to skip a test for a beta feature in stable test run.
  */
-export const skipTestInStableFlavor = (): boolean => {
+export const isTestProfileStableFlavor = (): boolean => {
   const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
   if (flavor === 'stable') {
     return true;

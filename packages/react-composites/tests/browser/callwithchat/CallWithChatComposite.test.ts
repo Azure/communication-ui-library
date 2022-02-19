@@ -5,6 +5,7 @@ import { IDS, TEST_PARTICIPANTS } from '../common/constants';
 import {
   buildUrl,
   dataUiId,
+  isTestProfileDesktop,
   loadCallPageWithParticipantVideos,
   pageClick,
   stubMessageTimestamps,
@@ -64,7 +65,10 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await pages[0].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
   });
 
-  test('People pane opens and displays correctly', async ({ pages }) => {
+  test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
+    // There is no PeopleButton on the control bar in mobile.
+    // TODO: Open the people pane via the MoreDrawer for mobile.
+    test.skip(!isTestProfileDesktop(testInfo));
     const page = pages[1];
     await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
