@@ -2,15 +2,7 @@
 // Licensed under the MIT license.
 import React, { useMemo, useState } from 'react';
 import { ChatComposite, ChatAdapter, ChatCompositeProps } from '../ChatComposite';
-import {
-  CommandBarButton,
-  DefaultButton,
-  PartialTheme,
-  Theme,
-  Stack,
-  IContextualMenuItem,
-  IStackStyles
-} from '@fluentui/react';
+import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack, IStackStyles } from '@fluentui/react';
 import {
   sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
@@ -23,10 +15,11 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import {
   ParticipantList,
-  ParticipantItemProps,
   useTheme,
   _DrawerMenu,
-  _DrawerMenuItemProps
+  _DrawerMenuItemProps,
+  ParticipantListParticipant,
+  ParticipantListProps
 } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -35,6 +28,7 @@ import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatComposit
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { MobilePane } from './MobilePane';
+import { useLocale } from '../localization';
 
 const SidePane = (props: {
   headingText: string;
@@ -103,20 +97,20 @@ export const EmbeddedPeoplePane = (props: {
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink } = props;
+  const { callAdapter, chatAdapter, inviteLink, mobileView } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
-  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const locale = useLocale();
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
-  const participantListProps = useMemo(() => {
+  const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
     return {
       ...participantListDefaultProps,
-      onRemoveParticipant
+      onRemoveParticipant: mobileView ? undefined : onRemoveParticipant
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
@@ -124,31 +118,31 @@ export const EmbeddedPeoplePane = (props: {
     <ParticipantListWithHeading
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      title={callWithChatStrings.peoplePaneSubTitle}
-      onParticipantClick={(props?: ParticipantItemProps) => {
-        if (props?.menuItems && !props?.me) {
-          setShowDrawer(true);
-          setMenuItems(
-            props.menuItems.map((menuItem: IContextualMenuItem): _DrawerMenuItemProps => {
-              return {
-                onItemClick: () => {
-                  menuItem.onClick?.();
-                  setShowDrawer(false);
-                },
-                itemKey: menuItem.key,
-                text: menuItem.text,
-                iconProps: {
-                  iconName: 'UserRemove'
+      title={locale.strings.callWithChat.peoplePaneSubTitle}
+      onParticipantClick={(participant?: ParticipantListParticipant) => {
+        setShowDrawer(true);
+        if (participant?.userId !== participantListProps.myUserId) {
+          setMenuItems([
+            {
+              itemKey: 'remove',
+              text: locale.component.strings.participantItem.removeButtonLabel,
+              onItemClick: () => {
+                if (participant?.userId) {
+                  participantListDefaultProps.onRemoveParticipant?.(participant?.userId);
                 }
-              };
-            })
-          );
+                setShowDrawer(false);
+              },
+              iconProps: {
+                iconName: 'UserRemove'
+              }
+            }
+          ]);
         }
       }}
     />
   );
 
-  if (props.mobileView) {
+  if (mobileView) {
     return (
       <MobilePane
         hidden={props.hidden}
@@ -171,7 +165,7 @@ export const EmbeddedPeoplePane = (props: {
   return (
     <SidePane
       hidden={props.hidden}
-      headingText={callWithChatStrings.peoplePaneTitle}
+      headingText={locale.strings.callWithChat.peoplePaneTitle}
       onClose={props.onClose}
       dataUiId={'call-with-chat-composite-people-pane'}
     >

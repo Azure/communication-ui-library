@@ -11,7 +11,6 @@ import {
   Stack
 } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { ParticipantItemProps } from '.';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import {
@@ -79,7 +78,7 @@ export type ParticipantListProps = {
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
-  onParticipantClick?: (props?: ParticipantItemProps) => void;
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
 };
@@ -91,7 +90,7 @@ const onRenderParticipantDefault = (
   onRenderAvatar?: OnRenderAvatarCallback,
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
-  onParticipantClick?: (props?: ParticipantItemProps) => void
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -136,7 +135,7 @@ const onRenderParticipantDefault = (
         presence={presence}
         onRenderIcon={onRenderIcon}
         onRenderAvatar={onRenderAvatar}
-        onClick={onParticipantClick}
+        onClick={() => onParticipantClick?.(participant)}
       />
     );
   }

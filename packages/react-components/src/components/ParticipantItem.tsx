@@ -95,7 +95,7 @@ export interface ParticipantItemProps {
   /**
    * Optional callback when component is clicked. If this is defined then contextual menu will not shown when component is clicked.
    */
-  onClick?: (props: ParticipantItemProps) => void;
+  onClick?: (props?: ParticipantItemProps) => void;
 }
 
 /**
@@ -106,7 +106,7 @@ export interface ParticipantItemProps {
  * @public
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
+  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me, onClick } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -175,11 +175,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     setMenuHidden(true);
   };
 
-  const defaultOnClick = (): void => {
-    setItemHovered(true);
-    setMenuHidden(false);
-  };
-
   return (
     <div
       ref={containerRef}
@@ -189,11 +184,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
-        if (props.onClick) {
-          props.onClick(props);
-        } else {
-          defaultOnClick();
-        }
+        setItemHovered(true);
+        setMenuHidden(false);
+        onClick?.();
       }}
     >
       <Stack
@@ -209,31 +202,29 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       {menuItems && menuItems.length > 0 && (
         <>
           {menuButton}
-          {!props.onClick && (
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={onDismissMenu}
-              onDismiss={onDismissMenu}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-              calloutProps={{
-                // Disable dismiss on resize to work around a couple Fluent UI bugs
-                // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
-                //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
-                //   by the headless SDK.
-                // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
-                //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
-                //   deterministically avoid dismissal.
-                //
-                // A side effect of this workaround is that the context menu stays open when window is resized, and may
-                // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-                // The Callout (frequently) gets dismissed automatically.
-                preventDismissOnResize: true
-              }}
-            />
-          )}
+          <ContextualMenu
+            items={menuItems}
+            hidden={menuHidden}
+            target={containerRef}
+            onItemClick={onDismissMenu}
+            onDismiss={onDismissMenu}
+            directionalHint={DirectionalHint.bottomRightEdge}
+            className={contextualMenuStyle}
+            calloutProps={{
+              // Disable dismiss on resize to work around a couple Fluent UI bugs
+              // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
+              //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
+              //   by the headless SDK.
+              // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
+              //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
+              //   deterministically avoid dismissal.
+              //
+              // A side effect of this workaround is that the context menu stays open when window is resized, and may
+              // get detached from original target visually. That bug is preferable to the bug when this value is not set -
+              // The Callout (frequently) gets dismissed automatically.
+              preventDismissOnResize: true
+            }}
+          />
         </>
       )}
     </div>
