@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Using drawer menu when participant is clicked on PeoplePane in mobile view of CallWithChat composite.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
