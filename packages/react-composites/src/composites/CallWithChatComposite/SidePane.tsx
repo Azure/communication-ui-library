@@ -102,7 +102,6 @@ export const EmbeddedPeoplePane = (props: {
 
   const locale = useLocale();
 
-  const [showDrawer, setShowDrawer] = useState(false);
   const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
@@ -120,7 +119,6 @@ export const EmbeddedPeoplePane = (props: {
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       title={locale.strings.callWithChat.peoplePaneSubTitle}
       onParticipantClick={(participant?: ParticipantListParticipant) => {
-        setShowDrawer(true);
         if (participant?.userId !== participantListProps.myUserId) {
           setMenuItems([
             {
@@ -130,7 +128,7 @@ export const EmbeddedPeoplePane = (props: {
                 if (participant?.userId) {
                   participantListDefaultProps.onRemoveParticipant?.(participant?.userId);
                 }
-                setShowDrawer(false);
+                setMenuItems([]);
               },
               iconProps: {
                 iconName: 'UserRemove'
@@ -153,9 +151,9 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         {participantList}
-        {showDrawer && !!menuItems && (
+        {menuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
-            <_DrawerMenu onLightDismiss={() => setShowDrawer(false)} items={menuItems} />
+            <_DrawerMenu onLightDismiss={() => setMenuItems([])} items={menuItems} />
           </Stack>
         )}
       </MobilePane>
