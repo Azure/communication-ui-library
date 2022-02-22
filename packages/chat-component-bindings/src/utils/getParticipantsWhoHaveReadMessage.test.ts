@@ -8,66 +8,39 @@ const chatMessage = (messageID: string): ChatMessageWithStatus => ({
   type: 'text',
   sequenceId: '89542038450',
   version: 'jehkfhsdf',
-  createdOn: new Date(),
+  createdOn: new Date(0),
   status: 'delivered'
 });
 
-const readReceiptForEachSender = {
-  '12345': { lastReadMessage: '3', name: 'c' },
-  '67890': { lastReadMessage: '5', name: 'd' },
-  '11111': { lastReadMessage: '3', name: 'a' },
-  '22222': { lastReadMessage: '1', name: 'l' },
-  '6748438': { lastReadMessage: '0', name: 'k' }
-};
+const startTime = new Date('2022-01-01');
 
 describe('Get participants list who have read the message', () => {
-  test('get read receipt for message id 1', () => {
-    const message = chatMessage('1');
-    const result = [
-      { id: '11111', name: 'a' },
-      { id: '12345', name: 'c' },
-      { id: '22222', name: 'l' },
-      { id: '67890', name: 'd' }
-    ];
-    console.log(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender));
+  test('ensure that a client that has seen a future message is considered to have seen all previous messages', () => {
+    const messageId = `${startTime.getTime()}`;
+    const message = chatMessage(messageId);
+    const readReceiptForEachSender = {
+      '12345': { lastReadMessage: `${startTime.getTime() + 1}`, name: 'c' }
+    };
+    const result = [{ id: '12345', name: 'c' }];
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('get read receipt for message id 0', () => {
-    const message = chatMessage('0');
-    const result = [
-      { id: '11111', name: 'a' },
-      { id: '12345', name: 'c' },
-      { id: '22222', name: 'l' },
-      { id: '67890', name: 'd' },
-      { id: '6748438', name: 'k' }
-    ];
+  test('ensure that a client who has seen a message sent at time x means he/she has seen all messages sent at time x', () => {
+    const messageId = `${startTime.getTime()}`;
+    const message = chatMessage(messageId);
+    const readReceiptForEachSender = {
+      '12345': { lastReadMessage: `${startTime.getTime()}`, name: 'c' }
+    };
+    const result = [{ id: '12345', name: 'c' }];
     expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
   });
 
-  test('get read receipt for message id 9', () => {
-    const message = chatMessage('9');
-    const result = [];
-    expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
-  });
-
-  test('get read receipt for message id 3', () => {
-    const message = chatMessage('3');
-    const result = [
-      { id: '11111', name: 'a' },
-      { id: '12345', name: 'c' },
-      { id: '67890', name: 'd' }
-    ];
-    expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
-  });
-
-  test('get read receipt for message id 2', () => {
-    const message = chatMessage('2');
-    const result = [
-      { id: '11111', name: 'a' },
-      { id: '12345', name: 'c' },
-      { id: '67890', name: 'd' }
-    ];
-    expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual(result);
+  test('when a client has last seen a message sent at a previous time, the client has not seen the current message', () => {
+    const messageId = `${startTime.getTime()}`;
+    const message = chatMessage(messageId);
+    const readReceiptForEachSender = {
+      '12345': { lastReadMessage: `${startTime.getTime() - 1}`, name: 'c' }
+    };
+    expect(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender)).toEqual([]);
   });
 });
