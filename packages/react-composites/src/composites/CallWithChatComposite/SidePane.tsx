@@ -1,28 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo } from 'react';
-import { ChatComposite, ChatAdapter, ChatCompositeProps } from '../ChatComposite';
-import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
+import React from 'react';
+import { CommandBarButton, Stack } from '@fluentui/react';
 import {
   sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
   sidePaneContainerTokens,
   sidePaneHeaderStyles,
-  peoplePaneContainerTokens,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
-import { ParticipantList, useTheme } from '@internal/react-components';
-import copy from 'copy-to-clipboard';
-import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
-import { CallAdapter } from '../CallComposite';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { ParticipantListWithHeading } from '../common/ParticipantContainer';
-import { MobilePane } from './MobilePane';
+import { useTheme } from '@internal/react-components';
 
-const SidePane = (props: {
+export const SidePane = (props: {
   headingText: string;
   children: React.ReactNode;
   onClose: () => void;
@@ -59,138 +50,5 @@ const SidePane = (props: {
         </Stack.Item>
       </Stack>
     </Stack.Item>
-  );
-};
-
-/**
- * In a CallWithChat when a participant is removed, we must remove them from both
- * the call and the chat thread.
- */
-const removeParticipantFromCallWithChat = async (
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter,
-  participantId: string
-): Promise<void> => {
-  await callAdapter.removeParticipant(participantId);
-  await chatAdapter.removeParticipant(participantId);
-};
-
-/**
- * @private
- */
-export const EmbeddedPeoplePane = (props: {
-  inviteLink?: string;
-  onClose: () => void;
-  hidden: boolean;
-  callAdapter: CallAdapter;
-  chatAdapter: ChatAdapter;
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onChatButtonClick: () => void;
-  onPeopleButtonClick: () => void;
-  mobileView?: boolean;
-}): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink } = props;
-  const participantListDefaultProps = usePropsFor(ParticipantList);
-
-  const callWithChatStrings = useCallWithChatCompositeStrings();
-
-  const participantListProps = useMemo(() => {
-    const onRemoveParticipant = async (participantId: string): Promise<void> =>
-      removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
-    return {
-      ...participantListDefaultProps,
-      onRemoveParticipant
-    };
-  }, [participantListDefaultProps, callAdapter, chatAdapter]);
-
-  const participantList = (
-    <ParticipantListWithHeading
-      participantListProps={participantListProps}
-      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      title={callWithChatStrings.peoplePaneSubTitle}
-    />
-  );
-
-  if (props.mobileView) {
-    return (
-      <MobilePane
-        hidden={props.hidden}
-        dataUiId={'call-with-chat-composite-people-pane'}
-        onClose={props.onClose}
-        activeTab="people"
-        onChatButtonClicked={props.onChatButtonClick}
-        onPeopleButtonClicked={props.onPeopleButtonClick}
-      >
-        {participantList}
-      </MobilePane>
-    );
-  }
-
-  return (
-    <SidePane
-      hidden={props.hidden}
-      headingText={callWithChatStrings.peoplePaneTitle}
-      onClose={props.onClose}
-      dataUiId={'call-with-chat-composite-people-pane'}
-    >
-      <Stack tokens={peoplePaneContainerTokens}>
-        {inviteLink && (
-          <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
-        )}
-        {participantList}
-      </Stack>
-    </SidePane>
-  );
-};
-
-/**
- * @private
- */
-export const EmbeddedChatPane = (props: {
-  chatCompositeProps: Partial<ChatCompositeProps>;
-  chatAdapter: ChatAdapter;
-  fluentTheme?: PartialTheme | Theme;
-  hidden: boolean;
-  onClose: () => void;
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onChatButtonClick: () => void;
-  onPeopleButtonClick: () => void;
-  mobileView?: boolean;
-}): JSX.Element => {
-  const callWithChatStrings = useCallWithChatCompositeStrings();
-
-  const chatComposite = (
-    <ChatComposite
-      {...props.chatCompositeProps}
-      adapter={props.chatAdapter}
-      fluentTheme={props.fluentTheme}
-      options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
-      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-    />
-  );
-
-  if (props.mobileView) {
-    return (
-      <MobilePane
-        hidden={props.hidden}
-        dataUiId={'call-with-chat-composite-chat-pane'}
-        onClose={props.onClose}
-        activeTab="chat"
-        onChatButtonClicked={props.onChatButtonClick}
-        onPeopleButtonClicked={props.onPeopleButtonClick}
-      >
-        {chatComposite}
-      </MobilePane>
-    );
-  }
-  return (
-    <SidePane
-      hidden={props.hidden}
-      headingText={callWithChatStrings.chatPaneTitle}
-      onClose={props.onClose}
-      dataUiId={'call-with-chat-composite-chat-pane'}
-    >
-      {chatComposite}
-    </SidePane>
   );
 };
