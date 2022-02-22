@@ -3,6 +3,9 @@
 
 import { IButtonStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const copyLinkButtonStyles: IButtonStyles = {
   root: {
     height: '3rem',
@@ -15,4 +18,7 @@ export const copyLinkButtonStyles: IButtonStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const linkIconStyles = { marginRight: '0.5rem' };

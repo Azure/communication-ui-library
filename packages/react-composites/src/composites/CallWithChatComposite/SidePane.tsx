@@ -13,6 +13,10 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { useTheme } from '@internal/react-components';
 
+/**
+ * This is a wrapper for the Chat and People pane to be displayed to the side of the CallWithChat composite
+ * @private
+ */
 export const SidePane = (props: {
   headingText: string;
   children: React.ReactNode;
