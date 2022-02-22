@@ -110,7 +110,8 @@ export interface SendBoxProps {
    */
   strings?: Partial<SendBoxStrings>;
   /**
-   * boolean to determine if the input box has focus on render or not.
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
    */
   autoFocus?: 'sendBoxTextField' | undefined;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
