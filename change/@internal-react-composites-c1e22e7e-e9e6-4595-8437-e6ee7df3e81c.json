@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "Minor",
   "comment": "Update autofocus disabled state from false boolean to string value 'disabled'",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
