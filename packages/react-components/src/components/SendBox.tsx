@@ -111,6 +111,7 @@ export interface SendBoxProps {
   strings?: Partial<SendBoxStrings>;
   /**
    * boolean to determine if the input box has focus on render or not.
+   * @defaultValue 'disabled'
    */
   autoFocus?: 'sendBoxTextField' | 'disabled';
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
