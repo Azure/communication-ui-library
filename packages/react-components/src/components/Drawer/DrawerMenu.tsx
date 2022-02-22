@@ -49,9 +49,9 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   // Get the menu items that should be rendered
   const menuItemsToRender = useMemo(() => {
     let items: _DrawerMenuItemProps[] | undefined = props.items;
-    selectedKeyPath.forEach(
-      (subMenuKey) => (items = props.items.find((item) => item.itemKey === subMenuKey)?.subMenuProps)
-    );
+    for (const subMenuKey of selectedKeyPath) {
+      items = items?.find((item) => item.itemKey === subMenuKey)?.subMenuProps;
+    }
     return items;
   }, [props.items, selectedKeyPath]);
 
@@ -87,13 +87,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   );
 
   return (
-    <_DrawerSurface
-      styles={props.styles?.drawerSurfaceStyles}
-      onLightDismiss={() => {
-        console.log('light dismiss!');
-        props.onLightDismiss();
-      }}
-    >
+    <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
       <Stack styles={props.styles} role="menu">
         {menuItemsToRender?.slice(0, 1).map((item) => (
           <DrawerMenuItem
