@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { merge, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -42,33 +42,39 @@ export interface _DrawerMenuProps {
  */
 export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   // This component breaks from a pure component pattern in order to internally support sub menus.
-  // When a sub menu item is clicked the menu items to display is updated to be that of the submenu.
-  const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>(props.items);
+  // When a sub menu item is clicked the menu items displayed is updated to be that of the submenu.
+  // To track this state we store a list of the keys clicked up until this point.
+  const [selectedKeyPath, setSelectedKeyPath] = useState<string[]>([]);
 
-  // Here we store the itemCallbacks in state, so when the submenu handler is attached tp the menu
-  // item, a re-render will be triggered with the updated onItemClick callback.
-  const [onItemClicks, setOnItemClicks] = useState(props.items.map((item) => item.onItemClick));
-
-  // When menu items update the user focus goes into the ether. To workaround this we force the
-  // FocusTrapZone to re-render. This effectively resets the focus trap zone allowing the newly
-  // rendered menu items to correctly inherit focus (i.e. the topmost menu item gets focus).
-  const [forceUpdateValue, forceUpdate] = React.useReducer((bool) => !bool, false);
-
-  // Bind submenu handler to all items that have subMenuProps
-  useEffect(() => {
-    setOnItemClicks(
-      menuItems.map((item) =>
-        bindSubmenuHandlerToItemIfApplicable(item, (newItems: _DrawerMenuItemProps[]) => {
-          setMenuItems(newItems);
-          forceUpdate();
-        })
-      )
+  // Get the menu items that should be rendered
+  const menuItemsToRender = useMemo(() => {
+    let items: _DrawerMenuItemProps[] | undefined = props.items;
+    selectedKeyPath.forEach(
+      (subMenuKey) => (items = props.items.find((item) => item.itemKey === subMenuKey)?.subMenuProps)
     );
-  }, [menuItems]);
+    return items;
+  }, [props.items, selectedKeyPath]);
+
+  // When an item is clicked and it contains a submenu, push the key for the submenu. This will ensure
+  // a new render is triggered, menuItemsToRender will be re-calculated and the submenu will render.
+  const onItemClick = useCallback(
+    (
+      item: _DrawerMenuItemProps,
+      ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey?: string | undefined
+    ): void => {
+      if (item.subMenuProps) {
+        setSelectedKeyPath([...selectedKeyPath, item.itemKey]);
+      }
+
+      item.onItemClick?.(ev, itemKey);
+    },
+    [selectedKeyPath]
+  );
 
   // Ensure the first item has a border radius that matches the DrawerSurface
   const borderRadius = useTheme().effects.roundedCorner4;
-  const firstItemStyle = menuItems[0]?.styles;
+  const firstItemStyle = menuItemsToRender && menuItemsToRender[0]?.styles;
   const modifiedFirstItemStyle = useMemo(
     () =>
       merge(firstItemStyle ?? {}, {
@@ -82,40 +88,33 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
 
   return (
     <_DrawerSurface
-      key={+forceUpdateValue}
       styles={props.styles?.drawerSurfaceStyles}
-      onLightDismiss={props.onLightDismiss}
+      onLightDismiss={() => {
+        console.log('light dismiss!');
+        props.onLightDismiss();
+      }}
     >
       <Stack styles={props.styles} role="menu">
-        {menuItems.slice(0, 1).map((item) => (
-          <DrawerMenuItem {...item} key={'0'} styles={modifiedFirstItemStyle} onItemClick={onItemClicks[0]} />
+        {menuItemsToRender?.slice(0, 1).map((item) => (
+          <DrawerMenuItem
+            {...item}
+            key={'0'}
+            styles={modifiedFirstItemStyle}
+            onItemClick={(ev, itemKey) => {
+              onItemClick(item, ev, itemKey);
+            }}
+          />
         ))}
-        {menuItems.slice(1).map((item, i) => (
-          <DrawerMenuItem {...item} key={`${i + 1}`} onItemClick={onItemClicks[i + 1]} />
+        {menuItemsToRender?.slice(1).map((item, i) => (
+          <DrawerMenuItem
+            {...item}
+            key={`${i + 1}`}
+            onItemClick={(ev, itemKey) => {
+              onItemClick(item, ev, itemKey);
+            }}
+          />
         ))}
       </Stack>
     </_DrawerSurface>
   );
-};
-
-const bindSubmenuHandlerToItemIfApplicable = (
-  item: _DrawerMenuItemProps,
-  subMenuCallback: (newItems: _DrawerMenuItemProps[]) => void
-):
-  | ((
-      ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined,
-      itemKey?: string | undefined
-    ) => void)
-  | undefined => {
-  if (!item.subMenuProps) {
-    return item.onItemClick;
-  }
-
-  return (ev, itemKey) => {
-    if (item.subMenuProps) {
-      subMenuCallback(item.subMenuProps);
-    }
-    // Still perform any onItemClick in addition to handling transform into sub menu
-    item.onItemClick && item.onItemClick(ev, itemKey);
-  };
 };
