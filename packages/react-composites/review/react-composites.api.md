@@ -491,7 +491,7 @@ export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField' | 'disabled';
     fileSharing?: FileSharingOptions;
 };
 

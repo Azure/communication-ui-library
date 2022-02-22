@@ -759,7 +759,7 @@ export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField' | 'disabled';
     fileSharing?: FileSharingOptions;
 };
 
@@ -2062,7 +2062,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField' | 'disabled';
     disabled?: boolean;
     // @beta
     onRenderFileUploads?: () => JSX.Element;

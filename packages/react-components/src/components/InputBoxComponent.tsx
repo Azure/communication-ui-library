@@ -62,7 +62,7 @@ type InputBoxComponentProps = {
   errorMessage?: string | React.ReactElement;
   disabled?: boolean;
   styles?: InputBoxStylesProps;
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField' | 'disabled';
 };
 
 /**

@@ -68,7 +68,7 @@ export type ChatCompositeOptions = {
   /**
    * Set focus on the composite when the composite first mounts.
    */
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField' | 'disabled';
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
