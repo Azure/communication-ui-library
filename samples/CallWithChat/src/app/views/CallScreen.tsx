@@ -100,6 +100,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      icons={{
+        ControlButtonMicOff: <p>😊</p>,
+        ControlButtonMicOn: <p>😅</p>,
+        ControlButtonChatOn: <p>👀</p>,
+        ControlButtonChatOff: <p>📎</p>
+      }}
     />
   );
 };

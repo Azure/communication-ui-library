@@ -74,7 +74,10 @@ export type CallWithChatCompositeOptions = {
  * @beta
  */
 export interface CallWithChatControlOptions
-  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+  extends Pick<
+    CallControlOptions,
+    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType' | 'onFetchCustomButtonProps'
+  > {
   /**
    * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true

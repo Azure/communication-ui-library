@@ -618,7 +618,7 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @beta
-export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType' | 'onFetchCustomButtonProps'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
