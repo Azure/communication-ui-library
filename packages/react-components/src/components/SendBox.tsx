@@ -111,9 +111,8 @@ export interface SendBoxProps {
   strings?: Partial<SendBoxStrings>;
   /**
    * boolean to determine if the input box has focus on render or not.
-   * @defaultValue 'disabled'
    */
-  autoFocus?: 'sendBoxTextField' | 'disabled';
+  autoFocus?: 'sendBoxTextField' | undefined;
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand
