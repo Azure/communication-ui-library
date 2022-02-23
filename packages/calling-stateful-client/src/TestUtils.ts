@@ -19,6 +19,8 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
+/* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
@@ -90,12 +92,19 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public name = 'Recording';
   public isRecordingActive = false;
+  public recordings;
   public emitter = new EventEmitter();
-  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
+  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
+  on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
-  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
-    this.emitter.off(event, listener);
+  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove-from(stable) @azure/communication-calling1.4.2-beta.1 sdk updates */
+  off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
+  off(event: any, listener: any): void {
+    this.emitter.on(event, listener);
   }
   dispose() {
     /* No state to clean up */

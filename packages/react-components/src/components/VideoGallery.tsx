@@ -130,7 +130,7 @@ export interface VideoGalleryProps {
   /**
    * Whether to display the local video camera switcher button
    */
-  showCamerSwitcherInLocalPreview?: boolean;
+  showCameraSwitcherInLocalPreview?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -181,7 +181,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
-    showCamerSwitcherInLocalPreview,
+    showCameraSwitcherInLocalPreview,
     /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
     localVideoCameraCycleButtonProps
   } = props;
@@ -219,7 +219,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
     return (
       <>
-        {showCamerSwitcherInLocalPreview &&
+        {showCameraSwitcherInLocalPreview &&
           localVideoCameraCycleButtonProps?.cameras !== undefined &&
           localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
           localVideoCameraCycleButtonProps?.onSelectCamera !== undefined && (
