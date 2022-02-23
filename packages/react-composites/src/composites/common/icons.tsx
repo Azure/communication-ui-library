@@ -181,7 +181,6 @@ export type CallCompositeIcons = Partial<
   >
 >;
 
-/* @conditional-compile-remove-from(stable) meeting-composite */
 /**
  * Icons that can be overridden for {@link CallWithChatComposite}.
  *
@@ -192,6 +191,9 @@ export type CallWithChatCompositeIcons = Partial<
     CompositeIcons,
     // CallWithChat Specific Icons
     | 'ControlBarButtonBadgeIcon'
+    | 'ControlBarChatButtonActive'
+    | 'ControlBarChatButtonInactive'
+    | 'ControlBarPeopleButton'
 
     // Call icons
     | 'ControlButtonCameraOff'
