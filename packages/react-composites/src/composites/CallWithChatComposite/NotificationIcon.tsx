@@ -2,19 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  Icon,
-  IIconStyles,
-  IStackStyles,
-  ITheme,
-  memoizeFunction,
-  Stack,
-  useTheme,
-  Text,
-  IIconProps,
-  FontIcon
-} from '@fluentui/react';
-import { CallCompositeIcons } from '../common/icons';
+import { IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
+import { CallWithChatCompositeIcon } from '../common/icons';
 
 /**
  * @private
@@ -44,7 +33,7 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <Icon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
+      <CallWithChatCompositeIcon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
       {renderNumber(chatMessagesCount)}
     </Stack>
   );

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, Icon, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeIcon } from '../common/icons';

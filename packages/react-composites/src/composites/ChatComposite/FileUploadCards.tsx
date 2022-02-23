@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon } from '@fluentui/react';
+
 import { FileCard, FileCardGroup, truncatedFileName, extension } from './file-sharing';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import React from 'react';
