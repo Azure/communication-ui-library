@@ -42,6 +42,12 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  Cancel: <FontIcon iconName="Cancel" />,
+  /* @conditional-compile-remove-from(stable): meeting-composite */
+  ChevronLeft: <FontIcon iconName="ChevronLeft" />,
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  Download: <FontIcon iconName="Download" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -115,11 +121,15 @@ export type ChatCompositeIcons = Partial<
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Download'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Cancel'
   >
 >;
 
 /**
- * Icon wrapper that ensures icon usage inside the ChatComposite is typeguarded.
+ * Icon wrapper to use when including customizable icons inside the ChatComposite.
+ * This wrapper ensures the icon name is being type-checked helping ensure no typos
+ * and ensure that icon is customizable through the composite API.
  *
  * @private
  */
@@ -182,7 +192,9 @@ export type CallCompositeIcons = Partial<
 >;
 
 /**
- * Icon wrapper that ensures icon usage inside the CallComposite is typeguarded.
+ * Icon wrapper to use when including customizable icons inside the CallComposite.
+ * This wrapper ensures the icon name is being type-checked helping ensure no typos
+ * and ensure that icon is customizable through the composite API.
  *
  * @private
  */
@@ -200,6 +212,7 @@ export type CallWithChatCompositeIcons = Partial<
     CompositeIcons,
     // CallWithChat only icons
     | 'ControlBarButtonBadgeIcon'
+    | 'ChevronLeft'
 
     // Call icons
     | 'ControlButtonCameraOff'
@@ -262,10 +275,12 @@ export type CallWithChatCompositeIcons = Partial<
 >;
 
 /**
- * Icon wrapper that ensures icon usage inside the CallWithChatComposite is typeguarded.
+ * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
+ * This wrapper ensures the icon name is being type-checked helping ensure no typos
+ * and ensure that icon is customizable through the composite API.
  *
  * @private
  */
-export const CallWithChatComposite = (props: CompositeIconProps<CallWithChatCompositeIcons>): JSX.Element => (
+export const CallWithChatCompositeIcon = (props: CompositeIconProps<CallWithChatCompositeIcons>): JSX.Element => (
   <FontIcon {...props} />
 );

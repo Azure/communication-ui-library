@@ -6,6 +6,7 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import React from 'react';
 import { useSelector } from './hooks/useSelector';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
+import { ChatCompositeIcon } from '../common/icons';
 
 /**
  * @beta
@@ -24,7 +25,7 @@ export const FileUploadCards = (): JSX.Element => {
             progress={file.progress}
             key={file.id}
             fileExtension={extension(file.filename)}
-            actionIcon={<Icon iconName="Cancel" />}
+            actionIcon={<ChatCompositeIcon iconName="Cancel" />}
             actionHandler={() => {
               adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
             }}

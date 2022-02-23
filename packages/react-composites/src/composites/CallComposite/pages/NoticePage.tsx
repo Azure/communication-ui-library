@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 import {
   containerStyle,
   moreDetailsStyles,

@@ -3,6 +3,7 @@
 import { concatStyleSets, DefaultButton, Icon, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   paneBodyContainer,
   scrollableContainer,
@@ -55,7 +56,7 @@ export const MobilePane = (props: {
         <DefaultButton
           onClick={props.onClose}
           styles={mobilePaneBackButtonStyles}
-          onRenderIcon={() => <Icon iconName="ChevronLeft" />}
+          onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
         ></DefaultButton>
         <DefaultButton
           onClick={props.onChatButtonClicked}
