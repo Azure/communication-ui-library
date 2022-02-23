@@ -62,6 +62,22 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
         props.onSelectSpeaker(selected as AudioDeviceInfo);
+
+        // Hiding previously selected speaker
+        let subMenuItems = drawerMenuItems.find((menuItem) => menuItem.itemKey === 'speakers')?.subMenuProps;
+        let selectedSubMenuItem = subMenuItems?.find((submenuItem) => submenuItem.itemKey === itemKey);
+        if (subMenuItems && selectedSubMenuItem) {
+          subMenuItems.forEach(function (e) {
+            e.secondaryIconProps = undefined;
+            e.iconProps = { iconName: 'MoreDrawerSpeakers' };
+          });
+          selectedSubMenuItem.iconProps = {
+            iconName: 'MoreDrawerSelectedSpeaker'
+          };
+          selectedSubMenuItem.secondaryIconProps = {
+            iconName: 'Accept'
+          };
+        }
       }
     },
     [props.speakers, props.onSelectSpeaker]
@@ -80,8 +96,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerSpeakers'
         },
         text: speaker.name,
-        onItemClick: onSelectSpeaker
-      }))
+        onItemClick: onSelectSpeaker,
+        secondaryIconProps: {
+          iconName: isDeviceSelected(speaker, props.selectedSpeaker) ? 'Accept' : undefined
+        }
+      })),
+      secondaryText: props.selectedSpeaker?.name
     });
   }
 
@@ -92,9 +112,25 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
         props.onSelectMicrophone(selected as AudioDeviceInfo);
+
+        // Hiding previously selected microphone
+        let subMenuItems = drawerMenuItems.find((menuItem) => menuItem.itemKey === 'microphones')?.subMenuProps;
+        let selectedSubMenuItem = subMenuItems?.find((submenuItem) => submenuItem.itemKey === itemKey);
+        if (subMenuItems && selectedSubMenuItem) {
+          subMenuItems.forEach(function (e) {
+            e.secondaryIconProps = undefined;
+            e.iconProps = { iconName: 'MoreDrawerMicrophones' };
+          });
+          selectedSubMenuItem.iconProps = {
+            iconName: 'MoreDrawerSelectedMicrophone'
+          };
+          selectedSubMenuItem.secondaryIconProps = {
+            iconName: 'Accept'
+          };
+        }
       }
     },
-    [props.speakers, props.onSelectSpeaker]
+    [props.microphones, props.onSelectMicrophone]
   );
 
   if (props.microphones && props.microphones.length > 0) {
@@ -110,8 +146,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerMicrophones'
         },
         text: mic.name,
-        onItemClick: onSelectMicrophone
-      }))
+        onItemClick: onSelectMicrophone,
+        secondaryIconProps: {
+          iconName: isDeviceSelected(mic, props.selectedMicrophone) ? 'Accept' : undefined
+        }
+      })),
+      secondaryText: props.selectedMicrophone?.name
     });
   }
 
