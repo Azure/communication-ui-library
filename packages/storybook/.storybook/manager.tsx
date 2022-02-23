@@ -24,7 +24,7 @@ addons.setConfig({
     copy: {hidden: true },
     fullscreen: {hidden: true}
   },
-  enableShortcuts: false
+  enableShortcuts: true
 });
 
 addons.register('toolbar', () => {
