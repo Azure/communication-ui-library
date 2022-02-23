@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix DrawerMenu MenuItem Icons to be vertically centered",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
