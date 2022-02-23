@@ -85,7 +85,7 @@ export const DEFAULT_COMPOSITE_ICONS = {
 /**
  * Icons that can be overridden in one of the composites exported by this library.
  *
- * See {@link ChatCompositeIcons} and {@link CallCompositeIcons} for more targeted types.
+ * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
  *
  * @public
  */
@@ -166,5 +166,77 @@ export type CallCompositeIcons = Partial<
     | 'VideoTileMicOff'
     | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
     | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
+  >
+>;
+
+/* @conditional-compile-remove-from(stable) meeting-composite */
+/**
+ * Icons that can be overridden for {@link CallWithChatComposite}.
+ *
+ * @beta
+ */
+export type CallWithChatCompositeIcons = Partial<
+  Pick<
+    CompositeIcons,
+    // CallWithChat Specific Icons
+    | 'ControlBarButtonBadgeIcon'
+
+    // Call icons
+    | 'ControlButtonCameraOff'
+    | 'ControlButtonCameraOn'
+    | 'ControlButtonEndCall'
+    | 'ControlButtonMicOff'
+    | 'ControlButtonMicOn'
+    | 'ControlButtonOptions'
+    | 'ControlButtonScreenShareStart'
+    | 'ControlButtonScreenShareStop'
+    | 'ErrorBarCallCameraAccessDenied'
+    | 'ErrorBarCallCameraAlreadyInUse'
+    | 'ErrorBarCallLocalVideoFreeze'
+    | 'ErrorBarCallMacOsCameraAccessDenied'
+    | 'ErrorBarCallMacOsMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneMutedBySystem'
+    | 'ErrorBarCallNetworkQualityLow'
+    | 'ErrorBarCallNoMicrophoneFound'
+    | 'ErrorBarCallNoSpeakerFound'
+    | 'HorizontalGalleryLeftButton'
+    | 'HorizontalGalleryRightButton'
+    | 'LobbyScreenConnectingToCall'
+    | 'LobbyScreenWaitingToBeAdmitted'
+    | 'LocalDeviceSettingsCamera'
+    | 'LocalDeviceSettingsMic'
+    | 'LocalDeviceSettingsSpeaker'
+    | 'LocalPreviewPlaceholder'
+    | 'Muted'
+    | 'NetworkReconnectIcon'
+    | 'NoticePageAccessDeniedTeamsMeeting'
+    | 'NoticePageJoinCallFailedDueToNoNetwork'
+    | 'NoticePageLeftCall'
+    | 'NoticePageRemovedFromCall'
+    | 'OptionsCamera'
+    | 'OptionsMic'
+    | 'OptionsSpeaker'
+    | 'ParticipantItemMicOff'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'ParticipantItemScreenShareStart'
+    | 'VideoTileMicOff'
+    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+
+    // Chat icons
+    | 'MessageDelivered'
+    | 'MessageFailed'
+    | 'MessageSeen'
+    | 'MessageSending'
+    | 'MessageEdit'
+    | 'MessageRemove'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'SendBoxSend'
+    | 'SendBoxSendHovered'
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
+    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
