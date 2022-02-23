@@ -178,6 +178,23 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
     | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
-    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
   >
 >;
+
+/* @conditional-compile-remove-from(stable): meeting-composite */
+/**
+ * Icons that can be overriden in {@link CallWithChatComposite}.
+ *
+ * @beta
+ */
+export type CallWithChatIcons =
+  | ChatCompositeIcons
+  | CallCompositeIcons
+  | Partial<
+      Pick<
+        CompositeIcons,
+        | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
+        | 'ControlBarChatButtonActive'
+        | 'ControlBarChatButtonInactive'
+      >
+    >;
