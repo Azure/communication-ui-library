@@ -82,7 +82,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
     <Stack className={containerClassName}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
         <Stack>
-          {/* Do not use <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+          {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
           <Icon
             {...getFileTypeIconProps({
               extension: fileExtension,
