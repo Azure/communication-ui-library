@@ -198,7 +198,7 @@ export interface CallAndChatLocator {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'>>;
 
 // @public
 export type CallCompositeOptions = {
@@ -563,6 +563,9 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;
@@ -634,6 +637,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;
