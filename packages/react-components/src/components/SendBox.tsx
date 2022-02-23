@@ -209,9 +209,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       onRenderIcon ? (
         onRenderIcon(isHover)
       ) : (
-        <Icon iconName={isHover ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
+        <Icon iconName={isHover && textValue ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
       ),
-    [mergedSendIconStyle, onRenderIcon]
+    [mergedSendIconStyle, onRenderIcon, textValue]
   );
 
   return (
