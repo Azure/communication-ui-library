@@ -391,7 +391,7 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
 // @beta
-export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, 'ControlBarButtonBadgeIcon' | 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, 'ControlBarButtonBadgeIcon' | 'ChevronLeft' | 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | 'LocalCameraSwitch' | 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
 
 // @beta
 export type CallWithChatCompositeOptions = {
@@ -487,7 +487,7 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Download' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Cancel'>>;
 
 // @public
 export type ChatCompositeOptions = {
@@ -555,6 +555,9 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
 export const COMPOSITE_ONLY_ICONS: {
+    Cancel: JSX.Element;
+    ChevronLeft: JSX.Element;
+    Download: JSX.Element;
     LobbyScreenConnectingToCall: JSX.Element;
     LobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
@@ -626,6 +629,9 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
+    Cancel: JSX.Element;
+    ChevronLeft: JSX.Element;
+    Download: JSX.Element;
     LobbyScreenConnectingToCall: JSX.Element;
     LobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
