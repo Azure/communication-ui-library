@@ -59,9 +59,9 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalCameraSwitch: <CameraSwitch24Regular />,
   /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove-from(stable): meeting-composite */
   ControlBarChatButtonActive: <Chat20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove-from(stable): meeting-composite */
   ControlBarChatButtonInactive: <Chat20Regular />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
   ControlBarPeopleButton: <People20Regular />,
