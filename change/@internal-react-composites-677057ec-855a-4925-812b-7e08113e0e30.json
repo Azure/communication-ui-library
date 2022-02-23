@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Align File card text to left and remove the right padding in message bubble when files are attached",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
