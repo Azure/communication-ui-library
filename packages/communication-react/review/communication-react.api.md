@@ -1274,7 +1274,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemMicOff: JSX.Element;
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element; /**
+    * Icons that can be overridden for {@link ChatComposite}.
+    *
+    * @public
+    */
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
