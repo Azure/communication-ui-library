@@ -70,7 +70,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-        showCamerSwitcherInLocalPreview={props.isMobile}
+        showCameraSwitcherInLocalPreview={props.isMobile}
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={(userId, options) => (
