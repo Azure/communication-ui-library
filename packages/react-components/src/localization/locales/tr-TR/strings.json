@@ -23,6 +23,7 @@
     "deliveredTooltipText": "Gönderilen",
     "seenAriaLabel": "İleti başkaları tarafından görüldü",
     "seenTooltipText": "Görüldü",
+    "readByTooltipText": "{messageThreadReadCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "sendingAriaLabel": "İleti gönderiliyor",
     "sendingTooltipText": "Gönderiliyor",
     "failedToSendAriaLabel": "İleti gönderilemedi",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala"
   },
   "screenShareButton": {
-    "onLabel": "Paylaşımı durdur",
-    "offLabel": "Paylaş",
-    "tooltipDisabledContent": "Ekran paylaşımı devre dışı",
-    "tooltipOnContent": "Ekranınızı paylaşmayı durdurma",
-    "tooltipOffContent": "Ekranınızı paylaşın"
+    "onLabel": "Sunumu Durdur",
+    "offLabel": "Sun",
+    "tooltipDisabledContent": "Sunu devre dışı bırakıldı.",
+    "tooltipOnContent": "Ekranınızı sunuluyor",
+    "tooltipOffContent": "Ekranınızı sunun"
   },
   "messageThread": {
     "yesterday": "Dün",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "Yeni iletiler",
     "noDisplayNameSub": "Ad yok",
     "editBoxCancelButton": "İptal",
-    "editBoxSubmitButton": "Gönder"
+    "editBoxSubmitButton": "Gönder",
+    "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
