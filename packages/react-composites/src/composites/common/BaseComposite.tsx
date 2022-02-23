@@ -7,7 +7,9 @@ import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
-import { CallCompositeIcons, CallWithChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
+import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
+/* @conditional-compile-remove-from(stable) meeting-composite */
+import { CallWithChatCompositeIcons } from './icons';
 
 /**
  * Properties common to all composites exported from this library.
@@ -60,7 +62,11 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
  * @private
  */
 export const BaseProvider = (
-  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons | CallWithChatCompositeIcons> & {
+  props: BaseCompositeProps<
+    | CallCompositeIcons
+    | ChatCompositeIcons
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ CallWithChatCompositeIcons
+  > & {
     children: React.ReactNode;
   }
 ): JSX.Element => {
