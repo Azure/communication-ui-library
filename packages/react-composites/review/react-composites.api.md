@@ -89,6 +89,15 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
+// @beta
+export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
+    callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
+    callAgent: CallAgent;
+    callClient: StatefulCallClient;
+    chatClient: StatefulChatClient;
+    chatThreadClient: ChatThreadClient;
+};
+
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpoint: string;
@@ -391,7 +400,7 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
 // @beta
-export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, 'ChevronLeft' | 'ControlBarButtonBadgeIcon' | 'ControlBarChatButtonActive' | 'ControlBarChatButtonInactive' | 'ControlBarPeopleButton' | 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalCameraSwitch' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, /* @conditional-compile-remove-from(stable) meeting-composite */ 'ChevronLeft' | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarButtonBadgeIcon' | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonActive' | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonInactive' | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarPeopleButton' | 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalCameraSwitch' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) meeting-composite */ 'LocalCameraSwitch' | 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
 
 // @beta
 export type CallWithChatCompositeOptions = {
@@ -487,14 +496,14 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Download' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Cancel'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Download' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Cancel'>>;
 
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
 };
 
@@ -607,6 +616,9 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 
 // @beta
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+
+// @beta
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;

@@ -122,18 +122,18 @@ export type CompositeIconProps<Icons> = IIconProps & { iconName: keyof Icons };
 export type ChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
     | 'MessageDelivered'
+    | 'MessageEdit'
     | 'MessageFailed'
+    | 'MessageRemove'
     | 'MessageSeen'
     | 'MessageSending'
-    | 'MessageEdit'
-    | 'MessageRemove'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
     | 'SendBoxSend'
     | 'SendBoxSendHovered'
-    | 'EditBoxCancel'
-    | 'EditBoxSubmit'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Download'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'Cancel'
@@ -223,12 +223,12 @@ export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>)
 export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
-    // CallWithChat only icons
-    | 'ChevronLeft'
-    | 'ControlBarButtonBadgeIcon'
-    | 'ControlBarChatButtonActive'
-    | 'ControlBarChatButtonInactive'
-    | 'ControlBarPeopleButton'
+    // CallWithChat Specific Icons
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ChevronLeft'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarButtonBadgeIcon'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonActive'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonInactive'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarPeopleButton'
 
     // Call icons
     | 'ControlButtonCameraOff'
@@ -272,6 +272,7 @@ export type CallWithChatCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'LocalCameraSwitch'
 
     // Chat icons
     | 'EditBoxCancel'
