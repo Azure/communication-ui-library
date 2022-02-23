@@ -69,7 +69,7 @@ export type ChatCompositeOptions = {
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | undefined;
+  autoFocus?: 'sendBoxTextField';
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**

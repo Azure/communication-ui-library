@@ -332,7 +332,7 @@ export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered'
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | undefined;
+    autoFocus?: 'sendBoxTextField';
 };
 
 // @public
