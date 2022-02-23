@@ -118,5 +118,12 @@ const iconStyles: IStyle = {
   // Vertically center icons in the menu item. Using line-height does not work for centering fluent SVG icons.
   display: 'flex',
   alignItems: 'center',
-  height: '100%'
+  height: '100%',
+
+  // This can be removed when we upgrade to fluent-react-icons v2 (that removes the inner span element)
+  ' span': {
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%'
+  }
 };
