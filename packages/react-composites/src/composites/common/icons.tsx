@@ -187,7 +187,7 @@ export type CallCompositeIcons = Partial<
  *
  * @beta
  */
-export type CallWithChatIcons = Partial<
+export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
     | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
