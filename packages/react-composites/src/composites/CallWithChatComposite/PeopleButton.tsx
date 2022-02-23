@@ -3,9 +3,9 @@
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-import { concatStyleSets, Icon } from '@fluentui/react';
+import { concatStyleSets, FontIcon } from '@fluentui/react';
 
-const icon = (): JSX.Element => <Icon iconName={'ControlBarPeopleButton'} />;
+const icon = (): JSX.Element => <FontIcon iconName={'ControlBarPeopleButton'} />;
 
 /**
  * @private

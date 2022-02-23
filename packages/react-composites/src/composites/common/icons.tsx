@@ -60,9 +60,9 @@ export const COMPOSITE_ONLY_ICONS = {
   /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
-  ControlBarChatButtonFilled: <Chat20Filled />,
+  ControlBarChatButtonActive: <Chat20Filled />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
-  ControlBarChatButtonNormal: <Chat20Regular />,
+  ControlBarChatButtonInactive: <Chat20Regular />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
   ControlBarPeopleButton: <People20Regular />,
   /* @conditional-compile-remove-from(stable): meeting/calling-composite */
