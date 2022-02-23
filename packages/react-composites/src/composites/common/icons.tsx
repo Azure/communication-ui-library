@@ -112,18 +112,18 @@ export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY
 export type ChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
     | 'MessageDelivered'
+    | 'MessageEdit'
     | 'MessageFailed'
+    | 'MessageRemove'
     | 'MessageSeen'
     | 'MessageSending'
-    | 'MessageEdit'
-    | 'MessageRemove'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
     | 'SendBoxSend'
     | 'SendBoxSendHovered'
-    | 'EditBoxCancel'
-    | 'EditBoxSubmit'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
@@ -239,18 +239,18 @@ export type CallWithChatCompositeIcons = Partial<
     | /* @conditional-compile-remove-from(stable) meeting-composite */ 'LocalCameraSwitch'
 
     // Chat icons
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
     | 'MessageDelivered'
+    | 'MessageEdit'
     | 'MessageFailed'
+    | 'MessageRemove'
     | 'MessageSeen'
     | 'MessageSending'
-    | 'MessageEdit'
-    | 'MessageRemove'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
     | 'SendBoxSend'
     | 'SendBoxSendHovered'
-    | 'EditBoxCancel'
-    | 'EditBoxSubmit'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
