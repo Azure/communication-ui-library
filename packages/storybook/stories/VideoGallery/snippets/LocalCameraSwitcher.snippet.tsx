@@ -92,7 +92,7 @@ export const LocalCameraSwitcherExample: () => JSX.Element = () => {
         layout="floatingLocalVideo"
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        showCamerSwitcherInLocalPreview={true}
+        showCameraSwitcherInLocalPreview={true}
         localVideoCameraCycleButtonProps={cameraButtonProps}
       />
     </Stack>
