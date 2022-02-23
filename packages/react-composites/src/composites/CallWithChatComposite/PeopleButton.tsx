@@ -3,10 +3,9 @@
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-import { People20Regular } from '@fluentui/react-icons';
-import { concatStyleSets } from '@fluentui/react';
+import { concatStyleSets, Icon } from '@fluentui/react';
 
-const icon = (): JSX.Element => <People20Regular key={'peopleOffIconKey'} primaryFill="currentColor" />;
+const icon = (): JSX.Element => <Icon iconName={'ControlBarPeopleButton'} />;
 
 /**
  * @private

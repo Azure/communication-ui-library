@@ -1026,6 +1026,9 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonFilled: JSX.Element;
+    ControlBarChatButtonNormal: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;
@@ -1224,6 +1227,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonFilled: JSX.Element;
+    ControlBarChatButtonNormal: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;
