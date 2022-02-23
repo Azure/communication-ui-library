@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
+  // eslint-disable-next-line no-restricted-imports
   Icon,
   IProgressIndicatorStyleProps,
   IProgressIndicatorStyles,

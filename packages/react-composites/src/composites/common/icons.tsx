@@ -24,6 +24,7 @@ import {
 } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
+// eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
 import { Circle20Filled } from '@fluentui/react-icons';
@@ -223,8 +224,11 @@ export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
     // CallWithChat only icons
-    | 'ControlBarButtonBadgeIcon'
     | 'ChevronLeft'
+    | 'ControlBarButtonBadgeIcon'
+    | 'ControlBarChatButtonActive'
+    | 'ControlBarChatButtonInactive'
+    | 'ControlBarPeopleButton'
 
     // Call icons
     | 'ControlButtonCameraOff'
@@ -249,6 +253,7 @@ export type CallWithChatCompositeIcons = Partial<
     | 'HorizontalGalleryRightButton'
     | 'LobbyScreenConnectingToCall'
     | 'LobbyScreenWaitingToBeAdmitted'
+    | 'LocalCameraSwitch'
     | 'LocalDeviceSettingsCamera'
     | 'LocalDeviceSettingsMic'
     | 'LocalDeviceSettingsSpeaker'
@@ -267,21 +272,20 @@ export type CallWithChatCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
-    | 'LocalCameraSwitch'
 
     // Chat icons
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
     | 'MessageDelivered'
+    | 'MessageEdit'
     | 'MessageFailed'
+    | 'MessageRemove'
     | 'MessageSeen'
     | 'MessageSending'
-    | 'MessageEdit'
-    | 'MessageRemove'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
     | 'SendBoxSend'
     | 'SendBoxSendHovered'
-    | 'EditBoxCancel'
-    | 'EditBoxSubmit'
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;

@@ -3,9 +3,10 @@
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-import { concatStyleSets, FontIcon } from '@fluentui/react';
+import { concatStyleSets } from '@fluentui/react';
+import { CallWithChatCompositeIcon } from '../common/icons';
 
-const icon = (): JSX.Element => <FontIcon iconName={'ControlBarPeopleButton'} />;
+const icon = (): JSX.Element => <CallWithChatCompositeIcon iconName={'ControlBarPeopleButton'} />;
 
 /**
  * @private
