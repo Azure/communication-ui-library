@@ -65,11 +65,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
-  /**
-   * Until mobile call-with-chat is worked on, statically set the width of the
-   * control bar such that all controls can be accessed.
-   */
-  const temporaryCallWithChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
     [props.mobileView]
@@ -103,14 +98,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   );
 
   return (
-    <Stack
-      horizontal
-      className={mergeStyles(
-        temporaryCallWithChatControlBarStyles,
-        callControlsContainerStyles,
-        controlBarContainerStyles
-      )}
-    >
+    <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">

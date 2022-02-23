@@ -23,8 +23,7 @@ addons.setConfig({
     eject: {hidden: true },
     copy: {hidden: true },
     fullscreen: {hidden: true}
-  },
-  enableShortcuts: false
+  }
 });
 
 addons.register('toolbar', () => {
