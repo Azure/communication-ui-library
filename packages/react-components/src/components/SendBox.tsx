@@ -113,7 +113,7 @@ export interface SendBoxProps {
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | undefined;
+  autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand

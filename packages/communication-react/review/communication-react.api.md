@@ -2062,7 +2062,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    autoFocus?: 'sendBoxTextField' | undefined;
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
