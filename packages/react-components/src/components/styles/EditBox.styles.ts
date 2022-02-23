@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -39,4 +39,16 @@ export const editBoxStyleSet = {
   root: {
     width: '100%'
   }
+};
+
+/**
+ * @private
+ */
+export const borderAndBoxShadowStyle = (theme: Theme): IStyle => {
+  const borderColor = theme.palette.blue;
+  return {
+    borderRadius: theme.effects.roundedCorner4,
+    border: `0.125rem solid ${borderColor}`,
+    width: '100%'
+  };
 };
