@@ -183,18 +183,15 @@ export type CallCompositeIcons = Partial<
 
 /* @conditional-compile-remove-from(stable): meeting-composite */
 /**
- * Icons that can be overriden in {@link CallWithChatComposite}.
+ * Icons that can be only overriden in {@link CallWithChatComposite}.
  *
  * @beta
  */
-export type CallWithChatIcons =
-  | ChatCompositeIcons
-  | CallCompositeIcons
-  | Partial<
-      Pick<
-        CompositeIcons,
-        | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
-        | 'ControlBarChatButtonActive'
-        | 'ControlBarChatButtonInactive'
-      >
-    >;
+export type CallWithChatIcons = Partial<
+  Pick<
+    CompositeIcons,
+    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
+    | 'ControlBarChatButtonActive'
+    | 'ControlBarChatButtonInactive'
+  >
+>;

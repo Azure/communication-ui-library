@@ -7,8 +7,9 @@ import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
-import { CallCompositeIcons, CallWithChatIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
-
+import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
+/* @conditional-compile-remove-from(stable): meeting-composite */
+import { CallWithChatIcons } from './icons';
 /**
  * Properties common to all composites exported from this library.
  *

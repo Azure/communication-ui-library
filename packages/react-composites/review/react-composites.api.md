@@ -428,7 +428,7 @@ export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'ca
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
-export type CallWithChatIcons = ChatCompositeIcons | CallCompositeIcons | Partial<Pick<CompositeIcons, /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon' | 'ControlBarChatButtonActive' | 'ControlBarChatButtonInactive'>>;
+export type CallWithChatIcons = Partial<Pick<CompositeIcons, /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon' | 'ControlBarChatButtonActive' | 'ControlBarChatButtonInactive'>>;
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
 //
