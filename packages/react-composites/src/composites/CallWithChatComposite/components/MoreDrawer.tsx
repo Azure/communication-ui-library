@@ -62,22 +62,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
         props.onSelectSpeaker(selected as AudioDeviceInfo);
-
-        // Hiding previously selected speaker
-        let subMenuItems = drawerMenuItems.find((menuItem) => menuItem.itemKey === 'speakers')?.subMenuProps;
-        let selectedSubMenuItem = subMenuItems?.find((submenuItem) => submenuItem.itemKey === itemKey);
-        if (subMenuItems && selectedSubMenuItem) {
-          subMenuItems.forEach(function (e) {
-            e.secondaryIconProps = undefined;
-            e.iconProps = { iconName: 'MoreDrawerSpeakers' };
-          });
-          selectedSubMenuItem.iconProps = {
-            iconName: 'MoreDrawerSelectedSpeaker'
-          };
-          selectedSubMenuItem.secondaryIconProps = {
-            iconName: 'Accept'
-          };
-        }
       }
     },
     [props.speakers, props.onSelectSpeaker]
@@ -112,22 +96,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
         props.onSelectMicrophone(selected as AudioDeviceInfo);
-
-        // Hiding previously selected microphone
-        let subMenuItems = drawerMenuItems.find((menuItem) => menuItem.itemKey === 'microphones')?.subMenuProps;
-        let selectedSubMenuItem = subMenuItems?.find((submenuItem) => submenuItem.itemKey === itemKey);
-        if (subMenuItems && selectedSubMenuItem) {
-          subMenuItems.forEach(function (e) {
-            e.secondaryIconProps = undefined;
-            e.iconProps = { iconName: 'MoreDrawerMicrophones' };
-          });
-          selectedSubMenuItem.iconProps = {
-            iconName: 'MoreDrawerSelectedMicrophone'
-          };
-          selectedSubMenuItem.secondaryIconProps = {
-            iconName: 'Accept'
-          };
-        }
       }
     },
     [props.microphones, props.onSelectMicrophone]
