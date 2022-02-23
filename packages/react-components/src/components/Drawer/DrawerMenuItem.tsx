@@ -1,7 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontIcon, Icon, IIconProps, IRawStyle, IStackStyles, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
+import {
+  FontIcon,
+  IFontIconProps,
+  IIconProps,
+  IRawStyle,
+  IStackStyles,
+  IStyle,
+  mergeStyles,
+  Stack,
+  Text
+} from '@fluentui/react';
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
@@ -42,9 +52,9 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
 
   const secondaryIcon = props.secondaryIconProps ? (
-    <FontIcon {...props.secondaryIconProps} />
+    <MenuItemIcon {...props.secondaryIconProps} />
   ) : props.subMenuProps ? (
-    <FontIcon iconName="ChevronRight" />
+    <MenuItemIcon iconName="ChevronRight" />
   ) : undefined;
 
   return (
@@ -62,7 +72,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     >
       {props.iconProps && (
         <Stack.Item role="presentation">
-          <Icon {...props.iconProps} />
+          <MenuItemIcon {...props.iconProps} />
         </Stack.Item>
       )}
       <Stack.Item styles={drawerMenuItemTextStyles} grow>
@@ -77,6 +87,10 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     </Stack>
   );
 };
+
+const MenuItemIcon = (props: IFontIconProps): JSX.Element => (
+  <FontIcon className={mergeStyles(iconStyles)} {...props} />
+);
 
 const menuItemChildrenGap = { childrenGap: '0.5rem' };
 
@@ -98,4 +112,11 @@ const drawerMenuItemTextStyles: IStackStyles = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   }
+};
+
+const iconStyles: IStyle = {
+  // Vertically center icons in the menu item. Using line-height does not work for centering fluent SVG icons.
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%'
 };
