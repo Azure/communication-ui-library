@@ -190,10 +190,10 @@ export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
     // CallWithChat Specific Icons
-    | 'ControlBarButtonBadgeIcon'
-    | 'ControlBarChatButtonActive'
-    | 'ControlBarChatButtonInactive'
-    | 'ControlBarPeopleButton'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarButtonBadgeIcon'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonActive'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonInactive'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarPeopleButton'
 
     // Call icons
     | 'ControlButtonCameraOff'
@@ -236,7 +236,7 @@ export type CallWithChatCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
-    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'LocalCameraSwitch'
 
     // Chat icons
     | 'MessageDelivered'
