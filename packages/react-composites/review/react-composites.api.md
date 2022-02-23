@@ -419,7 +419,7 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @beta
-export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType' | 'onFetchCustomButtonProps'> {
+export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     chatButton?: boolean;
     peopleButton?: boolean;
 }
@@ -560,8 +560,8 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonFilled: JSX.Element;
-    ControlBarChatButtonNormal: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
     ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
@@ -634,8 +634,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonFilled: JSX.Element;
-    ControlBarChatButtonNormal: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
     ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
