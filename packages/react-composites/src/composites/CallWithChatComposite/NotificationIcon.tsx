@@ -2,7 +2,19 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
+import {
+  Icon,
+  IIconStyles,
+  IStackStyles,
+  ITheme,
+  memoizeFunction,
+  Stack,
+  useTheme,
+  Text,
+  IIconProps,
+  FontIcon
+} from '@fluentui/react';
+import { CallCompositeIcons } from '../common/icons';
 
 /**
  * @private

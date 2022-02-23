@@ -17,7 +17,7 @@ import {
 import { CameraSwitch24Regular, MicOn20Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
-import { mergeStyles, Text } from '@fluentui/react';
+import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
 import { Circle20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
@@ -91,6 +91,9 @@ export const DEFAULT_COMPOSITE_ICONS = {
  */
 export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
 
+/** @private */
+export type CompositeIconProps<Icons> = IIconProps & { iconName: keyof Icons };
+
 /**
  * Icons that can be overridden for {@link ChatComposite}.
  *
@@ -114,6 +117,15 @@ export type ChatCompositeIcons = Partial<
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
+
+/**
+ * Icon wrapper that ensures icon usage inside the ChatComposite is typeguarded.
+ *
+ * @private
+ */
+export const ChatCompositeIcon = (props: CompositeIconProps<ChatCompositeIcons>): JSX.Element => (
+  <FontIcon {...props} />
+);
 
 /**
  * Icons that can be overridden for {@link CallComposite}.
@@ -169,7 +181,15 @@ export type CallCompositeIcons = Partial<
   >
 >;
 
-/* @conditional-compile-remove-from(stable) meeting-composite */
+/**
+ * Icon wrapper that ensures icon usage inside the CallComposite is typeguarded.
+ *
+ * @private
+ */
+export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>): JSX.Element => (
+  <FontIcon {...props} />
+);
+
 /**
  * Icons that can be overridden for {@link CallWithChatComposite}.
  *
@@ -178,7 +198,7 @@ export type CallCompositeIcons = Partial<
 export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
-    // CallWithChat Specific Icons
+    // CallWithChat only icons
     | 'ControlBarButtonBadgeIcon'
 
     // Call icons
@@ -222,7 +242,7 @@ export type CallWithChatCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
-    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | 'LocalCameraSwitch'
 
     // Chat icons
     | 'MessageDelivered'
@@ -240,3 +260,12 @@ export type CallWithChatCompositeIcons = Partial<
     | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
   >
 >;
+
+/**
+ * Icon wrapper that ensures icon usage inside the CallWithChatComposite is typeguarded.
+ *
+ * @private
+ */
+export const CallWithChatComposite = (props: CompositeIconProps<CallWithChatCompositeIcons>): JSX.Element => (
+  <FontIcon {...props} />
+);

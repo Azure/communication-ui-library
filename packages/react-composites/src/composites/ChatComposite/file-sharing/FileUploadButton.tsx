@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
+import { ChatCompositeIcon } from '../../common/icons';
 
 /**
  * Props for {@link FileUploadButton} component.
@@ -54,7 +55,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         className={fileUploadButtonClassName}
         onClick={() => inputRef.current?.click()}
       >
-        <Icon iconName="SendBoxAttachFile" />
+        <ChatCompositeIcon iconName="SendBoxAttachFile" />
       </Stack>
       <input
         ref={inputRef}

@@ -12,12 +12,13 @@ import {
 } from '../styles/NoticePage.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { StartCallButton } from '../components/StartCallButton';
+import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
 
 /**
  * @private
  */
 export interface NoticePageProps {
-  iconName: string;
+  iconName: keyof CallCompositeIcons;
   title: string;
   moreDetails?: string;
   dataUiId: string;
@@ -33,7 +34,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId}>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
-        {props.iconName && <Icon iconName={props.iconName} />}
+        {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
         <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>
         <Stack styles={rejoinCallButtonContainerStyles}>
