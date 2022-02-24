@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "enable storybook keyboard shortcuts",
+  "packageName": "@internal/storybook",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
