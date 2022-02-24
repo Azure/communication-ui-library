@@ -55,6 +55,9 @@ export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT ext
 // @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
+// @internal
+export const _safeStringify: (value: unknown, replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined, space?: string | number | undefined) => string;
+
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
