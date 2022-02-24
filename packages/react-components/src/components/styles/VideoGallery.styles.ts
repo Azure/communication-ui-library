@@ -72,7 +72,6 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
   };
 };
 
-/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
 /**
  * @private
  */

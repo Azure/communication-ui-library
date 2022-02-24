@@ -31,17 +31,17 @@ import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  localVideoTileContainerStyle,
-  floatingLocalVideoModalStyle,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle,
   layerHostStyle,
-  localVideoTileWithControlsContainerStyle
+  localVideoTileContainerStyle,
+  localVideoTileWithControlsContainerStyle,
+  videoGalleryContainerStyle,
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -196,8 +196,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-  const shouldAddControlsLocalVideo = !!(layout === 'withControlsLocalVideo' && remoteParticipants.length > 0);
+  const shouldAddControlsLocalVideo = shouldAddControlsToLocalVideoTrampoline(layout, remoteParticipants);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -348,22 +347,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  //TODO: Remove function call and return to simple logic when camera switcher goes stable
-  const pushLocalOnGridTiles = (): void => {
-    // If not floating local tile or tile with controls push into grid layout
-    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-    if (!shouldFloatLocalVideo && !shouldAddControlsLocalVideo && localParticipant) {
-      gridTiles.push(localVideoTile);
-      return;
-    } else {
-      return;
-    }
-    if (!shouldFloatLocalVideo && localParticipant) {
-      gridTiles.push(localVideoTile);
-    }
-  };
-
-  pushLocalOnGridTiles();
+  if (!shouldFloatLocalVideo && !shouldAddControlsLocalVideo && localParticipant) {
+    gridTiles.push(localVideoTile);
+  }
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -400,14 +386,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localVideoTile}
           </Modal>
         ))}
-      {
-        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
-        shouldAddControlsLocalVideo && localParticipant && (
-          <Stack className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow))}>
-            {localVideoTile}
-          </Stack>
-        )
-      }
+      {shouldAddControlsLocalVideo && localParticipant && (
+        <Stack className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow))}>
+          {localVideoTile}
+        </Stack>
+      )}
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
@@ -440,3 +423,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
+
+function shouldAddControlsToLocalVideoTrampoline(
+  layout: 'default' | 'floatingLocalVideo' | 'withControlsLocalVideo' | undefined,
+  remoteParticipants: VideoGalleryRemoteParticipant[]
+): boolean {
+  return !!(layout === 'withControlsLocalVideo' && remoteParticipants.length > 0);
+}
