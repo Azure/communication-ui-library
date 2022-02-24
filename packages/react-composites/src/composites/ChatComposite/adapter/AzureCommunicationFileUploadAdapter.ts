@@ -160,7 +160,7 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
-      if (file.metadata) {
+      if (!file.errorMessage && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });
