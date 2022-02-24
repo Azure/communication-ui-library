@@ -19,7 +19,8 @@ const fileCardGroupClassName = mergeStyles({
   flexFlow: 'row wrap',
   '& > *': {
     margin: '0.5rem',
-    marginLeft: '0 rem'
+    marginLeft: '0 rem',
+    marginRight: 'auto'
   },
   ':not(:first-child)': {
     marginLeft: '0.5rem'

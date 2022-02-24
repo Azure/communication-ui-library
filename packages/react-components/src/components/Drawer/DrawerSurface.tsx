@@ -57,6 +57,9 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
             props.onLightDismiss && props.onLightDismiss();
           }
         }}
+        // Ensure when the focus trap has focus, the light dismiss area can still be clicked with mouse to dismiss.
+        // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
+        isClickableOutsideFocusTrap={true}
       >
         <DrawerContentContainer styles={props.styles?.drawerContentContainer}>{props.children}</DrawerContentContainer>
       </FocusTrapZone>
