@@ -2,7 +2,7 @@ const plugins = [];
 process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
-    { annotations: [{ match: '@conditional-compile-remove-from(stable)' }] }
+    { match: '@conditional-compile-remove-from(stable)' }
   ]);
 
 plugins.push([

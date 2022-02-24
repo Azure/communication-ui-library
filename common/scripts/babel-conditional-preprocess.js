@@ -6,48 +6,44 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const babelHelper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
 exports.default = babelHelper.declare((_api, opts) => {
-  const {
-    annotations
-  } = opts;
-
   return {
     name: 'babel-conditional-preprocess',
     // Check types/visitors supported: https://babeljs.io/docs/en/babel-types#typescript
     visitor: {
       ObjectProperty(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       FunctionDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       Statement(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       VariableDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       ImportDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       ExportNamedDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       ExportAllDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       JSXAttribute(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       TSPropertySignature(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
@@ -63,62 +59,58 @@ exports.default = babelHelper.declare((_api, opts) => {
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
       TSType(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       TSDeclareMethod(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       Expression(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       ClassMethod(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
 
       ClassProperty(path) {
-        Handle(path, annotations);
+        Handle(path, opts);
       },
     }
   };
 });
 
-function Handle(path, annotations) {
+function Handle(path, opts) {
   let { node } = path;
-  let removed = false;
+  const { match } = opts;
 
-  for (const annotation of annotations) {
-    const {
-      match
-    } = annotation;
+  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match));
+  if (!shouldRemove) {
+    return;
+  }
 
-    if (node.leadingComments && node.leadingComments.length > 0) {
-      for (const comment of node.leadingComments) {
-        if (comment.value.includes(match)) {
-          removed = true;
-        }
-        if (removed) {
-          comment.ignore = true;
-          // Comment will be inherit to next line even it is set to 'ignore'
-          // this will cause some unexpected removals of code
-          // clear the comment to ensure nothing gets wrong
-          comment.value = '';
-        }
-      }
+  node.leadingComments && node.leadingComments.forEach((comment) => {
+    if (!containsDirective(comment, match)) {
+      return;
     }
+    comment.ignore = true;
+    // Comment is inherited by next line even it is set to 'ignore'.
+    // Clear the conditional compilation directive to avoid removing the
+    // next line.
+    comment.value = '';
+  })
 
-    if (removed) {
-      // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
-      // Replacing it with jSXEmptyExpression will get us the same result
-      // There will always be only one expression under JSXExpressionContainer
-      if (path?.container?.type === 'JSXExpressionContainer') {
-        path.replaceWith(t.jSXEmptyExpression());
-      } else {
-        path.remove();
-      }
-    }
+  // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
+  // Replacing it with jSXEmptyExpression will get us the same result
+  // There will always be only one expression under JSXExpressionContainer
+  if (path?.container?.type === 'JSXExpressionContainer') {
+    path.replaceWith(t.jSXEmptyExpression());
+  } else {
+    path.remove();
   }
 }
 
+function containsDirective(comment, match) {
+  return comment.value.includes(match);
+}
