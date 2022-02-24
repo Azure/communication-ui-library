@@ -81,9 +81,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         },
         text: speaker.name,
         onItemClick: onSelectSpeaker,
-        secondaryIconProps: {
-          iconName: isDeviceSelected(speaker, props.selectedSpeaker) ? 'Accept' : undefined
-        }
+        secondaryIconProps: isDeviceSelected(speaker, props.selectedSpeaker) ? { iconName: 'Accept' } : undefined
       })),
       secondaryText: props.selectedSpeaker?.name
     });
@@ -115,9 +113,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         },
         text: mic.name,
         onItemClick: onSelectMicrophone,
-        secondaryIconProps: {
-          iconName: isDeviceSelected(mic, props.selectedMicrophone) ? 'Accept' : undefined
-        }
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
       })),
       secondaryText: props.selectedMicrophone?.name
     });
