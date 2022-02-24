@@ -8,7 +8,7 @@
  *
  * @internal
  */
-export const _safeStringify = (
+export const _safeJSONStringify = (
   value: unknown,
   replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined,
   space?: string | number | undefined

@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add _safeStringify function",
+  "comment": "Add _safeJSONStringify function",
   "packageName": "@internal/acs-ui-common",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
