@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Modifying filesharing to only show & send files without errors",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
