@@ -66,9 +66,10 @@ export type ChatCompositeOptions = {
    */
   topic?: boolean;
   /**
-   * Set focus on the composite when the composite first mounts.
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField';
 
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
