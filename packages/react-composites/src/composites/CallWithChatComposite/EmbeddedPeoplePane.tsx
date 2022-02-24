@@ -85,6 +85,7 @@ export const EmbeddedPeoplePane = (props: {
                   <LocalAndRemotePIP
                     {...pictureInPictureProps}
                     {...pictureInPictureHandlers}
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
                     onClick={() => {}} // no onClick behavior
                   />
                 </Stack>
