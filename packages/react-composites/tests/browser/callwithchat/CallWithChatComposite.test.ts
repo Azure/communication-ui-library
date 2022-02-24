@@ -66,11 +66,14 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
-    // There is no PeopleButton on the control bar in mobile.
-    // TODO: Open the people pane via the MoreDrawer for mobile.
-    test.skip(!isTestProfileDesktop(testInfo));
     const page = pages[1];
-    await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    if (isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    } else {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    }
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
     expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
