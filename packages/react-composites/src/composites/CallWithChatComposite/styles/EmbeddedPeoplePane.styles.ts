@@ -1,7 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles } from '@fluentui/react';
+import { IButtonStyles, IStackStyles, IStackTokens } from '@fluentui/react';
+
+/**
+ * @private
+ */
+export const peoplePaneContainerTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+/**
+ * @private
+ */
+export const localAndRemotePIPContainerStyles: IStackStyles = { root: { height: '100%' } };
+
+/**
+ * @private
+ */
+export const localAndRemotePIPStyles: IStackStyles = { root: { marginRight: '1rem' } };
+
+/**
+ * @private
+ */
+export const copyLinkButtonContainerStyles: IStackStyles = { root: { width: '100%', padding: '0.5rem 1rem' } };
 
 /**
  * @private
@@ -9,8 +31,8 @@ import { IButtonStyles } from '@fluentui/react';
 export const copyLinkButtonStyles: IButtonStyles = {
   root: {
     height: '3rem',
-    borderRadius: '0.5rem',
-    margin: '0.75rem 1rem'
+    width: '100%',
+    borderRadius: '0.5rem'
   },
   textContainer: {
     display: 'contents'

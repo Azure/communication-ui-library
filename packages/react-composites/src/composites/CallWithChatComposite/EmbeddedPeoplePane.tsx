@@ -5,15 +5,25 @@ import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallAdapter } from '../CallComposite';
+import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+import { useSelector } from '../CallComposite/hooks/useSelector';
+import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
-import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
-import { copyLinkButtonStyles, linkIconStyles } from './styles/EmbeddedPeoplePane.styles';
+import {
+  copyLinkButtonContainerStyles,
+  copyLinkButtonStyles,
+  linkIconStyles,
+  localAndRemotePIPContainerStyles,
+  localAndRemotePIPStyles,
+  peoplePaneContainerTokens
+} from './styles/EmbeddedPeoplePane.styles';
 
 /**
  * @private
@@ -51,6 +61,9 @@ export const EmbeddedPeoplePane = (props: {
     />
   );
 
+  const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
+  const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
+
   if (props.mobileView) {
     return (
       <MobilePane
@@ -62,14 +75,31 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         <Stack verticalFill tokens={peoplePaneContainerTokens}>
-          {participantList}
+          <Stack.Item>{participantList}</Stack.Item>
+          {
+            // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+            // possession of the dominant remote participant video stream
+            !props.hidden && (
+              <Stack horizontalAlign="end" styles={localAndRemotePIPContainerStyles}>
+                <Stack styles={localAndRemotePIPStyles}>
+                  <LocalAndRemotePIP
+                    {...pictureInPictureProps}
+                    {...pictureInPictureHandlers}
+                    onClick={() => {}} // no onClick behavior
+                  />
+                </Stack>
+              </Stack>
+            )
+          }
           {inviteLink && (
-            <PrimaryButton
-              onClick={() => copy(inviteLink)}
-              styles={copyLinkButtonStyles}
-              onRenderIcon={() => <FontIcon iconName="Link" style={linkIconStyles} />}
-              text="Copy invite link"
-            />
+            <Stack.Item styles={copyLinkButtonContainerStyles}>
+              <PrimaryButton
+                onClick={() => copy(inviteLink)}
+                styles={copyLinkButtonStyles}
+                onRenderIcon={() => <FontIcon iconName="Link" style={linkIconStyles} />}
+                text="Copy invite link"
+              />
+            </Stack.Item>
           )}
         </Stack>
       </MobilePane>
