@@ -38,6 +38,11 @@ export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 4, height: 5.5 };
 export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
 
 /**
+ * z-index to ensure that the local video tile is above the video gallery.
+ */
+export const LOCAL_VIDEO_TILE_ZINDEX = 1;
+
+/**
  * @private
  */
 export const floatingLocalVideoModalStyle = (
@@ -48,7 +53,7 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    { main: { boxShadow: theme.effects.elevation4 } }
   );
 };
 
@@ -57,13 +62,31 @@ export const floatingLocalVideoModalStyle = (
  */
 export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
   return {
-    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    width: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+    height: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
     position: 'absolute',
     bottom: '0.5rem',
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
     ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+  };
+};
+
+/* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+/**
+ * @private
+ */
+export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+  return {
+    width: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+    height: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    position: 'absolute',
+    bottom: '0.5rem',
+    borderRadius: theme.effects.roundedCorner4,
+    overflow: 'hidden',
+    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' }),
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX,
+    boxShadow: theme.effects.elevation4
   };
 };
 

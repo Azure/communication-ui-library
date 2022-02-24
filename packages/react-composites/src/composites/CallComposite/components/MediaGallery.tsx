@@ -60,6 +60,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
+  const layout = (isMobile?: boolean): string => {
+    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+    return isMobile ? 'withControlsLocalVideo' : 'floatingLocalVideo';
+    return 'floatingLocalVideo';
+  };
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -68,7 +74,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
-        layout="floatingLocalVideo"
+        layout={layout(props.isMobile)}
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
         showCameraSwitcherInLocalPreview={props.isMobile}
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
