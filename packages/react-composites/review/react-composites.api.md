@@ -4,6 +4,7 @@
 
 ```ts
 
+/// <reference types="node" />
 /// <reference types="react" />
 
 import type { AudioDeviceInfo } from '@azure/communication-calling';
@@ -23,6 +24,7 @@ import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { EventEmitter } from 'events';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -731,8 +733,11 @@ export interface FileUploadAdapter {
     registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
 }
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
+// @beta
+export class FileUploadEventEmitter {
+    constructor();
+    // (undocumented)
+    _emitter: EventEmitter;
     off(event: 'uploadProgressed', listener: UploadProgressListener): void;
     off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
     off(event: 'uploadFailed', listener: UploadFailedListener): void;
@@ -806,9 +811,11 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 };
 
 // @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+export class ObservableFileUpload extends FileUploadEventEmitter {
+    constructor(fileName: string, metadata?: FileMetadata);
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public

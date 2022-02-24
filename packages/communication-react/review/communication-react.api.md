@@ -4,6 +4,7 @@
 
 ```ts
 
+/// <reference types="node" />
 /// <reference types="react" />
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -31,6 +32,7 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { EventEmitter } from 'events';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -1449,8 +1451,11 @@ export interface FileUploadAdapter {
     registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
 }
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
+// @beta
+export class FileUploadEventEmitter {
+    constructor();
+    // (undocumented)
+    _emitter: EventEmitter;
     off(event: 'uploadProgressed', listener: UploadProgressListener): void;
     off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
     off(event: 'uploadFailed', listener: UploadFailedListener): void;
@@ -1833,9 +1838,11 @@ export interface NetworkDiagnosticsState {
 }
 
 // @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+export class ObservableFileUpload extends FileUploadEventEmitter {
+    constructor(fileName: string, metadata?: FileMetadata);
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public

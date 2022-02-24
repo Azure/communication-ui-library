@@ -48,7 +48,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
-  const showProgressIndicator = (): boolean => progress !== undefined && progress < 1;
+  const showProgressIndicator = (): boolean => progress !== undefined && progress > 0 && progress < 1;
 
   const containerClassName = mergeStyles({
     width: '14rem',
