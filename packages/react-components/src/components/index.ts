@@ -11,7 +11,7 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
-export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps, FileMetadata, FileUploadState } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';

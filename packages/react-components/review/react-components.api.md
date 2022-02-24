@@ -458,6 +458,22 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
+// @beta
+export interface FileUploadState {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    metadata?: FileMetadata;
+    progress: number;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -890,6 +906,10 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
+    // Warning: (ae-incompatible-release-tags) The symbol "activeFileUploads" is marked as @public, but its signature references "FileUploadState" which is marked as @beta
+    //
+    // (undocumented)
+    activeFileUploads?: FileUploadState[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

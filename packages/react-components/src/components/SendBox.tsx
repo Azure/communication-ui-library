@@ -40,6 +40,59 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 /**
+ * Meta Data containing information about the uploaded file.
+ * @beta
+ */
+export interface FileMetadata {
+  /**
+   * File name to be displayed.
+   */
+  name: string;
+  /**
+   * Extension is used for rendering the file icon.
+   * An unknown extension will be rendered as a generic icon.
+   * Example: `jpeg`
+   */
+  extension: string;
+  /**
+   * Download URL for the file.
+   */
+  url: string;
+}
+
+/**
+ * Contains the state attibutes of a file upload like name, progress etc.
+ * @beta
+ */
+export interface FileUploadState {
+  /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+
+  /**
+   * Filename extracted from the {@link File} object.
+   * This attribute is used to render the filename if `metadata.name` is not available.
+   */
+  filename: string;
+
+  /**
+   * A number between 0 and 1 indicating the progress of the upload.
+   */
+  progress: number;
+
+  /**
+   * Meta Data {@link FileMetadata} containing information about the uploaded file.
+   */
+  metadata?: FileMetadata;
+
+  /**
+   * Error message to be displayed to the user if the upload fails.
+   */
+  errorMessage?: string;
+}
+
+/**
  * Strings of {@link SendBox} that can be overridden.
  *
  * @public
@@ -122,6 +175,7 @@ export interface SendBoxProps {
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
+  activeFileUploads?: FileUploadState[];
 }
 
 /**
@@ -182,6 +236,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
+  function renderErrorMessage(fileUploads: FileUploadState[]): JSX.Element {
+    let errorMsg: JSX.Element = <Stack></Stack>;
+    fileUploads &&
+      fileUploads.forEach(function (file: FileUploadState) {
+        if (file.errorMessage) {
+          errorMsg = <Stack className={mergeStyles({ background: '#FFF4CE' })}>{file.errorMessage} </Stack>;
+          return;
+        }
+      });
+    return errorMsg;
+  }
+
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
@@ -216,52 +282,58 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack
-      className={mergeStyles(
-        borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-        sendBoxWrapperStyles
-      )}
-    >
-      <InputBoxComponent
-        autoFocus={autoFocus}
-        data-ui-id={ids.sendboxTextField}
-        inlineChildren={true}
-        disabled={disabled}
-        errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-        textFieldRef={sendTextFieldRef}
-        id="sendbox"
-        inputClassName={sendBoxStyle}
-        placeholderText={strings.placeholderText}
-        textValue={textValue}
-        onChange={setText}
-        onKeyDown={() => {
-          onTyping && onTyping();
-        }}
-        onEnterKeyDown={() => {
-          sendMessageOnClick();
-        }}
-        styles={mergedStyles}
-        supportNewline={supportNewline}
-        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-      >
-        <InputBoxButton
-          onRenderIcon={onRenderSendIcon}
-          onClick={(e) => {
-            if (!textValueOverflow) {
-              sendMessageOnClick();
-            }
-            e.stopPropagation();
-          }}
-          id={'sendIconWrapper'}
-          className={mergedSendButtonStyle}
-          ariaLabel={localeStrings.sendButtonAriaLabel}
-          tooltipContent={localeStrings.sendButtonAriaLabel}
-        />
-      </InputBoxComponent>
+    <Stack>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        props.onRenderFileUploads && props.onRenderFileUploads()
+        renderErrorMessage(props.activeFileUploads || [])
       }
+      <Stack
+        className={mergeStyles(
+          borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
+          sendBoxWrapperStyles
+        )}
+      >
+        <InputBoxComponent
+          autoFocus={autoFocus}
+          data-ui-id={ids.sendboxTextField}
+          inlineChildren={true}
+          disabled={disabled}
+          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+          textFieldRef={sendTextFieldRef}
+          id="sendbox"
+          inputClassName={sendBoxStyle}
+          placeholderText={strings.placeholderText}
+          textValue={textValue}
+          onChange={setText}
+          onKeyDown={() => {
+            onTyping && onTyping();
+          }}
+          onEnterKeyDown={() => {
+            sendMessageOnClick();
+          }}
+          styles={mergedStyles}
+          supportNewline={supportNewline}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        >
+          <InputBoxButton
+            onRenderIcon={onRenderSendIcon}
+            onClick={(e) => {
+              if (!textValueOverflow) {
+                sendMessageOnClick();
+              }
+              e.stopPropagation();
+            }}
+            id={'sendIconWrapper'}
+            className={mergedSendButtonStyle}
+            ariaLabel={localeStrings.sendButtonAriaLabel}
+            tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </InputBoxComponent>
+        {
+          /* @conditional-compile-remove-from(stable): FILE_SHARING */
+          props.onRenderFileUploads && props.onRenderFileUploads()
+        }
+      </Stack>
     </Stack>
   );
 };
