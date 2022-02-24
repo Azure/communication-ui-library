@@ -6,50 +6,58 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const babelHelper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
 
-const FEATURE_PREFIX = '@conditional-compile-remove';
+const CONDITIONAL_FEATURE_RE = /@conditional-compile-remove\(.*\)/g;
+
+function createFeatureSet(features) {
+  const featureSet = {}
+  features.forEach(f => featureSet[`@conditional-compile-remove(${f})`] = true);
+  return featureSet;
+}
+
 
 exports.default = babelHelper.declare((_api, opts) => {
-  const { match, features } = opts;
-  const featurePrefixes = features.map((feature) => `${FEATURE_PREFIX}(${feature})`);
+  const { match, features, stabilizedFeatures } = opts;
+  const featureSet = createFeatureSet(features);
+  const stabilizedFeatureSet = createFeatureSet(stabilizedFeatures);
 
   return {
     name: 'babel-conditional-preprocess',
     // Check types/visitors supported: https://babeljs.io/docs/en/babel-types#typescript
     visitor: {
       ObjectProperty(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       FunctionDeclaration(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       Statement(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       VariableDeclaration(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       ImportDeclaration(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       ExportNamedDeclaration(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       ExportAllDeclaration(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       JSXAttribute(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       TSPropertySignature(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
@@ -65,38 +73,38 @@ exports.default = babelHelper.declare((_api, opts) => {
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
       TSType(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       TSDeclareMethod(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       Expression(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       ClassMethod(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
 
       ClassProperty(path) {
-        Handle(path, match, featurePrefixes);
+        Handle(path, match, featureSet, stabilizedFeatureSet);
       },
     }
   };
 });
 
-function Handle(path, match, featurePrefixes) {
+function Handle(path, match, featureSet, stabilizedFeatureSet) {
   let { node } = path;
 
-  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match, featurePrefixes));
+  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match, featureSet, stabilizedFeatureSet));
   if (!shouldRemove) {
     return;
   }
 
   node.leadingComments && node.leadingComments.forEach((comment) => {
-    if (!containsDirective(comment, match, featurePrefixes)) {
+    if (!containsDirective(comment, match, featureSet, stabilizedFeatureSet)) {
       return;
     }
     comment.ignore = true;
@@ -116,17 +124,21 @@ function Handle(path, match, featurePrefixes) {
   }
 }
 
-function containsDirective(comment, match, featurePrefixes) {
+function containsDirective(comment, match, featureSet, stabilizedFeatureSet) {
   if (comment.value.includes(match)) {
     // legacy annotation
     return true;
   }
-  // Check for partial prefix first to avoid checking each feature in most cases.
-  if (!comment.value.includes(FEATURE_PREFIX)) {
+
+  const featuresInComment = comment.value.match(CONDITIONAL_FEATURE_RE);
+  if (!featuresInComment) {
     return false;
   }
-  if(featurePrefixes.some((match) => comment.value.includes(match))) {
-    return true;
+
+  // Check for validity first to catch errors even when valid features exist.
+  const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] || stabilizedFeatureSet[f]))
+  if (unknownFeatures.length > 1) {
+    throw new Error(`Unknown conditional compilation features ${unknownFeatures} in: ${comment.value}`);
   }
-  throw new Error(`Unknown conditional compilation feature in: ${comment.value}`);
+  return featuresInComment.some(f => featureSet[f]);
 }

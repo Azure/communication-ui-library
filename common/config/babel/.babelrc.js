@@ -14,6 +14,14 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Do not use in production code.
         'demo',
       ],
+      // A list of stabilized features.
+      // These features can be listed in the conditional compilation directives without
+      // causing a build failure, but they are ignored by the preprocessing step.
+      stabilizedFeatures: [
+        // Demo feature. Used in live-documentation of conditional compilation.
+        // Do not use in production code.
+        'stabilizedDemo',
+      ]
      }
   ]);
 

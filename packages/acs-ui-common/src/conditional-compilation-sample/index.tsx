@@ -176,6 +176,35 @@ function propTrampoline(): string {
  */
 
 /**
+ * Conditional compilation directives can refer to one or more predefined features.
+ *
+ * When working on a beta feature, define a new feature tag in common/config/babel/.babelrc.js
+ * Then use that tag in all the conditional compilation directives for your feature.
+ *
+ * Most examples in this file use the `demo` feature.
+ *
+ * When your feature is ready for stable builds: Move the feature flag to the `stabilizedFeatures` list.
+ * The tagged code will no longer be removed from stable builds.
+ *
+ * Using an undeclared feature in conditional compilation directive will cause a build failure (prevents typos).
+ *
+ * The following code is not removed because it contains a stabilized feature tag.
+ */
+/* @conditional-compile-remove(stabilizedDemo) */
+export const thisIsNowStable = 42;
+
+/* But the following is removed because it contains one non-stabilized feature still. */
+/* @conditional-compile-remove(stabilizedDemo) */
+/* @conditional-compile-remove(demo) */
+export const onlyPartiallyStable = 43;
+
+/* You can also include multiple features' directives in a single comment, like so:
+ * @conditional-compile-remove(stabilizedDemo)
+ * @conditional-compile-remove(demo)
+ */
+export const alsoOnlyPartiallyStable = 44;
+
+/**
  * A common example where a combination of some of the examples above is required is extending a selector.
  *
  * Note how the selector has a conditional field in the *return type* and the *implementation*, but does not have a conditional
