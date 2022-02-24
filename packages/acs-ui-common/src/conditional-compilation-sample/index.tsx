@@ -56,10 +56,10 @@ import * as utils from './utils';
 /**
  * Conditionally define a type or interface.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 type A = number;
 
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 interface B {
   c: number;
 }
@@ -67,19 +67,19 @@ interface B {
 /**
  * Conditionally import from a package.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 import { Dir } from 'fs';
 
 /**
  * Conditionally export from a module.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export interface C {
   a: A;
   b: B;
 }
 
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export type MyDir = Dir;
 
 /**
@@ -87,7 +87,7 @@ export type MyDir = Dir;
  */
 export interface B2 {
   sameOld: number;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   somethingNew: number;
 }
 
@@ -96,8 +96,8 @@ export interface B2 {
  *
  * Watchout: A common pitfall here is adding the conditional directive before the binary operator.
  */
-export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
-export type Impossible = number & /* @conditional-compile-remove-from(stable) */ boolean;
+export type Unionize = number | /* @conditional-compile-remove(demo) */ boolean;
+export type Impossible = number & /* @conditional-compile-remove(demo) */ boolean;
 
 /**
  * Add a parameter to an existing function
@@ -114,12 +114,12 @@ export type Impossible = number & /* @conditional-compile-remove-from(stable) */
  *
  * cf: https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads.
  */
-export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number): void;
-/* @conditional-compile-remove-from(stable) */
+export function d(e: number, /* @conditional-compile-remove(demo) */ f: number): void;
+/* @conditional-compile-remove(demo) */
 export function d(e: number, f: number, g: number): void;
 export function d(e: number, f?: number, g?: number): void {
   console.log(e);
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   console.log(f, g);
 }
 
@@ -133,8 +133,8 @@ export function d(e: number, f?: number, g?: number): void {
  * Call a function with conditional parameters.
  */
 export function dCaller(): void {
-  d(1, /* @conditional-compile-remove-from(stable) */ 2);
-  d(1, /* @conditional-compile-remove-from(stable) */ 2, /* @conditional-compile-remove-from(stable) */ 3);
+  d(1, /* @conditional-compile-remove(demo) */ 2);
+  d(1, /* @conditional-compile-remove(demo) */ 2, /* @conditional-compile-remove(demo) */ 3);
 
   // The following would stable flavor build because the function overload signature for `d` only allows one
   // argument in stable flavor.
@@ -148,7 +148,7 @@ export function GottaHaveAnExtraStackItem(): JSX.Element {
   return (
     <ul>
       <li>Old kid</li>
-      {/* @conditional-compile-remove-from(stable) */ <li>New Kid</li>}
+      {/* @conditional-compile-remove(demo) */ <li>New Kid</li>}
     </ul>
   );
 }
@@ -164,7 +164,7 @@ export function OverrideSomePropInBeta(): JSX.Element {
 }
 function propTrampoline(): string {
   let propValue = 'general';
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   propValue = 'II class';
   return propValue;
 }
@@ -189,7 +189,7 @@ export type MyExtensibleSelector = (
 ) => {
   memoizedA: boolean;
   memoizedB: boolean;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   memoizedC: boolean;
 };
 
@@ -199,7 +199,7 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
     return {
       memoizedA: a,
       memoizedB: b,
-      /* @conditional-compile-remove-from(stable) */
+      /* @conditional-compile-remove(demo) */
       memoizedC: c
     };
   }
@@ -222,7 +222,7 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
  */
 
 type ThisIsUnstableType = string;
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export type { ThisIsUnstableType };
 
 class InternalImplementation {
@@ -245,7 +245,7 @@ export function StableAPIThatGainsNewUnstableBehavior(): void {
 }
 
 function shouldIncludeUnstableFeature(): boolean {
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   return true;
   return false;
 }

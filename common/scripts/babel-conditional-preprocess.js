@@ -5,45 +5,51 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const babelHelper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
+
+const FEATURE_PREFIX = '@conditional-compile-remove';
+
 exports.default = babelHelper.declare((_api, opts) => {
+  const { match, features } = opts;
+  const featurePrefixes = features.map((feature) => `${FEATURE_PREFIX}(${feature})`);
+
   return {
     name: 'babel-conditional-preprocess',
     // Check types/visitors supported: https://babeljs.io/docs/en/babel-types#typescript
     visitor: {
       ObjectProperty(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       FunctionDeclaration(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       Statement(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       VariableDeclaration(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       ImportDeclaration(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       ExportNamedDeclaration(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       ExportAllDeclaration(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       JSXAttribute(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       TSPropertySignature(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
@@ -59,39 +65,38 @@ exports.default = babelHelper.declare((_api, opts) => {
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
       TSType(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       TSDeclareMethod(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       Expression(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       ClassMethod(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
 
       ClassProperty(path) {
-        Handle(path, opts);
+        Handle(path, match, featurePrefixes);
       },
     }
   };
 });
 
-function Handle(path, opts) {
+function Handle(path, match, featurePrefixes) {
   let { node } = path;
-  const { match } = opts;
 
-  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match));
+  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match, featurePrefixes));
   if (!shouldRemove) {
     return;
   }
 
   node.leadingComments && node.leadingComments.forEach((comment) => {
-    if (!containsDirective(comment, match)) {
+    if (!containsDirective(comment, match, featurePrefixes)) {
       return;
     }
     comment.ignore = true;
@@ -111,6 +116,17 @@ function Handle(path, opts) {
   }
 }
 
-function containsDirective(comment, match) {
-  return comment.value.includes(match);
+function containsDirective(comment, match, featurePrefixes) {
+  if (comment.value.includes(match)) {
+    // legacy annotation
+    return true;
+  }
+  // Check for partial prefix first to avoid checking each feature in most cases.
+  if (!comment.value.includes(FEATURE_PREFIX)) {
+    return false;
+  }
+  if(featurePrefixes.some((match) => comment.value.includes(match))) {
+    return true;
+  }
+  throw new Error(`Unknown conditional compilation feature in: ${comment.value}`);
 }
