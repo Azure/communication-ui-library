@@ -84,6 +84,7 @@ function App(): JSX.Element {
             <CallWithChatComposite
               callWithChatAdapter={callWithChatAdapter}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
+              joinInvitationURL={window.location.href}
             />
           </_IdentifierProvider>
         </div>
