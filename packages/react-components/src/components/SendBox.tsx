@@ -241,7 +241,17 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     fileUploads &&
       fileUploads.forEach(function (file: FileUploadState) {
         if (file.errorMessage) {
-          errorMsg = <Stack className={mergeStyles({ background: '#FFF4CE' })}>{file.errorMessage} </Stack>;
+          errorMsg = (
+            <Stack
+              className={mergeStyles({
+                background: '#FFF4CE',
+                padding: '0.50rem',
+                borderRadius: theme.effects.roundedCorner4
+              })}
+            >
+              {file.errorMessage}
+            </Stack>
+          );
           return;
         }
       });
@@ -282,15 +292,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack>
+    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
         renderErrorMessage(props.activeFileUploads || [])
       }
       <Stack
         className={mergeStyles(
-          borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-          sendBoxWrapperStyles
+          borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled)
         )}
       >
         <InputBoxComponent
