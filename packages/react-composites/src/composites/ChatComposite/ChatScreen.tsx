@@ -60,7 +60,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: 'sendBoxTextField' | false;
+  hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
 };
 
