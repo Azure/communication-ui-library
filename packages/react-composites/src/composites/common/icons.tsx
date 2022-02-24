@@ -253,7 +253,6 @@ export type CallWithChatCompositeIcons = Partial<
     | 'HorizontalGalleryRightButton'
     | 'LobbyScreenConnectingToCall'
     | 'LobbyScreenWaitingToBeAdmitted'
-    | 'LocalCameraSwitch'
     | 'LocalDeviceSettingsCamera'
     | 'LocalDeviceSettingsMic'
     | 'LocalDeviceSettingsSpeaker'
