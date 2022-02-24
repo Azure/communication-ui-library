@@ -12,11 +12,11 @@ export const _safeJSONStringify = (
   value: unknown,
   replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined,
   space?: string | number | undefined
-): string => {
+): string | undefined => {
   try {
     return JSON.stringify(value, replacer, space);
   } catch (e) {
     console.error(e);
-    return '';
+    return undefined;
   }
 };
