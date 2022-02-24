@@ -2292,7 +2292,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;

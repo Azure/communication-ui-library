@@ -60,7 +60,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const layout = (isMobile?: boolean): string => {
+  const layout = (
+    isMobile?: boolean
+  ):
+    | 'default'
+    | 'floatingLocalVideo'
+    | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo'
+    | undefined => {
     /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
     return isMobile ? 'controlsLocalVideo' : 'floatingLocalVideo';
     return 'floatingLocalVideo';
