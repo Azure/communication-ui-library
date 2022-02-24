@@ -93,7 +93,7 @@ export interface ParticipantItemProps {
    */
   strings?: Partial<ParticipantItemStrings>;
   /**
-   * Optional callback when component is clicked. If this is defined then contextual menu will not shown when component is clicked.
+   * Optional callback when component is clicked
    */
   onClick?: (props?: ParticipantItemProps) => void;
 }
