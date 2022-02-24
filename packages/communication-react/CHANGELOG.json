@@ -2,6 +2,572 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 23:50:05 GMT",
+      "tag": "@azure/communication-react_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update the acs-common dependancy and nanoid dependancy as per dependabot"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "c6d8a57be092772c7dc7713f1b7ea35586e194b1",
+            "comment": "Add sample module for conditional compilation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common dependency per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "2a03f36b4c0102bf858e79c9e869fedf53932724",
+            "comment": "expose participant conversion functions"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update the acs-common dependancy per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common package and nanoid per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common and nanoid per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Create PiPiP pure component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "31cda10cdf60dc4a65e9c30fcee90f3dccb62afd",
+            "comment": "Removed VideoGallery containuer uuid"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b33c4b24d5fe93fded45602a7fb06f74579bad36",
+            "comment": "Center send button"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Create scaffolding for PiPiP component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "1194e5847c9b78ca0c5d7c99a4191c0db39052fb"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "Fixup a11y properties of the PiP, allow secondary tile to be optional"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e76c622217585929b03f8b08a7fb7055dbbae0bb",
+            "comment": "Simplify conditional compilation directives for some types"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2756d4f25314feff9ac4580f97932657f8c40ef5",
+            "comment": "Refactor: Extract custom button logic to a component"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c564abf50b6ddcd8267be4ee9f81d5ab7bb83a39",
+            "comment": "Refactor: Extract some internal helper button wrappers"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "db0af1a1b46f38cdb47312e9b0d7825df76dabdc",
+            "comment": "MeetingComposite: stop subscribing to state change event on every render."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "cba84e25b52056dc0a821f2efd0d9a15668057af",
+            "comment": "create selectors and pipe through local and dominant participants into the PiP"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common per dependabot"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0276b39771b82c6a3b5264a54d1c258bd87229a3",
+            "comment": "Remove obsolete declare"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "63a43a48625cebe418677cc48a7a1bdb32f887bf",
+            "comment": "refactor: Inline button arrangement into `MeetingCallControlBar`."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Update PiPiP story to have tweakable args"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "464c5ab7111e70ee5d1eb9eaa41dbb0b9b55b3eb",
+            "comment": "Remove safari from android listing"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0d8c061900189effb4a357931455ec7fb1576c0d",
+            "comment": "Update install instructions for beta channel"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "pass new props in story"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "104b52f02f8f15353a08e2e96769245c1af77346",
+            "comment": "Update types to match new API types"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Add ability to have local-only stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "2c32ccbc5b1aafec1d603eda1bdb7d5aa1ba22d0",
+            "comment": "Fix internal story visibility"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8eaa0b5d7a548e5fee032926da03098f974bda17",
+            "comment": "Update stories to match new API"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common per dependabot"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Exporting a _MAX_EVENT_LISTENERS internal constant"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Add audio devices to MicrophoneButton selector"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Include cameras in CameraButton selector"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Camera Logic added for local camera switcher button"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51",
+            "comment": "updating nanoid to 3.1.32"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Meeting/CallComposite: introduces camera logic to local camera switcher button through video gallery selector."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Add option to show device selection menu in MicrophoneButton"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "eb8ed86862a1471f825d5ba7ead3109700014721",
+            "comment": "Introduced new Aria strings and roles to chat notification and local camera switcher."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "4fb9cd532bf8449b4b0abb84179d55ef9f71677a",
+            "comment": "Logic introduced to cause local camera switcher to appear on mobile."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Add camera selection menu to CameraButton"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "60d648d0d99be67e9a2ea2da403ec3d4be2531ad",
+            "comment": "Add File upload button to Chat Composite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add adapter ui state and selectors for file sharing"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "acc6dceb6aa505cbdfef93a71387b66ec83ceb5b",
+            "comment": "Notification Icon for the chat button in the meeting composite."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "9c9e5491cf95794c0f3d15008f94527885035210",
+            "comment": "Add FileCard component to chat composite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "2b672ce30759de9f932c33b83d9badab3178ef05",
+            "comment": "Add FileDownloadHandler for handling file downloads"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Show device selection menu in MirophoneButton in MeetingComposite on desktop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "4fb9cd532bf8449b4b0abb84179d55ef9f71677a",
+            "comment": "Logic introduced to media gallery to allow for mobile detection for local camera switcher."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Use split CameraButton in MeetingComposite control bar"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "104b52f02f8f15353a08e2e96769245c1af77346",
+            "comment": "Initial Call and Meeting adapter support for making Adhoc calls directly to participants (i.e. without use of a groupID)"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8eaa0b5d7a548e5fee032926da03098f974bda17",
+            "comment": "[BREAKING CHANGE] Update createAzureCommunicationMeetingAdapter arguments to enable accepting just a teams link without having to provide an extracted chat thread ID."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9c3d92684f362eab0bf72eda7c2c219de5ec06e5",
+            "comment": "MeetingComposite: store messages since last time ChatPane was opened"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "15fb8e95102ce703318308a92c86b711ca1663e3",
+            "comment": "Add file sharing option props to ChatComposite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "20d85e4add02e02e04edef6f8e67a846bd381d0c",
+            "comment": "Changing userId to string in FileUploadHandler"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "923604cfb5ff688daa5ee5ae656e9095f6b7ab20",
+            "comment": "Update visuals of MeetingComposite control bar"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Passes Camera logic from call composite to the local camera switcher button."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "eb8ed86862a1471f825d5ba7ead3109700014721",
+            "comment": "introduced aria roles and strings to chat notifaction icon"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0385e2e81cce42d1cdf9b9272afdd57816ef27e6",
+            "comment": "Remove DevicesButton from MeetingComposite"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51",
+            "comment": "upgrading nanoid to 3.1.32"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Update MicrophoneButton story to showcase device selection menu"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9f73ea9cebf3504d1d47e8e8deda16e461f329ec",
+            "comment": "Add docs for split camera and microphone buttons"
+          }
+        ],
+        "patch": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "b326cd5e57261abe6064e6ad369cbf08d4686f41",
+            "comment": "Update string from remove to delete"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "806d379e8408eaec206c18e9d00609790b2cfc4d",
+            "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0276b39771b82c6a3b5264a54d1c258bd87229a3",
+            "comment": "Allow setting min and max size of the persona avatar in the Video Tile"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9824b904553976549f8001d92d4cc079f6dc6dd9",
+            "comment": "Fix CallComposite being stuck on the configuration page when using adapter.startCall"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Update CameraButton story to show device flyout"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          }
+        ],
+        "minor": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add options param to sendMessage for sending metadata"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "created button component for local video feed camera switcher"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add metadata attribute to ChatMessage type"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a6c7201daab7a6545520a11de24a1e7611197a5e",
+            "comment": "Identifiers added for HorizontalGallery left and right navigation buttons."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d60cf91aa66f380b60545e46921ba756fbbc9665",
+            "comment": "Exposed Chat and Call latestErrors in MeetingComposite"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7e659a46f1eafa4ee57d4ae769dbbd66376a7eb5",
+            "comment": "Added new constructor that accepts stateful client arguments in MeetingComposite"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "467585555760935e90bb03a180478b9564422a17",
+            "comment": "Created component for ParticipantList and heading"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "Updated calling composite icons to include new icon for local video feed camera switcher"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:53 GMT",
       "tag": "@azure/communication-react_v1.0.1",
       "version": "1.0.1",

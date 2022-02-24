@@ -2,6 +2,140 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 23:50:06 GMT",
+      "tag": "@internal/react-components_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "created button component for local video feed camera switcher"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add metadata attribute to ChatMessage type"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a6c7201daab7a6545520a11de24a1e7611197a5e",
+            "comment": "Identifiers added for HorizontalGallery left and right navigation buttons."
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Meeting/CallComposite: introduces camera logic to local camera switcher button through video gallery selector."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Add option to show device selection menu in MicrophoneButton"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "eb8ed86862a1471f825d5ba7ead3109700014721",
+            "comment": "Introduced new Aria strings and roles to chat notification and local camera switcher."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "4fb9cd532bf8449b4b0abb84179d55ef9f71677a",
+            "comment": "Logic introduced to cause local camera switcher to appear on mobile."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Add camera selection menu to CameraButton"
+          }
+        ],
+        "patch": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "b326cd5e57261abe6064e6ad369cbf08d4686f41",
+            "comment": "Update string from remove to delete"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "806d379e8408eaec206c18e9d00609790b2cfc4d",
+            "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0276b39771b82c6a3b5264a54d1c258bd87229a3",
+            "comment": "Allow setting min and max size of the persona avatar in the Video Tile"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Create PiPiP pure component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "31cda10cdf60dc4a65e9c30fcee90f3dccb62afd",
+            "comment": "Removed VideoGallery containuer uuid"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b33c4b24d5fe93fded45602a7fb06f74579bad36",
+            "comment": "Center send button"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Create scaffolding for PiPiP component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "1194e5847c9b78ca0c5d7c99a4191c0db39052fb"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "Fixup a11y properties of the PiP, allow secondary tile to be optional"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:54 GMT",
       "tag": "@internal/react-components_v1.0.1",
       "version": "1.0.1",

@@ -2,6 +2,109 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 23:50:08 GMT",
+      "tag": "@internal/storybook_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Update PiPiP story to have tweakable args"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "464c5ab7111e70ee5d1eb9eaa41dbb0b9b55b3eb",
+            "comment": "Remove safari from android listing"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0d8c061900189effb4a357931455ec7fb1576c0d",
+            "comment": "Update install instructions for beta channel"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "pass new props in story"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "104b52f02f8f15353a08e2e96769245c1af77346",
+            "comment": "Update types to match new API types"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Add ability to have local-only stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "2c32ccbc5b1aafec1d603eda1bdb7d5aa1ba22d0",
+            "comment": "Fix internal story visibility"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8eaa0b5d7a548e5fee032926da03098f974bda17",
+            "comment": "Update stories to match new API"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common per dependabot"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Update MicrophoneButton story to showcase device selection menu"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9f73ea9cebf3504d1d47e8e8deda16e461f329ec",
+            "comment": "Add docs for split camera and microphone buttons"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Update CameraButton story to show device flyout"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.1.0",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:56 GMT",
       "tag": "@internal/storybook_v1.0.1",
       "version": "1.0.1",

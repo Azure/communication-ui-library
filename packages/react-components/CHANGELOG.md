@@ -1,8 +1,34 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 23:50:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.1.0)
+
+Mon, 14 Feb 2022 23:50:06 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.1...@internal/react-components_v1.1.0)
+
+### Minor changes
+
+- created button component for local video feed camera switcher ([PR #1367](https://github.com/azure/communication-ui-library/pull/1367) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add metadata attribute to ChatMessage type ([PR #1374](https://github.com/azure/communication-ui-library/pull/1374) by anjulgarg@live.com)
+- Identifiers added for HorizontalGallery left and right navigation buttons. ([PR #1347](https://github.com/azure/communication-ui-library/pull/1347) by miguelgamis@microsoft.com)
+
+### Patches
+
+- Update string from remove to delete ([PR #1434](https://github.com/azure/communication-ui-library/pull/1434) by jiangnanhello@live.com)
+- Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread ([PR #1345](https://github.com/azure/communication-ui-library/pull/1345) by edwardlee@microsoft.com)
+- Allow setting min and max size of the persona avatar in the Video Tile ([PR #1406](https://github.com/azure/communication-ui-library/pull/1406) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.0 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by beachball)
+
+### Changes
+
+- Meeting/CallComposite: introduces camera logic to local camera switcher button through video gallery selector. ([PR #1393](https://github.com/azure/communication-ui-library/pull/1393) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add option to show device selection menu in MicrophoneButton ([PR #1392](https://github.com/azure/communication-ui-library/pull/1392) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Introduced new Aria strings and roles to chat notification and local camera switcher. ([PR #1429](https://github.com/azure/communication-ui-library/pull/1429) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Logic introduced to cause local camera switcher to appear on mobile. ([PR #1391](https://github.com/azure/communication-ui-library/pull/1391) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add camera selection menu to CameraButton ([PR #1436](https://github.com/azure/communication-ui-library/pull/1436) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.1)
 
