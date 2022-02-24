@@ -137,7 +137,7 @@ function containsDirective(comment, match, featureSet, stabilizedFeatureSet) {
 
   // Check for validity first to catch errors even when valid features exist.
   const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] || stabilizedFeatureSet[f]))
-  if (unknownFeatures.length > 1) {
+  if (unknownFeatures.length > 0) {
     throw new Error(`Unknown conditional compilation features ${unknownFeatures} in: ${comment.value}`);
   }
   return featuresInComment.some(f => featureSet[f]);
