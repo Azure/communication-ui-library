@@ -15,6 +15,7 @@ import {
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
+import { secondaryText } from '../styles/DrawerMenu.styles';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
 
 /**
@@ -79,7 +80,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
         <Text>{props.text}</Text>
       </Stack.Item>
       {props.secondaryText && (
-        <Stack.Item styles={drawerMenuItemTextStyles}>
+        <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryText)}>
           <Text className={mergeStyles({ color: theme.palette.neutralSecondary })}>{props.secondaryText}</Text>
         </Stack.Item>
       )}
