@@ -1622,9 +1622,6 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public (undocumented)
-export type LocalTileMode = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo' | undefined;
-
 // @beta (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
@@ -2280,6 +2277,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -2295,7 +2295,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: LocalTileMode;
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;

@@ -39,7 +39,6 @@ import {
   horizontalGalleryStyle,
   layerHostStyle,
   localVideoTileContainerStyle,
-  localVideoTileWithControlsContainerStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
@@ -50,6 +49,8 @@ import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove-from(stable) Local_Camera_switcher */
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+import { localVideoTileWithControlsContainerStyle } from './styles/VideoGallery.styles';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -76,11 +77,7 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type LocalTileMode =
-  | 'default'
-  | 'floatingLocalVideo'
-  | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo'
-  | undefined;
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -111,7 +108,7 @@ export interface VideoGalleryProps {
    */
   styles?: VideoGalleryStyles;
   /** Layout of the video tiles. */
-  layout?: LocalTileMode;
+  layout?: VideoGalleryLayout;
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -202,7 +199,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  const shouldAddControlsLocalVideo = shouldAddControlsToLocalVideoTrampoline(layout, remoteParticipants);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -353,9 +349,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  if (!shouldFloatLocalVideo && !shouldAddControlsLocalVideo && localParticipant) {
-    gridTiles.push(localVideoTile);
-  }
+  const localVideoTileLayout = (): void => {
+    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+    if (!shouldFloatLocalVideo && !showCameraSwitcherInLocalPreview && localParticipant) {
+      gridTiles.push(localVideoTile);
+      return;
+    }
+    if (!shouldFloatLocalVideo && localParticipant) {
+      gridTiles.push(localVideoTile);
+      return;
+    }
+  };
+
+  localVideoTileLayout();
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -378,6 +384,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {shouldFloatLocalVideo &&
+        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        !showCameraSwitcherInLocalPreview &&
         localParticipant &&
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
@@ -392,11 +400,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localVideoTile}
           </Modal>
         ))}
-      {shouldAddControlsLocalVideo && localParticipant && (
-        <Stack className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow))}>
-          {localVideoTile}
-        </Stack>
-      )}
+      {
+        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        showCameraSwitcherInLocalPreview && localParticipant && (
+          <Stack className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow))}>
+            {localVideoTile}
+          </Stack>
+        )
+      }
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
@@ -429,10 +440,3 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
-
-function shouldAddControlsToLocalVideoTrampoline(
-  layout: LocalTileMode,
-  remoteParticipants: VideoGalleryRemoteParticipant[]
-): boolean {
-  return !!((layout as string) === 'controlsLocalVideo' && remoteParticipants.length > 0);
-}
