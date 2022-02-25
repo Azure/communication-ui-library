@@ -98,13 +98,13 @@ exports.default = babelHelper.declare((_api, opts) => {
 function Handle(path, match, featureSet, stabilizedFeatureSet) {
   let { node } = path;
 
-  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(comment, match, featureSet, stabilizedFeatureSet));
+  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(node, comment, match, featureSet, stabilizedFeatureSet));
   if (!shouldRemove) {
     return;
   }
 
   node.leadingComments && node.leadingComments.forEach((comment) => {
-    if (!containsDirective(comment, match, featureSet, stabilizedFeatureSet)) {
+    if (!containsDirective(node, comment, match, featureSet, stabilizedFeatureSet)) {
       return;
     }
     comment.ignore = true;
@@ -124,7 +124,7 @@ function Handle(path, match, featureSet, stabilizedFeatureSet) {
   }
 }
 
-function containsDirective(comment, match, featureSet, stabilizedFeatureSet) {
+function containsDirective(node, comment, match, featureSet, stabilizedFeatureSet) {
   if (comment.value.includes(match)) {
     // legacy annotation
     return true;
@@ -138,7 +138,20 @@ function containsDirective(comment, match, featureSet, stabilizedFeatureSet) {
   // Check for validity first to catch errors even when valid features exist.
   const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] || stabilizedFeatureSet[f]))
   if (unknownFeatures.length > 0) {
-    throw new Error(`Unknown conditional compilation features ${unknownFeatures} in: ${comment.value}`);
+    throw new Error(`Unknown conditional compilation features ${unknownFeatures} in file ${node.loc?.filename} at line ${node.loc?.start?.line}`);
   }
   return featuresInComment.some(f => featureSet[f]);
 }
+
+const replacerFunc = () => {
+  const visited = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (visited.has(value)) {
+        return;
+      }
+      visited.add(value);
+    }
+    return value;
+  };
+};
