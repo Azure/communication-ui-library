@@ -402,6 +402,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         ))}
       {
         /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
         showCameraSwitcherInLocalPreview && localParticipant && (
           <Stack className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow))}>
             {localVideoTile}
