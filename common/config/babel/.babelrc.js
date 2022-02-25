@@ -10,6 +10,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
       // The plugin removes any AST node that is preceded by a comment that contains with the tag:
       // @conditional-compile-remove(demo)
       features: [
+        'call-with-chat-composite',
+        // Split buttons in control bar. These are used by `call-with-chat-composite` feature.
+        // Perhaps we should merge this into the `call-with-chat-composite` feature?
+        'control-bar-split-buttons',
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'demo',
