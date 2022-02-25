@@ -13,7 +13,7 @@ import {
   PersonDelete20Filled,
   CallEnd20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable): meeting/calling-composite */
+/* @conditional-compile-remove(call-with-chat-composite) */
 import {
   CameraSwitch24Regular,
   MicOn20Regular,
@@ -59,21 +59,21 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalCameraSwitch: <CameraSwitch24Regular />,
   /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonActive: <Chat20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonInactive: <Chat20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarPeopleButton: <People20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerMicrophones: <MicOn20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerPeople: <People20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSpeakers: <Speaker220Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedMicrophone: <MicOn20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
@@ -181,7 +181,7 @@ export type CallCompositeIcons = Partial<
   >
 >;
 
-/* @conditional-compile-remove-from(stable): meeting-composite */
+/* @conditional-compile-remove(call-with-chat-composite) */
 /**
  * Icons that can be only overriden in {@link CallWithChatComposite}.
  *
