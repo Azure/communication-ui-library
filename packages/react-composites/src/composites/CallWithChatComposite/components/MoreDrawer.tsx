@@ -80,8 +80,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerSpeakers'
         },
         text: speaker.name,
-        onItemClick: onSelectSpeaker
-      }))
+        onItemClick: onSelectSpeaker,
+        secondaryIconProps: isDeviceSelected(speaker, props.selectedSpeaker) ? { iconName: 'Accept' } : undefined
+      })),
+      secondaryText: props.selectedSpeaker?.name
     });
   }
 
@@ -94,7 +96,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         props.onSelectMicrophone(selected as AudioDeviceInfo);
       }
     },
-    [props.speakers, props.onSelectSpeaker]
+    [props.microphones, props.onSelectMicrophone]
   );
 
   if (props.microphones && props.microphones.length > 0) {
@@ -110,8 +112,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerMicrophones'
         },
         text: mic.name,
-        onItemClick: onSelectMicrophone
-      }))
+        onItemClick: onSelectMicrophone,
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
+      })),
+      secondaryText: props.selectedMicrophone?.name
     });
   }
 
