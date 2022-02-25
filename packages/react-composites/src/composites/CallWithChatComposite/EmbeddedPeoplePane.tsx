@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, FontIcon, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
 import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
@@ -8,6 +8,7 @@ import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
@@ -67,7 +68,7 @@ export const EmbeddedPeoplePane = (props: {
             <PrimaryButton
               onClick={() => copy(inviteLink)}
               styles={copyLinkButtonStyles}
-              onRenderIcon={() => <FontIcon iconName="Link" style={linkIconStyles} />}
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
               text="Copy invite link"
             />
           )}
@@ -85,13 +86,21 @@ export const EmbeddedPeoplePane = (props: {
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
-          <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
+          <DefaultButton
+            text="Copy invite link"
+            iconProps={{ iconName: safeGetLinkIconName() }}
+            onClick={() => copy(inviteLink)}
+          />
         )}
         {participantList}
       </Stack>
     </SidePane>
   );
 };
+
+// Remove safe getter when conditional-compile-remove-from(stable) meeting-composite is removed
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const safeGetLinkIconName = (): any => 'Link';
 
 /**
  * In a CallWithChat when a participant is removed, we must remove them from both

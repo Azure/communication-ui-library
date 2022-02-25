@@ -56,6 +56,8 @@ export const COMPOSITE_ONLY_ICONS = {
   ChevronLeft: <FontIcon iconName="ChevronLeft" />,
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   Download: <FontIcon iconName="Download" />,
+  /* @conditional-compile-remove-from(stable): meeting-composite */
+  Link: <FontIcon iconName="Link" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -229,6 +231,7 @@ export type CallWithChatCompositeIcons = Partial<
     | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonActive'
     | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarChatButtonInactive'
     | /* @conditional-compile-remove-from(stable) meeting-composite */ 'ControlBarPeopleButton'
+    | /* @conditional-compile-remove-from(stable) meeting-composite */ 'Link'
 
     // Call icons
     | 'ControlButtonCameraOff'
