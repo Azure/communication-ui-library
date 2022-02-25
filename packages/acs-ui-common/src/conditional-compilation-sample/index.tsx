@@ -193,7 +193,11 @@ function propTrampoline(): string {
 /* @conditional-compile-remove(stabilizedDemo) */
 export const thisIsNowStable = 42;
 
-/* But the following is removed because it contains one non-stabilized feature still. */
+/* The following is not removed because it contains one stabilized feature, along with a beta-only feature.
+ *
+ * If some code is needed for more than one feature, the first feature that is stabilized needs it.
+ * Thus the code is not stripped from stable flavor build.
+ */
 /* @conditional-compile-remove(stabilizedDemo) */
 /* @conditional-compile-remove(demo) */
 export const onlyPartiallyStable = 43;
