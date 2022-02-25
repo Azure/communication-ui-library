@@ -27,7 +27,7 @@ import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
 import { Circle20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
@@ -81,7 +81,7 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />
 };
 
@@ -124,7 +124,7 @@ export type ChatCompositeIcons = Partial<
     | 'SendBoxSendHovered'
     | 'EditBoxCancel'
     | 'EditBoxSubmit'
-    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
+    | /* @conditional-compile-remove(file-sharing) */ 'SendBoxAttachFile'
   >
 >;
 

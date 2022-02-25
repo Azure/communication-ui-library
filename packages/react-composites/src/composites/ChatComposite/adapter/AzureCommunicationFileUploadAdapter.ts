@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
@@ -25,7 +25,7 @@ export interface FileUploadAdapter {
   cancelFileUpload?: (id: string) => void;
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -82,7 +82,7 @@ class FileUploadContext {
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -149,7 +149,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private

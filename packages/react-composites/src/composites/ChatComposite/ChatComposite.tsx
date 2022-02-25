@@ -9,7 +9,7 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from './ChatScreen';
 
 /**
@@ -71,7 +71,7 @@ export type ChatCompositeOptions = {
    */
   autoFocus?: 'sendBoxTextField';
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
@@ -102,7 +102,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
    * @private
    */
   const fileSharingOptions = () => {
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     return {
       fileSharing: options?.fileSharing
     };
