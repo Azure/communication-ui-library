@@ -99,13 +99,17 @@ exports.default = babelHelper.declare((_api, opts) => {
 function Handle(path, match, featureSet, stabilizedFeatureSet) {
   let { node } = path;
 
-  const shouldRemove = node.leadingComments && node.leadingComments.some((comment) => containsDirective(node, comment, match, featureSet, stabilizedFeatureSet));
-  if (!shouldRemove) {
+  if (!node.leadingComments) {
+    return;
+  }
+  const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet));
+  if (!shouldRemoveNode(removalInstructions)) {
     return;
   }
 
-  node.leadingComments && node.leadingComments.forEach((comment) => {
-    if (!containsDirective(node, comment, match, featureSet, stabilizedFeatureSet)) {
+  node.leadingComments.forEach((comment) => {
+    const instruction = nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet)
+    if (instruction !== 'legacyRemove' && instruction !== 'remove') {
       return;
     }
     comment.ignore = true;
@@ -125,15 +129,15 @@ function Handle(path, match, featureSet, stabilizedFeatureSet) {
   }
 }
 
-function containsDirective(node, comment, match, featureSet, stabilizedFeatureSet) {
+function nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet) {
   if (comment.value.includes(match)) {
     // legacy annotation
-    return true;
+    return 'legacyRemove';
   }
 
   const featuresInComment = comment.value.match(CONDITIONAL_FEATURE_RE);
   if (!featuresInComment) {
-    return false;
+    return 'none';
   }
 
   // Check for validity first to catch errors even when valid features exist.
@@ -141,18 +145,25 @@ function containsDirective(node, comment, match, featureSet, stabilizedFeatureSe
   if (unknownFeatures.length > 0) {
     throw new Error(`Unknown conditional compilation features ${unknownFeatures} in file ${node.loc?.filename} at line ${node.loc?.start?.line}`);
   }
-  return featuresInComment.some(f => featureSet[f]);
+  // If any of the directives reference a stabilized feature, do not remove the associated node.
+  // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
+  // that node in the stable build.
+  if (featuresInComment.some(f => stabilizedFeatureSet[f])) {
+    return 'keep';
+  }
+  return 'remove';
 }
 
-const replacerFunc = () => {
-  const visited = new WeakSet();
-  return (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (visited.has(value)) {
-        return;
-      }
-      visited.add(value);
-    }
-    return value;
-  };
-};
+function shouldRemoveNode(instructions) {
+  // Legacy directive gets highest priority because it doesn't respect specific features.
+  if (instructions.includes('legacyRemove')) {
+    return true;
+  }
+  // If any of the directives reference a stabilized feature, do not remove the associated node.
+  // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
+  // that node in the stable build.
+  if (instructions.includes('keep')) {
+    return false;
+  }
+  return instructions.includes('remove');
+}
