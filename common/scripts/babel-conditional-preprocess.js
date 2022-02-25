@@ -6,7 +6,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const babelHelper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
 
-const CONDITIONAL_FEATURE_RE = /@conditional-compile-remove\(.*\)/g;
+// Note: This uses the non-greedy `*?` so that the first closing `)` finishes the tag.
+const CONDITIONAL_FEATURE_RE = /@conditional-compile-remove\(.*?\)/g;
 
 function createFeatureSet(features) {
   const featureSet = {}
