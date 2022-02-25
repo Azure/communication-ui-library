@@ -14,23 +14,24 @@ import { ChatCompositeIcon } from '../common/icons';
 export const FileUploadCards = (): JSX.Element => {
   const truncateLength = 15;
   const adapter = useAdapter();
-  const uploadedFilesSelector = useSelector(fileUploadsSelector);
-  const fileUploads = uploadedFilesSelector.files;
+  const { files } = useSelector(fileUploadsSelector);
   return (
     <FileCardGroup>
-      {fileUploads &&
-        fileUploads.map((file) => (
-          <FileCard
-            fileName={truncatedFileName(file.filename, truncateLength)}
-            progress={file.progress}
-            key={file.id}
-            fileExtension={extension(file.filename)}
-            actionIcon={<ChatCompositeIcon iconName="Cancel" />}
-            actionHandler={() => {
-              adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
-            }}
-          />
-        ))}
+      {files &&
+        files
+          .filter((file) => !file.errorMessage)
+          .map((file) => (
+            <FileCard
+              fileName={truncatedFileName(file.filename, truncateLength)}
+              progress={file.progress}
+              key={file.id}
+              fileExtension={extension(file.filename)}
+              actionIcon={<ChatCompositeIcon iconName="Cancel" />}
+              actionHandler={() => {
+                adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
+              }}
+            />
+          ))}
     </FileCardGroup>
   );
 };
