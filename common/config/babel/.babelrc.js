@@ -16,9 +16,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-1.4.2-beta.1',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
-        // Incoming chat notification in `CallWithChatComposite`.
-        // TODO: Merge this with `call-with-chat-composite` feature.
-        'chat-notification-icon',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
         'control-bar-button-injection',
