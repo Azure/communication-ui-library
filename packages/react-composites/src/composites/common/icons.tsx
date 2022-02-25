@@ -25,7 +25,7 @@ import {
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
-/* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
+/* @conditional-compile-remove(chat-notification-icon) */
 import { Circle20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
@@ -57,7 +57,7 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   /* @conditional-compile-remove-from(stable) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
-  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
+  /* @conditional-compile-remove(chat-notification-icon)*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonActive: <Chat20Filled />,
@@ -190,7 +190,7 @@ export type CallCompositeIcons = Partial<
 export type CallWithChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
-    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
+    | /* @conditional-compile-remove(chat-notification-icon) */ 'ControlBarButtonBadgeIcon'
     | 'ControlBarChatButtonActive'
     | 'ControlBarChatButtonInactive'
   >
