@@ -916,6 +916,9 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @beta
+export const completedFileUpload: (data: FileMetadata) => ObservableFileUpload;
+
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
@@ -1855,8 +1858,9 @@ export interface NetworkDiagnosticsState {
 
 // @beta
 export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public

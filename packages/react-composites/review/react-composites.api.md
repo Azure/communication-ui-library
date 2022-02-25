@@ -520,6 +520,9 @@ export interface ChatCompositeStrings {
     chatListHeader: string;
 }
 
+// @beta
+export const completedFileUpload: (data: FileMetadata) => ObservableFileUpload;
+
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
@@ -828,8 +831,9 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 
 // @beta
 export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public
