@@ -892,7 +892,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
@@ -1016,7 +1016,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
-    showCamerSwitcherInLocalPreview?: boolean;
+    showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;

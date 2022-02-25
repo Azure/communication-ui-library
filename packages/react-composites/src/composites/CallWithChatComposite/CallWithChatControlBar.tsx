@@ -65,11 +65,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
-  /**
-   * Until mobile call-with-chat is worked on, statically set the width of the
-   * control bar such that all controls can be accessed.
-   */
-  const temporaryCallWithChatControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
     [props.mobileView]
@@ -103,14 +98,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   );
 
   return (
-    <Stack
-      horizontal
-      className={mergeStyles(
-        temporaryCallWithChatControlBarStyles,
-        callControlsContainerStyles,
-        controlBarContainerStyles
-      )}
-    >
+    <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
@@ -145,27 +133,31 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     styles={commonButtonStyles}
                   />
                 )}
-                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
+                {props.mobileView && (
+                  <MoreButton data-ui-id="call-with-chat-composite-more-button" onClick={props.onMoreButtonClicked} />
+                )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>
           </Stack>
         </CallAdapterProvider>
       </Stack.Item>
-      <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-        {isEnabled(options?.peopleButton) && (
-          <PeopleButton
-            checked={props.peopleButtonChecked}
-            showLabel={true}
-            onClick={props.onPeopleButtonClicked}
-            data-ui-id="call-with-chat-composite-people-button"
-            disabled={props.disableButtonsForLobbyPage}
-            label={callWithChatStrings.peopleButtonLabel}
-            styles={commonButtonStyles}
-          />
-        )}
-        {!props.mobileView && isEnabled(options?.chatButton) && chatButton}
-      </Stack>
+      {!props.mobileView && (
+        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+          {isEnabled(options?.peopleButton) && (
+            <PeopleButton
+              checked={props.peopleButtonChecked}
+              showLabel={true}
+              onClick={props.onPeopleButtonClicked}
+              data-ui-id="call-with-chat-composite-people-button"
+              disabled={props.disableButtonsForLobbyPage}
+              label={callWithChatStrings.peopleButtonLabel}
+              styles={commonButtonStyles}
+            />
+          )}
+          {isEnabled(options?.chatButton) && chatButton}
+        </Stack>
+      )}
     </Stack>
   );
 };
