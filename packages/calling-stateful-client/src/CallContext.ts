@@ -11,7 +11,7 @@ import {
   CallState as CallStatus,
   RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   CallClientState,
@@ -78,7 +78,7 @@ export class CallContext {
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
         // Log to `info` because AzureLogger.verbose() doesn't show up in console.
-        this._logger.info(`State change: ${JSON.stringify(patches)}`);
+        this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
       }
     });
     if (!this._batchMode) {
