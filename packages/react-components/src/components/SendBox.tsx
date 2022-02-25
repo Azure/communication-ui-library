@@ -8,7 +8,8 @@ import {
   sendButtonStyle,
   sendIconStyle,
   sendBoxWrapperStyles,
-  borderAndBoxShadowStyle
+  borderAndBoxShadowStyle,
+  errorBarStyle
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -175,6 +176,12 @@ export interface SendBoxProps {
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /**
+   * Optional array of active file uploads where each object has attibutes
+   * of a file upload like name, progress, metadata, errormessage etc.
+   * @beta
+   */
   activeFileUploads?: FileUploadState[];
 }
 
@@ -236,27 +243,17 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  function renderErrorMessage(fileUploads: FileUploadState[]): JSX.Element {
+  const renderErrorMessage = (fileUploads: FileUploadState[]): JSX.Element => {
     let errorMsg: JSX.Element = <Stack></Stack>;
     fileUploads &&
       fileUploads.forEach(function (file: FileUploadState) {
         if (file.errorMessage) {
-          errorMsg = (
-            <Stack
-              className={mergeStyles({
-                background: '#FFF4CE',
-                padding: '0.50rem',
-                borderRadius: theme.effects.roundedCorner4
-              })}
-            >
-              {file.errorMessage}
-            </Stack>
-          );
+          errorMsg = <Stack className={mergeStyles(errorBarStyle(theme))}>{file.errorMessage}</Stack>;
           return;
         }
       });
     return errorMsg;
-  }
+  };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
