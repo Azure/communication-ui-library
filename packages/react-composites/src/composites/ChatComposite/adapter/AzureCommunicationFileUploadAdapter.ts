@@ -1,21 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FileUploadState, ObservableFileUpload } from '../file-sharing';
+
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
+import { FileMetadata, FileSharingMetadata } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
  */
 export type FileUploadsUiState = Record<string, FileUploadState>;
+
 /**
  * @beta
  */
@@ -167,9 +169,3 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
 };
-
-/**
- * Workaround to make this module compile under the `--isolatedModules` flag.
- * @internal
- */
-export {};
