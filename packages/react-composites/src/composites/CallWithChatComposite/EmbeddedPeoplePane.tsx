@@ -15,7 +15,7 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
-import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+import { peoplePaneContainerStyle, peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
@@ -92,7 +92,7 @@ export const EmbeddedPeoplePane = (props: {
         onChatButtonClicked={props.onChatButtonClick}
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
-        <Stack verticalFill tokens={peoplePaneContainerTokens}>
+        <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
           {participantList}
           {inviteLink && (
             <PrimaryButton
