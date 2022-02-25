@@ -14,6 +14,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-1.4.2-beta.1',
+        // Participant pane in the `ChatComposite`.
+        'chat-composite-participant-pane',
         // Incoming chat notification in `CallWithChatComposite`.
         // TODO: Merge this with `call-with-chat-composite` feature.
         'chat-notification-icon',

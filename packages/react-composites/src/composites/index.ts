@@ -11,7 +11,7 @@ export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(call-with-chat-composite) */
 export * from './CallWithChatComposite';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(call-with-chat-composite) */
 export { createAzureCommunicationCallWithChatAdapter } from './CallWithChatComposite';

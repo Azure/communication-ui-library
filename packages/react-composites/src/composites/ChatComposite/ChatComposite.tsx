@@ -52,7 +52,7 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   errorBar?: boolean;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
   /**
    * Show or hide the participant pane. This feature is in beta and not supported on mobile or narrow screen views.
    * @defaultValue false

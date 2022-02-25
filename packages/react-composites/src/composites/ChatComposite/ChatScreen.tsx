@@ -39,7 +39,7 @@ import {
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
@@ -191,7 +191,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack>
         </Stack>
         {
-          /* @conditional-compile-remove-from(stable) */
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           options?.participantPane === true && (
             <ChatScreenPeoplePane
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}

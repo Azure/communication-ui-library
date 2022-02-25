@@ -55,7 +55,7 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
   /* @conditional-compile-remove(chat-notification-icon)*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
@@ -177,7 +177,7 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
-    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
+    | /* @conditional-compile-remove(local-camera-switcher) */ 'LocalCameraSwitch'
   >
 >;
 
