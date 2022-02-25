@@ -5,7 +5,8 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
+import { EmbeddedChatPane } from './EmbeddedChatPane';
+import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import {

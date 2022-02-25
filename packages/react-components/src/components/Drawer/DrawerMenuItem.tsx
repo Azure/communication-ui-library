@@ -79,7 +79,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
         <Text>{props.text}</Text>
       </Stack.Item>
       {props.secondaryText && (
-        <Stack.Item styles={drawerMenuItemTextStyles}>
+        <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
           <Text className={mergeStyles({ color: theme.palette.neutralSecondary })}>{props.secondaryText}</Text>
         </Stack.Item>
       )}
@@ -126,4 +126,9 @@ const iconStyles: IStyle = {
     alignItems: 'center',
     height: '100%'
   }
+};
+
+const secondaryTextStyles: IStyle = {
+  // limit width for secondaryText in the menu item so it does not overlap with text on left.
+  maxWidth: '50%'
 };
