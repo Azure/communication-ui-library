@@ -56,7 +56,7 @@ export const EmbeddedPeoplePane = (props: {
               setMenuItems([
                 {
                   itemKey: 'remove',
-                  text: 'Remove',
+                  text: callWithChatStrings.removeMenuLabel,
                   onItemClick: () => {
                     if (participant?.userId) {
                       participantListDefaultProps.onRemoveParticipant?.(participant?.userId);
@@ -99,7 +99,7 @@ export const EmbeddedPeoplePane = (props: {
               onClick={() => copy(inviteLink)}
               styles={copyLinkButtonStyles}
               onRenderIcon={() => <FontIcon iconName="Link" style={linkIconStyles} />}
-              text="Copy invite link"
+              text={callWithChatStrings.copyInviteLinkButtonLabel}
             />
           )}
         </Stack>
