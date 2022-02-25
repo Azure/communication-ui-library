@@ -144,6 +144,7 @@ export type {
   HorizontalGalleryStyles,
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
+  LocalTileMode,
   Message,
   MessageAttachedStatus,
   MessageCommon,

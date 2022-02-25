@@ -519,6 +519,9 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
+// @public (undocumented)
+export type LocalTileMode = 'default' | 'floatingLocalVideo' | undefined;
+
 // Warning: (ae-internal-missing-underscore) The name "LocalVideoCameraCycleButton" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
@@ -958,7 +961,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: LocalTileMode;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;

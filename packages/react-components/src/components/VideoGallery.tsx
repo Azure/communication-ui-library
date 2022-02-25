@@ -74,6 +74,15 @@ export interface VideoGalleryStrings {
 }
 
 /**
+ * @public
+ */
+export type LocalTileMode =
+  | 'default'
+  | 'floatingLocalVideo'
+  | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo'
+  | undefined;
+
+/**
  * {@link VideoGallery} Component Styles.
  * @public
  */
@@ -102,10 +111,7 @@ export interface VideoGalleryProps {
    */
   styles?: VideoGalleryStyles;
   /** Layout of the video tiles. */
-  layout?:
-    | 'default'
-    | 'floatingLocalVideo'
-    | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo';
+  layout?: LocalTileMode;
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -425,8 +431,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 };
 
 function shouldAddControlsToLocalVideoTrampoline(
-  layout: 'default' | 'floatingLocalVideo' | 'controlsLocalVideo' | undefined,
+  layout: LocalTileMode,
   remoteParticipants: VideoGalleryRemoteParticipant[]
 ): boolean {
-  return !!(layout === 'controlsLocalVideo' && remoteParticipants.length > 0);
+  return !!((layout as string) === 'controlsLocalVideo' && remoteParticipants.length > 0);
 }

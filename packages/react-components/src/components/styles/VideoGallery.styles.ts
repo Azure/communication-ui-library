@@ -62,8 +62,8 @@ export const floatingLocalVideoModalStyle = (
  */
 export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
   return {
-    width: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    height: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
     position: 'absolute',
     bottom: '0.5rem',
     borderRadius: theme.effects.roundedCorner4,
@@ -95,7 +95,7 @@ export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX,
     height: '100%',
     width: '100%'
   }
@@ -106,9 +106,6 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
  */
 export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
-    maxHeight: isNarrow
-      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
-      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     minHeight: isNarrow
       ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
@@ -180,8 +177,8 @@ export const layerHostStyle: IStyle = {
 export const localVideoCameraCycleButtonStyles: IButtonStyles = {
   root: {
     position: 'absolute',
-    right: '0.2rem',
-    top: '0.2rem',
+    right: '0.1rem',
+    top: '0.1rem',
     color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
     zIndex: 2, // shows the button directly over the local video feed.
     background: 'transparent'

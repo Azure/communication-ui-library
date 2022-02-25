@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback, LocalTileMode } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -60,13 +60,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const layout = (
-    isMobile?: boolean
-  ):
-    | 'default'
-    | 'floatingLocalVideo'
-    | /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */ 'controlsLocalVideo'
-    | undefined => {
+  const layout = (isMobile?: boolean): LocalTileMode => {
     /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
     return isMobile ? 'controlsLocalVideo' : 'floatingLocalVideo';
     return 'floatingLocalVideo';
