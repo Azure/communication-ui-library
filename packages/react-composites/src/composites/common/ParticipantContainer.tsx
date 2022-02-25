@@ -11,8 +11,7 @@ import {
   OnRenderAvatarCallback,
   ParticipantList,
   ParticipantListProps,
-  ParticipantMenuItemsCallback,
-  ParticipantListParticipant
+  ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
@@ -45,7 +44,6 @@ export const ParticipantListWithHeading = (props: {
   title?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  onParticipantClick?: (props?: ParticipantListParticipant) => void;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
@@ -72,7 +70,6 @@ export const ParticipantListWithHeading = (props: {
             />
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          onParticipantClick={props.onParticipantClick}
         />
       </FocusZone>
     </Stack>
