@@ -520,9 +520,6 @@ export interface ChatCompositeStrings {
     chatListHeader: string;
 }
 
-// @beta
-export const completedFileUpload: (data: FileMetadata) => ObservableFileUpload;
-
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
@@ -625,6 +622,9 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @beta
+export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;

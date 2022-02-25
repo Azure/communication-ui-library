@@ -916,9 +916,6 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
-// @beta
-export const completedFileUpload: (data: FileMetadata) => ObservableFileUpload;
-
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
@@ -1140,6 +1137,9 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @beta
+export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;

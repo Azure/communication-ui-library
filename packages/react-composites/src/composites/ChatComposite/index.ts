@@ -40,7 +40,7 @@ export type {
   UploadCompleteListener,
   UploadFailedListener,
   UploadProgressListener,
-  completedFileUpload
+  createCompletedFileUpload
 } from './file-sharing';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 export type { FileSharingOptions } from './ChatScreen';

@@ -225,7 +225,7 @@ export interface FileUploadEventEmitter {
  * Allows adding already uploaded files to the send box in Chat Composite.
  * @beta
  */
-export const completedFileUpload = (data: FileMetadata): ObservableFileUpload => {
+export const createCompletedFileUpload = (data: FileMetadata): ObservableFileUpload => {
   return {
     id: nanoid(),
     fileName: data.name,
