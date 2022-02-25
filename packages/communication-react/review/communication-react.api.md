@@ -609,7 +609,7 @@ export type CallWithChatCompositeOptions = {
 // @beta
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
     // (undocumented)
-    callWithChatAdapter: CallWithChatAdapter;
+    adapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
