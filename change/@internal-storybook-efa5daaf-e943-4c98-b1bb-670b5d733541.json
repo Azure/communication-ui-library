@@ -1,0 +1,6 @@
+{
+  "type": "patch",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
