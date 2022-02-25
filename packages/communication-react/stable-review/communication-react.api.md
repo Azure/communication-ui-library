@@ -499,7 +499,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -538,6 +538,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
+    fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -576,13 +577,14 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | 'SendBoxAttachFile'>>;
 
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
+    fileSharing?: FileSharingOptions;
 };
 
 // @public
@@ -852,6 +854,7 @@ export const COMPOSITE_ONLY_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
 };
 
 // @public
@@ -1022,6 +1025,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     NoticePageLeftCall: JSX.Element;
     NoticePageRemovedFromCall: JSX.Element;
+    SendBoxAttachFile: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1201,6 +1205,72 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @beta
+export interface FileDownloadErrorMessage {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
+// @beta
+export interface FileSharingOptions {
+    accept?: string;
+    downloadHandler?: FileDownloadHandler;
+    multiple?: boolean;
+    uploadHandler: FileUploadHandler;
+}
+
+// @beta (undocumented)
+export interface FileUploadAdapter {
+    // (undocumented)
+    cancelFileUpload?: (id: string) => void;
+    // (undocumented)
+    clearFileUploads?: () => void;
+    // (undocumented)
+    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadEventEmitter {
+    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    off(event: 'uploadFailed', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+}
+
+// @beta
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
+
+// @beta
+export interface FileUploadManager {
+    file: File;
+    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressed: (value: number) => void;
+}
+
+// @beta
+export interface FileUploadState {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    metadata?: FileMetadata;
+    progress: number;
+}
+
+// @beta
+export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -1518,6 +1588,12 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export interface ObservableFileUpload extends FileUploadEventEmitter {
+    file: File;
+    id: string;
+}
+
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
@@ -1744,6 +1820,8 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -1894,6 +1972,15 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @beta
+export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+
+// @beta
+export type UploadFailedListener = (id: string, message: string) => void;
+
+// @beta
+export type UploadProgressListener = (id: string, value: number) => void;
 
 // @public
 export const useCall: () => Call | undefined;

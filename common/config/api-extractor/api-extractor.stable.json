@@ -28,7 +28,7 @@
         "addToApiReportFile": false
       },
       "ae-incompatible-release-tags": {
-        "logLevel": "error",
+        "logLevel": "warning",
         "addToApiReportFile": false
       }
     },
