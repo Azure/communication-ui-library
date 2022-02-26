@@ -123,6 +123,14 @@ export function d(e: number, f?: number, g?: number): void {
   console.log(f, g);
 }
 
+// @conditional-compile-remove(demo)
+// Add comments after the directive
+export const v1 = 0;
+/**
+ * @conditional-compile-remove(demo)
+ * Or in the same comment block
+ */
+export const v2 = 1;
 /******************************************************************************
  *
  * Conditional business logic
