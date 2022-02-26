@@ -39,12 +39,12 @@ import {
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
 /* @conditional-compile-remove-from(stable): FILE_SHARING */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
@@ -151,7 +151,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
@@ -166,7 +166,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
-            /* @conditional-compile-remove-from(stable): FILE_SHARING */
+            /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -181,7 +181,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
-              /* @conditional-compile-remove-from(stable): FILE_SHARING */
+              /* @conditional-compile-remove(file-sharing) */
               onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
@@ -197,7 +197,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack>
         </Stack>
         {
-          /* @conditional-compile-remove-from(stable) */
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           options?.participantPane === true && (
             <ChatScreenPeoplePane
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}

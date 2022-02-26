@@ -142,7 +142,7 @@ export interface SendBoxProps {
    * When undefined nothing has focus on render
    */
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand
    * veritcally to accomodate the uploaded files. File uploads will

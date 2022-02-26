@@ -27,7 +27,7 @@ export type {
 
 export * from './Strings';
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 export type {
   FileDownloadErrorMessage,
   FileDownloadHandler,
@@ -41,7 +41,7 @@ export type {
   UploadFailedListener,
   UploadProgressListener
 } from './file-sharing';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 export type { FileUploadsUiState, FileUploadAdapter } from './adapter/AzureCommunicationFileUploadAdapter';
