@@ -8,11 +8,11 @@ import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { ControlBarButtonStyles } from './ControlBarButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 
 const defaultLocalVideoViewOptions = {
@@ -38,19 +38,19 @@ export interface CameraButtonStrings {
   tooltipOffContent?: string;
   /** Tooltip content when the button is disabled due to video loading. */
   tooltipVideoLoadingContent?: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of camera menu
    */
   cameraMenuTitle: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of camera menu
    */
   cameraMenuTooltip: string;
 }
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for {@link CameraButton}
  *
@@ -63,7 +63,7 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for the {@link CameraButton} menu.
  *
@@ -91,22 +91,22 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOptions?: VideoStreamOptions;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available cameras for selection
    */
   cameras?: OptionsDevice[];
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Camera that is shown as currently selected
    */
   selectedCamera?: OptionsDevice;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Callback when a camera is selected
    */
   onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -117,7 +117,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<CameraButtonStrings>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Styles for {@link CameraButton} and the device selection flyout.
    */
@@ -178,7 +178,7 @@ const generateDefaultDeviceMenuPropsTrampoline = (
   props: CameraButtonProps,
   strings: CameraButtonStrings
 ): IContextualMenuProps | undefined => {
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   if (props.enableDeviceSelectionMenu) {
     return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
   }
@@ -186,7 +186,7 @@ const generateDefaultDeviceMenuPropsTrampoline = (
 };
 
 const enableDeviceSelectionMenuTrampoline = (props: CameraButtonProps): boolean => {
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   if (props.enableDeviceSelectionMenu) {
     return true;
   }
