@@ -107,18 +107,23 @@ function Handle(path, match, featureSet, stabilizedFeatureSet) {
     return;
   }
 
-  node.leadingComments.forEach((comment) => {
-    const instruction = nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet)
-    if (instruction !== 'legacyRemove' && instruction !== 'remove') {
-      return;
-    }
+  const firstRemovalInstructionIdx = node.leadingComments.findIndex((comment) => {
+    const instruction = nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet);
+    return instruction === 'legacyRemove' || instruction === 'remove';
+  })
+  if (firstRemovalInstructionIdx === -1) {
+    return;
+  }
+
+  // Remove the first removal instruction as well as all following comments so that
+  // those comments aren't added to the AST node that follows the removed node.
+  node.leadingComments.slice(firstRemovalInstructionIdx).forEach((comment) => {
     comment.ignore = true;
     // Comment is inherited by next line even it is set to 'ignore'.
     // Clear the conditional compilation directive to avoid removing the
     // next line.
     comment.value = '';
   })
-
   // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
   // Replacing it with jSXEmptyExpression will get us the same result
   // There will always be only one expression under JSXExpressionContainer
