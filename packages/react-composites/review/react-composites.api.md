@@ -624,6 +624,9 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta
+export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
+
+// @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
 // @beta
@@ -828,8 +831,9 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 
 // @beta
 export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public

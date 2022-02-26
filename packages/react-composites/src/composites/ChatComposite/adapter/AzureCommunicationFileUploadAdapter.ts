@@ -46,8 +46,9 @@ class FileUploadContext {
     const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
       map[fileUpload.id] = {
         id: fileUpload.id,
-        filename: fileUpload.file.name,
-        progress: 0
+        filename: fileUpload.fileName,
+        progress: 0,
+        metadata: fileUpload.metadata
       };
       return map;
     }, {});
