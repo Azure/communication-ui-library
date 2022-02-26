@@ -76,17 +76,9 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
  * @private
  */
 export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
-  return {
-    width: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    height: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
-    position: 'absolute',
-    bottom: '0.5rem',
-    borderRadius: theme.effects.roundedCorner4,
-    overflow: 'hidden',
-    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' }),
-    zIndex: LOCAL_VIDEO_TILE_ZINDEX,
-    boxShadow: theme.effects.elevation4
-  };
+  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
+    root: { boxShadow: theme.effects.elevation4 }
+  });
 };
 
 /**
