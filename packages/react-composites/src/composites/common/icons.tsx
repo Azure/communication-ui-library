@@ -13,14 +13,21 @@ import {
   PersonDelete20Filled,
   CallEnd20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable): meeting/calling-composite */
-import { CameraSwitch24Regular, MicOn20Regular, People20Regular, Speaker220Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(call-with-chat-composite) */
+import {
+  CameraSwitch24Regular,
+  MicOn20Regular,
+  People20Regular,
+  Speaker220Regular,
+  Chat20Regular,
+  Chat20Filled
+} from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
-/* @conditional-compile-remove-from(stable) Chat_Notification_Icon */
+/* @conditional-compile-remove(chat-notification-icon) */
 import { Circle20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
@@ -48,19 +55,25 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
-  /* @conditional-compile-remove-from(stable) Chat_Notification_Icon*/
+  /* @conditional-compile-remove(chat-notification-icon)*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
+  ControlBarChatButtonActive: <Chat20Filled />,
+  /* @conditional-compile-remove(call-with-chat-composite) */
+  ControlBarChatButtonInactive: <Chat20Regular />,
+  /* @conditional-compile-remove(call-with-chat-composite) */
+  ControlBarPeopleButton: <People20Regular />,
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerMicrophones: <MicOn20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerPeople: <People20Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSpeakers: <Speaker220Regular />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedMicrophone: <MicOn20Filled />,
-  /* @conditional-compile-remove-from(stable): meeting/calling-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
@@ -68,7 +81,7 @@ export const COMPOSITE_ONLY_ICONS = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />
 };
 
@@ -85,7 +98,7 @@ export const DEFAULT_COMPOSITE_ICONS = {
 /**
  * Icons that can be overridden in one of the composites exported by this library.
  *
- * See {@link ChatCompositeIcons} and {@link CallCompositeIcons} for more targeted types.
+ * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
  *
  * @public
  */
@@ -99,19 +112,19 @@ export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY
 export type ChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
     | 'MessageDelivered'
+    | 'MessageEdit'
     | 'MessageFailed'
+    | 'MessageRemove'
     | 'MessageSeen'
     | 'MessageSending'
-    | 'MessageEdit'
-    | 'MessageRemove'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
     | 'SendBoxSend'
     | 'SendBoxSendHovered'
-    | 'EditBoxCancel'
-    | 'EditBoxSubmit'
-    | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'
+    | /* @conditional-compile-remove(file-sharing) */ 'SendBoxAttachFile'
   >
 >;
 
@@ -164,7 +177,80 @@ export type CallCompositeIcons = Partial<
     | 'ParticipantItemOptionsHovered'
     | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
-    | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'
-    | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'
+    | /* @conditional-compile-remove(local-camera-switcher) */ 'LocalCameraSwitch'
+  >
+>;
+
+/**
+ * Icons that can be overridden for {@link CallWithChatComposite}.
+ *
+ * @beta
+ */
+export type CallWithChatCompositeIcons = Partial<
+  Pick<
+    CompositeIcons,
+    // CallWithChat Specific Icons
+    | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarButtonBadgeIcon'
+    | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarChatButtonActive'
+    | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarChatButtonInactive'
+    | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarPeopleButton'
+
+    // Call icons
+    | 'ControlButtonCameraOff'
+    | 'ControlButtonCameraOn'
+    | 'ControlButtonEndCall'
+    | 'ControlButtonMicOff'
+    | 'ControlButtonMicOn'
+    | 'ControlButtonOptions'
+    | 'ControlButtonScreenShareStart'
+    | 'ControlButtonScreenShareStop'
+    | 'ErrorBarCallCameraAccessDenied'
+    | 'ErrorBarCallCameraAlreadyInUse'
+    | 'ErrorBarCallLocalVideoFreeze'
+    | 'ErrorBarCallMacOsCameraAccessDenied'
+    | 'ErrorBarCallMacOsMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneMutedBySystem'
+    | 'ErrorBarCallNetworkQualityLow'
+    | 'ErrorBarCallNoMicrophoneFound'
+    | 'ErrorBarCallNoSpeakerFound'
+    | 'HorizontalGalleryLeftButton'
+    | 'HorizontalGalleryRightButton'
+    | 'LobbyScreenConnectingToCall'
+    | 'LobbyScreenWaitingToBeAdmitted'
+    | 'LocalDeviceSettingsCamera'
+    | 'LocalDeviceSettingsMic'
+    | 'LocalDeviceSettingsSpeaker'
+    | 'LocalPreviewPlaceholder'
+    | 'Muted'
+    | 'NetworkReconnectIcon'
+    | 'NoticePageAccessDeniedTeamsMeeting'
+    | 'NoticePageJoinCallFailedDueToNoNetwork'
+    | 'NoticePageLeftCall'
+    | 'NoticePageRemovedFromCall'
+    | 'OptionsCamera'
+    | 'OptionsMic'
+    | 'OptionsSpeaker'
+    | 'ParticipantItemMicOff'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'ParticipantItemScreenShareStart'
+    | 'VideoTileMicOff'
+    | /* @conditional-compile-remove(call-with-chat-composite) */ 'LocalCameraSwitch'
+
+    // Chat icons
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
+    | 'MessageDelivered'
+    | 'MessageEdit'
+    | 'MessageFailed'
+    | 'MessageRemove'
+    | 'MessageSeen'
+    | 'MessageSending'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'SendBoxSend'
+    | 'SendBoxSendHovered'
+    | /* @conditional-compile-remove(file-sharing) */ 'SendBoxAttachFile'
   >
 >;

@@ -382,7 +382,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -576,13 +576,13 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered'>>;
 
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
 };
 
 // @public
@@ -1431,6 +1431,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1741,7 +1742,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;

@@ -92,7 +92,7 @@ const onFetchCustomButtonPropsTrampoline = (
   options?: CallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove-from(stable): custom button injection */
+  /* @conditional-compile-remove(control-bar-button-injection) */
   response = options?.onFetchCustomButtonProps;
   return response;
 };

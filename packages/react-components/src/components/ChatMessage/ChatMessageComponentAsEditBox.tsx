@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
+import {
+  editBoxStyle,
+  inputBoxIcon,
+  editingButtonStyle,
+  editBoxStyleSet,
+  borderAndBoxShadowStyle
+} from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
 
@@ -84,43 +90,47 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   return (
-    <InputBoxComponent
-      inlineChildren={props.inlineEditButtons}
-      id={'editbox'}
-      textFieldRef={editTextFieldRef}
-      inputClassName={editBoxStyle(props.inlineEditButtons)}
-      placeholderText={strings.editBoxPlaceholderText}
-      textValue={textValue}
-      onChange={setText}
-      onEnterKeyDown={() => {
-        onSubmit(textValue);
-      }}
-      supportNewline={false}
-      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-      errorMessage={textTooLongMessage}
-      styles={editBoxStyles}
-    >
-      <InputBoxButton
-        className={editingButtonStyle}
-        ariaLabel={strings.editBoxCancelButton}
-        onRenderIcon={onRenderThemedCancelIcon}
-        onClick={() => {
-          onCancel && onCancel();
+    <Stack className={mergeStyles(borderAndBoxShadowStyle(theme))}>
+      <InputBoxComponent
+        inlineChildren={props.inlineEditButtons}
+        id={'editbox'}
+        textFieldRef={editTextFieldRef}
+        inputClassName={editBoxStyle(props.inlineEditButtons)}
+        placeholderText={strings.editBoxPlaceholderText}
+        textValue={textValue}
+        onChange={setText}
+        onEnterKeyDown={() => {
+          onSubmit(textValue);
         }}
-        id={'dismissIconWrapper'}
-      />
-      <InputBoxButton
-        className={editingButtonStyle}
-        ariaLabel={strings.editBoxSubmitButton}
-        onRenderIcon={onRenderThemedSubmitIcon}
-        onClick={(e) => {
-          if (!textValueOverflow && textValue !== '') {
-            onSubmit(textValue);
-          }
-          e.stopPropagation();
-        }}
-        id={'submitIconWrapper'}
-      />
-    </InputBoxComponent>
+        supportNewline={false}
+        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        errorMessage={textTooLongMessage}
+        styles={editBoxStyles}
+      >
+        <InputBoxButton
+          className={editingButtonStyle}
+          ariaLabel={strings.editBoxCancelButton}
+          tooltipContent={strings.editBoxCancelButton}
+          onRenderIcon={onRenderThemedCancelIcon}
+          onClick={() => {
+            onCancel && onCancel();
+          }}
+          id={'dismissIconWrapper'}
+        />
+        <InputBoxButton
+          className={editingButtonStyle}
+          ariaLabel={strings.editBoxSubmitButton}
+          tooltipContent={strings.editBoxSubmitButton}
+          onRenderIcon={onRenderThemedSubmitIcon}
+          onClick={(e) => {
+            if (!textValueOverflow && textValue !== '') {
+              onSubmit(textValue);
+            }
+            e.stopPropagation();
+          }}
+          id={'submitIconWrapper'}
+        />
+      </InputBoxComponent>
+    </Stack>
   );
 };

@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
@@ -25,7 +25,7 @@ export interface FileUploadAdapter {
   cancelFileUpload?: (id: string) => void;
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -82,7 +82,7 @@ class FileUploadContext {
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -105,12 +105,13 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
     this.fileUploads = this.fileUploads.concat(fileUploads);
     this.context.setFileUploads(this.fileUploads);
-    this.fileUploads.forEach(this.subscribeAllEvents);
+    this.fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
   }
 
   clearFileUploads(): void {
     this.context.setFileUploads([]);
-    this.fileUploads.forEach(this.unsubscribeAllEvents);
+    this.fileUploads.forEach((fileUpload) => this.unsubscribeAllEvents(fileUpload));
+    this.fileUploads = [];
   }
 
   cancelFileUpload(id: string): void {
@@ -136,19 +137,19 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   private subscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload.on('uploadProgressed', this.fileUploadProgressListener);
-    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener);
-    fileUpload.on('uploadFailed', this.fileUploadFailedListener);
+    fileUpload.on('uploadProgressed', this.fileUploadProgressListener.bind(this));
+    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener.bind(this));
+    fileUpload.on('uploadFailed', this.fileUploadFailedListener.bind(this));
   }
 
   private unsubscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener);
-    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener);
-    fileUpload?.off('uploadFailed', this.fileUploadFailedListener);
+    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener.bind(this));
+    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener.bind(this));
+    fileUpload?.off('uploadFailed', this.fileUploadFailedListener.bind(this));
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private
@@ -158,7 +159,7 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
-      if (file.metadata) {
+      if (!file.errorMessage && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });

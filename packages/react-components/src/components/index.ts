@@ -49,7 +49,7 @@ export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton'
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 export type { CameraButtonContextualMenuStyles, CameraButtonStyles } from './CameraButton';
 
 export { ControlBar } from './ControlBar';
@@ -63,7 +63,7 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';

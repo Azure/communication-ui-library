@@ -110,10 +110,11 @@ export interface SendBoxProps {
    */
   strings?: Partial<SendBoxStrings>;
   /**
-   * boolean to determine if the input box has focus on render or not.
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | false;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand
    * veritcally to accomodate the uploaded files. File uploads will
@@ -254,10 +255,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           id={'sendIconWrapper'}
           className={mergedSendButtonStyle}
           ariaLabel={localeStrings.sendButtonAriaLabel}
+          tooltipContent={localeStrings.sendButtonAriaLabel}
         />
       </InputBoxComponent>
       {
-        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        /* @conditional-compile-remove(file-sharing) */
         props.onRenderFileUploads && props.onRenderFileUploads()
       }
     </Stack>

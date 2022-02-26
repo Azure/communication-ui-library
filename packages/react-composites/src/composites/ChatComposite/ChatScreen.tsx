@@ -38,17 +38,14 @@ import {
   sendboxContainerStyles,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
-
-/* @conditional-compile-remove-from(stable) */
-import { ParticipantContainer } from '../common/ParticipantContainer';
-/* @conditional-compile-remove-from(stable) */
-import { useLocale } from '../localization';
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
-/* @conditional-compile-remove-from(stable) */
-import { ParticipantList } from '@internal/react-components';
+/* @conditional-compile-remove(chat-composite-participant-pane) */
+import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadCards } from './FileDownloadCards';
 
 /**
  * @private
@@ -60,7 +57,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: 'sendBoxTextField' | false;
+  hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
 };
 
@@ -115,11 +112,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
 
-  /* @conditional-compile-remove-from(stable) */
-  const locale = useLocale();
-  /* @conditional-compile-remove-from(stable) */
-  const chatListHeader = locale.strings.chat.chatListHeader;
-
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
@@ -129,8 +121,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
-  /* @conditional-compile-remove-from(stable) */
-  const participantListProps = usePropsFor(ParticipantList);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -157,8 +147,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
-    adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    /* @conditional-compile-remove(file-sharing) */
+    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 
@@ -172,6 +162,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
+            /* @conditional-compile-remove(file-sharing) */
+            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -185,7 +177,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
-              /* @conditional-compile-remove-from(stable): FILE_SHARING */
+              /* @conditional-compile-remove(file-sharing) */
               onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
@@ -199,13 +191,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack>
         </Stack>
         {
-          /* @conditional-compile-remove-from(stable) */
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           options?.participantPane === true && (
-            <ParticipantContainer
-              participantListProps={participantListProps}
+            <ChatScreenPeoplePane
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              title={chatListHeader}
             />
           )
         }

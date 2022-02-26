@@ -89,6 +89,15 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
+// @beta
+export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
+    callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
+    callAgent: CallAgent;
+    callClient: StatefulCallClient;
+    chatClient: StatefulChatClient;
+    chatThreadClient: ChatThreadClient;
+};
+
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpoint: string;
@@ -153,7 +162,7 @@ export interface CallAdapterDeviceManagement {
 // Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
 //
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -190,7 +199,7 @@ export type CallAdapterUiState = {
 
 // @beta
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -198,7 +207,7 @@ export interface CallAndChatLocator {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove(local-camera-switcher) */ 'LocalCameraSwitch'>>;
 
 // @public
 export type CallCompositeOptions = {
@@ -391,12 +400,15 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
 // @beta
+export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarButtonBadgeIcon' | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarChatButtonActive' | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarChatButtonInactive' | /* @conditional-compile-remove(call-with-chat-composite) */ 'ControlBarPeopleButton' | 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove(call-with-chat-composite) */ 'LocalCameraSwitch' | 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | /* @conditional-compile-remove(file-sharing) */ 'SendBoxAttachFile'>>;
+
+// @beta
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
 };
 
 // @beta
-export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     callWithChatAdapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
@@ -484,14 +496,14 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | /* @conditional-compile-remove(file-sharing) */ 'SendBoxAttachFile'>>;
 
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
 };
 
@@ -560,6 +572,9 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;
@@ -599,6 +614,9 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 // @beta
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
+// @beta
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
@@ -631,6 +649,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     LocalCameraSwitch: JSX.Element;
     ControlBarButtonBadgeIcon: JSX.Element;
+    ControlBarChatButtonActive: JSX.Element;
+    ControlBarChatButtonInactive: JSX.Element;
+    ControlBarPeopleButton: JSX.Element;
     MoreDrawerMicrophones: JSX.Element;
     MoreDrawerPeople: JSX.Element;
     MoreDrawerSpeakers: JSX.Element;

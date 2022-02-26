@@ -6,6 +6,9 @@ on:
       npm-tag:
         description: 'Npm tag for the release, e.g. latest, next, dev'
         required: true
+      release-flavor:
+        description: 'Beta release or stable release. Will be determined by branch name if left empty.'
+        required: false
 
 jobs:
   publish:
@@ -31,6 +34,12 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+
+      # Switch flavor to stable when it is release branch
+      - name: Switch flavor for stable build
+        # If no param for release flavor, get it from branch name
+        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor == 'stable' }}
+        run: rush switch-flavor:stable
 
       # Builds
       - name: Build Packages and Samples

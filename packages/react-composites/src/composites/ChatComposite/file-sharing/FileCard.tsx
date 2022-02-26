@@ -27,7 +27,7 @@ export interface FileCardProps {
    */
   fileExtension: string;
   /**
-   * File upload/download progress percentage between 0 and 1.
+   * File upload progress percentage between 0 and 1.
    * File transfer progress indicator is only shown when the value is greater than 0 and less than 1.
    */
   progress?: number;
@@ -62,6 +62,9 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
     // To make space for the progress indicator.
     paddingBottom: showProgressIndicator() ? '0.5rem' : '0.75rem'
   });
+  const fileInfoClassName = mergeStyles({
+    paddingLeft: '0.25rem'
+  });
 
   const actionIconClassName = mergeStyles({
     cursor: 'pointer',
@@ -81,17 +84,19 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   return (
     <Stack className={containerClassName}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <Stack>
-          <Icon
-            {...getFileTypeIconProps({
-              extension: fileExtension,
-              size: 24,
-              imageFileType: 'svg'
-            })}
-          />
-        </Stack>
-        <Stack horizontalAlign="start">
-          <Text>{fileName}</Text>
+        <Stack horizontal verticalAlign="center">
+          <Stack>
+            <Icon
+              {...getFileTypeIconProps({
+                extension: fileExtension,
+                size: 24,
+                imageFileType: 'svg'
+              })}
+            />
+          </Stack>
+          <Stack className={fileInfoClassName}>
+            <Text>{fileName}</Text>
+          </Stack>
         </Stack>
         <Stack
           className={actionIconClassName}

@@ -45,6 +45,8 @@
   "callWithChat": {
     "peopleButtonLabel": "Kişiler",
     "chatButtonLabel": "Sohbet",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "Kişiler",
     "peoplePaneSubTitle": "Bu aramada",
     "chatPaneTitle": "Sohbet",

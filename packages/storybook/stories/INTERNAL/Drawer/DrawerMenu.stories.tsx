@@ -19,43 +19,44 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
 
   const drawerMenuItems: _DrawerMenuItemProps[] = [
     {
-      key: 'raiseHand',
+      itemKey: 'raiseHand',
       text: 'Raise hand',
-      iconProps: { iconName: 'RightHand', styles: iconStyles },
+      iconProps: { iconName: 'RightHand' },
       onItemClick: () => setIsDrawerShowing(false)
     },
     {
-      key: 'speaker',
+      itemKey: 'speaker',
       text: 'Speaker',
-      iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+      secondaryText: 'Speaker1',
+      iconProps: { iconName: 'OptionsSpeaker' },
       subMenuProps: [
         {
-          key: 'speaker1',
+          itemKey: 'speaker1',
           text: 'Default Speaker 1',
-          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          iconProps: { iconName: 'OptionsSpeaker' },
           onItemClick: () => setIsDrawerShowing(false)
         },
         {
-          key: 'speaker2',
+          itemKey: 'speaker2',
           text: 'Default Speaker 2',
-          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          iconProps: { iconName: 'OptionsSpeaker' },
           onItemClick: () => setIsDrawerShowing(false)
         },
         {
-          key: 'speaker3',
+          itemKey: 'speaker3',
           text: 'Choose from more speakers',
-          iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+          iconProps: { iconName: 'OptionsSpeaker' },
           subMenuProps: [
             {
-              key: 'speakerMore1',
+              itemKey: 'speakerMore1',
               text: 'Another Speaker',
-              iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+              iconProps: { iconName: 'OptionsSpeaker' },
               onItemClick: () => setIsDrawerShowing(false)
             },
             {
-              key: 'speakerMore2',
+              itemKey: 'speakerMore2',
               text: 'Another another Speaker',
-              iconProps: { iconName: 'OptionsSpeaker', styles: iconStyles },
+              iconProps: { iconName: 'OptionsSpeaker' },
               onItemClick: () => setIsDrawerShowing(false)
             }
           ]
@@ -63,15 +64,16 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
       ]
     },
     {
-      key: 'people',
+      itemKey: 'people',
       text: 'People',
-      iconProps: { iconName: 'Participants', styles: iconStyles },
+      iconProps: { iconName: 'Participants' },
+      secondaryIconProps: { iconName: 'Open' },
       onItemClick: () => setIsDrawerShowing(false)
     },
     {
-      key: 'recording',
+      itemKey: 'recording',
       text: 'Start Recording',
-      iconProps: { iconName: 'Record', styles: iconStyles },
+      iconProps: { iconName: 'Record' },
       onItemClick: () => setIsDrawerShowing(false)
     }
   ];
@@ -94,8 +96,6 @@ const DrawerMenuStory = (/*args*/): JSX.Element => {
     </MobilePreviewContainer>
   );
 };
-
-const iconStyles = { root: { fontSize: '1.75rem' } };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.

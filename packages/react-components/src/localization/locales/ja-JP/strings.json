@@ -23,6 +23,7 @@
     "deliveredTooltipText": "送信しました",
     "seenAriaLabel": "他のユーザーが表示したメッセージ",
     "seenTooltipText": "既読",
+    "readByTooltipText": "{remoteParticipantsCount} の {messageThreadReadCount} による読み取り",
     "sendingAriaLabel": "メッセージを送信しています",
     "sendingTooltipText": "送信中",
     "failedToSendAriaLabel": "メッセージの送信に失敗しました",
@@ -72,11 +73,11 @@
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー"
   },
   "screenShareButton": {
-    "onLabel": "共有の停止",
-    "offLabel": "共有",
-    "tooltipDisabledContent": "画面共有が無効になっています",
-    "tooltipOnContent": "画面の共有を停止する",
-    "tooltipOffContent": "画面を共有します"
+    "onLabel": "プレゼンテーションの停止",
+    "offLabel": "提示",
+    "tooltipDisabledContent": "プレゼンテーションは無効です",
+    "tooltipOnContent": "画面の表示",
+    "tooltipOffContent": "画面のプレゼンテーション"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -98,7 +99,8 @@
     "newMessagesIndicator": "新しいメッセージ",
     "noDisplayNameSub": "名前がありません",
     "editBoxCancelButton": "取り消し",
-    "editBoxSubmitButton": "送信"
+    "editBoxSubmitButton": "送信",
+    "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
