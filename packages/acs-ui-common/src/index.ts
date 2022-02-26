@@ -5,6 +5,7 @@ export { memoizeFnAll } from './memoizeFnAll';
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
+export { _safeJSONStringify } from './safeStringify';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

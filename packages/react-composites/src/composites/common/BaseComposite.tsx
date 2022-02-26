@@ -10,6 +10,7 @@ import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 /* @conditional-compile-remove(call-with-chat-composite) */
 import { CallWithChatCompositeIcons } from './icons';
+
 /**
  * Properties common to all composites exported from this library.
  *
@@ -65,7 +66,9 @@ export const BaseProvider = (
     | CallCompositeIcons
     | ChatCompositeIcons
     | /* @conditional-compile-remove(call-with-chat-composite) */ CallWithChatCompositeIcons
-  > & { children: React.ReactNode }
+  > & {
+    children: React.ReactNode;
+  }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 
