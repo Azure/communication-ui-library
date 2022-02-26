@@ -906,9 +906,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    // Warning: (ae-incompatible-release-tags) The symbol "activeFileUploads" is marked as @public, but its signature references "FileUploadState" which is marked as @beta
-    //
-    // (undocumented)
+    // @beta
     activeFileUploads?: FileUploadState[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;

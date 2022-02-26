@@ -41,31 +41,10 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 /**
- * Meta Data containing information about the uploaded file.
+ * Attributes required for SendBox to show file uploads like name, progress etc.
  * @beta
  */
-export interface FileMetadata {
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
-   */
-  extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
-}
-
-/**
- * Contains the state attibutes of a file upload like name, progress etc.
- * @beta
- */
-export interface FileUploadState {
+export interface ActiveFileUploads {
   /**
    * Unique identifier for the file upload.
    */
@@ -81,11 +60,6 @@ export interface FileUploadState {
    * A number between 0 and 1 indicating the progress of the upload.
    */
   progress: number;
-
-  /**
-   * Meta Data {@link FileMetadata} containing information about the uploaded file.
-   */
-  metadata?: FileMetadata;
 
   /**
    * Error message to be displayed to the user if the upload fails.
@@ -182,7 +156,7 @@ export interface SendBoxProps {
    * of a file upload like name, progress, metadata, errormessage etc.
    * @beta
    */
-  activeFileUploads?: FileUploadState[];
+  activeFileUploads?: ActiveFileUploads[];
 }
 
 /**
@@ -243,16 +217,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const renderErrorMessage = (fileUploads: FileUploadState[]): JSX.Element => {
-    let errorMsg: JSX.Element = <Stack></Stack>;
-    fileUploads &&
-      fileUploads.forEach(function (file: FileUploadState) {
-        if (file.errorMessage) {
-          errorMsg = <Stack className={mergeStyles(errorBarStyle(theme))}>{file.errorMessage}</Stack>;
-          return;
-        }
-      });
-    return errorMsg;
+  const renderFileUploadErrorMessage = (fileUploads: ActiveFileUploads[]): JSX.Element => {
+    const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
+    if (latestError) {
+      return <Stack className={mergeStyles(errorBarStyle(theme))}>{latestError.errorMessage}</Stack>;
+    }
+    return <Stack></Stack>;
   };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
@@ -292,7 +262,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        renderErrorMessage(props.activeFileUploads || [])
+        renderFileUploadErrorMessage(props.activeFileUploads || [])
       }
       <Stack
         className={mergeStyles(
