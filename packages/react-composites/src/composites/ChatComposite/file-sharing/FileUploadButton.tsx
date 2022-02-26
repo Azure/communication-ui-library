@@ -83,7 +83,7 @@ export const FileUploadButtonWrapper = (
   return (
     <>
       {
-        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        /* @conditional-compile-remove(file-sharing) */
         <FileUploadButton {...props} />
       }
     </>
