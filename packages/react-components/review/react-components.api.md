@@ -32,6 +32,14 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// @beta
+export interface ActiveFileUploads {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    progress: number;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -457,22 +465,6 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
-
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
-// @beta
-export interface FileUploadState {
-    errorMessage?: string;
-    filename: string;
-    id: string;
-    metadata?: FileMetadata;
-    progress: number;
-}
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -907,7 +899,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: FileUploadState[];
+    activeFileUploads?: ActiveFileUploads[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

@@ -178,6 +178,7 @@ export type {
   SendBoxProps,
   SendBoxStrings,
   SendBoxStylesProps,
+  ActiveFileUploads,
   StreamMediaProps,
   SystemMessage,
   SystemMessageCommon,
