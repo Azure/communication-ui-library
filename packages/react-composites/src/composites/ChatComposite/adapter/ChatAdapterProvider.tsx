@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
+import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
 /**
@@ -31,4 +32,14 @@ export const useAdapter = (): ChatAdapter => {
     throw 'Cannot find adapter please initialize before usage.';
   }
   return adapter;
+};
+
+/**
+ * @private
+ */
+export const useFileUploadAdapter = (): FileUploadAdapter => {
+  /* @conditional-compile-remove(file-sharing) */
+  return useAdapter();
+  // A stub that short-circuits all logic because none of the fields are available.
+  return {};
 };
