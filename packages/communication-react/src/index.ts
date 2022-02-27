@@ -197,11 +197,11 @@ export type {
   VideoTileProps,
   VideoTileStylesProps
 } from '../../react-components/src';
-/* @conditional-compile-remove-from(stable) meeting-composite Local_Camera_switcher */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 export type { LocalVideoCameraCycleButtonProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 export type {
   CameraButtonContextualMenuStyles,
   CameraButtonStyles,
