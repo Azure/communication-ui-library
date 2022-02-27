@@ -252,7 +252,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     const localVideoTileStyles =
-      shouldFloatLocalVideo || showCameraSwitcherInLocalPreview ? floatingLocalVideoTileStyle : {};
+      shouldFloatLocalVideo ||
+      /* @conditional-compile-remove-from(stable) Local_Camera_switcher */ showCameraSwitcherInLocalPreview
+        ? floatingLocalVideoTileStyle
+        : {};
 
     const localVideoTileStylesThemed = concatStyleSets(
       localVideoTileStyles,
