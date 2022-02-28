@@ -49,7 +49,7 @@ import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
-/* @conditional-compile-remove-from(stable) Local_Camera_switcher */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle } from './styles/VideoGallery.styles';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
@@ -253,7 +253,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const localVideoTileStyles =
       shouldFloatLocalVideo ||
-      /* @conditional-compile-remove-from(stable) Local_Camera_switcher */ showCameraSwitcherInLocalPreview
+      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */ showCameraSwitcherInLocalPreview
         ? floatingLocalVideoTileStyle
         : {};
 
@@ -354,7 +354,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }
 
   const localVideoTileLayout = (): void => {
-    /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     if (!shouldFloatLocalVideo && !showCameraSwitcherInLocalPreview && localParticipant) {
       gridTiles.push(localVideoTile);
       return;
@@ -388,7 +388,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {shouldFloatLocalVideo &&
-        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         !showCameraSwitcherInLocalPreview &&
         localParticipant &&
         (horizontalGalleryPresent ? (
@@ -405,7 +405,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </Modal>
         ))}
       {
-        /* @conditional-compile-remove-from(stable) meeting/calling-composite <Local-Camera-Switcher> */
+        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
         showCameraSwitcherInLocalPreview && localParticipant && (
           <Stack
