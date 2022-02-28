@@ -3,8 +3,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
     {
-      // Deprecated: Use `features` instead.
-      match: '@conditional-compile-remove-from(stable)',
       // A list of features recognized by the conditional compilation preprocessing plugin.
       // "demo" is a special feature, used for demo purposes. For this feature,
       // The plugin removes any AST node that is preceded by a comment that contains the tag:
@@ -16,9 +14,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-1.4.2-beta.1',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
-        // Incoming chat notification in `CallWithChatComposite`.
-        // TODO: Merge this with `call-with-chat-composite` feature.
-        'chat-notification-icon',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
         'control-bar-button-injection',
