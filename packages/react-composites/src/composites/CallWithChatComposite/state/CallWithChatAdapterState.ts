@@ -64,7 +64,7 @@ export function callWithChatAdapterStateFromBackingStates(
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     fileUploads: chatAdapterState.fileUploads
   };
 }
@@ -80,7 +80,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     fileUploads: chatAdapterState.fileUploads
   };
 }

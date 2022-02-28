@@ -7,11 +7,11 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { ControlBarButtonStyles } from './ControlBarButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 
 /**
@@ -30,29 +30,29 @@ export interface MicrophoneButtonStrings {
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
   tooltipOffContent?: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of microphone menu
    */
   microphoneMenuTitle?: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of speaker menu
    */
   speakerMenuTitle?: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of microphone menu
    */
   microphoneMenuTooltip?: string;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
 }
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for {@link MicrophoneButton}
  *
@@ -65,7 +65,7 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for the {@link MicrophoneButton} menu.
  *
@@ -89,37 +89,37 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available microphones for selection
    */
   microphones?: OptionsDevice[];
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available speakers for selection
    */
   speakers?: OptionsDevice[];
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Microphone that is shown as currently selected
    */
   selectedMicrophone?: OptionsDevice;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker that is shown as currently selected
    */
   selectedSpeaker?: OptionsDevice;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Callback when a microphone is selected
    */
   onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker when a speaker is selected
    */
   onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -130,7 +130,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<MicrophoneButtonStrings>;
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
@@ -174,7 +174,7 @@ const generateDefaultDeviceMenuPropsTrampoline = (
   props: MicrophoneButtonProps,
   strings: MicrophoneButtonStrings
 ): IContextualMenuProps | undefined => {
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   if (props.enableDeviceSelectionMenu) {
     return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
   }
@@ -182,7 +182,7 @@ const generateDefaultDeviceMenuPropsTrampoline = (
 };
 
 const enableDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
-  /* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   if (props.enableDeviceSelectionMenu) {
     return true;
   }

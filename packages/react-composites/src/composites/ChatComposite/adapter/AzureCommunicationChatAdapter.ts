@@ -29,9 +29,9 @@ import {
   TopicChangedListener
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ObservableFileUpload } from '../file-sharing';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import {
   FileUploadAdapter,
   AzureCommunicationFileUploadAdapter,
@@ -95,7 +95,7 @@ export class ChatContext {
       latestErrors: clientState.latestErrors
     };
 
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     updatedState = { ...updatedState, fileUploads: this.state.fileUploads };
 
     this.setState(updatedState);
@@ -109,7 +109,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
@@ -119,7 +119,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -152,11 +152,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     this.registerFileUploads = this.registerFileUploads.bind(this);
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     this.clearFileUploads = this.clearFileUploads.bind(this);
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     this.cancelFileUpload = this.cancelFileUpload.bind(this);
   }
 
@@ -197,7 +197,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      /* @conditional-compile-remove-from(stable): FILE_SHARING */
+      /* @conditional-compile-remove(file-sharing) */
       options.metadata = {
         ...options.metadata,
         ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
@@ -205,7 +205,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
       await this.handlers.onSendMessage(content, options);
 
-      /* @conditional-compile-remove-from(stable): FILE_SHARING */
+      /* @conditional-compile-remove(file-sharing) */
       /**
        * All the current uploads need to be clear from the state after a message has been sent.
        * This ensures that any component rendering these file uploads doesn't continue to do so.
@@ -255,17 +255,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
     this.fileUploadAdapter.registerFileUploads && this.fileUploadAdapter.registerFileUploads(fileUploads);
   }
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   clearFileUploads(): void {
     this.fileUploadAdapter.clearFileUploads && this.fileUploadAdapter.clearFileUploads();
   }
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   cancelFileUpload(id: string): void {
     this.fileUploadAdapter.cancelFileUpload && this.fileUploadAdapter.cancelFileUpload(id);
   }

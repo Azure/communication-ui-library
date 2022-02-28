@@ -56,7 +56,7 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove-from(stable): custom button injection */
+  /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
    *

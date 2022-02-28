@@ -1,21 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+import { FileUploadState, ObservableFileUpload } from '../file-sharing';
+
+/* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
-import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata, FileSharingMetadata } from '../file-sharing';
+/* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
  */
 export type FileUploadsUiState = Record<string, FileUploadState>;
+
 /**
  * @beta
  */
@@ -25,7 +27,7 @@ export interface FileUploadAdapter {
   cancelFileUpload?: (id: string) => void;
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -44,8 +46,9 @@ class FileUploadContext {
     const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
       map[fileUpload.id] = {
         id: fileUpload.id,
-        filename: fileUpload.file.name,
-        progress: 0
+        filename: fileUpload.fileName,
+        progress: 0,
+        metadata: fileUpload.metadata
       };
       return map;
     }, {});
@@ -82,7 +85,7 @@ class FileUploadContext {
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -149,7 +152,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 }
 
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private
@@ -167,9 +170,3 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
 };
-
-/**
- * Workaround to make this module compile under the `--isolatedModules` flag.
- * @internal
- */
-export {};
