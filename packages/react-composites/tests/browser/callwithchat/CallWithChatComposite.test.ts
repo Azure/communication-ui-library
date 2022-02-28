@@ -126,6 +126,47 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-speaker-screen.png`);
     }
   });
+
+  test('More Drawer Microphone submenu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
+    }
+  });
+
+  test('Microphone Submenu click on a new audio device displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
+      await submenuNewAudioDeviceDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
+    }
+  });
+
+  test('More Drawer menu opens and displays new selected microphone device correctly on mobile', async ({
+    pages
+  }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      // Select new audio device in submenu drawer
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
+      await submenuNewAudioDeviceDiv?.click();
+
+      // Display MoreDrawer to view newly selected audio device
+      await page.mouse.click(100, 100);
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-microphone-screen.png`);
+    }
+  });
 });
 
 export const callWithChatTestSetup = async ({
