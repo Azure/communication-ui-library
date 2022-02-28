@@ -51,8 +51,7 @@ export interface ActiveFileUploads {
   id: string;
 
   /**
-   * Filename extracted from the {@link File} object.
-   * This attribute is used to render the filename if `metadata.name` is not available.
+   * File name to be rendered for uploaded file.
    */
   filename: string;
 
@@ -153,7 +152,7 @@ export interface SendBoxProps {
   /* @conditional-compile-remove-from(stable): FILE_SHARING */
   /**
    * Optional array of active file uploads where each object has attibutes
-   * of a file upload like name, progress, metadata, errormessage etc.
+   * of a file upload like name, progress, errormessage etc.
    * @beta
    */
   activeFileUploads?: ActiveFileUploads[];
@@ -217,13 +216,15 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const renderFileUploadErrorMessage = (fileUploads: ActiveFileUploads[]): JSX.Element => {
+  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
+    const fileUploads: ActiveFileUploads[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
     if (latestError) {
       return <Stack className={mergeStyles(errorBarStyle(theme))}>{latestError.errorMessage}</Stack>;
     }
     return <Stack></Stack>;
-  };
+  }, [props.activeFileUploads, theme]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
@@ -262,7 +263,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove-from(stable): FILE_SHARING */
-        renderFileUploadErrorMessage(props.activeFileUploads || [])
+        renderFileUploadErrorMessage
       }
       <Stack
         className={mergeStyles(
