@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Modifying file sharing to allow attaching already uploaded files to message",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

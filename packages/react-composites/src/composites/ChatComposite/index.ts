@@ -39,7 +39,8 @@ export type {
   ObservableFileUpload,
   UploadCompleteListener,
   UploadFailedListener,
-  UploadProgressListener
+  UploadProgressListener,
+  createCompletedFileUpload
 } from './file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';
