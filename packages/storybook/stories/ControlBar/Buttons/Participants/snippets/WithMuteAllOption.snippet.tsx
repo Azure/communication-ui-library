@@ -1,5 +1,6 @@
 import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import React from 'react';
+import { defaultBorderStyles } from '../styles/ParticipantStyles';
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {
@@ -50,6 +51,7 @@ export const ParticipantsButtonWithMuteAllOptionExample: () => JSX.Element = () 
         myUserId={'user1'}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
+        styles={defaultBorderStyles}
       />
     </FluentThemeProvider>
   );

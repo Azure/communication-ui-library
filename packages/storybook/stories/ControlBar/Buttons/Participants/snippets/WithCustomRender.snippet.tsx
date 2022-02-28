@@ -1,6 +1,7 @@
 import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
+import { defaultBorderStyles } from '../styles/ParticipantStyles';
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {
@@ -73,11 +74,12 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
 
   const customOnRenderText = (): JSX.Element => {
     return (
-      <Label key={'participantsCustomLabelKey'} style={{ color: 'darkviolet', fontStyle: 'italic' }}>
+      <Label key={'participantsCustomLabelKey'} style={{ color: 'darkviolet', fontStyle: 'italic', padding: '0rem' }}>
         who is on this call
       </Label>
     );
   };
+
   return (
     <FluentThemeProvider>
       <ParticipantsButton
@@ -89,6 +91,7 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
         onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
+        styles={defaultBorderStyles}
       />
     </FluentThemeProvider>
   );

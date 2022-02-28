@@ -1,5 +1,6 @@
 import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import React from 'react';
+import { defaultBorderStyles } from '../styles/ParticipantStyles';
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {
@@ -39,7 +40,7 @@ const mockParticipants: CallParticipantListParticipant[] = [
 export const ParticipantsButtonDefaultExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton participants={mockParticipants} />
+      <ParticipantsButton participants={mockParticipants} styles={defaultBorderStyles} />
     </FluentThemeProvider>
   );
 };

@@ -47,11 +47,15 @@ const onMuteAll = (): void => {
   // your implementation to mute all participants
 };
 
+/**
+ * styles to make sure that the border on the participant menu isnt overriden buy the csutom styles example
+ */
 const mockStyles: ParticipantsButtonStyles = {
-  root: { background: 'blue', color: 'white' },
+  root: { background: 'gold', color: 'white' },
   rootHovered: { background: 'crimson', color: 'white' },
-  rootExpanded: { background: 'dimgrey', color: 'white' },
-  label: { color: 'white', fontStyle: 'italic' },
+  rootCheckedPressed: { color: 'blue' },
+  rootExpanded: { background: 'darkgrey', color: 'white' },
+  label: { color: 'DarkSlateGrey', fontStyle: 'italic' },
   menuStyles: {
     participantListStyles: { root: { border: 'solid 1px red' } }
   }

@@ -1,5 +1,6 @@
 import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import React from 'react';
+import { defaultBorderStyles } from '../styles/ParticipantStyles';
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {
@@ -41,7 +42,12 @@ const mockCallLink = 'URL to invite new participants to the current call (https:
 export const ParticipantsButtonWithCallLinkExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton participants={mockParticipants} myUserId={'user1'} callInvitationURL={mockCallLink} />
+      <ParticipantsButton
+        participants={mockParticipants}
+        myUserId={'user1'}
+        callInvitationURL={mockCallLink}
+        styles={defaultBorderStyles}
+      />
     </FluentThemeProvider>
   );
 };
