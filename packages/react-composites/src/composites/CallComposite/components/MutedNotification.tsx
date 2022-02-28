@@ -48,7 +48,8 @@ const stackStyle = (theme: ITheme): IStyle => {
 
 const iconStyle = (theme: ITheme): IStyle => {
   return {
-    color: theme.palette.white
+    color: theme.palette.white,
+    maxHeight: '1.25rem'
   };
 };
 
