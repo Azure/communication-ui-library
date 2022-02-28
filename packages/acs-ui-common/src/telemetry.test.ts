@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _getApplicationId, sanitize } from './telemetry';
+import { _getApplicationId, _getAppliationIdImpl } from './telemetry';
 
 // WARNING: Do not change this format. Restrictions:
 // - The data analytics backend depends on the application ID meeting this format.
@@ -13,10 +13,10 @@ test('applicationId conforms to restrictions', () => {
 });
 
 test('sanitize works for all versions in use', () => {
-  expect(sanitize('acr/1.0.0')).toEqual('acr/1.0.0');
-  expect(sanitize('acr/1.0.1')).toEqual('acr/1.0.1');
-  expect(sanitize('acr/99.99.99')).toEqual('acr/99.99.99');
-  expect(sanitize('acr/99.99.99-beta.99')).toEqual('acr/99.99.99-beta.99');
-  expect(sanitize('acr/1.0.0-alpha-202108050010.0')).toEqual('acr/1.0.0-alpha');
-  expect(applicationIdFormat.test(sanitize('acr/1.0.0-alpha-202108050010.0'))).toBe(true);
+  expect(_getAppliationIdImpl('1.0.0')).toEqual('acr/1.0.0');
+  expect(_getAppliationIdImpl('1.0.1')).toEqual('acr/1.0.1');
+  expect(_getAppliationIdImpl('99.99.99')).toEqual('acr/99.99.99');
+  expect(_getAppliationIdImpl('99.99.99-beta.99')).toEqual('acr/99.99.99-beta.99');
+  expect(_getAppliationIdImpl('1.0.0-alpha-202108050010.0')).toEqual('acr/1.0.0-alpha');
+  expect(applicationIdFormat.test(_getAppliationIdImpl('1.0.0-alpha-202108050010.0'))).toBe(true);
 });
