@@ -48,7 +48,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             fileName={truncatedFileName(file.name, truncateLength)}
             key={file.name}
             fileExtension={extension(file.name)}
-            actionIcon={<ChatCompositeIcon iconName="Download" />}
+            actionIcon={<DownloadIconTrampoline />}
             actionHandler={() => {
               props.downloadHandler && props.downloadHandler(userId, file);
               !props.downloadHandler && window.open(file.url, '_blank', 'noopener,noreferrer');
@@ -57,4 +57,11 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
         ))}
     </FileCardGroup>
   );
+};
+
+const DownloadIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="Download" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };

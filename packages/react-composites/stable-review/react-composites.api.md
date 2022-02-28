@@ -19,7 +19,6 @@ import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -180,7 +179,49 @@ export type CallAdapterUiState = {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff'>>;
+export type CallCompositeIcons = {
+    ControlButtonCameraOff?: JSX.Element;
+    ControlButtonCameraOn?: JSX.Element;
+    ControlButtonEndCall?: JSX.Element;
+    ControlButtonMicOff?: JSX.Element;
+    ControlButtonMicOn?: JSX.Element;
+    ControlButtonOptions?: JSX.Element;
+    ControlButtonParticipants?: JSX.Element;
+    ControlButtonScreenShareStart?: JSX.Element;
+    ControlButtonScreenShareStop?: JSX.Element;
+    ErrorBarCallCameraAccessDenied?: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse?: JSX.Element;
+    ErrorBarCallLocalVideoFreeze?: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallNetworkQualityLow?: JSX.Element;
+    ErrorBarCallNoMicrophoneFound?: JSX.Element;
+    ErrorBarCallNoSpeakerFound?: JSX.Element;
+    HorizontalGalleryLeftButton?: JSX.Element;
+    HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
+    LocalDeviceSettingsCamera?: JSX.Element;
+    LocalDeviceSettingsMic?: JSX.Element;
+    LocalDeviceSettingsSpeaker?: JSX.Element;
+    LocalPreviewPlaceholder?: JSX.Element;
+    Muted?: JSX.Element;
+    NetworkReconnectIcon?: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
+    NoticePageLeftCall?: JSX.Element;
+    NoticePageRemovedFromCall?: JSX.Element;
+    OptionsCamera?: JSX.Element;
+    OptionsMic?: JSX.Element;
+    OptionsSpeaker?: JSX.Element;
+    ParticipantItemMicOff?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    ParticipantItemScreenShareStart?: JSX.Element;
+    VideoTileMicOff?: JSX.Element;
+};
 
 // @public
 export type CallCompositeOptions = {
@@ -326,7 +367,20 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'EditBoxCancel' | 'EditBoxSubmit' | 'MessageDelivered' | 'MessageEdit' | 'MessageFailed' | 'MessageRemove' | 'MessageSeen' | 'MessageSending' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered'>>;
+export type ChatCompositeIcons = {
+    EditBoxCancel?: JSX.Element;
+    EditBoxSubmit?: JSX.Element;
+    MessageDelivered?: JSX.Element;
+    MessageEdit?: JSX.Element;
+    MessageFailed?: JSX.Element;
+    MessageRemove?: JSX.Element;
+    MessageSeen?: JSX.Element;
+    MessageSending?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    SendBoxSend?: JSX.Element;
+    SendBoxSendHovered?: JSX.Element;
+};
 
 // @public
 export type ChatCompositeOptions = {
@@ -391,23 +445,10 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
-export const COMPOSITE_ONLY_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-};
+export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
 // @public
-export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons;
 
 // @public
 export interface CompositeLocale {
@@ -435,18 +476,18 @@ export const createAzureCommunicationChatAdapterFromClient: (chatClient: Statefu
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -456,8 +497,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -470,21 +509,23 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallNoSpeakerFound: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element | undefined;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
+    LocalDeviceSettingsCamera?: JSX.Element | undefined;
+    LocalDeviceSettingsMic?: JSX.Element | undefined;
+    LocalDeviceSettingsSpeaker?: JSX.Element | undefined;
+    LocalPreviewPlaceholder?: JSX.Element | undefined;
+    Muted?: JSX.Element | undefined;
+    NetworkReconnectIcon?: JSX.Element | undefined;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element | undefined;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
+    NoticePageLeftCall?: JSX.Element | undefined;
+    NoticePageRemovedFromCall?: JSX.Element | undefined;
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
     ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
 };
 

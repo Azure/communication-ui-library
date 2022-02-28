@@ -26,7 +26,7 @@ export const FileUploadCards = (): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<ChatCompositeIcon iconName="Cancel" />}
+              actionIcon={<CancelIconTrampoline />}
               actionHandler={() => {
                 adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
               }}
@@ -34,4 +34,11 @@ export const FileUploadCards = (): JSX.Element => {
           ))}
     </FileCardGroup>
   );
+};
+
+const CancelIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="Cancel" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
