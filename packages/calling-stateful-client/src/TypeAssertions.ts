@@ -23,7 +23,13 @@ type InferredCallErrorTargets =
   | CallObjectMethodNames<'CallClient', CallClient>
   | CallObjectMethodNames<'CallAgent', CallAgent>
   | CallObjectMethodNames<'DeviceManager', DeviceManager>
-  | CallObjectMethodNames<'Call', Call>;
+  | CallObjectMethodNames<'Call', Call>
+  /* Need to explicitly add these because we incorrectly added them to exported type before it was
+   * stabilized in @azure/commmunication-calling.
+   * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.
+   */
+  | 'CallAgent.feature'
+  | 'CallClient.feature';
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
