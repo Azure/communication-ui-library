@@ -98,7 +98,7 @@ export const EmbeddedPeoplePane = (props: {
   );
 };
 
-// Remove safe getter when conditional-compile-remove-from(stable) meeting-composite is removed
+// Remove safe getter when conditional-compile-remove(call-with-chat-composite) is removed
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const safeGetLinkIconName = (): any => 'Link';
 

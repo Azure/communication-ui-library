@@ -71,7 +71,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
   );
 };
 
-// Remove safe getter when conditional-compile-remove-from(stable) FILE_SHARING is removed
+// Remove safe getter when conditional-compile-remove(file-sharing) is removed
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const safeGetSendBoxAttachFileIconName = (): any => 'SendBoxAttachFile';
 
@@ -88,7 +88,7 @@ export const FileUploadButtonWrapper = (
   return (
     <>
       {
-        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        /* @conditional-compile-remove(file-sharing) */
         <FileUploadButton {...props} />
       }
     </>

@@ -101,7 +101,7 @@ function chatAdapterStateFromCallWithChatAdapterState(
     displayName: callWithChatAdapterState.displayName || '',
     thread: callWithChatAdapterState.chat,
     latestErrors: callWithChatAdapterState.latestChatErrors,
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     fileUploads: callWithChatAdapterState.fileUploads
   };
 }
