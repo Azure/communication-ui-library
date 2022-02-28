@@ -65,7 +65,8 @@ export const EmbeddedPeoplePane = (props: {
                   },
                   iconProps: {
                     iconName: 'UserRemove'
-                  }
+                  },
+                  disabled: !participant?.isRemovable
                 }
               ]);
             }
