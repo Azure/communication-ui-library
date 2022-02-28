@@ -449,6 +449,11 @@ export type CallWithChatCompositeIcons = {
     ControlBarChatButtonInactive?: JSX.Element;
     ControlBarPeopleButton?: JSX.Element;
     Link?: JSX.Element;
+    MoreDrawerMicrophones?: JSX.Element;
+    MoreDrawerPeople?: JSX.Element;
+    MoreDrawerSelectedMicrophone?: JSX.Element;
+    MoreDrawerSelectedSpeaker?: JSX.Element;
+    MoreDrawerSpeakers?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -680,35 +685,7 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
-export const COMPOSITE_ONLY_ICONS: {
-    Cancel: JSX.Element;
-    ChevronLeft: JSX.Element;
-    Download: JSX.Element;
-    Link: JSX.Element;
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonActive: JSX.Element;
-    ControlBarChatButtonInactive: JSX.Element;
-    ControlBarPeopleButton: JSX.Element;
-    MoreDrawerMicrophones: JSX.Element;
-    MoreDrawerPeople: JSX.Element;
-    MoreDrawerSpeakers: JSX.Element;
-    MoreDrawerSelectedMicrophone: JSX.Element;
-    MoreDrawerSelectedSpeaker: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
-};
+export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
 // Warning: (ae-incompatible-release-tags) The symbol "CompositeIcons" is marked as @public, but its signature references "CallWithChatCompositeIcons" which is marked as @beta
 //
@@ -767,33 +744,21 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    Cancel: JSX.Element;
-    ChevronLeft: JSX.Element;
-    Download: JSX.Element;
-    Link: JSX.Element;
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonActive: JSX.Element;
-    ControlBarChatButtonInactive: JSX.Element;
-    ControlBarPeopleButton: JSX.Element;
-    MoreDrawerMicrophones: JSX.Element;
-    MoreDrawerPeople: JSX.Element;
-    MoreDrawerSpeakers: JSX.Element;
-    MoreDrawerSelectedMicrophone: JSX.Element;
-    MoreDrawerSelectedSpeaker: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    SendBoxAttachFile?: JSX.Element | undefined;
+    Download?: JSX.Element | undefined;
+    Cancel?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -803,8 +768,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -817,22 +780,36 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallNoSpeakerFound: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element | undefined;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
+    LocalDeviceSettingsCamera?: JSX.Element | undefined;
+    LocalDeviceSettingsMic?: JSX.Element | undefined;
+    LocalDeviceSettingsSpeaker?: JSX.Element | undefined;
+    LocalPreviewPlaceholder?: JSX.Element | undefined;
+    Muted?: JSX.Element | undefined;
+    NetworkReconnectIcon?: JSX.Element | undefined;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element | undefined;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
+    NoticePageLeftCall?: JSX.Element | undefined;
+    NoticePageRemovedFromCall?: JSX.Element | undefined;
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
     ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    LocalCameraSwitch?: JSX.Element | undefined;
+    ChevronLeft?: JSX.Element | undefined;
+    ControlBarButtonBadgeIcon?: JSX.Element | undefined;
+    ControlBarChatButtonActive?: JSX.Element | undefined;
+    ControlBarChatButtonInactive?: JSX.Element | undefined;
+    ControlBarPeopleButton?: JSX.Element | undefined;
+    Link?: JSX.Element | undefined;
+    MoreDrawerMicrophones?: JSX.Element | undefined;
+    MoreDrawerPeople?: JSX.Element | undefined;
+    MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
+    MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
+    MoreDrawerSpeakers?: JSX.Element | undefined;
 };
 
 // @public

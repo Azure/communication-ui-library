@@ -49,7 +49,7 @@ const coffeeIconStyle = {
  *
  * @public
  */
-export const COMPOSITE_ONLY_ICONS = {
+export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(file-sharing) */
   Cancel: <FontIcon iconName="Cancel" />,
   /* @conditional-compile-remove(call-with-chat-composite) */
@@ -219,6 +219,11 @@ export type CallWithChatCompositeIcons = {
   ControlBarChatButtonInactive?: JSX.Element;
   ControlBarPeopleButton?: JSX.Element;
   Link?: JSX.Element;
+  MoreDrawerMicrophones?: JSX.Element;
+  MoreDrawerPeople?: JSX.Element;
+  MoreDrawerSelectedMicrophone?: JSX.Element;
+  MoreDrawerSelectedSpeaker?: JSX.Element;
+  MoreDrawerSpeakers?: JSX.Element;
 
   // Call icons
   ControlButtonCameraOff?: JSX.Element;
