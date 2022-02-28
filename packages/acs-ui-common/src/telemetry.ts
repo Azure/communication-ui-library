@@ -16,7 +16,21 @@ export const _getApplicationId = (composite?: Composite): string => {
 };
 
 /** @private */
-export const _getAppliationIdImpl = (version: string, composite?: Composite): string => sanitize(`acr/${version}`);
+export const _getAppliationIdImpl = (version: string, composite?: Composite): string =>
+  sanitize(`acr${infix(composite)}/${version}`);
+
+const infix = (composite?: Composite): string => {
+  switch (composite) {
+    case 'call':
+      return '11';
+    case 'chat':
+      return '12';
+    case 'callWithChat':
+      return '13';
+    default:
+      return '';
+  }
+};
 
 // Removes long suffixes that don't fit the constraints for telemetry application ID.
 // e.g., the build suffix is dropped for alpha package versions.
