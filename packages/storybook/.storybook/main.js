@@ -11,7 +11,7 @@ console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}
 const storybookDevGlobPaths = ['../stories/**/*.stories.@(ts|tsx|mdx)'];
 // In production builds include all stories except those in the INTERNAL/ folder
 const storybookProdGlobPaths = [
-  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx|mdx)', // excludes anything in the INTERNAL folder
+  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx|mdx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
   '../stories/*.stories.@(ts|tsx|mdx)' // includes all top level stories
 ];
 
