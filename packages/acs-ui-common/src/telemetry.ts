@@ -12,11 +12,11 @@ export type Composite = 'call' | 'chat' | 'callWithChat';
  */
 export const _getApplicationId = (composite?: Composite): string => {
   const version = telemetryVersion['default'];
-  return _getAppliationIdImpl(version);
+  return _getApplicationIdImpl(version);
 };
 
 /** @private */
-export const _getAppliationIdImpl = (version: string, composite?: Composite): string =>
+export const _getApplicationIdImpl = (version: string, composite?: Composite): string =>
   sanitize(`acr${infix(composite)}/${version}`);
 
 const infix = (composite?: Composite): string => {
