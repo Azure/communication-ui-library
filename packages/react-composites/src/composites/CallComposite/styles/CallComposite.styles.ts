@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 const mainScreenContainerStyle: IStyle = {
   height: '100%',
@@ -25,3 +25,12 @@ export const mainScreenContainerStyleMobile = mergeStyles({
   minWidth: '19.5rem', // max of min-width of composite pages (Call page)
   minHeight: '21rem' // max height of min-height of composite pages (Configuration page)
 });
+
+/**
+ * @private
+ */
+export const complianceBannerWarningStyles = (theme: Theme): IStyle => {
+  return {
+    backgroundColor: theme.semanticColors.warningBackground
+  };
+};
