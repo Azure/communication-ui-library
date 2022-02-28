@@ -26,7 +26,7 @@ import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
-/* @conditional-compile-remove(chat-notification-icon) */
+/* @conditional-compile-remove(call-with-chat-composite) */
 import { Circle20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
@@ -66,7 +66,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   /* @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
-  /* @conditional-compile-remove(chat-notification-icon)*/
+  /* @conditional-compile-remove(call-with-chat-composite)*/
   ControlBarButtonBadgeIcon: <Circle20Filled />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonActive: <Chat20Filled />,
