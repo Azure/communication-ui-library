@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
-/* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapter';
 
 /**
@@ -10,10 +9,11 @@ import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapt
  */
 export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind => state.userId;
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */
 export const getFileUploads = (state: ChatAdapterState): FileUploadsUiState | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
   return state?.fileUploads;
+  return undefined;
 };
