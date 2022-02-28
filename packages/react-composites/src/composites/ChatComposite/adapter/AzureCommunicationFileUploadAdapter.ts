@@ -1,21 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FileUploadState, ObservableFileUpload } from '../file-sharing';
+
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileSharingMetadata, ObservableFileUpload, FileUploadState } from '../file-sharing';
+import { FileMetadata, FileSharingMetadata } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * A record containing {@link FileUploadState} mapped to unique ids.
  * @beta
  */
 export type FileUploadsUiState = Record<string, FileUploadState>;
+
 /**
  * @beta
  */
@@ -44,8 +46,9 @@ class FileUploadContext {
     const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
       map[fileUpload.id] = {
         id: fileUpload.id,
-        filename: fileUpload.file.name,
-        progress: 0
+        filename: fileUpload.fileName,
+        progress: 0,
+        metadata: fileUpload.metadata
       };
       return map;
     }, {});
@@ -159,7 +162,7 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
-      if (file.metadata) {
+      if (!file.errorMessage && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });
@@ -167,9 +170,3 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
 };
-
-/**
- * Workaround to make this module compile under the `--isolatedModules` flag.
- * @internal
- */
-export {};

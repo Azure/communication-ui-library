@@ -17,7 +17,7 @@ function createFeatureSet(features) {
 
 
 exports.default = babelHelper.declare((_api, opts) => {
-  const { match, features, stabilizedFeatures } = opts;
+  const { features, stabilizedFeatures } = opts;
   const featureSet = createFeatureSet(features);
   const stabilizedFeatureSet = createFeatureSet(stabilizedFeatures);
 
@@ -26,39 +26,39 @@ exports.default = babelHelper.declare((_api, opts) => {
     // Check types/visitors supported: https://babeljs.io/docs/en/babel-types#typescript
     visitor: {
       ObjectProperty(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       FunctionDeclaration(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       Statement(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       VariableDeclaration(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ImportDeclaration(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ExportNamedDeclaration(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ExportAllDeclaration(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       JSXAttribute(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       TSPropertySignature(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
@@ -74,51 +74,53 @@ exports.default = babelHelper.declare((_api, opts) => {
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
       TSType(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       TSDeclareMethod(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       Expression(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ClassMethod(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ClassProperty(path) {
-        Handle(path, match, featureSet, stabilizedFeatureSet);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
     }
   };
 });
 
-function Handle(path, match, featureSet, stabilizedFeatureSet) {
+function Handle(path, featureSet, stabilizedFeatureSet) {
   let { node } = path;
 
   if (!node.leadingComments) {
     return;
   }
-  const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet));
+  const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
   if (!shouldRemoveNode(removalInstructions)) {
     return;
   }
 
-  node.leadingComments.forEach((comment) => {
-    const instruction = nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet)
-    if (instruction !== 'legacyRemove' && instruction !== 'remove') {
-      return;
-    }
+  const firstRemovalInstructionIdx = node.leadingComments.findIndex((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) === 'remove');
+  if (firstRemovalInstructionIdx === -1) {
+    return;
+  }
+
+  // Remove the first removal instruction as well as all following comments so that
+  // those comments aren't added to the AST node that follows the removed node.
+  node.leadingComments.slice(firstRemovalInstructionIdx).forEach((comment) => {
     comment.ignore = true;
     // Comment is inherited by next line even it is set to 'ignore'.
     // Clear the conditional compilation directive to avoid removing the
     // next line.
     comment.value = '';
   })
-
   // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
   // Replacing it with jSXEmptyExpression will get us the same result
   // There will always be only one expression under JSXExpressionContainer
@@ -129,12 +131,7 @@ function Handle(path, match, featureSet, stabilizedFeatureSet) {
   }
 }
 
-function nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeatureSet) {
-  if (comment.value.includes(match)) {
-    // legacy annotation
-    return 'legacyRemove';
-  }
-
+function nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) {
   const featuresInComment = comment.value.match(CONDITIONAL_FEATURE_RE);
   if (!featuresInComment) {
     return 'none';
@@ -155,10 +152,6 @@ function nodeRemovalInstruction(node, comment, match, featureSet, stabilizedFeat
 }
 
 function shouldRemoveNode(instructions) {
-  // Legacy directive gets highest priority because it doesn't respect specific features.
-  if (instructions.includes('legacyRemove')) {
-    return true;
-  }
   // If any of the directives reference a stabilized feature, do not remove the associated node.
   // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
   // that node in the stable build.
