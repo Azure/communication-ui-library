@@ -56,7 +56,7 @@ export const MobilePane = (props: {
         <DefaultButton
           onClick={props.onClose}
           styles={mobilePaneBackButtonStyles}
-          onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
+          onRenderIcon={() => <CallWithChatCompositeIcon iconName={safeGetChevronLeftIconName()} />}
         ></DefaultButton>
         <DefaultButton
           onClick={props.onChatButtonClicked}
@@ -83,6 +83,10 @@ export const MobilePane = (props: {
     </Stack>
   );
 };
+
+// Remove safe getter when conditional-compile-remove(call-with-chat-composite) is removed
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const safeGetChevronLeftIconName = (): any => 'ChevronLeft';
 
 /**
  * Type used to define which tab is active in {@link MobilePane}
