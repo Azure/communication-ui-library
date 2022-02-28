@@ -51,8 +51,9 @@ to the `locale` prop like in the example below.
 
 ## Available locales
 
-The following is a table of locales for components and composites which can be imported from our package. The component strings are passed as
-a prop to `LocalizationProvider` while the composite strings are passed as a prop to `ChatComposite` or `CallComposite`.
+The following is a table of locales for components and composites which can be imported from our package. If you want to localize your components then import a
+component locale from below and pass it as the `locale` prop of `LocalizationProvider` that is wrapping your components. If you want to localize your composite then import a
+composite locale from below and pass it as the `locale` prop of your `ChatComposite` or `CallComposite`.
 
 <table>
   <tr>
@@ -98,7 +99,7 @@ a prop to `LocalizationProvider` while the composite strings are passed as a pro
   <tr>
     <td>Korean (South Korea)</td>
     <td>COMPONENT_LOCALE_KO_KR</td>
-    <td>COMPONENT_LOCALE_KO_KR</td>
+    <td>COMPOSITE_LOCALE_KO_KR</td>
   </tr>
   <tr>
     <td>Dutch (Netherlands)</td>
@@ -123,16 +124,16 @@ a prop to `LocalizationProvider` while the composite strings are passed as a pro
   <tr>
     <td>Chinese (Mainland China)</td>
     <td>COMPONENT_LOCALE_ZH_CN</td>
-    <td>COMPONENT_LOCALE_ZH_CN</td>
+    <td>COMPOSITE_LOCALE_ZH_CN</td>
   </tr>
   <tr>
     <td>Chinese (Taiwan)</td>
     <td>COMPONENT_LOCALE_ZH_TW</td>
-    <td>COMPONENT_LOCALE_ZH_TW</td>
+    <td>COMPOSITE_LOCALE_ZH_TW</td>
   </tr>
 </table>
 
-## Overriding locales
+## Customizing locales
 
 There are two options to customize the locales that we provide. For the examples below, let's say you wish to have a `ControlBar`
 with strings from our English (US) locale but you want to change the label of `CameraButton` to "Start" when its state is off.
