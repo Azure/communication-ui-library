@@ -55,7 +55,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         className={fileUploadButtonClassName}
         onClick={() => inputRef.current?.click()}
       >
-        <ChatCompositeIcon iconName="SendBoxAttachFile" />
+        <ChatCompositeIcon iconName={safeGetSendBoxAttachFileIconName()} />
       </Stack>
       <input
         ref={inputRef}
@@ -70,6 +70,10 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
     </>
   );
 };
+
+// Remove safe getter when conditional-compile-remove-from(stable) FILE_SHARING is removed
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const safeGetSendBoxAttachFileIconName = (): any => 'SendBoxAttachFile';
 
 /**
  * A wrapper to return {@link FileUploadButton} component conditionally.
