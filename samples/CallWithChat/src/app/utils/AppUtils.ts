@@ -85,3 +85,6 @@ export const callingSDKVersion = __CALLINGVERSION__;
 
 declare let __CHATVERSION__: string; // Injected by webpack
 export const chatSDKVersion = __CHATVERSION__;
+
+declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
+export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
