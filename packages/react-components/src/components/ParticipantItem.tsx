@@ -186,7 +186,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onClick={() => {
         setItemHovered(true);
         setMenuHidden(false);
-        onClick?.();
+        onClick?.(props);
       }}
     >
       <Stack
