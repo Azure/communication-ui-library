@@ -88,7 +88,8 @@ const ChevronLeftIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(call-with-chat-composite)
   return <CallWithChatCompositeIcon iconName="ChevronLeft" />;
 
-  return <></>;
+  // Return _something_ in stable builds to satisfy build system
+  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" />;
 };
 
 /**

@@ -68,7 +68,7 @@ export const EmbeddedPeoplePane = (props: {
             <PrimaryButton
               onClick={() => copy(inviteLink)}
               styles={copyLinkButtonStyles}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
+              onRenderIcon={() => <LinkIconTrampoline />}
               text="Copy invite link"
             />
           )}
@@ -86,11 +86,7 @@ export const EmbeddedPeoplePane = (props: {
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
-          <DefaultButton
-            text="Copy invite link"
-            iconProps={{ iconName: safeGetLinkIconName() }}
-            onClick={() => copy(inviteLink)}
-          />
+          <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
         {participantList}
       </Stack>
@@ -98,9 +94,13 @@ export const EmbeddedPeoplePane = (props: {
   );
 };
 
-// Remove safe getter when conditional-compile-remove(call-with-chat-composite) is removed
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const safeGetLinkIconName = (): any => 'Link';
+const LinkIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(call-with-chat-composite)
+  return <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />;
+
+  // Return _something_ in stable builds to satisfy build system
+  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" />;
+};
 
 /**
  * In a CallWithChat when a participant is removed, we must remove them from both

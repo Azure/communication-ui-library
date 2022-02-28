@@ -74,8 +74,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
 const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
   return <ChatCompositeIcon iconName="SendBoxAttachFile" />;
-
-  return <></>;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
 
 /**
