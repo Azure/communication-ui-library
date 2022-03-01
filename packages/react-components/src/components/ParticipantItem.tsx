@@ -92,6 +92,10 @@ export interface ParticipantItemProps {
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantItemStrings>;
+  /**
+   * Optional callback when component is clicked
+   */
+  onClick?: (props?: ParticipantItemProps) => void;
 }
 
 /**
@@ -102,7 +106,7 @@ export interface ParticipantItemProps {
  * @public
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
+  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me, onClick } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -182,6 +186,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onClick={() => {
         setItemHovered(true);
         setMenuHidden(false);
+        onClick?.(props);
       }}
     >
       <Stack
