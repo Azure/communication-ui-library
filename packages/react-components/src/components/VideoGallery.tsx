@@ -251,11 +251,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return onRenderLocalVideoTile(localParticipant);
     }
 
-    const localVideoTileStyles =
-      shouldFloatLocalVideo ||
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */ showCameraSwitcherInLocalPreview
-        ? floatingLocalVideoTileStyle
-        : {};
+    const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
 
     const localVideoTileStylesThemed = concatStyleSets(
       localVideoTileStyles,
@@ -407,7 +403,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       {
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        showCameraSwitcherInLocalPreview && localParticipant && (
+        showCameraSwitcherInLocalPreview && localParticipant && remoteParticipants.length > 0 && (
           <Stack
             className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
               boxShadow: theme.effects.elevation8
