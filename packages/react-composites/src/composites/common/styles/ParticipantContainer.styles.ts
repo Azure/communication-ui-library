@@ -71,6 +71,22 @@ export const peopleSubheadingStyle: IStackItemStyles = {
 /**
  * @private
  */
+export const peoplePaneContainerStyle: IStackItemStyles = {
+  root: {
+    position: 'relative'
+  }
+};
+
+/**
+ * @private
+ */
+export const peoplePaneContainerTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+/**
+ * @private
+ */
 export const participantListWrapper = mergeStyles({
   width: '20rem',
   // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in

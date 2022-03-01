@@ -1,9 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
-import { ParticipantList } from '@internal/react-components';
+import { DefaultButton, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  ParticipantList,
+  ParticipantListParticipant,
+  ParticipantListProps,
+  ParticipantMenuItemsCallback,
+  _DrawerMenu,
+  _DrawerMenuItemProps
+} from '@internal/react-components';
 import copy from 'copy-to-clipboard';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
@@ -14,15 +22,16 @@ import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
+import { peoplePaneContainerStyle, peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
+import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
-  localAndRemotePIPStyles,
-  peoplePaneContainerTokens
+  localAndRemotePIPStyles
 } from './styles/EmbeddedPeoplePane.styles';
 
 /**
@@ -35,6 +44,7 @@ export const EmbeddedPeoplePane = (props: {
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
@@ -44,12 +54,41 @@ export const EmbeddedPeoplePane = (props: {
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
-  const participantListProps = useMemo(() => {
+  const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+
+  const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
+    return (participant?: ParticipantListParticipant) => {
+      if (participant) {
+        let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
+          participant,
+          callWithChatStrings,
+          participantListDefaultProps.onRemoveParticipant,
+          participantListProps.myUserId
+        );
+        if (props.onFetchParticipantMenuItems) {
+          contextualMenuItems = props.onFetchParticipantMenuItems(
+            participant.userId,
+            participantListProps.myUserId,
+            contextualMenuItems
+          );
+        }
+        const drawerMenuItems = contextualMenuItems.map((contextualMenu: IContextualMenuItem) =>
+          convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setDrawerMenuItems([]))
+        );
+        setDrawerMenuItems(drawerMenuItems);
+      }
+    };
+  }, []);
+
+  const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
     return {
       ...participantListDefaultProps,
-      onRemoveParticipant
+      // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
+      onRemoveParticipant: props.mobileView ? undefined : onRemoveParticipant,
+      // We want the drawer menu items to appear when participants in ParticipantList are clicked
+      onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
@@ -57,6 +96,7 @@ export const EmbeddedPeoplePane = (props: {
     <ParticipantListWithHeading
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
       title={callWithChatStrings.peoplePaneSubTitle}
     />
   );
@@ -74,7 +114,7 @@ export const EmbeddedPeoplePane = (props: {
         onChatButtonClicked={props.onChatButtonClick}
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
-        <Stack verticalFill tokens={peoplePaneContainerTokens}>
+        <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
           <Stack.Item>{participantList}</Stack.Item>
           {
             // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
@@ -93,11 +133,16 @@ export const EmbeddedPeoplePane = (props: {
                 onClick={() => copy(inviteLink)}
                 styles={copyLinkButtonStyles}
                 onRenderIcon={() => <LinkIconTrampoline />}
-                text="Copy invite link"
+                text={callWithChatStrings.copyInviteLinkButtonLabel}
               />
             </Stack.Item>
           )}
         </Stack>
+        {drawerMenuItems.length > 0 && (
+          <Stack styles={drawerContainerStyles}>
+            <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+          </Stack>
+        )}
       </MobilePane>
     );
   }
@@ -138,4 +183,59 @@ const removeParticipantFromCallWithChat = async (
 ): Promise<void> => {
   await callAdapter.removeParticipant(participantId);
   await chatAdapter.removeParticipant(participantId);
+};
+
+/**
+ * Create default contextual menu items for particant
+ * @param participant - participant to create contextual menu items for
+ * @param callWithChatStrings - localized strings for menu item text
+ * @param onRemoveParticipant - callback to remove participant
+ * @param localParticipantUserId - Local participant user id
+ * @returns - IContextualMenuItem[]
+ */
+const createDefaultContextualMenuItems = (
+  participant: ParticipantListParticipant,
+  callWithChatStrings: CallWithChatCompositeStrings,
+  onRemoveParticipant: (userId: string) => Promise<void>,
+  localParticipantUserId?: string
+): IContextualMenuItem[] => {
+  const menuItems: IContextualMenuItem[] = [];
+  if (participant?.userId !== localParticipantUserId) {
+    menuItems.push({
+      key: 'remove',
+      text: callWithChatStrings.removeMenuLabel,
+      onClick: () => {
+        if (participant?.userId) {
+          onRemoveParticipant?.(participant?.userId);
+        }
+      },
+      iconProps: {
+        iconName: 'UserRemove'
+      },
+      disabled: !participant.isRemovable
+    });
+  }
+  return menuItems;
+};
+
+/**
+ * Convert IContextualMenuItem to _DrawerMenuItemProps
+ * @param contextualMenu - IContextualMenuItem
+ * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
+ * @returns DrawerMenuItem
+ */
+const convertContextualMenuItemToDrawerMenuItem = (
+  contextualMenu: IContextualMenuItem,
+  onDrawerMenuItemClick: () => void
+): _DrawerMenuItemProps => {
+  return {
+    itemKey: contextualMenu.key,
+    onItemClick: () => {
+      contextualMenu.onClick?.();
+      onDrawerMenuItemClick();
+    },
+    iconProps: contextualMenu.iconProps,
+    text: contextualMenu.text,
+    disabled: contextualMenu.disabled
+  };
 };
