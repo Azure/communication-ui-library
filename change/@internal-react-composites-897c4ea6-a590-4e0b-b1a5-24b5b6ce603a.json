@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added option to disable back button when mobile pane is active in CallWithChat composite",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
