@@ -175,7 +175,10 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
-    minHeight: '2.5rem'
+    minHeight: '2.5rem',
+
+    // New button styles should never have text go onto a new line. If this removed test buttons that have very long label text.
+    maxWidth: 'unset'
   },
   flexContainer: {
     flexFlow: 'row nowrap'
