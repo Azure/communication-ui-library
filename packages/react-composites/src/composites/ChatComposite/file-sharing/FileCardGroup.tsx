@@ -21,6 +21,9 @@ const fileCardGroupClassName = mergeStyles({
     margin: '0.5rem',
     marginRight: 'auto'
   },
+  /**
+   * margin for children is overriden by parent stack, so adding left margin for each child
+   */
   '& > *:not(:first-child)': {
     marginLeft: '0.625rem'
   }

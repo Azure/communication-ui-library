@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Added changes to see file specific upload errors in the errorbar above Sendbox",
+  "comment": "Show file upload errors above sendbox in Composites containing Chat features",
   "packageName": "@internal/react-components",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
