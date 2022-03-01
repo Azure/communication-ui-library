@@ -13,11 +13,6 @@ export const peoplePaneContainerTokens: IStackTokens = {
 /**
  * @private
  */
-export const localAndRemotePIPContainerStyles: IStackStyles = { root: { height: '100%' } };
-
-/**
- * @private
- */
 export const localAndRemotePIPStyles: IStackStyles = { root: { marginRight: '1rem' } };
 
 /**

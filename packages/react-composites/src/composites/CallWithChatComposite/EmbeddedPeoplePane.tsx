@@ -21,7 +21,6 @@ import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
-  localAndRemotePIPContainerStyles,
   localAndRemotePIPStyles,
   peoplePaneContainerTokens
 } from './styles/EmbeddedPeoplePane.styles';
@@ -81,14 +80,9 @@ export const EmbeddedPeoplePane = (props: {
             // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
             // possession of the dominant remote participant video stream
             !props.hidden && (
-              <Stack horizontalAlign="end" styles={localAndRemotePIPContainerStyles}>
+              <Stack horizontalAlign="end" grow>
                 <Stack styles={localAndRemotePIPStyles}>
-                  <LocalAndRemotePIP
-                    {...pictureInPictureProps}
-                    {...pictureInPictureHandlers}
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onClick={() => {}} // no onClick behavior
-                  />
+                  <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
                 </Stack>
               </Stack>
             )
