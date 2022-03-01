@@ -2,14 +2,22 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
+import {
+  IStyle,
+  ITextField,
+  mergeStyles,
+  concatStyleSets,
+  Icon,
+  Stack,
+  MessageBar,
+  MessageBarType
+} from '@fluentui/react';
 import {
   sendBoxStyle,
   sendButtonStyle,
   sendIconStyle,
   sendBoxWrapperStyles,
-  borderAndBoxShadowStyle,
-  errorBarStyle
+  borderAndBoxShadowStyle
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -220,10 +228,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
     if (latestError) {
-      return <Stack className={mergeStyles(errorBarStyle(theme))}>{latestError.errorMessage}</Stack>;
+      return <MessageBar messageBarType={MessageBarType.warning}>{latestError.errorMessage}</MessageBar>;
     }
-    return <Stack></Stack>;
-  }, [props.activeFileUploads, theme]);
+    return <></>;
+  }, [props.activeFileUploads]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
