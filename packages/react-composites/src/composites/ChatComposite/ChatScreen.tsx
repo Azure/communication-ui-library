@@ -163,7 +163,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
+            onRenderFileDownloads={(userId, message) => (
+              <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
+            )}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
