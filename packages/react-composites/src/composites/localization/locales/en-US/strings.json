@@ -51,6 +51,8 @@
     "peoplePaneSubTitle": "In this call",
     "chatPaneTitle": "Chat",
     "chatButtonNewMessageNotificationLabel": "New Message",
-    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
+    "removeMenuLabel": "Remove",
+    "copyInviteLinkButtonLabel": "Copy invite link"
   }
 }
