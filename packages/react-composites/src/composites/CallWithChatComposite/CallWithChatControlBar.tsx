@@ -176,21 +176,30 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem',
-
-    // New button styles should never have text go onto a new line. If this removed test buttons that have very long label text.
-    maxWidth: 'unset'
+    maxWidth: '12rem' // allot extra space that the regular ControlBarButton to give extra room to have the icon beside the text
   },
   flexContainer: {
+    display: 'flex',
     flexFlow: 'row nowrap'
   },
   textContainer: {
     // Override the default so that label doesn't introduce a new block.
-    display: 'inline'
+    display: 'inline',
+
+    // Ensure width is set to permit child to show ellipsis when there is a label that is too long
+    maxWidth: '100%'
   },
   label: {
-    // Override styling from ControlBarButton so that label doesn't introduce a new block.
-    display: 'inline',
-    fontSize: theme.fonts.medium.fontSize
+    fontSize: theme.fonts.medium.fontSize,
+
+    // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
+    lineHeight: '1.5rem',
+
+    // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
+    display: 'block',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
