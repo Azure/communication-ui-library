@@ -20,4 +20,16 @@ export const copyLinkButtonStyles: IButtonStyles = {
 /**
  * @private
  */
+export const copyLinkDesktopButtonStyles: IButtonStyles = {
+  root: {
+    margin: '1rem 1rem 0 1rem'
+  },
+  textContainer: {
+    display: 'contents'
+  }
+};
+
+/**
+ * @private
+ */
 export const linkIconStyles = { marginRight: '0.5rem' };
