@@ -11,6 +11,7 @@ import {
 } from './file-sharing';
 import { ChatMessage } from '@internal/react-components';
 import { ChatCompositeIcon } from '../common/icons';
+// @conditional-compile-remove(file-sharing)
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { useState } from 'react';
 import React from 'react';
@@ -41,6 +42,7 @@ export interface FileDownloadCards {
 export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   const truncateLength = 15;
   const { userId, message } = props;
+  // @conditional-compile-remove(file-sharing)
   const [showSpinner, setSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
   const DownloadIconTrampoline = (): JSX.Element => {
@@ -66,14 +68,17 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             actionIcon={<DownloadIconTrampoline />}
             actionHandler={() => {
               if (props.downloadHandler) {
+                // @conditional-compile-remove(file-sharing)
                 setSpinner(true);
                 props
                   .downloadHandler(userId, file)
                   .then((fileurl) => {
+                    // @conditional-compile-remove(file-sharing)
                     setSpinner(false);
                     window.open(fileurl.toString(), '_blank', 'noopener,noreferrer');
                   })
                   .catch((error) => {
+                    // @conditional-compile-remove(file-sharing)
                     setSpinner(false);
                     //TODO: implement error handling for reject
                     console.log(error);
