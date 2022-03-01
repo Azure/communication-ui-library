@@ -53,7 +53,7 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation4 } }
+    { main: { boxShadow: theme.effects.elevation8 } }
   );
 };
 
@@ -77,7 +77,7 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
  */
 export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
   return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
-    root: { boxShadow: theme.effects.elevation4 }
+    root: { boxShadow: theme.effects.elevation8, zIndex: LOCAL_VIDEO_TILE_ZINDEX }
   });
 };
 

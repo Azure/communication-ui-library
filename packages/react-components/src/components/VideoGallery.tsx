@@ -410,7 +410,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview && localParticipant && (
           <Stack
             className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-              boxShadow: theme.effects.elevation4
+              boxShadow: theme.effects.elevation8
             })}
           >
             {localVideoTile}
