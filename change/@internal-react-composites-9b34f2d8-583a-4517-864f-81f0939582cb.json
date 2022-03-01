@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add e2e tests for More Menu on CallWithChat Mobile",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
