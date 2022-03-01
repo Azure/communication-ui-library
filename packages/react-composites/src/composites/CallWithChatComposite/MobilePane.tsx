@@ -60,7 +60,7 @@ export const MobilePane = (props: {
       };
     } else {
       // remove onpopstate listener otherwise
-      window.onpopstate = () => {};
+      window.onpopstate = null;
     }
   }, [props.disableBackButton, props.hidden]);
 
