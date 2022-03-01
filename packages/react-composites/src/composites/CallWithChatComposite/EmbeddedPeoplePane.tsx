@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, FontIcon, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
