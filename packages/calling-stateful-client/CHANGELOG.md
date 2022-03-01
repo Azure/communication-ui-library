@@ -1,8 +1,22 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Mar 2022 16:42:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.1.1-beta.1)
+
+Tue, 01 Mar 2022 16:42:56 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.1...@internal/calling-stateful-client_v1.1.1-beta.1)
+
+### Patches
+
+- Fix exception thrown when trying to log stringified state when azure logger is set to verbose ([PR #1543](https://github.com/azure/communication-ui-library/pull/1543) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+
+### Changes
+
+- upgrading calling to 1.4.2-beta.1 ([PR #1509](https://github.com/azure/communication-ui-library/pull/1509) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.1)
 

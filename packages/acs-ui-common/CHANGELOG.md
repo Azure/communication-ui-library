@@ -1,8 +1,21 @@
 # Change Log - @internal/acs-ui-common
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Mar 2022 16:43:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.1.1-beta.1)
+
+Tue, 01 Mar 2022 16:43:00 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.1...@internal/acs-ui-common_v1.1.1-beta.1)
+
+### Patches
+
+- Add _safeJSONStringify function ([PR #1543](https://github.com/azure/communication-ui-library/pull/1543) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Changes
+
+- Exporting a _MAX_EVENT_LISTENERS internal constant ([PR #1374](https://github.com/azure/communication-ui-library/pull/1374) by anjulgarg@live.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.8)
 

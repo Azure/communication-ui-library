@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Logic introduced to cause local camera switcher to appear on mobile.",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

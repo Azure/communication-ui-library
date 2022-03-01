@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "MoreDrawer secondaryText maxWidth set to prevent overlap",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
