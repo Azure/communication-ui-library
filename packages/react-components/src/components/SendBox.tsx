@@ -44,7 +44,7 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
  * Attributes required for SendBox to show file uploads like name, progress etc.
  * @beta
  */
-export interface ActiveFileUploads {
+export interface ActiveFileUpload {
   /**
    * Unique identifier for the file upload.
    */
@@ -148,13 +148,13 @@ export interface SendBoxProps {
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional array of active file uploads where each object has attibutes
    * of a file upload like name, progress, errormessage etc.
    * @beta
    */
-  activeFileUploads?: ActiveFileUploads[];
+  activeFileUploads?: ActiveFileUpload[];
 }
 
 /**
@@ -215,9 +215,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
-    const fileUploads: ActiveFileUploads[] = props.activeFileUploads || [];
+    const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
     if (latestError) {
       return <Stack className={mergeStyles(errorBarStyle(theme))}>{latestError.errorMessage}</Stack>;
@@ -261,7 +261,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
-        /* @conditional-compile-remove-from(stable): FILE_SHARING */
+        /* @conditional-compile-remove(file-sharing) */
         renderFileUploadErrorMessage
       }
       <Stack
@@ -306,7 +306,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           />
         </InputBoxComponent>
         {
-          /* @conditional-compile-remove-from(stable): FILE_SHARING */
+          /* @conditional-compile-remove(file-sharing) */
           props.onRenderFileUploads && props.onRenderFileUploads()
         }
       </Stack>
