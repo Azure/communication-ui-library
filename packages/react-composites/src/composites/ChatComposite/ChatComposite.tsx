@@ -98,7 +98,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   } = props;
 
   /**
-   * @TODO Remove this function and pass the props directly when FILE_SHARING is promoted to stable.
+   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
    * @private
    */
   const fileSharingOptions = () => {
