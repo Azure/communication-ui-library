@@ -32,6 +32,14 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// @beta
+export interface ActiveFileUploads {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    progress: number;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -851,8 +859,12 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
+    // @beta
+    activeFileUploads?: ActiveFileUploads[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;

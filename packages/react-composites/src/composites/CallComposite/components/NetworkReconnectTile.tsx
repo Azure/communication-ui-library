@@ -4,7 +4,7 @@
 import React from 'react';
 import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
-import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import {
   containerStyle,
@@ -14,6 +14,7 @@ import {
 } from '../styles/NetworkReconnectTile.styles';
 import { useHandlers } from '../hooks/useHandlers';
 import { useLocalVideoStartTrigger } from './MediaGallery';
+import { CallCompositeIcon } from '../../common/icons';
 
 /**
  * @private
@@ -42,7 +43,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
       overlayContent={
         <Stack verticalFill horizontalAlign="center" verticalAlign="center" className={mergeStyles(containerStyle)}>
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
-            <Icon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
+            <CallCompositeIcon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
             <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
               {strings.networkReconnectTitle}
             </Text>
