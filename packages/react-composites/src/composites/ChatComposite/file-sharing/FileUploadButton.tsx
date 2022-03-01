@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React, { useRef } from 'react';
+import { ChatCompositeIcon } from '../../common/icons';
 
 /**
  * Props for {@link FileUploadButton} component.
@@ -54,7 +55,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         className={fileUploadButtonClassName}
         onClick={() => inputRef.current?.click()}
       >
-        <Icon iconName="SendBoxAttachFile" />
+        <SendBoxAttachFileIconTrampoline />
       </Stack>
       <input
         ref={inputRef}
@@ -68,6 +69,13 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       />
     </>
   );
+};
+
+const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="SendBoxAttachFile" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
 
 /**
