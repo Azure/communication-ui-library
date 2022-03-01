@@ -15,7 +15,7 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -61,7 +61,7 @@ export class ChatContext {
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
         // Log to `info` because AzureLogger.verbose() doesn't show up in console.
-        this._logger.info(`State change: ${JSON.stringify(patches)}`);
+        this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
       }
     });
     if (!this._batchMode) {
@@ -401,7 +401,7 @@ export class ChatContext {
     } catch (e) {
       this._state = priorState;
       if (getLogLevel() === 'verbose') {
-        this._logger.warning(`State rollback to: ${JSON.stringify(priorState)}`);
+        this._logger.warning(`State rollback to: ${_safeJSONStringify(priorState)}`);
       }
       throw e;
     } finally {

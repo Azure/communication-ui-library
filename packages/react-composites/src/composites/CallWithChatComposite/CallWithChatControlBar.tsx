@@ -133,7 +133,9 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     styles={commonButtonStyles}
                   />
                 )}
-                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
+                {props.mobileView && (
+                  <MoreButton data-ui-id="call-with-chat-composite-more-button" onClick={props.onMoreButtonClicked} />
+                )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>

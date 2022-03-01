@@ -9,7 +9,7 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove-from(stable): FILE_SHARING */
+/* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from './ChatScreen';
 
 /**
@@ -52,7 +52,7 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   errorBar?: boolean;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
   /**
    * Show or hide the participant pane. This feature is in beta and not supported on mobile or narrow screen views.
    * @defaultValue false
@@ -66,11 +66,12 @@ export type ChatCompositeOptions = {
    */
   topic?: boolean;
   /**
-   * Set focus on the composite when the composite first mounts.
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField';
 
-  /* @conditional-compile-remove-from(stable): FILE_SHARING */
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
@@ -97,11 +98,11 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   } = props;
 
   /**
-   * @TODO Remove this function and pass the props directly when FILE_SHARING is promoted to stable.
+   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
    * @private
    */
   const fileSharingOptions = () => {
-    /* @conditional-compile-remove-from(stable): FILE_SHARING */
+    /* @conditional-compile-remove(file-sharing) */
     return {
       fileSharing: options?.fileSharing
     };

@@ -96,9 +96,13 @@ export interface ObservableFileUpload extends FileUploadEventEmitter {
    */
   id: string;
   /**
-   * The {@link File} object for the file being uploaded.
+   * Filename to be displayed in the UI during file upload.
    */
-  file: File;
+  fileName: string;
+  /**
+   * Optional object of type {@link FileMetadata}
+   */
+  metadata?: FileMetadata;
 }
 
 /**
@@ -110,10 +114,12 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
   private _emitter: EventEmitter;
   public id: string;
   public file: File;
+  fileName: string;
 
   constructor(file: File, maxListeners = _MAX_EVENT_LISTENERS) {
     this.id = nanoid();
     this.file = file;
+    this.fileName = file.name;
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
   }
@@ -213,3 +219,22 @@ export interface FileUploadEventEmitter {
    */
   off(event: 'uploadFailed', listener: UploadFailedListener): void;
 }
+
+/**
+ * Utility function to be used with {@link AzureCommunicationChatAdapter#registerFileUploads}
+ * Allows adding already uploaded files to the send box in Chat Composite.
+ * @beta
+ */
+export const createCompletedFileUpload = (data: FileMetadata): ObservableFileUpload => {
+  return {
+    id: nanoid(),
+    fileName: data.name,
+    metadata: data,
+    on(): void {
+      // noop
+    },
+    off(): void {
+      // noop
+    }
+  };
+};

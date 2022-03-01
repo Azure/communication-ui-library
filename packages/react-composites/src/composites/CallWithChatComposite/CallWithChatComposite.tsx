@@ -5,7 +5,8 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
+import { EmbeddedChatPane } from './EmbeddedChatPane';
+import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import {
@@ -20,7 +21,7 @@ import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatA
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
-import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
+import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
@@ -31,7 +32,7 @@ import { PreparedMoreDrawer } from './PreparedMoreDrawer';
  *
  * @beta
  */
-export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   callWithChatAdapter: CallWithChatAdapter;
   /**
    * Fluent theme for the composite.

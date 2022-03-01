@@ -8,6 +8,8 @@ import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
+/* @conditional-compile-remove(call-with-chat-composite) */
+import { CallWithChatCompositeIcons } from './icons';
 
 /**
  * Properties common to all composites exported from this library.
@@ -60,7 +62,13 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
  * @private
  */
 export const BaseProvider = (
-  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+  props: BaseCompositeProps<
+    | CallCompositeIcons
+    | ChatCompositeIcons
+    | /* @conditional-compile-remove(call-with-chat-composite) */ CallWithChatCompositeIcons
+  > & {
+    children: React.ReactNode;
+  }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 

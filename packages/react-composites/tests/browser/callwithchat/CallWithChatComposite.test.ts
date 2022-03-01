@@ -66,13 +66,106 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
-    // There is no PeopleButton on the control bar in mobile.
-    // TODO: Open the people pane via the MoreDrawer for mobile.
-    test.skip(!isTestProfileDesktop(testInfo));
     const page = pages[1];
-    await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    if (isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    } else {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    }
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
     expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
+  });
+
+  test('More Drawer menu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
+    }
+  });
+
+  test('More Drawer Speaker submenu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerSpeakerDiv = await page.$('div[role="menu"] >> text=Speaker');
+      await moreDrawerSpeakerDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
+    }
+  });
+
+  test('Speaker Submenu click on a new audio device displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerSpeakerDiv = await page.$('div[role="menu"] >> text=Speaker');
+      await moreDrawerSpeakerDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Output 1"');
+      await submenuNewAudioDeviceDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
+    }
+  });
+
+  test('More Drawer menu opens and displays new selected speaker device correctly on mobile', async ({
+    pages
+  }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      // Select new audio device in submenu drawer
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerSpeakerDiv = await page.$('div[role="menu"] >> text=Speaker');
+      await moreDrawerSpeakerDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Output 1"');
+      await submenuNewAudioDeviceDiv?.click();
+
+      // Display MoreDrawer to view newly selected audio device
+      await page.mouse.click(100, 100);
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-speaker-screen.png`);
+    }
+  });
+
+  test('More Drawer Microphone submenu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
+    }
+  });
+
+  test('Microphone Submenu click on a new audio device displays correctly on mobile', async ({ pages }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
+      await submenuNewAudioDeviceDiv?.click();
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
+    }
+  });
+
+  test('More Drawer menu opens and displays new selected microphone device correctly on mobile', async ({
+    pages
+  }, testInfo) => {
+    const page = pages[1];
+    if (!isTestProfileDesktop(testInfo)) {
+      // Select new audio device in submenu drawer
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv?.click();
+      const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
+      await submenuNewAudioDeviceDiv?.click();
+
+      // Display MoreDrawer to view newly selected audio device
+      await page.mouse.click(100, 100);
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-microphone-screen.png`);
+    }
   });
 });
 
