@@ -99,7 +99,7 @@ const LinkIconTrampoline = (): JSX.Element => {
   return <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />;
 
   // Return _something_ in stable builds to satisfy build system
-  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" />;
+  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" style={linkIconStyles} />;
 };
 
 /**
