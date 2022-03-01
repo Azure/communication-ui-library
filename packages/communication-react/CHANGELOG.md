@@ -4,6 +4,32 @@ This log was last generated on Mon, 24 Jan 2022 23:18:53 GMT and should not be m
 
 <!-- Start content -->
 
+## [1.1.0](https://github.com/azure/communication-ui-library/tree/1.1.0)
+
+With this minor release, @azure/communication-react's Azure Communication Service core SDKs have been moved to [peerDependencies](https://nodejs.org/en/blog/npm/peer-dependencies/).
+This change gives you a more consistent way to use the core SDKs in your application.
+
+After upgrading to 1.1.0, you will need to install these core SDKs in your application:
+
+```bash
+npm i @azure/communication-calling@1.3.2
+npm i @azure/communication-chat@1.1.0
+```
+
+This minor release also contains general bug fixes and performance improvements.
+
+## Changes since 1.0.0
+[Compare changes](https://github.com/Azure/communication-ui-library/compare/1.0.0...1.1.0)
+
+
+### Changes
+  - Upgrade @azure/communication-signaling to 1.0.0.beta.12 ([PR #1352](https://github.com/azure/communication-ui-library/pull/1352) by anjulgarg@live.com)
+  - Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread ([PR #1345](https://github.com/azure/communication-ui-library/pull/1345) by edwardlee@microsoft.com)
+  - Allows setting min and max size of the persona avatar in the Video Tile ([PR #1406](https://github.com/azure/communication-ui-library/pull/1406) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Bug Fixes
+  - Fix CallComposite being stuck on the configuration page when using adapter.startCall ([PR #1403](https://github.com/azure/communication-ui-library/pull/1403) by 2684369+JamesBurnside@users.noreply.github.com)
+
 ## [1.0.1-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.1-beta.2)
 
 Mon, 24 Jan 2022 23:18:53 GMT 
