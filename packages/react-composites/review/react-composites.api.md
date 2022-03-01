@@ -19,7 +19,6 @@ import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
@@ -162,7 +161,7 @@ export interface CallAdapterDeviceManagement {
 // Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
 //
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -199,7 +198,7 @@ export type CallAdapterUiState = {
 
 // @beta
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -207,7 +206,50 @@ export interface CallAndChatLocator {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch'>>;
+export type CallCompositeIcons = {
+    ControlButtonCameraOff?: JSX.Element;
+    ControlButtonCameraOn?: JSX.Element;
+    ControlButtonEndCall?: JSX.Element;
+    ControlButtonMicOff?: JSX.Element;
+    ControlButtonMicOn?: JSX.Element;
+    ControlButtonOptions?: JSX.Element;
+    ControlButtonParticipants?: JSX.Element;
+    ControlButtonScreenShareStart?: JSX.Element;
+    ControlButtonScreenShareStop?: JSX.Element;
+    ErrorBarCallCameraAccessDenied?: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse?: JSX.Element;
+    ErrorBarCallLocalVideoFreeze?: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallNetworkQualityLow?: JSX.Element;
+    ErrorBarCallNoMicrophoneFound?: JSX.Element;
+    ErrorBarCallNoSpeakerFound?: JSX.Element;
+    HorizontalGalleryLeftButton?: JSX.Element;
+    HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
+    LocalDeviceSettingsCamera?: JSX.Element;
+    LocalDeviceSettingsMic?: JSX.Element;
+    LocalDeviceSettingsSpeaker?: JSX.Element;
+    LocalPreviewPlaceholder?: JSX.Element;
+    Muted?: JSX.Element;
+    NetworkReconnectIcon?: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
+    NoticePageLeftCall?: JSX.Element;
+    NoticePageRemovedFromCall?: JSX.Element;
+    OptionsCamera?: JSX.Element;
+    OptionsMic?: JSX.Element;
+    OptionsSpeaker?: JSX.Element;
+    ParticipantItemMicOff?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    ParticipantItemScreenShareStart?: JSX.Element;
+    VideoTileMicOff?: JSX.Element;
+    LocalCameraSwitch?: JSX.Element;
+};
 
 // @public
 export type CallCompositeOptions = {
@@ -400,7 +442,71 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
 // @beta
-export type CallWithChatCompositeIcons = Partial<Pick<CompositeIcons, /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon' | 'ControlBarChatButtonActive' | 'ControlBarChatButtonInactive'>>;
+export type CallWithChatCompositeIcons = {
+    ChevronLeft?: JSX.Element;
+    ControlBarButtonBadgeIcon?: JSX.Element;
+    ControlBarChatButtonActive?: JSX.Element;
+    ControlBarChatButtonInactive?: JSX.Element;
+    ControlBarPeopleButton?: JSX.Element;
+    Link?: JSX.Element;
+    MoreDrawerMicrophones?: JSX.Element;
+    MoreDrawerPeople?: JSX.Element;
+    MoreDrawerSelectedMicrophone?: JSX.Element;
+    MoreDrawerSelectedSpeaker?: JSX.Element;
+    MoreDrawerSpeakers?: JSX.Element;
+    ControlButtonCameraOff?: JSX.Element;
+    ControlButtonCameraOn?: JSX.Element;
+    ControlButtonEndCall?: JSX.Element;
+    ControlButtonMicOff?: JSX.Element;
+    ControlButtonMicOn?: JSX.Element;
+    ControlButtonOptions?: JSX.Element;
+    ControlButtonScreenShareStart?: JSX.Element;
+    ControlButtonScreenShareStop?: JSX.Element;
+    ErrorBarCallCameraAccessDenied?: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse?: JSX.Element;
+    ErrorBarCallLocalVideoFreeze?: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallNetworkQualityLow?: JSX.Element;
+    ErrorBarCallNoMicrophoneFound?: JSX.Element;
+    ErrorBarCallNoSpeakerFound?: JSX.Element;
+    HorizontalGalleryLeftButton?: JSX.Element;
+    HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
+    LocalDeviceSettingsCamera?: JSX.Element;
+    LocalDeviceSettingsMic?: JSX.Element;
+    LocalDeviceSettingsSpeaker?: JSX.Element;
+    LocalPreviewPlaceholder?: JSX.Element;
+    Muted?: JSX.Element;
+    NetworkReconnectIcon?: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
+    NoticePageLeftCall?: JSX.Element;
+    NoticePageRemovedFromCall?: JSX.Element;
+    OptionsCamera?: JSX.Element;
+    OptionsMic?: JSX.Element;
+    OptionsSpeaker?: JSX.Element;
+    ParticipantItemMicOff?: JSX.Element;
+    ParticipantItemScreenShareStart?: JSX.Element;
+    VideoTileMicOff?: JSX.Element;
+    LocalCameraSwitch?: JSX.Element;
+    EditBoxCancel?: JSX.Element;
+    EditBoxSubmit?: JSX.Element;
+    MessageDelivered?: JSX.Element;
+    MessageEdit?: JSX.Element;
+    MessageFailed?: JSX.Element;
+    MessageRemove?: JSX.Element;
+    MessageSeen?: JSX.Element;
+    MessageSending?: JSX.Element;
+    SendBoxSend?: JSX.Element;
+    SendBoxSendHovered?: JSX.Element;
+    SendBoxAttachFile?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+};
 
 // @beta
 export type CallWithChatCompositeOptions = {
@@ -408,7 +514,7 @@ export type CallWithChatCompositeOptions = {
 };
 
 // @beta
-export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     callWithChatAdapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
@@ -496,7 +602,23 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type ChatCompositeIcons = {
+    EditBoxCancel?: JSX.Element;
+    EditBoxSubmit?: JSX.Element;
+    MessageDelivered?: JSX.Element;
+    MessageEdit?: JSX.Element;
+    MessageFailed?: JSX.Element;
+    MessageRemove?: JSX.Element;
+    MessageSeen?: JSX.Element;
+    MessageSending?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    SendBoxSend?: JSX.Element;
+    SendBoxSendHovered?: JSX.Element;
+    SendBoxAttachFile?: JSX.Element;
+    Download?: JSX.Element;
+    Cancel?: JSX.Element;
+};
 
 // @public
 export type ChatCompositeOptions = {
@@ -563,34 +685,12 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
-export const COMPOSITE_ONLY_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonActive: JSX.Element;
-    ControlBarChatButtonInactive: JSX.Element;
-    ControlBarPeopleButton: JSX.Element;
-    MoreDrawerMicrophones: JSX.Element;
-    MoreDrawerPeople: JSX.Element;
-    MoreDrawerSpeakers: JSX.Element;
-    MoreDrawerSelectedMicrophone: JSX.Element;
-    MoreDrawerSelectedSpeaker: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
-};
+export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
+// Warning: (ae-incompatible-release-tags) The symbol "CompositeIcons" is marked as @public, but its signature references "CallWithChatCompositeIcons" which is marked as @beta
+//
 // @public
-export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
 
 // @public
 export interface CompositeLocale {
@@ -624,6 +724,9 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta
+export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
+
+// @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
 // @beta
@@ -641,29 +744,21 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    ControlBarChatButtonActive: JSX.Element;
-    ControlBarChatButtonInactive: JSX.Element;
-    ControlBarPeopleButton: JSX.Element;
-    MoreDrawerMicrophones: JSX.Element;
-    MoreDrawerPeople: JSX.Element;
-    MoreDrawerSpeakers: JSX.Element;
-    MoreDrawerSelectedMicrophone: JSX.Element;
-    MoreDrawerSelectedSpeaker: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    SendBoxAttachFile?: JSX.Element | undefined;
+    Download?: JSX.Element | undefined;
+    Cancel?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -673,8 +768,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -687,22 +780,36 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallNoSpeakerFound: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element | undefined;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
+    LocalDeviceSettingsCamera?: JSX.Element | undefined;
+    LocalDeviceSettingsMic?: JSX.Element | undefined;
+    LocalDeviceSettingsSpeaker?: JSX.Element | undefined;
+    LocalPreviewPlaceholder?: JSX.Element | undefined;
+    Muted?: JSX.Element | undefined;
+    NetworkReconnectIcon?: JSX.Element | undefined;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element | undefined;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
+    NoticePageLeftCall?: JSX.Element | undefined;
+    NoticePageRemovedFromCall?: JSX.Element | undefined;
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
     ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    LocalCameraSwitch?: JSX.Element | undefined;
+    ChevronLeft?: JSX.Element | undefined;
+    ControlBarButtonBadgeIcon?: JSX.Element | undefined;
+    ControlBarChatButtonActive?: JSX.Element | undefined;
+    ControlBarChatButtonInactive?: JSX.Element | undefined;
+    ControlBarPeopleButton?: JSX.Element | undefined;
+    Link?: JSX.Element | undefined;
+    MoreDrawerMicrophones?: JSX.Element | undefined;
+    MoreDrawerPeople?: JSX.Element | undefined;
+    MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
+    MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
+    MoreDrawerSpeakers?: JSX.Element | undefined;
 };
 
 // @public
@@ -828,8 +935,9 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 
 // @beta
 export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
+    fileName: string;
     id: string;
+    metadata?: FileMetadata;
 }
 
 // @public

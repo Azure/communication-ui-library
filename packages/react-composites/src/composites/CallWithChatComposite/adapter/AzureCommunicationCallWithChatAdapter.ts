@@ -51,7 +51,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/* @conditional-compile-remove(teams-adhoc-call) */
 import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import {
@@ -445,9 +445,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator:
-    | GroupCallLocator
-    | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }

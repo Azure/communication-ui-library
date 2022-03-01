@@ -10,12 +10,14 @@ import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
-import { getBuildTime, getChatSDKVersion } from './utils/utils';
+import { getBuildTime, getChatSDKVersion, getCommnicationReactSDKVersion } from './utils/utils';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 setLogLevel('warning');
 
-console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
+console.info(
+  `Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()} and @azure/communication-react : ${getCommnicationReactSDKVersion()}`
+);
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();

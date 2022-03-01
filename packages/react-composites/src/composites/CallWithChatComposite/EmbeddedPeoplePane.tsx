@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, FontIcon, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
 import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
@@ -12,6 +12,7 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
@@ -97,7 +98,7 @@ export const EmbeddedPeoplePane = (props: {
               <PrimaryButton
                 onClick={() => copy(inviteLink)}
                 styles={copyLinkButtonStyles}
-                onRenderIcon={() => <FontIcon iconName="Link" style={linkIconStyles} />}
+                onRenderIcon={() => <LinkIconTrampoline />}
                 text="Copy invite link"
               />
             </Stack.Item>
@@ -122,6 +123,14 @@ export const EmbeddedPeoplePane = (props: {
       </Stack>
     </SidePane>
   );
+};
+
+const LinkIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(call-with-chat-composite)
+  return <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />;
+
+  // Return _something_ in stable builds to satisfy build system
+  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" style={linkIconStyles} />;
 };
 
 /**

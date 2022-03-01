@@ -104,7 +104,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
 const safeGetArialLabel = (locale: CompositeLocale): string => {
   // eslint-disable-next-line prefer-const
   let ariaLabel = '';
-  /* @conditional-compile-remove-from(stable) meeting-composite */
+  /* @conditional-compile-remove(call-with-chat-composite) */
   ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
   return ariaLabel;
 };

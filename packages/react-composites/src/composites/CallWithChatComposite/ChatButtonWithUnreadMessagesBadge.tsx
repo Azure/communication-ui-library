@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import { ChatMessage } from '@azure/communication-chat';
-import { FontIcon, IStackStyles, Stack } from '@fluentui/react';
+import { IStackStyles, Stack } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 import React, { useCallback, useState } from 'react';
 import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import { ChatButton } from './ChatButton';
 import { NotificationIcon } from './NotificationIcon';
 
@@ -26,8 +27,8 @@ export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButton
 const validNewChatMessage = (message): boolean =>
   !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
 
-const filledIcon = <FontIcon iconName={'ControlBarChatButtonActive'} />;
-const regularIcon = <FontIcon iconName={'ControlBarChatButtonInactive'} />;
+const filledIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonActive'} />;
+const regularIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonInactive'} />;
 
 /**
  * @private
