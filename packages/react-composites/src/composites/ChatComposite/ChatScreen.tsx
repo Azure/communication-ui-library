@@ -22,8 +22,8 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import {
-  // FileUploadButtonWrapper as FileUploadButton,
-  // FileUpload,
+  FileUploadButtonWrapper as FileUploadButton,
+  FileUpload,
   FileUploadHandler,
   FileDownloadHandler
 } from './file-sharing';
@@ -41,11 +41,14 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
-// import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
+
+/* REMOVE THE FILE SHARING BUTTON FOR 1.1.1-BETA.1 RELEASE -- DO NOT COMMIT THIS TO THE MAIN BRANCH */
+const SHOW_FILE_SHARING_BUTTON = false;
 
 /**
  * @private
@@ -106,8 +109,7 @@ export interface FileSharingOptions {
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles /*, fileSharing */ } =
-    props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
 
@@ -141,18 +143,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
 
-  /* REMOVE THE FILE SHARING BUTTON FOR 1.1.1-BETA.1 RELEASE -- DO NOT COMMIT THIS TO THE MAIN BRANCH */
-  // const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
-  // const fileUploadButtonOnChange = (files: FileList | null): void => {
-  //   if (!files) {
-  //     return;
-  //   }
+  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
+  const fileUploadButtonOnChange = (files: FileList | null): void => {
+    if (!files) {
+      return;
+    }
 
-  //   const fileUploads = Array.from(files).map((file) => new FileUpload(file));
-  //   /* @conditional-compile-remove(file-sharing) */
-  //   fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
-  //   fileSharing?.uploadHandler(userId, fileUploads);
-  // };
+    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
+    /* @conditional-compile-remove(file-sharing) */
+    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    fileSharing?.uploadHandler(userId, fileUploads);
+  };
 
   return (
     <Stack className={chatContainer} grow>
@@ -185,12 +186,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               styles={sendBoxStyles}
             />
 
-            {/* REMOVE THE FILE SHARING BUTTON FOR 1.1.1-BETA.1 RELEASE -- DO NOT COMMIT THIS TO THE MAIN BRANCH */}
-            {/* <FileUploadButton
-              accept={fileSharing?.accept}
-              multiple={fileSharing?.multiple}
-              onChange={fileUploadButtonOnChange}
-            /> */}
+            {SHOW_FILE_SHARING_BUTTON && (
+              <FileUploadButton
+                accept={fileSharing?.accept}
+                multiple={fileSharing?.multiple}
+                onChange={fileUploadButtonOnChange}
+              />
+            )}
           </Stack>
         </Stack>
         {
