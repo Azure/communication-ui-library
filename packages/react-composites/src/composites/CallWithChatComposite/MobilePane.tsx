@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, Icon, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   paneBodyContainer,
   scrollableContainer,
@@ -55,7 +56,7 @@ export const MobilePane = (props: {
         <DefaultButton
           onClick={props.onClose}
           styles={mobilePaneBackButtonStyles}
-          onRenderIcon={() => <Icon iconName="ChevronLeft" />}
+          onRenderIcon={() => <ChevronLeftIconTrampoline />}
         ></DefaultButton>
         <DefaultButton
           onClick={props.onChatButtonClicked}
@@ -81,6 +82,14 @@ export const MobilePane = (props: {
       </Stack.Item>
     </Stack>
   );
+};
+
+const ChevronLeftIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(call-with-chat-composite)
+  return <CallWithChatCompositeIcon iconName="ChevronLeft" />;
+
+  // Return _something_ in stable builds to satisfy build system
+  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" />;
 };
 
 /**
