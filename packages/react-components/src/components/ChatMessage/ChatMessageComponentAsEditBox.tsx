@@ -41,15 +41,18 @@ export type ChatMessageComponentAsEditBoxProps = {
   inlineEditButtons: boolean;
 };
 
+type MessageState = 'OK' | 'too short' | 'too long';
+
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
-  const [textValueOverflow, setTextValueOverflow] = useState(false);
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
+  const messageState = getMessageState(textValue);
+  const submitEnabled = messageState === 'OK';
 
   useEffect(() => {
     editTextFieldRef.current?.focus();
@@ -59,21 +62,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
   ): void => {
-    if (newValue === undefined) {
-      return;
-    }
-
-    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
-    } else {
-      setTextValueOverflow(false);
-    }
-    setTextValue(newValue);
+    setTextValue(newValue ?? '');
   };
 
-  const textTooLongMessage = textValueOverflow
-    ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-    : undefined;
+  const textTooLongMessage =
+    messageState === 'too long'
+      ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
+      : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
     () => onRenderCancelIcon(theme.palette.neutralSecondary),
@@ -100,7 +95,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         textValue={textValue}
         onChange={setText}
         onEnterKeyDown={() => {
-          onSubmit(textValue);
+          submitEnabled && onSubmit(textValue);
         }}
         supportNewline={false}
         maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
@@ -123,9 +118,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            if (!textValueOverflow && textValue !== '') {
-              onSubmit(textValue);
-            }
+            submitEnabled && onSubmit(textValue);
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
@@ -134,3 +127,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     </Stack>
   );
 };
+
+const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
+const isMessageEmpty = (messageText: string): boolean => messageText.trim().length === 0;
+const getMessageState = (messageText: string): MessageState =>
+  isMessageEmpty(messageText) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
