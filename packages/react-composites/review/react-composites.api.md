@@ -516,7 +516,7 @@ export type CallWithChatCompositeOptions = {
 // @beta
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
-    callWithChatAdapter: CallWithChatAdapter;
+    adapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
@@ -528,12 +528,14 @@ export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
+    copyInviteLinkButtonLabel: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
+    removeMenuLabel: string;
 }
 
 // @beta
