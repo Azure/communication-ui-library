@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, FontIcon, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, FontIcon, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
+  ParticipantMenuItemsCallback,
   _DrawerMenu,
   _DrawerMenuItemProps
 } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo, useState } from 'react';
+import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { ChatAdapter } from '../ChatComposite';
@@ -32,6 +34,7 @@ export const EmbeddedPeoplePane = (props: {
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
@@ -41,37 +44,41 @@ export const EmbeddedPeoplePane = (props: {
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
-  const [menuItems, setMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+  const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+
+  const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
+    return (participant?: ParticipantListParticipant) => {
+      if (participant) {
+        let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
+          participant,
+          callWithChatStrings,
+          participantListDefaultProps.onRemoveParticipant,
+          participantListProps.myUserId
+        );
+        if (props.onFetchParticipantMenuItems) {
+          contextualMenuItems = props.onFetchParticipantMenuItems(
+            participant.userId,
+            participantListProps.myUserId,
+            contextualMenuItems
+          );
+        }
+        const drawerMenuItems = contextualMenuItems.map((contextualMenu: IContextualMenuItem) =>
+          convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setDrawerMenuItems([]))
+        );
+        setDrawerMenuItems(drawerMenuItems);
+      }
+    };
+  }, []);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
     return {
       ...participantListDefaultProps,
-      // Passing undefined callback for mobile to avoid context menus for participants are clicked. We want the drawer menu to appear for mobile.
+      // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
       onRemoveParticipant: props.mobileView ? undefined : onRemoveParticipant,
-      onParticipantClick: props.mobileView
-        ? (participant?: ParticipantListParticipant) => {
-            if (participant?.userId !== participantListProps.myUserId) {
-              setMenuItems([
-                {
-                  itemKey: 'remove',
-                  text: callWithChatStrings.removeMenuLabel,
-                  onItemClick: () => {
-                    if (participant?.userId) {
-                      participantListDefaultProps.onRemoveParticipant?.(participant?.userId);
-                    }
-                    setMenuItems([]);
-                  },
-                  iconProps: {
-                    iconName: 'UserRemove'
-                  },
-                  disabled: !participant?.isRemovable
-                }
-              ]);
-            }
-          }
-        : undefined
+      // We want the drawer menu items to appear when participants in ParticipantList are clicked
+      onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
@@ -79,6 +86,7 @@ export const EmbeddedPeoplePane = (props: {
     <ParticipantListWithHeading
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
       title={callWithChatStrings.peoplePaneSubTitle}
     />
   );
@@ -104,9 +112,9 @@ export const EmbeddedPeoplePane = (props: {
             />
           )}
         </Stack>
-        {menuItems.length > 0 && (
+        {drawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
-            <_DrawerMenu onLightDismiss={() => setMenuItems([])} items={menuItems} />
+            <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
           </Stack>
         )}
       </MobilePane>
@@ -141,4 +149,59 @@ const removeParticipantFromCallWithChat = async (
 ): Promise<void> => {
   await callAdapter.removeParticipant(participantId);
   await chatAdapter.removeParticipant(participantId);
+};
+
+/**
+ * Create default contextual menu items for particant
+ * @param participant - participant to create contextual menu items for
+ * @param callWithChatStrings - localized strings for menu item text
+ * @param onRemoveParticipant - callback to remove participant
+ * @param localParticipantUserId - Local participant user id
+ * @returns - IContextualMenuItem[]
+ */
+const createDefaultContextualMenuItems = (
+  participant: ParticipantListParticipant,
+  callWithChatStrings: CallWithChatCompositeStrings,
+  onRemoveParticipant: (userId: string) => Promise<void>,
+  localParticipantUserId?: string
+): IContextualMenuItem[] => {
+  const menuItems: IContextualMenuItem[] = [];
+  if (participant?.userId !== localParticipantUserId) {
+    menuItems.push({
+      key: 'remove',
+      text: callWithChatStrings.removeMenuLabel,
+      onClick: () => {
+        if (participant?.userId) {
+          onRemoveParticipant?.(participant?.userId);
+        }
+      },
+      iconProps: {
+        iconName: 'UserRemove'
+      },
+      disabled: !participant.isRemovable
+    });
+  }
+  return menuItems;
+};
+
+/**
+ * Convert IContextualMenuItem to _DrawerMenuItemProps
+ * @param contextualMenu - IContextualMenuItem
+ * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
+ * @returns DrawerMenuItem
+ */
+const convertContextualMenuItemToDrawerMenuItem = (
+  contextualMenu: IContextualMenuItem,
+  onDrawerMenuItemClick: () => void
+): _DrawerMenuItemProps => {
+  return {
+    itemKey: contextualMenu.key,
+    onItemClick: () => {
+      contextualMenu.onClick?.();
+      onDrawerMenuItemClick();
+    },
+    iconProps: contextualMenu.iconProps,
+    text: contextualMenu.text,
+    disabled: contextualMenu.disabled
+  };
 };

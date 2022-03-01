@@ -26,6 +26,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
+import { ParticipantMenuItemsCallback } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -95,6 +96,7 @@ type CallWithChatScreenProps = {
   joinInvitationURL?: string;
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
