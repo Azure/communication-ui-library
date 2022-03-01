@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useRef, useState } from 'react';
-import { Link, mergeStyles, MessageBar, MessageBarType, useTheme } from '@fluentui/react';
+import { Link, MessageBar, MessageBarType } from '@fluentui/react';
 import { CompositeStrings, useLocale } from '../../localization';
 import { ComplianceBannerVariant, ComplianceState, computeVariant } from '../utils';
-import { complianceBannerWarningStyles } from '../styles/CallComposite.styles';
 
 /**
  * @private
@@ -51,7 +50,6 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
 
   const strings = useLocale().strings;
-  const theme = useTheme();
   const [variant, setVariant] = useState<ComplianceBannerVariant>('NO_STATE');
   const cachedProps = useRef<CachedComplianceBannerProps>({
     latestBooleanState: {
@@ -100,7 +98,6 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
     <></>
   ) : (
     <MessageBar
-      // className={mergeStyles(complianceBannerWarningStyles(theme))}
       messageBarType={MessageBarType.warning}
       onDismiss={() => {
         // when closing the banner, change variant to nostate and change stopped state to off state.
