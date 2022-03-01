@@ -68,7 +68,22 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
+  /**
+   * Mobile pane options to disable browser back button functionality when a mobile pane is active. Clicking
+   * the back button will close the mobile pane instead.
+   */
+  mobilePane?: MobilePaneOptions;
 };
+
+/**
+ * {@link CallWithChatComposite} mobile pane options.
+ *
+ * @beta
+ */
+export interface MobilePaneOptions {
+  disabledBackButton?: boolean;
+}
+
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
@@ -95,6 +110,7 @@ type CallWithChatScreenProps = {
   joinInvitationURL?: string;
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  mobilePane?: MobilePaneOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -198,6 +214,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             onChatButtonClick={selectChat}
             onPeopleButtonClick={selectPeople}
             mobileView={isMobile}
+            disableBackButton={props.mobilePane?.disabledBackButton}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -212,6 +229,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onChatButtonClick={selectChat}
               onPeopleButtonClick={selectPeople}
               mobileView={isMobile}
+              disableBackButton={props.mobilePane?.disabledBackButton}
             />
           </CallAdapterProvider>
         )}
@@ -260,9 +278,9 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         {...props}
         callWithChatAdapter={callWithChatAdapter}
         formFactor={formFactor}
-        callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
+        {...options}
       />
     </BaseProvider>
   );

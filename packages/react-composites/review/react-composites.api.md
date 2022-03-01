@@ -511,6 +511,7 @@ export type CallWithChatCompositeIcons = {
 // @beta
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    mobilePane?: MobilePaneOptions;
 };
 
 // @beta
@@ -927,6 +928,12 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @beta
+export interface MobilePaneOptions {
+    // (undocumented)
+    disabledBackButton?: boolean;
+}
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {

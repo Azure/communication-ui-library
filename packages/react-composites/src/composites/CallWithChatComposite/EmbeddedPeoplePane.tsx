@@ -29,6 +29,7 @@ export const EmbeddedPeoplePane = (props: {
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
+  disableBackButton?: boolean;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -61,6 +62,7 @@ export const EmbeddedPeoplePane = (props: {
         activeTab="people"
         onChatButtonClicked={props.onChatButtonClick}
         onPeopleButtonClicked={props.onPeopleButtonClick}
+        disableBackButton={props.disableBackButton}
       >
         <Stack verticalFill tokens={peoplePaneContainerTokens}>
           {participantList}

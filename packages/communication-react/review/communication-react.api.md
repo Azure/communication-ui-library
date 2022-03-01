@@ -711,6 +711,7 @@ export type CallWithChatCompositeIcons = {
 // @beta
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    mobilePane?: MobilePaneOptions;
 };
 
 // @beta
@@ -1948,6 +1949,12 @@ export interface MicrophoneButtonStrings {
 // @public
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
+}
+
+// @beta
+export interface MobilePaneOptions {
+    // (undocumented)
+    disabledBackButton?: boolean;
 }
 
 // @public

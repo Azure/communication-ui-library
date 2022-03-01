@@ -21,6 +21,7 @@ export const EmbeddedChatPane = (props: {
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
+  disableBackButton?: boolean;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
@@ -46,6 +47,7 @@ export const EmbeddedChatPane = (props: {
         activeTab="chat"
         onChatButtonClicked={props.onChatButtonClick}
         onPeopleButtonClicked={props.onPeopleButtonClick}
+        disableBackButton={props.disableBackButton}
       >
         {chatComposite}
       </MobilePane>

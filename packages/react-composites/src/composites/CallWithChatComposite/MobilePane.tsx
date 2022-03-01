@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   paneBodyContainer,
@@ -31,6 +31,7 @@ export const MobilePane = (props: {
   hidden: boolean;
   dataUiId: string;
   activeTab: MobilePaneTab;
+  disableBackButton?: boolean;
 }): JSX.Element => {
   // We hide the mobile pane instead of not rendering the entire pane to persist certain elements
   // between renders. An example of this is composing a chat message - a chat message that has been
@@ -49,6 +50,19 @@ export const MobilePane = (props: {
     });
   }, [theme]);
   const strings = useCallWithChatCompositeStrings();
+
+  useEffect(() => {
+    // disable back button when boolean is true and mobile pane is not hidden
+    if (props.disableBackButton && !props.hidden) {
+      window.onpopstate = function () {
+        window.history.forward();
+        props.onClose();
+      };
+    } else {
+      // remove onpopstate listener otherwise
+      window.onpopstate = () => {};
+    }
+  }, [props.disableBackButton, props.hidden]);
 
   return (
     <Stack verticalFill grow styles={mobilePaneStyles} data-ui-id={props.dataUiId}>
