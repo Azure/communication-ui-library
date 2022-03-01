@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon } from '@fluentui/react';
 import {
   FileCard,
   FileCardGroup,
@@ -12,6 +11,7 @@ import {
 } from './file-sharing';
 import React from 'react';
 import { ChatMessage } from '@internal/react-components';
+import { ChatCompositeIcon } from '../common/icons';
 
 /**
  * @beta
@@ -48,7 +48,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             fileName={truncatedFileName(file.name, truncateLength)}
             key={file.name}
             fileExtension={extension(file.name)}
-            actionIcon={<Icon iconName="Download" />}
+            actionIcon={<DownloadIconTrampoline />}
             actionHandler={() => {
               props.downloadHandler && props.downloadHandler(userId, file);
               !props.downloadHandler && window.open(file.url, '_blank', 'noopener,noreferrer');
@@ -57,4 +57,11 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
         ))}
     </FileCardGroup>
   );
+};
+
+const DownloadIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="Download" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };

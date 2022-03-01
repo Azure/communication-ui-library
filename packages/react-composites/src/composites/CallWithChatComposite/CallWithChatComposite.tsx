@@ -21,7 +21,7 @@ import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatA
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
-import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
+import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
@@ -32,7 +32,7 @@ import { PreparedMoreDrawer } from './PreparedMoreDrawer';
  *
  * @beta
  */
-export interface CallWithChatCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   adapter: CallWithChatAdapter;
   /**
    * Fluent theme for the composite.

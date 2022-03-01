@@ -243,7 +243,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
-    /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+    /* @conditional-compile-remove(teams-adhoc-call) */
     // Check if we should be starting a new call or joining an existing call
     if (isAdhocCall(this.locator)) {
       return this.startCall(this.locator.participantIDs);
@@ -531,7 +531,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/* @conditional-compile-remove(teams-adhoc-call) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -557,7 +557,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -615,7 +615,7 @@ const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
 };
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/* @conditional-compile-remove(teams-adhoc-call) */
 const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };

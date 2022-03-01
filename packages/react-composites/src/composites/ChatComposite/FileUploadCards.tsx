@@ -1,18 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon } from '@fluentui/react';
+
 import { FileCard, FileCardGroup, truncatedFileName, extension } from './file-sharing';
-import { useAdapter } from './adapter/ChatAdapterProvider';
+import { useFileUploadAdapter } from './adapter/ChatAdapterProvider';
 import React from 'react';
 import { useSelector } from './hooks/useSelector';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
+import { ChatCompositeIcon } from '../common/icons';
 
 /**
  * @beta
  */
 export const FileUploadCards = (): JSX.Element => {
   const truncateLength = 15;
-  const adapter = useAdapter();
+  const adapter = useFileUploadAdapter();
   const { files } = useSelector(fileUploadsSelector);
   return (
     <FileCardGroup>
@@ -25,7 +26,7 @@ export const FileUploadCards = (): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<Icon iconName="Cancel" />}
+              actionIcon={<CancelIconTrampoline />}
               actionHandler={() => {
                 adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
               }}
@@ -33,4 +34,11 @@ export const FileUploadCards = (): JSX.Element => {
           ))}
     </FileCardGroup>
   );
+};
+
+const CancelIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="Cancel" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
