@@ -76,7 +76,7 @@ export interface ActiveErrorMessage {
 }
 
 // @beta
-export interface ActiveFileUploads {
+export interface ActiveFileUpload {
     errorMessage?: string;
     filename: string;
     id: string;
@@ -2205,7 +2205,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: ActiveFileUploads[];
+    activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

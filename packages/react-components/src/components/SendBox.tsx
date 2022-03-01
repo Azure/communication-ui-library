@@ -2,16 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import {
-  IStyle,
-  ITextField,
-  mergeStyles,
-  concatStyleSets,
-  Icon,
-  Stack,
-  MessageBar,
-  MessageBarType
-} from '@fluentui/react';
+import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(file-sharing) */
+import { MessageBar, MessageBarType } from '@fluentui/react';
 import {
   sendBoxStyle,
   sendButtonStyle,
