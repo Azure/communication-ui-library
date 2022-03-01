@@ -191,7 +191,9 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner4,
+    borderTopLeftRadius: '0',
+    borderBottomLeftRadius: '0'
   },
   splitButtonMenuButtonChecked: {
     // Default colors the menu half similarly for :hover and when button is checked.
