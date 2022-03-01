@@ -71,3 +71,6 @@ export const buildTime = __BUILDTIME__;
 
 declare let __CALLINGVERSION__: string; // Injected by webpack
 export const callingSDKVersion = __CALLINGVERSION__;
+
+declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
+export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
