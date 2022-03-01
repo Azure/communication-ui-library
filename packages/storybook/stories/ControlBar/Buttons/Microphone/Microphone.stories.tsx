@@ -6,7 +6,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import { StoryBookBanner } from '../../../BetaBanners/StoryBookBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import {
   controlsToAdd,
@@ -62,7 +62,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Microphone with device selection menu</Heading>
-      <SingleLineBetaBanner />
+      <StoryBookBanner />
       <Description>
         `MicrophoneButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
         where users can select the audio devices to use. To render `MicrophoneButton` in this mode, set the
