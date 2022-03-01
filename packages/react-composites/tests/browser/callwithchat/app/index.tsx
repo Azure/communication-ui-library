@@ -82,7 +82,7 @@ function App(): JSX.Element {
         <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
           <_IdentifierProvider identifiers={IDS}>
             <CallWithChatComposite
-              callWithChatAdapter={callWithChatAdapter}
+              adapter={callWithChatAdapter}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               joinInvitationURL={window.location.href}
             />

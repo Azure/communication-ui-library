@@ -53,4 +53,12 @@ export interface CallWithChatCompositeStrings {
    * returns the user to the call screen.
    */
   pictureInPictureTileAriaLabel: string;
+  /**
+   * Label for menu item to remove participant
+   */
+  removeMenuLabel: string;
+  /**
+   * Label for button to copy invite link
+   */
+  copyInviteLinkButtonLabel: string;
 }
