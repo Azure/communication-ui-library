@@ -199,6 +199,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -349,19 +351,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  const localVideoTileLayout = (): void => {
-    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-    if (!shouldFloatLocalVideo && !showCameraSwitcherInLocalPreview && localParticipant) {
-      gridTiles.push(localVideoTile);
-      return;
-    }
-    if (!shouldFloatLocalVideo && localParticipant) {
-      gridTiles.push(localVideoTile);
-      return;
-    }
-  };
-
-  localVideoTileLayout();
+  if (
+    !shouldFloatLocalVideo &&
+    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */ !shouldFloatNonDraggableLocalVideo &&
+    localParticipant
+  ) {
+    gridTiles.push(localVideoTile);
+  }
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -385,7 +381,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     >
       {shouldFloatLocalVideo &&
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-        !showCameraSwitcherInLocalPreview &&
+        !shouldFloatNonDraggableLocalVideo &&
         localParticipant &&
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
@@ -403,7 +399,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       {
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        showCameraSwitcherInLocalPreview && localParticipant && remoteParticipants.length > 0 && (
+        shouldFloatNonDraggableLocalVideo && localParticipant && remoteParticipants.length > 0 && (
           <Stack
             className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
               boxShadow: theme.effects.elevation8
