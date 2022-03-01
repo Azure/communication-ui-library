@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { errorBarStyle } from './styles/SendBox.styles';
 
 /**
  * @internal
@@ -23,8 +22,6 @@ export interface SendBoxErrorBarProps {
  */
 export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): JSX.Element => {
   const { message, timeout } = props;
-  const theme = useTheme();
-
   const [errorMessage, setErrorMessage] = React.useState(message);
 
   useEffect(() => {
@@ -41,7 +38,7 @@ export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): 
   }, [timeout]);
 
   if (errorMessage) {
-    return <Stack className={mergeStyles(errorBarStyle(theme))}>{errorMessage}</Stack>;
+    return <MessageBar messageBarType={MessageBarType.warning}>{errorMessage}</MessageBar>;
   } else {
     return <></>;
   }
