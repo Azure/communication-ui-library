@@ -8,8 +8,7 @@ import {
   sendButtonStyle,
   sendIconStyle,
   sendBoxWrapperStyles,
-  borderAndBoxShadowStyle,
-  errorBarStyle
+  borderAndBoxShadowStyle
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -18,6 +17,8 @@ import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { SendBoxErrorBar } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -220,11 +221,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
     const fileUploads: ActiveFileUploads[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    if (latestError) {
-      return <Stack className={mergeStyles(errorBarStyle(theme))}>{latestError.errorMessage}</Stack>;
-    }
-    return <Stack></Stack>;
-  }, [props.activeFileUploads, theme]);
+    return <SendBoxErrorBar message={latestError?.errorMessage} timeout={10 * 1000} />;
+  }, [props.activeFileUploads]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
