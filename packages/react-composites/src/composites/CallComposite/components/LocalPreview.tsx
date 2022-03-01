@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -12,6 +12,7 @@ import {
   VideoTile
 } from '@internal/react-components';
 import React, { useCallback } from 'react';
+import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { usePropsFor } from '../hooks/usePropsFor';
@@ -61,7 +62,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         tokens={{ childrenGap: '0.25rem' }}
       >
         <Stack.Item align="center">
-          <Icon
+          <CallCompositeIcon
             iconName="LocalPreviewPlaceholder"
             className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralTertiary })}
           />

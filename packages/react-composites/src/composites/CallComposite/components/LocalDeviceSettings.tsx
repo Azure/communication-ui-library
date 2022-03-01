@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import { Dropdown, Icon, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
+import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
+import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 import {
   dropDownStyles,
@@ -33,11 +34,11 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
 
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   if (type === 'Camera') {
-    return <Icon iconName="LocalDeviceSettingsCamera" className={optionIconStyles} />;
+    return <CallCompositeIcon iconName="LocalDeviceSettingsCamera" className={optionIconStyles} />;
   } else if (type === 'Microphone') {
-    return <Icon iconName="LocalDeviceSettingsMic" className={optionIconStyles} />;
+    return <CallCompositeIcon iconName="LocalDeviceSettingsMic" className={optionIconStyles} />;
   } else if (type === 'Speaker') {
-    return <Icon iconName="LocalDeviceSettingsSpeaker" className={optionIconStyles} />;
+    return <CallCompositeIcon iconName="LocalDeviceSettingsSpeaker" className={optionIconStyles} />;
   } else {
     return undefined;
   }

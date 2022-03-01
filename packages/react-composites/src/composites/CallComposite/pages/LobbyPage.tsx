@@ -13,8 +13,8 @@ import { reduceCallControlsForMobile } from '../utils';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
-import { Icon } from '@fluentui/react';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
+import { CallCompositeIcon } from '../../common/icons';
 
 /**
  * @private
@@ -87,11 +87,11 @@ const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOve
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
   moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: <Icon iconName="LobbyScreenConnectingToCall" />
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenConnectingToCall" />
 });
 
 const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
-  overlayIcon: <Icon iconName="LobbyScreenWaitingToBeAdmitted" />
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
