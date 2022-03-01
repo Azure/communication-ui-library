@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
+  // eslint-disable-next-line no-restricted-imports
   Icon,
   IProgressIndicatorStyleProps,
   IProgressIndicatorStyles,
@@ -86,6 +87,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
         <Stack horizontal verticalAlign="center">
           <Stack>
+            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
             <Icon
               {...getFileTypeIconProps({
                 extension: fileExtension,
