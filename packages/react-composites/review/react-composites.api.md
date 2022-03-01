@@ -528,12 +528,14 @@ export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
+    copyInviteLinkButtonLabel: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
+    removeMenuLabel: string;
 }
 
 // @beta
