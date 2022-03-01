@@ -48,7 +48,7 @@ const onMuteAll = (): void => {
 };
 
 /**
- * styles to make sure that the border on the participant menu isnt overriden buy the csutom styles example
+ * styles to make sure that the border on the participant menu isnt overridden by the custom styles example
  */
 const mockStyles: ParticipantsButtonStyles = {
   root: { background: 'gold', color: 'white' },
