@@ -52,13 +52,7 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
 
   if (callWithChatAdapter) {
     const options = { callControls: props.callWithChatControlOptions };
-    return (
-      <CallWithChatComposite
-        callWithChatAdapter={callWithChatAdapter}
-        fluentTheme={props.fluentTheme}
-        options={options}
-      />
-    );
+    return <CallWithChatComposite adapter={callWithChatAdapter} fluentTheme={props.fluentTheme} options={options} />;
   }
 
   if (credential === undefined) {
