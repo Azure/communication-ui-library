@@ -33,7 +33,7 @@ import { PreparedMoreDrawer } from './PreparedMoreDrawer';
  * @beta
  */
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
-  callWithChatAdapter: CallWithChatAdapter;
+  adapter: CallWithChatAdapter;
   /**
    * Fluent theme for the composite.
    *
@@ -253,12 +253,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  * @beta
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { callWithChatAdapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
+  const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
   return (
     <BaseProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
-        callWithChatAdapter={callWithChatAdapter}
+        callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
