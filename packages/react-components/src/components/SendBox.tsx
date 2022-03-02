@@ -260,7 +260,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack className={sendBoxWrapperStyles}>
+    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove(file-sharing) */
         renderFileUploadErrorMessage
