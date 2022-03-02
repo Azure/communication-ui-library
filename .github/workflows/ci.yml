@@ -83,7 +83,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -147,7 +146,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -301,7 +299,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -335,7 +332,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -369,7 +365,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -403,7 +398,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -455,7 +449,6 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
-          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:

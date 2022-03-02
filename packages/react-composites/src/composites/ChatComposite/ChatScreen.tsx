@@ -47,6 +47,9 @@ import { FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
 
+/* REMOVE THE FILE SHARING BUTTON FOR 1.1.1-BETA.1 RELEASE -- DO NOT COMMIT THIS TO THE MAIN BRANCH */
+const SHOW_FILE_SHARING_BUTTON = false;
+
 /**
  * @private
  */
@@ -183,11 +186,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               styles={sendBoxStyles}
             />
 
-            <FileUploadButton
-              accept={fileSharing?.accept}
-              multiple={fileSharing?.multiple}
-              onChange={fileUploadButtonOnChange}
-            />
+            {SHOW_FILE_SHARING_BUTTON && (
+              <FileUploadButton
+                accept={fileSharing?.accept}
+                multiple={fileSharing?.multiple}
+                onChange={fileUploadButtonOnChange}
+              />
+            )}
           </Stack>
         </Stack>
         {
