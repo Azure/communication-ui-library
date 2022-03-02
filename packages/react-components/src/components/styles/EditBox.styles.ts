@@ -40,15 +40,3 @@ export const editBoxStyleSet = {
     width: '100%'
   }
 };
-
-/**
- * @private
- */
-export const borderAndBoxShadowStyle = (theme: Theme): IStyle => {
-  const borderColor = theme.palette.blue;
-  return {
-    borderRadius: theme.effects.roundedCorner4,
-    border: `0.125rem solid ${borderColor}`,
-    width: '100%'
-  };
-};
