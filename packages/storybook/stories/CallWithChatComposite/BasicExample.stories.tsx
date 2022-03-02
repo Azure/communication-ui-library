@@ -5,7 +5,7 @@ import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { FloatingSingleLineBetaBanner } from '../BetaBanners/StoryBookBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './CallWithChatCompositeDocs';
@@ -45,7 +45,7 @@ const BasicStory = (args, context): JSX.Element => {
 
   return (
     <>
-      <FloatingSingleLineBetaBanner />
+      <SingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
           <CallWithChatExperience fluentTheme={context.theme} {...callWithChatProps} />
