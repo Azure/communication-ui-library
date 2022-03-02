@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * @private
