@@ -75,6 +75,14 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// @beta
+export interface ActiveFileUpload {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    progress: number;
+}
+
 // @public
 export interface AdapterError extends Error {
     innerError: Error;
@@ -716,7 +724,7 @@ export type CallWithChatCompositeOptions = {
 // @beta
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
-    callWithChatAdapter: CallWithChatAdapter;
+    adapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
@@ -728,12 +736,14 @@ export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatPaneTitle: string;
+    copyInviteLinkButtonLabel: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
+    removeMenuLabel: string;
 }
 
 // @beta
@@ -1995,6 +2005,7 @@ export interface ParticipantItemProps {
     displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
+    onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
@@ -2042,6 +2053,7 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
 };
 
@@ -2192,6 +2204,8 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
+    // @beta
+    activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
