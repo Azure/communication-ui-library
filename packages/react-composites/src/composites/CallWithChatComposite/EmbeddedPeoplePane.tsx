@@ -1,11 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  ContextualMenu,
+  DefaultButton,
+  IContextualMenuItem,
+  IDragOptions,
+  LayerHost,
+  mergeStyles,
+  Modal,
+  PrimaryButton,
+  Stack
+} from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
+  useTheme,
   _DrawerMenu,
   _DrawerMenuItemProps
 } from '@internal/react-components';
@@ -22,7 +33,7 @@ import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
-import { peoplePaneContainerStyle, peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
@@ -31,8 +42,11 @@ import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
-  localAndRemotePIPStyles
+  modalLayerHostStyle,
+  modalStyle,
+  peoplePaneContainerStyle
 } from './styles/EmbeddedPeoplePane.styles';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * @private
@@ -104,6 +118,16 @@ export const EmbeddedPeoplePane = (props: {
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
 
+  const DRAG_OPTIONS: IDragOptions = {
+    moveMenuItemText: 'Move',
+    closeMenuItemText: 'Close',
+    menu: ContextualMenu,
+    keepInBounds: true
+  };
+
+  const theme = useTheme();
+  const layerHostId = useId('layerhost');
+
   if (props.mobileView) {
     return (
       <MobilePane
@@ -115,18 +139,7 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
-          <Stack.Item>{participantList}</Stack.Item>
-          {
-            // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-            // possession of the dominant remote participant video stream
-            !props.hidden && (
-              <Stack horizontalAlign="end" grow>
-                <Stack styles={localAndRemotePIPStyles}>
-                  <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
-                </Stack>
-              </Stack>
-            )
-          }
+          <Stack.Item grow>{participantList}</Stack.Item>
           {inviteLink && (
             <Stack.Item styles={copyLinkButtonContainerStyles}>
               <PrimaryButton
@@ -137,6 +150,23 @@ export const EmbeddedPeoplePane = (props: {
               />
             </Stack.Item>
           )}
+          <LayerHost id={layerHostId} className={mergeStyles(modalLayerHostStyle)}>
+            {
+              <Modal
+                isOpen={true}
+                isModeless={true}
+                dragOptions={DRAG_OPTIONS}
+                styles={modalStyle(theme)}
+                layerProps={{ hostId: layerHostId }}
+              >
+                {
+                  // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+                  // possession of the dominant remote participant video stream
+                  !props.hidden && <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+                }
+              </Modal>
+            }
+          </LayerHost>
         </Stack>
         {drawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
@@ -220,7 +250,7 @@ const createDefaultContextualMenuItems = (
 
 /**
  * Convert IContextualMenuItem to _DrawerMenuItemProps
- * @param contextualMenu - IContextualMenuItem
+ * @param contextualMenu - IContextualMenuItem to convert
  * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
  * @returns DrawerMenuItem
  */
