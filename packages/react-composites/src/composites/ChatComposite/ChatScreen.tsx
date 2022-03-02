@@ -46,6 +46,10 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { fileUploadsSelector } from './selectors/fileUploadsSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useSelector } from './hooks/useSelector';
 
 /**
  * @private
@@ -181,6 +185,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
+              /* @conditional-compile-remove(file-sharing) */
+              activeFileUploads={useSelector(fileUploadsSelector).files}
             />
 
             <FileUploadButton
