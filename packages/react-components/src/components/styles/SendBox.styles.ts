@@ -61,12 +61,13 @@ export const fileCardBoxStyle = mergeStyles({
 /**
  * @private
  */
-export const borderAndBoxShadowStyle = (
-  theme: Theme,
-  errorColor: string,
-  hasErrorMessage: boolean,
-  disabled: boolean
-): IStyle => {
+export const borderAndBoxShadowStyle = (props: {
+  theme: Theme;
+  errorColor: string;
+  hasErrorMessage: boolean;
+  disabled: boolean;
+}): IStyle => {
+  const { theme, errorColor, hasErrorMessage, disabled } = props;
   const borderColorActive = hasErrorMessage ? errorColor : theme.palette.blue;
   const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
   return {
