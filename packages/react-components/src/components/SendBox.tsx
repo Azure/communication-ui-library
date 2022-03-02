@@ -218,7 +218,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   return (
     <Stack
       className={mergeStyles(
-        borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
+        borderAndBoxShadowStyle({
+          theme,
+          errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
+          hasErrorMessage: !!errorMessage,
+          disabled: !!disabled
+        }),
         sendBoxWrapperStyles
       )}
     >
