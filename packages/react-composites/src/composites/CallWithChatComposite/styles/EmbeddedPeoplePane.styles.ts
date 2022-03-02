@@ -78,6 +78,8 @@ export const modalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProp
       pointerEvents: 'auto'
     },
     root: {
+      width: '100%',
+      height: '100%',
       // pointer events for root Modal div set to none to make descendants interactive
       pointerEvents: 'none'
     }
