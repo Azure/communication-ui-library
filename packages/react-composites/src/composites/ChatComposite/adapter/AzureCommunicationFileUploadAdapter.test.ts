@@ -14,6 +14,10 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 
+test('workaround for conditional compilation. Test suite must contain atleast one test', () => {
+  expect(true).toBeTruthy();
+});
+
 /* @conditional-compile-remove(file-sharing) */
 describe('registerFileUploads()', () => {
   test('should create file uploads in state', () => {
