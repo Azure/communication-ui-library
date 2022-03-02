@@ -1,13 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(file-sharing) */
 import { ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
+/* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
+/* @conditional-compile-remove(file-sharing) */
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState, ObservableFileUpload } from '..';
+/* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
+/* @conditional-compile-remove(file-sharing) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 
+/* @conditional-compile-remove(file-sharing) */
 describe('registerFileUploads()', () => {
   test('should create file uploads in state', () => {
     const chatContext = createChatContext();
@@ -59,6 +66,7 @@ describe('registerFileUploads()', () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 describe('clearFileUploads()', () => {
   test('should remove all file uploads from state', () => {
     const chatContext = createChatContext();
@@ -69,6 +77,7 @@ describe('clearFileUploads()', () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 describe('cancelFileUpload()', () => {
   test('should remove file upload from state', () => {
     const chatContext = createChatContext();
@@ -82,6 +91,7 @@ describe('cancelFileUpload()', () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 const createChatContext = (): ChatContext =>
   new ChatContext(
     {
@@ -95,6 +105,7 @@ const createChatContext = (): ChatContext =>
     'threadId'
   );
 
+/* @conditional-compile-remove(file-sharing) */
 const generateObservableFileUploads = (quantity: number): ObservableFileUpload[] => {
   const fileUploads: ObservableFileUpload[] = [];
   for (let i = 0; i < quantity; i++) {
@@ -111,3 +122,5 @@ const generateObservableFileUploads = (quantity: number): ObservableFileUpload[]
   }
   return fileUploads;
 };
+
+export default {};
