@@ -38,7 +38,18 @@ export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): 
   }, [timeout]);
 
   if (errorMessage) {
-    return <MessageBar messageBarType={MessageBarType.warning}>{errorMessage}</MessageBar>;
+    return (
+      <MessageBar
+        messageBarType={MessageBarType.warning}
+        styles={{
+          iconContainer: {
+            display: 'none'
+          }
+        }}
+      >
+        {errorMessage}
+      </MessageBar>
+    );
   } else {
     return <></>;
   }
