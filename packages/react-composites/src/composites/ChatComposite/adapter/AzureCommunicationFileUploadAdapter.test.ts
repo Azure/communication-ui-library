@@ -102,10 +102,10 @@ const generateObservableFileUploads = (quantity: number): ObservableFileUpload[]
       fileName: `SampleName-${nanoid()}.pdf`,
       id: `SampleID-${nanoid()}`,
       on() {
-        // console.log(`on called for ${nanoid()}`);
+        // noop
       },
       off() {
-        // console.log(`off called for ${nanoid()}`);
+        // noop
       }
     });
   }
