@@ -216,52 +216,53 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack
-      className={mergeStyles(
-        borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-        sendBoxWrapperStyles
-      )}
-    >
-      <InputBoxComponent
-        autoFocus={autoFocus}
-        data-ui-id={ids.sendboxTextField}
-        inlineChildren={true}
-        disabled={disabled}
-        errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-        textFieldRef={sendTextFieldRef}
-        id="sendbox"
-        inputClassName={sendBoxStyle}
-        placeholderText={strings.placeholderText}
-        textValue={textValue}
-        onChange={setText}
-        onKeyDown={() => {
-          onTyping && onTyping();
-        }}
-        onEnterKeyDown={() => {
-          sendMessageOnClick();
-        }}
-        styles={mergedStyles}
-        supportNewline={supportNewline}
-        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+    <Stack className={sendBoxWrapperStyles}>
+      <Stack
+        className={mergeStyles(
+          borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled)
+        )}
       >
-        <InputBoxButton
-          onRenderIcon={onRenderSendIcon}
-          onClick={(e) => {
-            if (!textValueOverflow) {
-              sendMessageOnClick();
-            }
-            e.stopPropagation();
+        <InputBoxComponent
+          autoFocus={autoFocus}
+          data-ui-id={ids.sendboxTextField}
+          inlineChildren={true}
+          disabled={disabled}
+          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+          textFieldRef={sendTextFieldRef}
+          id="sendbox"
+          inputClassName={sendBoxStyle}
+          placeholderText={strings.placeholderText}
+          textValue={textValue}
+          onChange={setText}
+          onKeyDown={() => {
+            onTyping && onTyping();
           }}
-          id={'sendIconWrapper'}
-          className={mergedSendButtonStyle}
-          ariaLabel={localeStrings.sendButtonAriaLabel}
-          tooltipContent={localeStrings.sendButtonAriaLabel}
-        />
-      </InputBoxComponent>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        props.onRenderFileUploads && props.onRenderFileUploads()
-      }
+          onEnterKeyDown={() => {
+            sendMessageOnClick();
+          }}
+          styles={mergedStyles}
+          supportNewline={supportNewline}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        >
+          <InputBoxButton
+            onRenderIcon={onRenderSendIcon}
+            onClick={(e) => {
+              if (!textValueOverflow) {
+                sendMessageOnClick();
+              }
+              e.stopPropagation();
+            }}
+            id={'sendIconWrapper'}
+            className={mergedSendButtonStyle}
+            ariaLabel={localeStrings.sendButtonAriaLabel}
+            tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </InputBoxComponent>
+        {
+          /* @conditional-compile-remove(file-sharing) */
+          props.onRenderFileUploads && props.onRenderFileUploads()
+        }
+      </Stack>
     </Stack>
   );
 };
