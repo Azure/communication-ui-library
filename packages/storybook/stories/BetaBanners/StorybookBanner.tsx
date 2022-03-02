@@ -33,5 +33,6 @@ export const StorybookBanner = (props: StorybookBannerProps): JSX.Element => {
 const bannerContainerStyles = (backgroundColor: string): string =>
   mergeStyles({
     background: backgroundColor,
-    padding: '1rem'
+    padding: '1rem',
+    borderRadius: '0.375rem'
   });

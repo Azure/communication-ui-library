@@ -137,8 +137,7 @@ const getDocs: () => JSX.Element = () => {
         palette={yellowBannerPalette}
       >
         <Text style={{ display: 'inline-block' }}>
-          Please note: this feature when enabled will disable the ability to drag the local video tile around the video
-          gallery.
+          This feature when enabled will disable the ability to drag the local video tile around the video gallery.
         </Text>
       </StorybookBanner>
       <Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
