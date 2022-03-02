@@ -37,7 +37,7 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge release/1.1.1-beta.1
+          git merge origin/release/1.1.1-beta.1
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -125,7 +125,7 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge release/1.1.1-beta.1
+          git merge origin/release/1.1.1-beta.1
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -213,7 +213,7 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge release/1.1.1-beta.1
+          git merge origin/release/1.1.1-beta.1
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
