@@ -644,7 +644,6 @@ export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.E
 // @beta
 export type CallWithChatCompositeIcons = {
     ChevronLeft?: JSX.Element;
-    ControlBarButtonBadgeIcon?: JSX.Element;
     ControlBarChatButtonActive?: JSX.Element;
     ControlBarChatButtonInactive?: JSX.Element;
     ControlBarPeopleButton?: JSX.Element;
@@ -1396,7 +1395,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
-    ControlBarButtonBadgeIcon?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
     ControlBarPeopleButton?: JSX.Element | undefined;

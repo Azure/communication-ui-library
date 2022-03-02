@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
-import { CallWithChatCompositeIcon } from '../common/icons';
 
 /**
  * @private
@@ -32,28 +31,28 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   };
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <CallWithChatCompositeIcon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
-      {renderNumber(chatMessagesCount)}
+    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles(theme)}>
+      <Stack>{renderNumber(chatMessagesCount)}</Stack>
     </Stack>
   );
 };
 
-const notificationIconContainerStyles = memoizeFunction(
-  (): IIconStyles => ({
-    root: {
-      // positioning to place the badge within the button appropriately.
-      position: 'absolute',
-      top: '-0.5rem',
-      right: '-0.5rem'
-    }
-  })
-);
+const notificationIconPaddingREM = 0.225;
 
-const notificationIconStyles = memoizeFunction(
+const notificationIconContainerStyles = memoizeFunction(
   (theme: ITheme): IIconStyles => ({
     root: {
-      color: theme.palette.themePrimary
+      borderRadius: '1rem',
+      background: theme.palette.themePrimary,
+      border: `0.0625rem solid ${theme.palette.white}`,
+      padding: `${notificationIconPaddingREM}rem`,
+      minWidth: '1rem',
+      height: '1rem',
+
+      // positioning to place the badge within the button appropriately.
+      position: 'absolute',
+      top: `-${0.5 - notificationIconPaddingREM / 2}rem`,
+      left: `${0.5 + notificationIconPaddingREM / 2}rem`
     }
   })
 );
@@ -61,10 +60,8 @@ const notificationIconStyles = memoizeFunction(
 const notificationTextStyles = memoizeFunction(
   (theme: ITheme): IStackStyles => ({
     root: {
-      position: 'absolute',
-      top: '0.1rem',
       color: theme.palette.white,
-      fontSize: theme.fonts.smallPlus.fontSize
+      fontSize: theme.fonts.xSmall.fontSize
     }
   })
 );
