@@ -71,11 +71,7 @@ export const borderAndBoxShadowStyle = (
   disabled: boolean
 ): IStyle => {
   const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
-  const borderColorActive = hasErrorMessage
-    ? errorColor
-    : disabled
-    ? theme.palette.neutralSecondary
-    : theme.palette.themePrimary;
+  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
   const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
