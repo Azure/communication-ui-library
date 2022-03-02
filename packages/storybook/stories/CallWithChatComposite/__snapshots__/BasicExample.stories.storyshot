@@ -21,13 +21,18 @@ exports[`storybook snapshot tests Storyshots Composites/CallWithChatComposite/Ba
       }
     >
       <div
-        className="ms-Stack css-177 css-1"
+        className="ms-Stack css-3"
       >
         <div
-          className="ms-Stack css-4"
+          className="ms-StackItem css-4"
         >
           <div
-            className="ms-StackItem css-5"
+            className="ms-Stack css-5"
+            style={
+              Object {
+                "display": "inline-block",
+              }
+            }
           >
             <span
               aria-hidden={true}
@@ -66,20 +71,28 @@ exports[`storybook snapshot tests Storyshots Composites/CallWithChatComposite/Ba
               Important
             </span>
              - 
-            <span
-              className="css-7"
+            <div
+              className="ms-Stack css-5"
+              style={
+                Object {
+                  "display": "inline-block",
+                }
+              }
             >
-              This feature is currently in public preview and not recommended for production use.
-            </span>
-             
-            <a
-              className="ms-Link root-8"
-              href="https://azure.microsoft.com/support/legal/preview-supplemental-terms/"
-              onClick={[Function]}
-              target="_blank"
-            >
-              More info.
-            </a>
+              <span
+                className="css-7"
+              >
+                This feature is currently in public preview and not recommended for production use. 
+              </span>
+              <a
+                className="ms-Link root-8"
+                href="https://azure.microsoft.com/support/legal/preview-supplemental-terms/"
+                onClick={[Function]}
+                target="_blank"
+              >
+                More info.
+              </a>
+            </div>
           </div>
         </div>
       </div>
