@@ -12,11 +12,20 @@ on:
           - next
           - dev
       release-flavor:
-        description: 'Beta release or stable release. Will be determined by branch name if left empty.'
+        description: 'Beta release or stable release.'
         required: false
+        type: choice
         options:
           - stable
           - beta
+      test-param:
+        description: 'Looking at GH action options.'
+        required: false
+        type: environment
+      test-param2:
+        description: 'Looking at GH action options.'
+        required: false
+        type: boolean
 
 jobs:
   publish:
@@ -46,7 +55,7 @@ jobs:
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         # If no param for release flavor, get it from branch name
-        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor == 'stable' }}
+        if: ${{ github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
 
       # Builds
