@@ -188,8 +188,7 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     // Override styling from ControlBarButton so that label doesn't introduce a new block.
     display: 'inline',
     fontSize: theme.fonts.medium.fontSize,
-    marginLeft: '0.625rem',
-    marginRight: '0.625rem'
+    marginLeft: '0.625rem'
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
