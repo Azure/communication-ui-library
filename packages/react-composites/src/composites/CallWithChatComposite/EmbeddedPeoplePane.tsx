@@ -186,7 +186,12 @@ export const EmbeddedPeoplePane = (props: {
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
-          <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
+          <DefaultButton
+            text={callWithChatStrings.copyInviteLinkButtonLabel}
+            onRenderIcon={() => <LinkIconTrampoline />}
+            onClick={() => copy(inviteLink)}
+            styles={{ root: { height: '2.5rem', borderRadie: '0.25rem' } }}
+          />
         )}
         {participantList}
       </Stack>
