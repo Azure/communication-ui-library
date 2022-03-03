@@ -3,6 +3,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(file-sharing) */
+import { MessageBar, MessageBarType } from '@fluentui/react';
 import {
   sendBoxStyle,
   sendButtonStyle,
@@ -37,6 +39,32 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
   sendMessageIcon?: IStyle;
   /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
   systemMessage?: IStyle;
+}
+
+/**
+ * Attributes required for SendBox to show file uploads like name, progress etc.
+ * @beta
+ */
+export interface ActiveFileUpload {
+  /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+
+  /**
+   * File name to be rendered for uploaded file.
+   */
+  filename: string;
+
+  /**
+   * A number between 0 and 1 indicating the progress of the upload.
+   */
+  progress: number;
+
+  /**
+   * Error message to be displayed to the user if the upload fails.
+   */
+  errorMessage?: string;
 }
 
 /**
@@ -114,7 +142,6 @@ export interface SendBoxProps {
    * When undefined nothing has focus on render
    */
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand
    * veritcally to accomodate the uploaded files. File uploads will
@@ -122,6 +149,13 @@ export interface SendBoxProps {
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional array of active file uploads where each object has attibutes
+   * of a file upload like name, progress, errormessage etc.
+   * @beta
+   */
+  activeFileUploads?: ActiveFileUpload[];
 }
 
 /**
@@ -182,6 +216,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
+  /* @conditional-compile-remove(file-sharing) */
+  const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
+    const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
+    const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
+    if (latestError) {
+      return <MessageBar messageBarType={MessageBarType.warning}>{latestError.errorMessage}</MessageBar>;
+    }
+    return <></>;
+  }, [props.activeFileUploads]);
+
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
@@ -216,52 +260,62 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   return (
-    <Stack
-      className={mergeStyles(
-        borderAndBoxShadowStyle(theme, isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-        sendBoxWrapperStyles
-      )}
-    >
-      <InputBoxComponent
-        autoFocus={autoFocus}
-        data-ui-id={ids.sendboxTextField}
-        inlineChildren={true}
-        disabled={disabled}
-        errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-        textFieldRef={sendTextFieldRef}
-        id="sendbox"
-        inputClassName={sendBoxStyle}
-        placeholderText={strings.placeholderText}
-        textValue={textValue}
-        onChange={setText}
-        onKeyDown={() => {
-          onTyping && onTyping();
-        }}
-        onEnterKeyDown={() => {
-          sendMessageOnClick();
-        }}
-        styles={mergedStyles}
-        supportNewline={supportNewline}
-        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-      >
-        <InputBoxButton
-          onRenderIcon={onRenderSendIcon}
-          onClick={(e) => {
-            if (!textValueOverflow) {
-              sendMessageOnClick();
-            }
-            e.stopPropagation();
-          }}
-          id={'sendIconWrapper'}
-          className={mergedSendButtonStyle}
-          ariaLabel={localeStrings.sendButtonAriaLabel}
-          tooltipContent={localeStrings.sendButtonAriaLabel}
-        />
-      </InputBoxComponent>
+    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove(file-sharing) */
-        props.onRenderFileUploads && props.onRenderFileUploads()
+        renderFileUploadErrorMessage
       }
+      <Stack
+        className={mergeStyles(
+          borderAndBoxShadowStyle({
+            theme,
+            errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
+            hasErrorMessage: !!errorMessage,
+            disabled: !!disabled
+          })
+        )}
+      >
+        <InputBoxComponent
+          autoFocus={autoFocus}
+          data-ui-id={ids.sendboxTextField}
+          inlineChildren={true}
+          disabled={disabled}
+          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+          textFieldRef={sendTextFieldRef}
+          id="sendbox"
+          inputClassName={sendBoxStyle}
+          placeholderText={strings.placeholderText}
+          textValue={textValue}
+          onChange={setText}
+          onKeyDown={() => {
+            onTyping && onTyping();
+          }}
+          onEnterKeyDown={() => {
+            sendMessageOnClick();
+          }}
+          styles={mergedStyles}
+          supportNewline={supportNewline}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        >
+          <InputBoxButton
+            onRenderIcon={onRenderSendIcon}
+            onClick={(e) => {
+              if (!textValueOverflow) {
+                sendMessageOnClick();
+              }
+              e.stopPropagation();
+            }}
+            id={'sendIconWrapper'}
+            className={mergedSendButtonStyle}
+            ariaLabel={localeStrings.sendButtonAriaLabel}
+            tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </InputBoxComponent>
+        {
+          /* @conditional-compile-remove(file-sharing) */
+          props.onRenderFileUploads && props.onRenderFileUploads()
+        }
+      </Stack>
     </Stack>
   );
 };
