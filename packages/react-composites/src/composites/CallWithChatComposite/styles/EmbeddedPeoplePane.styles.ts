@@ -8,7 +8,6 @@ import {
   IStackItemStyles,
   IStackStyles,
   IStackTokens,
-  IStyle,
   IStyleFunctionOrObject,
   Theme
 } from '@fluentui/react';
@@ -84,21 +83,6 @@ export const modalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProp
       pointerEvents: 'none'
     }
   };
-};
-
-/**
- * @private
- */
-export const modalLayerHostStyle: IStyle = {
-  display: 'flex',
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-  // pointer events for layerHost set to none to make descendants interactive
-  pointerEvents: 'none'
 };
 
 /**

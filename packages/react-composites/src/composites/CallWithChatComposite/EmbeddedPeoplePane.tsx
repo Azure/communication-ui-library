@@ -5,8 +5,6 @@ import {
   DefaultButton,
   IContextualMenuItem,
   IDragOptions,
-  LayerHost,
-  mergeStyles,
   Modal,
   PrimaryButton,
   Stack
@@ -42,12 +40,10 @@ import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
-  modalLayerHostStyle,
   modalStyle,
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/EmbeddedPeoplePane.styles';
-import { useId } from '@fluentui/react-hooks';
 
 /**
  * @private
@@ -62,6 +58,7 @@ export const EmbeddedPeoplePane = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
+  modalLayerHostId: string;
   mobileView?: boolean;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
@@ -127,7 +124,6 @@ export const EmbeddedPeoplePane = (props: {
   };
 
   const theme = useTheme();
-  const layerHostId = useId('layerhost');
 
   if (props.mobileView) {
     return (
@@ -153,23 +149,19 @@ export const EmbeddedPeoplePane = (props: {
               />
             </Stack.Item>
           )}
-          <LayerHost id={layerHostId} className={mergeStyles(modalLayerHostStyle)}>
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={modalStyle(theme)}
+            layerProps={{ hostId: props.modalLayerHostId }}
+          >
             {
-              <Modal
-                isOpen={true}
-                isModeless={true}
-                dragOptions={DRAG_OPTIONS}
-                styles={modalStyle(theme)}
-                layerProps={{ hostId: layerHostId }}
-              >
-                {
-                  // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-                  // possession of the dominant remote participant video stream
-                  !props.hidden && <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
-                }
-              </Modal>
+              // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+              // possession of the dominant remote participant video stream
+              !props.hidden && <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
             }
-          </LayerHost>
+          </Modal>
         </Stack>
         {drawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
