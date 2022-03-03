@@ -38,6 +38,7 @@ export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 4, height: 5.5 };
 export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
 
 /**
+ * @private
  * z-index to ensure that the local video tile is above the video gallery.
  */
 export const LOCAL_VIDEO_TILE_ZINDEX = 1;
@@ -75,9 +76,9 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
 /**
  * @private
  */
-export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStackStyles => {
   return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
-    root: { boxShadow: theme.effects.elevation8, zIndex: LOCAL_VIDEO_TILE_ZINDEX }
+    root: { boxShadow: theme.effects.elevation8 }
   });
 };
 

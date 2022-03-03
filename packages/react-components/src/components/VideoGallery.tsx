@@ -40,7 +40,8 @@ import {
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -402,7 +403,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         shouldFloatNonDraggableLocalVideo && localParticipant && remoteParticipants.length > 0 && (
           <Stack
             className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-              boxShadow: theme.effects.elevation8
+              boxShadow: theme.effects.elevation8,
+              zIndex: LOCAL_VIDEO_TILE_ZINDEX
             })}
           >
             {localVideoTile}
