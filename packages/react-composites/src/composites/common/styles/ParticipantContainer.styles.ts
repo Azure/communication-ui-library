@@ -37,7 +37,6 @@ export const sidePaneContainerTokens: IStackTokens = {
  */
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
-    fontSize: '0.825rem',
     lineHeight: '1.25rem',
     padding: '0.25rem',
     fontWeight: '600'
@@ -89,14 +88,6 @@ export const participantListWrapper = mergeStyles({
  * @private
  */
 export const participantListContainerPadding = { childrenGap: '0.5rem' };
-
-/**
- * @private
- */
-export const listHeader = mergeStyles({
-  fontSize: '1rem',
-  margin: '1rem'
-});
 
 /**
  * @private

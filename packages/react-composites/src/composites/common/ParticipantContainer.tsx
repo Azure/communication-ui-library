@@ -4,8 +4,7 @@ import React from 'react';
 import {
   participantListStack,
   participantListStyle,
-  participantListWrapper,
-  listHeader
+  participantListWrapper
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -13,9 +12,8 @@ import {
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
+import { FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { peopleSubheadingStyle } from './styles/ParticipantContainer.styles';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -47,17 +45,17 @@ export const ParticipantListWithHeading = (props: {
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
-  const subheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
+  const subheadingStyleThemed = {
     root: {
-      color: theme.palette.neutralSecondary
+      color: theme.palette.neutralSecondary,
+      margin: '1rem',
+      fontSize: theme.fonts.smallPlus.fontSize
     }
-  });
+  };
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
-        {title}
-      </Stack.Item>
+      <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
       <FocusZone className={participantListStyle}>
         <ParticipantList
           {...participantListProps}

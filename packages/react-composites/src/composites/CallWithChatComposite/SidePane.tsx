@@ -37,8 +37,8 @@ export const SidePane = (props: {
   return (
     <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
       <Stack verticalFill data-ui-id={props.dataUiId}>
-        <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
-          <Stack.Item>{props.headingText}</Stack.Item>
+        <Stack horizontal horizontalAlign="space-between">
+          <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
           <CommandBarButton
             styles={sidePaneCloseButtonStyles}
             iconProps={{ iconName: 'cancel' }}
