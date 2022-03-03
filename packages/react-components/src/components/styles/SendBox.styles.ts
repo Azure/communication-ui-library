@@ -58,36 +58,47 @@ export const fileCardBoxStyle = mergeStyles({
   padding: '0.50rem'
 });
 
+const defaultSendBoxInactiveBorderThicknessREM = 0.0625;
+const defaultSendBoxActiveBorderThicknessREM = 0.125;
+
 /**
  * @private
  */
-export const borderAndBoxShadowStyle = (
-  theme: Theme,
-  errorColor: string,
-  hasErrorMessage: boolean,
-  disabled: boolean
-): IStyle => {
-  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.blue;
+export const borderAndBoxShadowStyle = (props: {
+  theme: Theme;
+  errorColor: string;
+  hasErrorMessage: boolean;
+  disabled: boolean;
+}): IStyle => {
+  const { theme, errorColor, hasErrorMessage, disabled } = props;
   const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
+  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.themePrimary;
+
+  const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
+  const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
+
   return {
     borderRadius: theme.effects.roundedCorner4,
-    borderWidth: disabled ? '0px' : '1px',
-    border: `0.0625rem solid ${borderColor}`,
-    ':hover': {
-      border: '2px solid',
-      borderColor: borderColorActive
-    },
-    ':active': {
-      border: '2px solid',
-      borderColor: borderColorActive
-    },
-    ':focus': {
-      border: '2px solid',
-      borderColor: borderColorActive
-    },
-    ':focus-within': {
-      border: '2px solid',
-      borderColor: borderColorActive
+    border: `${borderThickness}rem solid ${borderColor}`,
+
+    // The border thickness of the sendbox wrapper changes on hover, to prevent the border thickness change causing the
+    // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
+    margin: `${defaultSendBoxActiveBorderThicknessREM - borderThickness}rem`,
+
+    ':hover, :active, :focus, :focus-within': {
+      border: `${borderActiveThickness}rem solid ${borderColorActive}`,
+      margin: `${defaultSendBoxActiveBorderThicknessREM - borderActiveThickness}rem`
     }
+  };
+};
+
+/**
+ * @private
+ */
+export const errorBarStyle = (theme: Theme): IStyle => {
+  return {
+    background: '#FFF4CE',
+    padding: '0.50rem',
+    borderRadius: theme.effects.roundedCorner4
   };
 };
