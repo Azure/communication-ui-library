@@ -38,16 +38,17 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
 };
 
 const notificationIconPaddingREM = 0.225;
+const notificationSizeREM = 1;
 
 const notificationIconContainerStyles = memoizeFunction(
   (theme: ITheme): IIconStyles => ({
     root: {
-      borderRadius: '1rem',
+      borderRadius: `${notificationSizeREM}rem`, // Create a css circle. This should match the height.
+      height: `${notificationSizeREM}rem`,
+      minWidth: `${notificationSizeREM}rem`, // use min-width over width as we want to extend the width of the notification icon when contents is more than one character (e.g. 9+)
       background: theme.palette.themePrimary,
       border: `0.0625rem solid ${theme.palette.white}`,
       padding: `${notificationIconPaddingREM}rem`,
-      minWidth: '1rem',
-      height: '1rem',
 
       // positioning to place the badge within the button appropriately.
       position: 'absolute',
