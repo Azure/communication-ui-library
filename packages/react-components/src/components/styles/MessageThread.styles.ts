@@ -107,8 +107,8 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem',
   ' img': {
-    maxWidth: '100%',
-    height: 'auto'
+    maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
+    height: 'auto !important'
   },
   ' p': {
     // Deal with awkward padding seen in messages from Teams.
