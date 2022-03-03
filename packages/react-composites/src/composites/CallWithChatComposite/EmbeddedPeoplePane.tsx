@@ -44,6 +44,7 @@ import {
   linkIconStyles,
   modalLayerHostStyle,
   modalStyle,
+  participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/EmbeddedPeoplePane.styles';
 import { useId } from '@fluentui/react-hooks';
@@ -139,7 +140,9 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
-          <Stack.Item grow>{participantList}</Stack.Item>
+          <Stack.Item grow styles={participantListContainerStyles}>
+            {participantList}
+          </Stack.Item>
           {inviteLink && (
             <Stack.Item styles={copyLinkButtonContainerStyles}>
               <PrimaryButton

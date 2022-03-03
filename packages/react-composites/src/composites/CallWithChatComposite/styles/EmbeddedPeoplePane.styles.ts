@@ -34,7 +34,7 @@ export const peoplePaneContainerStyle: IStackItemStyles = {
 /**
  * @private
  */
-export const localAndRemotePIPStyles: IStackStyles = { root: { marginRight: '1rem' } };
+export const participantListContainerStyles: IStackItemStyles = { root: { overflowY: 'scroll' } };
 
 /**
  * @private
@@ -73,7 +73,7 @@ export const modalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProp
       borderRadius: theme.effects.roundedCorner4,
       boxShadow: theme.effects.elevation8,
       overflow: 'hidden',
-      ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' }),
+      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' }),
       // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
       pointerEvents: 'auto'
     },
@@ -100,3 +100,8 @@ export const modalLayerHostStyle: IStyle = {
   // pointer events for layerHost set to none to make descendants interactive
   pointerEvents: 'none'
 };
+
+/**
+ * @private
+ */
+export const localAndRemotePIPStyles: IStackStyles = { root: { marginRight: '1rem' } };
