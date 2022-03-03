@@ -8,24 +8,16 @@ on:
         required: true
         type: choice
         options:
-          - latest
-          - next
           - dev
+          - next
+          - latest
       release-flavor:
         description: 'Beta release or stable release.'
-        required: false
+        required: true
         type: choice
         options:
           - stable
           - beta
-      test-param:
-        description: 'Looking at GH action options.'
-        required: false
-        type: environment
-      test-param2:
-        description: 'Looking at GH action options.'
-        required: false
-        type: boolean
 
 jobs:
   publish:
