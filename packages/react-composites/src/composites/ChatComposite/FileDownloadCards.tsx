@@ -7,11 +7,11 @@ import {
   extension,
   FileMetadata,
   extractFileMetadata,
-  FileDownloadHandler
+  FileDownloadHandler,
+  FileDownloadErrorMessage
 } from './file-sharing';
 import { ChatMessage } from '@internal/react-components';
 import { ChatCompositeIcon } from '../common/icons';
-// @conditional-compile-remove(file-sharing)
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { useState } from 'react';
 import React from 'react';
@@ -42,21 +42,8 @@ export interface FileDownloadCards {
 export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   const truncateLength = 15;
   const { userId, message } = props;
-  // @conditional-compile-remove(file-sharing)
-  const [showSpinner, setSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
-  const DownloadIconTrampoline = (): JSX.Element => {
-    // @conditional-compile-remove(file-sharing)
-    if (showSpinner) {
-      // @conditional-compile-remove(file-sharing)
-      return <Spinner size={SpinnerSize.medium} aria-live={'assertive'} />;
-    } else {
-      // @conditional-compile-remove(file-sharing)
-      return <ChatCompositeIcon iconName="Download" />;
-    }
-    // Return _some_ available icon, as the real icon is beta-only.
-    return <ChatCompositeIcon iconName="EditBoxCancel" />;
-  };
   return (
     <FileCardGroup>
       {fileDownloads &&
@@ -65,23 +52,28 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             fileName={truncatedFileName(file.name, truncateLength)}
             key={file.name}
             fileExtension={extension(file.name)}
-            actionIcon={<DownloadIconTrampoline />}
+            actionIcon={
+              showSpinner ? (
+                <Spinner size={SpinnerSize.medium} aria-live={'assertive'} />
+              ) : (
+                <ChatCompositeIcon iconName="Download" />
+              )
+            }
             actionHandler={() => {
               if (props.downloadHandler) {
-                // @conditional-compile-remove(file-sharing)
-                setSpinner(true);
+                setShowSpinner(true);
                 props
                   .downloadHandler(userId, file)
-                  .then((fileurl) => {
-                    // @conditional-compile-remove(file-sharing)
-                    setSpinner(false);
-                    window.open(fileurl.toString(), '_blank', 'noopener,noreferrer');
+                  .then((value: URL | FileDownloadErrorMessage) => {
+                    if (value instanceof URL) {
+                      window.open(value.toString(), '_blank', 'noopener,noreferrer');
+                    } else {
+                      //TODO: implement error handling for reject
+                      console.log(value);
+                    }
                   })
-                  .catch((error) => {
-                    // @conditional-compile-remove(file-sharing)
-                    setSpinner(false);
-                    //TODO: implement error handling for reject
-                    console.log(error);
+                  .finally(() => {
+                    setShowSpinner(false);
                   });
               }
               !props.downloadHandler && window.open(file.url, '_blank', 'noopener,noreferrer');
