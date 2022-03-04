@@ -116,6 +116,11 @@ export const EmbeddedPeoplePane = (props: {
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
 
+  const localAndRemotePIP = useMemo(
+    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
+    [pictureInPictureProps, pictureInPictureHandlers]
+  );
+
   const DRAG_OPTIONS: IDragOptions = {
     moveMenuItemText: 'Move',
     closeMenuItemText: 'Close',
@@ -159,7 +164,7 @@ export const EmbeddedPeoplePane = (props: {
             {
               // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
               // possession of the dominant remote participant video stream
-              !props.hidden && <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+              !props.hidden && localAndRemotePIP
             }
           </Modal>
         </Stack>
