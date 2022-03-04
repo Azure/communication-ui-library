@@ -82,7 +82,7 @@ const PictureInPictureInPictureContainer = (props: {
 };
 
 const tileContainerStyles: React.CSSProperties = {
-  display: 'inline-block',
+  display: 'flex',
   width: 'min-content',
   position: 'relative',
   cursor: 'pointer'
