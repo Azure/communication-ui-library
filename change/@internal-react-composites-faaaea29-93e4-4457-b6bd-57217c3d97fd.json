@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "upgrading nanoid to 3.1.32",
-  "packageName": "@internal/react-composites",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
