@@ -176,7 +176,7 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem',
-    maxWidth: '12rem' // allot extra space that the regular ControlBarButton to give extra room to have the icon beside the text
+    maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
   flexContainer: {
     display: 'flex',
