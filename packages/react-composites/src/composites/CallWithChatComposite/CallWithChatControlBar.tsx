@@ -174,7 +174,7 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4,
+    borderRadius: theme.effects.roundedCorner2,
     minHeight: '2.5rem'
   },
   flexContainer: {
@@ -187,11 +187,14 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   label: {
     // Override styling from ControlBarButton so that label doesn't introduce a new block.
     display: 'inline',
-    fontSize: theme.fonts.medium.fontSize
+    fontSize: theme.fonts.medium.fontSize,
+    marginLeft: '0.625rem'
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner2,
+    borderTopLeftRadius: '0',
+    borderBottomLeftRadius: '0'
   },
   splitButtonMenuButtonChecked: {
     // Default colors the menu half similarly for :hover and when button is checked.
