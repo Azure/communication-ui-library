@@ -11,17 +11,21 @@ export interface SendBoxErrorBarProps {
   /** Error message to render */
   message?: string;
   /**
-   * Timeout delay in ms after which the error bar disappears.
-   * If undefined, the error bar will never disappear.
+   * Automatically dismisses the error bar after the specified delay in ms.
+   * Example: `10 * 1000` would be 10 seconds
    */
-  timeoutDelay?: number;
+  dismissAfterMs?: number;
+  /**
+   * Callback to invoke when the error bar is dismissed
+   */
+  onDismiss?: () => void;
 }
 
 /**
  * @internal
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
-  const { message, timeoutDelay } = props;
+  const { message, dismissAfterMs, onDismiss } = props;
   const [errorMessage, setErrorMessage] = React.useState(message);
   const timeoutRef = React.useRef<NodeJS.Timeout>();
 
@@ -31,13 +35,14 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
 
   useEffect(() => {
     clearTimeoutRef();
-    if (timeoutDelay !== undefined) {
+    if (dismissAfterMs !== undefined) {
       timeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
-      }, timeoutDelay);
+        onDismiss && onDismiss();
+      }, dismissAfterMs);
     }
     return clearTimeoutRef;
-  }, [clearTimeoutRef, timeoutDelay]);
+  }, [clearTimeoutRef, dismissAfterMs, onDismiss]);
 
   if (errorMessage) {
     return (

@@ -18,7 +18,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
-import { SendBoxErrorBar } from './SendBoxErrorBar';
+import { SendBoxErrors } from './SendBoxErrors';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -63,6 +63,7 @@ export interface ActiveFileUpload {
 
   /**
    * Error message to be displayed to the user if the upload fails.
+   * @TODO Replace with `SendBoxError` type that has a timestamp and a message.
    */
   errorMessage?: string;
 
@@ -196,12 +197,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
+  const sendTextFieldRef = React.useRef<ITextField>(null);
+
   /* @conditional-compile-remove(file-sharing) */
   const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
-  /* @conditional-compile-remove(file-sharing) */
-  const fileUploadsPendingErrorTimeoutRef = React.useRef<NodeJS.Timeout>();
 
-  const sendTextFieldRef = React.useRef<ITextField>(null);
+  /* @conditional-compile-remove(file-sharing) */
+  const hasIncompleteFileUploads = useCallback(() => {
+    return (
+      props.activeFileUploads?.length &&
+      !props.activeFileUploads
+        .filter((fileUpload) => !fileUpload.errorMessage)
+        .every((fileUpload) => fileUpload.isUploaded)
+    );
+  }, [props.activeFileUploads]);
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
@@ -213,7 +222,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing) */
     setShowFileUploadsPendingError(false);
     /* @conditional-compile-remove(file-sharing) */
-    if (uploadInProgressErrorBar) {
+    if (hasIncompleteFileUploads()) {
       setShowFileUploadsPendingError(true);
       return;
     }
@@ -239,37 +248,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       setTextValueOverflow(false);
     }
     setTextValue(newValue);
-  };
-
-  /* @conditional-compile-remove(file-sharing) */
-  const uploadInProgressErrorBar = useMemo(() => {
-    const renderError = !!(
-      props.activeFileUploads?.length &&
-      !props.activeFileUploads
-        .filter((fileUpload) => !fileUpload.errorMessage)
-        .every((fileUpload) => fileUpload.isUploaded)
-    );
-    return renderError && <SendBoxErrorBar message={strings.fileUploadsPendingError} />;
-  }, [props.activeFileUploads, strings.fileUploadsPendingError]);
-
-  /* @conditional-compile-remove(file-sharing) */
-  const fileUploadErrorBar = useMemo(() => {
-    const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
-    const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    return latestError && <SendBoxErrorBar message={latestError.errorMessage} timeoutDelay={10 * 1000} />;
-  }, [props.activeFileUploads]);
-
-  /* @conditional-compile-remove(file-sharing) */
-  const renderSendBoxError = () => {
-    if (showFileUploadsPendingError) {
-      fileUploadsPendingErrorTimeoutRef.current && clearTimeout(fileUploadsPendingErrorTimeoutRef.current);
-      fileUploadsPendingErrorTimeoutRef.current = setTimeout(() => {
-        setShowFileUploadsPendingError(false);
-      }, 10 * 1000);
-      return uploadInProgressErrorBar;
-    } else {
-      return fileUploadErrorBar;
-    }
   };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
@@ -307,10 +285,15 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        renderSendBoxError()
-      }
+      {/* @conditional-compile-remove(file-sharing) */}
+      <SendBoxErrors
+        {...{
+          onDismissFileUploadsPendingError: () => setShowFileUploadsPendingError(false),
+          fileUploadsPendingError: showFileUploadsPendingError
+            ? { message: strings.fileUploadsPendingError }
+            : undefined
+        }}
+      />
       <Stack
         className={mergeStyles(
           borderAndBoxShadowStyle({
