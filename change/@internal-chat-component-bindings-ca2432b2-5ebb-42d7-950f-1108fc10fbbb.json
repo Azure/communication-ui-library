@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed participant should not show up in read information ",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
