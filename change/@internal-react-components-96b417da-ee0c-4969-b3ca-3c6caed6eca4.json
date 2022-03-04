@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Limit image size from html",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
