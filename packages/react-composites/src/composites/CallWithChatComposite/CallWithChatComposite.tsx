@@ -149,14 +149,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const onMoreButtonClicked = useCallback(() => {
     closePane();
     setShowDrawer(true);
-  }, []);
+  }, [closePane]);
   const closeDrawer = useCallback(() => {
     setShowDrawer(false);
   }, []);
   const onMoreDrawerPeopleClicked = useCallback(() => {
     setShowDrawer(false);
     togglePeople();
-  }, []);
+  }, [togglePeople]);
   const selectPeople = useCallback(() => {
     setShowPeople(true);
     setShowChat(false);
