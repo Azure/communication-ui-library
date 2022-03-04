@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added button to copy invite link in people pane of CallWithChat composite in mobile view.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
