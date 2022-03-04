@@ -15,7 +15,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
-import { WEB_APP_TITLE } from 'app/utils/AppUtils';
+import { WEB_APP_TITLE } from '../utils/AppUtils';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
