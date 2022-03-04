@@ -4,11 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       npm-tag:
-        description: 'Npm tag for the release, e.g. latest, next, dev'
+        description: 'Npm tag for the release. Use latest for latest stable release, next for latest beta releases and dev for latest alpha releases.'
         required: true
+        type: choice
+        options:
+          - dev
+          - next
+          - latest
       release-flavor:
-        description: 'Beta release or stable release. Will be determined by branch name if left empty.'
-        required: false
+        description: 'Beta release or stable release.'
+        required: true
+        type: choice
+        options:
+          - stable
+          - beta
 
 jobs:
   publish:
@@ -38,7 +47,7 @@ jobs:
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         # If no param for release flavor, get it from branch name
-        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor == 'stable' }}
+        if: ${{ github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
 
       # Builds
