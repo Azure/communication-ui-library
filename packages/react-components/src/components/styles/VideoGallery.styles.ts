@@ -41,7 +41,7 @@ export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
  * @private
  * z-index to ensure that the local video tile is above the video gallery.
  */
-export const LOCAL_VIDEO_TILE_ZINDEX = 1;
+export const LOCAL_VIDEO_TILE_ZINDEX = 2;
 
 /**
  * @private
