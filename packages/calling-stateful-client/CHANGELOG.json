@@ -2,6 +2,73 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:42:56 GMT",
+      "tag": "@internal/calling-stateful-client_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "b96cb050b49ad1057142f33b8f169d0b064f612a",
+            "comment": "Log StatefulCallClient state changes when verbose logging is enabled"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "9a9948616fa6d37a13a56518fb8827778765937d",
+            "comment": "Use per-feature conditional compilation directives"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "87979c60be946d0e1f9dc5bc732cff6cdfc91b70",
+            "comment": "Include all files in stable flavor build"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update the acs-common dependancy per dependabot"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "a87694951dd50fe4c355aba3e7915f9c59a53b94",
+            "comment": "upgrading calling to 1.4.2-beta.1"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "e6821eb7ed2e90d5dd41198b3a6de5bb05b41e7f",
+            "comment": "Fix exception thrown when trying to log stringified state when azure logger is set to verbose"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:54 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.1",
       "version": "1.0.1",
