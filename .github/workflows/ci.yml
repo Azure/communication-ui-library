@@ -370,6 +370,7 @@ jobs:
       matrix:
         include:
           - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       - uses: actions/checkout@v2
         with:
