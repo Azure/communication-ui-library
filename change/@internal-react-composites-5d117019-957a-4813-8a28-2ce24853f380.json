@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Timeout file upload error bar after 10 seconds",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

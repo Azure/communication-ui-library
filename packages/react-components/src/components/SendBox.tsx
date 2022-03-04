@@ -3,8 +3,6 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(file-sharing) */
-import { MessageBar, MessageBarType } from '@fluentui/react';
 import {
   sendBoxStyle,
   sendButtonStyle,
@@ -19,6 +17,8 @@ import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { SendBoxErrorBar } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -220,10 +220,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
     const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    if (latestError) {
-      return <MessageBar messageBarType={MessageBarType.warning}>{latestError.errorMessage}</MessageBar>;
-    }
-    return <></>;
+    return <SendBoxErrorBar message={latestError?.errorMessage} timeout={10 * 1000} />;
   }, [props.activeFileUploads]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;

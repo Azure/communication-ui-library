@@ -43,19 +43,19 @@ class FileUploadContext {
   }
 
   public setFileUploads(fileUploads: ObservableFileUpload[]): void {
-    const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
-      map[fileUpload.id] = {
-        id: fileUpload.id,
-        filename: fileUpload.fileName,
-        progress: 0,
-        metadata: fileUpload.metadata
-      };
-      return map;
-    }, {});
-
+    const fileUploadsMap = convertObservableFileUploadToFileUploadsUiState(fileUploads);
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft) => {
         draft.fileUploads = fileUploadsMap;
+      })
+    );
+  }
+
+  public appendFileUploads(fileUploads: ObservableFileUpload[]): void {
+    const fileUploadsMap = convertObservableFileUploadToFileUploadsUiState(fileUploads);
+    this.chatContext.setState(
+      produce(this.chatContext.getState(), (draft) => {
+        draft.fileUploads = { ...draft.fileUploads, ...fileUploadsMap };
       })
     );
   }
@@ -76,10 +76,12 @@ class FileUploadContext {
     );
   }
 
-  public deleteFileUpload(id: string): void {
+  public deleteFileUploads(ids: string[]): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        delete draft?.fileUploads?.[id];
+        ids.forEach((id) => {
+          delete draft?.fileUploads?.[id];
+        });
       })
     );
   }
@@ -101,14 +103,34 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     return this.fileUploads.find((fileUpload) => fileUpload.id === id);
   }
 
-  private deleteFileUpload(id: string): void {
-    this.fileUploads = this.fileUploads.filter((fileUpload) => fileUpload.id !== id);
+  private deleteFileUploads(ids: string[]): void {
+    this.fileUploads = this.fileUploads.filter((fileUpload) => !ids.includes(fileUpload.id));
+    this.context.deleteFileUploads(ids);
+  }
+
+  private deleteErroneousFileUploads(): void {
+    const fileUploads = this.context.getFileUploads() || {};
+    const ids = Object.values(fileUploads)
+      .filter((item: FileUploadState) => item.errorMessage)
+      .map((item: FileUploadState) => item.id);
+
+    ids.forEach((id) => {
+      const fileUpload = this.findFileUpload(id);
+      this.unsubscribeAllEvents(fileUpload);
+    });
+
+    this.deleteFileUploads(ids);
   }
 
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+    this.deleteErroneousFileUploads();
+    fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
     this.fileUploads = this.fileUploads.concat(fileUploads);
-    this.context.setFileUploads(this.fileUploads);
-    this.fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
+    if (this.context.getFileUploads()) {
+      this.context.appendFileUploads(fileUploads);
+    } else {
+      this.context.setFileUploads(this.fileUploads);
+    }
   }
 
   clearFileUploads(): void {
@@ -118,13 +140,9 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   cancelFileUpload(id: string): void {
-    this.context.deleteFileUpload(id);
     const fileUpload = this.findFileUpload(id);
-    if (!fileUpload) {
-      throw new Error('File upload not found');
-    }
     this.unsubscribeAllEvents(fileUpload);
-    this.deleteFileUpload(id);
+    this.deleteFileUploads([id]);
   }
 
   private fileUploadProgressListener(id: string, progress: number): void {
@@ -145,7 +163,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     fileUpload.on('uploadFailed', this.fileUploadFailedListener.bind(this));
   }
 
-  private unsubscribeAllEvents(fileUpload: ObservableFileUpload): void {
+  private unsubscribeAllEvents(fileUpload?: ObservableFileUpload): void {
     fileUpload?.off('uploadProgressed', this.fileUploadProgressListener.bind(this));
     fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener.bind(this));
     fileUpload?.off('uploadFailed', this.fileUploadFailedListener.bind(this));
@@ -169,4 +187,20 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   }
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+};
+
+/* @conditional-compile-remove(file-sharing) */
+/**
+ * @private
+ */
+const convertObservableFileUploadToFileUploadsUiState = (fileUploads: ObservableFileUpload[]): FileUploadsUiState => {
+  return fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
+    map[fileUpload.id] = {
+      id: fileUpload.id,
+      filename: fileUpload.fileName,
+      progress: 0,
+      metadata: fileUpload.metadata
+    };
+    return map;
+  }, {});
 };
