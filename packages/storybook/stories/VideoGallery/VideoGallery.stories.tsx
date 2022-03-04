@@ -132,10 +132,7 @@ const getDocs: () => JSX.Element = () => {
         button will cycle through the different camera's in the users device. Typical usage is to enable this button on
         mobile devices. This button is enabled through the use of the `showCameraSwitcherInLocalPreview` prop.
       </Description>
-      <StorybookBanner
-        // eslint-disable-next-line react/no-children-prop
-        palette={yellowBannerPalette}
-      >
+      <StorybookBanner palette={yellowBannerPalette}>
         <Text style={{ display: 'inline-block' }}>
           This feature when enabled will disable the ability to drag the local video tile around the video gallery.
         </Text>
