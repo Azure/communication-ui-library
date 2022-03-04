@@ -48,7 +48,7 @@ export const ParticipantListWithHeading = (props: {
   const subheadingStyleThemed = {
     root: {
       color: theme.palette.neutralSecondary,
-      margin: '1rem',
+      margin: '0.5rem',
       fontSize: theme.fonts.smallPlus.fontSize
     }
   };

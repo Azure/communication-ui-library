@@ -30,13 +30,14 @@ export const SidePane = (props: {
   const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
   const theme = useTheme();
   const sidePaneCloseButtonStyles = {
+    root: { minWidth: '1.5rem', padding: 0 },
     icon: { color: theme.palette.neutralSecondary },
     iconHovered: { color: theme.palette.neutralSecondary },
     iconPressed: { color: theme.palette.neutralSecondary }
   };
   return (
-    <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
-      <Stack verticalFill data-ui-id={props.dataUiId}>
+    <Stack.Item disableShrink verticalFill styles={sidePaneStyles}>
+      <Stack verticalFill data-ui-id={props.dataUiId} tokens={sidePaneContainerTokens}>
         <Stack horizontal horizontalAlign="space-between">
           <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
           <CommandBarButton
@@ -47,7 +48,7 @@ export const SidePane = (props: {
         </Stack>
         <Stack.Item verticalFill grow styles={paneBodyContainer}>
           <Stack horizontal styles={scrollableContainer}>
-            <Stack.Item verticalFill styles={scrollableContainerContents}>
+            <Stack.Item verticalFill styles={scrollableContainerContents} tokens={sidePaneContainerTokens}>
               {props.children}
             </Stack.Item>
           </Stack>

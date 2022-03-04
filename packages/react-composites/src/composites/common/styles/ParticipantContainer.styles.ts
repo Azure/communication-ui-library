@@ -9,8 +9,7 @@ import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@flue
 export const sidePaneContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
+    padding: '0.5rem 0.25rem',
     width: '21.5rem'
   }
 };

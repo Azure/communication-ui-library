@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  concatStyleSets,
   IButtonStyles,
   IModalStyleProps,
   IModalStyles,
@@ -43,16 +44,26 @@ export const copyLinkButtonContainerStyles: IStackStyles = { root: { width: '100
 /**
  * @private
  */
-export const copyLinkButtonStyles: IButtonStyles = {
+export const desktopCopyLinkButtonStyles: IButtonStyles = {
   root: {
-    height: '3rem',
+    height: '2.5rem',
     width: '100%',
-    borderRadius: '0.5rem'
+    borderRadius: '0.25rem'
   },
   textContainer: {
     display: 'contents'
   }
 };
+
+/**
+ * @private
+ */
+export const mobileCopyLinkButtonStyles: IButtonStyles = concatStyleSets(desktopCopyLinkButtonStyles, {
+  root: {
+    height: '3rem',
+    borderRadius: '0.5rem'
+  }
+});
 
 /**
  * @private

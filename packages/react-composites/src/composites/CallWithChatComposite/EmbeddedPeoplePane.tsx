@@ -38,11 +38,12 @@ import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
-  copyLinkButtonStyles,
+  mobileCopyLinkButtonStyles,
   linkIconStyles,
   modalStyle,
   participantListContainerStyles,
-  peoplePaneContainerStyle
+  peoplePaneContainerStyle,
+  desktopCopyLinkButtonStyles
 } from './styles/EmbeddedPeoplePane.styles';
 
 /**
@@ -148,7 +149,7 @@ export const EmbeddedPeoplePane = (props: {
             <Stack.Item styles={copyLinkButtonContainerStyles}>
               <PrimaryButton
                 onClick={() => copy(inviteLink)}
-                styles={copyLinkButtonStyles}
+                styles={mobileCopyLinkButtonStyles}
                 onRenderIcon={() => <LinkIconTrampoline />}
                 text={callWithChatStrings.copyInviteLinkButtonLabel}
               />
@@ -190,7 +191,7 @@ export const EmbeddedPeoplePane = (props: {
             text={callWithChatStrings.copyInviteLinkButtonLabel}
             onRenderIcon={() => <LinkIconTrampoline />}
             onClick={() => copy(inviteLink)}
-            styles={{ root: { height: '2.5rem', borderRadie: '0.25rem' } }}
+            styles={desktopCopyLinkButtonStyles}
           />
         )}
         {participantList}
