@@ -40,8 +40,7 @@ import {
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle,
-  LOCAL_VIDEO_TILE_ZINDEX
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -51,7 +50,7 @@ import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-import { localVideoTileWithControlsContainerStyle } from './styles/VideoGallery.styles';
+import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
