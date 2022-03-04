@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Updated PictureInPictureInPicture container styles display property.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
