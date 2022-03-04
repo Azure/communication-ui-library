@@ -147,14 +147,19 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
 
     return items;
   }, [
+    props.strings.editMessage,
+    props.strings.removeMessage,
+    props.strings.messageReadCount,
     props.increaseFlyoutItemSize,
     props.onEditClick,
     props.onRemoveClick,
-    props.strings.editMessage,
-    props.strings.removeMessage,
     props.remoteParticipantsCount,
-    messageReadByList,
-    messageReadByCount
+    messageReadByCount,
+    theme.palette.neutralPrimary,
+    theme.palette.neutralTertiary,
+    theme.palette.neutralLighter,
+    theme.palette.themeDarkAlt,
+    messageReadByList
   ]);
 
   // gap space uses pixels
