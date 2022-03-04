@@ -256,7 +256,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const fileUploadErrorBar = useMemo(() => {
     const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    return latestError && <SendBoxErrorBar message={latestError.errorMessage} timeout={10 * 1000} />;
+    return latestError && <SendBoxErrorBar message={latestError.errorMessage} timeoutDelay={10 * 1000} />;
   }, [props.activeFileUploads]);
 
   /* @conditional-compile-remove(file-sharing) */

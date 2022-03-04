@@ -32,15 +32,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveFileUpload {
-    errorMessage?: string;
-    filename: string;
-    id: string;
-    isUploaded?: boolean;
-    progress: number;
-}
-
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;

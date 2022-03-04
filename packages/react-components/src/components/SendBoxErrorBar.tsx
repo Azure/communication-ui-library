@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 /**
  * @internal
@@ -11,35 +11,33 @@ export interface SendBoxErrorBarProps {
   /** Error message to render */
   message?: string;
   /**
-   * Timeout in ms after which the error bar disappears.
+   * Timeout delay in ms after which the error bar disappears.
    * If undefined, the error bar will never disappear.
    */
-  timeout?: number;
+  timeoutDelay?: number;
 }
 
 /**
  * @internal
  */
-export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): JSX.Element => {
-  const { message, timeout } = props;
+export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
+  const { message, timeoutDelay } = props;
   const [errorMessage, setErrorMessage] = React.useState(message);
-  const setTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
+
+  const clearTimeoutRef = useCallback(() => {
+    timeoutRef.current && clearTimeout(timeoutRef.current);
+  }, [timeoutRef]);
 
   useEffect(() => {
-    const clearSetTimeout = (): void => {
-      setTimeoutRef.current && clearTimeout(setTimeoutRef.current);
-    };
-
-    clearSetTimeout();
-    if (timeout !== undefined) {
-      setTimeoutRef.current = setTimeout(() => {
+    clearTimeoutRef();
+    if (timeoutDelay !== undefined) {
+      timeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
-      }, timeout);
-      return clearSetTimeout;
-    } else {
-      return;
+      }, timeoutDelay);
     }
-  }, [timeout]);
+    return clearTimeoutRef;
+  }, [clearTimeoutRef, timeoutDelay]);
 
   if (errorMessage) {
     return (
