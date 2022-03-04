@@ -92,9 +92,9 @@ export interface SendBoxStrings {
   sendButtonAriaLabel: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Warning message indicating that all file uploads are not complete.
+   * Error message indicating that all file uploads are not complete.
    */
-  fileUploadsPendingWarning: string;
+  fileUploadsPendingError: string;
 }
 
 /**
@@ -199,7 +199,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const uploadInProgressErrorTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const fileUploadsPendingErrorTimeout = React.useRef<NodeJS.Timeout>();
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
@@ -249,8 +249,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         .filter((fileUpload) => !fileUpload.errorMessage)
         .every((fileUpload) => fileUpload.isUploaded)
     );
-    return renderError && <SendBoxErrorBar message={strings.fileUploadsPendingWarning} />;
-  }, [props.activeFileUploads, strings.fileUploadsPendingWarning]);
+    return renderError && <SendBoxErrorBar message={strings.fileUploadsPendingError} />;
+  }, [props.activeFileUploads, strings.fileUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
   const fileUploadErrorBar = useMemo(() => {
@@ -260,19 +260,17 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [props.activeFileUploads]);
 
   /* @conditional-compile-remove(file-sharing) */
-  const renderSendBoxError = useCallback(() => {
+  const renderSendBoxError = () => {
     if (showFileUploadsPendingError) {
-      if (uploadInProgressErrorTimeoutRef.current) {
-        clearTimeout(uploadInProgressErrorTimeoutRef.current);
-      }
-      uploadInProgressErrorTimeoutRef.current = setTimeout(() => {
+      fileUploadsPendingErrorTimeout.current && clearTimeout(fileUploadsPendingErrorTimeout.current);
+      fileUploadsPendingErrorTimeout.current = setTimeout(() => {
         setShowFileUploadsPendingError(false);
       }, 10 * 1000);
       return uploadInProgressErrorBar;
     } else {
       return fileUploadErrorBar;
     }
-  }, [fileUploadErrorBar, uploadInProgressErrorBar, showFileUploadsPendingError]);
+  };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
