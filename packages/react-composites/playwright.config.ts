@@ -73,6 +73,21 @@ const config: PlaywrightTestConfig = {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions }
       }
+    },
+    {
+      name: 'Mobile Android Landscape',
+      use: {
+        /*
+          userAgent: 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
+          viewport: { width: 640, height: 360 },
+          deviceScaleFactor: 3,
+          isMobile: true,
+          hasTouch: true,
+          defaultBrowserType: 'chromium'
+        */
+        ...devices['Nexus 5 Landscape'],
+        launchOptions: { ...chromeLaunchOptions }
+      }
     }
   ]
 };
