@@ -2,6 +2,73 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:43:00 GMT",
+      "tag": "@internal/acs-ui-common_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update the acs-common dependancy and nanoid dependancy as per dependabot"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "87979c60be946d0e1f9dc5bc732cff6cdfc91b70",
+            "comment": "Include all files in stable flavor build"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "c6d8a57be092772c7dc7713f1b7ea35586e194b1",
+            "comment": "Add sample module for conditional compilation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "33547ed25c23552f68220a075439ab7f2854b210",
+            "comment": "Update conditional compilation example"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "c8f7737416da9f3ee048d3926e7960232cdbad1d",
+            "comment": "Update conditional compilation and documentation"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Exporting a _MAX_EVENT_LISTENERS internal constant"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "e6821eb7ed2e90d5dd41198b3a6de5bb05b41e7f",
+            "comment": "Add _safeJSONStringify function"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:53 GMT",
       "tag": "@internal/acs-ui-common_v1.0.1",
       "version": "1.0.1",

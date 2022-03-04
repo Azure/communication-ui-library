@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add soft vertical height support for unsupported mobile landscape orientation in Calling-based Composites",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

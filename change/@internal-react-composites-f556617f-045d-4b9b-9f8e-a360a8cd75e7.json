@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added LocalAndRemotePIP to mobile EmbeddedPeoplePane.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

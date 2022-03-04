@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update string from remove to delete",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
