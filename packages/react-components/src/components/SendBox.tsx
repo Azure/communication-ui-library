@@ -19,6 +19,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBar } from './SendBoxErrorBar';
+import { FileUploadCards } from './FileUploadCards';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -156,6 +157,12 @@ export interface SendBoxProps {
    * @beta
    */
   activeFileUploads?: ActiveFileUpload[];
+  /**
+   * Optional callback to remove the file upload before sending by clicking on
+   * cancel icon.
+   * @beta
+   */
+  cancelFileUpload?: (fileId: string) => void;
 }
 
 /**
@@ -256,6 +263,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileUploads = useCallback(
+    () =>
+      props.onRenderFileUploads ? (
+        props.onRenderFileUploads()
+      ) : (
+        <FileUploadCards
+          activeFileUploads={props.activeFileUploads ? props.activeFileUploads : []}
+          cancelFileUpload={props.cancelFileUpload}
+        />
+      ),
+    [props]
+  );
+
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
@@ -310,7 +331,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         </InputBoxComponent>
         {
           /* @conditional-compile-remove(file-sharing) */
-          props.onRenderFileUploads && props.onRenderFileUploads()
+          onRenderFileUploads()
         }
       </Stack>
     </Stack>

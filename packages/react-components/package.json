@@ -41,7 +41,8 @@
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5",
     "uuid": "^8.1.0",
-    "@fluentui/react-hooks": "~8.3.8"
+    "@fluentui/react-hooks": "~8.3.8",
+    "@fluentui/react-file-type-icons": "~8.5.8"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",

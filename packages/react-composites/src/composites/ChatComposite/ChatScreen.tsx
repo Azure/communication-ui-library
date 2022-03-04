@@ -50,6 +50,8 @@ import { FileDownloadCards } from './FileDownloadCards';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useFileUploadAdapter } from './adapter/ChatAdapterProvider';
 
 /**
  * @private
@@ -181,12 +183,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
-              /* @conditional-compile-remove(file-sharing) */
-              onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
               /* @conditional-compile-remove(file-sharing) */
               activeFileUploads={useSelector(fileUploadsSelector).files}
+              /* @conditional-compile-remove(file-sharing) */
+              cancelFileUpload={useFileUploadAdapter().cancelFileUpload}
             />
 
             <FileUploadButton
