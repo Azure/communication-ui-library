@@ -11,7 +11,9 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
-export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps, ActiveFileUpload } from './SendBox';
+export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+/* @conditional-compile-remove(file-sharing) */
+export type { ActiveFileUpload } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
