@@ -43,8 +43,6 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadCards } from './FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';

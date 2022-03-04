@@ -19,6 +19,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBar } from './SendBoxErrorBar';
+/* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
