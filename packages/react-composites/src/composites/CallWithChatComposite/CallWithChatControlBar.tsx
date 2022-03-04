@@ -174,24 +174,41 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4,
-    minHeight: '2.5rem'
+    borderRadius: theme.effects.roundedCorner2,
+    minHeight: '2.5rem',
+    maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
   flexContainer: {
+    display: 'flex',
     flexFlow: 'row nowrap'
   },
   textContainer: {
     // Override the default so that label doesn't introduce a new block.
-    display: 'inline'
+    display: 'inline',
+
+    // Ensure width is set to permit child to show ellipsis when there is a label that is too long
+    maxWidth: '100%'
   },
   label: {
-    // Override styling from ControlBarButton so that label doesn't introduce a new block.
-    display: 'inline',
-    fontSize: theme.fonts.medium.fontSize
+    fontSize: theme.fonts.medium.fontSize,
+
+    // Ensure there is enough space between the icon and text to allow for the unread messages badge in the chat button
+    marginLeft: '0.625rem',
+
+    // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
+    lineHeight: '1.5rem',
+
+    // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
+    display: 'block',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner2,
+    borderTopLeftRadius: '0',
+    borderBottomLeftRadius: '0'
   },
   splitButtonMenuButtonChecked: {
     // Default colors the menu half similarly for :hover and when button is checked.

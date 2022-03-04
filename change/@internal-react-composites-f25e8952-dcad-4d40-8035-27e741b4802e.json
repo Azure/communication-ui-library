@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Using React Context to set locale, icons, and theme only once through BaseComposite",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

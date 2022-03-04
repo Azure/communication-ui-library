@@ -6,15 +6,11 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import {
-  editBoxStyle,
-  inputBoxIcon,
-  editingButtonStyle,
-  editBoxStyleSet,
-  borderAndBoxShadowStyle
-} from '../styles/EditBox.styles';
+import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
+import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -85,7 +81,16 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   return (
-    <Stack className={mergeStyles(borderAndBoxShadowStyle(theme))}>
+    <Stack
+      className={mergeStyles(
+        borderAndBoxShadowStyle({
+          theme,
+          errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
+          hasErrorMessage: false,
+          disabled: false
+        })
+      )}
+    >
       <InputBoxComponent
         inlineChildren={props.inlineEditButtons}
         id={'editbox'}

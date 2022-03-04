@@ -75,6 +75,14 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// @beta
+export interface ActiveFileUpload {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    progress: number;
+}
+
 // @public
 export interface AdapterError extends Error {
     innerError: Error;
@@ -1788,6 +1796,8 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -1969,6 +1979,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -1984,7 +1997,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
