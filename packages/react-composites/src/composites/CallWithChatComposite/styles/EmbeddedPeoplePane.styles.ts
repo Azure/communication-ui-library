@@ -74,7 +74,8 @@ export const modalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProp
       overflow: 'hidden',
       ...(theme.rtl ? { left: '1rem' } : { right: '1rem' }),
       // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
-      pointerEvents: 'auto'
+      pointerEvents: 'auto',
+      touchAction: 'none'
     },
     root: {
       width: '100%',
