@@ -199,7 +199,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const fileUploadsPendingErrorTimeout = React.useRef<NodeJS.Timeout>();
+  const fileUploadsPendingErrorTimeoutRef = React.useRef<NodeJS.Timeout>();
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
@@ -262,8 +262,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const renderSendBoxError = () => {
     if (showFileUploadsPendingError) {
-      fileUploadsPendingErrorTimeout.current && clearTimeout(fileUploadsPendingErrorTimeout.current);
-      fileUploadsPendingErrorTimeout.current = setTimeout(() => {
+      fileUploadsPendingErrorTimeoutRef.current && clearTimeout(fileUploadsPendingErrorTimeoutRef.current);
+      fileUploadsPendingErrorTimeoutRef.current = setTimeout(() => {
         setShowFileUploadsPendingError(false);
       }, 10 * 1000);
       return uploadInProgressErrorBar;
