@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix missing storybook stories by updating the story glob path check",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

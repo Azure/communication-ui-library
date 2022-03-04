@@ -43,7 +43,7 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';

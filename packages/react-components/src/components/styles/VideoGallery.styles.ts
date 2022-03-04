@@ -39,6 +39,12 @@ export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
 
 /**
  * @private
+ * z-index to ensure that the local video tile is above the video gallery.
+ */
+export const LOCAL_VIDEO_TILE_ZINDEX = 2;
+
+/**
+ * @private
  */
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
@@ -70,10 +76,19 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
 /**
  * @private
  */
+export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStackStyles => {
+  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
+    root: { boxShadow: theme.effects.elevation8 }
+  });
+};
+
+/**
+ * @private
+ */
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX,
     height: '100%',
     width: '100%'
   }
@@ -84,9 +99,6 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
  */
 export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
-    maxHeight: isNarrow
-      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
-      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     minHeight: isNarrow
       ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
@@ -158,8 +170,8 @@ export const layerHostStyle: IStyle = {
 export const localVideoCameraCycleButtonStyles: IButtonStyles = {
   root: {
     position: 'absolute',
-    right: '0.2rem',
-    top: '0.2rem',
+    right: '0.1rem',
+    top: '0.1rem',
     color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
     zIndex: 2, // shows the button directly over the local video feed.
     background: 'transparent'
