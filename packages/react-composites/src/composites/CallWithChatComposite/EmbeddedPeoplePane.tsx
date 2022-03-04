@@ -1,11 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DefaultButton, IContextualMenuItem, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  ContextualMenu,
+  DefaultButton,
+  IContextualMenuItem,
+  IDragOptions,
+  Modal,
+  PrimaryButton,
+  Stack
+} from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
+  useTheme,
   _DrawerMenu,
   _DrawerMenuItemProps
 } from '@internal/react-components';
@@ -13,17 +22,28 @@ import copy from 'copy-to-clipboard';
 import React, { useMemo, useState } from 'react';
 import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
+import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+import { useSelector } from '../CallComposite/hooks/useSelector';
+import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
-import { peoplePaneContainerStyle, peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
-import { copyLinkButtonStyles, linkIconStyles } from './styles/EmbeddedPeoplePane.styles';
+import {
+  copyLinkButtonContainerStyles,
+  copyLinkButtonStyles,
+  linkIconStyles,
+  modalStyle,
+  participantListContainerStyles,
+  peoplePaneContainerStyle
+} from './styles/EmbeddedPeoplePane.styles';
 
 /**
  * @private
@@ -38,6 +58,7 @@ export const EmbeddedPeoplePane = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
+  modalLayerHostId: string;
   mobileView?: boolean;
 }): JSX.Element => {
   const { callAdapter, chatAdapter, inviteLink } = props;
@@ -93,6 +114,23 @@ export const EmbeddedPeoplePane = (props: {
     />
   );
 
+  const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
+  const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
+
+  const localAndRemotePIP = useMemo(
+    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
+    [pictureInPictureProps, pictureInPictureHandlers]
+  );
+
+  const DRAG_OPTIONS: IDragOptions = {
+    moveMenuItemText: 'Move',
+    closeMenuItemText: 'Close',
+    menu: ContextualMenu,
+    keepInBounds: true
+  };
+
+  const theme = useTheme();
+
   if (props.mobileView) {
     return (
       <MobilePane
@@ -104,15 +142,32 @@ export const EmbeddedPeoplePane = (props: {
         onPeopleButtonClicked={props.onPeopleButtonClick}
       >
         <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
-          {participantList}
+          <Stack.Item grow styles={participantListContainerStyles}>
+            {participantList}
+          </Stack.Item>
           {inviteLink && (
-            <PrimaryButton
-              onClick={() => copy(inviteLink)}
-              styles={copyLinkButtonStyles}
-              onRenderIcon={() => <LinkIconTrampoline />}
-              text={callWithChatStrings.copyInviteLinkButtonLabel}
-            />
+            <Stack.Item styles={copyLinkButtonContainerStyles}>
+              <PrimaryButton
+                onClick={() => copy(inviteLink)}
+                styles={copyLinkButtonStyles}
+                onRenderIcon={() => <LinkIconTrampoline />}
+                text={callWithChatStrings.copyInviteLinkButtonLabel}
+              />
+            </Stack.Item>
           )}
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={modalStyle(theme)}
+            layerProps={{ hostId: props.modalLayerHostId }}
+          >
+            {
+              // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+              // possession of the dominant remote participant video stream
+              !props.hidden && localAndRemotePIP
+            }
+          </Modal>
         </Stack>
         {drawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
@@ -196,7 +251,7 @@ const createDefaultContextualMenuItems = (
 
 /**
  * Convert IContextualMenuItem to _DrawerMenuItemProps
- * @param contextualMenu - IContextualMenuItem
+ * @param contextualMenu - IContextualMenuItem to convert
  * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
  * @returns DrawerMenuItem
  */

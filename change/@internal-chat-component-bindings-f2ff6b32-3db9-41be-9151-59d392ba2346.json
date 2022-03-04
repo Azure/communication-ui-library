@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Follow the import trace from every index.ts and not to compile non-exported files",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}

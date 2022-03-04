@@ -2,6 +2,236 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:42:54 GMT",
+      "tag": "@internal/storybook_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "2d97c503493ec62eb473ab7b5a515d8c48fd0b42",
+            "comment": "enable storybook keyboard shortcuts"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "36920d486ce205d30ada07ab89eea1cef9ccf203",
+            "comment": "Rename MeetingComposite to CallWithChatComposite"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Update MicrophoneButton story to showcase device selection menu"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a87694951dd50fe4c355aba3e7915f9c59a53b94",
+            "comment": "upgrading calling to 1.4.2-beta.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9f73ea9cebf3504d1d47e8e8deda16e461f329ec",
+            "comment": "Add docs for split camera and microphone buttons"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "54c9ee47c1ca0d128d2fdb967be3a83a9f48c0d2",
+            "comment": "updating version of node suggested for snippets"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c683af8ce546a53b36dd0ae7057e196c40c0f95b",
+            "comment": "Update storybook to have story showing custom icon at the end of a menu item"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Update PiPiP story to have tweakable args"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "43f7608c523fe51791c0608cd448fa6703d4a31e",
+            "comment": "Add (internal only) Drawer Surface Story"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "74bbac6eaf3f182ac8fb930043deec0a101126dd",
+            "comment": "Fix typo: `CamerSwitcher` -> `CameraSwitcher`"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "464c5ab7111e70ee5d1eb9eaa41dbb0b9b55b3eb",
+            "comment": "Remove safari from android listing"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0d8c061900189effb4a357931455ec7fb1576c0d",
+            "comment": "Update install instructions for beta channel"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "cde64f5a0dcc6109b244d62793e308f93c5c51bb",
+            "comment": "Update DrawerMenu story to haave submenus"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ceac04631c2b6cd7a4a98d3289edf72da87bc127",
+            "comment": "Rename of files and folders (internal only change)"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "686db6e51c34e122a10b56ea31f3a7ed55a3006d",
+            "comment": "Remove unnecessary styling"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "pass new props in story"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8e121fe6a0f40c4ff1539e7e75206264982b09d0",
+            "comment": "remove lock files added by mistake"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "98e65bb216a27b4303d49ad8771059b0fa93e0c4",
+            "comment": "Update peerdependencies documentation in preparation for stable release"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7ac22e30469dcc104e5736172b037fac4d92bb29",
+            "comment": "Add secondary text inside story for viewing"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "104b52f02f8f15353a08e2e96769245c1af77346",
+            "comment": "Update types to match new API types"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "9bed45bf86ab9ca726948ef9a2828cbf0e4c1636",
+            "comment": "Updated Localization doc and fixed locales table"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "ef102588adc3e8e5252c22d03c3451cc810f7e84",
+            "comment": "Added spanish locale in storybook documentation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "bd875cf509d6a3e1267992c543de6e1d742a2cab",
+            "comment": "Add DrawerMenu (internal only) Story"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Add ability to have local-only stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "2c32ccbc5b1aafec1d603eda1bdb7d5aa1ba22d0",
+            "comment": "Fix internal story visibility"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8eaa0b5d7a548e5fee032926da03098f974bda17",
+            "comment": "Update stories to match new API"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common per dependabot"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "36ff9ce5894f2f8f35e797d5a4c047c7e0a5d5b7",
+            "comment": "update jest-junit dependency"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "6c1301ca4eea28aba760d983e491988694e469aa",
+            "comment": "Fix missing storybook stories by updating the story glob path check"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Update CameraButton story to show device flyout"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "9bed45bf86ab9ca726948ef9a2828cbf0e4c1636"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5c8eabff086afeb509f435d48923ea486f564d00",
+            "comment": "Add documentation for Local camera switcher button"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "2feaab4c28a0686078e5795ecf27def1367ab5a4",
+            "comment": "get read number from read receipt"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:56 GMT",
       "tag": "@internal/storybook_v1.0.1",
       "version": "1.0.1",

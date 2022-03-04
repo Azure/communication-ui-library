@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update storybook to have story showing custom icon at the end of a menu item",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

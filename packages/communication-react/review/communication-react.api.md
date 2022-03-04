@@ -652,7 +652,6 @@ export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.E
 // @beta
 export type CallWithChatCompositeIcons = {
     ChevronLeft?: JSX.Element;
-    ControlBarButtonBadgeIcon?: JSX.Element;
     ControlBarChatButtonActive?: JSX.Element;
     ControlBarChatButtonInactive?: JSX.Element;
     ControlBarPeopleButton?: JSX.Element;
@@ -1404,7 +1403,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
-    ControlBarButtonBadgeIcon?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
     ControlBarPeopleButton?: JSX.Element | undefined;
@@ -2400,6 +2398,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -2415,7 +2416,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;

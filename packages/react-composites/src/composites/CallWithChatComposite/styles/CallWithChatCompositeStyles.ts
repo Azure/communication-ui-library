@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles } from '@fluentui/react';
+import { IStackStyles, IStyle } from '@fluentui/react';
 
 /**
  * @private
@@ -56,4 +56,20 @@ export const ChatButtonContainerStyles: IStackStyles = {
   root: {
     position: 'relative'
   }
+};
+
+/**
+ * Styles for layer host to bound the modal wrapping PiPiP in the mobile pane.
+ * @private
+ */
+export const modalLayerHostStyle: IStyle = {
+  display: 'flex',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  // pointer events for layerHost set to none to make descendants interactive
+  pointerEvents: 'none'
 };

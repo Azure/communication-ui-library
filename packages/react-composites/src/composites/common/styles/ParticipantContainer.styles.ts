@@ -73,15 +73,6 @@ export const peopleSubheadingStyle: IStackItemStyles = {
 /**
  * @private
  */
-export const peoplePaneContainerStyle: IStackItemStyles = {
-  root: {
-    position: 'relative'
-  }
-};
-
-/**
- * @private
- */
 export const peoplePaneContainerTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
