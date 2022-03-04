@@ -30,6 +30,7 @@ export const SidePane = (props: {
   const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
   const theme = useTheme();
   const sidePaneCloseButtonStyles = {
+    root: { borderRadius: theme.effects.roundedCorner2 },
     icon: { color: theme.palette.neutralSecondary },
     iconHovered: { color: theme.palette.neutralSecondary },
     iconPressed: { color: theme.palette.neutralSecondary }
