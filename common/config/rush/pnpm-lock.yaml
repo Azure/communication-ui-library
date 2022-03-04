@@ -1,5 +1,5 @@
 dependencies:
-  '@azure/communication-calling': 1.3.2-beta.1
+  '@azure/communication-calling': 1.4.2-beta.1
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
@@ -28,13 +28,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-lNUmDRVGpanCsiUN3NWxFTdwmdFI53xwhkTFfHDGTYk46ca7Ind3nanJc+U6Zj9Tv+9nTCWRBscWEW1DyKOpTw==
-  /@azure/communication-calling/1.3.2-beta.1:
-    dependencies:
-      '@azure/communication-common': 1.1.0
-      '@azure/logger': 1.0.2
-    dev: false
-    resolution:
-      integrity: sha512-uzEzesBoF++rNm02lPcLe2oQpuvOvYSeWLzViuzYZZ+sQ0UzkF8v+ZhySXCUCFXJF5aDT6xDnpBgOcRTYOIbAg==
   /@azure/communication-calling/1.4.2-beta.1:
     dependencies:
       '@azure/communication-common': 1.1.0
@@ -19895,7 +19888,7 @@ packages:
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
-  '@azure/communication-calling': 1.3.2-beta.1
+  '@azure/communication-calling': 1.4.2-beta.1
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
