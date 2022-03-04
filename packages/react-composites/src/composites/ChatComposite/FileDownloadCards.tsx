@@ -13,7 +13,7 @@ import {
 import { ChatMessage } from '@internal/react-components';
 import { ChatCompositeIcon } from '../common/icons';
 import { Spinner, SpinnerSize } from '@fluentui/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import React from 'react';
 
 /**
@@ -44,6 +44,21 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   const { userId, message } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
+  const fileDownloadHandler = useCallback(
+    async (userId, file) => {
+      if (props.downloadHandler) {
+        setShowSpinner(true);
+        const url = await props.downloadHandler(userId, file);
+        if (url instanceof URL) {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        }
+        setShowSpinner(false);
+      } else {
+        window.open(file.url, '_blank', 'noopener,noreferrer');
+      }
+    },
+    [props]
+  );
   return (
     <FileCardGroup>
       {fileDownloads &&
@@ -53,33 +68,18 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             key={file.name}
             fileExtension={extension(file.name)}
             actionIcon={
-              showSpinner ? (
-                <Spinner size={SpinnerSize.medium} aria-live={'assertive'} />
-              ) : (
-                <ChatCompositeIcon iconName="Download" />
-              )
+              showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
             }
-            actionHandler={() => {
-              if (props.downloadHandler) {
-                setShowSpinner(true);
-                props
-                  .downloadHandler(userId, file)
-                  .then((value: URL | FileDownloadErrorMessage) => {
-                    if (value instanceof URL) {
-                      window.open(value.toString(), '_blank', 'noopener,noreferrer');
-                    } else {
-                      //TODO: implement error handling for reject
-                      console.log(value);
-                    }
-                  })
-                  .finally(() => {
-                    setShowSpinner(false);
-                  });
-              }
-              !props.downloadHandler && window.open(file.url, '_blank', 'noopener,noreferrer');
-            }}
+            actionHandler={() => fileDownloadHandler(userId, file)}
           />
         ))}
     </FileCardGroup>
   );
+};
+
+const DownloadIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(file-sharing)
+  return <ChatCompositeIcon iconName="Download" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
