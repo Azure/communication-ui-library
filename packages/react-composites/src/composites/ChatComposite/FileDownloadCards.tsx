@@ -49,7 +49,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
         setShowSpinner(true);
         const url = await props.downloadHandler(userId, file);
         if (url instanceof URL) {
-          window.open(url, '_blank', 'noopener,noreferrer');
+          window.open(url.toString(), '_blank', 'noopener,noreferrer');
         }
         setShowSpinner(false);
       } else {
