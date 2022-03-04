@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

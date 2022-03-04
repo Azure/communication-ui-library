@@ -31,16 +31,16 @@ import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  layerHostStyle,
   localVideoTileContainerStyle,
-  floatingLocalVideoModalStyle,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle,
-  layerHostStyle
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -49,6 +49,8 @@ import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -71,6 +73,11 @@ export interface VideoGalleryStrings {
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
 }
+
+/**
+ * @public
+ */
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -101,7 +108,7 @@ export interface VideoGalleryProps {
    */
   styles?: VideoGalleryStyles;
   /** Layout of the video tiles. */
-  layout?: 'default' | 'floatingLocalVideo';
+  layout?: VideoGalleryLayout;
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -192,6 +199,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -342,7 +351,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  if (!shouldFloatLocalVideo && localParticipant) {
+  if (
+    !shouldFloatLocalVideo &&
+    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */ !shouldFloatNonDraggableLocalVideo &&
+    localParticipant
+  ) {
     gridTiles.push(localVideoTile);
   }
 
@@ -367,6 +380,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {shouldFloatLocalVideo &&
+        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+        !shouldFloatNonDraggableLocalVideo &&
         localParticipant &&
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
@@ -381,6 +396,20 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localVideoTile}
           </Modal>
         ))}
+      {
+        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+        // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
+        shouldFloatNonDraggableLocalVideo && localParticipant && remoteParticipants.length > 0 && (
+          <Stack
+            className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
+              boxShadow: theme.effects.elevation8,
+              zIndex: LOCAL_VIDEO_TILE_ZINDEX
+            })}
+          >
+            {localVideoTile}
+          </Stack>
+        )
+      }
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent

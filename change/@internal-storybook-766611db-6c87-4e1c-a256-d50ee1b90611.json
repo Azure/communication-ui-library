@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update CameraButton story to show device flyout",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
