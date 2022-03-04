@@ -17,7 +17,8 @@ import {
   isLandscape,
   isMobileSession,
   isOnIphoneAndNotSafari,
-  navigateToHomePage
+  navigateToHomePage,
+  WEB_APP_TITLE
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
@@ -34,8 +35,6 @@ console.log(
 initializeIcons();
 
 type AppPages = 'home' | 'call' | 'endCall';
-
-const webAppTitle = document.title;
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
@@ -74,7 +73,7 @@ const App = (): JSX.Element => {
 
   switch (page) {
     case 'home': {
-      document.title = `home - ${webAppTitle}`;
+      document.title = `home - ${WEB_APP_TITLE}`;
       // Show a simplified join home screen if joining an existing call
       const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
       return (
@@ -101,12 +100,12 @@ const App = (): JSX.Element => {
       );
     }
     case 'endCall': {
-      document.title = `end call - ${webAppTitle}`;
+      document.title = `end call - ${WEB_APP_TITLE}`;
       return <EndCall rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
     }
     case 'call': {
       if (userCredentialFetchError) {
-        document.title = `error - ${webAppTitle}`;
+        document.title = `error - ${WEB_APP_TITLE}`;
         return (
           <CallError
             title="Error getting user credentials from server"
@@ -118,7 +117,7 @@ const App = (): JSX.Element => {
       }
 
       if (!token || !userId || !displayName || !callLocator) {
-        document.title = `credentials - ${webAppTitle}`;
+        document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
@@ -128,12 +127,11 @@ const App = (): JSX.Element => {
           displayName={displayName}
           callLocator={callLocator}
           onCallEnded={() => setPage('endCall')}
-          webAppTitle={webAppTitle}
         />
       );
     }
     default:
-      document.title = `error - ${webAppTitle}`;
+      document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
 };
