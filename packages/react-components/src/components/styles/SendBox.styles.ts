@@ -91,3 +91,14 @@ export const borderAndBoxShadowStyle = (props: {
     }
   };
 };
+
+/**
+ * @private
+ */
+export const errorBarStyle = (theme: Theme): IStyle => {
+  return {
+    background: '#FFF4CE',
+    padding: '0.50rem',
+    borderRadius: theme.effects.roundedCorner4
+  };
+};
