@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CallWithChatComposite/mobileView: Move device selection menu to MoreDrawer",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
