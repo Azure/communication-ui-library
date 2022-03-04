@@ -7,8 +7,7 @@ import {
   extension,
   FileMetadata,
   extractFileMetadata,
-  FileDownloadHandler,
-  FileDownloadErrorMessage
+  FileDownloadHandler
 } from './file-sharing';
 import { ChatMessage } from '@internal/react-components';
 import { ChatCompositeIcon } from '../common/icons';
