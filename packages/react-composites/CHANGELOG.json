@@ -2,6 +2,501 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:42:53 GMT",
+      "tag": "@internal/react-composites_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "db0af1a1b46f38cdb47312e9b0d7825df76dabdc",
+            "comment": "MeetingComposite: stop subscribing to state change event on every render."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "cba84e25b52056dc0a821f2efd0d9a15668057af",
+            "comment": "create selectors and pipe through local and dominant participants into the PiP"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ceac04631c2b6cd7a4a98d3289edf72da87bc127",
+            "comment": "Rename of files and folders (internal only change)"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common per dependabot"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "932dc4ee9b72514b7de02f4f03cfb586dfd8815e",
+            "comment": "made new file for the chatScreenPeoplePane"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0276b39771b82c6a3b5264a54d1c258bd87229a3",
+            "comment": "Remove obsolete declare"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "63a43a48625cebe418677cc48a7a1bdb32f887bf",
+            "comment": "refactor: Inline button arrangement into `MeetingCallControlBar`."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "87979c60be946d0e1f9dc5bc732cff6cdfc91b70",
+            "comment": "Include all files in stable flavor build and fix build errors"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fa39eb2ba5a8bcc595dba7dfda5de8e13cee58ac",
+            "comment": "Update doc file"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e76c622217585929b03f8b08a7fb7055dbbae0bb",
+            "comment": "Simplify conditional compilation directives for some types"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2756d4f25314feff9ac4580f97932657f8c40ef5",
+            "comment": "Refactor: Extract custom button logic to a component"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b04202a9cdb37480427c135a771293ef45277566",
+            "comment": "Updating locales through TD Build"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "36ff9ce5894f2f8f35e797d5a4c047c7e0a5d5b7",
+            "comment": "update jest-junit dependency"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c564abf50b6ddcd8267be4ee9f81d5ab7bb83a39",
+            "comment": "Refactor: Extract some internal helper button wrappers"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9a9948616fa6d37a13a56518fb8827778765937d",
+            "comment": "Use per-feature conditional compilation directives"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8e121fe6a0f40c4ff1539e7e75206264982b09d0",
+            "comment": "remove lock files added by mistake"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0b1ac6629eb26cc1bbe14b924e73d79d2ac96109",
+            "comment": "Update key -> itemKey"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "33412318762e885291c7a5e9d2930d7ad0a6a55f",
+            "comment": "Drop a small feature from conditional compilation"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "15fb8e95102ce703318308a92c86b711ca1663e3",
+            "comment": "Add file sharing option props to ChatComposite"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a87694951dd50fe4c355aba3e7915f9c59a53b94",
+            "comment": "upgrading calling to 1.4.2-beta.1"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "20d85e4add02e02e04edef6f8e67a846bd381d0c",
+            "comment": "Changing userId to string in FileUploadHandler"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "f100208d90437cdbe6fdf06967139996015bed0c",
+            "comment": "Add e2e tests for More Menu on CallWithChat Mobile"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "923604cfb5ff688daa5ee5ae656e9095f6b7ab20",
+            "comment": "Update visuals of MeetingComposite control bar"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e9622a0f52b0d3a3218d9507d6f2dc5f0d08d6ee",
+            "comment": "Make ChevronRight customizable through icons interface"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "78197e635d10de4cdfe01343a3201c5eb4e1bf3b",
+            "comment": "CallWithChatComposite: Drop PeopleButon in mobileView"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d44e6af046f065a2054e9d05bb1c270eaa4a35d1",
+            "comment": "Modifying file sharing to allow attaching already uploaded files to message"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Passes Camera logic from call composite to the local camera switcher button."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "18c3c1412fae653184e741faae1a2e899437a90e",
+            "comment": "Drop fixed width for CallWithChatControlBar in mobileView"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8bafc3e0ae93e4dd181dd65450acc4a9ed4d5dd7",
+            "comment": "Do not show label on EndCall button on desktop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "eb8ed86862a1471f825d5ba7ead3109700014721",
+            "comment": "introduced aria roles and strings to chat notifaction icon"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "02665af0a22b3e64cee068c22f56d5a6f6dd4e17",
+            "comment": "Update chat and people button styling to match figma spec"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0385e2e81cce42d1cdf9b9272afdd57816ef27e6",
+            "comment": "Remove DevicesButton from MeetingComposite"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1f75153b2287009e796fae900becd81b24bd8b34",
+            "comment": "CallWithChatComposite/mobileView: Move device selection menu to MoreDrawer"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "cd88ff1952b11d5bd2bd2d5cb658bb23e58625b2",
+            "comment": "Move chat button to center in mobileView"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9c6e44cf5bb5bd2fc7be9f6f898d54d32ef2bc51",
+            "comment": "upgrading nanoid to 3.1.32"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8ce2d16cf138c77915b85b7a72099d09f59b229e",
+            "comment": "Update Chat Screen to display uploaded files in sendbox"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "60d648d0d99be67e9a2ea2da403ec3d4be2531ad",
+            "comment": "Add File upload button to Chat Composite"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "390cf787695f16d2a22426d4f96010363c494309",
+            "comment": "People pane and chat pane take up entire screen on mobile view in CallWithChatComposite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add adapter ui state and selectors for file sharing"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "632951addd6f370d7f2f7bc51a4494a68d2b52ef",
+            "comment": "Added button to copy invite link in people pane of CallWithChat composite in mobile view."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e1ca49d0ec8b8bf89bf724607b175ba9e0647660",
+            "comment": "Create CallWithChatCompositeIcons type. Move ControlBarButtonBadgeIcon out of CallCompositeIcons"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "acc6dceb6aa505cbdfef93a71387b66ec83ceb5b",
+            "comment": "Notification Icon for the chat button in the meeting composite."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "9c9e5491cf95794c0f3d15008f94527885035210",
+            "comment": "Add FileCard component to chat composite"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "abcd97c571def0627994f5b80e7c0d49538c9a30",
+            "comment": "CallAndChatComopsite/mobile: Add a drawer with people button to show people pane"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "2b672ce30759de9f932c33b83d9badab3178ef05",
+            "comment": "Add FileDownloadHandler for handling file downloads"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "7e0819b4d76ad50a5c0ec3da41d9ca8bf8e2dd35",
+            "comment": "Introduce People and Chat button icon customization in CallWithChatComposite"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Show device selection menu in MirophoneButton in MeetingComposite on desktop"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fcb456bf8cb4a69b7cee7856fa8742ad67aa38ff",
+            "comment": "Updated the message thread component to display attached files in a message."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "4fb9cd532bf8449b4b0abb84179d55ef9f71677a",
+            "comment": "Logic introduced to media gallery to allow for mobile detection for local camera switcher."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Use split CameraButton in MeetingComposite control bar"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "104b52f02f8f15353a08e2e96769245c1af77346",
+            "comment": "Initial Call and Meeting adapter support for making Adhoc calls directly to participants (i.e. without use of a groupID)"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8c2b876500549db26d07703fdde0dea31db11234",
+            "comment": "export createAzureCommunicationCallWithChatAdapterFromClients in npm package"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "36920d486ce205d30ada07ab89eea1cef9ccf203",
+            "comment": "Rename MeetingComposite to CallWithChatComposite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1863e0ee4010705943206841c13ccd4dd7d2bd25",
+            "comment": "Align File card text to left and remove the right padding in message bubble when files are attached"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d10ee0cfd5a163f87ed98b200a49e660788c235b",
+            "comment": "Rename 'afterDevicesButton' button placement"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8eaa0b5d7a548e5fee032926da03098f974bda17",
+            "comment": "[BREAKING CHANGE] Update createAzureCommunicationMeetingAdapter arguments to enable accepting just a teams link without having to provide an extracted chat thread ID."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "74bbac6eaf3f182ac8fb930043deec0a101126dd",
+            "comment": "Fix typo: `CamerSwitcher` -> `CameraSwitcher`"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "c754b565f554c3e116e00d3d8243a15d4ab41015",
+            "comment": "FileUpload: Only show FileCard for files that don't contain errors. Only send files metadata in the message if it doesn't contain errors."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9c3d92684f362eab0bf72eda7c2c219de5ec06e5",
+            "comment": "MeetingComposite: store messages since last time ChatPane was opened"
+          }
+        ],
+        "minor": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "467585555760935e90bb03a180478b9564422a17",
+            "comment": "Created component for ParticipantList and heading"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "Updated calling composite icons to include new icon for local video feed camera switcher"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c8edd8a8244665c6e25108d760426af3f254decf",
+            "comment": "Update autofocus disabled state from false boolean to string value 'disabled'"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "54f65986195fc5f5b61be3bfc4aaad710af3679c",
+            "comment": "TDBuild - updating localized resource files."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d60cf91aa66f380b60545e46921ba756fbbc9665",
+            "comment": "Exposed Chat and Call latestErrors in MeetingComposite"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7e659a46f1eafa4ee57d4ae769dbbd66376a7eb5",
+            "comment": "Added new constructor that accepts stateful client arguments in MeetingComposite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3fbdcabd24fd1cdddfc0fe50b055e90b11857a2e",
+            "comment": "add new test for local camera swticher button"
+          }
+        ],
+        "patch": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "e2a8f1961f257e7a9ceb1dde435b52e490267b95",
+            "comment": "Show currently active device in MoreDrawer and SubMenuItems"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "6f077a5852e4a44fe22b4b265e641c784d683dc8",
+            "comment": "Removed unused conditional compilation and split imports for .../AzureCommunicationCallAdapter"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d5e000ebfd0621095475c7ee2344906fe59fdc40",
+            "comment": "Using React Context to set locale, icons, and theme only once through BaseComposite"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "cbbee63c1d52779566846ea58c565bbbc31489b5",
+            "comment": "Vertically aligned Muted indicator notification"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9824b904553976549f8001d92d4cc079f6dc6dd9",
+            "comment": "Fix CallComposite being stuck on the configuration page when using adapter.startCall"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:55 GMT",
       "tag": "@internal/react-composites_v1.0.1",
       "version": "1.0.1",
