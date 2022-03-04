@@ -106,6 +106,7 @@ export const EmbeddedPeoplePane = (props: {
 
   const participantList = (
     <ParticipantListWithHeading
+      isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
