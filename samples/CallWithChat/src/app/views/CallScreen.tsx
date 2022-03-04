@@ -95,7 +95,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   return (
     <CallWithChatComposite
-      callWithChatAdapter={adapter}
+      adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
