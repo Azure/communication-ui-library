@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exposed a prop  in SendBox to allow sendbox to render file uploads without implementing onRenderFileUploads",
+  "packageName": "@internal/react-components",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
