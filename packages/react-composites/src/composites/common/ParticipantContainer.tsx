@@ -1,14 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { participantListStack, participantListWrapper, listHeader } from './styles/ParticipantContainer.styles';
+import {
+  participantListStack,
+  participantListWrapper,
+  listHeader,
+  participantListStyle
+} from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
   ParticipantList,
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { concatStyleSets, FocusZone, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { peopleSubheadingStyle } from './styles/ParticipantContainer.styles';
 
@@ -55,7 +60,7 @@ export const ParticipantListWithHeading = (props: {
       <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
         {title}
       </Stack.Item>
-      <FocusZone className={props.isMobile ? participantListMobileStyle : participantListDesktopStyle}>
+      <FocusZone className={participantListStyle}>
         <ParticipantList
           {...participantListProps}
           onRenderAvatar={(userId, options) => (
@@ -72,16 +77,3 @@ export const ParticipantListWithHeading = (props: {
     </Stack>
   );
 };
-
-const participantListDesktopStyle = mergeStyles({
-  maxWidth: '20rem',
-  height: '100%',
-  overflowY: 'auto',
-  overflowX: 'hidden'
-});
-const participantListMobileStyle = mergeStyles({
-  maxWidth: '100vw',
-  height: '100%',
-  overflowY: 'auto',
-  overflowX: 'hidden'
-});
