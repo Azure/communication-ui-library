@@ -65,6 +65,11 @@ export interface ActiveFileUpload {
    * Error message to be displayed to the user if the upload fails.
    */
   errorMessage?: string;
+
+  /**
+   * `true` means that the upload is completed.
+   */
+  isUploaded?: boolean;
 }
 
 /**
@@ -85,6 +90,11 @@ export interface SendBoxStrings {
    * Aria label for send message button
    */
   sendButtonAriaLabel: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Warning message indicating that all file uploads are not complete.
+   */
+  fileUploadsPendingWarning: string;
 }
 
 /**
@@ -186,6 +196,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
+  /* @conditional-compile-remove(file-sharing) */
+  const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadInProgressErrorTimeoutRef = React.useRef<NodeJS.Timeout>();
+
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
   const sendMessageOnClick = (): void => {
@@ -193,6 +208,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     if (disabled || textValueOverflow) {
       return;
     }
+
+    // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
+    setShowFileUploadsPendingError(false);
+    /* @conditional-compile-remove(file-sharing) */
+    if (uploadInProgressErrorBar) {
+      setShowFileUploadsPendingError(true);
+      return;
+    }
+
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
       onSendMessage && onSendMessage(textValue);
@@ -217,11 +242,37 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
+  const uploadInProgressErrorBar = useMemo(() => {
+    const renderError = !!(
+      props.activeFileUploads?.length &&
+      !props.activeFileUploads
+        .filter((fileUpload) => !fileUpload.errorMessage)
+        .every((fileUpload) => fileUpload.isUploaded)
+    );
+    return renderError && <SendBoxErrorBar message={strings.fileUploadsPendingWarning} />;
+  }, [props.activeFileUploads, strings.fileUploadsPendingWarning]);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const fileUploadErrorBar = useMemo(() => {
     const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
     const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    return <SendBoxErrorBar message={latestError?.errorMessage} timeout={10 * 1000} />;
+    return latestError && <SendBoxErrorBar message={latestError.errorMessage} timeout={10 * 1000} />;
   }, [props.activeFileUploads]);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const renderSendBoxError = useCallback(() => {
+    if (showFileUploadsPendingError) {
+      if (uploadInProgressErrorTimeoutRef.current) {
+        clearTimeout(uploadInProgressErrorTimeoutRef.current);
+      }
+      uploadInProgressErrorTimeoutRef.current = setTimeout(() => {
+        setShowFileUploadsPendingError(false);
+      }, 10 * 1000);
+      return uploadInProgressErrorBar;
+    } else {
+      return fileUploadErrorBar;
+    }
+  }, [fileUploadErrorBar, uploadInProgressErrorBar, showFileUploadsPendingError]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
@@ -260,7 +311,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove(file-sharing) */
-        renderFileUploadErrorMessage
+        renderSendBoxError()
       }
       <Stack
         className={mergeStyles(

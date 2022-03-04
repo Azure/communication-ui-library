@@ -23,15 +23,19 @@ export interface SendBoxErrorBarProps {
 export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): JSX.Element => {
   const { message, timeout } = props;
   const [errorMessage, setErrorMessage] = React.useState(message);
+  const setTimeoutRef = React.useRef<NodeJS.Timeout>();
 
   useEffect(() => {
+    const clearSetTimeout = (): void => {
+      setTimeoutRef.current && clearTimeout(setTimeoutRef.current);
+    };
+
+    clearSetTimeout();
     if (timeout !== undefined) {
-      const messageTimeout = setTimeout(() => {
+      setTimeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
       }, timeout);
-      return () => {
-        clearTimeout(messageTimeout);
-      };
+      return clearSetTimeout;
     } else {
       return;
     }
