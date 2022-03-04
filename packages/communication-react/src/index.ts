@@ -187,6 +187,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   VideoGalleryLocalParticipant,
+  VideoGalleryLayout,
   VideoGalleryParticipant,
   VideoGalleryProps,
   VideoGalleryRemoteParticipant,
