@@ -2205,9 +2205,9 @@ export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
-    // @beta
-    cancelFileUpload?: (fileId: string) => void;
     disabled?: boolean;
+    // @beta
+    onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;

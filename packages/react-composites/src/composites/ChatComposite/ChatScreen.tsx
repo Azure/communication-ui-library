@@ -186,7 +186,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               /* @conditional-compile-remove(file-sharing) */
               activeFileUploads={useSelector(fileUploadsSelector).files}
               /* @conditional-compile-remove(file-sharing) */
-              cancelFileUpload={useFileUploadAdapter().cancelFileUpload}
+              onCancelFileUpload={useFileUploadAdapter().cancelFileUpload}
             />
 
             <FileUploadButton

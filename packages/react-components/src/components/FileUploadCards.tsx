@@ -3,6 +3,7 @@
 
 import { Icon } from '@fluentui/react';
 import React from 'react';
+import { ActiveFileUpload } from '.';
 import { FileCard } from './FileCard';
 import { FileCardGroup } from './FileCardGroup';
 import { extension, truncatedFileName } from './utils';
@@ -23,33 +24,7 @@ export interface FileUploadCardsProps {
    * cancel icon.
    * @beta
    */
-  cancelFileUpload?: (fileId: string) => void;
-}
-
-/**
- * Attributes required for SendBox to show file uploads like name, progress etc.
- * @beta
- */
-export interface ActiveFileUpload {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * File name to be rendered for uploaded file.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  progress: number;
-
-  /**
-   * Error message to be displayed to the user if the upload fails.
-   */
-  errorMessage?: string;
+  onCancelFileUpload?: (fileId: string) => void;
 }
 
 /**
@@ -71,17 +46,10 @@ export const FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               fileExtension={extension(file.filename)}
               actionIcon={<Icon iconName="Cancel" />}
               actionHandler={() => {
-                props.cancelFileUpload && props.cancelFileUpload(file.id);
+                props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}
             />
           ))}
     </FileCardGroup>
   );
 };
-
-// const CancelIconTrampoline = (): JSX.Element => {
-//   // @conditional-compile-remove(file-sharing)
-//   return <ChatCompositeIcon iconName="Cancel" />;
-//   // Return _some_ available icon, as the real icon is beta-only.
-//   return <ChatCompositeIcon iconName="EditBoxCancel" />;
-// };

@@ -163,7 +163,7 @@ export interface SendBoxProps {
    * cancel icon.
    * @beta
    */
-  cancelFileUpload?: (fileId: string) => void;
+  onCancelFileUpload?: (fileId: string) => void;
 }
 
 /**
@@ -272,7 +272,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       ) : (
         <FileUploadCards
           activeFileUploads={props.activeFileUploads ? props.activeFileUploads : []}
-          cancelFileUpload={props.cancelFileUpload}
+          onCancelFileUpload={props.onCancelFileUpload}
         />
       ),
     [props]

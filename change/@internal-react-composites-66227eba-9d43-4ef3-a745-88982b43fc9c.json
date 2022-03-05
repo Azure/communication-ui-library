@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Exposed a prop  in SendBox to allow sendbox to render file uploads without implementing onRenderFileUploads",
+  "comment": "Add default implmenetation of file upload UI to SendBox",
   "packageName": "@internal/react-composites",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
