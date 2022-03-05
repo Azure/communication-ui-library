@@ -3,9 +3,9 @@
 import React from 'react';
 import {
   participantListStack,
-  participantListStyle,
   participantListWrapper,
-  listHeader
+  listHeader,
+  participantListStyle
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -23,6 +23,7 @@ type ParticipantContainerProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   participantListProps: ParticipantListProps;
   title?: string;
+  isMobile?: boolean;
 };
 
 /**
@@ -42,6 +43,7 @@ export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Elem
 export const ParticipantListWithHeading = (props: {
   participantListProps: ParticipantListProps;
   title?: string;
+  isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
