@@ -45,15 +45,21 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
-      if (props.downloadHandler) {
-        setShowSpinner(true);
-        const url = await props.downloadHandler(userId, file);
-        if (url instanceof URL) {
-          window.open(url.toString(), '_blank', 'noopener,noreferrer');
-        }
-        setShowSpinner(false);
-      } else {
+      if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
+      } else {
+        setShowSpinner(true);
+        try {
+          const response = await props.downloadHandler(userId, file);
+          setShowSpinner(false);
+          if (response instanceof URL) {
+            window.open(response.toString(), '_blank', 'noopener,noreferrer');
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setShowSpinner(false);
+        }
       }
     },
     [props]
