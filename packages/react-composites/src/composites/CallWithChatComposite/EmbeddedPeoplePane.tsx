@@ -38,12 +38,12 @@ import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
+  desktopCopyLinkButtonStyles,
   mobileCopyLinkButtonStyles,
   linkIconStyles,
   modalStyle,
   participantListContainerStyles,
-  peoplePaneContainerStyle,
-  desktopCopyLinkButtonStyles
+  peoplePaneContainerStyle
 } from './styles/EmbeddedPeoplePane.styles';
 
 /**
@@ -107,6 +107,7 @@ export const EmbeddedPeoplePane = (props: {
 
   const participantList = (
     <ParticipantListWithHeading
+      isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}

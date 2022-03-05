@@ -66,6 +66,8 @@ export const navigateToHomePage = (): void => {
   window.location.href = window.location.href.split('?')[0];
 };
 
+export const WEB_APP_TITLE = document.title;
+
 declare let __BUILDTIME__: string; // Injected by webpack
 export const buildTime = __BUILDTIME__;
 
