@@ -16,13 +16,24 @@ import { AdapterErrors } from '../../common/adapters';
  * @beta
  */
 export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'error'> {
+  /**
+   * Microphone state before a call has joined.
+   *
+   * @beta
+   */
   isLocalPreviewMicrophoneEnabled: boolean;
+  /**
+   * Current page of the Composite.
+   *
+   * @beta
+   */
   page: CallCompositePage;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
    * Array of type {@link FileUploadsUiState}
+   *
    * @beta
    */
   fileUploads?: FileUploadsUiState;

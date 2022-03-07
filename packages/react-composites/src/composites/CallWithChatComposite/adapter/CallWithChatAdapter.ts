@@ -36,6 +36,8 @@ export interface CallWithChatAdapterManagement {
   /**
    * Remove a participant from a Call
    * @param userId - UserId of the participant to remove.
+   *
+   * @beta
    */
   removeParticipant(userId: string): Promise<void>;
 
@@ -45,7 +47,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param microphoneOn - Whether microphone is initially enabled
    *
-   * @public
+   * @beta
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
   /**
@@ -53,7 +55,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param forEveryone - Whether to remove all participants when leaving
    *
-   * @public
+   * @beta
    */
   leaveCall(forEveryone?: boolean): Promise<void>;
   /**
@@ -62,26 +64,26 @@ export interface CallWithChatAdapterManagement {
    *
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @public
+   * @beta
    */
   startCamera(options?: VideoStreamOptions): Promise<void>;
   /**
    * Stop the camera
    * This method will stop rendering a local camera view when the call is not active
    *
-   * @public
+   * @beta
    */
   stopCamera(): Promise<void>;
   /**
    * Mute the current user during the call or disable microphone locally
    *
-   * @public
+   * @beta
    */
   mute(): Promise<void>;
   /**
    * Unmute the current user during the call or enable microphone locally
    *
-   * @public
+   * @beta
    */
   unmute(): Promise<void>;
   /**
@@ -89,19 +91,19 @@ export interface CallWithChatAdapterManagement {
    *
    * @param participants - An array of participant ids to join
    *
-   * @public
+   * @beta
    */
   startCall(participants: string[]): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
-   * @public
+   * @beta
    */
   startScreenShare(): Promise<void>;
   /**
    * Stop sharing the screen
    *
-   * @public
+   * @beta
    */
   stopScreenShare(): Promise<void>;
   /**
@@ -113,7 +115,7 @@ export interface CallWithChatAdapterManagement {
    * @param remoteUserId - Id of the participant to render, leave it undefined to create the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @public
+   * @beta
    */
   createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
   /**
@@ -125,7 +127,7 @@ export interface CallWithChatAdapterManagement {
    * @param remoteUserId - Id of the participant to render, leave it undefined to dispose the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @public
+   * @beta
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
   /**
@@ -136,7 +138,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling#PermissionConstraints }
    *
-   * @public
+   * @beta
    */
   askDevicePermission(constrain: PermissionConstraints): Promise<void>;
   /**
@@ -147,7 +149,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @return An array of video device information entities {@link @azure/communication-calling#VideoDeviceInfo }
    *
-   * @public
+   * @beta
    */
   queryCameras(): Promise<VideoDeviceInfo[]>;
   /**
@@ -158,7 +160,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @return An array of audio device information entities {@link @azure/communication-calling#AudioDeviceInfo }
    *
-   * @public
+   * @beta
    */
   queryMicrophones(): Promise<AudioDeviceInfo[]>;
   /**
@@ -169,7 +171,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @return An array of audio device information entities {@link @azure/communication-calling#AudioDeviceInfo }
    *
-   * @public
+   * @beta
    */
   querySpeakers(): Promise<AudioDeviceInfo[]>;
   /**
@@ -178,7 +180,7 @@ export interface CallWithChatAdapterManagement {
    * @param sourceInfo - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
    * @param options - Options to control how the camera stream is rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @public
+   * @beta
    */
   setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
   /**
@@ -186,7 +188,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param sourceInfo - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
    *
-   * @public
+   * @beta
    */
   setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
   /**
@@ -194,7 +196,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param sourceInfo - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
    *
-   * @public
+   * @beta
    */
   setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 
@@ -203,26 +205,38 @@ export interface CallWithChatAdapterManagement {
    * Fetch initial state for the Chat adapter.
    *
    * Performs the minimal fetch necessary for ChatComposite and API methods.
+   *
+   * @beta
    */
   fetchInitialData(): Promise<void>;
   /**
    * Send a message in the thread.
+   *
+   * @beta
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
   /**
    * Send a read receipt for a message.
+   *
+   * @beta
    */
   sendReadReceipt(chatMessageId: string): Promise<void>;
   /**
    * Send typing indicator in the thread.
+   *
+   * @beta
    */
   sendTypingIndicator(): Promise<void>;
   /**
    * Update a message content.
+   *
+   * @beta
    */
   updateMessage(messageId: string, content: string): Promise<void>;
   /**
    * Delete a message in the thread.
+   *
+   * @beta
    */
   deleteMessage(messageId: string): Promise<void>;
   /**
@@ -231,6 +245,7 @@ export interface CallWithChatAdapterManagement {
    * @remarks
    * This method is usually used to control incremental fetch/infinite scroll
    *
+   * @beta
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }

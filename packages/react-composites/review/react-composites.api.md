@@ -353,48 +353,30 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @beta
 export interface CallWithChatAdapterManagement {
-    // @public
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @public
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
-    // @public
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    // @public
     joinCall(microphoneOn?: boolean): Call | undefined;
-    // @public
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // @public
     mute(): Promise<void>;
-    // @public
     queryCameras(): Promise<VideoDeviceInfo[]>;
-    // @public
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // @public
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
-    // @public
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // @public
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
-    // @public
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    // @public
     startCall(participants: string[]): Call | undefined;
-    // @public
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    // @public
     startScreenShare(): Promise<void>;
-    // @public
     stopCamera(): Promise<void>;
-    // @public
     stopScreenShare(): Promise<void>;
-    // @public
     unmute(): Promise<void>;
     updateMessage(messageId: string, content: string): Promise<void>;
 }
@@ -470,9 +452,7 @@ export interface CallWithChatAdapterSubscriptions {
 // @beta
 export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'error'> {
     fileUploads?: FileUploadsUiState;
-    // (undocumented)
     isLocalPreviewMicrophoneEnabled: boolean;
-    // (undocumented)
     page: CallCompositePage;
 }
 
