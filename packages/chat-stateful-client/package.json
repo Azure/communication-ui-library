@@ -16,7 +16,7 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "rushx _by-flavor \"npm run _test:by-flavor\"",
     "test:coverage": "rushx _by-flavor \"npm run test:_by-flavor -- --coverage\"",
-    "lint": "eslint \"*/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "rushx _by-flavor \"npm run build:esm && npm run _api-extractor:by-flavor\"",

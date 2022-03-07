@@ -163,7 +163,7 @@ export interface SendBoxProps {
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional array of active file uploads where each object has attibutes
-   * of a file upload like name, progress, errormessage etc.
+   * of a file upload like name, progress, errorMessage etc.
    * @beta
    */
   activeFileUploads?: ActiveFileUpload[];
