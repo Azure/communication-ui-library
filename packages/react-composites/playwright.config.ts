@@ -82,7 +82,7 @@ const config: PlaywrightTestConfig = {
           'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
         // Smallest supported mobile viewport (iPhone 5/SE)
         viewport: { width: 568, height: 320 },
-        // Typical small mobile device scale factor (this simply scales up the produced image)
+        // Typical small mobile device scale factor (this will scale up the produced snapshot image)
         deviceScaleFactor: 2,
         isMobile: true,
         hasTouch: true,
