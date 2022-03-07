@@ -290,7 +290,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       fileUploadsPendingError: showFileUploadsPendingError ? { message: strings.fileUploadsPendingError } : undefined,
       fileUploadError: latestError ? { message: latestError } : undefined
     };
-    return {};
   }, [props.activeFileUploads, showFileUploadsPendingError, strings.fileUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
