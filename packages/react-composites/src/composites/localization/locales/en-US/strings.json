@@ -47,6 +47,7 @@
     "peopleButtonTooltipContent": "Open People Pane",
     "chatButtonLabel": "Chat",
     "chatButtonTooltipContent": "Open Chat Pane",
+    "chatButtonEnhancedToolTipContent": "new",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "People",

@@ -26,6 +26,10 @@ export interface CallWithChatCompositeStrings {
    */
   chatButtonTooltipContent: string;
   /**
+   * {@link CallWithChatComposite} control bar Chat button enhanced tooltip string.
+   */
+  chatButtonEnhancedToolTipContent: string;
+  /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *
    * Only used with `mobileView` set to `true`.

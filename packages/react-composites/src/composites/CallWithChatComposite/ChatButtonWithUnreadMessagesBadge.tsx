@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ChatButton } from './ChatButton';
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { NotificationIcon } from './NotificationIcon';
 
 /**
@@ -38,10 +39,15 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
 
   const baseIcon = props.showLabel ? regularIcon : filledIcon;
+  const callWithChatStrings = useCallWithChatCompositeStrings();
 
   const numberOfMsgToolTip =
     props.strings?.tooltipContent && unreadChatMessagesCount > 0
-      ? props.strings?.tooltipContent + ' ' + unreadChatMessagesCount + ' new'
+      ? props.strings?.tooltipContent +
+        ' ' +
+        unreadChatMessagesCount +
+        ' ' +
+        callWithChatStrings.chatButtonEnhancedToolTipContent
       : undefined;
 
   const chatStrings = {
