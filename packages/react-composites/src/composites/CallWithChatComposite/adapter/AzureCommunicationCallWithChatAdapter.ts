@@ -61,6 +61,7 @@ import {
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { useEffect, useState } from 'react';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -497,6 +498,44 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
+};
+
+/**
+ * A custom React hook to simplify the creation of {@link CallWithChatAdapter}.
+ *
+ * Similar to {@link createAzureCommunicationCallWithChatAdapter}, but takes care of asynchronous
+ * creation of the adapter internally.
+ *
+ * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+ * as they are created. The adapter is only created when all arguments are defined.
+ *
+ * Note that you must memoize the arguments to avoid recreating adapter on each render.
+ * See storybook for typical usage examples.
+ *
+ * @beta
+ */
+export const useAzureCommunicationCallWithChatAdapter = (
+  args: Partial<AzureCommunicationCallWithChatAdapterArgs>
+): CallWithChatAdapter | undefined => {
+  const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
+  useEffect(() => {
+    if (allArgsExist(args)) {
+      (async () => {
+        if (adapter) {
+          adapter.dispose();
+          setAdapter(undefined);
+        }
+        setAdapter(await createAzureCommunicationCallWithChatAdapter(args));
+      })();
+    }
+  }, [args.credential, args.displayName, args.endpoint, args.locator, args.userId]);
+  return adapter;
+};
+
+const allArgsExist = (
+  args: Partial<AzureCommunicationCallWithChatAdapterArgs>
+): args is AzureCommunicationCallWithChatAdapterArgs => {
+  return !!args.credential && !!args.displayName && !!args.endpoint && !!args.locator && !!args.userId;
 };
 
 /**
