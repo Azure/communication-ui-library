@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   participantListStack,
   participantListStyle,
@@ -47,13 +47,16 @@ export const ParticipantListWithHeading = (props: {
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
-  const subheadingStyleThemed = {
-    root: {
-      color: theme.palette.neutralSecondary,
-      margin: '0.5rem',
-      fontSize: theme.fonts.smallPlus.fontSize
-    }
-  };
+  const subheadingStyleThemed = useMemo(
+    () => ({
+      root: {
+        color: theme.palette.neutralSecondary,
+        margin: '0.5rem',
+        fontSize: theme.fonts.smallPlus.fontSize
+      }
+    }),
+    [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize]
+  );
 
   return (
     <Stack className={participantListStack}>
