@@ -50,7 +50,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
-import type { PermissionConstraints } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
@@ -560,8 +560,51 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 }
 
 // @beta
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface CallWithChatAdapterManagement {
+    // @public
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @public
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    deleteMessage(messageId: string): Promise<void>;
+    // @public
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    fetchInitialData(): Promise<void>;
+    // @public
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // @public
+    leaveCall(forEveryone?: boolean): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // @public
+    mute(): Promise<void>;
+    // @public
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // @public
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // @public
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
     removeParticipant(userId: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendTypingIndicator(): Promise<void>;
+    // @public
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    // @public
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    // @public
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    // @public
+    startCall(participants: string[]): Call | undefined;
+    // @public
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    // @public
+    startScreenShare(): Promise<void>;
+    // @public
+    stopCamera(): Promise<void>;
+    // @public
+    stopScreenShare(): Promise<void>;
+    // @public
+    unmute(): Promise<void>;
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @beta
@@ -633,14 +676,21 @@ export interface CallWithChatAdapterSubscriptions {
 }
 
 // @beta
-export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
+export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'error'> {
+    fileUploads?: FileUploadsUiState;
+    // (undocumented)
+    isLocalPreviewMicrophoneEnabled: boolean;
+    // (undocumented)
+    page: CallCompositePage;
 }
 
 // @beta
-export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+export interface CallWithChatClientState {
     call?: CallState;
     chat?: ChatThreadClientState;
+    devices: DeviceManagerState;
     displayName: string | undefined;
+    isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     userId: CommunicationIdentifierKind;
@@ -747,8 +797,15 @@ export interface CallWithChatCompositeStrings {
 
 // @beta
 export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+    cameraButton?: boolean;
     chatButton?: boolean;
+    displayType?: CallControlDisplayType;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
     peopleButton?: boolean;
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
 }
 
 // @beta

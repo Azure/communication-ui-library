@@ -2,10 +2,12 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { CallState } from '@internal/calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
+import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState, ChatAdapterUiState } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 
 /**
@@ -13,14 +15,25 @@ import { AdapterErrors } from '../../common/adapters';
  *
  * @beta
  */
-export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
+export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'error'> {
+  isLocalPreviewMicrophoneEnabled: boolean;
+  page: CallCompositePage;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Files being uploaded by a user in the current thread.
+   * Should be set to null once the upload is complete.
+   * Array of type {@link FileUploadsUiState}
+   * @beta
+   */
+  fileUploads?: FileUploadsUiState;
+}
 
 /**
  * State from the backend services that drives {@link CallWithChatComposite}.
  *
  * @beta
  */
-export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+export interface CallWithChatClientState {
   /** ID of the call participant using this CallWithChatAdapter. */
   userId: CommunicationIdentifierKind;
   /** Display name of the participant using this CallWithChatAdapter. */
@@ -33,6 +46,10 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
   latestCallErrors: AdapterErrors;
   /** Latest chat error encountered for each operation performed via the adapter. */
   latestChatErrors: AdapterErrors;
+  /** State of available and currently selected devices */
+  devices: DeviceManagerState;
+  /** State of whether the active call is a Teams interop call */
+  isTeamsCall: boolean;
 }
 
 /**

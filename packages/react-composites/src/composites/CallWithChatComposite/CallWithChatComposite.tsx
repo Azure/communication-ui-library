@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
+import { CallComposite, CallCompositePage, CallControlDisplayType, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane } from './EmbeddedChatPane';
 import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';
@@ -79,6 +79,36 @@ export type CallWithChatCompositeOptions = {
  */
 export interface CallWithChatControlOptions
   extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+  /**
+   * {@link CallControlDisplayType} to change how the call controls are displayed.
+   * `'compact'` display type will decreases the size of buttons and hide the labels.
+   *
+   * @remarks
+   * If the composite `formFactor` is set to `'mobile'`, the control bar will always use compact view.
+   *
+   * @defaultValue 'default'
+   */
+  displayType?: CallControlDisplayType;
+  /**
+   * Show or Hide Microphone button during a call.
+   * @defaultValue true
+   */
+  microphoneButton?: boolean;
+  /**
+   * Show or Hide Camera Button during a call
+   * @defaultValue true
+   */
+  cameraButton?: boolean;
+  /**
+   * Show, Hide or Disable the screen share button during a call.
+   * @defaultValue true
+   */
+  screenShareButton?: boolean | { disabled: boolean };
+  /**
+   * Show or Hide EndCall button during a call.
+   * @defaultValue true
+   */
+  endCallButton?: boolean;
   /**
    * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true
