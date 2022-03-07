@@ -16,7 +16,11 @@ export interface CallWithChatCompositeStrings {
   /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
-  peopleButtonTooltipContent: string;
+  peopleButtonTooltipContentOpen: string;
+  /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipContentClose: string;
   /**
    * {@link CallWithChatComposite} control bar Chat button label.
    */
@@ -24,7 +28,11 @@ export interface CallWithChatCompositeStrings {
   /**
    * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
    */
-  chatButtonTooltipContent: string;
+  chatButtonTooltipContentOpen: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipContentClose: string;
   /**
    * {@link CallWithChatComposite} control bar Chat button enhanced tooltip string.
    */
