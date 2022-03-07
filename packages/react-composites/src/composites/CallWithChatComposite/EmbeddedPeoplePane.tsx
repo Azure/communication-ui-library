@@ -39,6 +39,7 @@ import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
+  copyLinkDesktopButtonStyles,
   linkIconStyles,
   modalStyle,
   participantListContainerStyles,
@@ -111,6 +112,7 @@ export const EmbeddedPeoplePane = (props: {
 
   const participantList = (
     <ParticipantListWithHeading
+      isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
@@ -191,7 +193,12 @@ export const EmbeddedPeoplePane = (props: {
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
-          <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
+          <DefaultButton
+            text={callWithChatStrings.copyInviteLinkButtonLabel}
+            iconProps={{ iconName: 'Link' }}
+            onClick={() => copy(inviteLink)}
+            styles={copyLinkDesktopButtonStyles}
+          />
         )}
         {participantList}
       </Stack>
