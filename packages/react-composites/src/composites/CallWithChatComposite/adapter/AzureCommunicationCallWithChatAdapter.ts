@@ -522,6 +522,9 @@ export const useAzureCommunicationCallWithChatAdapter = (
     if (allArgsExist(args)) {
       (async () => {
         if (adapter) {
+          // Dispose here instead of returning a `useEffect` cleanup function because
+          // we only want to dispose when we are going to replace the adapter with
+          // a diferent one.
           adapter.dispose();
           setAdapter(undefined);
         }

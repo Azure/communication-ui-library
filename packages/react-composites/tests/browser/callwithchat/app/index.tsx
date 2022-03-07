@@ -2,15 +2,15 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import {
   CallWithChatAdapter,
   CallWithChatAdapterState,
-  createAzureCommunicationCallWithChatAdapter,
-  CallWithChatComposite
+  CallWithChatComposite,
+  useAzureCommunicationCallWithChatAdapter
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
@@ -33,31 +33,22 @@ const threadId = verifyParamExists(params.threadId, 'threadId');
 initializeIcons();
 
 function App(): JSX.Element {
-  const [callWithChatAdapter, setCallWithChatAdapter] = useState<CallWithChatAdapter>(undefined);
-
-  useEffect(() => {
-    const initialize = async (): Promise<void> => {
-      const credential = new AzureCommunicationTokenCredential(token);
-      const adapter = await createAzureCommunicationCallWithChatAdapter({
-        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-        displayName,
-        credential,
-        endpoint,
-        locator: {
-          callLocator: { groupId: groupId },
-          chatThreadId: threadId
-        }
-      });
-      setCallWithChatAdapter(wrapAdapterForTests(adapter));
-    };
-
-    initialize();
-
-    return () => {
-      callWithChatAdapter && callWithChatAdapter.dispose();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier, [userId]);
+  const locator = useMemo(
+    () => ({
+      callLocator: { groupId: groupId },
+      chatThreadId: threadId
+    }),
+    [groupId, threadId]
+  );
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(token), [token]);
+  const adapter = useAzureCommunicationCallWithChatAdapter({
+    userId: userIdArg,
+    displayName,
+    credential,
+    endpoint,
+    locator
+  });
 
   if (!token) {
     return <h3>ERROR: No token set.</h3>;
@@ -71,18 +62,18 @@ function App(): JSX.Element {
     return <h3>ERROR: No endpoint set.</h3>;
   } else if (!threadId) {
     return <h3>ERROR: No threadId set.</h3>;
-  } else if (!callWithChatAdapter) {
+  } else if (!adapter) {
     return <h3>Initializing call and chat adapters...</h3>;
   }
 
   return (
     <>
-      {!callWithChatAdapter && 'Initializing call-with-chat adapter...'}
-      {callWithChatAdapter && (
+      {!adapter && 'Initializing call-with-chat adapter...'}
+      {adapter && (
         <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
           <_IdentifierProvider identifiers={IDS}>
             <CallWithChatComposite
-              adapter={callWithChatAdapter}
+              adapter={adapter}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               joinInvitationURL={window.location.href}
             />
