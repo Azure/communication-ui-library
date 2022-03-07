@@ -42,17 +42,19 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
   const numberOfMsgToolTip =
-    props.strings?.tooltipContent && unreadChatMessagesCount > 0
-      ? props.strings?.tooltipContent +
-        ' ' +
+    props.strings?.tooltipOffContent && unreadChatMessagesCount > 0
+      ? props.strings?.tooltipOffContent +
+        ' (' +
         unreadChatMessagesCount +
         ' ' +
-        callWithChatStrings.chatButtonEnhancedToolTipContent
+        callWithChatStrings.chatButtonEnhancedToolTipContent +
+        ')'
       : undefined;
 
   const chatStrings = {
     label: props.strings?.label,
-    tooltipContent: numberOfMsgToolTip ? numberOfMsgToolTip : props.strings?.tooltipContent
+    tooltipOffContent: numberOfMsgToolTip ? numberOfMsgToolTip : props.strings?.tooltipOffContent,
+    tooltipOnContent: props.strings?.tooltipOnContent
   };
   const onRenderOnIcon = useCallback(() => baseIcon, [baseIcon]);
   const notificationOnIcon = useCallback((): JSX.Element => {
