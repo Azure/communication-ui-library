@@ -86,6 +86,7 @@ const config: PlaywrightTestConfig = {
           defaultBrowserType: 'chromium'
         */
         ...devices['Nexus 5 landscape'],
+        deviceScaleFactor: 2, // drop device scale factor from 3 to 2 to better reflect smaller devices
         launchOptions: { ...chromeLaunchOptions }
       }
     }
