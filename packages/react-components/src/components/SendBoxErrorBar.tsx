@@ -5,7 +5,7 @@ import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useCallback, useEffect } from 'react';
 
 /**
- * @internal
+ * @private
  */
 export interface SendBoxErrorBarProps {
   /** Error message to render */
@@ -22,7 +22,7 @@ export interface SendBoxErrorBarProps {
 }
 
 /**
- * @internal
+ * @private
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const { message, dismissAfterMs, onDismiss } = props;
