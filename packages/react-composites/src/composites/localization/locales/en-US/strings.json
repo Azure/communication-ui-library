@@ -44,7 +44,9 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "People",
+    "peopleButtonTooltipContent": "Open People Pane",
     "chatButtonLabel": "Chat",
+    "chatButtonTooltipContent": "Open Chat Pane",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "People",

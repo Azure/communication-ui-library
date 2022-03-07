@@ -14,9 +14,17 @@ export interface CallWithChatCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipContent: string;
+  /**
    * {@link CallWithChatComposite} control bar Chat button label.
    */
   chatButtonLabel: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipContent: string;
   /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *

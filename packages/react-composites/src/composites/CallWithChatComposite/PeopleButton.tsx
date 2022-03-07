@@ -12,7 +12,7 @@ const icon = (): JSX.Element => <CallWithChatCompositeIcon iconName={'ControlBar
  * @private
  */
 export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
-  const strings = { label: props.label, ...props.strings };
+  const strings = { label: props.strings?.label, tooltipContent: props.strings?.tooltipContent };
   const theme = useTheme();
   const styles: ControlBarButtonStyles = useMemo(
     () =>

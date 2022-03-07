@@ -64,6 +64,14 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
+  const chatButtonStrings = {
+    label: callWithChatStrings.chatButtonLabel,
+    tooltipContent: callWithChatStrings.chatButtonTooltipContent
+  };
+  const peopleButtonStrings = {
+    label: callWithChatStrings.peopleButtonLabel,
+    tooltipContent: callWithChatStrings.peopleButtonTooltipContent
+  };
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
@@ -91,7 +99,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
       isChatPaneVisible={props.chatButtonChecked}
       onClick={props.onChatButtonClicked}
       disabled={props.disableButtonsForLobbyPage}
-      label={callWithChatStrings.chatButtonLabel}
+      strings={chatButtonStrings}
       styles={commonButtonStyles}
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
@@ -151,7 +159,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
-              label={callWithChatStrings.peopleButtonLabel}
+              strings={peopleButtonStrings}
               styles={commonButtonStyles}
             />
           )}
