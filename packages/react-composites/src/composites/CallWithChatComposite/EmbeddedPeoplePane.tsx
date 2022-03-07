@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
+  concatStyleSets,
   ContextualMenu,
   DefaultButton,
   IContextualMenuItem,
@@ -38,8 +39,7 @@ import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
-  desktopCopyLinkButtonStyles,
-  mobileCopyLinkButtonStyles,
+  copyLinkButtonStyles,
   linkIconStyles,
   modalStyle,
   participantListContainerStyles,
@@ -132,6 +132,17 @@ export const EmbeddedPeoplePane = (props: {
 
   const theme = useTheme();
 
+  const copyLinkButtonStylesThemed = useMemo(
+    () =>
+      concatStyleSets(copyLinkButtonStyles, {
+        root: {
+          height: props.mobileView ? '3rem' : '2.5rem',
+          borderRadius: props.mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
+        }
+      }),
+    [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
+  );
+
   if (props.mobileView) {
     return (
       <MobilePane
@@ -150,7 +161,7 @@ export const EmbeddedPeoplePane = (props: {
             <Stack.Item styles={copyLinkButtonContainerStyles}>
               <PrimaryButton
                 onClick={() => copy(inviteLink)}
-                styles={mobileCopyLinkButtonStyles}
+                styles={copyLinkButtonStylesThemed}
                 onRenderIcon={() => <LinkIconTrampoline />}
                 text={callWithChatStrings.copyInviteLinkButtonLabel}
               />
@@ -192,7 +203,7 @@ export const EmbeddedPeoplePane = (props: {
             text={callWithChatStrings.copyInviteLinkButtonLabel}
             onRenderIcon={() => <LinkIconTrampoline />}
             onClick={() => copy(inviteLink)}
-            styles={desktopCopyLinkButtonStyles}
+            styles={copyLinkButtonStylesThemed}
           />
         )}
         {participantList}
