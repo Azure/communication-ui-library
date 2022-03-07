@@ -2,6 +2,99 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:42:56 GMT",
+      "tag": "@internal/chat-component-bindings_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "491af2253f921b66fa92093a81ae3f098f03ea67",
+            "comment": "using messageid to check read info instead of readon time stamp"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "cf149e82f77ce8bd7c4707b1bfc84bbfd9c9c2df",
+            "comment": "Upgrade @azure/communication-signaling to 1.0.0.beta.12"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "836ec9a6e9897a1fd4be8ded469b2eaecf2e96fe",
+            "comment": "submenu showing who read the message (name and avatar)"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "fd7e18031220c8602e8f7a1d97356e3bb9d8aa97",
+            "comment": "Removed participant should not show up in read information "
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "2feaab4c28a0686078e5795ecf27def1367ab5a4",
+            "comment": "Added Feature to show how many people have read the message"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "75b3b7e3db16e0c0d533246b08212bbe0a441279",
+            "comment": "update acs-common package and nanoid per dependabot"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "87979c60be946d0e1f9dc5bc732cff6cdfc91b70",
+            "comment": "Include all files in stable flavor build"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          }
+        ],
+        "minor": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add options param to sendMessage for sending metadata"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:54 GMT",
       "tag": "@internal/chat-component-bindings_v1.0.1",
       "version": "1.0.1",

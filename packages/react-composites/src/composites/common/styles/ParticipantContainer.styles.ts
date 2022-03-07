@@ -57,7 +57,9 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
 /**
  * @private
  */
-export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow: '1', flexBasis: '0' } };
+export const scrollableContainerContents: IStackItemStyles = {
+  root: { flexGrow: '1', flexBasis: '0', maxWidth: '100%' }
+};
 
 /**
  * @private
@@ -65,15 +67,6 @@ export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow:
 export const peopleSubheadingStyle: IStackItemStyles = {
   root: {
     fontSize: '0.75rem'
-  }
-};
-
-/**
- * @private
- */
-export const peoplePaneContainerStyle: IStackItemStyles = {
-  root: {
-    position: 'relative'
   }
 };
 
