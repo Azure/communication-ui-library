@@ -24,7 +24,7 @@ export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
         },
         props.styles ?? {}
       ),
-    [theme]
+    [props.styles, theme.palette.neutralLight]
   );
 
   return (
