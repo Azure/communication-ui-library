@@ -174,7 +174,7 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem',
     maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
