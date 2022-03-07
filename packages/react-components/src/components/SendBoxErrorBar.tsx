@@ -48,7 +48,7 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
       }, dismissAfterMs);
     }
     return clearTimeoutRef;
-  }, [clearTimeoutRef, dismissAfterMs, onDismiss]);
+  }, [clearTimeoutRef, dismissAfterMs, onDismiss, message]);
 
   if (errorMessage) {
     return (
