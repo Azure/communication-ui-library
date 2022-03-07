@@ -282,17 +282,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
-    /* @conditional-compile-remove(file-sharing) */
     const latestError = props.activeFileUploads?.filter((fileUpload) => fileUpload.errorMessage).pop()?.errorMessage;
-    /* @conditional-compile-remove(file-sharing) */
     return {
       onDismissFileUploadsPendingError: () => setShowFileUploadsPendingError(false),
       fileUploadsPendingError: showFileUploadsPendingError ? { message: strings.fileUploadsPendingError } : undefined,
       fileUploadError: latestError ? { message: latestError } : undefined
     };
     return {};
-  }, [props, showFileUploadsPendingError, strings]);
+  }, [props.activeFileUploads, showFileUploadsPendingError, strings.fileUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(
@@ -310,7 +309,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
-      <SendBoxErrors {...sendBoxErrorsProps} />
+      <SendBoxErrors
+        /* @conditional-compile-remove(file-sharing) */
+        {...sendBoxErrorsProps}
+      />
       <Stack
         className={mergeStyles(
           borderAndBoxShadowStyle({
