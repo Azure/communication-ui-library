@@ -33,10 +33,10 @@ export const toFlatCommunicationIdentifier = (identifier: CommunicationIdentifie
     if (identifier.isAnonymous) {
       return TEAMS_VISITOR_PREFIX + identifier.microsoftTeamsUserId;
     }
-    if (identifier.cloud == 'dod') {
+    if (identifier.cloud === 'dod') {
       return TEAMS_DOD_PREFIX + identifier.microsoftTeamsUserId;
     }
-    if (identifier.cloud == 'gcch') {
+    if (identifier.cloud === 'gcch') {
       return TEAMS_GCCH_PREFIX + identifier.microsoftTeamsUserId;
     }
     return TEAMS_USER_PREFIX + identifier.microsoftTeamsUserId;

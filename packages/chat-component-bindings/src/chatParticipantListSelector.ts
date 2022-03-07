@@ -18,7 +18,7 @@ const convertChatParticipantsToCommunicationParticipants = (
       displayName: participant.displayName,
       // ACS users can not remove Teams users.
       // Removing phone numbers or unknown types of users is undefined.
-      isRemovable: getIdentifierKind(participant.id).kind == 'communicationUser'
+      isRemovable: getIdentifierKind(participant.id).kind === 'communicationUser'
     };
   });
 };
