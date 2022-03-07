@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 /**
  * @private
@@ -35,20 +35,17 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
     setErrorMessage(message);
   }, [message]);
 
-  const clearTimeoutRef = useCallback(() => {
-    timeoutRef.current && clearTimeout(timeoutRef.current);
-  }, [timeoutRef]);
-
   useEffect(() => {
-    clearTimeoutRef();
     if (dismissAfterMs !== undefined) {
       timeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
         onDismiss && onDismiss();
       }, dismissAfterMs);
     }
-    return clearTimeoutRef;
-  }, [clearTimeoutRef, dismissAfterMs, onDismiss, message]);
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
+  }, [dismissAfterMs, onDismiss, message]);
 
   if (errorMessage) {
     return (

@@ -34,7 +34,7 @@ export const SendBoxErrors = (props: SendBoxErrorsProps): JSX.Element => {
 
   // If a new `fileUploadError` is available, show it instead of the `fileUploadsPendingError`
   useEffect(() => {
-    setShowFileUploadsPendingError(false);
+    fileUploadError && setShowFileUploadsPendingError(false);
   }, [fileUploadError]);
 
   if (showFileUploadsPendingError && fileUploadsPendingError) {
