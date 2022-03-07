@@ -31,6 +31,10 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const timeoutRef = React.useRef<any>();
 
+  React.useEffect(() => {
+    setErrorMessage(message);
+  }, [message]);
+
   const clearTimeoutRef = useCallback(() => {
     timeoutRef.current && clearTimeout(timeoutRef.current);
   }, [timeoutRef]);
