@@ -92,6 +92,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
       onClick={props.onChatButtonClicked}
       disabled={props.disableButtonsForLobbyPage}
       label={callWithChatStrings.chatButtonLabel}
+      ariaLabel={callWithChatStrings.chatButtonLabel}
       styles={commonButtonStyles}
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
@@ -134,7 +135,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   />
                 )}
                 {props.mobileView && (
-                  <MoreButton data-ui-id="call-with-chat-composite-more-button" onClick={props.onMoreButtonClicked} />
+                  <MoreButton
+                    data-ui-id="call-with-chat-composite-more-button"
+                    ariaLabel={callWithChatStrings.moreDrawerButtonLabel}
+                    onClick={props.onMoreButtonClicked}
+                  />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
