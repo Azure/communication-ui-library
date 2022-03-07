@@ -48,7 +48,7 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
         {baseIcon}
       </Stack>
     );
-  }, [unreadChatMessagesCount, newMessageLabel]);
+  }, [unreadChatMessagesCount, newMessageLabel, baseIcon]);
 
   useEffect(() => {
     if (isChatPaneVisible) {

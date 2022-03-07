@@ -188,7 +188,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         })
     );
 
-    updateMessagesWithAttached(convertedMessages, userId);
+    updateMessagesWithAttached(convertedMessages);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
