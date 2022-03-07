@@ -62,7 +62,7 @@ export const EmbeddedPeoplePane = (props: {
   modalLayerHostId: string;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink } = props;
+  const { callAdapter, chatAdapter, inviteLink, onFetchParticipantMenuItems } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
@@ -76,12 +76,12 @@ export const EmbeddedPeoplePane = (props: {
           participant,
           callWithChatStrings,
           participantListDefaultProps.onRemoveParticipant,
-          participantListProps.myUserId
+          participantListDefaultProps.myUserId
         );
-        if (props.onFetchParticipantMenuItems) {
-          contextualMenuItems = props.onFetchParticipantMenuItems(
+        if (onFetchParticipantMenuItems) {
+          contextualMenuItems = onFetchParticipantMenuItems(
             participant.userId,
-            participantListProps.myUserId,
+            participantListDefaultProps.myUserId,
             contextualMenuItems
           );
         }
@@ -91,7 +91,12 @@ export const EmbeddedPeoplePane = (props: {
         setDrawerMenuItems(drawerMenuItems);
       }
     };
-  }, []);
+  }, [
+    callWithChatStrings,
+    participantListDefaultProps.onRemoveParticipant,
+    participantListDefaultProps.myUserId,
+    onFetchParticipantMenuItems
+  ]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
@@ -103,7 +108,7 @@ export const EmbeddedPeoplePane = (props: {
       // We want the drawer menu items to appear when participants in ParticipantList are clicked
       onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
-  }, [participantListDefaultProps, callAdapter, chatAdapter]);
+  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, callAdapter, chatAdapter]);
 
   const participantList = (
     <ParticipantListWithHeading
