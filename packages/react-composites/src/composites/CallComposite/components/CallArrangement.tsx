@@ -12,7 +12,8 @@ import {
   containerStyleDesktop,
   containerStyleMobile,
   mediaGalleryContainerStyles,
-  galleryParentContainerStyles
+  galleryParentContainerStyles,
+  bannerNotificationStyles
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
@@ -46,11 +47,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
       <Stack.Item styles={notificationsContainerStyles}>
-        <Stack>
+        <Stack styles={bannerNotificationStyles}>
           <ComplianceBanner {...props.complianceBannerProps} />
         </Stack>
         {props.errorBarProps !== false && (
-          <Stack>
+          <Stack styles={bannerNotificationStyles}>
             <ErrorBar {...props.errorBarProps} />
           </Stack>
         )}
