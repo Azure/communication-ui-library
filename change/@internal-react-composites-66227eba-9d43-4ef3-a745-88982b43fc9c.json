@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add default implmenetation of file upload UI to SendBox",
+  "comment": "Add default implementation of file upload UI to SendBox",
   "packageName": "@internal/react-composites",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

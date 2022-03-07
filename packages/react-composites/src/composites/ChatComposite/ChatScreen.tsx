@@ -48,8 +48,6 @@ import { FileDownloadCards } from './FileDownloadCards';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(file-sharing) */
-import { useFileUploadAdapter } from './adapter/ChatAdapterProvider';
 
 /**
  * @private
@@ -188,7 +186,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               /* @conditional-compile-remove(file-sharing) */
               activeFileUploads={useSelector(fileUploadsSelector).files}
               /* @conditional-compile-remove(file-sharing) */
-              onCancelFileUpload={useFileUploadAdapter().cancelFileUpload}
+              onCancelFileUpload={adapter.cancelFileUpload}
             />
 
             <FileUploadButton
