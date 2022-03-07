@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrading calling to 1.4.3-beta.1",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
