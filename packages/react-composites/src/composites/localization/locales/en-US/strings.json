@@ -44,9 +44,11 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "People",
-    "peopleButtonTooltipContent": "Open People Pane",
+    "peopleButtonTooltipContentOpen": "Show Participants",
+    "peopleButtonTooltipContentClose": "Hide Participants",
     "chatButtonLabel": "Chat",
-    "chatButtonTooltipContent": "Open Chat Pane",
+    "chatButtonTooltipContentOpen": "Show Chat",
+    "chatButtonTooltipContentClose": "Hide Chat",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "peoplePaneTitle": "People",

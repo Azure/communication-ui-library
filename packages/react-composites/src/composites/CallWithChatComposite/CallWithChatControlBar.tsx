@@ -66,11 +66,13 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
   const chatButtonStrings = {
     label: callWithChatStrings.chatButtonLabel,
-    tooltipContent: callWithChatStrings.chatButtonTooltipContent
+    tooltipOffContent: callWithChatStrings.chatButtonTooltipContentOpen,
+    tooltipOnContent: callWithChatStrings.chatButtonTooltipContentClose
   };
   const peopleButtonStrings = {
     label: callWithChatStrings.peopleButtonLabel,
-    tooltipContent: callWithChatStrings.peopleButtonTooltipContent
+    tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
+    tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
   };
 
   const centerContainerStyles = useMemo(
