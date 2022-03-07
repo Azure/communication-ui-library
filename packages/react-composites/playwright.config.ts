@@ -75,7 +75,7 @@ const config: PlaywrightTestConfig = {
       }
     },
     {
-      name: 'Mobile Android Landscape',
+      name: 'Mobile Android Landscape', // Or should we just do a device of like 280 x 280 ?? (smallest dimension of landscape and portrait)
       use: {
         /*
           userAgent: 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
@@ -85,7 +85,7 @@ const config: PlaywrightTestConfig = {
           hasTouch: true,
           defaultBrowserType: 'chromium'
         */
-        ...devices['Nexus 5 Landscape'],
+        ...devices['Nexus 5 landscape'],
         launchOptions: { ...chromeLaunchOptions }
       }
     }
