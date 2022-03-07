@@ -58,6 +58,10 @@ export interface ActiveFileUpload {
 
   /**
    * A number between 0 and 1 indicating the progress of the upload.
+   * This is unrelated to the `uploadComplete` property.
+   * It is only used to show the progress of the upload.
+   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
+   * property to true to mark the upload as complete.
    */
   progress: number;
 
@@ -69,8 +73,9 @@ export interface ActiveFileUpload {
 
   /**
    * `true` means that the upload is completed.
+   * This is independent of the upload `progress`.
    */
-  isUploaded?: boolean;
+  uploadComplete?: boolean;
 }
 
 /**
@@ -208,7 +213,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.activeFileUploads?.length &&
       !props.activeFileUploads
         .filter((fileUpload) => !fileUpload.errorMessage)
-        .every((fileUpload) => fileUpload.isUploaded)
+        .every((fileUpload) => fileUpload.uploadComplete)
     );
   }, [props.activeFileUploads]);
 
@@ -283,6 +288,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
+  const latestFileUploadErrorMessage = useMemo(() => {
+    return props.activeFileUploads?.filter((fileUpload) => fileUpload.errorMessage).pop()?.errorMessage;
+  }, [props.activeFileUploads]);
+
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {/* @conditional-compile-remove(file-sharing) */}
@@ -291,7 +301,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           onDismissFileUploadsPendingError: () => setShowFileUploadsPendingError(false),
           fileUploadsPendingError: showFileUploadsPendingError
             ? { message: strings.fileUploadsPendingError }
-            : undefined
+            : undefined,
+          fileUploadError: latestFileUploadErrorMessage ? { message: latestFileUploadErrorMessage } : undefined
         }}
       />
       <Stack

@@ -5,15 +5,15 @@ import React, { useEffect } from 'react';
 import { SendBoxErrorBar } from './SendBoxErrorBar';
 
 /**
- * @internal
+ * @private
  * @TODO Add a timestamp to the error
  */
 export type SendBoxError = {
-  message: string;
+  message?: string;
 };
 
 /**
- * @internal
+ * @private
  */
 export interface SendBoxErrorsProps {
   fileUploadsPendingError?: SendBoxError;
@@ -22,7 +22,7 @@ export interface SendBoxErrorsProps {
 }
 
 /**
- * @internal
+ * @private
  */
 export const SendBoxErrors = (props: SendBoxErrorsProps): JSX.Element => {
   const { fileUploadError, fileUploadsPendingError, onDismissFileUploadsPendingError } = props;

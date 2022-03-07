@@ -37,8 +37,8 @@ export interface ActiveFileUpload {
     errorMessage?: string;
     filename: string;
     id: string;
-    isUploaded?: boolean;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
