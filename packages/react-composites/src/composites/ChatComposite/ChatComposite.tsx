@@ -101,6 +101,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
    * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
    * @private
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fileSharingOptions = () => {
     /* @conditional-compile-remove(file-sharing) */
     return {
