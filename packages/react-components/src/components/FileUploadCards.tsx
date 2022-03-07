@@ -12,7 +12,6 @@ import { extension, truncatedFileName } from './utils';
  * @beta
  */
 export interface FileUploadCardsProps {
-  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional array of active file uploads where each object has attibutes
    * of a file upload like name, progress, errormessage etc.
