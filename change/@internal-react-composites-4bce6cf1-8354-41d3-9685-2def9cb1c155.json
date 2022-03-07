@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Vertically aligned Muted indicator notification",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

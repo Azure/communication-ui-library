@@ -1,8 +1,25 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Mar 2022 16:42:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.1.1-beta.1)
+
+Tue, 01 Mar 2022 16:42:56 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.1...@internal/chat-stateful-client_v1.1.1-beta.1)
+
+### Patches
+
+- Upgrade @azure/communication-signaling to 1.0.0.beta.12 ([PR #1352](https://github.com/azure/communication-ui-library/pull/1352) by anjulgarg@live.com)
+- Fix exception thrown when trying to log stringified state when azure logger is set to verbose ([PR #1543](https://github.com/azure/communication-ui-library/pull/1543) by 2684369+JamesBurnside@users.noreply.github.com)
+- Log most state updates in ChatContext ([PR #1449](https://github.com/azure/communication-ui-library/pull/1449) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+
+### Changes
+
+- updating nanoid to 3.1.32 ([PR #1412](https://github.com/azure/communication-ui-library/pull/1412) by 79329532+alkwa-msft@users.noreply.github.com)
+- Getting and filtering the right read receipt data ([PR #1407](https://github.com/azure/communication-ui-library/pull/1407) by 96077406+carocao-msft@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.1)
 

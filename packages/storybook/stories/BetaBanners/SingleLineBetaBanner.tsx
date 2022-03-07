@@ -4,18 +4,18 @@
 import { Link, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { MICROSOFT_AZURE_PREVIEWS_URL } from '../constants';
-import { BannerPalette, blueBannerPalette } from './BannerPalettes';
-import { ImportantHeading } from './ImportantBannerHeading';
+import { blueBannerPalette } from './BannerPalettes';
+import { StorybookBanner, StorybookBannerProps } from './StorybookBanner';
 
-/** @private */
-export const SingleLineBetaBanner = (props: { palette?: BannerPalette }): JSX.Element => {
-  const palette: BannerPalette = props.palette ?? blueBannerPalette;
+/**
+ * @private
+ */
+export const SingleLineBetaBanner = (): JSX.Element => {
+  const palette = blueBannerPalette;
   return (
-    <Stack className={bannerContainerStyles(palette.background)}>
-      <Stack.Item>
-        <ImportantHeading color={palette.header} />
-        {' - '}
-        <Text>This feature is currently in public preview and not recommended for production use.</Text>{' '}
+    <StorybookBanner>
+      <Stack style={{ display: 'inline-block' }}>
+        <Text>This feature is currently in public preview and not recommended for production use. </Text>
         <Link
           className={mergeStyles({ color: palette.link })}
           underline={true}
@@ -24,22 +24,16 @@ export const SingleLineBetaBanner = (props: { palette?: BannerPalette }): JSX.El
         >
           More info.
         </Link>
-      </Stack.Item>
-    </Stack>
+      </Stack>
+    </StorybookBanner>
   );
 };
 
 /** @private */
-export const FloatingSingleLineBetaBanner = (props: { palette?: BannerPalette }): JSX.Element => (
+export const FloatingSingleLineBetaBanner = (props: StorybookBannerProps): JSX.Element => (
   <Stack className={floatingStyles}>
-    <SingleLineBetaBanner {...props} />
+    <StorybookBanner {...props} />
   </Stack>
 );
-
-const bannerContainerStyles = (backgroundColor: string): string =>
-  mergeStyles({
-    background: backgroundColor,
-    padding: '1rem'
-  });
 
 const floatingStyles = mergeStyles({ position: 'absolute', top: '0', width: '100%', textAlign: 'center' });

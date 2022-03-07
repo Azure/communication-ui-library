@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update story book docs for local camera switcher. Update SingleLineBanner to StoryBookBanner. Add Warning colour scheme to StoryBookBanner. ",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

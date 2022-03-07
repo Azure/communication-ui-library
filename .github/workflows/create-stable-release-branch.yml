@@ -10,9 +10,12 @@ on:
         required: true
         default: 'main'
       bump_type:
-        description: 'Bump type for stable branch [minor/patch]'
+        description: 'Bump type'
         required: true
-        default: 'minor'
+        type: choice
+        options:
+          - minor
+          - patch
 
 jobs:
   create_stable_release:
