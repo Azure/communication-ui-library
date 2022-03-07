@@ -75,18 +75,16 @@ const config: PlaywrightTestConfig = {
       }
     },
     {
-      name: 'Mobile Android Landscape', // Or should we just do a device of like 280 x 280 ?? (smallest dimension of landscape and portrait)
+      name: 'Mobile Android Landscape',
       use: {
-        /*
-          userAgent: 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
-          viewport: { width: 640, height: 360 },
-          deviceScaleFactor: 3,
-          isMobile: true,
-          hasTouch: true,
-          defaultBrowserType: 'chromium'
-        */
-        ...devices['Nexus 5 landscape'],
-        deviceScaleFactor: 2, // drop device scale factor from 3 to 2 to better reflect smaller devices
+        // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
+        userAgent:
+          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
+        // Smallest supported mobile viewport (iPhone 5/SE)
+        viewport: { width: 568, height: 320 },
+        isMobile: true,
+        hasTouch: true,
+        defaultBrowserType: 'chromium',
         launchOptions: { ...chromeLaunchOptions }
       }
     }
