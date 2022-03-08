@@ -6,7 +6,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { MobilePaneWithLocalAndRemotePIP } from './MobilePane';
+import { MobilePaneWithLocalAndRemotePIP, MobilePaneWithLocalAndRemotePIPStyles } from './MobilePane';
 import { SidePane } from './SidePane';
 
 /**
@@ -28,11 +28,11 @@ export const EmbeddedChatPane = (props: {
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
 
-  const mobilePaneStyles = useMemo(
+  const mobilePaneStyles: MobilePaneWithLocalAndRemotePIPStyles = useMemo(
     () => ({
       modal: {
         main: {
-          top: '3.5rem',
+          top: '3.25rem',
           borderRadius: theme.effects.roundedCorner4,
           boxShadow: theme.effects.elevation8,
           ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })

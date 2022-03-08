@@ -1,21 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  concatStyleSets,
-  ContextualMenu,
-  DefaultButton,
-  IContextualMenuItem,
-  IDragOptions,
-  Modal,
-  PrimaryButton,
-  Stack
-} from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
-  useTheme,
   _DrawerMenu,
   _DrawerMenuItemProps
 } from '@internal/react-components';
@@ -23,25 +13,20 @@ import copy from 'copy-to-clipboard';
 import React, { useMemo, useState } from 'react';
 import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
-import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
-import { useSelector } from '../CallComposite/hooks/useSelector';
-import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { MobilePane } from './MobilePane';
+import { MobilePaneWithLocalAndRemotePIP, MobilePaneWithLocalAndRemotePIPStyles } from './MobilePane';
 import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
-  modalStyle,
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/EmbeddedPeoplePane.styles';
@@ -110,25 +95,19 @@ export const EmbeddedPeoplePane = (props: {
     };
   }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, callAdapter, chatAdapter]);
 
-  const participantList = (
-    <ParticipantListWithHeading
-      isMobile={props.mobileView}
-      participantListProps={participantListProps}
-      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-      title={callWithChatStrings.peoplePaneSubTitle}
-    />
-  );
-
-  const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
-  const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
-
-  const localAndRemotePIP = useMemo(
-    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
-    [pictureInPictureProps, pictureInPictureHandlers]
-  );
-
   const theme = useTheme();
+  const mobilePaneStyles: MobilePaneWithLocalAndRemotePIPStyles = useMemo(
+    () => ({
+      modal: {
+        main: {
+          borderRadius: theme.effects.roundedCorner4,
+          boxShadow: theme.effects.elevation8,
+          ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
+        }
+      }
+    }),
+    [theme]
+  );
 
   const copyLinkButtonStylesThemed = useMemo(
     () =>
@@ -141,15 +120,28 @@ export const EmbeddedPeoplePane = (props: {
     [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
   );
 
+  const participantList = (
+    <ParticipantListWithHeading
+      isMobile={props.mobileView}
+      participantListProps={participantListProps}
+      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+      title={callWithChatStrings.peoplePaneSubTitle}
+    />
+  );
+
   if (props.mobileView) {
     return (
-      <MobilePane
+      <MobilePaneWithLocalAndRemotePIP
         hidden={props.hidden}
         dataUiId={'call-with-chat-composite-people-pane'}
         onClose={props.onClose}
         activeTab="people"
         onChatButtonClicked={props.onChatButtonClick}
         onPeopleButtonClicked={props.onPeopleButtonClick}
+        modalLayerHostId={props.modalLayerHostId}
+        callAdapter={props.callAdapter}
+        styles={mobilePaneStyles}
       >
         <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
           <Stack.Item grow styles={participantListContainerStyles}>
@@ -165,26 +157,13 @@ export const EmbeddedPeoplePane = (props: {
               />
             </Stack.Item>
           )}
-          <Modal
-            isOpen={true}
-            isModeless={true}
-            dragOptions={DRAG_OPTIONS}
-            styles={modalStyle(theme)}
-            layerProps={{ hostId: props.modalLayerHostId }}
-          >
-            {
-              // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-              // possession of the dominant remote participant video stream
-              !props.hidden && localAndRemotePIP
-            }
-          </Modal>
         </Stack>
         {drawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles}>
             <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
           </Stack>
         )}
-      </MobilePane>
+      </MobilePaneWithLocalAndRemotePIP>
     );
   }
 
@@ -284,14 +263,4 @@ const convertContextualMenuItemToDrawerMenuItem = (
     text: contextualMenu.text,
     disabled: contextualMenu.disabled
   };
-};
-
-/**
- * Drag options for Modal
- */
-const DRAG_OPTIONS: IDragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true
 };

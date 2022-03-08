@@ -129,10 +129,12 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+export type MobilePaneWithLocalAndRemotePIPStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+
 const _MobilePaneWithLocalAndRemotePIP = (
   props: MobilePaneProps & {
     modalLayerHostId: string;
-    styles?: { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+    styles?: MobilePaneWithLocalAndRemotePIPStyles;
   }
 ): JSX.Element => {
   const mobilePaneStyles = props.hidden ? hiddenMobilePaneStyle : mobilePaneStyle;
@@ -169,7 +171,7 @@ export const MobilePaneWithLocalAndRemotePIP = (
   props: MobilePaneProps & {
     callAdapter: CallAdapter;
     modalLayerHostId: string;
-    styles?: { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+    styles?: MobilePaneWithLocalAndRemotePIPStyles;
   }
 ): JSX.Element => {
   return (
