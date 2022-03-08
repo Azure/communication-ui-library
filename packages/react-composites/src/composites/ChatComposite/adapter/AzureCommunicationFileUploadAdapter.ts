@@ -158,15 +158,15 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   private subscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload.on('uploadProgressed', this.fileUploadProgressListener.bind(this));
-    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener.bind(this));
-    fileUpload.on('uploadFailed', this.fileUploadFailedListener.bind(this));
+    fileUpload.on('uploadProgress', this.fileUploadProgressListener.bind(this));
+    fileUpload.on('uploadComplete', this.fileUploadCompletedListener.bind(this));
+    fileUpload.on('uploadFail', this.fileUploadFailedListener.bind(this));
   }
 
   private unsubscribeAllEvents(fileUpload?: ObservableFileUpload): void {
-    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener.bind(this));
-    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener.bind(this));
-    fileUpload?.off('uploadFailed', this.fileUploadFailedListener.bind(this));
+    fileUpload?.off('uploadProgress', this.fileUploadProgressListener.bind(this));
+    fileUpload?.off('uploadComplete', this.fileUploadCompletedListener.bind(this));
+    fileUpload?.off('uploadFail', this.fileUploadFailedListener.bind(this));
   }
 }
 
