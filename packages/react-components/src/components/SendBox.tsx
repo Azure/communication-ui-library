@@ -18,7 +18,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
-import { SendBoxErrorBar } from './SendBoxErrorBar';
+import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
 
@@ -60,13 +60,24 @@ export interface ActiveFileUpload {
 
   /**
    * A number between 0 and 1 indicating the progress of the upload.
+   * This is unrelated to the `uploadComplete` property.
+   * It is only used to show the progress of the upload.
+   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
+   * property to true to mark the upload as complete.
    */
   progress: number;
 
   /**
    * Error message to be displayed to the user if the upload fails.
+   * @TODO Replace with `SendBoxError` type that has a timestamp and a message.
    */
   errorMessage?: string;
+
+  /**
+   * `true` means that the upload is completed.
+   * This is independent of the upload `progress`.
+   */
+  uploadComplete?: boolean;
 }
 
 /**
@@ -87,6 +98,11 @@ export interface SendBoxStrings {
    * Aria label for send message button
    */
   sendButtonAriaLabel: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Error message indicating that all file uploads are not complete.
+   */
+  fileUploadsPendingError: string;
 }
 
 /**
@@ -196,11 +212,24 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  /* @conditional-compile-remove(file-sharing) */
+  const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
+
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
     if (disabled || textValueOverflow) {
       return;
     }
+
+    // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
+    setShowFileUploadsPendingError(false);
+    /* @conditional-compile-remove(file-sharing) */
+    if (hasIncompleteFileUploads(props)) {
+      setShowFileUploadsPendingError(true);
+      return;
+    }
+
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
       onSendMessage && onSendMessage(textValue);
@@ -223,13 +252,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     setTextValue(newValue);
   };
-
-  /* @conditional-compile-remove(file-sharing) */
-  const renderFileUploadErrorMessage: JSX.Element = useMemo(() => {
-    const fileUploads: ActiveFileUpload[] = props.activeFileUploads || [];
-    const latestError = fileUploads.filter((fileUpload) => fileUpload.errorMessage).pop();
-    return <SendBoxErrorBar message={latestError?.errorMessage} timeout={10 * 1000} />;
-  }, [props.activeFileUploads]);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
@@ -265,6 +287,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(file-sharing) */
+  const sendBoxErrorsProps = useMemo(() => {
+    const latestError = props.activeFileUploads?.filter((fileUpload) => fileUpload.errorMessage).pop()?.errorMessage;
+    return {
+      onDismissFileUploadsPendingError: () => setShowFileUploadsPendingError(false),
+      fileUploadsPendingError: showFileUploadsPendingError ? { message: strings.fileUploadsPendingError } : undefined,
+      fileUploadError: latestError ? { message: latestError } : undefined
+    };
+  }, [props.activeFileUploads, showFileUploadsPendingError, strings.fileUploadsPendingError]);
+
+  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(
     () =>
       props.onRenderFileUploads ? (
@@ -282,7 +314,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
       {
         /* @conditional-compile-remove(file-sharing) */
-        renderFileUploadErrorMessage
+        <SendBoxErrors {...sendBoxErrorsProps} />
       }
       <Stack
         className={mergeStyles(
@@ -336,5 +368,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }
       </Stack>
     </Stack>
+  );
+};
+
+/* @conditional-compile-remove(file-sharing) */
+/**
+ * @private
+ */
+const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
+  return !!(
+    props.activeFileUploads?.length &&
+    !props.activeFileUploads
+      .filter((fileUpload) => !fileUpload.errorMessage)
+      .every((fileUpload) => fileUpload.uploadComplete)
   );
 };
