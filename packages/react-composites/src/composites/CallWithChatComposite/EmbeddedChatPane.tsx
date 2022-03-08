@@ -35,7 +35,8 @@ export const EmbeddedChatPane = (props: {
       fluentTheme={props.fluentTheme}
       options={{
         topic: false,
-        /* @conditional-compile-remove(chat-composite-participant-pane) */ participantPane: false,
+        /* @conditional-compile-remove(chat-composite-participant-pane) */ 
+        participantPane: false,
         /* @conditional-compile-remove(file-sharing) */
         fileSharing: props.fileSharing
       }}
