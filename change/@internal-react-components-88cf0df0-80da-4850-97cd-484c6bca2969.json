@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Update ControlBarButton to read aria strings from other string sources",
   "packageName": "@internal/react-components",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
