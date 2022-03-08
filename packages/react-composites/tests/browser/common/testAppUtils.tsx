@@ -1,9 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import React from 'react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
+import { ChevronRight20Regular, Link16Regular, People16Regular } from '@fluentui/react-icons';
+
 ///
 /// This file is only for use by the test apps
 ///
+
+/**
+ * This is a quick fix to cope with flakiness in UI tests were font icons have not yet been downloaded.
+ * Remove this once we are no longer reliant on Fluent's font icons and only used bundled SVG icons.
+ */
+export function initializeIconsForUITests(): void {
+  // Register icons that are normally downloaded from Fluent's CDN that are causing flakiness
+  registerIcons({
+    icons: {
+      ChevronRight: <ChevronRight20Regular />,
+      Link: <Link16Regular />,
+      People: <People16Regular />
+    }
+  });
+}
 
 /**
  * Throw error if required parameter exists.
