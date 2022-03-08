@@ -4,13 +4,11 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  createAzureCommunicationCallWithChatAdapter,
   toFlatCommunicationIdentifier,
+  useAzureCommunicationCallWithChatAdapter,
   CallAndChatLocator,
-  CallWithChatAdapter,
   CallWithChatAdapterState,
-  CallWithChatComposite,
-  useAzureCommunicationCallWithChatAdapter
+  CallWithChatComposite
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';

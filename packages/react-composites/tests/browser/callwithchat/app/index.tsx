@@ -33,22 +33,23 @@ const threadId = verifyParamExists(params.threadId, 'threadId');
 initializeIcons();
 
 function App(): JSX.Element {
-  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier, [userId]);
+  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier, []);
   const locator = useMemo(
     () => ({
       callLocator: { groupId: groupId },
       chatThreadId: threadId
     }),
-    [groupId, threadId]
+    []
   );
-  const credential = useMemo(() => new AzureCommunicationTokenCredential(token), [token]);
-  const adapter = useAzureCommunicationCallWithChatAdapter({
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(token), []);
+  const rawAdapter = useAzureCommunicationCallWithChatAdapter({
     userId: userIdArg,
     displayName,
     credential,
     endpoint,
     locator
   });
+  const adapter = useMemo(() => wrapAdapterForTests(rawAdapter), [rawAdapter]);
 
   if (!token) {
     return <h3>ERROR: No token set.</h3>;

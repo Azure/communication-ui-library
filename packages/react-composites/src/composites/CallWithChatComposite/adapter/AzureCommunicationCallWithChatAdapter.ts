@@ -61,7 +61,7 @@ import {
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -517,28 +517,36 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
 export const useAzureCommunicationCallWithChatAdapter = (
   args: Partial<AzureCommunicationCallWithChatAdapterArgs>
 ): CallWithChatAdapter | undefined => {
+  const { credential, displayName, endpoint, locator, userId } = args;
+  // Need to update internal state to trigger a rerender when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
-  useEffect(() => {
-    if (allArgsExist(args)) {
-      (async () => {
-        if (adapter) {
-          // Dispose here instead of returning a `useEffect` cleanup function because
-          // we only want to dispose when we are going to replace the adapter with
-          // a diferent one.
-          adapter.dispose();
-          setAdapter(undefined);
-        }
-        setAdapter(await createAzureCommunicationCallWithChatAdapter(args));
-      })();
-    }
-  }, [args.credential, args.displayName, args.endpoint, args.locator, args.userId]);
+  // Need to capture the same adapter in a Ref, so that the cleanup function from `useEffect` below uses
+  // the asynchronously created adapter.
+  const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
+  useEffect(
+    () => {
+      if (!!credential && !!displayName && !!endpoint && !!locator && !!userId) {
+        (async () => {
+          const newAdapter = await createAzureCommunicationCallWithChatAdapter({
+            credential,
+            displayName,
+            endpoint,
+            locator,
+            userId
+          });
+          setAdapter(newAdapter);
+          adapterRef.current = newAdapter;
+        })();
+      }
+      // If we use `adapter` in the cleanup function, it will not capture the adapter that will be created asynchronously.
+      // Use `adapterRef.current` instead because `adapterRef` will be captured, and the cleanup function, when it runs, will
+      // pick up the asynchronously updated value of `adapterRef.current`.
+      return () => adapterRef.current?.dispose();
+    },
+    // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
+    [credential, displayName, endpoint, locator, userId]
+  );
   return adapter;
-};
-
-const allArgsExist = (
-  args: Partial<AzureCommunicationCallWithChatAdapterArgs>
-): args is AzureCommunicationCallWithChatAdapterArgs => {
-  return !!args.credential && !!args.displayName && !!args.endpoint && !!args.locator && !!args.userId;
 };
 
 /**
