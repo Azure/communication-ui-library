@@ -976,6 +976,9 @@ export type UploadFailedListener = (id: string, message: string) => void;
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
 
+// @beta
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
 // (No @packageDocumentation comment for this package)
 
 ```
