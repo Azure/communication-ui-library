@@ -81,6 +81,7 @@ export interface ActiveFileUpload {
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -2232,6 +2233,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;

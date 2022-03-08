@@ -3,7 +3,7 @@
 
 import { Icon } from '@fluentui/react';
 import React from 'react';
-import { ActiveFileUpload } from '.';
+import { ActiveFileUpload } from './SendBox';
 import { FileCard } from './FileCard';
 import { FileCardGroup } from './FileCardGroup';
 import { extension, truncatedFileName } from './utils';
