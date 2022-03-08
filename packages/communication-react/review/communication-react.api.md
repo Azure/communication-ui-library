@@ -735,11 +735,15 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
+    chatButtonTooltipContentClose: string;
+    chatButtonTooltipContentOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
+    peopleButtonTooltipContentClose: string;
+    peopleButtonTooltipContentOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
