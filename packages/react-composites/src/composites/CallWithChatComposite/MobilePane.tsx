@@ -49,7 +49,7 @@ type MobilePaneProps = {
 };
 
 /**
- * This is a wrapper for Chat and People pane to cover the entire the screen and to have
+ * This is a wrapper component for Chat and People pane to cover the entire the screen and to have
  * its own navigation bar
  * @private
  */
@@ -129,6 +129,9 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+/**
+ * Styles for {@link MobilePaneWithLocalAndRemotePIP} component
+ */
 export type MobilePaneWithLocalAndRemotePIPStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
 
 const _MobilePaneWithLocalAndRemotePIP = (
@@ -145,7 +148,11 @@ const _MobilePaneWithLocalAndRemotePIP = (
     [pictureInPictureProps, pictureInPictureHandlers]
   );
 
-  const modalStylesThemed = concatStyleSets(modalStyle, { root: {} }, props.styles?.modal);
+  const modalStylesThemed = concatStyleSets(
+    modalStyle,
+    { root: {} } /* needed to bypass type error */,
+    props.styles?.modal
+  );
 
   return (
     <Stack styles={mobilePaneStyles}>
@@ -167,6 +174,10 @@ const _MobilePaneWithLocalAndRemotePIP = (
   );
 };
 
+/**
+ * This is {@link MobilePane} component with a draggable LocalAndRemotePIP component that is bound by a LayerHost component with id `modalLayerHostId`
+ * @private
+ */
 export const MobilePaneWithLocalAndRemotePIP = (
   props: MobilePaneProps & {
     callAdapter: CallAdapter;
