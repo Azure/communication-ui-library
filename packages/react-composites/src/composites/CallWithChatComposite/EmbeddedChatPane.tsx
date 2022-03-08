@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { PartialTheme, Theme } from '@fluentui/react';
 import React from 'react';
-import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatAdapter, ChatComposite, ChatCompositeProps, FileSharingOptions } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
@@ -21,6 +21,7 @@ export const EmbeddedChatPane = (props: {
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
+  fileSharing?: FileSharingOptions;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
@@ -31,7 +32,9 @@ export const EmbeddedChatPane = (props: {
       fluentTheme={props.fluentTheme}
       options={{
         topic: false,
-        /* @conditional-compile-remove(chat-composite-participant-pane) */ participantPane: false
+        /* @conditional-compile-remove(chat-composite-participant-pane) */ participantPane: false,
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing: props.fileSharing
       }}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
     />
