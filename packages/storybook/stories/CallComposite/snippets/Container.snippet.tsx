@@ -1,13 +1,12 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  createAzureCommunicationCallAdapter
+  useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -24,8 +23,6 @@ export type ContainerProps = {
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
-  const [adapter, setAdapter] = useState<CallAdapter>();
-
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
@@ -34,28 +31,17 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       return undefined;
     }
   }, [props.token]);
+  const locator = useMemo(
+    () => (isTeamsMeetingLink(props.locator) ? { meetingLink: props.locator } : { groupId: props.locator }),
+    [props.locator]
+  );
 
-  useEffect(() => {
-    (async () => {
-      if (!!credential && props.locator && props.displayName) {
-        const callLocator = isTeamsMeetingLink(props.locator)
-          ? { meetingLink: props.locator }
-          : { groupId: props.locator };
-        const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
-          setAdapter(
-            await createAzureCommunicationCallAdapter({
-              userId: props.userId,
-              displayName: props.displayName, // Max 256 Characters
-              credential,
-              locator: callLocator
-            })
-          );
-        };
-        createAdapter(credential);
-      }
-    })();
-  }, [props, credential]);
-
+  const adapter = useAzureCommunicationCallAdapter({
+    userId: props.userId,
+    displayName: props.displayName, // Max 256 Characters
+    credential,
+    locator
+  });
   useEffect(() => {
     return () => {
       (async () => {

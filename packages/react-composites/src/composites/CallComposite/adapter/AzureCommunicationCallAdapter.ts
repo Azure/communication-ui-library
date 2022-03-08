@@ -48,6 +48,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
+import { useEffect, useRef, useState } from 'react';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -591,6 +592,54 @@ export const createAzureCommunicationCallAdapter = async ({
   const callClient = createStatefulCallClient({ userId });
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  return adapter;
+};
+
+/**
+ * A custom React hook to simplify the creation of {@link CallAdapter}.
+ *
+ * Similar to {@link createAzureCommunicationCallAdapter}, but takes care of asynchronous
+ * creation of the adapter internally.
+ *
+ * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+ * as they are created. The adapter is only created when all arguments are defined.
+ *
+ * Note that you must memoize the arguments to avoid recreating adapter on each render.
+ * See storybook for typical usage examples.
+ *
+ * @beta
+ */
+export const useAzureCommunicationCallAdapter = (
+  args: Partial<AzureCommunicationCallAdapterArgs>
+): CallAdapter | undefined => {
+  const { credential, displayName, locator, userId } = args;
+  // Need to update internal state to trigger a rerender when a new adapter is created.
+  const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
+  // Need to capture the same adapter in a Ref, so that the cleanup function from `useEffect` below uses
+  // the asynchronously created adapter.
+  const adapterRef = useRef<CallAdapter | undefined>(undefined);
+  useEffect(
+    () => {
+      if (!!credential && !!displayName && !!locator && !!userId) {
+        (async () => {
+          const newAdapter = await createAzureCommunicationCallAdapter({
+            credential,
+            displayName,
+            locator,
+            userId
+          });
+          setAdapter(newAdapter);
+          adapterRef.current = newAdapter;
+        })();
+      }
+      // If we use `adapter` in the cleanup function, it will not capture the adapter that will be created asynchronously.
+      // Use `adapterRef.current` instead because `adapterRef` will be captured, and the cleanup function, when it runs, will
+      // pick up the asynchronously updated value of `adapterRef.current`.
+      return () => adapterRef.current?.dispose();
+    },
+    // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
+    [credential, displayName, locator, userId]
+  );
   return adapter;
 };
 
