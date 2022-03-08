@@ -542,8 +542,10 @@ export const useAzureCommunicationCallWithChatAdapter = (
   // Ref needed for cleanup to access the old adapter created asynchronously.
   const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
 
-  const afterCreateRef = useRef(afterCreate);
-  const beforeDisposeRef = useRef(beforeDispose);
+  const afterCreateRef = useRef<((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined>(
+    undefined
+  );
+  const beforeDisposeRef = useRef<((adapter: CallWithChatAdapter) => Promise<void>) | undefined>(undefined);
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
