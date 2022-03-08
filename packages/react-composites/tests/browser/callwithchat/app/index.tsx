@@ -42,14 +42,16 @@ function App(): JSX.Element {
     []
   );
   const credential = useMemo(() => new AzureCommunicationTokenCredential(token), []);
-  const rawAdapter = useAzureCommunicationCallWithChatAdapter({
-    userId: userIdArg,
-    displayName,
-    credential,
-    endpoint,
-    locator
-  });
-  const adapter = useMemo(() => wrapAdapterForTests(rawAdapter), [rawAdapter]);
+  const adapter = useAzureCommunicationCallWithChatAdapter(
+    {
+      userId: userIdArg,
+      displayName,
+      credential,
+      endpoint,
+      locator
+    },
+    wrapAdapterForTests
+  );
 
   if (!token) {
     return <h3>ERROR: No token set.</h3>;

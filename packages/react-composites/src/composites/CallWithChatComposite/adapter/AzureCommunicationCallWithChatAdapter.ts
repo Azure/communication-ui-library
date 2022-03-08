@@ -515,29 +515,59 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
  * @beta
  */
 export const useAzureCommunicationCallWithChatAdapter = (
-  args: Partial<AzureCommunicationCallWithChatAdapterArgs>
+  /**
+   * Arguments to be passed to {@link createAzureCommunicationCallWithChatAdapter}.
+   *
+   * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+   * as they are created. The adapter is only created when all arguments are defined.
+   */
+  args: Partial<AzureCommunicationCallWithChatAdapterArgs>,
+  /**
+   * Optional callback to modify the adapter once it is created.
+   *
+   * If set, must return the modified adapter.
+   */
+  afterCreate?: (adapter: CallWithChatAdapter) => CallWithChatAdapter,
+  /**
+   * Optional callback called before the adapter is disposed.
+   *
+   * This is useful for clean up tasks, e.g., leaving any ongoing calls.
+   */
+  beforeDispose?: (adapter: CallWithChatAdapter) => void
 ): CallWithChatAdapter | undefined => {
   const { credential, displayName, endpoint, locator, userId } = args;
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
+  const afterCreateRef = useRef(afterCreate);
+  const beforeDisposeRef = useRef(beforeDispose);
+
+  // These refs are updated on *each* render, so that the latest values
+  // are used in the `useEffect` closures below.
+  // Using a Ref ensures that new values for the callbacks do not trigger the
+  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  afterCreateRef.current = afterCreate;
+  beforeDisposeRef.current = beforeDispose;
+
   useEffect(
     () => {
       if (!credential || !displayName || !endpoint || !locator || !userId) {
         return;
       }
       (async () => {
-        setAdapter(
-          await createAzureCommunicationCallWithChatAdapter({
-            credential,
-            displayName,
-            endpoint,
-            locator,
-            userId
-          })
-        );
+        let newAdapter = await createAzureCommunicationCallWithChatAdapter({
+          credential,
+          displayName,
+          endpoint,
+          locator,
+          userId
+        });
+        if (afterCreateRef.current) {
+          newAdapter = afterCreateRef.current(newAdapter);
+        }
+        setAdapter(newAdapter);
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [credential, displayName, endpoint, locator, userId]
+    [afterCreateRef, credential, displayName, endpoint, locator, userId]
   );
 
   // Dispose the old adapter when a new one is created.
@@ -549,10 +579,13 @@ export const useAzureCommunicationCallWithChatAdapter = (
   useEffect(() => {
     return () => {
       if (adapter) {
+        if (beforeDisposeRef.current) {
+          beforeDisposeRef.current(adapter);
+        }
         adapter.dispose();
       }
     };
-  }, [adapter]);
+  }, [adapter, beforeDisposeRef]);
   return adapter;
 };
 
