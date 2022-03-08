@@ -832,12 +832,12 @@ export interface Disposable {
 }
 
 // @beta
-export interface FileDownloadErrorMessage {
+export interface FileDownloadError {
     errorMessage: string;
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {
@@ -866,12 +866,12 @@ export interface FileUploadAdapter {
 
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    off(event: 'uploadFailed', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    off(event: 'uploadFail', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    on(event: 'uploadFail', listener: UploadFailedListener): void;
 }
 
 // @beta
@@ -882,7 +882,7 @@ export interface FileUploadManager {
     file: File;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressed: (value: number) => void;
+    notifyUploadProgressChanged: (value: number) => void;
 }
 
 // @beta
@@ -980,6 +980,9 @@ export type UploadFailedListener = (id: string, message: string) => void;
 
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
+
+// @beta
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
 
 // (No @packageDocumentation comment for this package)
 
