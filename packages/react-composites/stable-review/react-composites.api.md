@@ -859,6 +859,9 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
+// @public
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
 // (No @packageDocumentation comment for this package)
 
 ```

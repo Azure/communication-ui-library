@@ -2245,6 +2245,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
 }
 
 // @public
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
+// @public
 export const useCall: () => Call | undefined;
 
 // @public
