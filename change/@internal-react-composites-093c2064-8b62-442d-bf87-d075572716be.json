@@ -1,6 +1,6 @@
 {
-  "type": "none",
-  "comment": "Update styles around split button border radius",
+  "type": "minor",
+  "comment": "Increase the border radius of buttons in composites with call features",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"
