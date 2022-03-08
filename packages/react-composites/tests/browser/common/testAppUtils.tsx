@@ -6,6 +6,7 @@ import { registerIcons } from '@fluentui/react';
 import {
   ChevronDown20Regular,
   ChevronRight20Regular,
+  Dismiss16Regular,
   Dismiss20Regular,
   DismissCircle16Regular,
   Link16Regular,
@@ -26,7 +27,8 @@ export function initializeIconsForUITests(): void {
   // Register icons that are normally downloaded from Fluent's CDN that are causing flakiness
   registerIcons({
     icons: {
-      Cancel: <Dismiss20Regular />,
+      Cancel: <Dismiss16Regular />,
+      Clear: <Dismiss20Regular />,
       ChevronDown: <ChevronDown20Regular />,
       ChevronRight: <ChevronRight20Regular />,
       ErrorBadge: <DismissCircle16Regular />,
