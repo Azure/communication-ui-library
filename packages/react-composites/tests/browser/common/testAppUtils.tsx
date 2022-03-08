@@ -2,8 +2,17 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
-import { ChevronRight20Regular, Link16Regular, People16Regular } from '@fluentui/react-icons';
+import { registerIcons } from '@fluentui/react';
+import {
+  ChevronDown20Regular,
+  ChevronRight20Regular,
+  Dismiss20Regular,
+  DismissCircle16Regular,
+  Link16Regular,
+  People16Regular,
+  PeopleAdd16Regular,
+  Warning16Regular
+} from '@fluentui/react-icons';
 
 ///
 /// This file is only for use by the test apps
@@ -17,9 +26,14 @@ export function initializeIconsForUITests(): void {
   // Register icons that are normally downloaded from Fluent's CDN that are causing flakiness
   registerIcons({
     icons: {
+      Cancel: <Dismiss20Regular />,
+      ChevronDown: <ChevronDown20Regular />,
       ChevronRight: <ChevronRight20Regular />,
+      ErrorBadge: <DismissCircle16Regular />,
       Link: <Link16Regular />,
-      People: <People16Regular />
+      People: <People16Regular />,
+      PeopleAdd: <PeopleAdd16Regular />,
+      Warning: <Warning16Regular />
     }
   });
 }
