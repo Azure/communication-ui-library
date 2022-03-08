@@ -18,7 +18,6 @@ export const MoreButton = (props: ControlBarButtonProps): JSX.Element => {
       showLabel={false}
       onRenderOnIcon={icon}
       onRenderOffIcon={icon}
-      ariaLabel={props.ariaLabel}
       onClick={props.onClick}
       data-ui-id={'call-with-chat-composite-more-button'}
     />

@@ -74,6 +74,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
     tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
   };
+  const moreButtonStrings = {
+    label: callWithChatStrings.moreDrawerButtonLabel,
+    tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+  };
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
@@ -146,7 +150,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                 {props.mobileView && (
                   <MoreButton
                     data-ui-id="call-with-chat-composite-more-button"
-                    ariaLabel={callWithChatStrings.moreDrawerButtonLabel}
+                    strings={moreButtonStrings}
                     onClick={props.onMoreButtonClicked}
                   />
                 )}

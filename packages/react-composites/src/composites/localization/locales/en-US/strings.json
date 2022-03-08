@@ -52,6 +52,7 @@
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "moreDrawerButtonLabel": "More options",
+    "moreDrawerButtonTooltip": "More options",
     "peoplePaneTitle": "People",
     "peoplePaneSubTitle": "In this call",
     "chatPaneTitle": "Chat",

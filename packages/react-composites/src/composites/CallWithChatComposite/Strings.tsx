@@ -50,6 +50,10 @@ export interface CallWithChatCompositeStrings {
    */
   moreDrawerButtonLabel: string;
   /**
+   * {@Link CallWithChatComposite} Mobile Control bar More drawer label for narrator
+   */
+  moreDrawerButtonTooltip: string;
+  /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
