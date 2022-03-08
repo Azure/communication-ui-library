@@ -441,7 +441,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 /**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Call with an associated Chat thread.
  *
- * @beta
+ * @public
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
@@ -453,7 +453,7 @@ export interface CallAndChatLocator {
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapter}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterArgs = {
   endpoint: string;
@@ -467,7 +467,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
  * Create a CallWithChatAdapter backed by Azure Communication services
  * to plug into the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapter = async ({
   userId,
@@ -502,7 +502,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
@@ -518,7 +518,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callClient,

@@ -33,7 +33,7 @@ import { useId } from '@fluentui/react-hooks';
 /**
  * Props required for the {@link CallWithChatComposite}
  *
- * @beta
+ * @public
  */
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   adapter: CallWithChatAdapter;
@@ -63,7 +63,7 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 /**
  * Optional features of the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeOptions = {
   /**
@@ -75,7 +75,7 @@ export type CallWithChatCompositeOptions = {
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatControlOptions
   extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
@@ -263,7 +263,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
- * @beta
+ * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
