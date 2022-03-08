@@ -518,34 +518,41 @@ export const useAzureCommunicationCallWithChatAdapter = (
   args: Partial<AzureCommunicationCallWithChatAdapterArgs>
 ): CallWithChatAdapter | undefined => {
   const { credential, displayName, endpoint, locator, userId } = args;
-  // Need to update internal state to trigger a rerender when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
-  // Need to capture the same adapter in a Ref, so that the cleanup function from `useEffect` below uses
-  // the asynchronously created adapter.
-  const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
   useEffect(
     () => {
-      if (!!credential && !!displayName && !!endpoint && !!locator && !!userId) {
-        (async () => {
-          const newAdapter = await createAzureCommunicationCallWithChatAdapter({
+      if (!credential || !displayName || !endpoint || !locator || !userId) {
+        return;
+      }
+      (async () => {
+        setAdapter(
+          await createAzureCommunicationCallWithChatAdapter({
             credential,
             displayName,
             endpoint,
             locator,
             userId
-          });
-          setAdapter(newAdapter);
-          adapterRef.current = newAdapter;
-        })();
-      }
-      // If we use `adapter` in the cleanup function, it will not capture the adapter that will be created asynchronously.
-      // Use `adapterRef.current` instead because `adapterRef` will be captured, and the cleanup function, when it runs, will
-      // pick up the asynchronously updated value of `adapterRef.current`.
-      return () => adapterRef.current?.dispose();
+          })
+        );
+      })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
     [credential, displayName, endpoint, locator, userId]
   );
+
+  // Dispose the old adapter when a new one is created.
+  // This clean up function is returned from a separate `useEffect` block because:
+  // - `adapter` is set asynchronously, so the clean up for `useEffect` that creates the adapter can not capture
+  //   the value of `adapter` that needs to be disposed.
+  // - `adapter` can not be added to the dependency array of `useEffect` above -- we do not want to trigger a new
+  //   adapter creation because of the first adapter creation.
+  useEffect(() => {
+    return () => {
+      if (adapter) {
+        adapter.dispose();
+      }
+    };
+  }, [adapter]);
   return adapter;
 };
 
