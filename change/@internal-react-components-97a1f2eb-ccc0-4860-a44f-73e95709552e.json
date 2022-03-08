@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "minor",
   "comment": "Switch CallWithChat from Beta to Public and Stable",
   "packageName": "@internal/react-components",
   "email": "edwardlee@microsoft.com",
