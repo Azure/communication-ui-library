@@ -36,25 +36,16 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     [props.locator]
   );
 
-  const adapter = useAzureCommunicationCallAdapter({
-    userId: props.userId,
-    displayName: props.displayName, // Max 256 Characters
-    credential,
-    locator
-  });
-  useEffect(() => {
-    return () => {
-      (async () => {
-        if (!adapter) {
-          return;
-        }
-        await adapter.leaveCall().catch((e) => {
-          console.error('Failed to leave call', e);
-        });
-        adapter.dispose();
-      })();
-    };
-  }, [adapter]);
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      userId: props.userId,
+      displayName: props.displayName, // Max 256 Characters
+      credential,
+      locator
+    },
+    undefined,
+    leaveCall
+  );
 
   if (adapter) {
     return (
@@ -74,4 +65,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
+};
+
+const leaveCall = async (adapter: CallAdapter): Promise<void> => {
+  await adapter.leaveCall().catch((e) => {
+    console.error('Failed to leave call', e);
+  });
 };
