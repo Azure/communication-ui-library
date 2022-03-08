@@ -45,21 +45,8 @@ export const copyLinkButtonContainerStyles: IStackStyles = { root: { width: '100
  */
 export const copyLinkButtonStyles: IButtonStyles = {
   root: {
-    height: '3rem',
-    width: '100%',
-    borderRadius: '0.5rem'
-  },
-  textContainer: {
-    display: 'contents'
-  }
-};
-
-/**
- * @private
- */
-export const copyLinkDesktopButtonStyles: IButtonStyles = {
-  root: {
-    margin: '1rem 1rem 0 1rem'
+    height: '2.5rem',
+    width: '100%'
   },
   textContainer: {
     display: 'contents'
