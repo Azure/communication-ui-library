@@ -72,7 +72,7 @@ export interface FileUploadManager {
    * Update the progress of the upload.
    * @param value - number between 0 and 1
    */
-  notifyUploadProgressed: (value: number) => void;
+  notifyUploadProgressChanged: (value: number) => void;
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
@@ -124,8 +124,8 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.setMaxListeners(maxListeners);
   }
 
-  notifyUploadProgressed(value: number): void {
-    this._emitter.emit('uploadProgress', this.id, value);
+  notifyUploadProgressChanged(value: number): void {
+    this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
   notifyUploadCompleted(metadata: FileMetadata): void {
@@ -136,7 +136,7 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.emit('uploadFail', this.id, message);
   }
 
-  on(event: 'uploadProgress', listener: UploadProgressListener): void;
+  on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   on(event: 'uploadComplete', listener: UploadCompleteListener): void;
   on(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
@@ -148,7 +148,7 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.addListener(event, listener);
   }
 
-  off(event: 'uploadProgress', listener: UploadProgressListener): void;
+  off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   off(event: 'uploadComplete', listener: UploadCompleteListener): void;
   off(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
@@ -165,7 +165,7 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
  * Events emitted by the FileUpload class.
  * @beta
  */
-export type FileUploadEvents = 'uploadProgress' | 'uploadComplete' | 'uploadFail';
+export type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
 /**
  * Events listeners supported by the FileUpload class.
@@ -196,7 +196,7 @@ export interface FileUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */
-  on(event: 'uploadProgress', listener: UploadProgressListener): void;
+  on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   /**
    * Subscriber function for `uploadComplete` event.
    */
@@ -209,7 +209,7 @@ export interface FileUploadEventEmitter {
   /**
    * Unsubscriber function for `uploadProgressed` event.
    */
-  off(event: 'uploadProgress', listener: UploadProgressListener): void;
+  off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   /**
    * Unsubscriber function for `uploadComplete` event.
    */

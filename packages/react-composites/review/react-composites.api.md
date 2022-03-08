@@ -865,10 +865,10 @@ export interface FileUploadAdapter {
 
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
-    off(event: 'uploadProgress', listener: UploadProgressListener): void;
+    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
     off(event: 'uploadComplete', listener: UploadCompleteListener): void;
     off(event: 'uploadFail', listener: UploadFailedListener): void;
-    on(event: 'uploadProgress', listener: UploadProgressListener): void;
+    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
     on(event: 'uploadComplete', listener: UploadCompleteListener): void;
     on(event: 'uploadFail', listener: UploadFailedListener): void;
 }
@@ -881,7 +881,7 @@ export interface FileUploadManager {
     file: File;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressed: (value: number) => void;
+    notifyUploadProgressChanged: (value: number) => void;
 }
 
 // @beta
