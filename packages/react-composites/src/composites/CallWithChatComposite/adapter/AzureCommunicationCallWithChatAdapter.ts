@@ -536,10 +536,14 @@ export const useAzureCommunicationCallWithChatAdapter = (
   beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>
 ): CallWithChatAdapter | undefined => {
   const { credential, displayName, endpoint, locator, userId } = args;
+
+  // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
+  // Ref needed for cleanup to access the old adapter created asynchronously.
+  const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
+
   const afterCreateRef = useRef(afterCreate);
   const beforeDisposeRef = useRef(beforeDispose);
-
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
@@ -553,6 +557,19 @@ export const useAzureCommunicationCallWithChatAdapter = (
         return;
       }
       (async () => {
+        if (adapterRef.current) {
+          // Dispose the old adapter when a new one is created.
+          //
+          // This clean up function uses `adapterRef` because `adapter` can not be added to the dependency array of
+          // this `useEffect` -- we do not want to trigger a new adapter creation because of the first adapter
+          // creation.
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+
         let newAdapter = await createAzureCommunicationCallWithChatAdapter({
           credential,
           displayName,
@@ -563,31 +580,14 @@ export const useAzureCommunicationCallWithChatAdapter = (
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
         }
+        adapterRef.current = newAdapter;
         setAdapter(newAdapter);
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [afterCreateRef, credential, displayName, endpoint, locator, userId]
+    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
   );
 
-  // Dispose the old adapter when a new one is created.
-  // This clean up function is returned from a separate `useEffect` block because:
-  // - `adapter` is set asynchronously, so the clean up for `useEffect` that creates the adapter can not capture
-  //   the value of `adapter` that needs to be disposed.
-  // - `adapter` can not be added to the dependency array of `useEffect` above -- we do not want to trigger a new
-  //   adapter creation because of the first adapter creation.
-  useEffect(() => {
-    return () => {
-      (async () => {
-        if (adapter) {
-          if (beforeDisposeRef.current) {
-            await beforeDisposeRef.current(adapter);
-          }
-          adapter.dispose();
-        }
-      })();
-    };
-  }, [adapter, beforeDisposeRef]);
   return adapter;
 };
 
