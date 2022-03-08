@@ -30,6 +30,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 // Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
+const useFileSharing = Boolean(params.useFileSharing);
 
 // Needed to initialize default icons used by Fluent components.
 initializeIcons();
@@ -100,7 +101,23 @@ function App(): JSX.Element {
                 : undefined
             }
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-            options={{ participantPane: true }}
+            options={{
+              participantPane: true,
+              fileSharing: useFileSharing
+                ? {
+                    uploadHandler: (userId, fileUploads) => {
+                      fileUploads.forEach((fileUpload) => {
+                        fileUpload.notifyUploadCompleted({
+                          name: 'fakename',
+                          extension: 'xls',
+                          url: 'fake.com'
+                        });
+                      });
+                    },
+                    multiple: true
+                  }
+                : undefined
+            }}
           />
         </_IdentifierProvider>
       )}
