@@ -128,13 +128,6 @@ export const EmbeddedPeoplePane = (props: {
     [pictureInPictureProps, pictureInPictureHandlers]
   );
 
-  const DRAG_OPTIONS: IDragOptions = {
-    moveMenuItemText: 'Move',
-    closeMenuItemText: 'Close',
-    menu: ContextualMenu,
-    keepInBounds: true
-  };
-
   const theme = useTheme();
 
   const copyLinkButtonStylesThemed = useMemo(
@@ -291,4 +284,14 @@ const convertContextualMenuItemToDrawerMenuItem = (
     text: contextualMenu.text,
     disabled: contextualMenu.disabled
   };
+};
+
+/**
+ * Drag options for Modal
+ */
+const DRAG_OPTIONS: IDragOptions = {
+  moveMenuItemText: 'Move',
+  closeMenuItemText: 'Close',
+  menu: ContextualMenu,
+  keepInBounds: true
 };

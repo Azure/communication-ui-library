@@ -1,8 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
+import {
+  concatStyleSets,
+  ContextualMenu,
+  DefaultButton,
+  IDragOptions,
+  IModalStyleProps,
+  IModalStyles,
+  IStyleFunctionOrObject,
+  Modal,
+  Stack
+} from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallAdapter } from '../CallComposite';
+import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
+import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
+import { useSelector } from '../CallComposite/hooks/useSelector';
+import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   paneBodyContainer,
@@ -15,15 +31,14 @@ import {
   mobilePaneBackButtonStyles,
   mobilePaneButtonStyles,
   mobilePaneControlBarStyle,
-  mobilePaneStyle
+  mobilePaneStyle,
+  modalStyle
 } from './styles/MobilePane.styles';
 
 /**
- * This is a wrapper for Chat and People pane to cover the entire the screen and to have
- * its own navigation bar
- * @private
+ * Props for {@link MobilePane} component
  */
-export const MobilePane = (props: {
+type MobilePaneProps = {
   onClose: () => void;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
@@ -31,7 +46,14 @@ export const MobilePane = (props: {
   hidden: boolean;
   dataUiId: string;
   activeTab: MobilePaneTab;
-}): JSX.Element => {
+};
+
+/**
+ * This is a wrapper for Chat and People pane to cover the entire the screen and to have
+ * its own navigation bar
+ * @private
+ */
+export const MobilePane = (props: MobilePaneProps): JSX.Element => {
   // We hide the mobile pane instead of not rendering the entire pane to persist certain elements
   // between renders. An example of this is composing a chat message - a chat message that has been
   // typed but not sent should not be lost if the mobile panel is closed and then reopened.
@@ -96,3 +118,63 @@ const ChevronLeftIconTrampoline = (): JSX.Element => {
  * Type used to define which tab is active in {@link MobilePane}
  */
 type MobilePaneTab = 'chat' | 'people';
+
+/**
+ * Drag options for Modal
+ */
+const DRAG_OPTIONS: IDragOptions = {
+  moveMenuItemText: 'Move',
+  closeMenuItemText: 'Close',
+  menu: ContextualMenu,
+  keepInBounds: true
+};
+
+const _MobilePaneWithLocalAndRemotePIP = (
+  props: MobilePaneProps & {
+    modalLayerHostId: string;
+    styles?: { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+  }
+): JSX.Element => {
+  const mobilePaneStyles = props.hidden ? hiddenMobilePaneStyle : mobilePaneStyle;
+  const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
+  const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
+  const localAndRemotePIP = useMemo(
+    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
+    [pictureInPictureProps, pictureInPictureHandlers]
+  );
+
+  const modalStylesThemed = concatStyleSets(modalStyle, { root: {} }, props.styles?.modal);
+
+  return (
+    <Stack styles={mobilePaneStyles}>
+      <MobilePane {...props} />
+      <Modal
+        isOpen={true}
+        isModeless={true}
+        dragOptions={DRAG_OPTIONS}
+        styles={modalStylesThemed}
+        layerProps={{ hostId: props.modalLayerHostId }}
+      >
+        {
+          // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+          // possession of the dominant remote participant video stream
+          !props.hidden && localAndRemotePIP
+        }
+      </Modal>
+    </Stack>
+  );
+};
+
+export const MobilePaneWithLocalAndRemotePIP = (
+  props: MobilePaneProps & {
+    callAdapter: CallAdapter;
+    modalLayerHostId: string;
+    styles?: { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+  }
+): JSX.Element => {
+  return (
+    <CallAdapterProvider adapter={props.callAdapter}>
+      <_MobilePaneWithLocalAndRemotePIP {...props} />
+    </CallAdapterProvider>
+  );
+};

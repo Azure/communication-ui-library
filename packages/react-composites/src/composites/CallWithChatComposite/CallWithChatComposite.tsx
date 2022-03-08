@@ -198,11 +198,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             chatCompositeProps={chatProps}
             hidden={!showChat}
             chatAdapter={chatProps.adapter}
+            callAdapter={callAdapter}
             fluentTheme={fluentTheme}
             onClose={closePane}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
             onChatButtonClick={selectChat}
             onPeopleButtonClick={selectPeople}
+            modalLayerHostId={modalLayerHostId}
             mobileView={isMobile}
           />
         )}
@@ -217,8 +219,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
               onChatButtonClick={selectChat}
               onPeopleButtonClick={selectPeople}
-              mobileView={isMobile}
               modalLayerHostId={modalLayerHostId}
+              mobileView={isMobile}
             />
           </CallAdapterProvider>
         )}

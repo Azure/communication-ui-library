@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, IButtonStyles, IStackStyles } from '@fluentui/react';
+import {
+  concatStyleSets,
+  IButtonStyles,
+  IModalStyleProps,
+  IModalStyles,
+  IStackStyles,
+  IStyleFunctionOrObject
+} from '@fluentui/react';
 
 /**
  * @private
@@ -51,4 +58,26 @@ export const mobilePaneButtonStyles: IButtonStyles = {
     whiteSpace: 'nowrap'
   },
   labelChecked: { fontWeight: 600 }
+};
+
+/**
+ * @private
+ */
+export const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
+  main: {
+    minWidth: 'min-content',
+    minHeight: 'min-content',
+    position: 'absolute',
+    zIndex: 1,
+    overflow: 'hidden',
+    // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
+    pointerEvents: 'auto',
+    touchAction: 'none'
+  },
+  root: {
+    width: '100%',
+    height: '100%',
+    // pointer events for root Modal div set to none to make descendants interactive
+    pointerEvents: 'none'
+  }
 };
