@@ -38,6 +38,7 @@ export interface ActiveFileUpload {
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -921,6 +922,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
