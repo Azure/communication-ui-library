@@ -46,11 +46,11 @@ export interface CallWithChatCompositeStrings {
    */
   moreDrawerSpeakerMenuTitle: string;
   /**
-   * {@Link CallWithChatComposite} Mobile Control bar More drawer label for narrator
+   * {@Link CallWithChatComposite} control bar More button label
    */
   moreDrawerButtonLabel: string;
   /**
-   * {@Link CallWithChatComposite} Mobile Control bar More drawer label for narrator
+   * {@Link CallWithChatComposite} control bar More button tooltip content
    */
   moreDrawerButtonTooltip: string;
   /**
