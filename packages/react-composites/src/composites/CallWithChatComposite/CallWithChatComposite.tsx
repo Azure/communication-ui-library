@@ -20,7 +20,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatCompositeProps, FileSharingOptions } from '../ChatComposite';
+import { ChatCompositeProps } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -29,6 +29,8 @@ import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -106,6 +108,7 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
 };
 
@@ -212,6 +215,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             onChatButtonClick={selectChat}
             onPeopleButtonClick={selectPeople}
             mobileView={isMobile}
+            /* @conditional-compile-remove(file-sharing) */
             fileSharing={props.fileSharing}
           />
         )}

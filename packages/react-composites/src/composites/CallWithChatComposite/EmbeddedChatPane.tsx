@@ -2,11 +2,13 @@
 // Licensed under the MIT license.
 import { PartialTheme, Theme } from '@fluentui/react';
 import React from 'react';
-import { ChatAdapter, ChatComposite, ChatCompositeProps, FileSharingOptions } from '../ChatComposite';
+import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * @private
@@ -21,6 +23,7 @@ export const EmbeddedChatPane = (props: {
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
