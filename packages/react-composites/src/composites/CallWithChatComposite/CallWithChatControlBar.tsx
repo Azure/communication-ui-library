@@ -206,7 +206,8 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderTopRightRadius: theme.effects.roundedCorner4,
+    borderBottomRightRadius: theme.effects.roundedCorner4,
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0'
   },
