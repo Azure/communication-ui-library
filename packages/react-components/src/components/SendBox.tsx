@@ -17,6 +17,7 @@ import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
@@ -211,6 +212,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  /* @conditional-compile-remove(file-sharing) */
   const [showFileUploadsPendingError, setShowFileUploadsPendingError] = useState(false);
 
   const sendMessageOnClick = (): void => {
@@ -220,7 +222,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
     setShowFileUploadsPendingError(false);
+    /* @conditional-compile-remove(file-sharing) */
     if (hasIncompleteFileUploads(props)) {
       setShowFileUploadsPendingError(true);
       return;
@@ -282,13 +286,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
-    /* @conditional-compile-remove(file-sharing) */
     const latestError = props.activeFileUploads?.filter((fileUpload) => fileUpload.errorMessage).pop()?.errorMessage;
     return {
       onDismissFileUploadsPendingError: () => setShowFileUploadsPendingError(false),
       fileUploadsPendingError: showFileUploadsPendingError ? { message: strings.fileUploadsPendingError } : undefined,
-      /* @conditional-compile-remove(file-sharing) */
       fileUploadError: latestError ? { message: latestError } : undefined
     };
   }, [props.activeFileUploads, showFileUploadsPendingError, strings.fileUploadsPendingError]);
@@ -309,7 +312,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
-      <SendBoxErrors {...sendBoxErrorsProps} />
+      {
+        /* @conditional-compile-remove(file-sharing) */
+        <SendBoxErrors {...sendBoxErrorsProps} />
+      }
       <Stack
         className={mergeStyles(
           borderAndBoxShadowStyle({
@@ -365,16 +371,15 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */
 const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
-  /* @conditional-compile-remove(file-sharing) */
   return !!(
     props.activeFileUploads?.length &&
     !props.activeFileUploads
       .filter((fileUpload) => !fileUpload.errorMessage)
       .every((fileUpload) => fileUpload.uploadComplete)
   );
-  return false;
 };
