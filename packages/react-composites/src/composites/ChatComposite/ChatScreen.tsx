@@ -43,8 +43,6 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadCards } from './FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
@@ -167,7 +165,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
+            onRenderFileDownloads={(userId, message) => (
+              <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
+            )}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -181,12 +181,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
-              /* @conditional-compile-remove(file-sharing) */
-              onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
               /* @conditional-compile-remove(file-sharing) */
               activeFileUploads={useSelector(fileUploadsSelector).files}
+              /* @conditional-compile-remove(file-sharing) */
+              onCancelFileUpload={adapter.cancelFileUpload}
             />
 
             <FileUploadButton

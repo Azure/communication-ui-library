@@ -526,11 +526,15 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
+    chatButtonTooltipContentClose: string;
+    chatButtonTooltipContentOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
+    peopleButtonTooltipContentClose: string;
+    peopleButtonTooltipContentOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -975,6 +979,9 @@ export type UploadFailedListener = (id: string, message: string) => void;
 
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
+
+// @beta
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
 
 // (No @packageDocumentation comment for this package)
 

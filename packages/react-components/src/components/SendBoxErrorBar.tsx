@@ -5,37 +5,47 @@ import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
 
 /**
- * @internal
+ * @private
  */
 export interface SendBoxErrorBarProps {
   /** Error message to render */
   message?: string;
   /**
-   * Timeout in ms after which the error bar disappears.
-   * If undefined, the error bar will never disappear.
+   * Automatically dismisses the error bar after the specified delay in ms.
+   * Example: `10 * 1000` would be 10 seconds
    */
-  timeout?: number;
+  dismissAfterMs?: number;
+  /**
+   * Callback to invoke when the error bar is dismissed
+   */
+  onDismiss?: () => void;
 }
 
 /**
- * @internal
+ * @private
  */
-export const SendBoxErrorBar = (props: { message?: string; timeout?: number }): JSX.Element => {
-  const { message, timeout } = props;
+export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
+  const { message, dismissAfterMs, onDismiss } = props;
   const [errorMessage, setErrorMessage] = React.useState(message);
+  // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const timeoutRef = React.useRef<any>();
+
+  React.useEffect(() => {
+    setErrorMessage(message);
+  }, [message]);
 
   useEffect(() => {
-    if (timeout !== undefined) {
-      const messageTimeout = setTimeout(() => {
+    if (dismissAfterMs !== undefined) {
+      timeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
-      }, timeout);
-      return () => {
-        clearTimeout(messageTimeout);
-      };
-    } else {
-      return;
+        onDismiss && onDismiss();
+      }, dismissAfterMs);
     }
-  }, [timeout]);
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
+  }, [dismissAfterMs, onDismiss, message]);
 
   if (errorMessage) {
     return (
