@@ -87,7 +87,7 @@ function App(): JSX.Element {
   );
 }
 
-const wrapAdapterForTests = (adapter: CallWithChatAdapter): CallWithChatAdapter => {
+const wrapAdapterForTests = async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
   return new Proxy(adapter, new ProxyCallWithChatAdapter());
 };
 

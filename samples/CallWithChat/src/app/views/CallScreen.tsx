@@ -39,7 +39,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   );
 
   const afterAdapterCreate = useCallback(
-    (adapter: CallWithChatAdapter): CallWithChatAdapter => {
+    async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
       adapter.on('callError', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).

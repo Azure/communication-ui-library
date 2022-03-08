@@ -527,13 +527,13 @@ export const useAzureCommunicationCallWithChatAdapter = (
    *
    * If set, must return the modified adapter.
    */
-  afterCreate?: (adapter: CallWithChatAdapter) => CallWithChatAdapter,
+  afterCreate?: (adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>,
   /**
    * Optional callback called before the adapter is disposed.
    *
    * This is useful for clean up tasks, e.g., leaving any ongoing calls.
    */
-  beforeDispose?: (adapter: CallWithChatAdapter) => void
+  beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>
 ): CallWithChatAdapter | undefined => {
   const { credential, displayName, endpoint, locator, userId } = args;
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
@@ -561,7 +561,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           userId
         });
         if (afterCreateRef.current) {
-          newAdapter = afterCreateRef.current(newAdapter);
+          newAdapter = await afterCreateRef.current(newAdapter);
         }
         setAdapter(newAdapter);
       })();
@@ -578,12 +578,14 @@ export const useAzureCommunicationCallWithChatAdapter = (
   //   adapter creation because of the first adapter creation.
   useEffect(() => {
     return () => {
-      if (adapter) {
-        if (beforeDisposeRef.current) {
-          beforeDisposeRef.current(adapter);
+      (async () => {
+        if (adapter) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapter);
+          }
+          adapter.dispose();
         }
-        adapter.dispose();
-      }
+      })();
     };
   }, [adapter, beforeDisposeRef]);
   return adapter;
