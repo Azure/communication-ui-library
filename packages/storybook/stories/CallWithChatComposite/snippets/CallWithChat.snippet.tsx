@@ -3,12 +3,11 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import {
   CallAndChatLocator,
   CallWithChatControlOptions,
-  CallWithChatAdapter,
   CallWithChatComposite,
-  createAzureCommunicationCallWithChatAdapter
+  useAzureCommunicationCallWithChatAdapter
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 export type CallWithChatExampleProps = {
   userId: CommunicationUserIdentifier;
@@ -22,8 +21,6 @@ export type CallWithChatExampleProps = {
 };
 
 export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Element => {
-  const [callWithChatAdapter, setCallWithChatAdapter] = useState<CallWithChatAdapter>();
-
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
@@ -32,27 +29,17 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
       return undefined;
     }
   }, [props.token]);
+  const adapter = useAzureCommunicationCallWithChatAdapter({
+    userId: props.userId,
+    displayName: props.displayName,
+    credential,
+    locator: props.locator,
+    endpoint: props.endpointUrl
+  });
 
-  useEffect(() => {
-    if (props && credential && props.locator && props.displayName && props.userId && props.endpointUrl) {
-      const createAdapters = async (): Promise<void> => {
-        setCallWithChatAdapter(
-          await createAzureCommunicationCallWithChatAdapter({
-            userId: props.userId,
-            displayName: props.displayName,
-            credential,
-            locator: props.locator,
-            endpoint: props.endpointUrl
-          })
-        );
-      };
-      createAdapters();
-    }
-  }, [credential, props]);
-
-  if (callWithChatAdapter) {
+  if (adapter) {
     const options = { callControls: props.callWithChatControlOptions };
-    return <CallWithChatComposite adapter={callWithChatAdapter} fluentTheme={props.fluentTheme} options={options} />;
+    return <CallWithChatComposite adapter={adapter} fluentTheme={props.fluentTheme} options={options} />;
   }
 
   if (credential === undefined) {
