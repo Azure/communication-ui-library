@@ -516,37 +516,77 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
  * @beta
  */
 export const useAzureCommunicationCallWithChatAdapter = (
-  args: Partial<AzureCommunicationCallWithChatAdapterArgs>
+  /**
+   * Arguments to be passed to {@link createAzureCommunicationCallWithChatAdapter}.
+   *
+   * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+   * as they are created. The adapter is only created when all arguments are defined.
+   */
+  args: Partial<AzureCommunicationCallWithChatAdapterArgs>,
+  /**
+   * Optional callback to modify the adapter once it is created.
+   *
+   * If set, must return the modified adapter.
+   */
+  afterCreate?: (adapter: CallWithChatAdapter) => CallWithChatAdapter,
+  /**
+   * Optional callback called before the adapter is disposed.
+   *
+   * This is useful for clean up tasks, e.g., leaving any ongoing calls.
+   */
+  beforeDispose?: (adapter: CallWithChatAdapter) => void
 ): CallWithChatAdapter | undefined => {
   const { credential, displayName, endpoint, locator, userId } = args;
-  // Need to update internal state to trigger a rerender when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
-  // Need to capture the same adapter in a Ref, so that the cleanup function from `useEffect` below uses
-  // the asynchronously created adapter.
-  const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
+  const afterCreateRef = useRef(afterCreate);
+  const beforeDisposeRef = useRef(beforeDispose);
+
+  // These refs are updated on *each* render, so that the latest values
+  // are used in the `useEffect` closures below.
+  // Using a Ref ensures that new values for the callbacks do not trigger the
+  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  afterCreateRef.current = afterCreate;
+  beforeDisposeRef.current = beforeDispose;
+
   useEffect(
     () => {
-      if (!!credential && !!displayName && !!endpoint && !!locator && !!userId) {
-        (async () => {
-          const newAdapter = await createAzureCommunicationCallWithChatAdapter({
-            credential,
-            displayName,
-            endpoint,
-            locator,
-            userId
-          });
-          setAdapter(newAdapter);
-          adapterRef.current = newAdapter;
-        })();
+      if (!credential || !displayName || !endpoint || !locator || !userId) {
+        return;
       }
-      // If we use `adapter` in the cleanup function, it will not capture the adapter that will be created asynchronously.
-      // Use `adapterRef.current` instead because `adapterRef` will be captured, and the cleanup function, when it runs, will
-      // pick up the asynchronously updated value of `adapterRef.current`.
-      return () => adapterRef.current?.dispose();
+      (async () => {
+        let newAdapter = await createAzureCommunicationCallWithChatAdapter({
+          credential,
+          displayName,
+          endpoint,
+          locator,
+          userId
+        });
+        if (afterCreateRef.current) {
+          newAdapter = afterCreateRef.current(newAdapter);
+        }
+        setAdapter(newAdapter);
+      })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [credential, displayName, endpoint, locator, userId]
+    [afterCreateRef, credential, displayName, endpoint, locator, userId]
   );
+
+  // Dispose the old adapter when a new one is created.
+  // This clean up function is returned from a separate `useEffect` block because:
+  // - `adapter` is set asynchronously, so the clean up for `useEffect` that creates the adapter can not capture
+  //   the value of `adapter` that needs to be disposed.
+  // - `adapter` can not be added to the dependency array of `useEffect` above -- we do not want to trigger a new
+  //   adapter creation because of the first adapter creation.
+  useEffect(() => {
+    return () => {
+      if (adapter) {
+        if (beforeDisposeRef.current) {
+          beforeDisposeRef.current(adapter);
+        }
+        adapter.dispose();
+      }
+    };
+  }, [adapter, beforeDisposeRef]);
   return adapter;
 };
 
