@@ -32,6 +32,15 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// @beta
+export interface ActiveFileUpload {
+    errorMessage?: string;
+    filename: string;
+    id: string;
+    progress: number;
+    uploadComplete?: boolean;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -360,6 +369,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
 export interface _DrawerMenuItemProps {
+    disabled?: boolean;
     iconProps?: IIconProps;
     // (undocumented)
     itemKey: string;
@@ -736,6 +746,7 @@ export interface ParticipantItemProps {
     displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
+    onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
@@ -783,6 +794,7 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
 };
 
@@ -890,8 +902,12 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
+    // @beta
+    activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
@@ -906,6 +922,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
@@ -984,6 +1001,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -999,7 +1019,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;

@@ -14,9 +14,25 @@ export interface CallWithChatCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipContentOpen: string;
+  /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipContentClose: string;
+  /**
    * {@link CallWithChatComposite} control bar Chat button label.
    */
   chatButtonLabel: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipContentOpen: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipContentClose: string;
   /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *
@@ -53,4 +69,12 @@ export interface CallWithChatCompositeStrings {
    * returns the user to the call screen.
    */
   pictureInPictureTileAriaLabel: string;
+  /**
+   * Label for menu item to remove participant
+   */
+  removeMenuLabel: string;
+  /**
+   * Label for button to copy invite link
+   */
+  copyInviteLinkButtonLabel: string;
 }

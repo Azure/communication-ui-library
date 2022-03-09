@@ -82,15 +82,15 @@ const disableLobbyPageControls = (
 };
 
 const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
-  inLobby ? overlayPropsWaitingToBeAdmitted(strings, inLobby) : overlayPropsConnectingToCall(strings, inLobby);
+  inLobby ? overlayPropsWaitingToBeAdmitted(strings) : overlayPropsConnectingToCall(strings);
 
-const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
   moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
   overlayIcon: <CallCompositeIcon iconName="LobbyScreenConnectingToCall" />
 });
 
-const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
   overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />

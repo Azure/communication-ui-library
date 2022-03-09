@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { PartialTheme, Stack, Theme } from '@fluentui/react';
+import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane } from './EmbeddedChatPane';
@@ -13,7 +13,8 @@ import {
   callCompositeContainerStyles,
   compositeOuterContainerStyles,
   controlBarContainerStyles,
-  drawerContainerStyles
+  drawerContainerStyles,
+  modalLayerHostStyle
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -26,6 +27,10 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
+import { ParticipantMenuItemsCallback } from '@internal/react-components';
+import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -68,6 +73,13 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Properties for configuring the File Sharing feature.
+   * If undefined, file sharing feature will be disabled.
+   * @beta
+   */
+  fileSharing?: FileSharingOptions;
 };
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
@@ -95,6 +107,9 @@ type CallWithChatScreenProps = {
   joinInvitationURL?: string;
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(file-sharing) */
+  fileSharing?: FileSharingOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -145,14 +160,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const onMoreButtonClicked = useCallback(() => {
     closePane();
     setShowDrawer(true);
-  }, []);
+  }, [closePane]);
   const closeDrawer = useCallback(() => {
     setShowDrawer(false);
   }, []);
   const onMoreDrawerPeopleClicked = useCallback(() => {
     setShowDrawer(false);
     togglePeople();
-  }, []);
+  }, [togglePeople]);
   const selectPeople = useCallback(() => {
     setShowPeople(true);
     setShowChat(false);
@@ -167,6 +182,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
     };
   }, [callWithChatAdapter]);
+
+  const modalLayerHostId = useId('modalLayerhost');
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
@@ -198,6 +215,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             onChatButtonClick={selectChat}
             onPeopleButtonClick={selectPeople}
             mobileView={isMobile}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={props.fileSharing}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -212,6 +231,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onChatButtonClick={selectChat}
               onPeopleButtonClick={selectPeople}
               mobileView={isMobile}
+              modalLayerHostId={modalLayerHostId}
             />
           </CallAdapterProvider>
         )}
@@ -243,6 +263,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
+      {
+        // This layer host is for Modal wrapping the PiPiP in the mobile EmbeddedPeoplePane. This LayerHost can't be inside the EmbeddedPeoplePane
+        // because when the EmbeddedPeoplePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+        // the Modal because the draggable bounds is no space and will always returns to its initial position after dragging.
+        isMobile && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+      }
     </Stack>
   );
 };
@@ -263,6 +289,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing={options?.fileSharing}
       />
     </BaseProvider>
   );

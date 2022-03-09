@@ -9,8 +9,7 @@ import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@flue
 export const sidePaneContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
+    padding: '0.5rem 0.25rem',
     width: '21.5rem'
   }
 };
@@ -37,7 +36,6 @@ export const sidePaneContainerTokens: IStackTokens = {
  */
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
-    fontSize: '0.825rem',
     lineHeight: '1.25rem',
     padding: '0.25rem',
     fontWeight: '600'
@@ -57,7 +55,9 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
 /**
  * @private
  */
-export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow: '1', flexBasis: '0' } };
+export const scrollableContainerContents: IStackItemStyles = {
+  root: { flexGrow: '1', flexBasis: '0', maxWidth: '100%' }
+};
 
 /**
  * @private
@@ -89,14 +89,6 @@ export const participantListWrapper = mergeStyles({
  * @private
  */
 export const participantListContainerPadding = { childrenGap: '0.5rem' };
-
-/**
- * @private
- */
-export const listHeader = mergeStyles({
-  fontSize: '1rem',
-  margin: '1rem'
-});
 
 /**
  * @private

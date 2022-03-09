@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "FileUpload: Only show FileCard for files that don't contain errors. Only send files metadata in the message if it doesn't contain errors.",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useRef, useState } from 'react';
-import { Link, MessageBar } from '@fluentui/react';
+import { Link, MessageBar, MessageBarType } from '@fluentui/react';
 import { CompositeStrings, useLocale } from '../../localization';
 import { ComplianceBannerVariant, ComplianceState, computeVariant } from '../utils';
 
@@ -98,6 +98,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
     <></>
   ) : (
     <MessageBar
+      messageBarType={MessageBarType.warning}
       onDismiss={() => {
         // when closing the banner, change variant to nostate and change stopped state to off state.
         // Reason: on banner close, going back to the default state

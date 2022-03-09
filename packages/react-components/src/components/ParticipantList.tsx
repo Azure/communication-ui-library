@@ -77,6 +77,8 @@ export type ParticipantListProps = {
   onRemoveParticipant?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /** Optional callback when rendered ParticipantItem is clicked */
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
 };
@@ -85,10 +87,10 @@ const onRenderParticipantDefault = (
   participant: ParticipantListParticipant,
   strings: ParticipantItemStrings,
   myUserId?: string,
-  onRemoveParticipant?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
-  styles?: ParticipantListItemStyles
+  styles?: ParticipantListItemStyles,
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -133,6 +135,7 @@ const onRenderParticipantDefault = (
         presence={presence}
         onRenderIcon={onRenderIcon}
         onRenderAvatar={onRenderAvatar}
+        onClick={() => onParticipantClick?.(participant)}
       />
     );
   }
@@ -217,10 +220,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               participant,
               strings,
               myUserId,
-              onRemoveParticipant,
               onRenderAvatar,
               createParticipantMenuItems,
-              participantItemStyles
+              participantItemStyles,
+              props.onParticipantClick
             )
       )}
     </Stack>

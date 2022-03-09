@@ -1,8 +1,26 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Mon, 24 Jan 2022 23:18:53 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Mar 2022 16:42:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.1.1-beta.1)
+
+Tue, 01 Mar 2022 16:42:55 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.1...@internal/calling-component-bindings_v1.1.1-beta.1)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+- Bump @internal/calling-stateful-client to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+- Bump @internal/react-components to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+
+### Changes
+
+- upgrading calling to 1.4.2-beta.1 ([PR #1509](https://github.com/azure/communication-ui-library/pull/1509) by 79329532+alkwa-msft@users.noreply.github.com)
+- Add audio devices to MicrophoneButton selector ([PR #1392](https://github.com/azure/communication-ui-library/pull/1392) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Include cameras in CameraButton selector ([PR #1436](https://github.com/azure/communication-ui-library/pull/1436) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Camera Logic added for local camera switcher button ([PR #1393](https://github.com/azure/communication-ui-library/pull/1393) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.1)
 

@@ -21,7 +21,7 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
         },
         props.styles ?? {}
       ),
-    [theme]
+    [props.styles, theme.palette.neutralLight]
   );
   return (
     <ControlBarButton

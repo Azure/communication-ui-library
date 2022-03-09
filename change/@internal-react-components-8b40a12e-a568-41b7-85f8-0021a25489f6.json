@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Mobile Participant pane now spans full sidepane width",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
