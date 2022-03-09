@@ -32,14 +32,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveFileUpload {
-    errorMessage?: string;
-    filename: string;
-    id: string;
-    progress: number;
-}
-
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -864,6 +856,8 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;

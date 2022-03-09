@@ -38,6 +38,7 @@ export interface ActiveFileUpload {
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -906,6 +907,8 @@ export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
+    onCancelFileUpload?: (fileId: string) => void;
+    // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
@@ -919,6 +922,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;

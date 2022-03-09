@@ -6,7 +6,7 @@ import { compareMessages } from './compareMessages';
 /**
  * @private
  */
-export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], userId: string): void => {
+export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): void => {
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {

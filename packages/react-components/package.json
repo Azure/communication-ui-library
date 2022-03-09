@@ -22,7 +22,7 @@
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "eslint \"*/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
@@ -41,7 +41,8 @@
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5",
     "uuid": "^8.1.0",
-    "@fluentui/react-hooks": "~8.3.8"
+    "@fluentui/react-hooks": "~8.3.8",
+    "@fluentui/react-file-type-icons": "~8.5.8"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",

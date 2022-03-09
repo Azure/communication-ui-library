@@ -35,7 +35,7 @@
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "eslint \"*/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
@@ -70,7 +70,7 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.4.2-beta.1 || 1.3.2",
+    "@azure/communication-calling": "1.4.3-beta.1 || 1.3.2",
     "@azure/communication-chat": "1.1.0",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
@@ -78,7 +78,7 @@
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.4.2-beta.1 || 1.3.2",
+    "@azure/communication-calling": "1.4.3-beta.1 || 1.3.2",
     "@azure/communication-chat": "1.1.0",
     "@azure/communication-identity": "1.0.0",
     "@babel/cli": "~7.16.0",
