@@ -41,5 +41,15 @@ export const useFileUploadAdapter = (): FileUploadAdapter => {
   /* @conditional-compile-remove(file-sharing) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
-  return {};
+  return {
+    registerFileUploads() {
+      // noop
+    },
+    cancelFileUpload() {
+      // noop
+    },
+    clearFileUploads() {
+      // noop
+    }
+  };
 };
