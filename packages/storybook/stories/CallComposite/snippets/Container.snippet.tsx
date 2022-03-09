@@ -6,7 +6,7 @@ import {
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
