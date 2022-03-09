@@ -14,9 +14,14 @@ import {
   CallEnd20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-with-chat-composite) */
-import { MicOn20Regular, People20Regular, Speaker220Regular, Chat20Regular, Chat20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(local-camera-switcher) */
-import { CameraSwitch24Regular } from '@fluentui/react-icons';
+import {
+  CameraSwitch24Regular,
+  MicOn20Regular,
+  People20Regular,
+  Speaker220Regular,
+  Chat20Regular,
+  Chat20Filled
+} from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports

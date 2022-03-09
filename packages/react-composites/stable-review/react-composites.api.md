@@ -245,6 +245,7 @@ export type CallCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
+    LocalCameraSwitch?: JSX.Element;
 };
 
 // @public
@@ -762,6 +763,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemMicOff: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    LocalCameraSwitch?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -772,7 +774,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
-    LocalCameraSwitch?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
 };
 
