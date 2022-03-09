@@ -4,7 +4,6 @@
 import { MessageBar } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
@@ -16,7 +15,6 @@ const formFactorSnippet = `
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <DetailedBetaBanner />
       <Title>CallWithChatComposite</Title>
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
