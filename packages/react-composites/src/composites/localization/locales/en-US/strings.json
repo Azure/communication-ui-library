@@ -47,7 +47,7 @@
     "peopleButtonTooltipContentOpen": "Show participants",
     "peopleButtonTooltipContentClose": "Hide participants",
     "chatButtonLabel": "Chat",
-    "chatButtonEnhancedToolTipContent": "unread",
+    "chatButtonEnhancedToolTipContent": " ({unreadMessagesCount} unread)",
     "chatButtonTooltipContentOpen": "Show chat",
     "chatButtonTooltipContentClose": "Hide chat",
     "moreDrawerMicrophoneMenuTitle": "Microphone",

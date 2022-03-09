@@ -3,6 +3,7 @@
 
 import { ChatMessage } from '@azure/communication-chat';
 import { IStackStyles, Stack } from '@fluentui/react';
+import { _formatString } from '@internal/acs-ui-common';
 import { ControlBarButtonProps } from '@internal/react-components';
 import React, { useCallback, useState } from 'react';
 import { useEffect } from 'react';
@@ -44,11 +45,9 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const numberOfMsgToolTip =
     props.strings?.tooltipOffContent && unreadChatMessagesCount > 0
       ? props.strings?.tooltipOffContent +
-        ' (' +
-        unreadChatMessagesCount +
-        ' ' +
-        callWithChatStrings.chatButtonEnhancedToolTipContent +
-        ')'
+        _formatString(callWithChatStrings.chatButtonEnhancedToolTipContent, {
+          unreadMessagesCount: `${unreadChatMessagesCount}`
+        })
       : undefined;
 
   const chatStrings = {
