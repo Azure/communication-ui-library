@@ -150,7 +150,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
     const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove(file-sharing) */
-    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    fileSharing?.uploadHandler && adapter.registerFileUploads(fileUploads);
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 

@@ -35,6 +35,8 @@ import {
   ParticipantsRemovedListener,
   ParticipantsAddedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { ObservableFileUpload } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
@@ -167,6 +169,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.registerFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.clearFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.cancelFileUpload.bind(this);
   }
 
   /** Join existing Call. */
@@ -298,6 +306,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+    this.chatAdapter.registerFileUploads(fileUploads);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public clearFileUploads(): void {
+    this.chatAdapter.clearFileUploads();
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public cancelFileUpload(id: string): void {
+    this.chatAdapter.cancelFileUpload(id);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -589,6 +609,21 @@ export const useAzureCommunicationCallWithChatAdapter = (
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
     [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
   );
+
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
 
   return adapter;
 };

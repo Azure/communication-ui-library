@@ -26,6 +26,8 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadAdapter } from '../../ChatComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -65,7 +67,9 @@ export interface CallWithChatAdapterManagement
       | 'loadPreviousChatMessages'
       | 'updateMessage'
       | 'deleteMessage'
-    > {
+    >,
+    /* @conditional-compile-remove(file-sharing) */
+    Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {
   /**
    * Remove a participant from a Call
    * @param userId - UserId of the participant to remove.
