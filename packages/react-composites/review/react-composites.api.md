@@ -352,7 +352,7 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 }
 
 // @beta
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'>, Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {
     removeParticipant(userId: string): Promise<void>;
 }
 
@@ -510,6 +510,7 @@ export type CallWithChatCompositeIcons = {
 // @beta
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    fileSharing?: FileSharingOptions;
 };
 
 // @beta
@@ -856,11 +857,11 @@ export interface FileSharingOptions {
 // @beta (undocumented)
 export interface FileUploadAdapter {
     // (undocumented)
-    cancelFileUpload?: (id: string) => void;
+    cancelFileUpload: (id: string) => void;
     // (undocumented)
-    clearFileUploads?: () => void;
+    clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
 // @beta (undocumented)
