@@ -56,8 +56,7 @@ import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommun
 
 import {
   CallAdapterLocator,
-  createAzureCommunicationCallAdapterFromClient,
-  useAzureCommunicationCallAdapter
+  createAzureCommunicationCallAdapterFromClient
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
