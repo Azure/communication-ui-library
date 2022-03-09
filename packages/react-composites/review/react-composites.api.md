@@ -531,6 +531,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipContentOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    moreDrawerButtonLabel: string;
+    moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
