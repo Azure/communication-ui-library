@@ -116,7 +116,7 @@ function App(): JSX.Element {
               participantPane: true,
               fileSharing: useFileSharing
                 ? {
-                    uploadHandler: (userId, fileUploads) => {
+                    uploadHandler: () => {
                       //noop
                     },
                     multiple: true
