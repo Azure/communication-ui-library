@@ -117,13 +117,7 @@ function App(): JSX.Element {
               fileSharing: useFileSharing
                 ? {
                     uploadHandler: (userId, fileUploads) => {
-                      fileUploads.forEach((fileUpload) => {
-                        fileUpload.notifyUploadCompleted({
-                          name: 'fakename',
-                          extension: 'xls',
-                          url: 'fake.com'
-                        });
-                      });
+                      //noop
                     },
                     multiple: true
                   }
