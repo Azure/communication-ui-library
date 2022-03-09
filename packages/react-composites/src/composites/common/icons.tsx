@@ -62,7 +62,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
-  /* @conditional-compile-remove(local-camera-switcher) */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonActive: <Chat20Filled />,
@@ -187,7 +187,7 @@ export type CallCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
-  /* @conditional-compile-remove(local-camera-switcher) */
+  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch?: JSX.Element;
 };
 
