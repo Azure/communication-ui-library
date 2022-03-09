@@ -34,7 +34,7 @@ const BasicStory = (args, context): JSX.Element => {
             callLocator,
             chatThreadId
           },
-          callWithChatControlOptions: args.callWithChatControlOptions
+          compositeOptions: { callControls: args.callWithChatControlOptions }
         });
       } else {
         setCallWithChatProps(undefined);
