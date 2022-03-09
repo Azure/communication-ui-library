@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @beta
@@ -52,10 +53,10 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const showProgressIndicator = (): boolean => progress !== undefined && progress > 0 && progress < 1;
 
   const containerClassName = mergeStyles({
-    width: '14rem',
+    width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    boxShadow: theme.effects.elevation8
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
   });
 
   const fileInfoWrapperClassName = mergeStyles({
