@@ -10,12 +10,14 @@ import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
   ChatComposite,
-  COMPOSITE_LOCALE_FR_FR
+  COMPOSITE_LOCALE_FR_FR,
+  createCompletedFileUpload
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { initializeIcons, Stack } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -31,8 +33,10 @@ const userId = verifyParamExists(params.userId, 'userId');
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 const useFileSharing = Boolean(params.useFileSharing);
+const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
 
 // Needed to initialize default icons used by Fluent components.
+initializeFileTypeIcons();
 initializeIcons();
 
 function App(): JSX.Element {
@@ -56,6 +60,13 @@ function App(): JSX.Element {
     return () => chatAdapter && chatAdapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (chatAdapter && uploadedFiles.length) {
+      const files = uploadedFiles.map((file) => createCompletedFileUpload(file));
+      chatAdapter.registerFileUploads(files);
+    }
+  }, [chatAdapter]);
 
   return (
     <>
