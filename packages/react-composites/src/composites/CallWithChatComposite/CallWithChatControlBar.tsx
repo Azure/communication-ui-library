@@ -3,12 +3,11 @@
 
 import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter } from '../CallComposite';
+import { CallAdapter, CallControlOptions } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
@@ -19,6 +18,20 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
+
+/**
+ * `CallWithChatControlOptions` should Pick the options it needs from CallControlOptions plus add its own.
+ * For improved developer tools we export a flattened version of this type.
+ * Internally we use CallWithChatControlOptionsInternal to ensure changes made to the CallControlBar interface are reflected here.
+ * When adding a new item to this interface it must also be added to CallWithChatControlOptions;
+ *
+ * @private
+ */
+interface CallWithChatControlOptionsInternal
+  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+  chatButton?: boolean;
+  peopleButton?: boolean;
+}
 
 /**
  * @private
@@ -32,14 +45,14 @@ export interface CallWithChatControlBarProps {
   onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | CallWithChatControlOptions;
+  callControls?: boolean | CallWithChatControlOptionsInternal;
   chatAdapter: ChatAdapter;
 }
 
 const inferCallWithChatControlOptions = (
   mobileView: boolean,
-  callWithChatControls?: boolean | CallWithChatControlOptions
-): CallWithChatControlOptions | false => {
+  callWithChatControls?: boolean | CallWithChatControlOptionsInternal
+): CallWithChatControlOptionsInternal | false => {
   if (callWithChatControls === false) {
     return false;
   }

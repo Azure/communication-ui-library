@@ -72,13 +72,13 @@ export type CallWithChatCompositeOptions = {
    */
   callControls?: boolean | CallWithChatControlOptions;
 };
+
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
  * @beta
  */
-export interface CallWithChatControlOptions
-  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+export interface CallWithChatControlOptions {
   /**
    * {@link CallControlDisplayType} to change how the call controls are displayed.
    * `'compact'` display type will decreases the size of buttons and hide the labels.
