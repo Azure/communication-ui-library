@@ -1,24 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  concatStyleSets,
-  ContextualMenu,
-  DefaultButton,
-  IDragOptions,
-  IModalStyleProps,
-  IModalStyles,
-  IStyleFunctionOrObject,
-  Modal,
-  Stack
-} from '@fluentui/react';
+import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { CallAdapter } from '../CallComposite';
-import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
-import { useSelector } from '../CallComposite/hooks/useSelector';
-import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   paneBodyContainer,
@@ -31,8 +15,7 @@ import {
   mobilePaneBackButtonStyles,
   mobilePaneButtonStyles,
   mobilePaneControlBarStyle,
-  mobilePaneStyle,
-  modalStyle
+  mobilePaneStyle
 } from './styles/MobilePane.styles';
 
 /**
@@ -118,76 +101,3 @@ const ChevronLeftIconTrampoline = (): JSX.Element => {
  * Type used to define which tab is active in {@link MobilePane}
  */
 type MobilePaneTab = 'chat' | 'people';
-
-/**
- * Drag options for Modal
- */
-const DRAG_OPTIONS: IDragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true
-};
-
-/**
- * Styles for {@link MobilePaneWithLocalAndRemotePIP} component
- */
-export type MobilePaneWithLocalAndRemotePIPStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
-
-const _MobilePaneWithLocalAndRemotePIP = (
-  props: MobilePaneProps & {
-    modalLayerHostId: string;
-    styles?: MobilePaneWithLocalAndRemotePIPStyles;
-  }
-): JSX.Element => {
-  const mobilePaneStyles = props.hidden ? hiddenMobilePaneStyle : mobilePaneStyle;
-  const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
-  const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
-  const localAndRemotePIP = useMemo(
-    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
-    [pictureInPictureProps, pictureInPictureHandlers]
-  );
-
-  const modalStylesThemed = concatStyleSets(
-    modalStyle,
-    { root: {} } /* needed to bypass type error */,
-    props.styles?.modal
-  );
-
-  return (
-    <Stack styles={mobilePaneStyles}>
-      <MobilePane {...props} />
-      <Modal
-        isOpen={true}
-        isModeless={true}
-        dragOptions={DRAG_OPTIONS}
-        styles={modalStylesThemed}
-        layerProps={{ hostId: props.modalLayerHostId }}
-      >
-        {
-          // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-          // possession of the dominant remote participant video stream
-          !props.hidden && localAndRemotePIP
-        }
-      </Modal>
-    </Stack>
-  );
-};
-
-/**
- * This is {@link MobilePane} component with a draggable LocalAndRemotePIP component that is bound by a LayerHost component with id `modalLayerHostId`
- * @private
- */
-export const MobilePaneWithLocalAndRemotePIP = (
-  props: MobilePaneProps & {
-    callAdapter: CallAdapter;
-    modalLayerHostId: string;
-    styles?: MobilePaneWithLocalAndRemotePIPStyles;
-  }
-): JSX.Element => {
-  return (
-    <CallAdapterProvider adapter={props.callAdapter}>
-      <_MobilePaneWithLocalAndRemotePIP {...props} />
-    </CallAdapterProvider>
-  );
-};

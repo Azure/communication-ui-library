@@ -20,7 +20,8 @@ import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { MobilePaneWithLocalAndRemotePIP, MobilePaneWithLocalAndRemotePIPStyles } from './MobilePane';
+import { WithLocalAndRemotePIP, WithLocalAndRemotePIPStyles } from './WithLocalAndRemotePIP';
+import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
@@ -96,7 +97,7 @@ export const EmbeddedPeoplePane = (props: {
   }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, callAdapter, chatAdapter]);
 
   const theme = useTheme();
-  const mobilePaneStyles: MobilePaneWithLocalAndRemotePIPStyles = useMemo(
+  const pipStyles: WithLocalAndRemotePIPStyles = useMemo(
     () => ({
       modal: {
         main: {
@@ -132,38 +133,42 @@ export const EmbeddedPeoplePane = (props: {
 
   if (props.mobileView) {
     return (
-      <MobilePaneWithLocalAndRemotePIP
-        hidden={props.hidden}
-        dataUiId={'call-with-chat-composite-people-pane'}
-        onClose={props.onClose}
-        activeTab="people"
-        onChatButtonClicked={props.onChatButtonClick}
-        onPeopleButtonClicked={props.onPeopleButtonClick}
+      <WithLocalAndRemotePIP
         modalLayerHostId={props.modalLayerHostId}
+        hidden={props.hidden}
         callAdapter={props.callAdapter}
-        styles={mobilePaneStyles}
+        styles={pipStyles}
       >
-        <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
-          <Stack.Item grow styles={participantListContainerStyles}>
-            {participantList}
-          </Stack.Item>
-          {inviteLink && (
-            <Stack.Item styles={copyLinkButtonContainerStyles}>
-              <PrimaryButton
-                onClick={() => copy(inviteLink)}
-                styles={copyLinkButtonStylesThemed}
-                onRenderIcon={() => <LinkIconTrampoline />}
-                text={callWithChatStrings.copyInviteLinkButtonLabel}
-              />
+        <MobilePane
+          hidden={props.hidden}
+          dataUiId={'call-with-chat-composite-people-pane'}
+          onClose={props.onClose}
+          activeTab="people"
+          onChatButtonClicked={props.onChatButtonClick}
+          onPeopleButtonClicked={props.onPeopleButtonClick}
+        >
+          <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
+            <Stack.Item grow styles={participantListContainerStyles}>
+              {participantList}
             </Stack.Item>
-          )}
-        </Stack>
-        {drawerMenuItems.length > 0 && (
-          <Stack styles={drawerContainerStyles}>
-            <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+            {inviteLink && (
+              <Stack.Item styles={copyLinkButtonContainerStyles}>
+                <PrimaryButton
+                  onClick={() => copy(inviteLink)}
+                  styles={copyLinkButtonStylesThemed}
+                  onRenderIcon={() => <LinkIconTrampoline />}
+                  text={callWithChatStrings.copyInviteLinkButtonLabel}
+                />
+              </Stack.Item>
+            )}
           </Stack>
-        )}
-      </MobilePaneWithLocalAndRemotePIP>
+          {drawerMenuItems.length > 0 && (
+            <Stack styles={drawerContainerStyles}>
+              <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+            </Stack>
+          )}
+        </MobilePane>
+      </WithLocalAndRemotePIP>
     );
   }
 

@@ -6,7 +6,8 @@ import { CallAdapter } from '../CallComposite';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { MobilePaneWithLocalAndRemotePIP, MobilePaneWithLocalAndRemotePIPStyles } from './MobilePane';
+import { WithLocalAndRemotePIP, WithLocalAndRemotePIPStyles } from './WithLocalAndRemotePIP';
+import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
@@ -32,7 +33,7 @@ export const EmbeddedChatPane = (props: {
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
 
-  const mobilePaneStyles: MobilePaneWithLocalAndRemotePIPStyles = useMemo(
+  const pipStyles: WithLocalAndRemotePIPStyles = useMemo(
     () => ({
       modal: {
         main: {
@@ -64,19 +65,23 @@ export const EmbeddedChatPane = (props: {
 
   if (props.mobileView) {
     return (
-      <MobilePaneWithLocalAndRemotePIP
-        hidden={props.hidden}
-        dataUiId={'call-with-chat-composite-chat-pane'}
-        onClose={props.onClose}
-        activeTab="chat"
-        onChatButtonClicked={props.onChatButtonClick}
-        onPeopleButtonClicked={props.onPeopleButtonClick}
+      <WithLocalAndRemotePIP
         callAdapter={props.callAdapter}
+        hidden={props.hidden}
         modalLayerHostId={props.modalLayerHostId}
-        styles={mobilePaneStyles}
+        styles={pipStyles}
       >
-        {chatComposite}
-      </MobilePaneWithLocalAndRemotePIP>
+        <MobilePane
+          hidden={props.hidden}
+          dataUiId={'call-with-chat-composite-chat-pane'}
+          onClose={props.onClose}
+          activeTab="chat"
+          onChatButtonClicked={props.onChatButtonClick}
+          onPeopleButtonClicked={props.onPeopleButtonClick}
+        >
+          {chatComposite}
+        </MobilePane>
+      </WithLocalAndRemotePIP>
     );
   }
   return (
