@@ -211,7 +211,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
        * This ensures that any component rendering these file uploads doesn't continue to do so.
        * This also cleans the state for new file uploads with a fresh message.
        */
-      this.fileUploadAdapter.clearFileUploads && this.fileUploadAdapter.clearFileUploads();
+      this.fileUploadAdapter.clearFileUploads();
     });
   }
 
@@ -257,17 +257,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove(file-sharing) */
   registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.fileUploadAdapter.registerFileUploads && this.fileUploadAdapter.registerFileUploads(fileUploads);
+    this.fileUploadAdapter.registerFileUploads(fileUploads);
   }
 
   /* @conditional-compile-remove(file-sharing) */
   clearFileUploads(): void {
-    this.fileUploadAdapter.clearFileUploads && this.fileUploadAdapter.clearFileUploads();
+    this.fileUploadAdapter.clearFileUploads();
   }
 
   /* @conditional-compile-remove(file-sharing) */
   cancelFileUpload(id: string): void {
-    this.fileUploadAdapter.cancelFileUpload && this.fileUploadAdapter.cancelFileUpload(id);
+    this.fileUploadAdapter.cancelFileUpload(id);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

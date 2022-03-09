@@ -17,7 +17,8 @@ export type {
 } from './adapter/AzureCommunicationCallWithChatAdapter';
 export {
   createAzureCommunicationCallWithChatAdapter,
-  createAzureCommunicationCallWithChatAdapterFromClients
+  createAzureCommunicationCallWithChatAdapterFromClients,
+  useAzureCommunicationCallWithChatAdapter
 } from './adapter/AzureCommunicationCallWithChatAdapter';
 
 export type {

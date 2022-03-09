@@ -46,6 +46,14 @@ export interface CallWithChatCompositeStrings {
    */
   moreDrawerSpeakerMenuTitle: string;
   /**
+   * {@Link CallWithChatComposite} control bar More button label
+   */
+  moreDrawerButtonLabel: string;
+  /**
+   * {@Link CallWithChatComposite} control bar More button tooltip content
+   */
+  moreDrawerButtonTooltip: string;
+  /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
