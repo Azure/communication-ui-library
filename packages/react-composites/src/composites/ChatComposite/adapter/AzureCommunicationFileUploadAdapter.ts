@@ -22,9 +22,9 @@ export type FileUploadsUiState = Record<string, FileUploadState>;
  * @beta
  */
 export interface FileUploadAdapter {
-  registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
-  clearFileUploads?: () => void;
-  cancelFileUpload?: (id: string) => void;
+  registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+  clearFileUploads: () => void;
+  cancelFileUpload: (id: string) => void;
 }
 
 /* @conditional-compile-remove(file-sharing) */
