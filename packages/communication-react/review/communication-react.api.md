@@ -561,7 +561,7 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 }
 
 // @beta
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'>, Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {
     removeParticipant(userId: string): Promise<void>;
 }
 
@@ -719,6 +719,7 @@ export type CallWithChatCompositeIcons = {
 // @beta
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    fileSharing?: FileSharingOptions;
 };
 
 // @beta
@@ -739,6 +740,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipContentOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    moreDrawerButtonLabel: string;
+    moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
@@ -1559,12 +1562,12 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export interface FileDownloadErrorMessage {
+export interface FileDownloadError {
     errorMessage: string;
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {
@@ -1584,21 +1587,21 @@ export interface FileSharingOptions {
 // @beta (undocumented)
 export interface FileUploadAdapter {
     // (undocumented)
-    cancelFileUpload?: (id: string) => void;
+    cancelFileUpload: (id: string) => void;
     // (undocumented)
-    clearFileUploads?: () => void;
+    clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    off(event: 'uploadFailed', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    off(event: 'uploadFail', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    on(event: 'uploadFail', listener: UploadFailedListener): void;
 }
 
 // @beta
@@ -1609,7 +1612,7 @@ export interface FileUploadManager {
     file: File;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressed: (value: number) => void;
+    notifyUploadProgressChanged: (value: number) => void;
 }
 
 // @beta
