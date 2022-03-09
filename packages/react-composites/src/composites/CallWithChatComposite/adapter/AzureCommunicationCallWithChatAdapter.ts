@@ -610,6 +610,21 @@ export const useAzureCommunicationCallWithChatAdapter = (
     [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
   );
 
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
+
   return adapter;
 };
 

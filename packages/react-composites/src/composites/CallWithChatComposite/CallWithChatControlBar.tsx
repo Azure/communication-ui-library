@@ -74,6 +74,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
     tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
   };
+  const moreButtonStrings = {
+    label: callWithChatStrings.moreDrawerButtonLabel,
+    tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+  };
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
@@ -144,7 +148,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   />
                 )}
                 {props.mobileView && (
-                  <MoreButton data-ui-id="call-with-chat-composite-more-button" onClick={props.onMoreButtonClicked} />
+                  <MoreButton
+                    data-ui-id="call-with-chat-composite-more-button"
+                    strings={moreButtonStrings}
+                    onClick={props.onMoreButtonClicked}
+                  />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
@@ -184,7 +192,7 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem',
     maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
@@ -216,7 +224,8 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderTopRightRadius: theme.effects.roundedCorner4,
+    borderBottomRightRadius: theme.effects.roundedCorner4,
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0'
   },
