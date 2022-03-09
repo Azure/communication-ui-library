@@ -56,8 +56,14 @@ export const getDocs: () => JSX.Element = () => {
         to be optimized for a mobile device.
       </Description>
       <Source code={formFactorSnippet} />
+      <Stack horizontalAlign="center">
+        <Image
+          src="images/call-with-chat-composite-mobile-hero.png"
+          alt="Call with chat composite mobile preview image"
+        />
+      </Stack>
       <MessageBar>
-        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+        Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
       </MessageBar>
       <Description>
         You can try out the form factor property in the [CallWithChatComposite Basic
