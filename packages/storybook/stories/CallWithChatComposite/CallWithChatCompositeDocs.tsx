@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MessageBar } from '@fluentui/react';
+import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
@@ -21,6 +21,13 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
       </Description>
+      <Stack horizontalAlign="center">
+        <Image
+          src="images/call-with-chat-composite-hero.png"
+          alt="Call with chat composite preview image"
+          width="85%"
+        />
+      </Stack>
       <Heading>Basic usage</Heading>
       <Description>
         A CallWithChatComposite is comprised of two key underlying parts: an ACS Call and an ACS Chat thread. As such
