@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add conditional compile CallWithChat with LocalCameraSwitcher to resolve dependency errors",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}
