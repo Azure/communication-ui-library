@@ -342,7 +342,6 @@ export type CallCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
-    LocalCameraSwitch?: JSX.Element;
 };
 
 // @public
@@ -1358,7 +1357,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemMicOff: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    LocalCameraSwitch?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1369,6 +1367,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    LocalCameraSwitch?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
 };
 
@@ -1630,7 +1629,7 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -2297,7 +2296,6 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
@@ -2309,7 +2307,6 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
-    showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
@@ -2339,7 +2336,6 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
-    localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;

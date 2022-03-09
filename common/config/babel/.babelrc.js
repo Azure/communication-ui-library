@@ -21,6 +21,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'demo',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // Camera switcher in the local video preview tile. These are used by `call-with-chat-composite` feature.
+        // Perhaps we should merge this into the `call-with-chat-composite` feature?
+        'local-camera-switcher',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
       ],
@@ -35,9 +38,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Split buttons in control bar. These are used by `call-with-chat-composite` feature.
         // Perhaps we should merge this into the `call-with-chat-composite` feature?
         'control-bar-split-buttons',
-        // Camera switcher in the local video preview tile. These are used by `call-with-chat-composite` feature.
-        // Perhaps we should merge this into the `call-with-chat-composite` feature?
-        'local-camera-switcher',
       ]
      }
   ]);

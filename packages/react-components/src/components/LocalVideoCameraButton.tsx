@@ -7,7 +7,7 @@ import { OptionsDevice } from './DevicesButton';
 import { localVideoCameraCycleButtonStyles } from './styles/VideoGallery.styles';
 
 /**
- * @public
+ * @beta
  */
 export interface LocalVideoCameraCycleButtonProps {
   /** Array of cameras available to the user. */
