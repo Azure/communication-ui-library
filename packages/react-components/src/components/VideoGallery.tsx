@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  concatStyleSets,
-  ContextualMenu,
-  IDragOptions,
-  IStyle,
-  LayerHost,
-  mergeStyles,
-  Modal,
-  Stack
-} from '@fluentui/react';
+import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -51,6 +42,7 @@ import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
+import { ModalClone } from './ModalClone/ModalClone';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -386,7 +378,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
         ) : (
-          <Modal
+          <ModalClone
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
@@ -394,7 +386,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             layerProps={{ hostId: layerHostId }}
           >
             {localVideoTile}
-          </Modal>
+          </ModalClone>
         ))}
       {
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */

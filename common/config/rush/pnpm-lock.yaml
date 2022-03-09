@@ -1916,7 +1916,7 @@ packages:
       integrity: sha512-s/XZwVKwVzU02Nl1kCQ+Qq2q9u0uLhd7cGDh2amFgWklUGaIgu+/01gLOk95OVCNfs21cA7XZpnJxdNy0ZeEqQ==
   /@fluentui/date-time-utilities/8.2.2:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       tslib: 2.3.1
     dev: false
     resolution:
@@ -1930,14 +1930,14 @@ packages:
       integrity: sha512-XqPS7l3YoMwxdNlaYF6S2Mp0K3FmVIOIy2K3YkMc+eRxu9wFK6emr2Q/3rBhtG5u/On37NExRT7/5CTLnoi9gw==
   /@fluentui/dom-utilities/2.1.5:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       tslib: 2.3.1
     dev: false
     resolution:
       integrity: sha512-OLDYV5ZGIiK/JXx/DFFib4vSa7PELvznbdAujDcX2wjt3V3Lt2N5ucv59JsVxk5LlwXjasUHJI2NZadagmnM6A==
   /@fluentui/font-icons-mdl2/8.1.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/style-utilities': 8.5.2_796713c4bb4631ac40b03d54b6277837
       tslib: 2.3.1
     dev: false
@@ -1949,7 +1949,7 @@ packages:
   /@fluentui/foundation-legacy/8.1.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/merge-styles': 8.2.3
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/style-utilities': 8.5.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.9_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
@@ -1969,7 +1969,7 @@ packages:
       integrity: sha512-pVY2m3IC5+LLmMzsaPApX9eKTzpOzdgQwrR3FNTE6mGx3N/+QWYM7fdF+T1ldZQt87dCRSeQnmAo5kqjtxeA/w==
   /@fluentui/merge-styles/8.2.3:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       tslib: 2.3.1
     dev: false
     resolution:
@@ -2052,7 +2052,7 @@ packages:
     dependencies:
       '@fluentui/keyboard-key': 0.3.4
       '@fluentui/merge-styles': 8.2.3
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/style-utilities': 8.5.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.9_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
@@ -2066,7 +2066,7 @@ packages:
       integrity: sha512-sojXA6epu2QJbFf+XqP1AHOrrWssoQJWJNuzp0MCzQOWCUlLLqRpRUHtUKZzCnrbD9G5MOW8/192m/rSPyM7eA==
   /@fluentui/react-hooks/8.3.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/react-window-provider': 2.1.6_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/react-window-provider': 2.2.0_796713c4bb4631ac40b03d54b6277837
       '@fluentui/set-version': 8.1.5
       '@fluentui/utilities': 8.3.9_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
@@ -2191,9 +2191,9 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-fGSgL3Vp/+6t1Ysfz21FWZmqsU+iFVxOigvHnm5uKVyyRPwtaabv/F6kQ2y5isLMI2YmJaUd2i0cDJKu8ggrvw==
-  /@fluentui/react-window-provider/2.1.6_796713c4bb4631ac40b03d54b6277837:
+  /@fluentui/react-window-provider/2.2.0_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -2202,7 +2202,7 @@ packages:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-Fr1THmtn/Kx95/WVXI1qIELX2VHpuGYVKWSpdgbpcmKukvk30h4JG6kKMGYPz3r7UeaTzpaeIw537A9CJ2hVMg==
+      integrity: sha512-1iZzfVQHZQn6IJSJD1pxnXi5H8T3vrZYi9aqKyVIPZ12DCTVE2gw8W3mnOjsfVuXMGdv1sA7dgd6v4xi9erBow==
   /@fluentui/react/8.17.4_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@fluentui/date-time-utilities': 8.2.2
@@ -2211,7 +2211,7 @@ packages:
       '@fluentui/merge-styles': 8.2.3
       '@fluentui/react-focus': 8.1.10_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/react-window-provider': 2.1.6_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/react-window-provider': 2.2.0_796713c4bb4631ac40b03d54b6277837
       '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.5.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/theme': 2.4.6_796713c4bb4631ac40b03d54b6277837
@@ -2232,7 +2232,7 @@ packages:
       integrity: sha512-9H9kNL8p/hpVIXk0SPh7ExhX00HuBofbbeU6rnBqWbKfOdbV+iQ8INsvZWAE1JcWoaxP3iscZcM3N0ViH218HA==
   /@fluentui/scheme-utilities/8.1.6_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/theme': 2.4.6_796713c4bb4631ac40b03d54b6277837
       tslib: 2.3.1
     dev: false
@@ -2247,6 +2247,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-AfaycaduWd/aErqEmrAUWpr2gpZrkaSe6D9noXhtVH3JlreRuFM78Ji1oE4f8cpWxSA/K5qb7BT6x4z4I2Bs+A==
+  /@fluentui/set-version/8.2.0:
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+    resolution:
+      integrity: sha512-bqjpfhqaIkBy16vdYzdc7tER9Td7BTcmC+kCXuqkHOQVuG9LJfqVGRV0DA857KLhOxiy0GXwKMeDbNV5jJf6qQ==
   /@fluentui/state/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -2256,7 +2262,7 @@ packages:
   /@fluentui/style-utilities/8.5.2_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/merge-styles': 8.2.3
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/theme': 2.4.6_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.9_796713c4bb4631ac40b03d54b6277837
       '@microsoft/load-themed-styles': 1.10.202
@@ -2279,7 +2285,7 @@ packages:
     dependencies:
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/scheme-utilities': 8.1.6_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       tslib: 2.3.1
     dev: false
     peerDependencies:
@@ -2292,7 +2298,7 @@ packages:
   /@fluentui/theme/2.4.6_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/merge-styles': 8.2.3
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@fluentui/utilities': 8.3.9_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
       react: 16.14.0
@@ -2307,7 +2313,7 @@ packages:
     dependencies:
       '@fluentui/dom-utilities': 2.1.5
       '@fluentui/merge-styles': 8.2.3
-      '@fluentui/set-version': 8.1.5
+      '@fluentui/set-version': 8.2.0
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -19492,6 +19498,7 @@ packages:
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-window-provider': 2.2.0_796713c4bb4631ac40b03d54b6277837
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
@@ -19566,7 +19573,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-4KweHP353P/kFewswei4CpiM+/Orr2CTWje6C/dhmsMuRDMLqNuWQNGQ/zActMqYnAPIc9MQPgugmfOFmvClXQ==
+      integrity: sha512-fF0MmJpJN2sxABH/M937wFBYc9RjmedeIQeDWz8YS5bF2nPSR0atVPtiNG3s1TEaZC43peZKWgIRD9Fqx0AxwQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
