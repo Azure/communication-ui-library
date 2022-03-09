@@ -19,7 +19,7 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
-import { CollectionUpdatedEvent } from '@azure/communication-calling';
+import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
@@ -94,15 +94,13 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public recordings;
   public emitter = new EventEmitter();
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
-  // TODO: revert to using `RecordingInfo`.
-  on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<any>): void;
+  on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
-  // TODO: revert to using `RecordingInfo`.
-  off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<any>): void;
+  off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
