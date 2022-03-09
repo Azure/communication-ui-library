@@ -1,5 +1,6 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
