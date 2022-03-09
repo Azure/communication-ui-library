@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Add tests for filesharing upload button and file cards in sendbox",
+  "comment": "Update internal FileCard component to not show progress bar when progress is 0",
   "packageName": "@internal/react-components",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "none"
