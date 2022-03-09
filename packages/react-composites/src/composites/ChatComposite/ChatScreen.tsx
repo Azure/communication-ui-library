@@ -15,7 +15,7 @@ import {
   TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -111,6 +111,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
+  /* @conditional-compile-remove(file-sharing) */
+  const [downloadErrorMessage, setDownloadErrorMessage] = useState('');
 
   const adapter = useAdapter();
 
@@ -165,8 +167,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
+            fileDownloadErrorMessage={downloadErrorMessage}
+            /* @conditional-compile-remove(file-sharing) */
+            onDismissFileDownloadErrorMessage={() => {
+              setDownloadErrorMessage('');
+            }}
+            /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={(userId, message) => (
-              <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
+              <FileDownloadCards
+                userId={userId}
+                message={message}
+                downloadHandler={fileSharing?.downloadHandler}
+                onDownloadErrorMessage={(errorMessage: string) => {
+                  setDownloadErrorMessage(errorMessage);
+                }}
+              />
             )}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
