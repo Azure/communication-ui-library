@@ -9,7 +9,8 @@ import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './CallWithChatCompositeDocs';
-import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
@@ -48,7 +49,7 @@ const BasicStory = (args, context): JSX.Element => {
       <SingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
-          <CallWithChatExperience fluentTheme={context.theme} {...callWithChatProps} />
+          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...callWithChatProps} />
         ) : (
           <ConfigHintBanner />
         )}

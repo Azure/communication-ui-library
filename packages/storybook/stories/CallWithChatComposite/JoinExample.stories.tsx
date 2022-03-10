@@ -9,7 +9,7 @@ import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanne
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './CallWithChatCompositeDocs';
-import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExperienceWithErrorChecks, CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
 
 const JoinTeamsMeetingStory = (args, context): JSX.Element => {
@@ -37,7 +37,7 @@ const JoinTeamsMeetingStory = (args, context): JSX.Element => {
       <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {meetingProps ? (
-          <CallWithChatExperience fluentTheme={context.theme} {...meetingProps} />
+          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...meetingProps} />
         ) : (
           <ConfigJoinMeetingHintBanner />
         )}
