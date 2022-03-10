@@ -609,6 +609,8 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    fileDownloadErrorMessage?: string;
+    onDismissFileDownloadErrorMessage?: () => void;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
