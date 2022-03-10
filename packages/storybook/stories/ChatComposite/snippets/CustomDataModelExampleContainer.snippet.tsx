@@ -4,11 +4,11 @@ import {
   ChatAdapter,
   ChatComposite,
   CompositeLocale,
-  createAzureCommunicationChatAdapter,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
   userId: CommunicationUserIdentifier;
@@ -23,27 +23,16 @@ export interface CustomDataModelExampleContainerProps {
 }
 
 export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
-  // Creating an adapter is asynchronous.
-  // An update to `config` triggers a new adapter creation, via the useEffect block.
-  // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
-  const [adapter, setAdapter] = useState<ChatAdapter>();
-  useEffect(() => {
-    if (props) {
-      const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter({
-            endpoint: props.endpointUrl,
-            userId: props.userId,
-            // Data model injection: The display name for the local user comes from Contoso's data model.
-            displayName: props.displayName,
-            credential: new AzureCommunicationTokenCredential(props.token),
-            threadId: props.threadId
-          })
-        );
-      };
-      createAdapter();
-    }
-  }, [props]);
+  // Arguments to `useAzureCommunicationChatAdapter` must be memoized to avoid recreating adapter on each render.
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
+  const adapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId: props.userId,
+    // Data model injection: The display name for the local user comes from Contoso's data model.
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
 
   // Data model injection: Contoso provides avatars for the chat bot participant.
   // Unlike the displayName example above, this sets the avatar for the remote bot participant.
