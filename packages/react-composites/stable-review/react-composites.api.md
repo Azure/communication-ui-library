@@ -344,57 +344,31 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @public
 export interface CallWithChatAdapterManagement {
-    // @beta
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
     deleteMessage(messageId: string): Promise<void>;
-    // @beta
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
     fetchInitialData(): Promise<void>;
-    // @beta
     joinCall(microphoneOn?: boolean): Call | undefined;
-    // @beta
     leaveCall(forEveryone?: boolean): Promise<void>;
-    // @beta
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // @beta
     mute(): Promise<void>;
-    // @beta
     queryCameras(): Promise<VideoDeviceInfo[]>;
-    // @beta
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // @beta
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // @beta
     removeParticipant(userId: string): Promise<void>;
-    // @beta
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-    // @beta
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    // @beta
     sendTypingIndicator(): Promise<void>;
-    // @beta
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // @beta
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
-    // @beta
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    // @beta
     startCall(participants: string[]): Call | undefined;
-    // @beta
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    // @beta
     startScreenShare(): Promise<void>;
-    // @beta
     stopCamera(): Promise<void>;
-    // @beta
     stopScreenShare(): Promise<void>;
-    // @beta
     unmute(): Promise<void>;
-    // @beta
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
@@ -468,9 +442,7 @@ export interface CallWithChatAdapterSubscriptions {
 
 // @public
 export interface CallWithChatAdapterUiState {
-    // @beta
     isLocalPreviewMicrophoneEnabled: boolean;
-    // @beta
     page: CallCompositePage;
 }
 

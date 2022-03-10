@@ -19,13 +19,13 @@ export interface CallWithChatAdapterUiState {
   /**
    * Microphone state before a call has joined.
    *
-   * @beta
+   * @public
    */
   isLocalPreviewMicrophoneEnabled: boolean;
   /**
    * Current page of the Composite.
    *
-   * @beta
+   * @public
    */
   page: CallCompositePage;
   /* @conditional-compile-remove(file-sharing) */
