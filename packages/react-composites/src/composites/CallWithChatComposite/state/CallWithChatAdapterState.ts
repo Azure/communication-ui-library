@@ -5,7 +5,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
-import { ChatAdapter, ChatAdapterState, ChatAdapterUiState } from '../../ChatComposite';
+import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
@@ -13,9 +13,9 @@ import { AdapterErrors } from '../../common/adapters';
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
-export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'error'> {
+export interface CallWithChatAdapterUiState {
   /**
    * Microphone state before a call has joined.
    *
@@ -42,7 +42,7 @@ export interface CallWithChatAdapterUiState extends Omit<ChatAdapterUiState, 'er
 /**
  * State from the backend services that drives {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatClientState {
   /** ID of the call participant using this CallWithChatAdapter. */
@@ -67,7 +67,7 @@ export interface CallWithChatClientState {
  * CallWithChat State is a combination of Stateful Chat and Stateful Calling clients with some
  * state specific to the CallWithChat Composite only.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {}
 

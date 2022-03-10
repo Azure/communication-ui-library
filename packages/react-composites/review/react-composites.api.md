@@ -79,7 +79,7 @@ export type AzureCommunicationCallAdapterArgs = {
     locator: CallAdapterLocator;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
     endpoint: string;
     userId: CommunicationUserIdentifier;
@@ -88,7 +88,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
     callAgent: CallAgent;
@@ -196,8 +196,9 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
-// @beta
+// @public
 export interface CallAndChatLocator {
+    // Warning: (ae-incompatible-release-tags) The symbol "callLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
     callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
@@ -347,7 +348,7 @@ export type CallParticipantsLocator = {
     participantIDs: string[];
 };
 
-// @beta
+// @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
@@ -381,11 +382,11 @@ export interface CallWithChatAdapterManagement {
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
-// @beta
+// @public
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
 }
 
-// @beta
+// @public
 export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
@@ -468,10 +469,10 @@ export interface CallWithChatClientState {
     userId: CommunicationIdentifierKind;
 }
 
-// @beta
+// @public
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
-// @beta
+// @public
 export type CallWithChatCompositeIcons = {
     ChevronLeft?: JSX.Element;
     ControlBarChatButtonActive?: JSX.Element;
@@ -537,16 +538,18 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
 };
 
-// @beta
+// @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    fileSharing?: FileSharingOptions;
 };
 
-// @beta
+// @public
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     adapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
+    // @beta
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
     options?: CallWithChatCompositeOptions;
@@ -556,18 +559,24 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
+    chatButtonTooltipContentClose: string;
+    chatButtonTooltipContentOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    moreDrawerButtonLabel: string;
+    moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
+    peopleButtonTooltipContentClose: string;
+    peopleButtonTooltipContentOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
 }
 
-// @beta
+// @public
 export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
     cameraButton?: boolean;
     chatButton?: boolean;
@@ -580,7 +589,7 @@ export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'ca
     };
 }
 
-// @beta
+// @public
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
@@ -725,8 +734,6 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 // @public
 export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
-// Warning: (ae-incompatible-release-tags) The symbol "CompositeIcons" is marked as @public, but its signature references "CallWithChatCompositeIcons" which is marked as @beta
-//
 // @public
 export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
 
@@ -749,10 +756,10 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
-// @beta
+// @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
-// @beta
+// @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
@@ -864,12 +871,12 @@ export interface Disposable {
 }
 
 // @beta
-export interface FileDownloadErrorMessage {
+export interface FileDownloadError {
     errorMessage: string;
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileData: FileMetadata) => Promise<URL | FileDownloadErrorMessage>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {
@@ -889,21 +896,21 @@ export interface FileSharingOptions {
 // @beta (undocumented)
 export interface FileUploadAdapter {
     // (undocumented)
-    cancelFileUpload?: (id: string) => void;
+    cancelFileUpload: (id: string) => void;
     // (undocumented)
-    clearFileUploads?: () => void;
+    clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
+    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    off(event: 'uploadFailed', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    off(event: 'uploadFail', listener: UploadFailedListener): void;
+    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
+    on(event: 'uploadFail', listener: UploadFailedListener): void;
 }
 
 // @beta
@@ -914,7 +921,7 @@ export interface FileUploadManager {
     file: File;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressed: (value: number) => void;
+    notifyUploadProgressChanged: (value: number) => void;
 }
 
 // @beta
@@ -1012,6 +1019,12 @@ export type UploadFailedListener = (id: string, message: string) => void;
 
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
+
+// @beta
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+
+// @public
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
 
 // (No @packageDocumentation comment for this package)
 

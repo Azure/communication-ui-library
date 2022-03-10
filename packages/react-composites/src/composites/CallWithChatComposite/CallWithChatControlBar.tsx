@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter, CallControlOptions } from '../CallComposite';
+import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
@@ -18,20 +18,7 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
-
-/**
- * `CallWithChatControlOptions` should Pick the options it needs from CallControlOptions plus add its own.
- * For improved developer tools we export a flattened version of this type.
- * Internally we use CallWithChatControlOptionsInternal to ensure changes made to the CallControlBar interface are reflected here.
- * When adding a new item to this interface it must also be added to CallWithChatControlOptions;
- *
- * @private
- */
-interface CallWithChatControlOptionsInternal
-  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
-  chatButton?: boolean;
-  peopleButton?: boolean;
-}
+import { CallWithChatControlOptions } from './CallWithChatComposite';
 
 /**
  * @private
@@ -45,14 +32,14 @@ export interface CallWithChatControlBarProps {
   onMoreButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | CallWithChatControlOptionsInternal;
+  callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
 }
 
 const inferCallWithChatControlOptions = (
   mobileView: boolean,
-  callWithChatControls?: boolean | CallWithChatControlOptionsInternal
-): CallWithChatControlOptionsInternal | false => {
+  callWithChatControls?: boolean | CallWithChatControlOptions
+): CallWithChatControlOptions | false => {
   if (callWithChatControls === false) {
     return false;
   }
@@ -77,6 +64,20 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
+  const chatButtonStrings = {
+    label: callWithChatStrings.chatButtonLabel,
+    tooltipOffContent: callWithChatStrings.chatButtonTooltipContentOpen,
+    tooltipOnContent: callWithChatStrings.chatButtonTooltipContentClose
+  };
+  const peopleButtonStrings = {
+    label: callWithChatStrings.peopleButtonLabel,
+    tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
+    tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
+  };
+  const moreButtonStrings = {
+    label: callWithChatStrings.moreDrawerButtonLabel,
+    tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+  };
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
@@ -104,7 +105,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
       isChatPaneVisible={props.chatButtonChecked}
       onClick={props.onChatButtonClicked}
       disabled={props.disableButtonsForLobbyPage}
-      label={callWithChatStrings.chatButtonLabel}
+      strings={chatButtonStrings}
       styles={commonButtonStyles}
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
@@ -147,7 +148,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   />
                 )}
                 {props.mobileView && (
-                  <MoreButton data-ui-id="call-with-chat-composite-more-button" onClick={props.onMoreButtonClicked} />
+                  <MoreButton
+                    data-ui-id="call-with-chat-composite-more-button"
+                    strings={moreButtonStrings}
+                    onClick={props.onMoreButtonClicked}
+                  />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
@@ -164,7 +169,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
-              label={callWithChatStrings.peopleButtonLabel}
+              strings={peopleButtonStrings}
               styles={commonButtonStyles}
             />
           )}
@@ -187,7 +192,7 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderRadius: theme.effects.roundedCorner4,
     minHeight: '2.5rem',
     maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
@@ -219,7 +224,8 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner2,
+    borderTopRightRadius: theme.effects.roundedCorner4,
+    borderBottomRightRadius: theme.effects.roundedCorner4,
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0'
   },

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Show error above sendbox if message is sent before all files are uploaded.",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

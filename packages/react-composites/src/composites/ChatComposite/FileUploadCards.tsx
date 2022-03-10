@@ -28,7 +28,7 @@ export const FileUploadCards = (): JSX.Element => {
               fileExtension={extension(file.filename)}
               actionIcon={<CancelIconTrampoline />}
               actionHandler={() => {
-                adapter.cancelFileUpload && adapter.cancelFileUpload(file.id);
+                adapter.cancelFileUpload(file.id);
               }}
             />
           ))}

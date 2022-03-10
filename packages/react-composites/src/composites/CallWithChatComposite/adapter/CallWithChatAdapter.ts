@@ -26,10 +26,12 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
+/* @conditional-compile-remove(file-sharing) */
+import { ObservableFileUpload } from '../../ChatComposite';
 
 /**
  * Functionality for managing the current call with chat.
- * @beta
+ * @public
  */
 export interface CallWithChatAdapterManagement {
   // CallWithChat-specific Interface methods
@@ -248,11 +250,18 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+
+  /* @conditional-compile-remove(file-sharing) */
+  registerFileUploads(fileUploads: ObservableFileUpload[]): void;
+  /* @conditional-compile-remove(file-sharing) */
+  clearFileUploads(): void;
+  /* @conditional-compile-remove(file-sharing) */
+  cancelFileUpload(id: string): void;
 }
 
 /**
  * Call and Chat events that can be subscribed to in the {@link CallWithChatAdapter}.
- * @beta
+ * @public
  */
 export interface CallWithChatAdapterSubscriptions {
   // Call subscriptions
@@ -294,7 +303,7 @@ export interface CallWithChatAdapterSubscriptions {
 
 /**
  * {@link CallWithChatComposite} Adapter interface.
- * @beta
+ * @public
  */
 export interface CallWithChatAdapter
   extends CallWithChatAdapterManagement,
@@ -304,7 +313,7 @@ export interface CallWithChatAdapter
 
 /**
  * Events fired off by the {@link CallWithChatAdapter}
- * @beta
+ * @public
  */
 export type CallWithChatEvent =
   | 'callError'

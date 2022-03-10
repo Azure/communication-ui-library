@@ -7,6 +7,8 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * @private
@@ -21,6 +23,8 @@ export const EmbeddedChatPane = (props: {
   onChatButtonClick: () => void;
   onPeopleButtonClick: () => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(file-sharing) */
+  fileSharing?: FileSharingOptions;
 }): JSX.Element => {
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
@@ -31,7 +35,10 @@ export const EmbeddedChatPane = (props: {
       fluentTheme={props.fluentTheme}
       options={{
         topic: false,
-        /* @conditional-compile-remove(chat-composite-participant-pane) */ participantPane: false
+        /* @conditional-compile-remove(chat-composite-participant-pane) */
+        participantPane: false,
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing: props.fileSharing
       }}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
     />
