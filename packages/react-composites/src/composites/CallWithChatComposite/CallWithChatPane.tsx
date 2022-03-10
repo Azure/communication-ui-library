@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IStackStyles, Stack } from '@fluentui/react';
+import { IStackStyles, IStackTokens, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
@@ -104,6 +104,7 @@ export const CallWithChatPane = (props: {
       data-ui-id={
         props.activePane === 'chat' ? 'call-with-chat-composite-chat-pane' : 'call-with-chat-composite-people-pane'
       }
+      tokens={props.mobileView ? {} : sidePaneTokens}
     >
       {header}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
@@ -152,3 +153,7 @@ const sidePaneStyles: IStackStyles = {
 };
 
 const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
+
+export const sidePaneTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
