@@ -32,7 +32,7 @@ const DRAG_OPTIONS: IDragOptions = {
 /**
  * Styles for {@link LocalAndRemotePIPInModal} component
  */
-export type LocalAndRemotePIPInModalStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+export type LocalAndRemotePIPInModalStyles = { modal?: Partial<IModalStyles> };
 
 const _LocalAndRemotePIPInModal = (props: {
   hidden: boolean;
@@ -47,11 +47,7 @@ const _LocalAndRemotePIPInModal = (props: {
     [pictureInPictureProps, pictureInPictureHandlers]
   );
 
-  const modalStylesThemed = concatStyleSets(
-    modalStyle,
-    { root: {} } /* needed to bypass type error */,
-    props.styles?.modal
-  );
+  const modalStylesThemed = concatStyleSets(modalStyle, props.styles?.modal);
 
   return (
     <Stack styles={rootStyles}>
