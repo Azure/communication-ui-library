@@ -113,7 +113,7 @@ type CallWithChatScreenProps = {
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  const isMobile = formFactor === 'mobile';
+  const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
@@ -191,12 +191,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const showMobilePane = isMobile && activePane !== 'none';
+  const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        {!showMobilePane && (
+        {!isMobileWithActivePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
             <CallComposite
               {...props}
@@ -218,12 +218,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             onChatButtonClicked={selectChat}
             onPeopleButtonClicked={selectPeople}
             modalLayerHostId={modalLayerHostId}
-            mobileView={isMobile}
+            mobileView={mobileView}
             activePane={activePane}
           />
         )}
       </Stack>
-      {showControlBar && !showMobilePane && (
+      {showControlBar && !isMobileWithActivePane && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <Stack.Item styles={controlBarContainerStyles}>
             <CallWithChatControlBar
@@ -234,7 +234,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               peopleButtonChecked={activePane === 'people'}
               onPeopleButtonClicked={togglePeople}
               onMoreButtonClicked={onMoreButtonClicked}
-              mobileView={isMobile}
+              mobileView={mobileView}
               disableButtonsForLobbyPage={isInLobbyOrConnecting}
               callControls={props.callControls}
             />
@@ -254,7 +254,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         // This layer host is for Modal wrapping the PiPiP in the mobile EmbeddedPeoplePane. This LayerHost can't be inside the EmbeddedPeoplePane
         // because when the EmbeddedPeoplePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
         // the Modal because the draggable bounds is no space and will always returns to its initial position after dragging.
-        isMobile && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+        mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
       }
     </Stack>
   );
