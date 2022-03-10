@@ -55,7 +55,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
       return adapter;
     },
-    [endChatHandler, errorHandler]
+    [endChatHandler, errorHandler, userId]
   );
 
   const adapterArgs = useMemo(

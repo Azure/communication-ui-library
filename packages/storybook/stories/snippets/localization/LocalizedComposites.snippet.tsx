@@ -2,12 +2,11 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import {
   CallComposite,
   ChatComposite,
-  ChatAdapter,
   COMPOSITE_LOCALE_FR_FR,
   useAzureCommunicationCallAdapter,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 export type AppProps = {
   userId: CommunicationUserIdentifier;

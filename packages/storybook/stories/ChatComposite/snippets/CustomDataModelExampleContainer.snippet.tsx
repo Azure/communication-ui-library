@@ -1,14 +1,13 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   AvatarPersonaData,
-  ChatAdapter,
   ChatComposite,
   CompositeLocale,
   ParticipantMenuItemsCallback,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
   userId: CommunicationUserIdentifier;

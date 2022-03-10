@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import { ChatAdapter, ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
