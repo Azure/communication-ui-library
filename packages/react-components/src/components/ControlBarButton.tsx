@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, IRenderFunction, concatStyleSets, IButtonStyles } from '@fluentui/react';
+import {
+  DefaultButton,
+  IButtonProps,
+  IRenderFunction,
+  concatStyleSets,
+  IButtonStyles,
+  KeyCodes
+} from '@fluentui/react';
 import { controlButtonStyles } from './styles/ControlBar.styles';
 import { ControlButtonTooltip } from './ControlButtonTooltip';
 
@@ -137,6 +144,8 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
         ariaLabel={props.ariaLabel ?? tooltipContent ?? labelText}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
+        aria-roledescription={'split button'}
+        menuTriggerKeyCode={KeyCodes.down}
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>
