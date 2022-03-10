@@ -69,7 +69,8 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    setDrawerMenuItems
   ]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
