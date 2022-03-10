@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IStackStyles, Stack } from '@fluentui/react';
-import { ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
+import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -14,9 +14,10 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { BasicHeader } from './BasicHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { PeoplePaneContent } from './PeoplePaneContent';
-import { TabHeader } from './TabHeader';
 import { LocalAndRemotePIPInModal, LocalAndRemotePIPInModalStyles } from './LocalAndRemotePIPInModal';
+import { PeoplePaneContent } from './PeoplePaneContent';
+import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
+import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 
@@ -40,6 +41,8 @@ export const CallWithChatPane = (props: {
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
 }): JSX.Element => {
+  const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
 
@@ -101,7 +104,7 @@ export const CallWithChatPane = (props: {
             </Stack>
             <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
-                <PeoplePaneContent {...props} strings={callWithChatStrings} />
+                <PeoplePaneContent {...props} setDrawerMenuItems={setDrawerMenuItems} strings={callWithChatStrings} />
               </CallAdapterProvider>
             </Stack>
           </Stack.Item>
@@ -114,6 +117,11 @@ export const CallWithChatPane = (props: {
           hidden={hidden}
           styles={pipStyles}
         />
+      )}
+      {drawerMenuItems.length > 0 && (
+        <Stack styles={drawerContainerStyles}>
+          <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+        </Stack>
       )}
     </Stack>
   );

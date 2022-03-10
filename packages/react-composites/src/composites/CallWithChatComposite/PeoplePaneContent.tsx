@@ -6,11 +6,10 @@ import {
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
-  _DrawerMenu,
   _DrawerMenuItemProps
 } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -19,7 +18,6 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
-import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
@@ -38,10 +36,10 @@ export const PeoplePaneContent = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings;
+  setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink, onFetchParticipantMenuItems, strings } = props;
-  const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+  const { callAdapter, chatAdapter, inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -124,11 +122,6 @@ export const PeoplePaneContent = (props: {
               text={strings.copyInviteLinkButtonLabel}
             />
           </Stack.Item>
-        )}
-        {drawerMenuItems.length > 0 && (
-          <Stack styles={drawerContainerStyles}>
-            <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
-          </Stack>
         )}
       </Stack>
     );
