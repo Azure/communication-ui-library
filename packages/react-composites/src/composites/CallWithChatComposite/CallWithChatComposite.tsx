@@ -5,8 +5,6 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane } from './EmbeddedChatPane';
-import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import {
@@ -31,6 +29,7 @@ import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
+import { Pane } from './Pane';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -127,8 +126,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-  const [showChat, setShowChat] = useState(false);
-  const [showPeople, setShowPeople] = useState(false);
+  const [activePane, setActivePane] = useState<'chat' | 'people' | 'none'>('none');
 
   useEffect(() => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
@@ -142,19 +140,32 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [callWithChatAdapter]);
 
   const closePane = useCallback(() => {
-    setShowChat(false);
-    setShowPeople(false);
-  }, []);
+    setActivePane('none');
+  }, [setActivePane]);
 
   const toggleChat = useCallback(() => {
-    setShowPeople(false);
-    setShowChat(!showChat);
-  }, [showChat]);
+    if (activePane === 'chat') {
+      setActivePane('none');
+    } else {
+      setActivePane('chat');
+    }
+  }, [activePane, setActivePane]);
 
   const togglePeople = useCallback(() => {
-    setShowChat(false);
-    setShowPeople(!showPeople);
-  }, [showPeople]);
+    if (activePane === 'people') {
+      setActivePane('none');
+    } else {
+      setActivePane('people');
+    }
+  }, [activePane, setActivePane]);
+
+  const selectChat = useCallback(() => {
+    setActivePane('chat');
+  }, [setActivePane]);
+
+  const selectPeople = useCallback(() => {
+    setActivePane('people');
+  }, [setActivePane]);
 
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -168,14 +179,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowDrawer(false);
     togglePeople();
   }, [togglePeople]);
-  const selectPeople = useCallback(() => {
-    setShowPeople(true);
-    setShowChat(false);
-  }, []);
-  const selectChat = useCallback(() => {
-    setShowChat(true);
-    setShowPeople(false);
-  }, []);
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
@@ -188,7 +191,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const showMobilePane = isMobile && (showChat || showPeople);
+  const showMobilePane = isMobile && activePane !== 'none';
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
@@ -204,38 +207,20 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             />
           </Stack.Item>
         )}
-        {chatProps.adapter && hasJoinedCall && (
-          <EmbeddedChatPane
+        {hasJoinedCall && (
+          <Pane
             chatCompositeProps={chatProps}
-            hidden={!showChat}
+            inviteLink={props.joinInvitationURL}
+            onClose={closePane}
             chatAdapter={chatProps.adapter}
             callAdapter={callAdapter}
-            fluentTheme={fluentTheme}
-            onClose={closePane}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClick={selectChat}
-            onPeopleButtonClick={selectPeople}
+            onChatButtonClicked={selectChat}
+            onPeopleButtonClicked={selectPeople}
             modalLayerHostId={modalLayerHostId}
             mobileView={isMobile}
-            /* @conditional-compile-remove(file-sharing) */
-            fileSharing={props.fileSharing}
+            activePane={activePane}
           />
-        )}
-        {callAdapter && chatProps.adapter && hasJoinedCall && (
-          <CallAdapterProvider adapter={callAdapter}>
-            <EmbeddedPeoplePane
-              hidden={!showPeople}
-              inviteLink={props.joinInvitationURL}
-              onClose={closePane}
-              chatAdapter={chatProps.adapter}
-              callAdapter={callAdapter}
-              onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-              onChatButtonClick={selectChat}
-              onPeopleButtonClick={selectPeople}
-              modalLayerHostId={modalLayerHostId}
-              mobileView={isMobile}
-            />
-          </CallAdapterProvider>
         )}
       </Stack>
       {showControlBar && !showMobilePane && (
@@ -244,12 +229,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallWithChatControlBar
               callAdapter={callAdapter}
               chatAdapter={chatProps.adapter}
-              chatButtonChecked={showChat}
+              chatButtonChecked={activePane === 'chat'}
               onChatButtonClicked={toggleChat}
-              peopleButtonChecked={showPeople}
+              peopleButtonChecked={activePane === 'people'}
               onPeopleButtonClicked={togglePeople}
               onMoreButtonClicked={onMoreButtonClicked}
-              mobileView={props.formFactor === 'mobile'}
+              mobileView={isMobile}
               disableButtonsForLobbyPage={isInLobbyOrConnecting}
               callControls={props.callControls}
             />

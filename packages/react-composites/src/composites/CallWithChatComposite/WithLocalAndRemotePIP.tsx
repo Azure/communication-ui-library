@@ -93,7 +93,9 @@ export const WithLocalAndRemotePIP = (props: {
   );
 };
 
-const availableSpaceStyle = { root: { width: '100%', height: '100%' } };
+const availableSpaceStyle: IStackStyles = {
+  root: { position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }
+};
 
 const hiddenStyle: IStackStyles = concatStyleSets(availableSpaceStyle, { root: { display: 'none' } });
 
