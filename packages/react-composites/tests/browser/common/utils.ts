@@ -126,7 +126,6 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 
     // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await waitForSelector(page, dataUiId('call-page'));
-    await clickOutsideOfPage(page);
   }
 
   // Wait for all participants tiles to have loaded
@@ -142,6 +141,11 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
       },
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
+  }
+
+  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
+  for (const page of pages) {
+    await clickOutsideOfPage(page);
   }
 };
 
@@ -182,6 +186,11 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         expectedVideoCount: pages.length
       }
     );
+  }
+
+  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
+  for (const page of pages) {
+    await clickOutsideOfPage(page);
   }
 };
 
