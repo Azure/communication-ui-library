@@ -11,14 +11,14 @@ import { AdapterErrors } from '../../common/adapters';
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
 
 /**
  * State from the backend services that drives {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
   /** ID of the call participant using this CallWithChatAdapter. */
@@ -39,7 +39,7 @@ export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'd
  * CallWithChat State is a combination of Stateful Chat and Stateful Calling clients with some
  * state specific to the CallWithChat Composite only.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {}
 
