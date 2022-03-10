@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { registerIcons } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import {
   ChevronDown20Regular,
   ChevronRight20Regular,
@@ -38,6 +38,9 @@ export function initializeIconsForUITests(): void {
       Warning: <Warning16Regular />
     }
   });
+
+  // Catch any unregistered icons as not including them in a context menu is causing the app to hang.
+  initializeIcons();
 }
 
 /**
