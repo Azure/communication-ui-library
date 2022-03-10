@@ -35,6 +35,8 @@ import {
   ParticipantsRemovedListener,
   ParticipantsAddedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { ObservableFileUpload } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
@@ -167,6 +169,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.registerFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.clearFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.cancelFileUpload.bind(this);
   }
 
   /** Join existing Call. */
@@ -298,6 +306,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+    this.chatAdapter.registerFileUploads(fileUploads);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public clearFileUploads(): void {
+    this.chatAdapter.clearFileUploads();
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public cancelFileUpload(id: string): void {
+    this.chatAdapter.cancelFileUpload(id);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -442,7 +462,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 /**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Call with an associated Chat thread.
  *
- * @beta
+ * @public
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
@@ -454,7 +474,7 @@ export interface CallAndChatLocator {
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapter}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterArgs = {
   endpoint: string;
@@ -468,7 +488,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
  * Create a CallWithChatAdapter backed by Azure Communication services
  * to plug into the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapter = async ({
   userId,
@@ -512,7 +532,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
  * Note that you must memoize the arguments to avoid recreating adapter on each render.
  * See storybook for typical usage examples.
  *
- * @beta
+ * @public
  */
 export const useAzureCommunicationCallWithChatAdapter = (
   /**
@@ -590,13 +610,28 @@ export const useAzureCommunicationCallWithChatAdapter = (
     [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
   );
 
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
+
   return adapter;
 };
 
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
@@ -612,7 +647,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callClient,

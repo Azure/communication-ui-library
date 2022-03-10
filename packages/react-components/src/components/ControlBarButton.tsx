@@ -135,7 +135,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         styles={componentStyles}
         onRenderText={props.showLabel && props.onRenderText ? props.onRenderText : undefined}
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
-        ariaLabel={tooltipContent}
+        ariaLabel={props.ariaLabel ?? tooltipContent ?? labelText}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
       >
         {props.showLabel ? labelText : <></>}
