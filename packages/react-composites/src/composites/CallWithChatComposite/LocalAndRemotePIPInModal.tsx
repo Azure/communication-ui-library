@@ -20,7 +20,7 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 
 /**
- * Drag options for Modal in {@link LocalAndRemotePIPHooked} component
+ * Drag options for Modal in {@link LocalAndRemotePIPInModal} component
  */
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -30,16 +30,16 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
- * Styles for {@link LocalAndRemotePIPHooked} component
+ * Styles for {@link LocalAndRemotePIPInModal} component
  */
-export type LocalAndRemotePIPHookedStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+export type LocalAndRemotePIPInModalStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
 
-const _LocalAndRemotePIPHooked = (props: {
+const _LocalAndRemotePIPInModal = (props: {
   hidden: boolean;
   modalLayerHostId: string;
-  styles?: LocalAndRemotePIPHookedStyles;
+  styles?: LocalAndRemotePIPInModalStyles;
 }): JSX.Element => {
-  const rootStyles = props.hidden ? hiddenStyle : availableSpaceStyle;
+  const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(
@@ -77,25 +77,25 @@ const _LocalAndRemotePIPHooked = (props: {
  * specified by `modalLayerHostId` prop
  * @private
  */
-export const LocalAndRemotePIPHooked = (props: {
+export const LocalAndRemotePIPInModal = (props: {
   callAdapter: CallAdapter;
   hidden: boolean;
   modalLayerHostId: string;
   children?: React.ReactNode;
-  styles?: LocalAndRemotePIPHookedStyles;
+  styles?: LocalAndRemotePIPInModalStyles;
 }): JSX.Element => {
   return (
     <CallAdapterProvider adapter={props.callAdapter}>
-      <_LocalAndRemotePIPHooked {...props}>{props.children}</_LocalAndRemotePIPHooked>
+      <_LocalAndRemotePIPInModal {...props}>{props.children}</_LocalAndRemotePIPInModal>
     </CallAdapterProvider>
   );
 };
 
-const availableSpaceStyle: IStackStyles = {
+const PIPContainerStyle: IStackStyles = {
   root: { position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }
 };
 
-const hiddenStyle: IStackStyles = concatStyleSets(availableSpaceStyle, { root: { display: 'none' } });
+const hiddenStyle: IStackStyles = concatStyleSets(PIPContainerStyle, { root: { display: 'none' } });
 
 const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
   main: {

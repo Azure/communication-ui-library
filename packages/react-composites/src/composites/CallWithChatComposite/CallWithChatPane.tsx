@@ -16,7 +16,7 @@ import { BasicHeader } from './BasicHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { PeoplePaneContent } from './PeoplePaneContent';
 import { TabHeader } from './TabHeader';
-import { LocalAndRemotePIPHooked, LocalAndRemotePIPHookedStyles } from './LocalAndRemotePIPHooked';
+import { LocalAndRemotePIPInModal, LocalAndRemotePIPInModalStyles } from './LocalAndRemotePIPInModal';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 
@@ -41,7 +41,7 @@ export const CallWithChatPane = (props: {
   fileSharing?: FileSharingOptions;
 }): JSX.Element => {
   const hidden = props.activePane === 'none';
-  const paneStyles = hidden ? hiddenStyles : props.mobileView ? mobilePaneStyles : sidePaneStyles;
+  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
@@ -58,7 +58,7 @@ export const CallWithChatPane = (props: {
       />
     );
 
-  const pipStyles: LocalAndRemotePIPHookedStyles = useMemo(
+  const pipStyles: LocalAndRemotePIPInModalStyles = useMemo(
     () => ({
       modal: {
         main: {
@@ -84,7 +84,7 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Stack styles={props.activePane === 'chat' ? mobilePaneStyles : hiddenStyles}>
+            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>
               <ChatComposite
                 {...props.chatCompositeProps}
                 adapter={props.chatAdapter}
@@ -99,7 +99,7 @@ export const CallWithChatPane = (props: {
                 onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
               />
             </Stack>
-            <Stack styles={props.activePane === 'people' ? mobilePaneStyles : hiddenStyles}>
+            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
                 <PeoplePaneContent {...props} strings={callWithChatStrings} />
               </CallAdapterProvider>
@@ -108,7 +108,7 @@ export const CallWithChatPane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <LocalAndRemotePIPHooked
+        <LocalAndRemotePIPInModal
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
@@ -142,4 +142,4 @@ export const sidePaneStyles: IStackStyles = {
 /**
  * @private
  */
-export const mobilePaneStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
+export const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
