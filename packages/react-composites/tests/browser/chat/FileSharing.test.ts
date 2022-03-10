@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForChatCompositeToLoad, buildUrl } from '../common/utils';
+import { waitForChatCompositeToLoad, buildUrl, isTestProfileStableFlavor } from '../common/utils';
 import { chatTestSetup } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
 test.describe('Filesharing Attach file icon', async () => {
+  test.skip(isTestProfileStableFlavor());
+
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     await chatTestSetup({ pages, users, serverUrl });
   });
@@ -24,6 +26,8 @@ test.describe('Filesharing Attach file icon', async () => {
 });
 
 test.describe('Filesharing SendBox', async () => {
+  test.skip(isTestProfileStableFlavor());
+
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     await chatTestSetup({ pages, users, serverUrl });
   });
