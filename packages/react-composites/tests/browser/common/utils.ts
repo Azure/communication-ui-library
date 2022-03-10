@@ -126,6 +126,7 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 
     // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await waitForSelector(page, dataUiId('call-page'));
+    await clickOutsideOfPage(page);
   }
 
   // Wait for all participants tiles to have loaded
