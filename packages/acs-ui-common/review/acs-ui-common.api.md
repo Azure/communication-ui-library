@@ -55,7 +55,7 @@ export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT ext
 // @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
-// @internal (undocumented)
+// @internal
 export const _pxToRem: (px: number) => string;
 
 // @internal

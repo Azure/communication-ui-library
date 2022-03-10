@@ -50,7 +50,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
-  const showProgressIndicator = (): boolean => progress !== undefined && progress > 0 && progress < 1;
+  const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 
   const containerClassName = mergeStyles({
     width: '12rem',
@@ -62,7 +62,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const fileInfoWrapperClassName = mergeStyles({
     padding: '0.75rem',
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator() ? '0.5rem' : '0.75rem'
+    paddingBottom: showProgressIndicator ? '0.5rem' : '0.75rem'
   });
   const fileInfoClassName = mergeStyles({
     paddingLeft: '0.25rem'
