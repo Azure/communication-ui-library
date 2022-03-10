@@ -2,16 +2,11 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import {
-  ChatAdapter,
-  createAzureCommunicationChatAdapter,
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR
-} from '../../../../src';
+import { ChatAdapter, ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -35,34 +30,25 @@ const customDataModel = params.customDataModel;
 initializeIcons();
 
 function App(): JSX.Element {
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
-
-  useEffect(() => {
-    const initialize = async (): Promise<void> => {
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter({
-          endpoint,
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          threadId
-        })
-      );
-    };
-
-    initialize();
-
-    return () => chatAdapter && chatAdapter.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const args = useMemo(
+    () => ({
+      endpoint,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential: new AzureCommunicationTokenCredential(token),
+      threadId
+    }),
+    []
+  );
+  const adapter = useAzureCommunicationChatAdapter(args);
 
   return (
     <>
-      {!chatAdapter && 'Initializing chat adapter...'}
-      {chatAdapter && (
+      {!adapter && 'Initializing chat adapter...'}
+      {adapter && (
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
-            adapter={chatAdapter}
+            adapter={adapter}
             onRenderTypingIndicator={
               customDataModel
                 ? (typingUsers) => (
