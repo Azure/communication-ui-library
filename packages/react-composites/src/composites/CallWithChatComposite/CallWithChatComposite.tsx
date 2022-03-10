@@ -27,7 +27,7 @@ import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
-import { CallWithChatPane } from './CallWithChatPane';
+import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 
@@ -126,7 +126,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-  const [activePane, setActivePane] = useState<'chat' | 'people' | 'none'>('none');
+  const [activePane, setActivePane] = useState<CallWithChatPaneOption>('none');
 
   useEffect(() => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {

@@ -35,7 +35,7 @@ export const CallWithChatPane = (props: {
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
   modalLayerHostId: string;
-  activePane: 'chat' | 'people' | 'none';
+  activePane: CallWithChatPaneOption;
   mobileView?: boolean;
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
@@ -128,18 +128,18 @@ export const CallWithChatPane = (props: {
 };
 
 /**
+ * Active tab option type for {@link CallWithChatPane} component
  * @private
  */
-export const hiddenStyles: IStackStyles = {
+export type CallWithChatPaneOption = 'none' | 'chat' | 'people';
+
+const hiddenStyles: IStackStyles = {
   root: {
     display: 'none'
   }
 };
 
-/**
- * @private
- */
-export const sidePaneStyles: IStackStyles = {
+const sidePaneStyles: IStackStyles = {
   root: {
     height: '100%',
     padding: '0.5rem 0.25rem',
@@ -147,7 +147,4 @@ export const sidePaneStyles: IStackStyles = {
   }
 };
 
-/**
- * @private
- */
-export const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
+const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
