@@ -27,9 +27,9 @@ import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
+import { CallWithChatPane } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
-import { Pane } from './Pane';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -207,8 +207,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             />
           </Stack.Item>
         )}
-        {hasJoinedCall && (
-          <Pane
+        {chatProps.adapter && callAdapter && hasJoinedCall && (
+          <CallWithChatPane
             chatCompositeProps={chatProps}
             inviteLink={props.joinInvitationURL}
             onClose={closePane}

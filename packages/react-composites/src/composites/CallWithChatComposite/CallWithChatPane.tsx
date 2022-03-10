@@ -21,9 +21,10 @@ import { LocalAndRemotePIPHooked, LocalAndRemotePIPHookedStyles } from './LocalA
 import { FileSharingOptions } from '../ChatComposite';
 
 /**
+ * Pane that is used to store chat and people for CallWithChat composite
  * @private
  */
-export const Pane = (props: {
+export const CallWithChatPane = (props: {
   chatCompositeProps: Partial<ChatCompositeProps>;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
@@ -57,34 +58,6 @@ export const Pane = (props: {
       />
     );
 
-  const chatComposite = useMemo(
-    () => (
-      <ChatComposite
-        {...props.chatCompositeProps}
-        adapter={props.chatAdapter}
-        fluentTheme={theme}
-        options={{
-          topic: false,
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          participantPane: false,
-          /* @conditional-compile-remove(file-sharing) */
-          fileSharing: props.fileSharing
-        }}
-        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      />
-    ),
-    []
-  );
-
-  const content =
-    props.activePane === 'chat' ? (
-      chatComposite
-    ) : props.activePane === 'people' ? (
-      <CallAdapterProvider adapter={props.callAdapter}>
-        <PeoplePaneContent {...props} strings={callWithChatStrings} />
-      </CallAdapterProvider>
-    ) : null;
-
   const pipStyles: LocalAndRemotePIPHookedStyles = useMemo(
     () => ({
       modal: {
@@ -111,7 +84,26 @@ export const Pane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            {content}
+            <Stack styles={props.activePane === 'chat' ? mobilePaneStyles : hiddenStyles}>
+              <ChatComposite
+                {...props.chatCompositeProps}
+                adapter={props.chatAdapter}
+                fluentTheme={theme}
+                options={{
+                  topic: false,
+                  /* @conditional-compile-remove(chat-composite-participant-pane) */
+                  participantPane: false,
+                  /* @conditional-compile-remove(file-sharing) */
+                  fileSharing: props.fileSharing
+                }}
+                onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+              />
+            </Stack>
+            <Stack styles={props.activePane === 'people' ? mobilePaneStyles : hiddenStyles}>
+              <CallAdapterProvider adapter={props.callAdapter}>
+                <PeoplePaneContent {...props} strings={callWithChatStrings} />
+              </CallAdapterProvider>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>
