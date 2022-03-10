@@ -5,7 +5,7 @@ import { ChatMessage } from '@azure/communication-chat';
 import { IStackStyles, Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { ControlBarButtonProps } from '@internal/react-components';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { ChatAdapter } from '../ChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
@@ -45,16 +45,19 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const numberOfMsgToolTip =
     props.strings?.tooltipOffContent && unreadChatMessagesCount > 0
       ? props.strings?.tooltipOffContent +
-        _formatString(callWithChatStrings.chatButtonEnhancedToolTipContent, {
+        _formatString(callWithChatStrings.chatButtonNewMessageCountToolTip, {
           unreadMessagesCount: `${unreadChatMessagesCount}`
         })
       : undefined;
 
-  const chatStrings = {
-    label: props.strings?.label,
-    tooltipOffContent: numberOfMsgToolTip ? numberOfMsgToolTip : props.strings?.tooltipOffContent,
-    tooltipOnContent: props.strings?.tooltipOnContent
-  };
+  const chatStrings = useMemo(
+    () => ({
+      label: props.strings?.label,
+      tooltipOffContent: numberOfMsgToolTip ? numberOfMsgToolTip : props.strings?.tooltipOffContent,
+      tooltipOnContent: props.strings?.tooltipOnContent
+    }),
+    [numberOfMsgToolTip, props.strings?.label, props.strings?.tooltipOffContent, props.strings?.tooltipOnContent]
+  );
   const onRenderOnIcon = useCallback(() => baseIcon, [baseIcon]);
   const notificationOnIcon = useCallback((): JSX.Element => {
     return (
