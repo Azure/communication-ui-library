@@ -144,8 +144,8 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
         ariaLabel={props.ariaLabel ?? tooltipContent ?? labelText}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
-        aria-roledescription={'split button'}
-        menuTriggerKeyCode={KeyCodes.down}
+        aria-roledescription={props.ariaDescription}
+        menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>

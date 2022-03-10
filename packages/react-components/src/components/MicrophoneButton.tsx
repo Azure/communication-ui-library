@@ -50,12 +50,10 @@ export interface MicrophoneButtonStrings {
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of microphone button split button role
    */
   microphoneButtonSplitRoleDescription?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of microphone button default role
    */

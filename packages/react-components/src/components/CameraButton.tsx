@@ -38,22 +38,18 @@ export interface CameraButtonStrings {
   tooltipOffContent?: string;
   /** Tooltip content when the button is disabled due to video loading. */
   tooltipVideoLoadingContent?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of camera menu
    */
   cameraMenuTitle: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of camera menu
    */
   cameraMenuTooltip: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of camera button split button role
    */
   cameraButtonSplitRoleDescription?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of camera button default role
    */
