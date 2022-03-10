@@ -14,7 +14,7 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { BasicHeader } from './BasicHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { LocalAndRemotePIPInModal, LocalAndRemotePIPInModalStyles } from './LocalAndRemotePIPInModal';
+import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from './PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
@@ -83,7 +83,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
-  const pipStyles: LocalAndRemotePIPInModalStyles = useMemo(
+  const pipStyles: ModalLocalAndRemotePIPStyles = useMemo(
     () => ({
       modal: {
         main: {
@@ -115,7 +115,7 @@ export const CallWithChatPane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <LocalAndRemotePIPInModal
+        <ModalLocalAndRemotePIP
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}

@@ -20,7 +20,7 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 
 /**
- * Drag options for Modal in {@link LocalAndRemotePIPInModal} component
+ * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
  */
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -30,14 +30,14 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
- * Styles for {@link LocalAndRemotePIPInModal} component
+ * Styles for {@link ModalLocalAndRemotePIP} component
  */
-export type LocalAndRemotePIPInModalStyles = { modal?: Partial<IModalStyles> };
+export type ModalLocalAndRemotePIPStyles = { modal?: Partial<IModalStyles> };
 
-const _LocalAndRemotePIPInModal = (props: {
+const _ModalLocalAndRemotePIP = (props: {
   hidden: boolean;
   modalLayerHostId: string;
-  styles?: LocalAndRemotePIPInModalStyles;
+  styles?: ModalLocalAndRemotePIPStyles;
 }): JSX.Element => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
@@ -73,16 +73,16 @@ const _LocalAndRemotePIPInModal = (props: {
  * specified by `modalLayerHostId` prop
  * @private
  */
-export const LocalAndRemotePIPInModal = (props: {
+export const ModalLocalAndRemotePIP = (props: {
   callAdapter: CallAdapter;
   hidden: boolean;
   modalLayerHostId: string;
   children?: React.ReactNode;
-  styles?: LocalAndRemotePIPInModalStyles;
+  styles?: ModalLocalAndRemotePIPStyles;
 }): JSX.Element => {
   return (
     <CallAdapterProvider adapter={props.callAdapter}>
-      <_LocalAndRemotePIPInModal {...props}>{props.children}</_LocalAndRemotePIPInModal>
+      <_ModalLocalAndRemotePIP {...props}>{props.children}</_ModalLocalAndRemotePIP>
     </CallAdapterProvider>
   );
 };
