@@ -26,12 +26,12 @@ import {
   linkIconStyles,
   participantListContainerStyles,
   peoplePaneContainerStyle
-} from './styles/EmbeddedPeoplePane.styles';
+} from './styles/PeoplePaneContent.styles';
 
 /**
  * @private
  */
-export const PeopleContent = (props: {
+export const PeoplePaneContent = (props: {
   inviteLink?: string;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;

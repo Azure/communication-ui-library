@@ -20,7 +20,7 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 
 /**
- * Drag options for Modal in {@link WithLocalAndRemotePIP} component
+ * Drag options for Modal in {@link LocalAndRemotePIPHooked} component
  */
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -30,14 +30,13 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
- * Styles for {@link WithLocalAndRemotePIP} component
+ * Styles for {@link LocalAndRemotePIPHooked} component
  */
 export type WithLocalAndRemotePIPStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
 
 const _WithLocalAndRemotePIP = (props: {
   hidden: boolean;
   modalLayerHostId: string;
-  children?: React.ReactNode;
   styles?: WithLocalAndRemotePIPStyles;
 }): JSX.Element => {
   const rootStyles = props.hidden ? hiddenStyle : availableSpaceStyle;
@@ -56,7 +55,6 @@ const _WithLocalAndRemotePIP = (props: {
 
   return (
     <Stack styles={rootStyles}>
-      {props.children}
       <Modal
         isOpen={true}
         isModeless={true}
@@ -79,7 +77,7 @@ const _WithLocalAndRemotePIP = (props: {
  * specified by `modalLayerHostId` prop
  * @private
  */
-export const WithLocalAndRemotePIP = (props: {
+export const LocalAndRemotePIPHooked = (props: {
   callAdapter: CallAdapter;
   hidden: boolean;
   modalLayerHostId: string;

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, IStackStyles, Stack } from '@fluentui/react';
+import { IStackStyles, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { ChatAdapter, ChatCompositeProps } from '../ChatComposite';
+import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import {
   paneBodyContainer,
@@ -14,10 +14,11 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { BasicHeader } from './BasicHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ChatContent } from './ChatContent';
-import { PeopleContent } from './PeopleContent';
+import { PeoplePaneContent } from './PeoplePaneContent';
 import { TabHeader } from './TabHeader';
-import { WithLocalAndRemotePIP, WithLocalAndRemotePIPStyles } from './WithLocalAndRemotePIP';
+import { LocalAndRemotePIPHooked, WithLocalAndRemotePIPStyles } from './WithLocalAndRemotePIP';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * @private
@@ -35,14 +36,11 @@ export const Pane = (props: {
   activePane: 'chat' | 'people' | 'none';
   mobileView?: boolean;
   inviteLink?: string;
+  /* @conditional-compile-remove(file-sharing) */
+  fileSharing?: FileSharingOptions;
 }): JSX.Element => {
-  const paneStyles = props.mobileView
-    ? props.activePane === 'none'
-      ? hiddenMobilePaneStyle
-      : mobilePaneStyle
-    : props.activePane === 'none'
-    ? sidePaneContainerHiddenStyles
-    : sidePaneContainerStyles;
+  const hidden = props.activePane === 'none';
+  const paneStyles = hidden ? hiddenStyles : props.mobileView ? mobilePaneStyles : sidePaneStyles;
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
@@ -61,12 +59,24 @@ export const Pane = (props: {
 
   const content =
     props.activePane === 'chat' ? (
-      <ChatContent {...props} fluentTheme={theme} />
-    ) : (
+      <ChatComposite
+        {...props.chatCompositeProps}
+        adapter={props.chatAdapter}
+        fluentTheme={theme}
+        options={{
+          topic: false,
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
+          participantPane: false,
+          /* @conditional-compile-remove(file-sharing) */
+          fileSharing: props.fileSharing
+        }}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      />
+    ) : props.activePane === 'people' ? (
       <CallAdapterProvider adapter={props.callAdapter}>
-        <PeopleContent {...props} strings={callWithChatStrings} />
+        <PeoplePaneContent {...props} strings={callWithChatStrings} />
       </CallAdapterProvider>
-    );
+    ) : null;
 
   const pipStyles: WithLocalAndRemotePIPStyles = useMemo(
     () => ({
@@ -78,7 +88,7 @@ export const Pane = (props: {
         }
       }
     }),
-    [theme]
+    [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
   );
 
   return (
@@ -99,7 +109,7 @@ export const Pane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <WithLocalAndRemotePIP
+        <LocalAndRemotePIPHooked
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={props.activePane === 'none'}
@@ -113,7 +123,16 @@ export const Pane = (props: {
 /**
  * @private
  */
-export const sidePaneContainerStyles: IStackStyles = {
+export const hiddenStyles: IStackStyles = {
+  root: {
+    display: 'none'
+  }
+};
+
+/**
+ * @private
+ */
+export const sidePaneStyles: IStackStyles = {
   root: {
     height: '100%',
     padding: '0.5rem 0.25rem',
@@ -124,19 +143,4 @@ export const sidePaneContainerStyles: IStackStyles = {
 /**
  * @private
  */
-export const sidePaneContainerHiddenStyles: IStackStyles = {
-  root: {
-    ...sidePaneContainerStyles,
-    display: 'none'
-  }
-};
-
-/**
- * @private
- */
-export const mobilePaneStyle: IStackStyles = { root: { width: '100%', height: '100%' } };
-
-/**
- * @private
- */
-export const hiddenMobilePaneStyle: IStackStyles = concatStyleSets(mobilePaneStyle, { root: { display: 'none' } });
+export const mobilePaneStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
