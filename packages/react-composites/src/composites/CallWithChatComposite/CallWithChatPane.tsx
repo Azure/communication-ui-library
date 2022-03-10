@@ -61,6 +61,28 @@ export const CallWithChatPane = (props: {
       />
     );
 
+  const chatContent = (
+    <ChatComposite
+      {...props.chatCompositeProps}
+      adapter={props.chatAdapter}
+      fluentTheme={theme}
+      options={{
+        topic: false,
+        /* @conditional-compile-remove(chat-composite-participant-pane) */
+        participantPane: false,
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing: props.fileSharing
+      }}
+      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+    />
+  );
+
+  const peopleContent = (
+    <CallAdapterProvider adapter={props.callAdapter}>
+      <PeoplePaneContent {...props} setDrawerMenuItems={setDrawerMenuItems} strings={callWithChatStrings} />
+    </CallAdapterProvider>
+  );
+
   const pipStyles: LocalAndRemotePIPInModalStyles = useMemo(
     () => ({
       modal: {
@@ -87,26 +109,8 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>
-              <ChatComposite
-                {...props.chatCompositeProps}
-                adapter={props.chatAdapter}
-                fluentTheme={theme}
-                options={{
-                  topic: false,
-                  /* @conditional-compile-remove(chat-composite-participant-pane) */
-                  participantPane: false,
-                  /* @conditional-compile-remove(file-sharing) */
-                  fileSharing: props.fileSharing
-                }}
-                onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-              />
-            </Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
-              <CallAdapterProvider adapter={props.callAdapter}>
-                <PeoplePaneContent {...props} setDrawerMenuItems={setDrawerMenuItems} strings={callWithChatStrings} />
-              </CallAdapterProvider>
-            </Stack>
+            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
+            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>
