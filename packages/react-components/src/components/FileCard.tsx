@@ -110,7 +110,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           {actionIcon && actionIcon}
         </Stack>
       </Stack>
-      {showProgressIndicator() && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
+      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
     </Stack>
   );
 };
