@@ -252,11 +252,11 @@ export interface CallWithChatAdapterManagement {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 
   /* @conditional-compile-remove(file-sharing) */
-  registerFileUploads(fileUploads: ObservableFileUpload[]): void;
+  registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
   /* @conditional-compile-remove(file-sharing) */
-  clearFileUploads(): void;
+  clearFileUploads: () => void;
   /* @conditional-compile-remove(file-sharing) */
-  cancelFileUpload(id: string): void;
+  cancelFileUpload: (id: string) => void;
 }
 
 /**

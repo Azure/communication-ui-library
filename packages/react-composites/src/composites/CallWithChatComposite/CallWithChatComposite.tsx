@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallCompositePage, CallControlDisplayType, CallControlOptions } from '../CallComposite';
+import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane } from './EmbeddedChatPane';
 import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';

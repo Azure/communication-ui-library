@@ -11,11 +11,13 @@ import {
   CallAdapterUiState,
   CallControlOptions
 } from '../../CallComposite';
-import { ChatAdapterThreadManagement, ChatAdapterUiState, FileUploadAdapter } from '../../ChatComposite';
+import { ChatAdapterThreadManagement, ChatAdapterUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 import { CallWithChatAdapterUiState, CallWithChatClientState } from '../state/CallWithChatAdapterState';
 import { CallWithChatAdapterManagement } from './CallWithChatAdapter';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadAdapter } from '../../ChatComposite';
 
 /// IMPORTANT
 ///
