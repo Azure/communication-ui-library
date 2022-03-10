@@ -1,12 +1,11 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
-  CallAdapter,
-  createAzureCommunicationCallAdapter,
   ChatComposite,
   ChatAdapter,
   createAzureCommunicationChatAdapter,
-  COMPOSITE_LOCALE_FR_FR
+  COMPOSITE_LOCALE_FR_FR,
+  useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -20,7 +19,6 @@ export type AppProps = {
 };
 
 export const App = (props: AppProps): JSX.Element => {
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
@@ -33,6 +31,18 @@ export const App = (props: AppProps): JSX.Element => {
     }
   }, [props.token]);
 
+  // Memoize arguments to `useAzureCommunicationCallAdapter` so that
+  // a new adapter is only created when an argument changes.
+  const locator = useMemo(
+    () => (isTeamsMeetingLink(props.locator) ? { meetingLink: props.locator } : { groupId: props.locator }),
+    [props.locator]
+  );
+  const callAdapter = useAzureCommunicationCallAdapter({
+    userId: props.userId,
+    displayName: props.displayName,
+    credential,
+    locator
+  });
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
       setChatAdapter(
@@ -42,17 +52,6 @@ export const App = (props: AppProps): JSX.Element => {
           displayName: props.displayName,
           credential: new AzureCommunicationTokenCredential(props.token),
           threadId: props.threadId
-        })
-      );
-      const callLocator = isTeamsMeetingLink(props.locator)
-        ? { meetingLink: props.locator }
-        : { groupId: props.locator };
-      setCallAdapter(
-        await createAzureCommunicationCallAdapter({
-          userId: props.userId,
-          displayName: props.displayName,
-          credential: new AzureCommunicationTokenCredential(props.token),
-          locator: callLocator
         })
       );
     };
