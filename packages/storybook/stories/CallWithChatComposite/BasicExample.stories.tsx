@@ -46,7 +46,6 @@ const BasicStory = (args, context): JSX.Element => {
 
   return (
     <>
-      <SingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
           <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...callWithChatProps} />

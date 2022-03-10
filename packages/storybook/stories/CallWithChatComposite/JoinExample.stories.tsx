@@ -34,7 +34,6 @@ const JoinTeamsMeetingStory = (args, context): JSX.Element => {
 
   return (
     <>
-      <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {meetingProps ? (
           <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...meetingProps} />
