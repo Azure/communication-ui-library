@@ -44,8 +44,7 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
 
   const numberOfMsgToolTip =
     props.strings?.tooltipOffContent && unreadChatMessagesCount > 0
-      ? props.strings?.tooltipOffContent +
-        _formatString(callWithChatStrings.chatButtonNewMessageCountToolTip, {
+      ? _formatString(callWithChatStrings.chatButtonNewMessageCountToolTip, {
           unreadMessagesCount: `${unreadChatMessagesCount}`
         })
       : undefined;
