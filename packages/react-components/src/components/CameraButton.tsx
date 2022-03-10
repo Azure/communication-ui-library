@@ -46,10 +46,12 @@ export interface CameraButtonStrings {
    * Tooltip of camera menu
    */
   cameraMenuTooltip: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of camera button split button role
    */
   cameraButtonSplitRoleDescription?: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of camera button default role
    */
