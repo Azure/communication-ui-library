@@ -1,10 +1,9 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallAdapter,
-  createAzureCommunicationCallAdapter,
   ChatAdapter,
   createAzureCommunicationChatAdapter,
-  fromFlatCommunicationIdentifier
+  fromFlatCommunicationIdentifier,
+  useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -17,7 +16,6 @@ function App(): JSX.Element {
   //Calling Variables
   //For Group Id, developers can pass any GUID they can generate
   const groupId = '<Developer generated GUID>';
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   //Chat Variables
   const threadId = '<Get thread id from chat service>';
@@ -33,6 +31,19 @@ function App(): JSX.Element {
     }
   }, [token]);
 
+  // Memoize arguments to `useAzureCommunicationCallAdapter` so that
+  // a new adapter is only created when an argument changes.
+  const callAdapterArgs = useMemo(
+    () => ({
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential,
+      locator: { groupId }
+    }),
+    [userId, credential, displayName, groupId]
+  );
+  const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
+
   useEffect(() => {
     if (credential !== undefined) {
       const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
@@ -43,14 +54,6 @@ function App(): JSX.Element {
             displayName,
             credential,
             threadId
-          })
-        );
-        setCallAdapter(
-          await createAzureCommunicationCallAdapter({
-            userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-            displayName,
-            credential,
-            locator: { groupId }
           })
         );
       };
