@@ -154,6 +154,6 @@ const sidePaneStyles: IStackStyles = {
 
 const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
 
-export const sidePaneTokens: IStackTokens = {
+const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
