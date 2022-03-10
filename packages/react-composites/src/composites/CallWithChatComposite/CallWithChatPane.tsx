@@ -143,7 +143,7 @@ export const sidePaneStyles: IStackStyles = {
   root: {
     height: '100%',
     padding: '0.5rem 0.25rem',
-    width: '21.5rem'
+    maxWidth: '21.5rem'
   }
 };
 

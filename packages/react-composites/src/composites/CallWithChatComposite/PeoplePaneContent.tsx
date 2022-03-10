@@ -101,7 +101,7 @@ export const PeoplePaneContent = (props: {
     () =>
       concatStyleSets(copyLinkButtonStyles, {
         root: {
-          height: props.mobileView ? '3rem' : '2.5rem',
+          minHeight: props.mobileView ? '3rem' : '2.5rem',
           borderRadius: props.mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
         }
       }),
