@@ -1009,22 +1009,24 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   return (
     <Ref innerRef={chatThreadRef}>
-      <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
+      <Stack grow>
         {/* @conditional-compile-remove(file-sharing) */}
         <FileDownloadErrorBar
           onDismissDownloadErrorMessage={props.onDismissFileDownloadErrorMessage}
           fileDownloadErrorMessage={props.fileDownloadErrorMessage ? props.fileDownloadErrorMessage : ''}
         ></FileDownloadErrorBar>
-        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
-        {existsNewChatMessage && !disableJumpToNewMessageButton && (
-          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-            {onRenderJumpToNewMessageButton ? (
-              onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
-            ) : (
-              <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
-            )}
-          </div>
-        )}
+        <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
+          <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
+          {existsNewChatMessage && !disableJumpToNewMessageButton && (
+            <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
+              {onRenderJumpToNewMessageButton ? (
+                onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
+              ) : (
+                <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
+              )}
+            </div>
+          )}
+        </Stack>
       </Stack>
     </Ref>
   );
