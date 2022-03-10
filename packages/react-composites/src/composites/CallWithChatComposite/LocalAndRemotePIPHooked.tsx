@@ -32,12 +32,12 @@ const DRAG_OPTIONS: IDragOptions = {
 /**
  * Styles for {@link LocalAndRemotePIPHooked} component
  */
-export type WithLocalAndRemotePIPStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
+export type LocalAndRemotePIPHookedStyles = { modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> };
 
-const _WithLocalAndRemotePIP = (props: {
+const _LocalAndRemotePIPHooked = (props: {
   hidden: boolean;
   modalLayerHostId: string;
-  styles?: WithLocalAndRemotePIPStyles;
+  styles?: LocalAndRemotePIPHookedStyles;
 }): JSX.Element => {
   const rootStyles = props.hidden ? hiddenStyle : availableSpaceStyle;
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
@@ -82,11 +82,11 @@ export const LocalAndRemotePIPHooked = (props: {
   hidden: boolean;
   modalLayerHostId: string;
   children?: React.ReactNode;
-  styles?: WithLocalAndRemotePIPStyles;
+  styles?: LocalAndRemotePIPHookedStyles;
 }): JSX.Element => {
   return (
     <CallAdapterProvider adapter={props.callAdapter}>
-      <_WithLocalAndRemotePIP {...props}>{props.children}</_WithLocalAndRemotePIP>
+      <_LocalAndRemotePIPHooked {...props}>{props.children}</_LocalAndRemotePIPHooked>
     </CallAdapterProvider>
   );
 };

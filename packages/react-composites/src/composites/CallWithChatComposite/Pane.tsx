@@ -16,7 +16,7 @@ import { BasicHeader } from './BasicHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { PeoplePaneContent } from './PeoplePaneContent';
 import { TabHeader } from './TabHeader';
-import { LocalAndRemotePIPHooked, WithLocalAndRemotePIPStyles } from './WithLocalAndRemotePIP';
+import { LocalAndRemotePIPHooked, LocalAndRemotePIPHookedStyles } from './LocalAndRemotePIPHooked';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 
@@ -57,8 +57,8 @@ export const Pane = (props: {
       />
     );
 
-  const content =
-    props.activePane === 'chat' ? (
+  const chatComposite = useMemo(
+    () => (
       <ChatComposite
         {...props.chatCompositeProps}
         adapter={props.chatAdapter}
@@ -72,13 +72,20 @@ export const Pane = (props: {
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
+    ),
+    []
+  );
+
+  const content =
+    props.activePane === 'chat' ? (
+      chatComposite
     ) : props.activePane === 'people' ? (
       <CallAdapterProvider adapter={props.callAdapter}>
         <PeoplePaneContent {...props} strings={callWithChatStrings} />
       </CallAdapterProvider>
     ) : null;
 
-  const pipStyles: WithLocalAndRemotePIPStyles = useMemo(
+  const pipStyles: LocalAndRemotePIPHookedStyles = useMemo(
     () => ({
       modal: {
         main: {
@@ -112,7 +119,7 @@ export const Pane = (props: {
         <LocalAndRemotePIPHooked
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
-          hidden={props.activePane === 'none'}
+          hidden={hidden}
           styles={pipStyles}
         />
       )}
