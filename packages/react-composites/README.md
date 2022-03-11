@@ -60,10 +60,10 @@ Conditional compilation creates a problem with the e2e tests. The tests themselv
 So when adding a new test to the suite keep this in mind and use the following call:
 
 ```TypeScript
-test.skip(skipTestInStableFlavor());
+test.skip(isTestProfileStableFlavor());
 ```
 
-The `skipTestInStableFlavor()` function is checking the environment variables of the session to check what flavor it is running in since it wont conditionally compile the test out. This function is found in the `Utils` folder under `testing` in the composites project.
+The `isTestProfileStableFlavor()` function is checking the environment variables of the session to check what flavor it is running in since it wont conditionally compile the test out. This function is found in the `Utils` folder under `testing` in the composites project.
 
 ## Mobile Only tests
 
