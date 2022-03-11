@@ -41,6 +41,30 @@ jobs:
         with:
           node-version: '14.x'
 
-        # Choose stable dependency for sdk
+      # Create new release branch
+      - name: Hop into new branch
+        run: git checkout -b release/${{ steps.version.outputs.version }}
+
+      # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk
         run: node common/scripts/choose-stable-sdk-deps.js
+
+      # Commit new dependencies
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Selected stable sdk's for release branch"
+
+      # Checkout back to pre-release branch
+      - name: Hop back to pre-release branch
+        run: git checkout ${{ github.event.inputs.branch }}
+
+      # Create pull request to orphan release branch
+      - name: Create pull request for pre-release back to main
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            https://api.github.com/repos/Azure/communication-ui-library/pulls \
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
