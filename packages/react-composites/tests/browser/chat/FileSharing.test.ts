@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForChatCompositeToLoad, buildUrl, isTestProfileStableFlavor, stubMessageTimestamps } from '../common/utils';
+import {
+  waitForChatCompositeToLoad,
+  buildUrl,
+  isTestProfileStableFlavor,
+  stubMessageTimestamps
+} from '../common/utils';
 import { chatTestSetup } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
