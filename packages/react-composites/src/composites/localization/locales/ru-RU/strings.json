@@ -44,13 +44,21 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "Люди",
+    "peopleButtonTooltipContentOpen": "Показать участников",
+    "peopleButtonTooltipContentClose": "Скрыть участников",
     "chatButtonLabel": "Чат",
+    "chatButtonTooltipContentOpen": "Показать чат",
+    "chatButtonTooltipContentClose": "Скрыть чат",
     "moreDrawerMicrophoneMenuTitle": "Микрофон",
     "moreDrawerSpeakerMenuTitle": "Динамик",
+    "moreDrawerButtonLabel": "Дополнительные параметры",
+    "moreDrawerButtonTooltip": "Дополнительные параметры",
     "peoplePaneTitle": "Люди",
     "peoplePaneSubTitle": "В этом звонке",
     "chatPaneTitle": "Чат",
     "chatButtonNewMessageNotificationLabel": "Новое сообщение",
-    "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова."
+    "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова.",
+    "removeMenuLabel": "Удалить",
+    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
   }
 }
