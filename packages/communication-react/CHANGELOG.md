@@ -4,9 +4,11 @@ This log was last generated on Fri, 11 Mar 2022 19:20:01 GMT and should not be m
 
 <!-- Start content -->
 
+TODO: Please groom this log.
+
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.2.0)
 
-Fri, 11 Mar 2022 19:20:01 GMT 
+Fri, 11 Mar 2022 19:20:01 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.1.1-beta.1...@azure/communication-react_v1.2.0)
 
 ### Minor changes
@@ -182,7 +184,7 @@ This minor release also contains general bug fixes and performance improvements.
 
 ## [1.0.1-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.1-beta.2)
 
-Mon, 24 Jan 2022 23:18:53 GMT 
+Mon, 24 Jan 2022 23:18:53 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.1-beta.1...1.0.1-beta.2)
 
 ### Changes
