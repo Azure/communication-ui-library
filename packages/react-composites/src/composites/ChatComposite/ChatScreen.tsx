@@ -15,7 +15,7 @@ import {
   TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -48,6 +48,8 @@ import { FileDownloadCards } from './FileDownloadCards';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useState } from 'react';
 
 /**
  * @private

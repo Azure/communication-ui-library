@@ -59,7 +59,6 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
           if (response instanceof URL) {
             window.open(response.toString(), '_blank', 'noopener,noreferrer');
           } else {
-            console.log(response);
             props.onDownloadErrorMessage(response.errorMessage);
           }
         } catch (error) {
