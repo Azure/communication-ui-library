@@ -14,9 +14,9 @@ import {
   createCompletedFileUpload
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { initializeIcons, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -37,7 +37,7 @@ const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : 
 
 // Needed to initialize default icons used by Fluent components.
 initializeFileTypeIcons();
-initializeIcons();
+initializeIconsForUITests();
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
