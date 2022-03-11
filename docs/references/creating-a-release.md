@@ -1,6 +1,6 @@
 # Creating a Release
 
-Releases can be created manually or by using the created GitHub actions (preferred).
+This document applies to beta and stable releases. Alpha releases are created nightly through a separate light-weight mechanism.
 
 All new major/minor releases and new beta releases should be posted on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
@@ -10,41 +10,74 @@ We must do due diligence in testing our packages before any new major/minor or b
 
 See the [release checklist](../references/release-checklist.md) for tasks that must be completed before releasing.
 
-### Release branches
+## Release workflow
 
-A release branch is created for each new beta and stable release (alpha version are excluded from this). The release branch is a short lived branch used to ensure high release quality.
+Both beta and stable release follow a two step workflow, aided by github actions.
+
+### Step 1: Prepare for release
+
+Use the <insert workflow name> github action to trigger the release preparation workflow.
+
+    TODO: Add image showing workflow and options, like there used to be here.
+
+This workflow will:
+
+1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
+1. Create a Pull Request into the `prerelease/<release-tag>` for manually summarizing the changes collected in the changelog. *Merge this PR before going to step 2*.
+
+For example, when creating a release off of `main` tagged `3.3.0`, the following branches and Pull Requests will be created:
+
+```mermaid
+graph LR
+  main[branch: main]
+  prerelease[branch: prerelease/3.3.0<br/>- version bump<br/>- collect changelog<br/>-trigger string translations]
+  pr[branch:groom_changelog_3.0.0]
+
+  main -->|Create Branch| prerelease
+  prerelease -->|Create Branch| pr
+  pr -.-o|Create Pull Request| prerelease
+```
+
+### Step 2: Create release branch
+
+Use the <insert workflow name> github action to trigger the release branch creation workflow.
+
+    TODO: Add image showing workflow and options, like there used to be here.
+
+This workflow will:
+
+1. Create a Pull Request to merge the prerelease branch back into the base branch.
+1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but *it will never be merged back in the base branch*.
+  1. Commit some release preparation modifications that can not be merged back, like choosing the dependency versions that depend on the type of the release.
+
+Continuing the example above, this action should be triggered once `groom_changelog_3.0.0` is merged. It will create the following new branches and Pull Requests:
+
+```mermaid
+graph LR
+  main[branch: main]
+  prerelease[branch: prerelease/3.3.0]
+  release[branch:release/3.0.0<br/>- Update dependency versions<br/>- Potential cherry-picks<br/>- Merge string translations<br/> Abandon branch once released]
+
+  main -.-|Created in step 1| prerelease
+  prerelease -->|Create Branch| release
+  prerelease -.-o|Create Pull Request| main
+```
+
+### Cherry-picking changes
 
 While the release branch is active, some changes might be merged into the branch (for bug fixes, features deemed necessary for the release). PRs into the release branch should follow this process when possible:
 
 - First land the change as a PR into `main`.
 - Then, cherry-pick the change as a separate PR onto the release branch.
+  - Do not merge changes into the prerelease branch created in Step #1. They may get merged after the release branch is created, and not make it into the release at all.
+  - The release branch is never merged back into `main`, so any changes directly into the release branch will be lost on `main` (and future releases).
 
 This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off. This avoids non-trivial merge conflicts when the release branch is eventually merged back into `main`.
 
-When ready to release to NPM, a new package is created off the release branch and the release branch is then merged into `main` and deleted. A git tag is added to the released git-version.
-
-## Creating a release through GitHub actions (Preferred)
-
-### Getting Ready for release
-
-1. Trigger the "Release branch - Create" GitHub action
-    Enter the branch or tag you are looking to create a release off. This will usually be an alpha tag or the main branch.
-
-    <https://user-images.githubusercontent.com/2684369/130101098-b356b16d-47a7-416b-af84-a27f7e4dc891.mp4>
-
-1. The triggered GitHub action will bump the package versions, generate the packlet changelogs and put up a PR up into main.
-1. Double check the package versions are as expected.
-1. The PR will auto create a Storybook deployment that can be used for verifications.
-1. Craft the [`@azure/communication-react` changelog](https://github.com/Azure/communication-ui-library/blob/main/packages/communication-react/CHANGELOG.md).
-    * This should be done as a Pull Request into the release branch.
-    * To create the changelist grab changes from the packlets' changelogs and prune the changelog lines as necessary; ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
-    * Example changelog PR: <https://github.com/Azure/communication-ui-library/pull/701>
-1. Ensure the "Before Release" steps of the [release checklist](../references/release-checklist.md) are completed.
-
-### Publishing the package
+## Publishing the package
 
 You are now ready to publish the package!
 
@@ -63,6 +96,10 @@ You are now ready to publish the package!
 1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.
 
 ## Manually creating a release
+
+
+    WARNING: This section is old, and likely wrong.
+
 
 To manually create a release:
 
