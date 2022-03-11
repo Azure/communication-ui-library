@@ -55,11 +55,6 @@ export interface MicrophoneButtonStrings {
    * description of microphone button split button role
    */
   microphoneButtonSplitRoleDescription?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
-  /**
-   * description of microphone button default role
-   */
-  microphoneButtonDefaultRoleDescription?: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -177,9 +172,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
       split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
       ariaDescription={
-        enableDeviceSelectionMenuTrampoline(props)
-          ? strings.microphoneButtonSplitRoleDescription
-          : strings.microphoneButtonDefaultRoleDescription
+        enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
       }
     />
   );

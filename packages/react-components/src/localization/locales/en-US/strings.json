@@ -43,8 +43,7 @@
     "tooltipVideoLoadingContent": "Video is loading",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
-    "cameraButtonSplitRoleDescription": "Split button",
-    "cameraButtonDefaultRoleDescription": "Button"
+    "cameraButtonSplitRoleDescription": "Split button"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -56,8 +55,7 @@
     "microphoneMenuTooltip": "Choose Microphone",
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose Speaker",
-    "microphoneButtonSplitRoleDescription": "Split button",
-    "microphoneButtonDefaultRoleDescription": "Button"
+    "microphoneButtonSplitRoleDescription": "Split button"
   },
   "devicesButton": {
     "label": "Devices",
