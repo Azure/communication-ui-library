@@ -18,12 +18,12 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.1.1-beta.1",
-    "@internal/react-components": "1.1.1-beta.1",
-    "@internal/chat-stateful-client": "1.1.1-beta.1",
-    "@internal/calling-stateful-client": "1.1.1-beta.1",
-    "@internal/chat-component-bindings": "1.1.1-beta.1",
-    "@internal/calling-component-bindings": "1.1.1-beta.1"
+    "@internal/acs-ui-common": "1.2.0",
+    "@internal/react-components": "1.2.0",
+    "@internal/chat-stateful-client": "1.2.0",
+    "@internal/calling-stateful-client": "1.2.0",
+    "@internal/chat-component-bindings": "1.2.0",
+    "@internal/calling-component-bindings": "1.2.0"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.1.1-beta.1",
+  "version": "1.2.0",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -36,7 +36,7 @@
     "@fluentui/react-icons": "~1.1.137",
     "@fluentui/react-northstar": "^0.57.0",
     "copy-to-clipboard": "~3.3.1",
-    "@internal/acs-ui-common": "1.1.1-beta.1",
+    "@internal/acs-ui-common": "1.2.0",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5",
