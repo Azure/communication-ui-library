@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
-    "sendButtonAriaLabel": "傳送訊息"
+    "sendButtonAriaLabel": "傳送訊息",
+    "fileUploadsPendingError": "正在上傳... 請稍候。"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "訊息已傳送",

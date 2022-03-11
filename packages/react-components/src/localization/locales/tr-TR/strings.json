@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
-    "sendButtonAriaLabel": "İleti gönder"
+    "sendButtonAriaLabel": "İleti gönder",
+    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
