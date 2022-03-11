@@ -30,7 +30,7 @@ export function initializeIconsForUITests(): void {
     icons: {
       Cancel: <Dismiss16Regular />,
       Clear: <Dismiss20Regular />,
-      Checkmark: <Checkmark16Regular />,
+      CheckMark: <Checkmark16Regular />,
       ChevronDown: <ChevronDown20Regular />,
       ChevronRight: <ChevronRight20Regular />,
       ErrorBadge: <DismissCircle20Regular />,
