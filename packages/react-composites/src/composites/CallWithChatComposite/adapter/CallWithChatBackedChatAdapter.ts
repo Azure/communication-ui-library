@@ -89,18 +89,21 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public setTopic = async (topicName: string): Promise<void> => {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
   };
+
   /* @conditional-compile-remove(file-sharing) */
-  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+  public registerFileUploads = (fileUploads: ObservableFileUpload[]): void => {
     this.callWithChatAdapter.registerFileUploads(fileUploads);
-  }
+  };
+
   /* @conditional-compile-remove(file-sharing) */
-  public clearFileUploads(): void {
+  public clearFileUploads = (): void => {
     this.callWithChatAdapter.clearFileUploads();
-  }
+  };
+
   /* @conditional-compile-remove(file-sharing) */
-  public cancelFileUpload(id: string): void {
+  public cancelFileUpload = (id: string): void => {
     this.callWithChatAdapter.cancelFileUpload(id);
-  }
+  };
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(
