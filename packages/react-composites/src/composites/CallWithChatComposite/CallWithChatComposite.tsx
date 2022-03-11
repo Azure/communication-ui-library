@@ -251,9 +251,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         </ChatAdapterProvider>
       )}
       {
-        // This layer host is for Modal wrapping the PiPiP in the mobile EmbeddedPeoplePane. This LayerHost can't be inside the EmbeddedPeoplePane
-        // because when the EmbeddedPeoplePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-        // the Modal because the draggable bounds is no space and will always returns to its initial position after dragging.
+        // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
+        // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+        // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
         mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
       }
     </Stack>
