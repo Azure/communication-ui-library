@@ -41,6 +41,14 @@ jobs:
         with:
           node-version: '14.x'
 
+      # get version number from communication react folder
+      - name: Retrieve new version from package.json
+        id: version
+        run: |
+          ver=$(jq -r .version packages/communication-react/package.json)
+          echo version: $ver
+          echo "::set-output name=version::$ver"
+
       # Create new release branch
       - name: Hop into new branch
         run: git checkout -b release/${{ steps.version.outputs.version }}

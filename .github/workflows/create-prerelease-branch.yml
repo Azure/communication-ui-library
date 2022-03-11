@@ -80,13 +80,15 @@ jobs:
           echo version: $ver
           echo "::set-output name=version::$ver"
 
+      # we still need to trigger the TD pipeline here.. => if we are supposed to wait for its conclusion how do we do that?
+
       # Commit changes
       - name: Hop into new branch
-        run: git checkout -b pre-release/${{ steps.version.outputs.version }}
+        run: git checkout -b ${{github.events.inputs.bump_type}}_pre-release/${{ steps.version.outputs.version }}
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Stable version bump pre-release branch"
+          git commit -m "${{github.events.inputs.bump_type}} version bump pre-release branch"
 
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
@@ -101,3 +103,9 @@ jobs:
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"groom_changelog_${{ steps.version.outputs.version }}", "base":"pre-release/${{ steps.version.outputs.version }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
+
+  # job to trigger strings on pre-reslease branch
+  run_TD_Build:
+    uses: ./.github/workflows/run-td-build.yml
+      with:
+        branch: ${{github.events.inputs.bump_type}}_pre-release/${{ steps.version.outputs.version }}
