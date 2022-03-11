@@ -1,0 +1,46 @@
+# create release branch from pre-release branch
+name: Create release branch from pre-release branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Pre-release branch to release from'
+        required: true
+
+jobs:
+  create_release:
+    name: Create release branch
+    runs_on: ubuntu-latest
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions. And we want this
+          # action to trigger the regular CI pipeline on the created branch.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
+      # Setup bot information for creating pull request
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      # Check out onto desired branch or tag to create release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.branch }}
+
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+        # Choose stable dependency for sdk
+      - name: Choose stable dependency for sdk
+        run: node common/scripts/choose-stable-sdk-deps.js
