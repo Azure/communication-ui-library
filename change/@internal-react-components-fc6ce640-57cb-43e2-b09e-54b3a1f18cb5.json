@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix: do not allow sending empty messages when editing chat messages",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
