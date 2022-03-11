@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
-    "sendButtonAriaLabel": "Envoyer un message"
+    "sendButtonAriaLabel": "Envoyer un message",
+    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
@@ -73,11 +74,11 @@
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation"
   },
   "screenShareButton": {
-    "onLabel": "Arrêter le partage",
-    "offLabel": "Partager",
-    "tooltipDisabledContent": "Le partage de vidéo est désactivé.",
-    "tooltipOnContent": "Cesser le partage de votre écran",
-    "tooltipOffContent": "Partager votre écran"
+    "onLabel": "Arrêter la présentation",
+    "offLabel": "Présenter",
+    "tooltipDisabledContent": "La présentation est désactivée.",
+    "tooltipOnContent": "Présentation de votre écran",
+    "tooltipOffContent": "Présenter votre écran"
   },
   "messageThread": {
     "yesterday": "Hier",

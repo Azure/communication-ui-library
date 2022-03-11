@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
-    "sendButtonAriaLabel": "Enviar mensagem"
+    "sendButtonAriaLabel": "Enviar mensagem",
+    "fileUploadsPendingError": "Carregando... Aguarde."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
