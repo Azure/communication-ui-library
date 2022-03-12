@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   participantListStack,
-  participantListWrapper,
-  listHeader,
-  participantListStyle
+  participantListStyle,
+  participantListWrapper
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -13,9 +12,8 @@ import {
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { concatStyleSets, FocusZone, Stack, useTheme } from '@fluentui/react';
+import { FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { peopleSubheadingStyle } from './styles/ParticipantContainer.styles';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -49,17 +47,20 @@ export const ParticipantListWithHeading = (props: {
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
-  const subheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
-    root: {
-      color: theme.palette.neutralSecondary
-    }
-  });
+  const subheadingStyleThemed = useMemo(
+    () => ({
+      root: {
+        color: theme.palette.neutralSecondary,
+        margin: '0.5rem',
+        fontSize: theme.fonts.smallPlus.fontSize
+      }
+    }),
+    [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize]
+  );
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} className={listHeader}>
-        {title}
-      </Stack.Item>
+      <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
       <FocusZone className={participantListStyle}>
         <ParticipantList
           {...participantListProps}

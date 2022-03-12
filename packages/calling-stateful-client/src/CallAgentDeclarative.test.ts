@@ -15,7 +15,7 @@ import {
   TranscriptionCallFeature,
   CallFeatureFactory
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(calling-1.4.2-beta.1) */
+/* @conditional-compile-remove(calling-1.4.3-beta.1) */
 import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -79,12 +79,12 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
@@ -133,12 +133,12 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-1.4.2-beta.1) */
+  /* @conditional-compile-remove(calling-1.4.3-beta.1) */
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {

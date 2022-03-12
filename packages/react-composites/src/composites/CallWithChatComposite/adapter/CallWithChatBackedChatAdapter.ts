@@ -3,6 +3,8 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { ObservableFileUpload } from '../../ChatComposite';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -86,6 +88,21 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public setTopic = async (topicName: string): Promise<void> => {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
+  };
+
+  /* @conditional-compile-remove(file-sharing) */
+  public registerFileUploads = (fileUploads: ObservableFileUpload[]): void => {
+    this.callWithChatAdapter.registerFileUploads(fileUploads);
+  };
+
+  /* @conditional-compile-remove(file-sharing) */
+  public clearFileUploads = (): void => {
+    this.callWithChatAdapter.clearFileUploads();
+  };
+
+  /* @conditional-compile-remove(file-sharing) */
+  public cancelFileUpload = (id: string): void => {
+    this.callWithChatAdapter.cancelFileUpload(id);
   };
 }
 

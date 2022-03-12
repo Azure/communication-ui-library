@@ -38,6 +38,7 @@ export interface ActiveFileUpload {
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -550,7 +551,7 @@ export type LocalizationProviderProps = {
 // @internal
 export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -921,6 +922,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
@@ -1019,7 +1021,6 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;

@@ -211,8 +211,8 @@ jobs:
     strategy:
       matrix:
         include:
-          # CallWithChatComposite is only in beta for now
           - flavor: 'beta'
+          - flavor: 'stable'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
