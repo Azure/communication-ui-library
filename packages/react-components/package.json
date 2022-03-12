@@ -34,7 +34,7 @@
   "dependencies": {
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
-    "@fluentui/react-northstar": "^0.57.0",
+    "@fluentui/react-northstar": "0.61.0",
     "copy-to-clipboard": "~3.3.1",
     "@internal/acs-ui-common": "1.2.0",
     "react-aria-live": "^2.0.5",
@@ -109,6 +109,7 @@
     "regenerator-runtime": "^0.13.7",
     "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
+    "scheduler": "^0.20.0",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",
