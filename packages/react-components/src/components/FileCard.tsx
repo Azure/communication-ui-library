@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @beta
@@ -49,19 +50,19 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
-  const showProgressIndicator = (): boolean => progress !== undefined && progress < 1;
+  const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 
   const containerClassName = mergeStyles({
-    width: '14rem',
+    width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    boxShadow: theme.effects.elevation8
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
   });
 
   const fileInfoWrapperClassName = mergeStyles({
     padding: '0.75rem',
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator() ? '0.5rem' : '0.75rem'
+    paddingBottom: showProgressIndicator ? '0.5rem' : '0.75rem'
   });
   const fileInfoClassName = mergeStyles({
     paddingLeft: '0.25rem'
@@ -109,7 +110,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           {actionIcon && actionIcon}
         </Stack>
       </Stack>
-      {showProgressIndicator() && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
+      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
     </Stack>
   );
 };
