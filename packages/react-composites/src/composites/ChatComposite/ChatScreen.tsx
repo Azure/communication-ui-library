@@ -169,9 +169,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {
             /* @conditional-compile-remove(file-sharing) */
             <FileDownloadErrorBar
-              onDismissDownloadErrorMessage={() => {
+              onDismissDownloadErrorMessage={useCallback(() => {
                 setDownloadErrorMessage('');
-              }}
+              }, [])}
               fileDownloadErrorMessage={downloadErrorMessage || ''}
             ></FileDownloadErrorBar>
           }

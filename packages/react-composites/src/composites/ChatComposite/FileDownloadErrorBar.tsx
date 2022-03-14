@@ -3,15 +3,16 @@
 
 import { IIconProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import React from 'react';
+import { ChatCompositeIcon } from '../common/icons';
 
 /**
  * @private
  */
 export interface FileDownloadErrorBarProps {
   /**callback to dismiss the download error message */
-  onDismissDownloadErrorMessage?: () => void;
+  onDismissDownloadErrorMessage: () => void;
   /** Error message to render */
-  fileDownloadErrorMessage?: string;
+  fileDownloadErrorMessage: string;
 }
 
 /**
@@ -19,19 +20,17 @@ export interface FileDownloadErrorBarProps {
  */
 export const FileDownloadErrorBar = (props: FileDownloadErrorBarProps): JSX.Element => {
   const { fileDownloadErrorMessage, onDismissDownloadErrorMessage } = props;
-  const messageBarIconProps = (): IIconProps | undefined => {
-    const iconName = { iconName: 'ProtectedDocument' };
-    return iconName;
-  };
-  if (fileDownloadErrorMessage && fileDownloadErrorMessage !== '') {
+  const messageBarIconProps = { iconName: 'ProtectedDocument' };
+
+  if (fileDownloadErrorMessage !== '') {
     return (
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <MessageBar
           messageBarType={MessageBarType.warning}
           onDismiss={() => {
-            onDismissDownloadErrorMessage && onDismissDownloadErrorMessage();
+            onDismissDownloadErrorMessage();
           }}
-          messageBarIconProps={messageBarIconProps()}
+          messageBarIconProps={messageBarIconProps}
         >
           {fileDownloadErrorMessage}
         </MessageBar>
