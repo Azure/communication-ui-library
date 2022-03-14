@@ -32,14 +32,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveFileUpload {
-    errorMessage?: string;
-    filename: string;
-    id: string;
-    progress: number;
-}
-
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -68,20 +60,37 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
+export interface CameraButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface CameraButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
+    selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
+    styles?: Partial<CameraButtonStyles>;
 }
 
 // @public
 export interface CameraButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
     offLabel: string;
     onLabel: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+}
+
+// @public
+export interface CameraButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
 // @public
@@ -533,7 +542,7 @@ export type LocalizationProviderProps = {
 // @internal
 export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -665,18 +674,40 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
+export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
+    enableDeviceSelectionMenu?: boolean;
+    microphones?: OptionsDevice[];
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
+    styles?: Partial<MicrophoneButtonStyles>;
 }
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
     offLabel: string;
     onLabel: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+}
+
+// @public
+export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
 // @public
@@ -865,6 +896,8 @@ export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
+    onCancelFileUpload?: (fileId: string) => void;
+    // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
@@ -976,6 +1009,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
@@ -987,6 +1021,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
+    showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
@@ -1008,6 +1043,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;

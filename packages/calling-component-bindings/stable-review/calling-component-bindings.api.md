@@ -102,6 +102,8 @@ export interface CallProviderProps {
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    cameras: VideoDeviceInfo[];
+    selectedCamera?: VideoDeviceInfo;
 };
 
 // @public
@@ -153,6 +155,10 @@ export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
 export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     disabled: boolean;
     checked: boolean;
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
 };
 
 // @public
