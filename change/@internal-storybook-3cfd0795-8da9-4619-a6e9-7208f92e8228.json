@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies",
+  "packageName": "@internal/storybook",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -8,9 +8,9 @@ import ReactDOM from 'react-dom';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { initializeIcons, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -26,8 +26,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 
-// Needed to initialize default icons used by Fluent components.
-initializeIcons();
+initializeIconsForUITests();
 
 function App(): JSX.Element {
   const args = useMemo(
