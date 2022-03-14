@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix A11y bug where user cannot keyboard outside of local video preview",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
