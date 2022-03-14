@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix for delay in removing file card after a message is sent",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
