@@ -203,15 +203,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
       };
 
-      await this.handlers.onSendMessage(content, options);
-
       /* @conditional-compile-remove(file-sharing) */
       /**
-       * All the current uploads need to be clear from the state after a message has been sent.
-       * This ensures that any component rendering these file uploads doesn't continue to do so.
-       * This also cleans the state for new file uploads with a fresh message.
+       * All the current uploads need to be clear from the state before a message has been sent.
+       * This ensures the following behavior:
+       * 1. File Upload cards are removed from sendbox at the same time text in sendbox is removed.
+       * 2. any component rendering these file uploads doesn't continue to do so.
+       * 3. Cleans the state for new file uploads with a fresh message.
        */
       this.fileUploadAdapter.clearFileUploads();
+
+      await this.handlers.onSendMessage(content, options);
     });
   }
 
