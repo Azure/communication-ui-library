@@ -2,12 +2,11 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import {
   CallComposite,
   ChatComposite,
-  ChatAdapter,
-  createAzureCommunicationChatAdapter,
   fromFlatCommunicationIdentifier,
-  useAzureCommunicationCallAdapter
+  useAzureCommunicationCallAdapter,
+  useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -21,7 +20,6 @@ function App(): JSX.Element {
 
   //Chat Variables
   const threadId = '<Get thread id from chat service>';
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
   const credential = useMemo(() => {
@@ -46,22 +44,19 @@ function App(): JSX.Element {
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
-  useEffect(() => {
-    if (credential !== undefined) {
-      const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
-        setChatAdapter(
-          await createAzureCommunicationChatAdapter({
-            endpoint: endpointUrl,
-            userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-            displayName,
-            credential,
-            threadId
-          })
-        );
-      };
-      createAdapter(credential);
-    }
-  }, [credential]);
+  // Memoize arguments to `useAzureCommunicationChatAdapter` so that
+  // a new adapter is only created when an argument changes.
+  const chatAdapterArgs = useMemo(
+    () => ({
+      endpoint: endpointUrl,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential,
+      threadId
+    }),
+    [userId, displayName, credential, threadId]
+  );
+  const chatAdapter = useAzureCommunicationChatAdapter(chatAdapterArgs);
 
   if (!!callAdapter && !!chatAdapter) {
     return (
