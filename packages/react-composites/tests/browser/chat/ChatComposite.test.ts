@@ -56,6 +56,7 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
     const page0 = pages[0];
     const page1 = pages[1];
+    
     await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await waitForSelector(page0, dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
