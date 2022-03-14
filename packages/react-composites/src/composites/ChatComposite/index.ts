@@ -3,7 +3,8 @@
 
 export {
   createAzureCommunicationChatAdapter,
-  createAzureCommunicationChatAdapterFromClient
+  createAzureCommunicationChatAdapterFromClient,
+  useAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 
