@@ -36,7 +36,7 @@ export interface CallWithChatCompositeStrings {
   /**
    * {@link CallWithChatComposite} control bar Chat button enhanced tooltip string.
    */
-  chatButtonNewMessageCountToolTip: string;
+  chatButtonTooltipClosedWithMessageCount: string;
   /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *

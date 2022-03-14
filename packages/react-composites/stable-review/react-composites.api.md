@@ -517,9 +517,9 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 // @public
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
-    chatButtonNewMessageCountToolTip: string;
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
+    chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
