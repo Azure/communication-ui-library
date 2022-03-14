@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participants",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
