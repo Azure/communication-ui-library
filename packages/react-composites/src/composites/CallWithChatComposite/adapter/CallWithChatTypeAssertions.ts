@@ -27,12 +27,11 @@ import { FileUploadAdapter } from '../../ChatComposite';
 
 /// CallWithChatAdapterManagement
 
-interface CallWithChatAdapterManagementInternal
-  extends Omit<CallAdapterCallManagement, 'removeParticipant'>,
-    CallAdapterDeviceManagement,
-    Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'>,
-    /* @conditional-compile-remove(file-sharing) */
-    FileUploadAdapter {}
+type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant'> &
+  CallAdapterDeviceManagement &
+  Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
+  /* @conditional-compile-remove(file-sharing) */
+  FileUploadAdapter;
 
 const CallWithChatAdapterManagementTypeAssertion = (
   value: CallWithChatAdapterManagement
@@ -47,14 +46,13 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 
 /// CallWithChatControlOptions
 
-interface CallWithChatControlOptionsInternal
-  extends Omit<
-    CallControlOptions,
-    | 'endCallButton'
-    | 'devicesButton'
-    | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
-    | 'participantsButton'
-  > {}
+type CallWithChatControlOptionsInternal = Omit<
+  CallControlOptions,
+  | 'endCallButton'
+  | 'devicesButton'
+  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
+  | 'participantsButton'
+>;
 
 const CallWithChatControlOptionsTypeAssertion = (
   value: CallWithChatControlOptions
@@ -69,7 +67,7 @@ CallWithChatControlOptionsRequiredTypeAssertion;
 
 /// CallWithChatAdapterUiState
 
-interface CallWithChatAdapterUiStateInternal extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {}
+type CallWithChatAdapterUiStateInternal = CallAdapterUiState & Omit<ChatAdapterUiState, 'error'>;
 
 const CallWithChatAdapterUiStateTypeAssertion = (
   value: CallWithChatAdapterUiState
@@ -84,8 +82,10 @@ CallWithChatAdapterUiStateRequiredTypeAssertion;
 
 /// CallWithChatClientState
 
-interface CallWithChatClientStateInternal
-  extends Omit<CallAdapterClientState, 'displayName' | 'endedCall' | 'latestErrors' | 'userId'> {}
+type CallWithChatClientStateInternal = Omit<
+  CallAdapterClientState,
+  'displayName' | 'endedCall' | 'latestErrors' | 'userId'
+>;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;
 
