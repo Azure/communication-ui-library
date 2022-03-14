@@ -32,6 +32,9 @@ export interface ChatMessageActionFlyoutProps {
   onDismiss: () => void;
   messageReadBy?: { id: string; name: string }[];
   remoteParticipantsCount?: number;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
   showMessageStatus?: boolean;
   /**
    * Increase the height of the flyout items.
