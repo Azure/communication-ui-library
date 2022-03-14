@@ -36,7 +36,8 @@ import { ObservableFileUpload } from '../../ChatComposite';
 export interface CallWithChatAdapterManagement {
   // CallWithChat-specific Interface methods
   /**
-   * Remove a participant from a Call
+   * Remove a participant from a Call.
+   *
    * @param userId - UserId of the participant to remove.
    *
    * @public
@@ -53,7 +54,7 @@ export interface CallWithChatAdapterManagement {
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
   /**
-   * Leave the call
+   * Leave the call.
    *
    * @param forEveryone - Whether to remove all participants when leaving
    *
@@ -61,8 +62,9 @@ export interface CallWithChatAdapterManagement {
    */
   leaveCall(forEveryone?: boolean): Promise<void>;
   /**
-   * Start the camera
-   * This method will start rendering a local camera view when the call is not active
+   * Start the camera.
+   *
+   * This method will start rendering a local camera view when the call is not active.
    *
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
@@ -70,20 +72,21 @@ export interface CallWithChatAdapterManagement {
    */
   startCamera(options?: VideoStreamOptions): Promise<void>;
   /**
-   * Stop the camera
-   * This method will stop rendering a local camera view when the call is not active
+   * Stop the camera.
+   *
+   * This method will stop rendering a local camera view when the call is not active.
    *
    * @public
    */
   stopCamera(): Promise<void>;
   /**
-   * Mute the current user during the call or disable microphone locally
+   * Mute the current user during the call or disable microphone locally.
    *
    * @public
    */
   mute(): Promise<void>;
   /**
-   * Unmute the current user during the call or enable microphone locally
+   * Unmute the current user during the call or enable microphone locally.
    *
    * @public
    */
@@ -103,7 +106,7 @@ export interface CallWithChatAdapterManagement {
    */
   startScreenShare(): Promise<void>;
   /**
-   * Stop sharing the screen
+   * Stop sharing the screen.
    *
    * @public
    */
@@ -112,7 +115,7 @@ export interface CallWithChatAdapterManagement {
    * Create the html view for a stream.
    *
    * @remarks
-   * This method is implemented for composite
+   * This method is implemented for composite.
    *
    * @param remoteUserId - Id of the participant to render, leave it undefined to create the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
@@ -124,7 +127,7 @@ export interface CallWithChatAdapterManagement {
    * Dispose the html view for a stream.
    *
    * @remarks
-   * This method is implemented for composite
+   * This method is implemented for composite.
    *
    * @param remoteUserId - Id of the participant to render, leave it undefined to dispose the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
@@ -136,7 +139,7 @@ export interface CallWithChatAdapterManagement {
    * Ask for permissions of devices.
    *
    * @remarks
-   * Browser permission window will pop up if permissions are not granted yet
+   * Browser permission window will pop up if permissions are not granted yet.
    *
    * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling#PermissionConstraints }
    *
@@ -245,7 +248,7 @@ export interface CallWithChatAdapterManagement {
    * Load more previous messages in the chat thread history.
    *
    * @remarks
-   * This method is usually used to control incremental fetch/infinite scroll
+   * This method is usually used to control incremental fetch/infinite scroll.
    *
    * @public
    */
@@ -306,6 +309,7 @@ export interface CallWithChatAdapterSubscriptions {
 
 /**
  * {@link CallWithChatComposite} Adapter interface.
+ *
  * @public
  */
 export interface CallWithChatAdapter
@@ -315,7 +319,8 @@ export interface CallWithChatAdapter
     CallWithChatAdapterSubscriptions {}
 
 /**
- * Events fired off by the {@link CallWithChatAdapter}
+ * Events fired off by the {@link CallWithChatAdapter}.
+ *
  * @public
  */
 export type CallWithChatEvent =
