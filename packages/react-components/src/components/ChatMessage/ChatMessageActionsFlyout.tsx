@@ -103,6 +103,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       props.remoteParticipantsCount &&
       messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
+      props.remoteParticipantsCount < 20 &&
       props.strings.messageReadCount
     ) {
       items.push({

@@ -5,7 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatMessage, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
+import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 /**
@@ -40,6 +40,7 @@ export type ChatHandlers = {
 export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatHandlers => {
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
+    let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions) => {
         const sendMessageRequest = {
@@ -73,17 +74,39 @@ export const createDefaultChatHandlers = memoizeOne(
           // Also allows recovery via retries in case of transient errors.
           messageIterator = chatThreadClient.listMessages({ maxPageSize: 50 });
         }
+        if (readReceiptIterator === undefined) {
+          readReceiptIterator = chatThreadClient.listReadReceipts();
+        }
 
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
+        let earliestTime = Number.MAX_SAFE_INTEGER;
         while (remainingMessagesToGet >= 1) {
           const message = await messageIterator.next();
+          if (message?.value?.id) {
+            if (parseInt(message.value.id) < earliestTime) {
+              earliestTime = parseInt(message.value.id);
+            }
+          }
+          // keep fetching read receipts until read receipt time < earlist message time
+
           if (message.value?.type && message.value.type === 'text') {
             remainingMessagesToGet--;
           }
+
           // We have traversed all messages in this thread
           if (message.done) {
             isAllChatMessagesLoaded = true;
+            break;
+          }
+        }
+        let continueFetchingReadReceipt = true;
+        while (continueFetchingReadReceipt) {
+          const readReceipts = await readReceiptIterator.next();
+          if (readReceipts.done) {
+            continueFetchingReadReceipt = false;
+          } else if (parseInt(readReceipts?.value?.chatMessageId) < earliestTime) {
+            continueFetchingReadReceipt = false;
             break;
           }
         }
