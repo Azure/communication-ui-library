@@ -28,42 +28,11 @@ import { FileUploadAdapter } from '../../ChatComposite';
 /// CallWithChatAdapterManagement
 
 interface CallWithChatAdapterManagementInternal
-  extends Pick<
-      CallAdapterCallManagement,
-      | 'startCamera'
-      | 'stopCamera'
-      | 'mute'
-      | 'unmute'
-      | 'startScreenShare'
-      | 'stopScreenShare'
-      | 'createStreamView'
-      | 'disposeStreamView'
-      | 'joinCall'
-      | 'leaveCall'
-      | 'startCall'
-    >,
-    Pick<
-      CallAdapterDeviceManagement,
-      | 'setCamera'
-      | 'setMicrophone'
-      | 'setSpeaker'
-      | 'askDevicePermission'
-      | 'queryCameras'
-      | 'queryMicrophones'
-      | 'querySpeakers'
-    >,
-    Pick<
-      ChatAdapterThreadManagement,
-      | 'fetchInitialData'
-      | 'sendMessage'
-      | 'sendReadReceipt'
-      | 'sendTypingIndicator'
-      | 'loadPreviousChatMessages'
-      | 'updateMessage'
-      | 'deleteMessage'
-    >,
+  extends Omit<CallAdapterCallManagement, 'removeParticipant'>,
+    CallAdapterDeviceManagement,
+    Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'>,
     /* @conditional-compile-remove(file-sharing) */
-    Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {}
+    FileUploadAdapter {}
 
 const CallWithChatAdapterManagementTypeAssertion = (
   value: CallWithChatAdapterManagement
@@ -79,7 +48,13 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 /// CallWithChatControlOptions
 
 interface CallWithChatControlOptionsInternal
-  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {}
+  extends Omit<
+    CallControlOptions,
+    | 'endCallButton'
+    | 'devicesButton'
+    | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
+    | 'participantsButton'
+  > {}
 
 const CallWithChatControlOptionsTypeAssertion = (
   value: CallWithChatControlOptions
@@ -109,7 +84,8 @@ CallWithChatAdapterUiStateRequiredTypeAssertion;
 
 /// CallWithChatClientState
 
-interface CallWithChatClientStateInternal extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {}
+interface CallWithChatClientStateInternal
+  extends Omit<CallAdapterClientState, 'displayName' | 'endedCall' | 'latestErrors' | 'userId'> {}
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;
 
