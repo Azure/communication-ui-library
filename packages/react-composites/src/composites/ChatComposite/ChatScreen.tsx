@@ -172,7 +172,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onDismissDownloadErrorMessage={() => {
                 setDownloadErrorMessage('');
               }}
-              fileDownloadErrorMessage={downloadErrorMessage ? downloadErrorMessage : ''}
+              fileDownloadErrorMessage={downloadErrorMessage || ''}
             ></FileDownloadErrorBar>
           }
           <MessageThread
