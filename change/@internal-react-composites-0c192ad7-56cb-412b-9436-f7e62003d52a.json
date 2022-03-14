@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add error bar to show file download error message in the chat screen.",
+  "comment": "Add error bar to show file download error message in the message thread.",
   "packageName": "@internal/react-composites",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

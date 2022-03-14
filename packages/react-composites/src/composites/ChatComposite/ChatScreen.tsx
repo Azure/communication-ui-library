@@ -50,6 +50,8 @@ import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 
 /**
  * @private
@@ -164,16 +166,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
+          {
+            /* @conditional-compile-remove(file-sharing) */
+            <FileDownloadErrorBar
+              onDismissDownloadErrorMessage={() => {
+                setDownloadErrorMessage('');
+              }}
+              fileDownloadErrorMessage={downloadErrorMessage ? downloadErrorMessage : ''}
+            ></FileDownloadErrorBar>
+          }
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
-            /* @conditional-compile-remove(file-sharing) */
-            fileDownloadErrorMessage={downloadErrorMessage}
-            /* @conditional-compile-remove(file-sharing) */
-            onDismissFileDownloadErrorMessage={() => {
-              setDownloadErrorMessage('');
-            }}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={(userId, message) => (
               <FileDownloadCards

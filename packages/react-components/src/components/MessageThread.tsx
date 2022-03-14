@@ -39,7 +39,6 @@ import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from 
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
-import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -518,16 +517,6 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional file download error message to render.
-   * @beta
-   */
-  fileDownloadErrorMessage?: string;
-  /**
-   * Optional callback to dismiss the file download error.
-   * @beta
-   */
-  onDismissFileDownloadErrorMessage?: () => void;
   /**
    * Optional callback to edit a message.
    *
@@ -1009,24 +998,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   return (
     <Ref innerRef={chatThreadRef}>
-      <Stack grow>
-        {/* @conditional-compile-remove(file-sharing) */}
-        <FileDownloadErrorBar
-          onDismissDownloadErrorMessage={props.onDismissFileDownloadErrorMessage}
-          fileDownloadErrorMessage={props.fileDownloadErrorMessage ? props.fileDownloadErrorMessage : ''}
-        ></FileDownloadErrorBar>
-        <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-          <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
-          {existsNewChatMessage && !disableJumpToNewMessageButton && (
-            <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-              {onRenderJumpToNewMessageButton ? (
-                onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
-              ) : (
-                <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
-              )}
-            </div>
-          )}
-        </Stack>
+      <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
+        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
+        {existsNewChatMessage && !disableJumpToNewMessageButton && (
+          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
+            {onRenderJumpToNewMessageButton ? (
+              onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
+            ) : (
+              <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
+            )}
+          </div>
+        )}
       </Stack>
     </Ref>
   );
