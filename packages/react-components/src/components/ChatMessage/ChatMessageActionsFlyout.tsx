@@ -159,6 +159,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     props.onEditClick,
     props.onRemoveClick,
     props.remoteParticipantsCount,
+    props.showMessageStatus,
     messageReadByCount,
     theme.palette.neutralPrimary,
     theme.palette.neutralTertiary,
