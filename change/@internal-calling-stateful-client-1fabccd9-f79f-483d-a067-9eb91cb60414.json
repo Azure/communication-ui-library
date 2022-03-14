@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump package version to 1.2.0",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}
