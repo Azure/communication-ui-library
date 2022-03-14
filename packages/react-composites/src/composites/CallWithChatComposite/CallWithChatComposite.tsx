@@ -29,11 +29,13 @@ import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
  *
- * @beta
+ * @public
  */
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   adapter: CallWithChatAdapter;
@@ -63,7 +65,7 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 /**
  * Optional features of the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeOptions = {
   /**
@@ -71,11 +73,18 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Properties for configuring the File Sharing feature.
+   * If undefined, file sharing feature will be disabled.
+   * @beta
+   */
+  fileSharing?: FileSharingOptions;
 };
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatControlOptions
   extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
@@ -99,6 +108,8 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(file-sharing) */
+  fileSharing?: FileSharingOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -204,6 +215,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             onChatButtonClick={selectChat}
             onPeopleButtonClick={selectPeople}
             mobileView={isMobile}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={props.fileSharing}
           />
         )}
         {callAdapter && chatProps.adapter && hasJoinedCall && (
@@ -263,7 +276,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
- * @beta
+ * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
@@ -276,6 +289,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing={options?.fileSharing}
       />
     </BaseProvider>
   );

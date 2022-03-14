@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Switch CallWithChat from Beta to Public and Stable",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

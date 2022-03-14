@@ -29,7 +29,7 @@ export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
 export type {
-  FileDownloadErrorMessage,
+  FileDownloadError,
   FileDownloadHandler,
   FileMetadata,
   FileUploadEventEmitter,
