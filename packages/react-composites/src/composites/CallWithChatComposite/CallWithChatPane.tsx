@@ -12,7 +12,7 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
-import { BasicHeader } from './BasicHeader';
+import { SidePaneHeader } from './SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from './PeoplePaneContent';
@@ -53,7 +53,7 @@ export const CallWithChatPane = (props: {
     props.activePane === 'none' ? null : props.mobileView ? (
       <TabHeader {...props} activeTab={props.activePane} />
     ) : (
-      <BasicHeader
+      <SidePaneHeader
         {...props}
         headingText={
           props.activePane === 'chat'
