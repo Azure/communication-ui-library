@@ -16,16 +16,16 @@ export interface FileCardGroupProps {
  * This is a workaround to avoid this issue.
  */
 const fileCardGroupClassName = mergeStyles({
+  margin: '0.25rem',
   flexFlow: 'row wrap',
   '& > *': {
-    margin: '0.5rem',
-    marginRight: 'auto'
+    margin: '0.25rem'
   },
   /**
    * margin for children is overriden by parent stack, so adding left margin for each child
    */
   '& > *:not(:first-child)': {
-    marginLeft: '0.625rem'
+    marginLeft: '0.25rem'
   }
 });
 
