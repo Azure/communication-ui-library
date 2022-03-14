@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "FileCard: Do not show progress bar when progress is 0",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

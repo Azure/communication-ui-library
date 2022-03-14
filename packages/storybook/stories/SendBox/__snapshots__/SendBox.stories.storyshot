@@ -125,9 +125,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-122 css-31"
-            />
           </div>
         </div>
       </div>
