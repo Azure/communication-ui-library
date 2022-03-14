@@ -77,7 +77,7 @@ export const createDefaultChatHandlers = memoizeOne(
         if (readReceiptIterator === undefined) {
           readReceiptIterator = chatThreadClient.listReadReceipts();
         }
-
+        // get the earliest message time
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
         let earliestTime = Number.MAX_SAFE_INTEGER;
@@ -88,7 +88,6 @@ export const createDefaultChatHandlers = memoizeOne(
               earliestTime = parseInt(message.value.id);
             }
           }
-          // keep fetching read receipts until read receipt time < earlist message time
 
           if (message.value?.type && message.value.type === 'text') {
             remainingMessagesToGet--;
@@ -100,6 +99,7 @@ export const createDefaultChatHandlers = memoizeOne(
             break;
           }
         }
+        // keep fetching read receipts until read receipt time < earlist message time
         let continueFetchingReadReceipt = true;
         while (continueFetchingReadReceipt) {
           const readReceipts = await readReceiptIterator.next();
