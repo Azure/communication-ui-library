@@ -25,6 +25,9 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
   userId: string;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
   showMessageStatus?: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
