@@ -100,15 +100,9 @@ export const createDefaultChatHandlers = memoizeOne(
           }
         }
         // keep fetching read receipts until read receipt time < earlist message time
-        let continueFetchingReadReceipt = true;
-        while (continueFetchingReadReceipt) {
-          const readReceipts = await readReceiptIterator.next();
-          if (readReceipts.done) {
-            continueFetchingReadReceipt = false;
-          } else if (parseInt(readReceipts?.value?.chatMessageId) < earliestTime) {
-            continueFetchingReadReceipt = false;
-            break;
-          }
+        let readReceipt = await readReceiptIterator.next();
+        while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
+          readReceipt = await readReceiptIterator.next();
         }
         return isAllChatMessagesLoaded;
       }

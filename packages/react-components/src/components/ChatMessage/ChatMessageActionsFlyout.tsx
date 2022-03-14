@@ -32,6 +32,7 @@ export interface ChatMessageActionFlyoutProps {
   onDismiss: () => void;
   messageReadBy?: { id: string; name: string }[];
   remoteParticipantsCount?: number;
+  showMessageStatus?: boolean;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
@@ -103,7 +104,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       props.remoteParticipantsCount &&
       messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
-      props.remoteParticipantsCount < 20 &&
+      props.showMessageStatus &&
       props.strings.messageReadCount
     ) {
       items.push({

@@ -18,6 +18,7 @@ type ChatMessageComponentProps = {
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
+  showMessageStatus?: boolean;
   /**
    * Inline the accept and reject edit buttons when editing a message.
    * Setting to false will mean they are on a new line inside the editable chat message.

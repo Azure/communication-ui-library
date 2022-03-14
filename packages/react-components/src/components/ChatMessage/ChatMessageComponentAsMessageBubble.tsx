@@ -25,6 +25,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onRemoveClick?: () => void;
   strings: MessageThreadStrings;
   userId: string;
+  showMessageStatus?: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -52,7 +53,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
-    onRenderAvatar
+    onRenderAvatar,
+    showMessageStatus
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -137,6 +139,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           messageReadBy={message.readBy ?? []}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}
+          showMessageStatus={showMessageStatus}
         />
       )}
     </>

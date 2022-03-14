@@ -880,6 +880,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
             onRenderAvatar={onRenderAvatar}
+            showMessageStatus={showMessageStatus}
           />
         );
       }
