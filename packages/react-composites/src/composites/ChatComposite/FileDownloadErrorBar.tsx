@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import React from 'react';
-import { ChatCompositeIcon } from '../common/icons';
 
 /**
  * @private
