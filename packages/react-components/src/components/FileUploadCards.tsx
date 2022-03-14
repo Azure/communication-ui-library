@@ -30,7 +30,7 @@ export interface FileUploadCardsProps {
  * @beta
  */
 export const FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
-  const truncateLength = 15;
+  const truncateLength = 12;
   const files = props.activeFileUploads;
   if (!files || files.length === 0) {
     return <></>;
