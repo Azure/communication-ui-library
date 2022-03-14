@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add util function for converting px to rem",
+  "packageName": "@internal/acs-ui-common",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

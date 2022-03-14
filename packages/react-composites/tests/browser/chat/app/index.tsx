@@ -2,15 +2,20 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { Stack } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
-
-import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
+import {
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  createCompletedFileUpload,
+  useAzureCommunicationChatAdapter
+} from '../../../../src';
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Stack } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -25,7 +30,11 @@ const userId = verifyParamExists(params.userId, 'userId');
 // Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
+const useFileSharing = Boolean(params.useFileSharing);
+const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
 
+// Needed to initialize default icons used by Fluent components.
+initializeFileTypeIcons();
 initializeIconsForUITests();
 
 function App(): JSX.Element {
@@ -40,6 +49,13 @@ function App(): JSX.Element {
     []
   );
   const adapter = useAzureCommunicationChatAdapter(args);
+
+  React.useEffect(() => {
+    if (adapter && uploadedFiles.length) {
+      const files = uploadedFiles.map((file) => createCompletedFileUpload(file));
+      adapter.registerFileUploads(files);
+    }
+  }, [adapter]);
 
   return (
     <>
@@ -85,7 +101,17 @@ function App(): JSX.Element {
                 : undefined
             }
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-            options={{ participantPane: true }}
+            options={{
+              participantPane: true,
+              fileSharing: useFileSharing
+                ? {
+                    uploadHandler: () => {
+                      //noop
+                    },
+                    multiple: true
+                  }
+                : undefined
+            }}
           />
         </_IdentifierProvider>
       )}
