@@ -2,12 +2,11 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import {
   CallComposite,
   ChatComposite,
-  ChatAdapter,
-  createAzureCommunicationChatAdapter,
   COMPOSITE_LOCALE_FR_FR,
-  useAzureCommunicationCallAdapter
+  useAzureCommunicationCallAdapter,
+  useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 export type AppProps = {
   userId: CommunicationUserIdentifier;
@@ -19,8 +18,6 @@ export type AppProps = {
 };
 
 export const App = (props: AppProps): JSX.Element => {
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
-
   // We can't even initialize the Chat and Call adapters without a well-formed token.
   const credential = useMemo(() => {
     try {
@@ -43,20 +40,14 @@ export const App = (props: AppProps): JSX.Element => {
     credential,
     locator
   });
-  useEffect(() => {
-    const createAdapter = async (): Promise<void> => {
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter({
-          endpoint: props.endpointUrl,
-          userId: props.userId,
-          displayName: props.displayName,
-          credential: new AzureCommunicationTokenCredential(props.token),
-          threadId: props.threadId
-        })
-      );
-    };
-    createAdapter();
-  }, [props]);
+
+  const chatAdapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId: props.userId,
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
 
   if (!!callAdapter && !!chatAdapter) {
     return (

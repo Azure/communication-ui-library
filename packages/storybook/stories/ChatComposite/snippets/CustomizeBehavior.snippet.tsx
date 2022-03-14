@@ -3,9 +3,9 @@ import {
   ChatAdapter,
   ChatComposite,
   CompositeLocale,
-  createAzureCommunicationChatAdapter
+  useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -17,34 +17,20 @@ export type ContainerProps = {
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
-  const [adapter, setAdapter] = useState<ChatAdapter>();
-
-  useEffect(() => {
-    if (!props) {
-      return;
-    }
-
-    const createAdapter = async (): Promise<void> => {
-      const chatAdapter = await createAzureCommunicationChatAdapter({
-        endpoint: props.endpointUrl,
-        userId: props.userId,
-        displayName: props.displayName,
-        credential: new AzureCommunicationTokenCredential(props.token),
-        threadId: props.threadId
-      });
-
-      // Custom behavior: Intercept messages from the local user and convert
-      // to uppercase before sending to backend.
-      const sendMessage = chatAdapter.sendMessage.bind(chatAdapter);
-      chatAdapter.sendMessage = async (content: string): Promise<void> => {
-        await sendMessage(content.toUpperCase());
-      };
-
-      setAdapter(chatAdapter);
-    };
-
-    createAdapter();
-  }, [props]);
+  // Arguments to `useAzureCommunicationChatAdapter` must be memoized to avoid recreating adapter on each render.
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
+  const adapter = useAzureCommunicationChatAdapter(
+    {
+      endpoint: props.endpointUrl,
+      userId: props.userId,
+      // Data model injection: The display name for the local user comes from Contoso's data model.
+      displayName: props.displayName,
+      credential,
+      threadId: props.threadId
+    },
+    // Custom behavior: Capitalize all messages before sending them.
+    capitalizeMessageBeforeSend
+  );
 
   return (
     <>
@@ -58,3 +44,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     </>
   );
 };
+
+async function capitalizeMessageBeforeSend(adapter: ChatAdapter): Promise<ChatAdapter> {
+  // Custom behavior: Intercept messages from the local user and convert
+  // to uppercase before sending to backend.
+  const sendMessage = adapter.sendMessage.bind(adapter);
+  adapter.sendMessage = async (content: string): Promise<void> => {
+    await sendMessage(content.toUpperCase());
+  };
+  return adapter;
+}
