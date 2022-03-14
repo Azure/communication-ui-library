@@ -14,3 +14,5 @@ export type { MessageStatus } from './MessageStatus';
 export type { _IObjectMap } from './localizationUtils';
 
 export { _MAX_EVENT_LISTENERS } from './constants';
+
+export { _pxToRem } from './cssUtils';

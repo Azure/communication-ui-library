@@ -775,8 +775,9 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
-    chatButtonTooltipContentClose: string;
-    chatButtonTooltipContentOpen: string;
+    chatButtonTooltipClose: string;
+    chatButtonTooltipClosedWithMessageCount: string;
+    chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     moreDrawerButtonLabel: string;
@@ -784,8 +785,8 @@ export interface CallWithChatCompositeStrings {
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
-    peopleButtonTooltipContentClose: string;
-    peopleButtonTooltipContentOpen: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -838,6 +839,7 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export interface CameraButtonStrings {
+    cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
     offLabel: string;
@@ -1994,6 +1996,7 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -2423,11 +2426,14 @@ export type UploadFailedListener = (id: string, message: string) => void;
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
 
-// @beta
+// @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
+// @public
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
