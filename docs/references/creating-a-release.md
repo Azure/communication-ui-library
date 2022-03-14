@@ -30,7 +30,7 @@ For example, when creating a release off of `main` tagged `3.3.0`, the following
 ```mermaid
 graph LR
   main[branch: main]
-  prerelease[branch: prerelease/3.3.0<br/>- version bump<br/>- collect changelog<br/>-trigger string translations]
+  prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.0<br/>- collect changelog<br/>-trigger string translations]
   pr[branch:groom_changelog_3.0.0]
 
   main -->|Create Branch| prerelease
@@ -47,6 +47,7 @@ Use the <insert workflow name> github action to trigger the release branch creat
 This workflow will:
 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
+  1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but *it will never be merged back in the base branch*.
   1. Commit some release preparation modifications that can not be merged back, like choosing the dependency versions that depend on the type of the release.
 
@@ -55,7 +56,7 @@ Continuing the example above, this action should be triggered once `groom_change
 ```mermaid
 graph LR
   main[branch: main]
-  prerelease[branch: prerelease/3.3.0]
+  prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.1-beta.0]
   release[branch:release/3.0.0<br/>- Update dependency versions<br/>- Potential cherry-picks<br/>- Merge string translations<br/> Abandon branch once released]
 
   main -.-|Created in step 1| prerelease
