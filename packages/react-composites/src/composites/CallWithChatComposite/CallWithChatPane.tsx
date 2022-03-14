@@ -56,7 +56,11 @@ export const CallWithChatPane = (props: {
       <BasicHeader
         {...props}
         headingText={
-          props.activePane === 'chat' ? callWithChatStrings.chatPaneTitle : callWithChatStrings.peoplePaneTitle
+          props.activePane === 'chat'
+            ? callWithChatStrings.chatPaneTitle
+            : props.activePane === 'people'
+            ? callWithChatStrings.peoplePaneTitle
+            : ''
         }
       />
     );
@@ -96,16 +100,15 @@ export const CallWithChatPane = (props: {
     [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
   );
 
+  const dataUiId =
+    props.activePane === 'chat'
+      ? 'call-with-chat-composite-chat-pane'
+      : props.activePane === 'people'
+      ? 'call-with-chat-composite-people-pane'
+      : '';
+
   return (
-    <Stack
-      verticalFill
-      grow
-      styles={paneStyles}
-      data-ui-id={
-        props.activePane === 'chat' ? 'call-with-chat-composite-chat-pane' : 'call-with-chat-composite-people-pane'
-      }
-      tokens={props.mobileView ? {} : sidePaneTokens}
-    >
+    <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
       {header}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
