@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Prevent chat message flyout randomly closing itself by setting preventDismissOnResize property on the chat message flyout",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
-    "sendButtonAriaLabel": "Отправить сообщение"
+    "sendButtonAriaLabel": "Отправить сообщение",
+    "fileUploadsPendingError": "Выполняется загрузка. Подождите..."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
