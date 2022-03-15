@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Sidepane copy invite link and cancel button UI style fix",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

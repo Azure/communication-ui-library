@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix img size for style defined element",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

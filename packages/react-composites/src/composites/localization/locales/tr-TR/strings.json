@@ -44,13 +44,21 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "Kişiler",
+    "peopleButtonTooltipContentOpen": "Katılımcıları Göster",
+    "peopleButtonTooltipContentClose": "Katılımcıları Gizle",
     "chatButtonLabel": "Sohbet",
-    "moreDrawerMicrophoneMenuTitle": "Microphone",
-    "moreDrawerSpeakerMenuTitle": "Speaker",
+    "chatButtonTooltipContentOpen": "Sohbeti Göster",
+    "chatButtonTooltipContentClose": "Sohbeti Gizle",
+    "moreDrawerMicrophoneMenuTitle": "Mikrofon",
+    "moreDrawerSpeakerMenuTitle": "Hoparlör",
+    "moreDrawerButtonLabel": "Diğer seçenekler",
+    "moreDrawerButtonTooltip": "Diğer seçenekler",
     "peoplePaneTitle": "Kişiler",
     "peoplePaneSubTitle": "Bu aramada",
     "chatPaneTitle": "Sohbet",
     "chatButtonNewMessageNotificationLabel": "Yeni İleti",
-    "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın."
+    "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın.",
+    "removeMenuLabel": "Kaldır",
+    "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala"
   }
 }

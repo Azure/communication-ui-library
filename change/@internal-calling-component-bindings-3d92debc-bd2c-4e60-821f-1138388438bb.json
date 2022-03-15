@@ -1,7 +1,7 @@
 {
-  "type": "patch",
-  "comment": "Bump @azure/communication-calling to 1.4.3",
+  "type": "none",
+  "comment": "Setup package versions after prerelease",
   "packageName": "@internal/calling-component-bindings",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
