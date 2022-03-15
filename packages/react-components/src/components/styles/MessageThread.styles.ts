@@ -106,11 +106,11 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem',
-  ' img': {
+  '& img': {
     maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
     height: 'auto !important'
   },
-  ' p': {
+  '& p': {
     // Deal with awkward padding seen in messages from Teams.
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
     marginBlock: '0.125rem'
