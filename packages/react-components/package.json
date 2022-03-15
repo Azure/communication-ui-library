@@ -32,17 +32,18 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@fluentui/react": "~8.17.2",
+    "@fluentui/react-file-type-icons": "~8.5.8",
+    "@fluentui/react-hooks": "~8.3.8",
     "@fluentui/react-icons": "~1.1.137",
-    "@fluentui/react-northstar": "^0.57.0",
     "copy-to-clipboard": "~3.3.1",
     "@internal/acs-ui-common": "1.2.0",
+    "@fluentui/react-northstar": "0.61.0",
+    "@fluentui/react-window-provider": "~2.2.0",
+    "@fluentui/react": "~8.17.2",
+    "html-to-react": "~1.4.5",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
-    "html-to-react": "~1.4.5",
-    "uuid": "^8.1.0",
-    "@fluentui/react-hooks": "~8.3.8",
-    "@fluentui/react-file-type-icons": "~8.5.8"
+    "uuid": "^8.1.0"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
@@ -109,6 +110,7 @@
     "regenerator-runtime": "^0.13.7",
     "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
+    "scheduler": "^0.20.0",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
     "ts-jest": "^26.4.4",
