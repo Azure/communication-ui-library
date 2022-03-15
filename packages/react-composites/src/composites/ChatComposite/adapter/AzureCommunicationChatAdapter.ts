@@ -416,7 +416,6 @@ export const createAzureCommunicationChatAdapter = async ({
   await chatClient.startRealtimeNotifications();
 
   const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
-  await adapter.fetchInitialData();
 
   return adapter;
 };

@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
@@ -33,12 +32,12 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -104,7 +103,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
@@ -122,12 +120,12 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -193,7 +191,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
@@ -211,12 +208,13 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
