@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove customization for unread messages button icon. Fix styling when unread messages exceeds 9 messages",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

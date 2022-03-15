@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
-    "sendButtonAriaLabel": "Nachricht senden"
+    "sendButtonAriaLabel": "Nachricht senden",
+    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",

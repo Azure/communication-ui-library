@@ -1,8 +1,57 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Tue, 01 Mar 2022 16:42:53 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.2.0)
+
+Fri, 11 Mar 2022 19:20:02 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.1.1-beta.1...@internal/react-composites_v1.2.0)
+
+### Minor changes
+
+- Switch CallWithChat from Beta to Public and Stable ([PR #1612](https://github.com/azure/communication-ui-library/pull/1612) by edwardlee@microsoft.com)
+- Added LocalAndRemotePIP to mobile EmbeddedPeoplePane. ([PR #1540](https://github.com/azure/communication-ui-library/pull/1540) by miguelgamis@microsoft.com)
+- Add useAzureCommunicationCallAdapter hook ([PR #1618](https://github.com/azure/communication-ui-library/pull/1618) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Using drawer menu when participant is clicked on PeoplePane in mobile view of CallWithChat composite. ([PR #1515](https://github.com/azure/communication-ui-library/pull/1515) by miguelgamis@microsoft.com)
+- Increase the border radius of buttons in composites with call features ([PR #1609](https://github.com/azure/communication-ui-library/pull/1609) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Sidepane copy invite link and cancel button UI style fix ([PR #1581](https://github.com/azure/communication-ui-library/pull/1581) by edwardlee@microsoft.com)
+- SidePane style updates. ([PR #1599](https://github.com/azure/communication-ui-library/pull/1599) by miguelgamis@microsoft.com)
+- Fix react useEffect dependencies in composites ([PR #1600](https://github.com/azure/communication-ui-library/pull/1600) by 2684369+JamesBurnside@users.noreply.github.com)
+- CallWithChat SplitButtonMenuButton inner border radius squared ([PR #1570](https://github.com/azure/communication-ui-library/pull/1570) by edwardlee@microsoft.com)
+- Add soft vertical height support for unsupported mobile landscape orientation in Calling-based Composites ([PR #1572](https://github.com/azure/communication-ui-library/pull/1572) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @azure/communication-calling to 1.4.3 ([PR #1610](https://github.com/azure/communication-ui-library/pull/1610) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/calling-component-bindings to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/calling-stateful-client to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/chat-component-bindings to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/chat-stateful-client to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/react-components to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+
+### Changes
+
+- Show error above sendbox if message is sent before all files are uploaded. ([PR #1593](https://github.com/azure/communication-ui-library/pull/1593) by anjulgarg@live.com)
+- Remove customization for unread messages button icon. Fix styling when unread messages exceeds 9 messages ([PR #1582](https://github.com/azure/communication-ui-library/pull/1582) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add useAzureCommunicationCallWithChatAdapter hook ([PR #1605](https://github.com/azure/communication-ui-library/pull/1605) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add tooltips to people and chat buttons ([PR #1604](https://github.com/azure/communication-ui-library/pull/1604) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce strings for more buttons to facilitate narrator functionality. ([PR #1614](https://github.com/azure/communication-ui-library/pull/1614) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add filesharing feature to CallWithChat Composite ([PR #1613](https://github.com/azure/communication-ui-library/pull/1613) by anjulgarg@live.com)
+- Update filesharing attribute names ([PR #1616](https://github.com/azure/communication-ui-library/pull/1616) by anjulgarg@live.com)
+- Add default implementation of file upload UI to SendBox ([PR #1595](https://github.com/azure/communication-ui-library/pull/1595) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Mobile Participant pane now spans full sidepane width ([PR #1589](https://github.com/azure/communication-ui-library/pull/1589) by edwardlee@microsoft.com)
+- bugfix: Dispose adapter in hook when component unmounts ([PR #1619](https://github.com/azure/communication-ui-library/pull/1619) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Rename CallWithChatComposite adapter prop from `callWithChatAdapter` to `adapter` ([PR #1552](https://github.com/azure/communication-ui-library/pull/1552) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix chat unread messages badge border to always be white ([PR #1608](https://github.com/azure/communication-ui-library/pull/1608) by 2684369+JamesBurnside@users.noreply.github.com)
+- Timeout file upload error bar after 10 seconds ([PR #1578](https://github.com/azure/communication-ui-library/pull/1578) by anjulgarg@live.com)
+- Fix control bar button text wrapping to a new line in the CallWithChatComposite ([PR #1577](https://github.com/azure/communication-ui-library/pull/1577) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix call control bar wrapping to a new line at high zoom levels and narrow screen heights ([PR #1571](https://github.com/azure/communication-ui-library/pull/1571) by 2684369+JamesBurnside@users.noreply.github.com)
+- Show file upload errors above sendbox in Composites containing Chat features ([PR #1554](https://github.com/azure/communication-ui-library/pull/1554) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Show loader in File card until file download promise is resolved ([PR #1574](https://github.com/azure/communication-ui-library/pull/1574) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Upgrading calling to 1.4.3-beta.1 ([PR #1607](https://github.com/azure/communication-ui-library/pull/1607) by edwardlee@microsoft.com)
 
 ## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.1.1-beta.1)
 

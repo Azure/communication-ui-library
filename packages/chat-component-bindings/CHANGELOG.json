@@ -2,6 +2,47 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:04 GMT",
+      "tag": "@internal/chat-component-bindings_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "97c1d1ad3fddaed8156846ac18f4c077025ce878",
+            "comment": "Fix eslint warnings. Update builds to fail on eslint warnings."
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:42:56 GMT",
       "tag": "@internal/chat-component-bindings_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",
