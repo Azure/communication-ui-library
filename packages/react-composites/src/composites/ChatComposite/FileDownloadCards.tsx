@@ -61,6 +61,11 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
     },
     [props]
   );
+
+  if (!fileDownloads || fileDownloads.length === 0) {
+    return <></>;
+  }
+
   return (
     <_FileCardGroup>
       {fileDownloads &&
