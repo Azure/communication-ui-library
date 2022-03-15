@@ -1,4 +1,4 @@
-name: Run Touchdown build. Changes will be commited on branches that are not main.
+name: Run Touchdown build and commit changes (if not main)
 
 on:
   push:
