@@ -1,19 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  FileCard,
-  FileCardGroup,
-  truncatedFileName,
-  extension,
-  FileMetadata,
-  extractFileMetadata,
-  FileDownloadHandler
-} from './file-sharing';
-import { ChatMessage } from '@internal/react-components';
-import { ChatCompositeIcon } from '../common/icons';
 import { Spinner, SpinnerSize } from '@fluentui/react';
-import { useCallback, useState } from 'react';
-import React from 'react';
+import { ChatMessage, _FileCard, _FileCardGroup } from '@internal/react-components';
+import React, { useCallback, useState } from 'react';
+import { ChatCompositeIcon } from '../common/icons';
+import { extension, extractFileMetadata, FileDownloadHandler, FileMetadata } from './file-sharing';
 
 /**
  * @beta
@@ -40,10 +31,10 @@ export interface FileDownloadCards {
 }
 
 /**
+ * @TODO Move to react-components as an internal component.
  * @beta
  */
 export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
-  const truncateLength = 15;
   const { userId, message } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
@@ -71,11 +62,11 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
     [props]
   );
   return (
-    <FileCardGroup>
+    <_FileCardGroup>
       {fileDownloads &&
         fileDownloads.map((file) => (
-          <FileCard
-            fileName={truncatedFileName(file.name, truncateLength)}
+          <_FileCard
+            fileName={file.name}
             key={file.name}
             fileExtension={extension(file.name)}
             actionIcon={
@@ -84,7 +75,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             actionHandler={() => fileDownloadHandler(userId, file)}
           />
         ))}
-    </FileCardGroup>
+    </_FileCardGroup>
   );
 };
 

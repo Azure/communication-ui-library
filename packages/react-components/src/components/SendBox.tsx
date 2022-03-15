@@ -20,7 +20,7 @@ import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadCards } from './FileUploadCards';
+import { _FileUploadCards } from './FileUploadCards';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -302,7 +302,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderFileUploads ? (
         props.onRenderFileUploads()
       ) : (
-        <FileUploadCards
+        <_FileUploadCards
           activeFileUploads={props.activeFileUploads ? props.activeFileUploads : []}
           onCancelFileUpload={props.onCancelFileUpload}
         />

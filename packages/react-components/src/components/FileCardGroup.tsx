@@ -4,9 +4,10 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import React from 'react';
 
 /**
- * @beta
+ * @internal
+ * Props for `_FileCardGroup` component.
  */
-export interface FileCardGroupProps {
+export interface _FileCardGroupProps {
   children: React.ReactNode;
 }
 
@@ -30,9 +31,11 @@ const fileCardGroupClassName = mergeStyles({
 });
 
 /**
- * @beta
+ * @internal
+ * Used with `_FileCard` component where `_FileCard` components are passed as children.
+ * Renders the children equally spaced in multiple rows.
  */
-export const FileCardGroup = (props: FileCardGroupProps): JSX.Element => {
+export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
   const { children } = props;
 
   return (

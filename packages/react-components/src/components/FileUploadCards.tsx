@@ -4,45 +4,42 @@
 import { Icon } from '@fluentui/react';
 import React from 'react';
 import { ActiveFileUpload } from './SendBox';
-import { FileCard } from './FileCard';
-import { FileCardGroup } from './FileCardGroup';
-import { extension, truncatedFileName } from './utils';
+import { _FileCard } from './FileCard';
+import { _FileCardGroup } from './FileCardGroup';
+import { extension } from './utils';
 
 /**
- * @beta
+ * @internal
  */
 export interface FileUploadCardsProps {
   /**
    * Optional array of active file uploads where each object has attibutes
    * of a file upload like name, progress, errormessage etc.
-   * @beta
    */
   activeFileUploads?: ActiveFileUpload[];
   /**
    * Optional callback to remove the file upload before sending by clicking on
    * cancel icon.
-   * @beta
    */
   onCancelFileUpload?: (fileId: string) => void;
 }
 
 /**
- * @beta
+ * @internal
  */
-export const FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
-  const truncateLength = 12;
+export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
   if (!files || files.length === 0) {
     return <></>;
   }
   return (
-    <FileCardGroup>
+    <_FileCardGroup>
       {files &&
         files
           .filter((file) => !file.errorMessage)
           .map((file) => (
-            <FileCard
-              fileName={truncatedFileName(file.filename, truncateLength)}
+            <_FileCard
+              fileName={file.filename}
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
@@ -52,6 +49,6 @@ export const FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               }}
             />
           ))}
-    </FileCardGroup>
+    </_FileCardGroup>
   );
 };
