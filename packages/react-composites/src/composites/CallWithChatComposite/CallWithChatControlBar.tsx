@@ -64,20 +64,29 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
-  const chatButtonStrings = {
-    label: callWithChatStrings.chatButtonLabel,
-    tooltipOffContent: callWithChatStrings.chatButtonTooltipContentOpen,
-    tooltipOnContent: callWithChatStrings.chatButtonTooltipContentClose
-  };
-  const peopleButtonStrings = {
-    label: callWithChatStrings.peopleButtonLabel,
-    tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
-    tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
-  };
-  const moreButtonStrings = {
-    label: callWithChatStrings.moreDrawerButtonLabel,
-    tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
-  };
+  const chatButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.chatButtonLabel,
+      tooltipOffContent: callWithChatStrings.chatButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.chatButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const peopleButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.peopleButtonLabel,
+      tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const moreButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.moreDrawerButtonLabel,
+      tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+    }),
+    [callWithChatStrings]
+  );
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
