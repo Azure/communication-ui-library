@@ -221,6 +221,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
   const isMobileWithActivePane = mobileView && activePane !== 'none';
+  const showTabHeader = props.callControls;
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
@@ -244,8 +245,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             chatAdapter={chatProps.adapter}
             callAdapter={callAdapter}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClicked={selectChat}
-            onPeopleButtonClicked={selectPeople}
+            onChatButtonClicked={shouldShowTabHeaderButtons(props.callControls) ? selectChat : undefined}
+            onPeopleButtonClicked={shouldShowTabHeaderButtons(props.callControls) ? selectPeople : undefined}
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             activePane={activePane}
@@ -316,3 +317,14 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
   page === 'call' && callStatus === 'Connected';
+
+const shouldShowTabHeaderButtons = (callControls?: boolean | CallWithChatControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  // If either people or chat button is hidden, there is no need to provide ways to toggle between the two.
+  return callControls.peopleButton !== false && callControls.chatButton !== false;
+};

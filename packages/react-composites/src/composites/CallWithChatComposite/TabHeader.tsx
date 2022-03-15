@@ -16,8 +16,10 @@ import {
  */
 type TabHeaderProps = {
   onClose: () => void;
-  onChatButtonClicked: () => void;
-  onPeopleButtonClicked: () => void;
+  // If set, show a button to open chat tab.
+  onChatButtonClicked?: () => void;
+  // If set, show a button to open people tab.
+  onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
 };
 
@@ -46,20 +48,24 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <ChevronLeftIconTrampoline />}
       ></DefaultButton>
-      <DefaultButton
-        onClick={props.onChatButtonClicked}
-        styles={mobilePaneButtonStylesThemed}
-        checked={props.activeTab === 'chat'}
-      >
-        {strings.chatButtonLabel}
-      </DefaultButton>
-      <DefaultButton
-        onClick={props.onPeopleButtonClicked}
-        styles={mobilePaneButtonStylesThemed}
-        checked={props.activeTab === 'people'}
-      >
-        {strings.peopleButtonLabel}
-      </DefaultButton>
+      {props.onChatButtonClicked && (
+        <DefaultButton
+          onClick={props.onChatButtonClicked}
+          styles={mobilePaneButtonStylesThemed}
+          checked={props.activeTab === 'chat'}
+        >
+          {strings.chatButtonLabel}
+        </DefaultButton>
+      )}
+      {props.onPeopleButtonClicked && (
+        <DefaultButton
+          onClick={props.onPeopleButtonClicked}
+          styles={mobilePaneButtonStylesThemed}
+          checked={props.activeTab === 'people'}
+        >
+          {strings.peopleButtonLabel}
+        </DefaultButton>
+      )}
     </Stack>
   );
 };
