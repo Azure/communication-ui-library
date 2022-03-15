@@ -8,7 +8,6 @@ import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
@@ -19,6 +18,7 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
+import { CallWithChatControlOptions } from './CallWithChatComposite';
 
 /**
  * @private
@@ -64,20 +64,29 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
-  const chatButtonStrings = {
-    label: callWithChatStrings.chatButtonLabel,
-    tooltipOffContent: callWithChatStrings.chatButtonTooltipContentOpen,
-    tooltipOnContent: callWithChatStrings.chatButtonTooltipContentClose
-  };
-  const peopleButtonStrings = {
-    label: callWithChatStrings.peopleButtonLabel,
-    tooltipOffContent: callWithChatStrings.peopleButtonTooltipContentOpen,
-    tooltipOnContent: callWithChatStrings.peopleButtonTooltipContentClose
-  };
-  const moreButtonStrings = {
-    label: callWithChatStrings.moreDrawerButtonLabel,
-    tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
-  };
+  const chatButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.chatButtonLabel,
+      tooltipOffContent: callWithChatStrings.chatButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.chatButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const peopleButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.peopleButtonLabel,
+      tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const moreButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.moreDrawerButtonLabel,
+      tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+    }),
+    [callWithChatStrings]
+  );
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
