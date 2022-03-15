@@ -39,7 +39,11 @@ function App(): JSX.Element {
     }),
     []
   );
-  const adapter = useAzureCommunicationChatAdapter(args);
+  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
+    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+    await adapter.fetchInitialData();
+    return adapter;
+  });
 
   return (
     <>
