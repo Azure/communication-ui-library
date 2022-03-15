@@ -50,7 +50,7 @@ function App(): JSX.Element {
   );
   const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
     // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-    adapter.fetchInitialData();
+    await adapter.fetchInitialData();
     return adapter;
   });
 
