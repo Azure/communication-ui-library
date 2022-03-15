@@ -50,7 +50,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
-import type { PermissionConstraints } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
@@ -561,11 +561,40 @@ export interface CallState {
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
-// Warning: (ae-incompatible-release-tags) The symbol "CallWithChatAdapterManagement" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
-//
 // @public
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'>, Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {
+export interface CallWithChatAdapterManagement {
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta (undocumented)
+    cancelFileUpload: (id: string) => void;
+    // @beta (undocumented)
+    clearFileUploads: () => void;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    deleteMessage(messageId: string): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    fetchInitialData(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    leaveCall(forEveryone?: boolean): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    mute(): Promise<void>;
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // @beta (undocumented)
+    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
     removeParticipant(userId: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendTypingIndicator(): Promise<void>;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    startCall(participants: string[]): Call | undefined;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    startScreenShare(): Promise<void>;
+    stopCamera(): Promise<void>;
+    stopScreenShare(): Promise<void>;
+    unmute(): Promise<void>;
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public
@@ -637,14 +666,20 @@ export interface CallWithChatAdapterSubscriptions {
 }
 
 // @public
-export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
+export interface CallWithChatAdapterUiState {
+    // @beta
+    fileUploads?: FileUploadsUiState;
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 }
 
 // @public
-export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+export interface CallWithChatClientState {
     call?: CallState;
     chat?: ChatThreadClientState;
+    devices: DeviceManagerState;
     displayName: string | undefined;
+    isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     userId: CommunicationIdentifierKind;
@@ -740,8 +775,9 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
-    chatButtonTooltipContentClose: string;
-    chatButtonTooltipContentOpen: string;
+    chatButtonTooltipClose: string;
+    chatButtonTooltipClosedWithMessageCount: string;
+    chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     moreDrawerButtonLabel: string;
@@ -749,8 +785,8 @@ export interface CallWithChatCompositeStrings {
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
-    peopleButtonTooltipContentClose: string;
-    peopleButtonTooltipContentOpen: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -758,9 +794,16 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @public
-export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+export interface CallWithChatControlOptions {
+    cameraButton?: boolean;
     chatButton?: boolean;
+    displayType?: CallControlDisplayType;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
     peopleButton?: boolean;
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
 }
 
 // @public
@@ -2381,11 +2424,14 @@ export type UploadFailedListener = (id: string, message: string) => void;
 // @beta
 export type UploadProgressListener = (id: string, value: number) => void;
 
-// @beta
+// @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
+// @public
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
