@@ -38,6 +38,10 @@ const fileCardGroupClassName = mergeStyles({
 export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
   const { children } = props;
 
+  if (!children) {
+    return <></>;
+  }
+
   return (
     <Stack horizontal className={fileCardGroupClassName}>
       {children}
