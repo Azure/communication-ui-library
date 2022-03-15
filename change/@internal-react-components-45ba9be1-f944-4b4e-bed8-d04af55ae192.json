@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use fela style selector",
+  "packageName": "@internal/react-components",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
