@@ -21,6 +21,8 @@ jobs:
   create_pre-release:
     name: Bump versions and make changelog
     runs_on: ubuntu-latest
+    env:
+      MAIN_BRANCH: 'main'
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
@@ -104,8 +106,21 @@ jobs:
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"groom_changelog_${{ steps.version.outputs.version }}", "base":"pre-release/${{ steps.version.outputs.version }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
 
-  # job to trigger strings on pre-reslease branch
-  run_TD_Build:
-    uses: ./.github/workflows/run-td-build.yml
-      with:
-        branch: ${{github.events.inputs.bump_type}}_pre-release/${{ steps.version.outputs.version }}
+      # Run touch down build
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Install github actions dependencies
+        run: npm ci
+        working-directory: ./.github/workflows/azure-pipeline-action-fork
+
+      - name: Trigger touchdown build pipeline
+        uses: ./.github/workflows/azure-pipeline-action-fork
+        with:
+          azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
+          azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build'
+          azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
+          azure-pipeline-variables: '{"commit": ${{ steps.extract_branch.outputs.branch != env.MAIN_BRANCH }} }'
