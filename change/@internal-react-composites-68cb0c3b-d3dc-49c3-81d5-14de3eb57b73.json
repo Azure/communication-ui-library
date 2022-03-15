@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Mobile Participant pane now spans full sidepane width",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "prerelease"
-}

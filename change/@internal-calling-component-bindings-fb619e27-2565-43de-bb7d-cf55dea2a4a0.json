@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix eslint warnings. Update builds to fail on eslint warnings.",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

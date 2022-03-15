@@ -44,13 +44,21 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "Personen",
+    "peopleButtonTooltipContentOpen": "Deelnemers weergeven",
+    "peopleButtonTooltipContentClose": "Deelnemers verbergen",
     "chatButtonLabel": "Chatten",
-    "moreDrawerMicrophoneMenuTitle": "Microphone",
-    "moreDrawerSpeakerMenuTitle": "Speaker",
+    "chatButtonTooltipContentOpen": "Chat weergeven",
+    "chatButtonTooltipContentClose": "Chat verbergen",
+    "moreDrawerMicrophoneMenuTitle": "Microfoon",
+    "moreDrawerSpeakerMenuTitle": "Luidspreker",
+    "moreDrawerButtonLabel": "Meer opties",
+    "moreDrawerButtonTooltip": "Meer opties",
     "peoplePaneTitle": "Personen",
     "peoplePaneSubTitle": "In dit gesprek",
     "chatPaneTitle": "Chatten",
     "chatButtonNewMessageNotificationLabel": "Nieuw bericht",
-    "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm."
+    "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm.",
+    "removeMenuLabel": "Verwijderen",
+    "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren"
   }
 }

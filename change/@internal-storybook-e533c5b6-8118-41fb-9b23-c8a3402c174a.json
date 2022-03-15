@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrading calling to 1.4.3-beta.1",
-  "packageName": "@internal/storybook",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
