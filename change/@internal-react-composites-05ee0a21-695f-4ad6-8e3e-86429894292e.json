@@ -1,6 +1,6 @@
 {
-  "type": "patch",
-  "comment": "Fix react useEffect dependencies in composites",
+  "type": "prerelease",
+  "comment": "Flatten pick and omit APIs in CallWithChatComposite",
   "packageName": "@internal/react-composites",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
