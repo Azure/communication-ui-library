@@ -38,6 +38,7 @@ export interface ActiveFileUpload {
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -86,6 +87,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface CameraButtonStrings {
+    cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
     offLabel: string;
@@ -550,7 +552,7 @@ export type LocalizationProviderProps = {
 // @internal
 export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -702,6 +704,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -906,6 +909,8 @@ export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
+    onCancelFileUpload?: (fileId: string) => void;
+    // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
@@ -919,6 +924,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
@@ -997,6 +1003,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -1012,9 +1021,8 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;

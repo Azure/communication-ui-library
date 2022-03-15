@@ -9,9 +9,11 @@ import {
   extractFileMetadata,
   FileDownloadHandler
 } from './file-sharing';
-import React from 'react';
 import { ChatMessage } from '@internal/react-components';
 import { ChatCompositeIcon } from '../common/icons';
+import { Spinner, SpinnerSize } from '@fluentui/react';
+import { useCallback, useState } from 'react';
+import React from 'react';
 
 /**
  * @beta
@@ -26,6 +28,10 @@ export interface FileDownloadCards {
    */
   message: ChatMessage;
   /**
+   * Callback to update download error message.
+   */
+  onDownloadErrorMessage: (errMsg: string) => void;
+  /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
    * initiate the download.
@@ -39,7 +45,31 @@ export interface FileDownloadCards {
 export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   const truncateLength = 15;
   const { userId, message } = props;
+  const [showSpinner, setShowSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = message.metadata ? extractFileMetadata(message.metadata) : [];
+  const fileDownloadHandler = useCallback(
+    async (userId, file) => {
+      if (!props.downloadHandler) {
+        window.open(file.url, '_blank', 'noopener,noreferrer');
+      } else {
+        setShowSpinner(true);
+        try {
+          const response = await props.downloadHandler(userId, file);
+          setShowSpinner(false);
+          if (response instanceof URL) {
+            window.open(response.toString(), '_blank', 'noopener,noreferrer');
+          } else {
+            props.onDownloadErrorMessage(response.errorMessage);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setShowSpinner(false);
+        }
+      }
+    },
+    [props]
+  );
   return (
     <FileCardGroup>
       {fileDownloads &&
@@ -48,11 +78,10 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
             fileName={truncatedFileName(file.name, truncateLength)}
             key={file.name}
             fileExtension={extension(file.name)}
-            actionIcon={<DownloadIconTrampoline />}
-            actionHandler={() => {
-              props.downloadHandler && props.downloadHandler(userId, file);
-              !props.downloadHandler && window.open(file.url, '_blank', 'noopener,noreferrer');
-            }}
+            actionIcon={
+              showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
+            }
+            actionHandler={() => fileDownloadHandler(userId, file)}
           />
         ))}
     </FileCardGroup>

@@ -55,16 +55,17 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
-  const onSelectSpeaker = useCallback(
+  const { speakers, onSelectSpeaker } = props;
+  const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
-      const selected = props.speakers?.find((speaker) => speaker.id === itemKey);
+      const selected = speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
-        props.onSelectSpeaker(selected as AudioDeviceInfo);
+        onSelectSpeaker(selected as AudioDeviceInfo);
       }
     },
-    [props.speakers, props.onSelectSpeaker]
+    [speakers, onSelectSpeaker]
   );
 
   if (props.speakers && props.speakers.length > 0) {
@@ -80,23 +81,24 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerSpeakers'
         },
         text: speaker.name,
-        onItemClick: onSelectSpeaker,
+        onItemClick: onSpeakerItemClick,
         secondaryIconProps: isDeviceSelected(speaker, props.selectedSpeaker) ? { iconName: 'Accept' } : undefined
       })),
       secondaryText: props.selectedSpeaker?.name
     });
   }
 
-  const onSelectMicrophone = useCallback(
+  const { microphones, onSelectMicrophone } = props;
+  const onMicrophoneItemClick = useCallback(
     (_ev, itemKey) => {
-      const selected = props.microphones?.find((mic) => mic.id === itemKey);
+      const selected = microphones?.find((mic) => mic.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
-        props.onSelectMicrophone(selected as AudioDeviceInfo);
+        onSelectMicrophone(selected as AudioDeviceInfo);
       }
     },
-    [props.microphones, props.onSelectMicrophone]
+    [microphones, onSelectMicrophone]
   );
 
   if (props.microphones && props.microphones.length > 0) {
@@ -112,7 +114,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerMicrophones'
         },
         text: mic.name,
-        onItemClick: onSelectMicrophone,
+        onItemClick: onMicrophoneItemClick,
         secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
       })),
       secondaryText: props.selectedMicrophone?.name

@@ -2,18 +2,17 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { PartialTheme, Stack, Theme } from '@fluentui/react';
+import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane } from './EmbeddedChatPane';
-import { EmbeddedPeoplePane } from './EmbeddedPeoplePane';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
 import {
   callCompositeContainerStyles,
   compositeOuterContainerStyles,
   controlBarContainerStyles,
-  drawerContainerStyles
+  drawerContainerStyles,
+  modalLayerHostStyle
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -27,11 +26,15 @@ import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvide
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
+import { useId } from '@fluentui/react-hooks';
+import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
+/* @conditional-compile-remove(file-sharing) */
+import { FileSharingOptions } from '../ChatComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
  *
- * @beta
+ * @public
  */
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   adapter: CallWithChatAdapter;
@@ -61,7 +64,7 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 /**
  * Optional features of the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeOptions = {
   /**
@@ -69,11 +72,18 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Properties for configuring the File Sharing feature.
+   * If undefined, file sharing feature will be disabled.
+   * @beta
+   */
+  fileSharing?: FileSharingOptions;
 };
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
- * @beta
+ * @public
  */
 export interface CallWithChatControlOptions
   extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
@@ -97,11 +107,13 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(file-sharing) */
+  fileSharing?: FileSharingOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  const isMobile = formFactor === 'mobile';
+  const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
@@ -114,8 +126,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-  const [showChat, setShowChat] = useState(false);
-  const [showPeople, setShowPeople] = useState(false);
+  const [activePane, setActivePane] = useState<CallWithChatPaneOption>('none');
 
   useEffect(() => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
@@ -129,40 +140,45 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [callWithChatAdapter]);
 
   const closePane = useCallback(() => {
-    setShowChat(false);
-    setShowPeople(false);
-  }, []);
+    setActivePane('none');
+  }, [setActivePane]);
 
   const toggleChat = useCallback(() => {
-    setShowPeople(false);
-    setShowChat(!showChat);
-  }, [showChat]);
+    if (activePane === 'chat') {
+      setActivePane('none');
+    } else {
+      setActivePane('chat');
+    }
+  }, [activePane, setActivePane]);
 
   const togglePeople = useCallback(() => {
-    setShowChat(false);
-    setShowPeople(!showPeople);
-  }, [showPeople]);
+    if (activePane === 'people') {
+      setActivePane('none');
+    } else {
+      setActivePane('people');
+    }
+  }, [activePane, setActivePane]);
+
+  const selectChat = useCallback(() => {
+    setActivePane('chat');
+  }, [setActivePane]);
+
+  const selectPeople = useCallback(() => {
+    setActivePane('people');
+  }, [setActivePane]);
 
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
     closePane();
     setShowDrawer(true);
-  }, []);
+  }, [closePane]);
   const closeDrawer = useCallback(() => {
     setShowDrawer(false);
   }, []);
   const onMoreDrawerPeopleClicked = useCallback(() => {
     setShowDrawer(false);
     togglePeople();
-  }, []);
-  const selectPeople = useCallback(() => {
-    setShowPeople(true);
-    setShowChat(false);
-  }, []);
-  const selectChat = useCallback(() => {
-    setShowChat(true);
-    setShowPeople(false);
-  }, []);
+  }, [togglePeople]);
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
@@ -170,15 +186,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
+  const modalLayerHostId = useId('modalLayerhost');
+
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const showMobilePane = isMobile && (showChat || showPeople);
+  const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles}>
       <Stack horizontal grow>
-        {!showMobilePane && (
+        {!isMobileWithActivePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
             <CallComposite
               {...props}
@@ -189,47 +207,34 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             />
           </Stack.Item>
         )}
-        {chatProps.adapter && hasJoinedCall && (
-          <EmbeddedChatPane
+        {chatProps.adapter && callAdapter && hasJoinedCall && (
+          <CallWithChatPane
             chatCompositeProps={chatProps}
-            hidden={!showChat}
-            chatAdapter={chatProps.adapter}
-            fluentTheme={fluentTheme}
+            inviteLink={props.joinInvitationURL}
             onClose={closePane}
+            chatAdapter={chatProps.adapter}
+            callAdapter={callAdapter}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClick={selectChat}
-            onPeopleButtonClick={selectPeople}
-            mobileView={isMobile}
+            onChatButtonClicked={selectChat}
+            onPeopleButtonClicked={selectPeople}
+            modalLayerHostId={modalLayerHostId}
+            mobileView={mobileView}
+            activePane={activePane}
           />
         )}
-        {callAdapter && chatProps.adapter && hasJoinedCall && (
-          <CallAdapterProvider adapter={callAdapter}>
-            <EmbeddedPeoplePane
-              hidden={!showPeople}
-              inviteLink={props.joinInvitationURL}
-              onClose={closePane}
-              chatAdapter={chatProps.adapter}
-              callAdapter={callAdapter}
-              onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-              onChatButtonClick={selectChat}
-              onPeopleButtonClick={selectPeople}
-              mobileView={isMobile}
-            />
-          </CallAdapterProvider>
-        )}
       </Stack>
-      {showControlBar && !showMobilePane && (
+      {showControlBar && !isMobileWithActivePane && (
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <Stack.Item styles={controlBarContainerStyles}>
             <CallWithChatControlBar
               callAdapter={callAdapter}
               chatAdapter={chatProps.adapter}
-              chatButtonChecked={showChat}
+              chatButtonChecked={activePane === 'chat'}
               onChatButtonClicked={toggleChat}
-              peopleButtonChecked={showPeople}
+              peopleButtonChecked={activePane === 'people'}
               onPeopleButtonClicked={togglePeople}
               onMoreButtonClicked={onMoreButtonClicked}
-              mobileView={props.formFactor === 'mobile'}
+              mobileView={mobileView}
               disableButtonsForLobbyPage={isInLobbyOrConnecting}
               callControls={props.callControls}
             />
@@ -245,6 +250,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
+      {
+        // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
+        // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+        // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+        mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+      }
     </Stack>
   );
 };
@@ -252,7 +263,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
- * @beta
+ * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
@@ -265,6 +276,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing={options?.fileSharing}
       />
     </BaseProvider>
   );

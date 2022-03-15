@@ -1,14 +1,12 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
-  CallAdapter,
-  createAzureCommunicationCallAdapter,
   ChatComposite,
-  ChatAdapter,
-  createAzureCommunicationChatAdapter,
-  fromFlatCommunicationIdentifier
+  fromFlatCommunicationIdentifier,
+  useAzureCommunicationCallAdapter,
+  useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -19,11 +17,9 @@ function App(): JSX.Element {
   //Calling Variables
   //For Group Id, developers can pass any GUID they can generate
   const groupId = '<Developer generated GUID>';
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   //Chat Variables
   const threadId = '<Get thread id from chat service>';
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
   const credential = useMemo(() => {
@@ -35,28 +31,32 @@ function App(): JSX.Element {
     }
   }, [token]);
 
-  useEffect(() => {
-    const createAdapter = async (): Promise<void> => {
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter({
-          endpoint: endpointUrl,
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          threadId
-        })
-      );
-      setCallAdapter(
-        await createAzureCommunicationCallAdapter({
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          locator: { groupId }
-        })
-      );
-    };
-    createAdapter();
-  }, []);
+  // Memoize arguments to `useAzureCommunicationCallAdapter` so that
+  // a new adapter is only created when an argument changes.
+  const callAdapterArgs = useMemo(
+    () => ({
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential,
+      locator: { groupId }
+    }),
+    [userId, credential, displayName, groupId]
+  );
+  const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
+
+  // Memoize arguments to `useAzureCommunicationChatAdapter` so that
+  // a new adapter is only created when an argument changes.
+  const chatAdapterArgs = useMemo(
+    () => ({
+      endpoint: endpointUrl,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential,
+      threadId
+    }),
+    [userId, displayName, credential, threadId]
+  );
+  const chatAdapter = useAzureCommunicationChatAdapter(chatAdapterArgs);
 
   if (!!callAdapter && !!chatAdapter) {
     return (

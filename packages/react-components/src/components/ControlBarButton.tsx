@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, IRenderFunction, concatStyleSets, IButtonStyles } from '@fluentui/react';
+import {
+  DefaultButton,
+  IButtonProps,
+  IRenderFunction,
+  concatStyleSets,
+  IButtonStyles,
+  KeyCodes
+} from '@fluentui/react';
 import { controlButtonStyles } from './styles/ControlBar.styles';
 import { ControlButtonTooltip } from './ControlButtonTooltip';
 
@@ -135,8 +142,10 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         styles={componentStyles}
         onRenderText={props.showLabel && props.onRenderText ? props.onRenderText : undefined}
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
-        ariaLabel={tooltipContent}
+        ariaLabel={props.ariaLabel ?? tooltipContent ?? labelText}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
+        aria-roledescription={props.ariaDescription}
+        menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>

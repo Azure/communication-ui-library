@@ -79,8 +79,15 @@ feature.
 
 ## Stabilizing a feature
 
-    TODO: How to move a feature from beta-only to building unconditionally.
+Careful scoping of [defined features](../../common/config/babel/.babelrc.js) will allow you to easily stabilize the feature. When you are ready to add your feature to the stable build:
 
+- One-step stabilization: Include all associated conditionally compiled code in the stable flavored build by moving your feature to `stabilizedFeatures` in the [defined features config file]((../../common/config/babel/.babelrc.js)).
+  - Switch to stable flavor and build, test and run samples to try out your stabilized feature.
+  - You will also get the updated API files for the stable build from this step. You can use this for API review.
+- Clean up: Once your feature is shipped in a stable release, remove all references to conditional compilation directive for your feature, and remove your feature from `stabilizedFeatures` list.
+  - Note: If some code has other conditional compilation directives along with your (now stable) feature, remove all directives (not only yours), so that the code is included in the stable flavor build unconditionally.
+
+This [example PR](https://github.com/Azure/communication-ui-library/pull/1547) for stabilizing a feature includes the [generated API diff](https://github.com/Azure/communication-ui-library/pull/1547/files#diff-e76b64bd635283f256ec46065d2e58b277d9fad73ff4e4a774e4509c0290acfe) for this feature.
 
 # Releases
 
@@ -97,14 +104,14 @@ You an help with the manual step of figuring out what the CHANGELOG is in each r
 * `patch`, `minor` or `major` for changes that affect the stable (and of course beta) flavor build as appropriate.
 * `none` for documentation changes etc that don't affect the NPM bundle meaningfully.
 
-# Conditionally Adding a E2E test 
+# Conditionally Adding a E2E test
 
 Conditional compilation creates a problem with the e2e tests. The tests themselves are not actually conditionally compiled, while the applications themselves are served in the different flavors.
 
 So when adding a new test to the suite keep this in mind and use the following call:
 
 ```TypeScript
-test.skip(skipTestInStableFlavor());
+test.skip(isTestProfileStableFlavor());
 ```
 
-The `skipTestInStableFlavor()` function is checking the environment variables of the session to check what flavor it is running in since it wont conditionally compile the test out.
+The `isTestProfileStableFlavor()` function is checking the environment variables of the session to check what flavor it is running in since it wont conditionally compile the test out.

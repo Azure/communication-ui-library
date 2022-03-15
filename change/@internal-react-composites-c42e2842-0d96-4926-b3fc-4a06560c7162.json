@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce strings for more buttons to facilitate narrator functionality.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

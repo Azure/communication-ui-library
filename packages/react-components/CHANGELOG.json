@@ -2,6 +2,332 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Tue, 01 Mar 2022 16:42:57 GMT",
+      "tag": "@internal/react-components_v1.1.1-beta.1",
+      "version": "1.1.1-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "74bbac6eaf3f182ac8fb930043deec0a101126dd",
+            "comment": "Fix typo: `CamerSwitcher` -> `CameraSwitcher`"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2feaab4c28a0686078e5795ecf27def1367ab5a4",
+            "comment": "Showing how many people have read the message, sending read receipt to all previous messages "
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "36920d486ce205d30ada07ab89eea1cef9ccf203",
+            "comment": "Rename MeetingComposite to CallWithChatComposite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "538c57d1dfa9d7be3c247d355fd0d4a280b573eb",
+            "comment": "Meeting/CallComposite: introduces camera logic to local camera switcher button through video gallery selector."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "66c4be543e751d463d3937231a0d9130d5572264",
+            "comment": "DrawerSurface Component"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "836ec9a6e9897a1fd4be8ded469b2eaecf2e96fe",
+            "comment": "submenu showing who read the message (name and avatar)"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2cd59fa3e8791429932854a1d14dd7edf2b9f529",
+            "comment": "Fixed Editbox border which disappeared after adding file sharing changes"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8ce2d16cf138c77915b85b7a72099d09f59b229e",
+            "comment": "Add a prop onRenderFileUploads for rendering uploaded files in sendbox"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "505dc4041c52534ef3e2f4db76319d0bea02ad7d",
+            "comment": "contextual menu showing read by x of y"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c683af8ce546a53b36dd0ae7057e196c40c0f95b",
+            "comment": "Add ability to set a custom icon at the End of a Drawer Menu Item"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1c456eab0729d34305336afba10693edb584b5d0",
+            "comment": "Add option to show device selection menu in MicrophoneButton"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "fcb456bf8cb4a69b7cee7856fa8742ad67aa38ff",
+            "comment": "Updated the message thread component to display attached files in a message."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "eb8ed86862a1471f825d5ba7ead3109700014721",
+            "comment": "Introduced new Aria strings and roles to chat notification and local camera switcher."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "bd875cf509d6a3e1267992c543de6e1d742a2cab",
+            "comment": "Add DrawerMenu component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "7ac22e30469dcc104e5736172b037fac4d92bb29",
+            "comment": "Add secondary text field to Drawer Menu Item"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e29f02dfb23912c1cbf08b68db080ebe97ad23c2",
+            "comment": "Fix drawer menu items' content not updating dynamically while the menu is open when props are updated."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0b1ac6629eb26cc1bbe14b924e73d79d2ac96109",
+            "comment": "A11y fixes for DrawerMenu component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "686db6e51c34e122a10b56ea31f3a7ed55a3006d",
+            "comment": "Fix DrawerMenu MenuItem Icons to be vertically centered"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "4fb9cd532bf8449b4b0abb84179d55ef9f71677a",
+            "comment": "Logic introduced to cause local camera switcher to appear on mobile."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3cb1e0ccd80bd8398fddfdff34eec128b0e73419",
+            "comment": "Add camera selection menu to CameraButton"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "cde64f5a0dcc6109b244d62793e308f93c5c51bb",
+            "comment": "Support submenu in DrawerMenu"
+          }
+        ],
+        "none": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8e121fe6a0f40c4ff1539e7e75206264982b09d0",
+            "comment": "remove lock files added by mistake"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "36ff9ce5894f2f8f35e797d5a4c047c7e0a5d5b7",
+            "comment": "update jest-junit dependency"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "293612a90cfebb8b0e4498ed2f423e5436fc38f0",
+            "comment": "Create PiPiP pure component"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9a9948616fa6d37a13a56518fb8827778765937d",
+            "comment": "Use per-feature conditional compilation directives"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a38a04bfb3b658013023dcd55877d9a6e8d6ffbc",
+            "comment": "Fixes issue where IME keyboards send messages before composition is complete."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "31cda10cdf60dc4a65e9c30fcee90f3dccb62afd",
+            "comment": "Removed VideoGallery containuer uuid"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b33c4b24d5fe93fded45602a7fb06f74579bad36",
+            "comment": "Center send button"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "87979c60be946d0e1f9dc5bc732cff6cdfc91b70",
+            "comment": "Include all files in stable flavor build"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "b04202a9cdb37480427c135a771293ef45277566",
+            "comment": "Updating locales through TD Build"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d2d53d1842efd37b3ed6286ebcce983efeea79cb",
+            "comment": "Bump package version to 1.0.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "8061151ddd7b6b13e387b8c591d9fc11cc2c43fe",
+            "comment": "Follow the import trace from every index.ts and not to compile non-exported files"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "61e59fc828a08ce5e32e9281c97db01b57b68a05",
+            "comment": "Create scaffolding for PiPiP component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "1194e5847c9b78ca0c5d7c99a4191c0db39052fb"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d845edf3d091c8a40ef827fc30136de14b7b887e",
+            "comment": "Fixup a11y properties of the PiP, allow secondary tile to be optional"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bf07405eda4cc7a77d2212a920b1a648ad11132",
+            "comment": "created button component for local video feed camera switcher"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "54f65986195fc5f5b61be3bfc4aaad710af3679c",
+            "comment": "TDBuild - updating localized resource files."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c8edd8a8244665c6e25108d760426af3f254decf",
+            "comment": "Update disabled state from false boolean to string value 'disabled'"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d8f0172cf1da6b9000c66da84e31a980bdc0cd31",
+            "comment": "Add metadata attribute to ChatMessage type"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a6c7201daab7a6545520a11de24a1e7611197a5e",
+            "comment": "Identifiers added for HorizontalGallery left and right navigation buttons."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3fbdcabd24fd1cdddfc0fe50b055e90b11857a2e",
+            "comment": "Add data ui id to local Camera switcher button"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "790d5f16ba1048d770bfb0bae3fae54955d86e6d",
+            "comment": "Update wording of labels for ScreenShareButton"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "4c3e4478d8d4d9f5b11304c5e6375e32fde28e87",
+            "comment": "Add tooltip to inputBox buttons"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "b326cd5e57261abe6064e6ad369cbf08d4686f41",
+            "comment": "Update string from remove to delete"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "68aa8836284b7d9bb2ff8544e36666bf5bca5565",
+            "comment": "Limit image size from html"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d2bea536d41d9be7de0c9864f3987f91b99a7fd7",
+            "comment": "Fix IME keyboard inputs for Safari using KeyCode and which properties."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "462818449f89d2c3e2b711734d88f046d6caf17b",
+            "comment": "Bugfix for messages from teams users having extra margins around the message content."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "806d379e8408eaec206c18e9d00609790b2cfc4d",
+            "comment": "Moved Avatars icons to the left of messages by not displaying usernames in Storybook MessageThread"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8bafc3e0ae93e4dd181dd65450acc4a9ed4d5dd7",
+            "comment": "Fix EndCallButton theme colors for better contrast"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "e2a8f1961f257e7a9ceb1dde435b52e490267b95",
+            "comment": "MoreDrawer secondaryText maxWidth set to prevent overlap"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0276b39771b82c6a3b5264a54d1c258bd87229a3",
+            "comment": "Allow setting min and max size of the persona avatar in the Video Tile"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.1.1-beta.1",
+            "commit": "ad59ff742c9fad2fceb1b819cb259c1ee8f29e62"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 23:18:54 GMT",
       "tag": "@internal/react-components_v1.0.1",
       "version": "1.0.1",

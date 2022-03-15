@@ -48,6 +48,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
+import { useEffect, useRef, useState } from 'react';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -591,6 +592,111 @@ export const createAzureCommunicationCallAdapter = async ({
   const callClient = createStatefulCallClient({ userId });
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  return adapter;
+};
+
+/**
+ * A custom React hook to simplify the creation of {@link CallAdapter}.
+ *
+ * Similar to {@link createAzureCommunicationCallAdapter}, but takes care of asynchronous
+ * creation of the adapter internally.
+ *
+ * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+ * as they are created. The adapter is only created when all arguments are defined.
+ *
+ * Note that you must memoize the arguments to avoid recreating adapter on each render.
+ * See storybook for typical usage examples.
+ *
+ * @public
+ */
+export const useAzureCommunicationCallAdapter = (
+  /**
+   * Arguments to be passed to {@link createAzureCommunicationCallAdapter}.
+   *
+   * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+   * as they are created. The adapter is only created when all arguments are defined.
+   */
+  args: Partial<AzureCommunicationCallAdapterArgs>,
+  /**
+   * Optional callback to modify the adapter once it is created.
+   *
+   * If set, must return the modified adapter.
+   */
+  afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>,
+  /**
+   * Optional callback called before the adapter is disposed.
+   *
+   * This is useful for clean up tasks, e.g., leaving any ongoing calls.
+   */
+  beforeDispose?: (adapter: CallAdapter) => Promise<void>
+): CallAdapter | undefined => {
+  const { credential, displayName, locator, userId } = args;
+
+  // State update needed to rerender the parent component when a new adapter is created.
+  const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
+  // Ref needed for cleanup to access the old adapter created asynchronously.
+  const adapterRef = useRef<CallAdapter | undefined>(undefined);
+
+  const afterCreateRef = useRef<((adapter: CallAdapter) => Promise<CallAdapter>) | undefined>(undefined);
+  const beforeDisposeRef = useRef<((adapter: CallAdapter) => Promise<void>) | undefined>(undefined);
+  // These refs are updated on *each* render, so that the latest values
+  // are used in the `useEffect` closures below.
+  // Using a Ref ensures that new values for the callbacks do not trigger the
+  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  afterCreateRef.current = afterCreate;
+  beforeDisposeRef.current = beforeDispose;
+
+  useEffect(
+    () => {
+      if (!credential || !displayName || !locator || !userId) {
+        return;
+      }
+      (async () => {
+        if (adapterRef.current) {
+          // Dispose the old adapter when a new one is created.
+          //
+          // This clean up function uses `adapterRef` because `adapter` can not be added to the dependency array of
+          // this `useEffect` -- we do not want to trigger a new adapter creation because of the first adapter
+          // creation.
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+
+        let newAdapter = await createAzureCommunicationCallAdapter({
+          credential,
+          displayName,
+          locator,
+          userId
+        });
+        if (afterCreateRef.current) {
+          newAdapter = await afterCreateRef.current(newAdapter);
+        }
+        adapterRef.current = newAdapter;
+        setAdapter(newAdapter);
+      })();
+    },
+    // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
+    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, locator, userId]
+  );
+
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
+
   return adapter;
 };
 

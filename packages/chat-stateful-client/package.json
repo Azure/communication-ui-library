@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-stateful-client",
-  "version": "1.0.1-beta.2",
+  "version": "1.1.1-beta.1",
   "description": "Stateful proxy over the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -16,7 +16,7 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "rushx _by-flavor \"npm run _test:by-flavor\"",
     "test:coverage": "rushx _by-flavor \"npm run test:_by-flavor -- --coverage\"",
-    "lint": "eslint \"*/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet",
     "api-extractor": "rushx _by-flavor \"npm run build:esm && npm run _api-extractor:by-flavor\"",
@@ -32,7 +32,7 @@
     "@azure/communication-signaling": "1.0.0-beta.12",
     "@azure/core-paging": "~1.1.3",
     "@azure/logger": "1.0.3",
-    "@internal/acs-ui-common": "1.0.1-beta.2",
+    "@internal/acs-ui-common": "1.1.1-beta.1",
     "events": "~3.3.0",
     "immer": "9.0.6",
     "nanoid": "3.1.32"

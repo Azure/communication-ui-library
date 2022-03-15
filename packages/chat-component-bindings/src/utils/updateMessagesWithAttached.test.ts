@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { ChatMessage, CustomMessage, Message } from '@internal/react-components';
+import { ChatMessage, CustomMessage, Message, MessageAttachedStatus } from '@internal/react-components';
 import { updateMessagesWithAttached } from './updateMessagesWithAttached';
 
 const cannedChatMessage = (senderId: string): ChatMessage => ({
@@ -18,7 +18,7 @@ const cannedCustomMessage = (): CustomMessage => ({
   messageId: ''
 });
 
-const getAttachedStatusArray = (messages: Message[]) => {
+const getAttachedStatusArray = (messages: Message[]): (MessageAttachedStatus | undefined)[] => {
   return messages.map((message) => (message.messageType === 'chat' ? message.attached : undefined));
 };
 
@@ -26,14 +26,14 @@ describe('update message with attached status', () => {
   test('Set right status for attached property for 1 message', () => {
     const oneMessageArray: Message[] = [cannedChatMessage('1')];
 
-    updateMessagesWithAttached(oneMessageArray, '1');
+    updateMessagesWithAttached(oneMessageArray);
     expect(getAttachedStatusArray(oneMessageArray)).toEqual([false]);
   });
 
   test('Set right status for attached property for 3 messages', () => {
     const threeMessagesArray = [cannedChatMessage('1'), cannedChatMessage('1'), cannedChatMessage('2')];
 
-    updateMessagesWithAttached(threeMessagesArray, '1');
+    updateMessagesWithAttached(threeMessagesArray);
     expect(getAttachedStatusArray(threeMessagesArray)).toEqual(['top', 'bottom', false]);
   });
 
@@ -46,14 +46,14 @@ describe('update message with attached status', () => {
       cannedChatMessage('2')
     ];
 
-    updateMessagesWithAttached(fiveMessagesArray, '1');
+    updateMessagesWithAttached(fiveMessagesArray);
     expect(getAttachedStatusArray(fiveMessagesArray)).toEqual([false, 'top', true, 'bottom', false]);
   });
 
   test('Set right status for attached property for different types of messages', () => {
     const messagesArrayWithOtherMessage = [cannedChatMessage('1'), cannedCustomMessage(), cannedChatMessage('1')];
 
-    updateMessagesWithAttached(messagesArrayWithOtherMessage, '1');
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
     expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual([false, undefined, false]);
   });
 });
