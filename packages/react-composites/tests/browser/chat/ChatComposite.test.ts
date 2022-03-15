@@ -56,7 +56,6 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
     const page0 = pages[0];
     const page1 = pages[1];
-
     await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await waitForSelector(page0, dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
@@ -94,6 +93,8 @@ test.describe('Chat Composite E2E Tests', () => {
     // await waitForSelector(page1, `[data-ui-status="seen"]`);
     await waitForMessageWithContent(page1, testMessageText);
     await stubMessageTimestamps(page1);
+    // we are getting read receipt for previous messages, so the message here should be seen, otherwise it could cause flaky test
+    await waitForMessageSeen(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
