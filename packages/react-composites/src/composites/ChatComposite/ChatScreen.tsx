@@ -48,6 +48,10 @@ import { FileDownloadCards } from './FileDownloadCards';
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 
 /**
  * @private
@@ -111,6 +115,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
+  /* @conditional-compile-remove(file-sharing) */
+  const [downloadErrorMessage, setDownloadErrorMessage] = useState('');
 
   const adapter = useAdapter();
 
@@ -160,13 +166,29 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
+          {
+            /* @conditional-compile-remove(file-sharing) */
+            <FileDownloadErrorBar
+              onDismissDownloadErrorMessage={useCallback(() => {
+                setDownloadErrorMessage('');
+              }, [])}
+              fileDownloadErrorMessage={downloadErrorMessage || ''}
+            ></FileDownloadErrorBar>
+          }
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={(userId, message) => (
-              <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
+              <FileDownloadCards
+                userId={userId}
+                message={message}
+                downloadHandler={fileSharing?.downloadHandler}
+                onDownloadErrorMessage={(errorMessage: string) => {
+                  setDownloadErrorMessage(errorMessage);
+                }}
+              />
             )}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -189,11 +211,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onCancelFileUpload={adapter.cancelFileUpload}
             />
 
-            <FileUploadButton
-              accept={fileSharing?.accept}
-              multiple={fileSharing?.multiple}
-              onChange={fileUploadButtonOnChange}
-            />
+            {fileSharing?.uploadHandler && (
+              <FileUploadButton
+                accept={fileSharing?.accept}
+                multiple={fileSharing?.multiple}
+                onChange={fileUploadButtonOnChange}
+              />
+            )}
           </Stack>
         </Stack>
         {
