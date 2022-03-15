@@ -477,6 +477,7 @@ export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
 
 // @internal
 export interface _FileCardGroupProps {
+    // (undocumented)
     children: React_2.ReactNode;
 }
 
