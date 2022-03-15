@@ -1,7 +1,7 @@
 {
-  "type": "minor",
-  "comment": "Add useAzureCommunicationCallAdapter hook",
+  "type": "none",
+  "comment": "Setup package versions after prerelease",
   "packageName": "@internal/react-composites",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
