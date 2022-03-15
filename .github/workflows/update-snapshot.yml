@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
@@ -104,7 +103,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
@@ -193,7 +191,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - flavor: 'beta'
           - flavor: 'stable'
     steps:
       # Checkout repo
