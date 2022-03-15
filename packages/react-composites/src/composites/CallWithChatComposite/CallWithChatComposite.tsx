@@ -250,6 +250,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             activePane={activePane}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={props.fileSharing}
           />
         )}
       </Stack>
