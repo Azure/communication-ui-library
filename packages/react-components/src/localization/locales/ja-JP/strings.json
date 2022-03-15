@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
-    "sendButtonAriaLabel": "メッセージの送信"
+    "sendButtonAriaLabel": "メッセージの送信",
+    "fileUploadsPendingError": "アップロード中です... お待ちください。"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",

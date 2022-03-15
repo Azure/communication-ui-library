@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename CallWithChatComposite adapter prop from `callWithChatAdapter` to `adapter`",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

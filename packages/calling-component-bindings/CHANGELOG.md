@@ -1,8 +1,28 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Tue, 01 Mar 2022 16:42:55 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.2.0)
+
+Fri, 11 Mar 2022 19:20:02 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.1.1-beta.1...@internal/calling-component-bindings_v1.2.0)
+
+### Minor changes
+
+- Switch CallWithChat from Beta to Public and Stable ([PR #1612](https://github.com/azure/communication-ui-library/pull/1612) by edwardlee@microsoft.com)
+
+### Patches
+
+- Bump @azure/communication-calling to 1.4.3 ([PR #1610](https://github.com/azure/communication-ui-library/pull/1610) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/calling-stateful-client to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/react-components to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+
+### Changes
+
+- Upgrading calling to 1.4.3-beta.1 ([PR #1607](https://github.com/azure/communication-ui-library/pull/1607) by edwardlee@microsoft.com)
 
 ## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.1.1-beta.1)
 

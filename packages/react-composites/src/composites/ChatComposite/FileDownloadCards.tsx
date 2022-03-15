@@ -28,6 +28,10 @@ export interface FileDownloadCards {
    */
   message: ChatMessage;
   /**
+   * Callback to update download error message.
+   */
+  onDownloadErrorMessage: (errMsg: string) => void;
+  /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
    * initiate the download.
@@ -54,6 +58,8 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
           setShowSpinner(false);
           if (response instanceof URL) {
             window.open(response.toString(), '_blank', 'noopener,noreferrer');
+          } else {
+            props.onDownloadErrorMessage(response.errorMessage);
           }
         } catch (error) {
           console.error(error);
