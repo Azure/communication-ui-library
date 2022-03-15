@@ -537,7 +537,6 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
     // (undocumented)
     adapter: CallWithChatAdapter;
     fluentTheme?: PartialTheme | Theme;
-    // @beta
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
     options?: CallWithChatCompositeOptions;

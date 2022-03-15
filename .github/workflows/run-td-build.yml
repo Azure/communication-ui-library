@@ -1,6 +1,13 @@
-name: Run Touchdown build and commit changes
+name: Run Touchdown build and commit changes (if not main)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      [
+        packages/react-components/src/localization/locales/en-US/strings.json,
+        packages/react-composites/src/composites/localization/locales/en-US/strings.json
+      ]
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
@@ -25,7 +32,7 @@ jobs:
         run: npm ci
         working-directory: ./.github/workflows/azure-pipeline-action-fork
 
-      - name: Trigger touchdown build pipeline
+      - name: Trigger touchdown build pipeline. Commit changes if current branch is not 'main'.
         uses: ./.github/workflows/azure-pipeline-action-fork
         with:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
