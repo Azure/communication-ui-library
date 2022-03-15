@@ -37,8 +37,19 @@ export const sidePaneContainerTokens: IStackTokens = {
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
     lineHeight: '1.25rem',
-    padding: '0.25rem',
-    fontWeight: '600'
+    fontWeight: '600',
+    paddingTop: '0.25rem',
+    paddingBottom: '0.25rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const sidePaneHeaderBarStyles: IStackStyles = {
+  root: {
+    marginLeft: '0.5rem',
+    marginRight: '0.25rem'
   }
 };
 
@@ -103,5 +114,26 @@ export const participantListStack = mergeStyles({
 export const participantListStyle = mergeStyles({
   height: '100%',
   overflowY: 'auto',
-  overflowX: 'hidden'
+  overflowX: 'hidden',
+  padding: '0'
 });
+
+/**
+ * @private
+ */
+export const participantListDesktopStyle = {
+  root: {
+    padding: '0'
+  }
+};
+
+/**
+ * @private
+ */
+export const participantListMobileStyle = {
+  root: {
+    padding: '0',
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem'
+  }
+};

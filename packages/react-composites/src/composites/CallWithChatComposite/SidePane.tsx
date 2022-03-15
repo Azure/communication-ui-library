@@ -9,7 +9,8 @@ import {
   sidePaneHeaderStyles,
   paneBodyContainer,
   scrollableContainer,
-  scrollableContainerContents
+  scrollableContainerContents,
+  sidePaneHeaderBarStyles
 } from '../common/styles/ParticipantContainer.styles';
 import { useTheme } from '@internal/react-components';
 
@@ -38,7 +39,7 @@ export const SidePane = (props: {
   return (
     <Stack.Item disableShrink verticalFill styles={sidePaneStyles}>
       <Stack verticalFill data-ui-id={props.dataUiId} tokens={sidePaneContainerTokens}>
-        <Stack horizontal horizontalAlign="space-between">
+        <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderBarStyles}>
           <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
           <CommandBarButton
             styles={sidePaneCloseButtonStyles}

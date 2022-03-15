@@ -47,6 +47,14 @@ export const drawerContainerStyles: IStackStyles = {
   }
 };
 
+/** @private */
+export const drawerContainerMenuItemsStyles: IStackStyles = {
+  root: {
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem'
+  }
+};
+
 /**
  * Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
  * this requires the parent to have `position relative`

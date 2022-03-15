@@ -36,7 +36,7 @@ import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MobilePane } from './MobilePane';
 import { SidePane } from './SidePane';
-import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
+import { drawerContainerStyles, drawerContainerMenuItemsStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
@@ -204,12 +204,14 @@ export const EmbeddedPeoplePane = (props: {
     >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
-          <DefaultButton
-            text={callWithChatStrings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <LinkIconTrampoline />}
-            onClick={() => copy(inviteLink)}
-            styles={copyLinkButtonStylesThemed}
-          />
+          <Stack styles={drawerContainerMenuItemsStyles}>
+            <DefaultButton
+              text={callWithChatStrings.copyInviteLinkButtonLabel}
+              onRenderIcon={() => <LinkIconTrampoline />}
+              onClick={() => copy(inviteLink)}
+              styles={copyLinkButtonStylesThemed}
+            />
+          </Stack>
         )}
         {participantList}
       </Stack>

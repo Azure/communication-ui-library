@@ -4,7 +4,9 @@ import React, { useMemo } from 'react';
 import {
   participantListStack,
   participantListStyle,
-  participantListWrapper
+  participantListMobileStyle,
+  participantListWrapper,
+  participantListDesktopStyle
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -51,8 +53,8 @@ export const ParticipantListWithHeading = (props: {
     () => ({
       root: {
         color: theme.palette.neutralSecondary,
-        margin: '0.5rem',
-        fontSize: theme.fonts.smallPlus.fontSize
+        fontSize: theme.fonts.smallPlus.fontSize,
+        margin: props.isMobile ? '1rem' : '0.5rem'
       }
     }),
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize]
@@ -64,6 +66,7 @@ export const ParticipantListWithHeading = (props: {
       <FocusZone className={participantListStyle}>
         <ParticipantList
           {...participantListProps}
+          styles={props.isMobile ? participantListMobileStyle : participantListDesktopStyle}
           onRenderAvatar={(userId, options) => (
             <AvatarPersona
               data-ui-id="chat-composite-participant-custom-avatar"
