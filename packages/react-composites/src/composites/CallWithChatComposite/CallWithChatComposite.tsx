@@ -48,7 +48,6 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
    * @defaultValue 'desktop'
-   * @beta
    */
   formFactor?: 'desktop' | 'mobile';
   /**
