@@ -121,7 +121,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
 
   useEffect(() => {
-    // Initial data should be always fetched instead of adapter, controlled by composite
+    // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
   }, [adapter]);
 
