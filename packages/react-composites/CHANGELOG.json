@@ -2,6 +2,273 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:02 GMT",
+      "tag": "@internal/react-composites_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "96cc5b9a5d8fb2221de5dae2473ec80848520948",
+            "comment": "Switch CallWithChat from Beta to Public and Stable"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "e93e7cd6ee217ba2ab24193efe7ea444365a5731",
+            "comment": "Added LocalAndRemotePIP to mobile EmbeddedPeoplePane."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "eefcc4af3d5d844f3157e8fdfb34bb47b2f809aa",
+            "comment": "Add useAzureCommunicationCallAdapter hook"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "a49965d9484252f13eaeec7020c20247389e69dc",
+            "comment": "Using drawer menu when participant is clicked on PeoplePane in mobile view of CallWithChat composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f120ae5e876381891bb0063fc24cd170aea62db0",
+            "comment": "Increase the border radius of buttons in composites with call features"
+          }
+        ],
+        "none": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "86c76de5619d646f719f91e2fb85d46cb59bf66d",
+            "comment": "updates pointer events to allow activiation of controls under the 'you are muted' notification"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0ea7ea6695854879f41614bd95b66d07c29e1da6",
+            "comment": "Colour update for the compliance banner in the Calling and CallWithChat Composites"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c72abb80d4795c84259a9c658c208b9dfa9083dc",
+            "comment": "Update azure/communication-calling dependency version to match the rest of the repo"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "01af4af775fccf047b0631f0e6943759bbac3580",
+            "comment": "Leverages new typing to use new local video tile in videoGallery."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "a5386b1e524f82d77702efc520a20ebf39d4b635",
+            "comment": "Update fileUploadSelector for SendBox props"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c30e6d27e4f2901f07d81665c7ab298b171de3e6",
+            "comment": "Add conditional compile CallWithChat with LocalCameraSwitcher to resolve dependency errors"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "40e476507593a812a734c6e071fae5fbad2356ae",
+            "comment": "Show error above sendbox if message is sent before all files are uploaded."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8bbd5ff1666dcd76dc4ca7cb95554fc568ae3d4e",
+            "comment": "Remove customization for unread messages button icon. Fix styling when unread messages exceeds 9 messages"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ee3ed768c47fbd95b794da561462dac5af824cce",
+            "comment": "Add useAzureCommunicationCallWithChatAdapter hook"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d016aeb0196d0e6c9607c2360f77c93bd6f4e148",
+            "comment": "Add tooltips to people and chat buttons"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a4b506ca88842bd90c1847d4831a787fa34606a1",
+            "comment": "Introduce strings for more buttons to facilitate narrator functionality."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "30a5765ef29b5f906ffa4e769ee43e8c8bfa1efb",
+            "comment": "Add filesharing feature to CallWithChat Composite"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b44b4d59f30d507793086899a107a0ef841a5d79",
+            "comment": "Update filesharing attribute names"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9c0dac917f9b8cf98d6edb7dd73b2e66ae46851d",
+            "comment": "Add default implementation of file upload UI to SendBox"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "6dc9b4b186b91ed0bc792d4ecbe7bce03b6352a0",
+            "comment": "Mobile Participant pane now spans full sidepane width"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "7bd0405238288253181bb679dd4e555598f34295",
+            "comment": "bugfix: Dispose adapter in hook when component unmounts"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "353247a9e3a414826e3a55d53a88e08148b3753a",
+            "comment": "Rename CallWithChatComposite adapter prop from `callWithChatAdapter` to `adapter`"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "51303c50e395a9351f46f39b87d56b4e25b8b8db",
+            "comment": "Fix chat unread messages badge border to always be white"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "6b5703551a947f4ca4b62f3b6626c269abc33d97",
+            "comment": "Timeout file upload error bar after 10 seconds"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "79bc06d15079b0882927814bf1ded308d7f3f6f8",
+            "comment": "Fix control bar button text wrapping to a new line in the CallWithChatComposite"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "b51a54f165a378e1892bfeda2ef28a2a509d4a59",
+            "comment": "Fix call control bar wrapping to a new line at high zoom levels and narrow screen heights"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3c16011e51800e23d47de01a509b0865eb590b10",
+            "comment": "Show file upload errors above sendbox in Composites containing Chat features"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ed515b487f4763c010bdf577134dba00ba6f0b7c",
+            "comment": "Show loader in File card until file download promise is resolved"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "fed7eafe04f692c5210d8702dfe47f3067fc4df1",
+            "comment": "Upgrading calling to 1.4.3-beta.1"
+          }
+        ],
+        "patch": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "722aab1134fe068eba85ccdb69843dadab96acf6",
+            "comment": "Sidepane copy invite link and cancel button UI style fix"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "de02d331a3575eb943daefa096eb69fe4b970862",
+            "comment": "SidePane style updates."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8dac9717a57d6ac14659bb6b0497afe25e611528",
+            "comment": "Fix react useEffect dependencies in composites"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "5d67d91a7cb54b6630eb01965673947639b26686",
+            "comment": "CallWithChat SplitButtonMenuButton inner border radius squared"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "85694c50f803d0e86258b325e0d7179bdff121f8",
+            "comment": "Add soft vertical height support for unsupported mobile landscape orientation in Calling-based Composites"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a8454e2d0a360defafc04b7ec7820cb260e9f77a",
+            "comment": "Bump @azure/communication-calling to 1.4.3"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:42:53 GMT",
       "tag": "@internal/react-composites_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",
