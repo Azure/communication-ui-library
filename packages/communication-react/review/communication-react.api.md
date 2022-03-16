@@ -77,7 +77,7 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
@@ -1639,6 +1639,12 @@ export interface FileUploadAdapter {
     registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
+// @beta
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
+
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
     off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
@@ -1662,7 +1668,7 @@ export interface FileUploadManager {
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
@@ -2253,6 +2259,12 @@ export type Selector = (state: ClientState, props: any) => any;
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
+
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
 
 // @public
 export interface SendBoxProps {
