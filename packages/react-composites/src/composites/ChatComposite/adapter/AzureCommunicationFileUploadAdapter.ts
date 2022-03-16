@@ -138,6 +138,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   cancelFileUpload(id: string): void {
+    this.deleteErroneousFileUploads();
     const fileUpload = this.findFileUpload(id);
     this.unsubscribeAllEvents(fileUpload);
     this.deleteFileUploads([id]);

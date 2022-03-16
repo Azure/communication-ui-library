@@ -290,6 +290,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(file-sharing) */
+  // Ensure that errors are cleared when there are no files in sendbox
+  React.useEffect(() => {
+    if (!props.activeFileUploads?.filter((upload) => !upload.error).length) {
+      setFileUploadsPendingError(undefined);
+    }
+  }, [props.activeFileUploads]);
+
+  /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
     return {
       fileUploadsPendingError: fileUploadsPendingError,
