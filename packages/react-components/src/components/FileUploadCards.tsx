@@ -39,7 +39,7 @@ export const FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
     <FileCardGroup>
       {files &&
         files
-          .filter((file) => !file.errorMessage)
+          .filter((file) => !file.error)
           .map((file) => (
             <FileCard
               fileName={truncatedFileName(file.filename, truncateLength)}

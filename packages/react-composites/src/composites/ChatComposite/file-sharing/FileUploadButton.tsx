@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { mergeStyles, Stack, useTheme } from '@fluentui/react';
-import React, { useRef } from 'react';
+import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
 
 /**
@@ -33,7 +33,7 @@ export interface FileUploadButtonProps {
  * @internal
  */
 export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const { accept, multiple = false, onChange } = props;
 
@@ -53,7 +53,9 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         verticalAlign="center"
         horizontalAlign="center"
         className={fileUploadButtonClassName}
-        onClick={() => inputRef.current?.click()}
+        onClick={() => {
+          inputRef.current?.click();
+        }}
       >
         <SendBoxAttachFileIconTrampoline />
       </Stack>
@@ -63,6 +65,10 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         multiple={multiple}
         accept={accept}
         type="file"
+        onClick={(e) => {
+          // To ensure that `onChange` is fired even if the same file is picked again.
+          e.currentTarget.value = '';
+        }}
         onChange={(e) => {
           onChange && onChange(e.currentTarget.files);
         }}
