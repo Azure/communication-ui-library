@@ -120,7 +120,7 @@ test.describe('Filesharing ProgressBar', async () => {
     expect(await page.screenshot()).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
   });
 
-  test('is not visible if progress is 1 or greater than 0', async ({ serverUrl, users, page }) => {
+  test('is not visible if progress is 1 or greater than 1', async ({ serverUrl, users, page }) => {
     await page.goto(
       buildUrl(serverUrl, users[0], {
         useFileSharing: 'true',
