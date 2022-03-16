@@ -460,6 +460,27 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @internal
+export const _FileCard: (props: _FileCardProps) => JSX.Element;
+
+// @internal
+export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
+
+// @internal
+export interface _FileCardGroupProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal
+export interface _FileCardProps {
+    actionHandler?: () => void;
+    actionIcon?: JSX.Element;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
