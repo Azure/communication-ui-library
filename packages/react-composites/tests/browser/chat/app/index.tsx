@@ -14,6 +14,8 @@ import {
   createCompletedFileUpload,
   useAzureCommunicationChatAdapter
 } from '../../../../src';
+// eslint-disable-next-line no-restricted-imports
+import { FileUpload } from '../../../../src/composites/ChatComposite/file-sharing';
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 
@@ -56,8 +58,16 @@ function App(): JSX.Element {
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
-      const files = uploadedFiles.map((file) => createCompletedFileUpload(file));
-      adapter.registerFileUploads(files);
+      uploadedFiles.forEach((file) => {
+        if (file.progress) {
+          const fileUpload = new FileUpload(new File([], file.name));
+          adapter.registerFileUploads([fileUpload]);
+          fileUpload.notifyUploadProgressChanged(file.progress);
+        } else {
+          const completedFileUpload = createCompletedFileUpload(file);
+          adapter.registerFileUploads([completedFileUpload]);
+        }
+      });
     }
   }, [adapter]);
 

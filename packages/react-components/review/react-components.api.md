@@ -34,7 +34,7 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
@@ -469,6 +469,27 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @internal
+export const _FileCard: (props: _FileCardProps) => JSX.Element;
+
+// @internal
+export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
+
+// @internal
+export interface _FileCardGroupProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal
+export interface _FileCardProps {
+    actionHandler?: () => void;
+    actionIcon?: JSX.Element;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+}
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -905,6 +926,12 @@ export interface ScreenShareButtonStrings {
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
+
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
 
 // @public
 export interface SendBoxProps {
