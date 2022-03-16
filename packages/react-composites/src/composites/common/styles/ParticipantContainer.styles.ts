@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, ITheme } from '@fluentui/react';
+import { ModalLocalAndRemotePIPStyles } from '../../CallWithChatComposite/ModalLocalAndRemotePIP';
 
 /**
  * @private
@@ -56,8 +57,26 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
  * @private
  */
 export const scrollableContainerContents: IStackItemStyles = {
-  root: { flexGrow: '1', flexBasis: '0', maxWidth: '100%' }
+  root: {
+    flexGrow: '1',
+    flexBasis: '0',
+    maxWidth: '100%',
+    // Create a new stacking context so that `pipStyles` can set zIndex above the container.
+    position: 'relative'
+  }
 };
+
+export const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
+  modal: {
+    main: {
+      borderRadius: theme.effects.roundedCorner4,
+      boxShadow: theme.effects.elevation8,
+      // Above the message thread / people pane.
+      zIndex: 2,
+      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
+    }
+  }
+});
 
 /**
  * @private
