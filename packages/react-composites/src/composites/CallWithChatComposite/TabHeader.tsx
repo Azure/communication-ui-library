@@ -8,7 +8,8 @@ import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatComposit
 import {
   mobilePaneBackButtonStyles,
   mobilePaneButtonStyles,
-  mobilePaneControlBarStyle
+  mobilePaneControlBarStyle,
+  mobilePaneHiddenIconStyles
 } from './styles/MobilePane.styles';
 
 /**
@@ -28,17 +29,28 @@ type TabHeaderProps = {
  */
 export const TabHeader = (props: TabHeaderProps): JSX.Element => {
   const theme = useTheme();
+  const haveMultipleTabs = props.onChatButtonClicked && props.onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
-    return concatStyleSets(mobilePaneButtonStyles, {
-      rootChecked: {
-        borderBottom: `0.125rem solid ${theme.palette.themePrimary}`
+    return concatStyleSets(
+      mobilePaneButtonStyles,
+      {
+        root: {
+          width: '100%'
+        },
+        label: {
+          fontSize: theme.fonts.medium.fontSize,
+          fontWeight: theme.fonts.medium.fontWeight
+        }
       },
-      label: {
-        fontSize: theme.fonts.medium.fontSize,
-        fontWeight: theme.fonts.medium.fontWeight
-      }
-    });
-  }, [theme]);
+      haveMultipleTabs
+        ? {
+            rootChecked: {
+              borderBottom: `0.125rem solid ${theme.palette.themePrimary}`
+            }
+          }
+        : {}
+    );
+  }, [theme, haveMultipleTabs]);
   const strings = useCallWithChatCompositeStrings();
 
   return (
@@ -48,24 +60,33 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <ChevronLeftIconTrampoline />}
       ></DefaultButton>
-      {props.onChatButtonClicked && (
-        <DefaultButton
-          onClick={props.onChatButtonClicked}
-          styles={mobilePaneButtonStylesThemed}
-          checked={props.activeTab === 'chat'}
-        >
-          {strings.chatButtonLabel}
-        </DefaultButton>
-      )}
-      {props.onPeopleButtonClicked && (
-        <DefaultButton
-          onClick={props.onPeopleButtonClicked}
-          styles={mobilePaneButtonStylesThemed}
-          checked={props.activeTab === 'people'}
-        >
-          {strings.peopleButtonLabel}
-        </DefaultButton>
-      )}
+      <Stack.Item grow>
+        {props.onChatButtonClicked && (
+          <DefaultButton
+            onClick={props.onChatButtonClicked}
+            styles={mobilePaneButtonStylesThemed}
+            checked={props.activeTab === 'chat'}
+          >
+            {strings.chatButtonLabel}
+          </DefaultButton>
+        )}
+      </Stack.Item>
+      <Stack.Item grow>
+        {props.onPeopleButtonClicked && (
+          <DefaultButton
+            onClick={props.onPeopleButtonClicked}
+            styles={mobilePaneButtonStylesThemed}
+            checked={props.activeTab === 'people'}
+          >
+            {strings.peopleButtonLabel}
+          </DefaultButton>
+        )}
+      </Stack.Item>
+      {/* Hidden icon to take the same space as the actual back button on the left. */}
+      <DefaultButton
+        styles={mobilePaneHiddenIconStyles}
+        onRenderIcon={() => <ChevronLeftIconTrampoline />}
+      ></DefaultButton>
     </Stack>
   );
 };
