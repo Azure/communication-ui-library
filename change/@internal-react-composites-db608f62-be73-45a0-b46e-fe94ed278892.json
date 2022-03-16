@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix for file upload button and sendbox errors",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
