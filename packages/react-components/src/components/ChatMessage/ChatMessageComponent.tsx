@@ -19,6 +19,10 @@ type ChatMessageComponentProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
   /**
+   * Whether the status indicator for each message is displayed or not.
+   */
+  showMessageStatus?: boolean;
+  /**
    * Inline the accept and reject edit buttons when editing a message.
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
