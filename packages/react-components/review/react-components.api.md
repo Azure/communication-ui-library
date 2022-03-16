@@ -34,7 +34,7 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
@@ -901,6 +901,12 @@ export interface ScreenShareButtonStrings {
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
+
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
 
 // @public
 export interface SendBoxProps {

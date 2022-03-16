@@ -21,7 +21,6 @@ import { isDarkThemed } from '../theming/themeUtils';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadCards } from './FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
