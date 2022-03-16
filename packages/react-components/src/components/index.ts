@@ -102,3 +102,5 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
+export * from './FileCard';
+export * from './FileCardGroup';
