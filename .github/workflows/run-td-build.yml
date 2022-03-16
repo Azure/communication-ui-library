@@ -1,4 +1,4 @@
-name: Run Touchdown build and commit changes (if not main)
+name: Send strings for translation, and optionally commit back current translations
 
 on:
   # Runs workflow on commits to important branches
