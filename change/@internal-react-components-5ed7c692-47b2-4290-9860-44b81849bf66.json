@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Bugfix for file upload button and sendbox errors",
+  "comment": "Bugfix for inconsistent fileupload sendbox errors",
   "packageName": "@internal/react-components",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
