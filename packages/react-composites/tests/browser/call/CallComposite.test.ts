@@ -111,7 +111,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
       // we need to dismiss any tool tips if there are any so we press the keyboard.
-      await page.keyboard.down('Escape');
+      await page.locator('[aria-describedby="microphoneButtonLabel-tooltip"]');
     }
 
     await loadCallPageWithParticipantVideos(pages);
