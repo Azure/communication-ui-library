@@ -75,7 +75,7 @@ export default (): JSX.Element => {
                 }
               }}
               errorHandler={() => {
-                // setPage('error');
+                setPage('error');
               }}
             />
           );
