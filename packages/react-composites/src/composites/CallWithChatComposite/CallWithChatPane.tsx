@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IStackStyles, IStackTokens, Stack } from '@fluentui/react';
+import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
@@ -8,14 +8,13 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import {
-  getPipStyles,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
 import { SidePaneHeader } from './SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ModalLocalAndRemotePIP } from './ModalLocalAndRemotePIP';
+import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from './PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
@@ -150,3 +149,18 @@ const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100
 const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
+
+/**
+ * @private
+ */
+const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
+  modal: {
+    main: {
+      borderRadius: theme.effects.roundedCorner4,
+      boxShadow: theme.effects.elevation8,
+      // Above the message thread / people pane.
+      zIndex: 2,
+      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
+    }
+  }
+});

@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, ITheme } from '@fluentui/react';
-import { ModalLocalAndRemotePIPStyles } from '../../CallWithChatComposite/ModalLocalAndRemotePIP';
+import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -65,21 +64,6 @@ export const scrollableContainerContents: IStackItemStyles = {
     position: 'relative'
   }
 };
-
-/**
- * @private
- */
-export const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
-  modal: {
-    main: {
-      borderRadius: theme.effects.roundedCorner4,
-      boxShadow: theme.effects.elevation8,
-      // Above the message thread / people pane.
-      zIndex: 2,
-      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
-    }
-  }
-});
 
 /**
  * @private
