@@ -61,7 +61,7 @@ describe('registerFileUploads()', () => {
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.fileUploads?.[fileUploads[0].id]) {
-          draft.fileUploads[fileUploads[0].id].errorMessage = 'Sample Error Message';
+          draft.fileUploads[fileUploads[0].id].error = { message: 'Sample Error Message', timestamp: Date.now() };
         }
       })
     );
