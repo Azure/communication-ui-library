@@ -36,7 +36,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
     <_FileCardGroup>
       {files &&
         files
-          .filter((file) => !file.errorMessage)
+          .filter((file) => !file.error)
           .map((file) => (
             <_FileCard
               fileName={file.filename}

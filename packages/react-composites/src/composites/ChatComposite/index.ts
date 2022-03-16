@@ -37,6 +37,7 @@ export type {
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
+  FileUploadError,
   ObservableFileUpload,
   UploadCompleteListener,
   UploadFailedListener,
