@@ -19,6 +19,7 @@ import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import {
+  copyLinkButtonStackStyles,
   copyLinkButtonContainerStyles,
   copyLinkButtonStyles,
   linkIconStyles,
@@ -130,12 +131,14 @@ export const PeoplePaneContent = (props: {
   return (
     <Stack tokens={peoplePaneContainerTokens}>
       {inviteLink && (
-        <DefaultButton
-          text={strings.copyInviteLinkButtonLabel}
-          onRenderIcon={() => <LinkIconTrampoline />}
-          onClick={() => copy(inviteLink)}
-          styles={copyLinkButtonStylesThemed}
-        />
+        <Stack styles={copyLinkButtonStackStyles}>
+          <DefaultButton
+            text={strings.copyInviteLinkButtonLabel}
+            onRenderIcon={() => <LinkIconTrampoline />}
+            onClick={() => copy(inviteLink)}
+            styles={copyLinkButtonStylesThemed}
+          />
+        </Stack>
       )}
       {participantList}
     </Stack>

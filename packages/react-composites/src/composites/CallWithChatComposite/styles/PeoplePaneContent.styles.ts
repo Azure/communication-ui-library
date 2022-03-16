@@ -34,6 +34,11 @@ export const copyLinkButtonContainerStyles: IStackStyles = { root: { width: '100
 /**
  * @private
  */
+export const copyLinkButtonStackStyles: IStackStyles = { root: { marginLeft: '0.5rem', marginRight: '0.5rem' } };
+
+/**
+ * @private
+ */
 export const copyLinkButtonStyles: IButtonStyles = {
   root: {
     height: '2.5rem',
