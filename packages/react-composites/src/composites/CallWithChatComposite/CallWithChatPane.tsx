@@ -8,6 +8,7 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import {
+  getPipStyles,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
@@ -87,18 +88,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
-  const pipStyles: ModalLocalAndRemotePIPStyles = useMemo(
-    () => ({
-      modal: {
-        main: {
-          borderRadius: theme.effects.roundedCorner4,
-          boxShadow: theme.effects.elevation8,
-          ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
-        }
-      }
-    }),
-    [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
-  );
+  const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const dataUiId =
     props.activePane === 'chat'

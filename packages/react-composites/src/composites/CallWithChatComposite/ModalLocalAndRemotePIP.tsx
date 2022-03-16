@@ -98,7 +98,6 @@ const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
     minWidth: 'min-content',
     minHeight: 'min-content',
     position: 'absolute',
-    zIndex: 3, // set the z-index to keep the PIPIP above the other items in the chat and people panes.
     overflow: 'hidden',
     // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
     pointerEvents: 'auto',
