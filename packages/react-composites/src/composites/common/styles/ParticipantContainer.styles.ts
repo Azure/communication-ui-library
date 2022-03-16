@@ -66,6 +66,9 @@ export const scrollableContainerContents: IStackItemStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
   modal: {
     main: {
