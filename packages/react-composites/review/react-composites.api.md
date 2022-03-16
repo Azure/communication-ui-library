@@ -911,6 +911,12 @@ export interface FileUploadAdapter {
     registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
+// @beta
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
+
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
     off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
@@ -934,7 +940,7 @@ export interface FileUploadManager {
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
