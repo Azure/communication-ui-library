@@ -121,6 +121,6 @@ export const participantListStyle = mergeStyles({
  */
 export const participantListItemStyle: ParticipantListItemStyles = {
   root: {
-    margin: '0.5rem'
+    padding: '0.5rem'
   }
 };

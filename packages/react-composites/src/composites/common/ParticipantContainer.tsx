@@ -65,7 +65,7 @@ export const ParticipantListWithHeading = (props: {
       <FocusZone className={participantListStyle}>
         <ParticipantList
           {...participantListProps}
-          styles={props.isMobile ? participantListItemStyle : {}}
+          styles={props.isMobile ? participantListItemStyle : undefined}
           onRenderAvatar={(userId, options) => (
             <AvatarPersona
               data-ui-id="chat-composite-participant-custom-avatar"

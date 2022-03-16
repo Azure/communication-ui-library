@@ -11,7 +11,7 @@ export const participantItemContainerStyle = mergeStyles({
   paddingBottom: '0.25rem',
   display: 'flex',
   maxWidth: '100%',
-  minWidth: '12rem',
+  minWidth: '10rem',
   cursor: 'pointer',
   alignItems: 'center'
 });
