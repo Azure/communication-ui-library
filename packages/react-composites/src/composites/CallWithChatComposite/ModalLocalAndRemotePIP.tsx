@@ -98,7 +98,6 @@ const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
     minWidth: 'min-content',
     minHeight: 'min-content',
     position: 'absolute',
-    zIndex: 1,
     overflow: 'hidden',
     // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
     pointerEvents: 'auto',
