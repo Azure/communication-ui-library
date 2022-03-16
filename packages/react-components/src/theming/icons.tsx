@@ -3,6 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import {
+  ArrowClockwise16Regular,
   CallEnd20Filled,
   Checkmark20Regular,
   CheckmarkCircle16Regular,
@@ -91,6 +92,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
   MessageRemove: <Delete20Regular />,
+  MessageResend: <ArrowClockwise16Regular />,
   MessageSeen: <EyeShow16Regular />,
   MessageSending: <Circle16Regular />,
   OptionsCamera: <Video20Regular />,

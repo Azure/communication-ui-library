@@ -66,7 +66,13 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
  * @private
  */
 export const scrollableContainerContents: IStackItemStyles = {
-  root: { flexGrow: '1', flexBasis: '0', maxWidth: '100%' }
+  root: {
+    flexGrow: '1',
+    flexBasis: '0',
+    maxWidth: '100%',
+    // Create a new stacking context so that `pipStyles` can set zIndex above the container.
+    position: 'relative'
+  }
 };
 
 /**

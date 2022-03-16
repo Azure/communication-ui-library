@@ -302,6 +302,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageEdit: JSX.Element;
     MessageFailed: JSX.Element;
     MessageRemove: JSX.Element;
+    MessageResend: JSX.Element;
     MessageSeen: JSX.Element;
     MessageSending: JSX.Element;
     OptionsCamera: JSX.Element;
@@ -460,6 +461,27 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @internal
+export const _FileCard: (props: _FileCardProps) => JSX.Element;
+
+// @internal
+export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
+
+// @internal
+export interface _FileCardGroupProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal
+export interface _FileCardProps {
+    actionHandler?: () => void;
+    actionIcon?: JSX.Element;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -577,6 +599,7 @@ export type MessageProps = {
     disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -629,6 +652,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -650,6 +674,7 @@ export interface MessageThreadStrings {
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
+    resendMessage?: string;
     saturday: string;
     sunday: string;
     thursday: string;

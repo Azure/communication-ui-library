@@ -861,6 +861,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    MessageResend: JSX.Element;
 };
 
 // @public
@@ -910,6 +911,12 @@ export interface FileUploadAdapter {
     registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
 }
 
+// @beta
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
+
 // @beta (undocumented)
 export interface FileUploadEventEmitter {
     off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
@@ -933,7 +940,7 @@ export interface FileUploadManager {
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
