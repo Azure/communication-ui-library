@@ -110,8 +110,8 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
       await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
-      // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
-      await page.mouse.move(0, 0);
+      // we need to dismiss any tool tips if there are any so we press the keyboard.
+      await page.keyboard.down('Escape');
     }
 
     await loadCallPageWithParticipantVideos(pages);
