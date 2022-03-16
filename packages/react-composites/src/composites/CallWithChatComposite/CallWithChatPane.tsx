@@ -15,7 +15,7 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { SidePaneHeader } from './SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
+import { ModalLocalAndRemotePIP } from './ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from './PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
