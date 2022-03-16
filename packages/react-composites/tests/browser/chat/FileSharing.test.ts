@@ -62,3 +62,88 @@ test.describe('Filesharing SendBox', async () => {
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-filecards.png');
   });
 });
+
+test.describe('Filesharing ProgressBar', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
+  });
+
+  test('is visible if progress is between 0 and 1', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            progress: 0.5
+          },
+          {
+            name: 'SampleXlsLoooongName.xlsx',
+            extension: 'xslx',
+            url: 'https://sample.com/SampleXls.xlsx',
+            progress: 0.8
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-progress-bar-visible.png');
+  });
+
+  test('is not visible if progress is 0 or less than 0', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            progress: 0
+          },
+          {
+            name: 'SampleXlsLoooongName.xlsx',
+            extension: 'xslx',
+            url: 'https://sample.com/SampleXls.xlsx',
+            progress: -1
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
+  });
+
+  test('is not visible if progress is 1 or greater than 0', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            progress: 1
+          },
+          {
+            name: 'SampleXlsLoooongName.xlsx',
+            extension: 'xslx',
+            url: 'https://sample.com/SampleXls.xlsx',
+            progress: 10
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot(
+      'filesharing-progress-bar-not-visible-progress-greater-than-one.png'
+    );
+  });
+});
