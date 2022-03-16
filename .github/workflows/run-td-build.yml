@@ -7,7 +7,6 @@ on:
     branches:
       - main
       - release/**
-  # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
     inputs:
       commit:
@@ -35,4 +34,4 @@ jobs:
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
           # Only commit updated files back when explicitly requested.
-          azure-pipeline-variables: '{"commit": ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit }} }'
+          azure-pipeline-variables: '{"commit": ${{ github.event_name == "workflow_dispatch" && github.event.inputs.commit }} }'
