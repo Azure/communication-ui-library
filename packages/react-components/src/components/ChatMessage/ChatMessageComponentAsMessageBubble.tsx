@@ -23,8 +23,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
   disableEditing?: boolean;
   onEditClick: () => void;
   onRemoveClick?: () => void;
+  onResendClick?: () => void;
   strings: MessageThreadStrings;
   userId: string;
+  messageStatus?: string;
   /**
    * Whether the status indicator for each message is displayed or not.
    */
@@ -50,6 +52,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
   const {
     message,
     onRemoveClick,
+    onResendClick,
     disableEditing,
     showDate,
     messageContainerStyle,
@@ -57,7 +60,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     onEditClick,
     remoteParticipantsCount = 0,
     onRenderAvatar,
-    showMessageStatus
+    showMessageStatus,
+    messageStatus
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -138,8 +142,10 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onDismiss={onActionFlyoutDismiss}
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
+          onResendClick={onResendClick}
           strings={strings}
           messageReadBy={message.readBy ?? []}
+          messageStatus={messageStatus ?? 'failed'}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}
           showMessageStatus={showMessageStatus}
