@@ -56,7 +56,7 @@ export const ParticipantListWithHeading = (props: {
         fontSize: theme.fonts.smallPlus.fontSize
       }
     }),
-    [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize]
+    [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
   );
 
   return (
