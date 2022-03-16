@@ -13,7 +13,7 @@ export const chatScreenContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
   minHeight: '20rem',
-  minWidth: '19.5rem'
+  minWidth: '17.5rem'
 });
 
 /**

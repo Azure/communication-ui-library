@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
-import { ParticipantListItemStyles } from '@internal/react-components';
+import { ParticipantListStyles } from '@internal/react-components';
 
 /**
  * @private
@@ -110,7 +110,7 @@ export const participantListStack = mergeStyles({
 /**
  * @private
  */
-export const participantListStyle = mergeStyles({
+export const participantListContainerStyle = mergeStyles({
   height: '100%',
   overflowY: 'auto',
   overflowX: 'hidden'
@@ -119,8 +119,23 @@ export const participantListStyle = mergeStyles({
 /**
  * @private
  */
-export const participantListItemStyle: ParticipantListItemStyles = {
-  root: {
-    padding: '0.5rem'
+export const participantListStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem'
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const participantListMobileStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem 1rem'
+    }
   }
 };

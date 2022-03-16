@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 import React, { useMemo } from 'react';
 import {
-  participantListItemStyle,
+  participantListContainerStyle,
+  participantListMobileStyle,
   participantListStack,
   participantListStyle,
   participantListWrapper
@@ -62,10 +63,10 @@ export const ParticipantListWithHeading = (props: {
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
-      <FocusZone className={participantListStyle}>
+      <FocusZone className={participantListContainerStyle}>
         <ParticipantList
           {...participantListProps}
-          styles={props.isMobile ? participantListItemStyle : undefined}
+          styles={props.isMobile ? participantListMobileStyle : participantListStyle}
           onRenderAvatar={(userId, options) => (
             <AvatarPersona
               data-ui-id="chat-composite-participant-custom-avatar"
