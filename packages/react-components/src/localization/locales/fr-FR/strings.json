@@ -42,7 +42,8 @@
     "tooltipOffContent": "Activer la caméra",
     "tooltipVideoLoadingContent": "Chargement de la vidéo",
     "cameraMenuTitle": "Caméra",
-    "cameraMenuTooltip": "Choisissez l'appareil photo"
+    "cameraMenuTooltip": "Choisissez l'appareil photo",
+    "cameraButtonSplitRoleDescription": "Bouton partagé"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Microphone",
     "microphoneMenuTooltip": "Choisissez le micro",
     "speakerMenuTitle": "Haut-parleur",
-    "speakerMenuTooltip": "Choisissez le haut-parleur"
+    "speakerMenuTooltip": "Choisissez le haut-parleur",
+    "microphoneButtonSplitRoleDescription": "Bouton partagé"
   },
   "devicesButton": {
     "label": "Appareils",

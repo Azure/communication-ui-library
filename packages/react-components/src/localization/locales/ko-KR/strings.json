@@ -42,7 +42,8 @@
     "tooltipOffContent": "카메라 켜기",
     "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다.",
     "cameraMenuTitle": "카메라",
-    "cameraMenuTooltip": "카메라 선택"
+    "cameraMenuTooltip": "카메라 선택",
+    "cameraButtonSplitRoleDescription": "분할 단추"
   },
   "microphoneButton": {
     "onLabel": "음소거",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "마이크",
     "microphoneMenuTooltip": "마이크 선택",
     "speakerMenuTitle": "발언자",
-    "speakerMenuTooltip": "스피커 선택"
+    "speakerMenuTooltip": "스피커 선택",
+    "microphoneButtonSplitRoleDescription": "분할 단추"
   },
   "devicesButton": {
     "label": "장치",

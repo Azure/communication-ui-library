@@ -42,7 +42,8 @@
     "tooltipOffContent": "Camera inschakelen",
     "tooltipVideoLoadingContent": "Video wordt geladen",
     "cameraMenuTitle": "Camera",
-    "cameraMenuTooltip": "Camera kiezen"
+    "cameraMenuTooltip": "Camera kiezen",
+    "cameraButtonSplitRoleDescription": "Knop Splitsen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Microfoon",
     "microphoneMenuTooltip": "Microfoon kiezen",
     "speakerMenuTitle": "Luidspreker",
-    "speakerMenuTooltip": "Luidspreker kiezen"
+    "speakerMenuTooltip": "Luidspreker kiezen",
+    "microphoneButtonSplitRoleDescription": "Knop Splitsen"
   },
   "devicesButton": {
     "label": "Apparaten",

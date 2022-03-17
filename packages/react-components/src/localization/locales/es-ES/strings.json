@@ -42,7 +42,8 @@
     "tooltipOffContent": "Activar la cámara",
     "tooltipVideoLoadingContent": "El vídeo se está cargando",
     "cameraMenuTitle": "Cámara",
-    "cameraMenuTooltip": "Elegir cámara"
+    "cameraMenuTooltip": "Elegir cámara",
+    "cameraButtonSplitRoleDescription": "Botón de expansión"
   },
   "microphoneButton": {
     "onLabel": "Silenciar",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Micrófono",
     "microphoneMenuTooltip": "Elegir micrófono",
     "speakerMenuTitle": "Altavoz",
-    "speakerMenuTooltip": "Elegir altavoz"
+    "speakerMenuTooltip": "Elegir altavoz",
+    "microphoneButtonSplitRoleDescription": "Botón de expansión"
   },
   "devicesButton": {
     "label": "Dispositivos",
