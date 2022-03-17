@@ -29,9 +29,11 @@ export interface ChatMessageActionFlyoutProps {
   strings: MessageThreadStrings;
   onEditClick?: () => void;
   onRemoveClick?: () => void;
+  onResendClick?: () => void;
   onDismiss: () => void;
   messageReadBy?: { id: string; name: string }[];
   remoteParticipantsCount?: number;
+  messageStatus?: string;
   /**
    * Whether the status indicator for each message is displayed or not.
    */
@@ -108,7 +110,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
       props.showMessageStatus &&
-      props.strings.messageReadCount
+      props.strings.messageReadCount &&
+      props.messageStatus !== 'failed'
     ) {
       items.push({
         key: 'Read Count',
@@ -148,6 +151,34 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         disabled: messageReadByCount <= 0
       });
+    } else if (props.messageStatus === 'failed' && props.strings.resendMessage) {
+      items.push({
+        key: 'Resend',
+        text: props.strings.resendMessage,
+        itemProps: {
+          styles: concatStyleSets(
+            {
+              linkContent: {
+                color: theme.palette.neutralPrimary
+              },
+              root: {
+                borderTop: `1px solid ${theme.palette.neutralLighter}`
+              }
+            },
+            props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+          )
+        },
+        calloutProps: preventUnwantedDismissProps,
+        iconProps: {
+          iconName: 'MessageResend',
+          styles: {
+            root: {
+              color: theme.palette.themeDarkAlt
+            }
+          }
+        },
+        onClick: props.onResendClick
+      });
     }
 
     return items;
@@ -155,9 +186,12 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     props.strings.editMessage,
     props.strings.removeMessage,
     props.strings.messageReadCount,
+    props.strings.resendMessage,
+    props.messageStatus,
     props.increaseFlyoutItemSize,
     props.onEditClick,
     props.onRemoveClick,
+    props.onResendClick,
     props.remoteParticipantsCount,
     props.showMessageStatus,
     messageReadByCount,

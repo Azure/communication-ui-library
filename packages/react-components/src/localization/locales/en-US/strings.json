@@ -95,6 +95,7 @@
     "participantLeft": "left the chat.",
     "editMessage": "Edit",
     "removeMessage": "Delete",
+    "resendMessage": "Try sending again",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",

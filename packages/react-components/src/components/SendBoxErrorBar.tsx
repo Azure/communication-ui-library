@@ -5,11 +5,24 @@ import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
 
 /**
+ * @beta
+ * Error to be displayed to the user in an error bar above sendbox.
+ */
+export interface SendBoxErrorBarError {
+  /** Error Message to be displayed */
+  message: string;
+  /**
+   * Unix Timestamp. Preferred generation using `Date.now()`
+   */
+  timestamp: number;
+}
+
+/**
  * @private
  */
 export interface SendBoxErrorBarProps {
-  /** Error message to render */
-  message?: string;
+  /** Error to render */
+  error?: SendBoxErrorBarError;
   /**
    * Automatically dismisses the error bar after the specified delay in ms.
    * Example: `10 * 1000` would be 10 seconds
@@ -25,18 +38,18 @@ export interface SendBoxErrorBarProps {
  * @private
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
-  const { message, dismissAfterMs, onDismiss } = props;
-  const [errorMessage, setErrorMessage] = React.useState(message);
+  const { error, dismissAfterMs, onDismiss } = props;
+  const [errorMessage, setErrorMessage] = React.useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const timeoutRef = React.useRef<any>();
 
   React.useEffect(() => {
-    setErrorMessage(message);
-  }, [message]);
+    setErrorMessage(error?.message);
+  }, [error]);
 
   useEffect(() => {
-    if (dismissAfterMs !== undefined) {
+    if (error && dismissAfterMs !== undefined) {
       timeoutRef.current = setTimeout(() => {
         setErrorMessage(undefined);
         onDismiss && onDismiss();
@@ -45,7 +58,7 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
     return () => {
       timeoutRef.current && clearTimeout(timeoutRef.current);
     };
-  }, [dismissAfterMs, onDismiss, message]);
+  }, [dismissAfterMs, onDismiss, error]);
 
   if (errorMessage) {
     return (
