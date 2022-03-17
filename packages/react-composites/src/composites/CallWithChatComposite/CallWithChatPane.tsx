@@ -32,8 +32,8 @@ export const CallWithChatPane = (props: {
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  onChatButtonClicked: () => void;
-  onPeopleButtonClicked: () => void;
+  onChatButtonClicked?: () => void;
+  onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
   activePane: CallWithChatPaneOption;
   mobileView?: boolean;
