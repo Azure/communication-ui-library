@@ -190,7 +190,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onCancelFileUpload={adapter.cancelFileUpload}
             />
 
-            {props.fileSharing?.uploadHandler && (
+            {fileSharing?.uploadHandler && (
               <FileUploadButton
                 accept={fileSharing?.accept}
                 multiple={fileSharing?.multiple}
