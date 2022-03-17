@@ -74,7 +74,8 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   const fileNameTextClassName = mergeStyles({
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   });
 
   const actionIconClassName = mergeStyles({
