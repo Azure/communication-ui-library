@@ -244,8 +244,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             chatAdapter={chatProps.adapter}
             callAdapter={callAdapter}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClicked={selectChat}
-            onPeopleButtonClicked={selectPeople}
+            onChatButtonClicked={showShowChatTabHeaderButton(props.callControls) ? selectChat : undefined}
+            onPeopleButtonClicked={showShowPeopleTabHeaderButton(props.callControls) ? selectPeople : undefined}
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             activePane={activePane}
@@ -314,3 +314,23 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
   page === 'call' && callStatus === 'Connected';
+
+const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.chatButton !== false;
+};
+
+const showShowPeopleTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.peopleButton !== false;
+};
