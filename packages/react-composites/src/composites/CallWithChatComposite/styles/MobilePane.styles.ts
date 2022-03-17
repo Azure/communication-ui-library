@@ -30,6 +30,13 @@ export const mobilePaneBackButtonStyles: IButtonStyles = {
 /**
  * @private
  */
+export const mobilePaneHiddenIconStyles: IButtonStyles = concatStyleSets(mobilePaneBackButtonStyles, {
+  root: { visibility: 'hidden' }
+});
+
+/**
+ * @private
+ */
 export const mobilePaneButtonStyles: IButtonStyles = {
   root: {
     border: 'none',
