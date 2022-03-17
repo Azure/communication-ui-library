@@ -155,7 +155,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await chatTestSetup({ pages, users, serverUrl });
   });
 
-  test('shows file too big error', async ({ serverUrl, users, page }) => {
+  test('shows file upload error', async ({ serverUrl, users, page }) => {
     await page.goto(
       buildUrl(serverUrl, users[0], {
         useFileSharing: 'true',
@@ -171,24 +171,6 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-errorbar-file-too-big.png');
-  });
-  test('shows file upload failed error', async ({ serverUrl, users, page }) => {
-    await page.goto(
-      buildUrl(serverUrl, users[0], {
-        useFileSharing: 'true',
-        uploadedFiles: JSON.stringify([
-          {
-            name: 'router-settings.docx',
-            extension: 'docx',
-            url: 'https://sample.com/router-settings.docx',
-            error: 'There was a problem uploading “router-settings.docx” Try again.'
-          }
-        ])
-      })
-    );
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-errorbar-file-upload-failed.png');
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
   });
 });
