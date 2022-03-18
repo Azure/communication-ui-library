@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "bugfix: Track callId changes for in-flight video render operations",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
