@@ -186,6 +186,7 @@ export class InternalCallContext {
 
   private latestCallId(callId: string): string {
     let latest = callId;
+    /* eslint no-constant-condition: ["error", { "checkLoops": false }] */
     while (true) {
       const newer = this._callIdHistory.get(latest);
       if (newer === undefined) {
