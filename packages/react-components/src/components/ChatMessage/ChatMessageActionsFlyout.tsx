@@ -147,7 +147,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuIconStyleSet
+          styles: menuIconStyleSet,
+          id: 'chat-composite-message-contextual-menu-read-info'
         },
         disabled: messageReadByCount <= 0
       });
@@ -205,6 +206,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
+      id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
       gapSpace={5 /*px*/}
       isBeakVisible={false}

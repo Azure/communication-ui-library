@@ -47,10 +47,19 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
-
     await waitForMessageSeen(page0);
+
     await stubMessageTimestamps(page0);
-    expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
+    await page0.hover(dataUiId('chat-composite-message-tooltip-icon'));
+    await page0.waitForSelector(dataUiId('chat-composite-message-tooltip'));
+    expect(await page0.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
+
+    await page0.hover(dataUiId('chat-composite-message'));
+    await page0.click(dataUiId('chat-composite-message-action-icon'));
+    await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await page0.click('[id="chat-composite-message-contextual-menu-read-info"]');
+    await page0.waitForTimeout(1000);
+    expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
   });
 
   test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
@@ -112,7 +121,7 @@ test.describe('Chat Composite custom data model', () => {
     // Participant list is a beta feature
     if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'stable') {
       await waitForFunction(page, () => {
-        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
+        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 3;
       });
     }
     await waitForSelector(page, '#custom-data-model-typing-indicator');

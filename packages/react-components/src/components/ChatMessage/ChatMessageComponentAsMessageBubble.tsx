@@ -106,6 +106,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     <>
       <div ref={messageRef}>
         <Chat.Message
+          data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
           content={
