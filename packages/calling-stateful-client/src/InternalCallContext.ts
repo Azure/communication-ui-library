@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
-import { latest } from 'immer/dist/internal';
 import { LocalVideoStreamState } from './CallClientState';
 
 /**
