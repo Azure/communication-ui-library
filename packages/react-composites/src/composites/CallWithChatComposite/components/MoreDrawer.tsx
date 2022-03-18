@@ -80,7 +80,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     [speakers, onSelectSpeaker]
   );
 
-  const options = inferCallWithChatControlOptions(props.callControls);
+  const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
@@ -135,7 +135,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  if (options !== false && isEnabled(options?.peopleButton)) {
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
       text: props.strings.peopleButtonLabel,
