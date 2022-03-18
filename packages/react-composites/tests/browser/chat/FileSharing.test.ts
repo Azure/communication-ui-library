@@ -189,7 +189,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
       })
     );
     await waitForChatCompositeToLoad(page);
-    await sendMessage(page, '');
+    await sendMessage(page, 'Hi');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
   });
