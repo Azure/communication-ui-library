@@ -276,7 +276,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <CallAdapterProvider adapter={callAdapter}>
             <Stack styles={drawerContainerStyles}>
-              <PreparedMoreDrawer onLightDismiss={closeDrawer} onPeopleButtonClicked={onMoreDrawerPeopleClicked} />
+              <PreparedMoreDrawer
+                callControls={props.callControls}
+                onLightDismiss={closeDrawer}
+                onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+              />
             </Stack>
           </CallAdapterProvider>
         </ChatAdapterProvider>
