@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { latest } from 'immer/dist/internal';
 import { LocalVideoStreamState } from './CallClientState';
 
 /**
@@ -51,7 +52,10 @@ export class InternalCallContext {
   // The key is the stream ID. We assume each stream ID to only have one owning render info
   private _unparentedRenderInfos = new Map<string, LocalRenderInfo>();
 
+  private _callIdHistory = new Map<string, string>();
+
   public setCallId(newCallId: string, oldCallId: string): void {
+    this.updateCallIdHistory(newCallId, oldCallId);
     const remoteRenderInfos = this._remoteRenderInfos.get(oldCallId);
     if (remoteRenderInfos) {
       this._remoteRenderInfos.delete(oldCallId);
@@ -70,7 +74,7 @@ export class InternalCallContext {
   }
 
   public getRemoteRenderInfoForCall(callId: string): Map<string, Map<number, RemoteRenderInfo>> | undefined {
-    return this._remoteRenderInfos.get(callId);
+    return this._remoteRenderInfos.get(this.latestCallId(callId));
   }
 
   public getRemoteRenderInfoForParticipant(
@@ -78,7 +82,7 @@ export class InternalCallContext {
     participantKey: string,
     streamId: number
   ): RemoteRenderInfo | undefined {
-    const callRenderInfos = this._remoteRenderInfos.get(callId);
+    const callRenderInfos = this._remoteRenderInfos.get(this.latestCallId(callId));
     if (!callRenderInfos) {
       return undefined;
     }
@@ -97,10 +101,11 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    let callRenderInfos = this._remoteRenderInfos.get(callId);
+    const latestCallId = this.latestCallId(callId);
+    let callRenderInfos = this._remoteRenderInfos.get(latestCallId);
     if (!callRenderInfos) {
       callRenderInfos = new Map<string, Map<number, RemoteRenderInfo>>();
-      this._remoteRenderInfos.set(callId, callRenderInfos);
+      this._remoteRenderInfos.set(latestCallId, callRenderInfos);
     }
 
     let participantRenderInfos = callRenderInfos.get(participantKey);
@@ -113,7 +118,7 @@ export class InternalCallContext {
   }
 
   public deleteRemoteRenderInfo(callId: string, participantKey: string, streamId: number): void {
-    const callRenderInfos = this._remoteRenderInfos.get(callId);
+    const callRenderInfos = this._remoteRenderInfos.get(this.latestCallId(callId));
     if (!callRenderInfos) {
       return;
     }
@@ -132,15 +137,15 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    this._localRenderInfos.set(callId, { stream, status, renderer });
+    this._localRenderInfos.set(this.latestCallId(callId), { stream, status, renderer });
   }
 
   public getLocalRenderInfo(callId: string): LocalRenderInfo | undefined {
-    return this._localRenderInfos.get(callId);
+    return this._localRenderInfos.get(this.latestCallId(callId));
   }
 
   public deleteLocalRenderInfo(callId: string): void {
-    this._localRenderInfos.delete(callId);
+    this._localRenderInfos.delete(this.latestCallId(callId));
   }
 
   public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
@@ -164,5 +169,31 @@ export class InternalCallContext {
   public clearCallRelatedState(): void {
     this._remoteRenderInfos.clear();
     this._localRenderInfos.clear();
+  }
+
+  private updateCallIdHistory(newCallId: string, oldCallId: string): void {
+    // callId for a call can fluctuate between some set of values.
+    // But if a newCallId already exists, and maps to different call, we're in trouble.
+    // This can only happen if a callId is reused across two distinct calls.
+    const existing = this._callIdHistory.get(newCallId);
+    if (existing !== undefined && this.latestCallId(newCallId) !== oldCallId) {
+      console.trace(`${newCallId} alredy exists and maps to ${existing}, which is not the same as ${oldCallId}`);
+    }
+
+    // The latest callId never maps to another callId.
+    this._callIdHistory.delete(newCallId);
+    this._callIdHistory.set(oldCallId, newCallId);
+  }
+
+  private latestCallId(callId: string): string {
+    let latest = callId;
+    while (true) {
+      const newer = this._callIdHistory.get(latest);
+      if (newer === undefined) {
+        break;
+      }
+      latest = newer;
+    }
+    return latest;
   }
 }
