@@ -1,20 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
  */
-export const participantItemContainerStyle = mergeStyles({
-  paddingTop: '0.25rem',
-  paddingBottom: '0.25rem',
-  display: 'flex',
-  maxWidth: '100%',
-  minWidth: '8rem',
-  cursor: 'pointer',
-  alignItems: 'center'
-});
+export const participantItemContainerStyle = (isMe: boolean | undefined): IStyle => {
+  return {
+    paddingTop: '0.25rem',
+    paddingBottom: '0.25rem',
+    display: 'flex',
+    maxWidth: '100%',
+    minWidth: '8rem',
+    cursor: isMe ? 'default' : 'pointer',
+    alignItems: 'center'
+  };
+};
 
 /**
  * @private
