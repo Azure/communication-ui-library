@@ -33,7 +33,7 @@ import { FileMetadata, FileUploadManager } from '../../ChatComposite';
  * Functionality for managing the current call with chat.
  * @public
  */
-export type CallWithChatAdapterManagement = {
+export interface CallWithChatAdapterManagement {
   // CallWithChat-specific Interface methods
   /**
    * Remove a participant from a Call.
@@ -253,22 +253,28 @@ export type CallWithChatAdapterManagement = {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-} /* @conditional-compile-remove(file-sharing) */ & {
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   clearFileUploads: () => void;
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   cancelFileUpload: (id: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadProgress: (id: string, progress: number) => void;
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-};
+}
 
 /**
  * Call and Chat events that can be subscribed to in the {@link CallWithChatAdapter}.

@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { FileUpload, FileUploadManager, FileUploadState } from '../file-sharing';
-
+import { FileUploadManager, FileUploadState, FileMetadata } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileSharingMetadata } from '../file-sharing';
+import { FileSharingMetadata, FileUpload } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */

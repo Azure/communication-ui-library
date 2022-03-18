@@ -36,6 +36,7 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata, FileUploadManager } from '../file-sharing';
 
 /**
