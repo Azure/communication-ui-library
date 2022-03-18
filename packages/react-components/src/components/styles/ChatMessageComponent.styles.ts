@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, IStyle, FontWeights, Theme, IContextualMenuItemStyles } from '@fluentui/react';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -42,6 +43,12 @@ export const chatMessageDateStyle = mergeStyles({ fontWeight: FontWeights.semibo
  */
 export const chatMessageEditedTagStyle = (theme: Theme): string =>
   mergeStyles({ fontWeight: FontWeights.semibold, color: theme.palette.neutralSecondary });
+
+/**
+ * @private
+ */
+export const chatMessageFailedTagStyle = (theme: Theme): string =>
+  mergeStyles({ fontWeight: FontWeights.light, color: isDarkThemed(theme) ? '#f1707b' : '#a80000' });
 
 /**
  * @private
