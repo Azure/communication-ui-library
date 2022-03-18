@@ -96,6 +96,7 @@
     "editMessage": "Edit",
     "removeMessage": "Delete",
     "resendMessage": "Try sending again",
+    "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
