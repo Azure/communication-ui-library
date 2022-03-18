@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix for text wrapping onto next line in file card",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
