@@ -6,7 +6,7 @@ import {
   isTestProfileStableFlavor,
   stubMessageTimestamps
 } from '../common/utils';
-import { chatTestSetup } from '../common/chatTestHelpers';
+import { chatTestSetup, sendMessage } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -145,5 +145,33 @@ test.describe('Filesharing ProgressBar', async () => {
     expect(await page.screenshot()).toMatchSnapshot(
       'filesharing-progress-bar-not-visible-progress-greater-than-one.png'
     );
+  });
+});
+
+test.describe('Filesharing SendBox Errorbar', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
+  });
+
+  test('shows file upload in progress error', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            progress: 0.5
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await sendMessage(page, '');
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
   });
 });
