@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatMessage } from '../..';
 
 /**
  * @private
@@ -17,13 +17,13 @@ import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
  * if MessageId of B is larger than message Id of A, then B is created after A
  * if the last read message is created after the message A is sent, then user should have read message A as well */
 export const getParticipantsWhoHaveReadMessage = (
-  message: ChatMessageWithStatus,
+  message: ChatMessage,
   readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } }
 ): { id: string; name: string }[] => {
   return (
     Object.entries(readReceiptForEachSender)
       // Filter to only read receipts that match the message OR the participant has read a different message after this message has been created
-      .filter(([_, readReceipt]) => readReceipt.lastReadMessage >= message.id)
+      .filter(([_, readReceipt]) => readReceipt.lastReadMessage >= message.messageId)
       // make sure the person is not removed from chat
       .filter(([_, readReceipt]) => readReceipt.name && readReceipt.name !== '')
       // Map properties to useful array

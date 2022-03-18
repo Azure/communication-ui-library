@@ -19,6 +19,7 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
+import { getParticipantsWhoHaveReadMessage } from '../utils/getParticipantsWhoHaveReadMessage';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -40,6 +41,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  readReceiptForEachSender?: { [key: string]: { lastReadMessage: string; name: string } };
   /**
    * Optional callback to override render of the avatar.
    *
@@ -65,7 +67,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     remoteParticipantsCount = 0,
     onRenderAvatar,
     showMessageStatus,
-    messageStatus
+    messageStatus,
+    readReceiptForEachSender
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -81,6 +84,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
   >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const [messageReadBy, setMessageReadBy] = useState<{ id: string; name: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
     ? undefined
@@ -90,6 +94,9 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
         forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
         onActionButtonClick: () => {
+          if (remoteParticipantsCount && remoteParticipantsCount > 1 && message && readReceiptForEachSender) {
+            setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender));
+          }
           // Open chat action flyout, and set the context menu to target the chat message action button
           setChatMessageActionFlyoutTarget(messageActionButtonRef);
         },
@@ -152,7 +159,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onRemoveClick={onRemoveClick}
           onResendClick={onResendClick}
           strings={strings}
-          messageReadBy={message.readBy ?? []}
+          messageReadBy={messageReadBy}
           messageStatus={messageStatus ?? 'failed'}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}

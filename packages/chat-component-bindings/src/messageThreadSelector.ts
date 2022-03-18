@@ -23,7 +23,6 @@ import {
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
-import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -31,9 +30,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     chatMessage: ChatMessageWithStatus,
     userId: string,
     isSeen: boolean,
-    isLargeGroup: boolean,
-    readNumber: number,
-    readBy: { id: string; name: string }[]
+    isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -41,7 +38,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, readBy);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
@@ -52,9 +49,7 @@ const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
-  isLargeGroup: boolean,
-  readNumber: number,
-  readBy: { id: string; name: string }[]
+  isLargeGroup: boolean
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -70,8 +65,6 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    readNumber,
-    readBy,
     metadata: message.metadata
   };
 };
@@ -171,19 +164,12 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) => {
-          const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
-            message,
-            readReceiptForEachSender
-          );
-
           return memoizedFn(
             message.id ?? message.clientMessageId,
             message,
             userId,
             message.createdOn <= latestReadTime,
-            isLargeGroup,
-            readBy.length,
-            readBy
+            isLargeGroup
           );
         })
     );
@@ -193,7 +179,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       userId,
       showMessageStatus: !isLargeGroup,
       messages: convertedMessages,
-      messageThreadParticipantCount
+      messageThreadParticipantCount,
+      readReceiptForEachSender
     };
   }
 );

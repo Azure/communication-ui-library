@@ -3,14 +3,15 @@
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStyles } from '../types';
+import { BaseCustomStyles, ChatMessage } from '../types';
 import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle
 } from './styles/MessageStatusIndicator.styles';
+import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 
 /**
  * Strings of {@link MessageStatusIndicator} that can be overridden.
@@ -44,6 +45,7 @@ export interface MessageStatusIndicatorStrings {
  * @public
  */
 export interface MessageStatusIndicatorProps {
+  message?: ChatMessage;
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
   /** how many people have read the message */
@@ -62,6 +64,7 @@ export interface MessageStatusIndicatorProps {
    * Optional strings to override in component
    */
   strings?: MessageStatusIndicatorStrings;
+  readReceiptForEachSender?: { [key: string]: { lastReadMessage: string; name: string } };
 }
 
 /**
@@ -72,10 +75,12 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, messageThreadReadCount, remoteParticipantsCount } = props;
+  const { message, status, styles, remoteParticipantsCount, readReceiptForEachSender } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
+  const [isToolTipHovered, setIsToolTipHovered] = useState(false);
+  let messageThreadReadCount = 0;
 
   switch (status) {
     case 'failed':
@@ -109,15 +114,28 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         </TooltipHost>
       );
     case 'seen':
+      if (
+        remoteParticipantsCount &&
+        remoteParticipantsCount > 1 &&
+        message &&
+        readReceiptForEachSender &&
+        isToolTipHovered
+      ) {
+        const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
+          message,
+          readReceiptForEachSender
+        );
+        messageThreadReadCount = readBy.length;
+      }
+
       return (
         <TooltipHost
           content={
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
             // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
-            (messageThreadReadCount === 1 && remoteParticipantsCount === 1) ||
             messageThreadReadCount === 0 ||
-            (remoteParticipantsCount && remoteParticipantsCount <= 0) ||
+            (remoteParticipantsCount && remoteParticipantsCount <= 1) ||
             !messageThreadReadCount ||
             !remoteParticipantsCount ||
             strings.readByTooltipText === undefined
@@ -127,6 +145,9 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
                   remoteParticipantsCount: `${remoteParticipantsCount}`
                 })
           }
+          onTooltipToggle={() => {
+            setIsToolTipHovered(!isToolTipHovered);
+          }}
         >
           <Icon
             role="status"

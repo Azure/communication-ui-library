@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+
+import { ChatMessage } from '../..';
 import { getParticipantsWhoHaveReadMessage } from './getParticipantsWhoHaveReadMessage';
 
-const chatMessage = (messageID: string): ChatMessageWithStatus => ({
-  id: messageID,
-  type: 'text',
-  sequenceId: '89542038450',
-  version: 'jehkfhsdf',
-  createdOn: new Date(0),
-  status: 'delivered'
+const chatMessage = (messageID: string): ChatMessage => ({
+  messageId: messageID,
+  messageType: 'chat',
+  contentType: 'text',
+  createdOn: new Date(0)
 });
 
 const startTime = new Date('2022-01-01');
