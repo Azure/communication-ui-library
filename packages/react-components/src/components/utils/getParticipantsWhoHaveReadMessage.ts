@@ -23,8 +23,10 @@ export const getParticipantsWhoHaveReadMessage = (
   return (
     Object.entries(readReceiptForEachSender)
       // Filter to only read receipts that match the message OR the participant has read a different message after this message has been created
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, readReceipt]) => readReceipt.lastReadMessage >= message.messageId)
       // make sure the person is not removed from chat
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, readReceipt]) => readReceipt.name && readReceipt.name !== '')
       // Map properties to useful array
       .map(([id, readReceipt]) => ({ id, name: readReceipt.name }))
