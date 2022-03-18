@@ -44,7 +44,7 @@ export const chatContainer = mergeStyles({
 export const chatArea = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'hidden'
+  overflow: 'auto'
 });
 
 /**
@@ -53,7 +53,7 @@ export const chatArea = mergeStyles({
 export const chatWrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'auto'
+  overflow: 'hidden'
 });
 
 /**
