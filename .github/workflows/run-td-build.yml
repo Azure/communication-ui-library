@@ -34,4 +34,4 @@ jobs:
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
           # Only commit updated files back when explicitly requested.
-          azure-pipeline-variables: '{"commit": ${{ github.event_name == "workflow_dispatch" && github.event.inputs.commit_strings }} }'
+          azure-pipeline-variables: "{'commit': ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit_strings }} }"
