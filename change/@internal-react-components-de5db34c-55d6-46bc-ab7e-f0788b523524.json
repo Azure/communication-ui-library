@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "calculate read number and who has read the message on hover tooltip or on click action menu",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

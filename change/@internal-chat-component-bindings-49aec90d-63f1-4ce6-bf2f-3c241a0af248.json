@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "do not caculate read receipt details, pass read receipt array down to component level",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
