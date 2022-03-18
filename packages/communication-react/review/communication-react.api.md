@@ -562,40 +562,42 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 }
 
 // @public
-export interface CallWithChatAdapterManagement {
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta (undocumented)
-    cancelFileUpload: (id: string) => void;
-    // @beta (undocumented)
-    clearFileUploads: () => void;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    deleteMessage(messageId: string): Promise<void>;
-    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    fetchInitialData(): Promise<void>;
+export type CallWithChatAdapterManagement = {
+    removeParticipant(userId: string): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    stopCamera(): Promise<void>;
     mute(): Promise<void>;
+    unmute(): Promise<void>;
+    startCall(participants: string[]): Call | undefined;
+    startScreenShare(): Promise<void>;
+    stopScreenShare(): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // @beta (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
-    removeParticipant(userId: string): Promise<void>;
-    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-    sendReadReceipt(chatMessageId: string): Promise<void>;
-    sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    startCall(participants: string[]): Call | undefined;
-    startCamera(options?: VideoStreamOptions): Promise<void>;
-    startScreenShare(): Promise<void>;
-    stopCamera(): Promise<void>;
-    stopScreenShare(): Promise<void>;
-    unmute(): Promise<void>;
+    fetchInitialData(): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendTypingIndicator(): Promise<void>;
     updateMessage(messageId: string, content: string): Promise<void>;
-}
+    deleteMessage(messageId: string): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+} & {
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    clearFileUploads: () => void;
+    cancelFileUpload: (id: string) => void;
+    updateFileUploadProgress: (id: string, progress: number) => void;
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+};
 
 // @public
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
@@ -1301,9 +1303,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @beta
-export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
-
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
@@ -1638,7 +1637,15 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
 // @beta
@@ -1647,22 +1654,13 @@ export type FileUploadError = {
     timestamp: number;
 };
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    off(event: 'uploadFail', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    on(event: 'uploadFail', listener: UploadFailedListener): void;
-}
-
 // @beta
 export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    file: File;
+    file?: File;
+    id: string;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
@@ -2032,13 +2030,6 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
-}
-
-// @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    fileName: string;
-    id: string;
-    metadata?: FileMetadata;
 }
 
 // @public
@@ -2432,15 +2423,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @beta
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
-
-// @beta
-export type UploadFailedListener = (id: string, message: string) => void;
-
-// @beta
-export type UploadProgressListener = (id: string, value: number) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;

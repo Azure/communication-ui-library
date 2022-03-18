@@ -21,12 +21,7 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import {
-  FileUploadButtonWrapper as FileUploadButton,
-  FileUpload,
-  FileUploadHandler,
-  FileDownloadHandler
-} from './file-sharing';
+import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler, FileDownloadHandler } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -155,9 +150,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
 
-    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
-    /* @conditional-compile-remove(file-sharing) */
-    fileSharing?.uploadHandler && adapter.registerFileUploads(fileUploads);
+    const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 

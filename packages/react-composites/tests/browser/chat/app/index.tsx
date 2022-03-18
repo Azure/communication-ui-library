@@ -8,14 +8,8 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR,
-  createCompletedFileUpload,
-  useAzureCommunicationChatAdapter
-} from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { FileUpload } from '../../../../src/composites/ChatComposite/file-sharing';
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 
@@ -60,12 +54,10 @@ function App(): JSX.Element {
     if (adapter && uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
         if (file.progress) {
-          const fileUpload = new FileUpload(new File([], file.name));
-          adapter.registerFileUploads([fileUpload]);
-          fileUpload.notifyUploadProgressChanged(file.progress);
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadProgressChanged(file.progress);
         } else {
-          const completedFileUpload = createCompletedFileUpload(file);
-          adapter.registerFileUploads([completedFileUpload]);
+          adapter.registerCompletedFileUploads([file]);
         }
       });
     }

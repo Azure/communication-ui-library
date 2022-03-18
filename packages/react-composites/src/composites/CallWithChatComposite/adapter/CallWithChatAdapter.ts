@@ -27,13 +27,13 @@ import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../../ChatComposite';
+import { FileMetadata, FileUploadManager } from '../../ChatComposite';
 
 /**
  * Functionality for managing the current call with chat.
  * @public
  */
-export interface CallWithChatAdapterManagement {
+export type CallWithChatAdapterManagement = {
   // CallWithChat-specific Interface methods
   /**
    * Remove a participant from a Call.
@@ -253,17 +253,22 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-
-  /* @conditional-compile-remove(file-sharing) */
+} /* @conditional-compile-remove(file-sharing) */ & {
   /** @beta */
-  registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  /** @beta */
+  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
   /** @beta */
   clearFileUploads: () => void;
-  /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   cancelFileUpload: (id: string) => void;
-}
+  /** @beta */
+  updateFileUploadProgress: (id: string, progress: number) => void;
+  /** @beta */
+  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  /** @beta */
+  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+};
 
 /**
  * Call and Chat events that can be subscribed to in the {@link CallWithChatAdapter}.
