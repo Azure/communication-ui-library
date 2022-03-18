@@ -90,3 +90,13 @@ export const menuIconStyleSet = {
     width: '1.25rem'
   }
 };
+
+/**
+ * @private
+ */
+export const menuSubIconStyleSet = {
+  root: {
+    height: 'calc(100% - 10px)',
+    width: '1.25rem'
+  }
+};
