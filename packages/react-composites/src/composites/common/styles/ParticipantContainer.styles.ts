@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { ParticipantListStyles } from '@internal/react-components';
 
 /**
  * @private
@@ -39,6 +40,15 @@ export const sidePaneHeaderStyles: IStackItemStyles = {
     lineHeight: '1.25rem',
     padding: '0.25rem',
     fontWeight: '600'
+  }
+};
+
+/**
+ * @private
+ */
+export const sidePaneHeaderContainerStyles: IStackStyles = {
+  root: {
+    margin: '0 0.25rem'
   }
 };
 
@@ -106,8 +116,32 @@ export const participantListStack = mergeStyles({
 /**
  * @private
  */
-export const participantListStyle = mergeStyles({
+export const participantListContainerStyle = mergeStyles({
   height: '100%',
   overflowY: 'auto',
   overflowX: 'hidden'
 });
+
+/**
+ * @private
+ */
+export const participantListStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem'
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const participantListMobileStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem 1rem'
+    }
+  }
+};
