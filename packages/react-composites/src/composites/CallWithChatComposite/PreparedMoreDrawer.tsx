@@ -7,11 +7,13 @@ import { MoreDrawer, MoreDrawerStrings } from './components/MoreDrawer';
 import { moreDrawerSelector } from './selectors/moreDrawerSelector';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
+import { CallWithChatControlOptions } from './CallWithChatComposite';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
+  callControls?: boolean | CallWithChatControlOptions;
 }
 
 /** @private */

@@ -8,6 +8,7 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps
 } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { CallWithChatControlOptions } from '../CallWithChatComposite';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -48,8 +49,19 @@ export interface MoreDrawerDevicesMenuProps {
 export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
+  callControls?: boolean | CallWithChatControlOptions;
   strings: MoreDrawerStrings;
 }
+
+const inferCallWithChatControlOptions = (
+  callWithChatControls?: boolean | CallWithChatControlOptions
+): CallWithChatControlOptions | false => {
+  if (callWithChatControls === false) {
+    return false;
+  }
+  const options = callWithChatControls === true || callWithChatControls === undefined ? {} : callWithChatControls;
+  return options;
+};
 
 /** @private */
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
@@ -67,6 +79,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     },
     [speakers, onSelectSpeaker]
   );
+
+  const options = inferCallWithChatControlOptions(props.callControls);
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
@@ -121,15 +135,19 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  drawerMenuItems.push({
-    itemKey: 'people',
-    text: props.strings.peopleButtonLabel,
-    iconProps: { iconName: 'MoreDrawerPeople' },
-    onItemClick: props.onPeopleButtonClicked
-  });
+  if (options !== false && isEnabled(options?.peopleButton)) {
+    drawerMenuItems.push({
+      itemKey: 'people',
+      text: props.strings.peopleButtonLabel,
+      iconProps: { iconName: 'MoreDrawerPeople' },
+      onItemClick: props.onPeopleButtonClicked
+    });
+  }
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
 
 const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevice): boolean =>
   !!selectedSpeaker && speaker.id === selectedSpeaker.id;
+
+const isEnabled = (option: unknown): boolean => option !== false;
