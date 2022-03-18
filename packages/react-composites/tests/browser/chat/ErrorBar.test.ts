@@ -30,7 +30,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
-  test.only('with wrong thread ID', async ({ page, serverUrl, users }) => {
+  test('with wrong thread ID', async ({ page, serverUrl, users }) => {
     await page.goto(buildUrl(serverUrl, { ...users[0], threadId: 'INCORRECT_VALUE' }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
