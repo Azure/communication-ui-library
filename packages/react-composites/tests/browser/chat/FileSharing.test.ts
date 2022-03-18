@@ -155,6 +155,25 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await chatTestSetup({ pages, users, serverUrl });
   });
 
+  test('shows file upload error', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            error: 'File too big. Select a file under 99 MB.'
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
+  });
+
   test('shows file upload in progress error', async ({ serverUrl, users, page }) => {
     await page.goto(
       buildUrl(serverUrl, users[0], {
