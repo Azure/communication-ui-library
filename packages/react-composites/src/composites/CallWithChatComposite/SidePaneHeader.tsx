@@ -3,7 +3,7 @@
 import { CommandBarButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
+import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 
 /**
  * @private
@@ -20,7 +20,7 @@ export const SidePaneHeader = (props: { headingText: string; onClose: () => void
     [theme.palette.neutralSecondary]
   );
   return (
-    <Stack horizontal horizontalAlign="space-between">
+    <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles}>
       <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
       <CommandBarButton styles={sidePaneCloseButtonStyles} iconProps={{ iconName: 'cancel' }} onClick={props.onClose} />
     </Stack>
