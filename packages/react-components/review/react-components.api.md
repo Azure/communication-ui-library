@@ -123,13 +123,6 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
-    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -619,7 +612,16 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
+    // (undocumented)
+    message?: ChatMessage;
     messageThreadReadCount?: number;
+    // (undocumented)
+    readReceiptForEachSender?: {
+        [key: string]: {
+            lastReadMessage: string;
+            name: string;
+        };
+    };
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -647,6 +649,12 @@ export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
     messageThreadParticipantCount?: number;
+    readReceiptForEachSender?: {
+        [key: string]: {
+            lastReadMessage: string;
+            name: string;
+        };
+    };
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
