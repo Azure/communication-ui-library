@@ -110,11 +110,13 @@ export class EventSubscriber {
     threadId: string,
     actionType: 'participantAdded' | 'participantRemoved'
   ): Promise<void> => {
-    for await (const message of this.chatClient
+    const messages = this.chatClient
       .getChatThreadClient(threadId)
-      .listMessages({ startTime: new Date(Date.now() - maxSyncTimeInMs) })) {
-      if (message.type === actionType) {
-        this.chatContext.setChatMessage(threadId, { ...message, status: 'delivered' });
+      .listMessages({ startTime: new Date(Date.now() - maxSyncTimeInMs) })
+      [Symbol.asyncIterator]();
+    for (let message = await messages.next(); !message.done; message = await messages.next()) {
+      if (message.value.type === actionType) {
+        this.chatContext.setChatMessage(threadId, { ...message.value, status: 'delivered' });
       }
     }
   };
