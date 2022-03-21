@@ -174,11 +174,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
     // Fetch all participants who joined before the local user.
     try {
-      for await (const _page of this.chatThreadClient.listParticipants().byPage({
-        // Fetch 100 participants per page by default.
-        maxPageSize: 100
-        // eslint-disable-next-line curly
-      }));
+      const pagedParticipants = this.chatThreadClient
+        .listParticipants()
+        .byPage({
+          // Fetch 100 participants per page by default.
+          maxPageSize: 100
+          // eslint-disable-next-line curly
+        })
+        [Symbol.asyncIterator]();
+      while (!(await pagedParticipants.next()).done) {
+        // Simply fetch participants to sync state.
+      }
     } catch (e) {
       console.log(e);
     }
