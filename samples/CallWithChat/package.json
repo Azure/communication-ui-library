@@ -93,6 +93,7 @@
     "esbuild": "~0.14.27",
     "@esbuild-plugins/node-modules-polyfill": "~0.1.4",
     "esbuild-plugin-svg": "~0.1.0",
-    "@craftamap/esbuild-plugin-html": "~0.3.2"
+    "@craftamap/esbuild-plugin-html": "~0.3.2",
+    "@esbuild-plugins/node-globals-polyfill": "~0.1.1"
   }
 }
