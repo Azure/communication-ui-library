@@ -2,22 +2,22 @@ import { NodeModulesPolyfillPlugin as esbuildPluginNodeModulePolyfills } from '@
 import svg from 'esbuild-plugin-svg';
 import { htmlPlugin } from '@craftamap/esbuild-plugin-html';
 import { build } from 'esbuild';
+import { writeFileSync } from 'fs';
 
-build({
+const result = await build({
   bundle: true,
-  entryPoints: ['./src/index.tsx'],
+  entryPoints: ['src/index.tsx'],
   logLevel: 'error',
   metafile: true, // Needed by `htmlPlugin`.
-  minify: true,
   outdir: 'dist/esbuild/', // Needed by `htmlPlugin`.
   plugins: [
     esbuildPluginNodeModulePolyfills(),
     htmlPlugin({
       files: [
         {
-          entryPoints: ['./src/index.tsx'],
+          entryPoints: ['src/index.tsx'],
           filename: 'index.html',
-          template: `
+          htmlTemplate: `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,3 +42,5 @@ build({
   ],
   sourcemap: true
 });
+
+writeFileSync('dist/esbuild/meta.json', JSON.stringify(result.metafile, null, 2));
