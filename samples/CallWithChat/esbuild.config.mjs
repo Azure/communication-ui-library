@@ -3,10 +3,11 @@ import svg from 'esbuild-plugin-svg';
 import { build } from 'esbuild';
 
 build({
-  entryPoints: ['./src/index.tsx'],
-  outfile: 'dist/esbuild/index.js',
   bundle: true,
+  entryPoints: ['./src/index.tsx'],
+  logLevel: 'error',
+  minify: true,
+  outfile: 'dist/esbuild/index.js',
   plugins: [esbuildPluginNodeModulePolyfills(), svg()],
-  sourcemap: true,
-  logLevel: 'error'
+  sourcemap: true
 });
