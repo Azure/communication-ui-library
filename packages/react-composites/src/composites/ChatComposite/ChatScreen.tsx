@@ -161,6 +161,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 
+  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
     (userId, message) => (
       <FileDownloadCards
