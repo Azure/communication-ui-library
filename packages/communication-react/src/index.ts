@@ -198,7 +198,7 @@ export type {
   VideoTileStylesProps
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from '../../react-components/src';
+export type { ActiveFileUpload, SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 export type { LocalVideoCameraCycleButtonProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';

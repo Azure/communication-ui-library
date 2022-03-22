@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix chat unread messages badge border to always be white",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

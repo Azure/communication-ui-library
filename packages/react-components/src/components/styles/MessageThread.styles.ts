@@ -102,6 +102,14 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
 /**
  * @private
  */
+export const FailedMyChatMessageContainer: ComponentSlotStyle = {
+  ...defaultChatItemMessageContainer,
+  backgroundColor: 'rgba(168, 0, 0, 0.2)'
+};
+
+/**
+ * @private
+ */
 export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,

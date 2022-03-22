@@ -54,8 +54,17 @@ export interface FileUploadState {
   /**
    * Error message to be displayed to the user if the upload fails.
    */
-  errorMessage?: string;
+  error?: FileUploadError;
 }
+
+/**
+ * @beta
+ * Error message to be displayed to the user if the upload fails.
+ */
+export type FileUploadError = {
+  message: string;
+  timestamp: number;
+};
 
 /**
  * A wrapper object for a file that is being uploaded.

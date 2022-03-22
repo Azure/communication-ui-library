@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update azure/communication-calling dependency version to match the rest of the repo",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Switch local-camera-switcher from Beta to Public and Stable",
-  "packageName": "@internal/storybook",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

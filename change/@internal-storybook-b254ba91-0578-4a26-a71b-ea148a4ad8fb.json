@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add images of call with chat to documentation",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
