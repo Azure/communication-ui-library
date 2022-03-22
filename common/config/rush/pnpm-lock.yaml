@@ -20217,6 +20217,9 @@ packages:
       '@azure/communication-common': 1.1.0
       '@azure/communication-identity': 1.0.0
       '@babel/core': 7.16.5
+      '@craftamap/esbuild-plugin-html': 0.3.2_esbuild@0.14.27
+      '@esbuild-plugins/node-globals-polyfill': 0.1.1_esbuild@0.14.27
+      '@esbuild-plugins/node-modules-polyfill': 0.1.4_esbuild@0.14.27
       '@playwright/test': 1.17.1
       '@types/node': 14.17.9
       '@types/node-static': 0.7.7
@@ -20226,6 +20229,10 @@ packages:
       dotenv: 10.0.0
       ecstatic: 4.1.4
       env-cmd: 10.1.0
+      esbuild: 0.14.27
+      esbuild-plugin-alias: 0.2.1
+      esbuild-plugin-svg: 0.1.0
+      escape-string-regexp: 4.0.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       http: 0.0.1-security
       http-server: 0.12.3
@@ -20236,6 +20243,7 @@ packages:
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
       rimraf: 2.7.1
+      rollup-plugin-node-polyfills: 0.2.1
       typescript: 4.3.5
       uuid: 8.3.2
       webpack: 5.38.1_webpack-cli@4.7.2
@@ -20243,7 +20251,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-CR0VyACW6EuBFy3GaQoceSq+cMzT+GMymd98dHB4Zccsl8SMcxT823fFML/WVETwL8Xi/YJ1aWyDnYrU59HdOw==
+      integrity: sha512-GoSsqUKSXaEVjaUDb/eE6/idVTpOlA/jLog13wYCzVw3HLBAKRkyvueXb48Jw8NqybVtK+KIGdG8h7DaOYgiaA==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
