@@ -40,6 +40,7 @@ import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from 
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -901,6 +902,25 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const messageThreadParticipantCountRef = useRef(messageThreadParticipantCount);
+  const readReceiptForEachSenderRef = useRef(readReceiptForEachSender);
+
+  messageThreadParticipantCountRef.current = messageThreadParticipantCount;
+  readReceiptForEachSenderRef.current = readReceiptForEachSender;
+
+  const onActionButtonClickMemo = useCallback(
+    (message: ChatMessage, setMessageReadBy: (readBy: { id: string; name: string }[]) => void) => {
+      if (
+        messageThreadParticipantCountRef.current &&
+        messageThreadParticipantCountRef.current - 1 > 1 &&
+        readReceiptForEachSenderRef.current
+      ) {
+        setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSenderRef.current));
+      }
+    },
+    []
+  );
+
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -916,14 +936,23 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
-            readReceiptForEachSender={readReceiptForEachSender}
+            onActionButtonClick={onActionButtonClickMemo}
           />
         );
       }
       return <></>;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString(), isNarrow, messageThreadParticipantCount, readReceiptForEachSender, onRenderAvatar]
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      new Date().toDateString(),
+      isNarrow,
+      messageThreadParticipantCount,
+      onRenderAvatar,
+      onActionButtonClickMemo,
+      props.onRenderFileDownloads,
+      props.userId,
+      showMessageStatus
+    ]
   );
 
   const localeStrings = useLocale().strings.messageThread;
