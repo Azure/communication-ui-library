@@ -41,7 +41,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
     // test resend button in contextual menu
-    await page.hover(dataUiId('chat-composite-message'));
+    await page.click(dataUiId('chat-composite-message'));
     await page.click(dataUiId('chat-composite-message-action-icon'));
     await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
 

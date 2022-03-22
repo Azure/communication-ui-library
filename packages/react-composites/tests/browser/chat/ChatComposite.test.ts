@@ -50,12 +50,12 @@ test.describe('Chat Composite E2E Tests', () => {
     await waitForMessageSeen(page0);
 
     await stubMessageTimestamps(page0);
-    await page0.hover(dataUiId('chat-composite-message-tooltip-icon'));
+    await page0.click(dataUiId('chat-composite-message-tooltip-icon'));
     await page0.waitForSelector(dataUiId('chat-composite-message-tooltip'));
     expect(await page0.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
 
     await stubMessageTimestamps(page0);
-    await page0.hover(dataUiId('chat-composite-message'));
+    await page0.click(dataUiId('chat-composite-message'));
     await page0.click(dataUiId('chat-composite-message-action-icon'));
     await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
     await page0.click('[id="chat-composite-message-contextual-menu-read-info"]');
