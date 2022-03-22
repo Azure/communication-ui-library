@@ -4,7 +4,7 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
-import { setLogLevel } from '@azure/logger';
+import { AzureLogger, setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
@@ -32,6 +32,11 @@ import { WEB_APP_TITLE } from './utils/constants';
 
 setLogLevel('warning');
 initializeIcons();
+
+// override logging to output to console.log (default location is stderr)
+AzureLogger.log = (...args) => {
+  console.log(...args);
+};
 
 interface Credentials {
   userId: CommunicationUserIdentifier;

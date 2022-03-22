@@ -8743,6 +8743,10 @@ packages:
       - openbsd
     resolution:
       integrity: sha512-xwSje6qIZaDHXWoPpIgvL+7fC6WeubHHv18tusLYMwL+Z6bEa4Pbfs5IWDtQdHkArtfxEkIZz77944z8MgDxGw==
+  /esbuild-plugin-alias/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-jyfL/pwPqaFXyKnj8lP8iLk6Z0m099uXR45aSN8Av1XD4vhvQutxxPzgA2bTcAwQpa1zCXDcWOlhFgyP3GKqhQ==
   /esbuild-plugin-svg/0.1.0:
     dependencies:
       svgo: 2.8.0
@@ -19572,7 +19576,9 @@ packages:
       cross-env: 7.0.3
       css-loader: 4.3.0_webpack@5.38.1
       esbuild: 0.14.27
+      esbuild-plugin-alias: 0.2.1
       esbuild-plugin-svg: 0.1.0
+      escape-string-regexp: 4.0.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-config-react-app: 6.0.0_82666de81919be5d252925df007529ed
@@ -19599,6 +19605,7 @@ packages:
       reactstrap: 8.9.0_react-dom@16.13.1+react@16.14.0
       reselect: 4.0.0
       rimraf: 2.7.1
+      rollup-plugin-node-polyfills: 0.2.1
       source-map-explorer: 2.5.2
       style-loader: 2.0.0_webpack@5.38.1
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
@@ -19611,7 +19618,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-GusnjHjpc0/CKGbHpqc1Q14UkbMs+aCkdz+OGHc08p3pT5cf3CZy4Cok17J5h88gpqyGYAygzlIAOE/HclQ69g==
+      integrity: sha512-63PUptYDFslizaPt8OfYI9A6JiHHOLwCmkWPGybmFxbuiOUFoqsI25pveTy8itRppT8I3XVvHjc5Lhbbd3wFFw==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:

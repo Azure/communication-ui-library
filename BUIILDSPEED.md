@@ -5,7 +5,7 @@ This file lists some unscientific speed improvements observed during the March 2
 All measurements were done once (so no statistical guarnatees) and in codepspaces (so unstable measurement environment).
 So.... don't trust small diffs, but order of magnitude changes should still matter.
 
-# Codespaces
+# Codespaces (16 cores)
 
-- webpack `rushx build` - 109298ms
-- esbuild `rushx build` -
+- webpack `rushx build` - 1m32.490s
+- esbuild `rushx build` - 0m3.518s
