@@ -1,4 +1,4 @@
-import { NodeModulesPolyfillPlugin as esbuildPluginNodeModulePolyfills } from '@esbuild-plugins/node-modules-polyfill';
+import { NodeModulesPolyfillPlugin as esbuildPluginNodeModulePolyfills } from './node-modules-polyfill/index.js';
 import NodeGlobalsPolyfillPluginPkg from '@esbuild-plugins/node-globals-polyfill';
 import svg from 'esbuild-plugin-svg';
 import { htmlPlugin } from '@craftamap/esbuild-plugin-html';
