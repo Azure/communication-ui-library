@@ -20099,6 +20099,9 @@ packages:
       '@babel/core': 7.16.5
       '@babel/plugin-syntax-typescript': 7.16.5_@babel+core@7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
+      '@craftamap/esbuild-plugin-html': 0.3.2_esbuild@0.14.27
+      '@esbuild-plugins/node-globals-polyfill': 0.1.1_esbuild@0.14.27
+      '@esbuild-plugins/node-modules-polyfill': 0.1.4_esbuild@0.14.27
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
@@ -20140,6 +20143,10 @@ packages:
       env-cmd: 10.1.0
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
+      esbuild: 0.14.27
+      esbuild-plugin-alias: 0.2.1
+      esbuild-plugin-svg: 0.1.0
+      escape-string-regexp: 4.0.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -20177,6 +20184,7 @@ packages:
       reselect: 4.0.0
       rimraf: 2.7.1
       rollup: 2.42.4
+      rollup-plugin-node-polyfills: 0.2.1
       source-map-explorer: 2.5.2
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
@@ -20191,7 +20199,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-QuKocQ7a3yLkImFQuj94C2a0LEYFwtN7PzN45Zc+/LTdpeum+tMSu8UFuGHm41MiztSUpoPVxlViaeDw4WhHAA==
+      integrity: sha512-oMeA4zVkXPhsmZRJLpYRiaJKGOL34k07DtasO+0is8I0pYrse17Wh7LZB2SHM0QtA8fMmelLxsBV4hRbHnSw5g==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
