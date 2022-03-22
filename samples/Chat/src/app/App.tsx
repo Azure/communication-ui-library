@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { setLogLevel } from '@azure/logger';
+import { AzureLogger, setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
@@ -14,6 +14,11 @@ import { getBuildTime, getChatSDKVersion, getCommnicationReactSDKVersion } from 
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 setLogLevel('warning');
+
+// override logging to output to console.log (default location is stderr)
+AzureLogger.log = (...args) => {
+  console.log(...args);
+};
 
 console.info(
   `Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()} and @azure/communication-react : ${getCommnicationReactSDKVersion()}`
