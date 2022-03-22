@@ -39,8 +39,10 @@ export const UseSelectorExample = (): JSX.Element => {
   // State in stateful client only stores the history of previous function call results
   useEffect(() => {
     (async () => {
-      // eslint-disable-next-line curly
-      for await (const _ of chatThreadClient.listMessages());
+      const messages = chatThreadClient.listMessages()[Symbol.asyncIterator]();
+      for (let message = await messages.next(); !message.done; message = await messages.next()) {
+        // Simply fetch all messages
+      }
       chatThreadClient.getProperties();
     })();
   }, [chatThreadClient]);
