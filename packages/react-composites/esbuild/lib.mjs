@@ -1,5 +1,6 @@
 import { NodeModulesPolyfillPlugin as esbuildPluginNodeModulePolyfills } from './node-modules-polyfill/index.js';
 import NodeGlobalsPolyfillPluginPkg from '@esbuild-plugins/node-globals-polyfill';
+import globCopy from 'esbuild-plugin-globcopy';
 import svg from 'esbuild-plugin-svg';
 import alias from 'esbuild-plugin-alias';
 import { htmlPlugin } from '@craftamap/esbuild-plugin-html';
@@ -43,6 +44,9 @@ const esbuildOptions = (testSubDir) => {
         ),
         '@internal/acs-ui-common': path.resolve(ROOT_DIR, 'packages/acs-ui-common/src/index.ts')
       }),
+      globCopy({
+        targets: ['fonts']
+      }),
       NodeGlobalsPolyfillPlugin(),
       esbuildPluginNodeModulePolyfills(),
       htmlPlugin({
@@ -54,7 +58,8 @@ const esbuildOptions = (testSubDir) => {
               __COMMUNICATIONREACTVERSION__: pkgJSON.dependencies['@azure/communication-react'],
               __BUILDTIME__: new Date().toLocaleString()
             },
-            entryPoints: [testSubDir],
+            // This is very finicky. It wants relative path AND it depends on cwd of where the script is run from :(
+            entryPoints: [`${testSubDir}/index.tsx`],
             filename: 'index.html',
             htmlTemplate: `
           <!-- Copyright (c) Microsoft Corporation. -->

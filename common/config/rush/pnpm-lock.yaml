@@ -8747,6 +8747,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jyfL/pwPqaFXyKnj8lP8iLk6Z0m099uXR45aSN8Av1XD4vhvQutxxPzgA2bTcAwQpa1zCXDcWOlhFgyP3GKqhQ==
+  /esbuild-plugin-globcopy/0.1.3:
+    dependencies:
+      chokidar: 3.5.2
+      fs-extra: 10.0.1
+      minimatch: 3.0.4
+      tiny-glob: 0.2.9
+    dev: false
+    resolution:
+      integrity: sha512-39/2T9OgF3hPk0Fs7rlF2z3s5EUG18EbvlReB9o2PWDa+1AqTGNbutR84Cp+RxqoqjKk0GbxVy3ZX/PoT2177g==
   /esbuild-plugin-svg/0.1.0:
     dependencies:
       svgo: 2.8.0
@@ -10131,6 +10140,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-8jP/zAjU2n1DLapEl3aYnbHfk/A=
+  /fs-extra/10.0.1:
+    dependencies:
+      graceful-fs: 4.2.8
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-NbdoVMZso2Lsrn/QwLXOy6rm0ufY2zEOKCDzJR/0kBsb0E6qed0P3iYK+Ath3BfvXEeu4JhEtXLgILx5psUfag==
   /fs-extra/4.0.3:
     dependencies:
       graceful-fs: 4.2.8
@@ -10466,6 +10485,10 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-ZQnSFO1la8P7auIOQECnm0sSuoMeaSq0EEdXMBFF2QJO4uNcwbyhSgG3MruWNbFTqCLmxVwGOl7LZ9kASvHdeQ==
+  /globalyzer/0.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==
   /globby/11.0.1:
     dependencies:
       array-union: 2.1.0
@@ -10519,6 +10542,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-ollPHROa5mcxDEkwg6bPt3QbEf4pDQSNtd6JPL1YvOvAo/7/0VAm9TccUeoTmarjPw4pfUthSCqcyfNB1I3ZSg==
+  /globrex/0.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==
   /graceful-fs/4.2.8:
     dev: false
     resolution:
@@ -17598,6 +17625,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+  /tiny-glob/0.2.9:
+    dependencies:
+      globalyzer: 0.1.0
+      globrex: 0.1.2
+    dev: false
+    resolution:
+      integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==
   /tiny-invariant/1.1.0:
     dev: false
     resolution:
@@ -20145,6 +20179,7 @@ packages:
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       esbuild: 0.14.27
       esbuild-plugin-alias: 0.2.1
+      esbuild-plugin-globcopy: 0.1.3
       esbuild-plugin-svg: 0.1.0
       escape-string-regexp: 4.0.0
       eslint: 7.32.0
@@ -20199,7 +20234,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-oMeA4zVkXPhsmZRJLpYRiaJKGOL34k07DtasO+0is8I0pYrse17Wh7LZB2SHM0QtA8fMmelLxsBV4hRbHnSw5g==
+      integrity: sha512-T8dNN5R06fSTV26JbLzz4jIA7V6hYlZJgaiVQs3NtKBFM4QkJE4uJAeLAYpI0AHGi4krnsltGpEfbUx4Hs4lWQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
