@@ -19478,6 +19478,9 @@ packages:
       '@babel/core': 7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
       '@babel/preset-react': 7.14.5_@babel+core@7.16.5
+      '@craftamap/esbuild-plugin-html': 0.3.2_esbuild@0.14.27
+      '@esbuild-plugins/node-globals-polyfill': 0.1.1_esbuild@0.14.27
+      '@esbuild-plugins/node-modules-polyfill': 0.1.4_esbuild@0.14.27
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
@@ -19497,6 +19500,10 @@ packages:
       cross-env: 7.0.3
       css-loader: 4.3.0_webpack@5.38.1
       env-cmd: 10.1.0
+      esbuild: 0.14.27
+      esbuild-plugin-alias: 0.2.1
+      esbuild-plugin-svg: 0.1.0
+      escape-string-regexp: 4.0.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-config-react-app: 6.0.0_82666de81919be5d252925df007529ed
@@ -19528,6 +19535,7 @@ packages:
       reactstrap: 8.9.0_react-dom@16.13.1+react@16.14.0
       reselect: 4.0.0
       rimraf: 2.7.1
+      rollup-plugin-node-polyfills: 0.2.1
       source-map-explorer: 2.5.2
       style-loader: 2.0.0_webpack@5.38.1
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
@@ -19540,7 +19548,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-EemNAlZYoGWZb/OTwmbS45dzZfUBorpMxF7edAjIUltkrWS+MYV9ePBoAdfbFYKzUFOm/X+84IckOBNSD1I+mw==
+      integrity: sha512-Gvtya6Sy/NFvbg9uK1/11K6QFcXE2JQirvBUwMtwGKMHuhl4KMS1Ql6w6EfgctbUIkeDm/5FouidPoLZR3WBdw==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
