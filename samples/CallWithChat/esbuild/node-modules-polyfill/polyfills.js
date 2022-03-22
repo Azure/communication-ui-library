@@ -9,7 +9,8 @@ function builtinsPolyfills() {
   libs.set('buffer', require.resolve('rollup-plugin-node-polyfills/polyfills/buffer-es6'));
   libs.set('util', require.resolve('rollup-plugin-node-polyfills/polyfills/util'));
   libs.set('sys', libs.get('util'));
-  libs.set('events', require.resolve('rollup-plugin-node-polyfills/polyfills/events'));
+  // xkcd: Removed because `rollup-plugin-node-polyfills` doesn't provide `EventEmitter.off`.
+  // libs.set('events', require.resolve('rollup-plugin-node-polyfills/polyfills/events'));
   libs.set('stream', require.resolve('rollup-plugin-node-polyfills/polyfills/stream'));
   libs.set('path', require.resolve('rollup-plugin-node-polyfills/polyfills/path'));
   libs.set('querystring', require.resolve('rollup-plugin-node-polyfills/polyfills/qs'));
