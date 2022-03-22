@@ -47,6 +47,14 @@
     "rimraf": "^2.6.2",
     "typescript": "4.3.5",
     "webpack": "5.38.1",
-    "webpack-cli": "4.7.2"
+    "webpack-cli": "4.7.2",
+    "esbuild": "~0.14.27",
+    "@esbuild-plugins/node-modules-polyfill": "~0.1.4",
+    "esbuild-plugin-svg": "~0.1.0",
+    "@craftamap/esbuild-plugin-html": "~0.3.2",
+    "@esbuild-plugins/node-globals-polyfill": "~0.1.1",
+    "escape-string-regexp": "^4.0.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "esbuild-plugin-alias": "~0.2.1"
   }
 }

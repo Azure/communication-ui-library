@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { setLogLevel } from '@azure/logger';
+import { AzureLogger, setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -27,6 +27,11 @@ import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
 setLogLevel('warning');
+
+// override logging to output to console.log (default location is stderr)
+AzureLogger.log = (...args) => {
+  console.log(...args);
+};
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`

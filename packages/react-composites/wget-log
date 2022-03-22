@@ -1,0 +1,11 @@
+--2022-03-22 22:24:26--  https://www.google.ca/chrome/thank-you.html?brand=UEAD
+Resolving www.google.ca (www.google.ca)... 142.251.33.99, 2607:f8b0:400a:807::2003
+Connecting to www.google.ca (www.google.ca)|142.251.33.99|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 260434 (254K) [text/html]
+Saving to: ‘thank-you.html?brand=UEAD’
+
+thank-you.html?brand=UEAD                                             0%[                                                                                                                                                                   ]       0  --.-KB/s               thank-you.html?brand=UEAD                                           100%[==================================================================================================================================================================>] 254.33K  --.-KB/s    in 0.02s   
+
+2022-03-22 22:24:26 (12.1 MB/s) - ‘thank-you.html?brand=UEAD’ saved [260434/260434]
+
