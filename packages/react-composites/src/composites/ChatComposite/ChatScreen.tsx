@@ -115,6 +115,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
 
   useEffect(() => {
+    // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
   }, [adapter]);
 
@@ -189,11 +190,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onCancelFileUpload={adapter.cancelFileUpload}
             />
 
-            <FileUploadButton
-              accept={fileSharing?.accept}
-              multiple={fileSharing?.multiple}
-              onChange={fileUploadButtonOnChange}
-            />
+            {fileSharing?.uploadHandler && (
+              <FileUploadButton
+                accept={fileSharing?.accept}
+                multiple={fileSharing?.multiple}
+                onChange={fileUploadButtonOnChange}
+              />
+            )}
           </Stack>
         </Stack>
         {

@@ -50,6 +50,11 @@ export interface MicrophoneButtonStrings {
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
+  /**
+   * description of microphone button split button role
+   */
+  microphoneButtonSplitRoleDescription?: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -166,6 +171,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
       menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
       split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+      ariaDescription={
+        enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
+      }
     />
   );
 };

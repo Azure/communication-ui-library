@@ -1,25 +1,27 @@
-name: Run Touchdown build and commit changes
+name: Send strings for translation, and optionally commit back current translations
 
 on:
-  # Allows running workflow manually from the GitHub Actions tab
+  # Runs workflow on commits to important branches
+  # Never commits updated string files back in this mode.
+  push:
+    branches:
+      - main
+      - release/**
   workflow_dispatch:
+    inputs:
+      commit_strings:
+        description: 'Whether to commit updated string files to branch'
+        type: boolean
+        default: false
 
 jobs:
   runTDBuild:
     name: Run Touchdown build
     runs-on: ubuntu-latest
-    env:
-      MAIN_BRANCH: 'main'
     steps:
-      # Check-out repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
 
       - name: Install github actions dependencies
         run: npm ci
@@ -31,4 +33,5 @@ jobs:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
-          azure-pipeline-variables: '{"commit": ${{ steps.extract_branch.outputs.branch != env.MAIN_BRANCH }} }'
+          # Only commit updated files back when explicitly requested.
+          azure-pipeline-variables: "{'commit': ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit_strings }} }"
