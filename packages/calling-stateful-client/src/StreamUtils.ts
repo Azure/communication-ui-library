@@ -74,7 +74,9 @@ async function createViewRemoteVideo(
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up state.
     renderer.dispose();
-    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    // get latest call ID because this happens after an await call
+    // Call Id could change between time gap
+    context.setRemoteVideoStreamRendererView(internalContext.latestCallId(callId), participantKey, streamId, undefined);
     return;
   }
 
@@ -90,7 +92,10 @@ async function createViewRemoteVideo(
       'NotRendered',
       undefined
     );
-    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+
+    // get latest call ID because this happens after an await call
+    // Call Id could change between time gap
+    context.setRemoteVideoStreamRendererView(internalContext.latestCallId(callId), participantKey, streamId, undefined);
     return;
   }
 
@@ -104,8 +109,11 @@ async function createViewRemoteVideo(
     'Rendered',
     renderer
   );
+
+  // get latest call ID because this happens after an await call
+  // Call Id could change between time gap
   context.setRemoteVideoStreamRendererView(
-    callId,
+    internalContext.latestCallId(callId),
     participantKey,
     streamId,
     convertFromSDKToDeclarativeVideoStreamRendererView(view)
@@ -161,7 +169,9 @@ async function createViewLocalVideo(
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up the state.
     renderer.dispose();
-    context.setLocalVideoStreamRendererView(callId, undefined);
+    // get latest call ID because this happens after an await call
+    // Call Id could change between time gap
+    context.setLocalVideoStreamRendererView(internalContext.latestCallId(callId), undefined);
     return;
   }
 
@@ -170,14 +180,17 @@ async function createViewLocalVideo(
     // put the view into the state.
     renderer.dispose();
     internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'NotRendered', undefined);
-    context.setLocalVideoStreamRendererView(callId, undefined);
+    context.setLocalVideoStreamRendererView(internalContext.latestCallId(callId), undefined);
     return;
   }
 
   // Else The stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
   internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
-  context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
+  context.setLocalVideoStreamRendererView(
+    internalContext.latestCallId(callId),
+    convertFromSDKToDeclarativeVideoStreamRendererView(view)
+  );
 }
 
 async function createViewUnparentedVideo(

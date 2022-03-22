@@ -184,7 +184,7 @@ export class InternalCallContext {
     this._callIdHistory.set(oldCallId, newCallId);
   }
 
-  private latestCallId(callId: string): string {
+  public latestCallId(callId: string): string {
     let latest = callId;
     /* eslint no-constant-condition: ["error", { "checkLoops": false }] */
     while (true) {
