@@ -4,7 +4,7 @@
   "private": true,
   "description": "This is a sample application to show how the UI Library can be used to build a call with chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
-    "build": "rushx clean && node esbuild/build.mjs",
+    "build": "rushx clean && concurrently \"node esbuild/build.mjs\" \"tsc --noEmit\"",
     "build:stable": "cross-env FLAVOR=stable rushx build",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
