@@ -60,10 +60,7 @@ class FileUploadContext {
     );
   }
 
-  public updateFileUpload(
-    id: string,
-    data: Partial<Pick<FileUploadState, 'progress' | 'metadata' | 'errorMessage'>>
-  ): void {
+  public updateFileUpload(id: string, data: Partial<Pick<FileUploadState, 'progress' | 'metadata' | 'error'>>): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.fileUploads?.[id]) {
@@ -111,7 +108,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private deleteErroneousFileUploads(): void {
     const fileUploads = this.context.getFileUploads() || {};
     const ids = Object.values(fileUploads)
-      .filter((item: FileUploadState) => item.errorMessage)
+      .filter((item: FileUploadState) => item.error)
       .map((item: FileUploadState) => item.id);
 
     ids.forEach((id) => {
@@ -126,7 +123,8 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     this.deleteErroneousFileUploads();
     fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
     this.fileUploads = this.fileUploads.concat(fileUploads);
-    if (this.context.getFileUploads()) {
+    const existingFileUploads = this.context.getFileUploads();
+    if (existingFileUploads && Object.keys(existingFileUploads).length > 0) {
       this.context.appendFileUploads(fileUploads);
     } else {
       this.context.setFileUploads(this.fileUploads);
@@ -140,6 +138,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   cancelFileUpload(id: string): void {
+    this.deleteErroneousFileUploads();
     const fileUpload = this.findFileUpload(id);
     this.unsubscribeAllEvents(fileUpload);
     this.deleteFileUploads([id]);
@@ -150,7 +149,12 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 
   private fileUploadFailedListener(id: string, errorMessage: string): void {
-    this.context.updateFileUpload(id, { errorMessage });
+    this.context.updateFileUpload(id, {
+      error: {
+        message: errorMessage,
+        timestamp: Date.now()
+      }
+    });
   }
 
   private fileUploadCompletedListener(id: string, metadata: FileMetadata): void {
@@ -180,7 +184,7 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
-      if (!file.errorMessage && file.metadata) {
+      if (!file.error && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Cleaning up duplicate file sharing code from react-composites",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add SendboxErrorBar with timeout for showing file upload errors in SendBox",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

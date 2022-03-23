@@ -16,11 +16,11 @@ export interface CallWithChatCompositeStrings {
   /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
-  peopleButtonTooltipContentOpen: string;
+  peopleButtonTooltipOpen: string;
   /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
-  peopleButtonTooltipContentClose: string;
+  peopleButtonTooltipClose: string;
   /**
    * {@link CallWithChatComposite} control bar Chat button label.
    */
@@ -28,11 +28,15 @@ export interface CallWithChatCompositeStrings {
   /**
    * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
    */
-  chatButtonTooltipContentOpen: string;
+  chatButtonTooltipOpen: string;
   /**
    * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
    */
-  chatButtonTooltipContentClose: string;
+  chatButtonTooltipClose: string;
+  /**
+   * {@link CallWithChatComposite} control bar Chat button enhanced tooltip string.
+   */
+  chatButtonTooltipClosedWithMessageCount: string;
   /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *

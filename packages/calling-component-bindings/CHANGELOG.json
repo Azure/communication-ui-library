@@ -2,6 +2,69 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:02 GMT",
+      "tag": "@internal/calling-component-bindings_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "96cc5b9a5d8fb2221de5dae2473ec80848520948",
+            "comment": "Switch CallWithChat from Beta to Public and Stable"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a8454e2d0a360defafc04b7ec7820cb260e9f77a",
+            "comment": "Bump @azure/communication-calling to 1.4.3"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "97c1d1ad3fddaed8156846ac18f4c077025ce878",
+            "comment": "Fix eslint warnings. Update builds to fail on eslint warnings."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "fed7eafe04f692c5210d8702dfe47f3067fc4df1",
+            "comment": "Upgrading calling to 1.4.3-beta.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:42:55 GMT",
       "tag": "@internal/calling-component-bindings_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",

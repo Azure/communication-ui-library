@@ -1,7 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-export * from './FileCard';
-export * from './FileCardGroup';
 export * from './FileDownloadHandler';
 export * from './FileUpload';
 export * from './FileUploadButton';

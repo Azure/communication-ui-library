@@ -1,8 +1,31 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Tue, 01 Mar 2022 16:42:54 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.2.0)
+
+Fri, 11 Mar 2022 19:20:02 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.1.1-beta.1...@internal/storybook_v1.2.0)
+
+### Minor changes
+
+- Switch local-camera-switcher from Beta to Public and Stable ([PR #1612](https://github.com/azure/communication-ui-library/pull/1612) by edwardlee@microsoft.com)
+- Use useAzureCommunicationCallAdapter hook ([PR #1618](https://github.com/azure/communication-ui-library/pull/1618) by 82062616+prprabhu-ms@users.noreply.github.com)
+
+### Patches
+
+- Bump @azure/communication-calling to 1.4.3 ([PR #1610](https://github.com/azure/communication-ui-library/pull/1610) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Re-enable storybook fullscreen button ([PR #1567](https://github.com/azure/communication-ui-library/pull/1567) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @azure/communication-react to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+
+### Changes
+
+- Add images of call with chat to documentation ([PR #1624](https://github.com/azure/communication-ui-library/pull/1624) by 2684369+JamesBurnside@users.noreply.github.com)
+- Simplify callwithchat code snippets ([PR #1620](https://github.com/azure/communication-ui-library/pull/1620) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add useAzureCommunicationCallWithChatAdapter hook ([PR #1605](https://github.com/azure/communication-ui-library/pull/1605) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Upgrading calling to 1.4.3-beta.1 ([PR #1607](https://github.com/azure/communication-ui-library/pull/1607) by edwardlee@microsoft.com)
 
 ## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.1.1-beta.1)
 
