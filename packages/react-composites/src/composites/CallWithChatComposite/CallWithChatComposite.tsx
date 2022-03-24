@@ -177,6 +177,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       setActivePane('none');
     } else {
       setActivePane('chat');
+      // timeout is required to give the window time to render the sendbox so we have something to send focus to.
+      setTimeout(() => {
+        document.getElementById('sendbox')?.focus();
+      }, 10);
     }
   }, [activePane, setActivePane]);
 

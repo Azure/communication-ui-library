@@ -75,8 +75,7 @@ export const CallWithChatPane = (props: {
         /* @conditional-compile-remove(chat-composite-participant-pane) */
         participantPane: false,
         /* @conditional-compile-remove(file-sharing) */
-        fileSharing: props.fileSharing,
-        autoFocus: 'sendBoxTextField'
+        fileSharing: props.fileSharing
       }}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
     />
@@ -103,8 +102,8 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            {props.activePane === 'chat' && <Stack styles={availableSpaceStyles}>{chatContent}</Stack>}
-            {props.activePane === 'people' && <Stack styles={availableSpaceStyles}>{peopleContent}</Stack>}
+            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
+            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>
