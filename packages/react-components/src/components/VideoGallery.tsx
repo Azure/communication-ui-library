@@ -64,8 +64,10 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
-  /**String for announcing the local video tile can be moved by keyboard controls */
+  /** String for announcing the local video tile can be moved by keyboard controls */
   localVideoMovementLabel: string;
+  /** String for announcing the role of the local video tile keyboard movement controls */
+  localVideoMovementRole: string;
 }
 
 /**
@@ -261,7 +263,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} aria-role={'drop down'} aria-live={'polite'}>
+      <Stack
+        tabIndex={0}
+        aria-label={strings.localVideoMovementLabel}
+        aria-role={strings.localVideoMovementRole}
+        aria-live={'polite'}
+      >
         <VideoTile
           key={localParticipant.userId}
           userId={localParticipant.userId}

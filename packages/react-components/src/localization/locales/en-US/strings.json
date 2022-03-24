@@ -138,6 +138,7 @@
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Cycle camera",
-    "localVideoMovementLabel": "Tile keyboard movement Dropdown Hidden"
+    "localVideoMovementLabel": "Tile keyboard movement Dropdown Hidden",
+    "localVideoMovementRole": "Drop down"
   }
 }
