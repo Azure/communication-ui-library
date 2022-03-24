@@ -2389,7 +2389,6 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
-    localVideoMovementLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
