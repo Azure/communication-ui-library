@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           <div
             aria-label="Tile keyboard movement Dropdown Hidden"
             aria-live="polite"
-            aria-role="drop down"
+            aria-role="Drop down"
             className="ms-Stack css-4"
             tabIndex={0}
           >
