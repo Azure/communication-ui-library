@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -58,6 +59,12 @@ export const floatingLocalVideoModalStyle = (
   );
 };
 
+/** @private */
+export const localVideoTileStartPositionPX = {
+  bottom: 8,
+  right: 8
+};
+
 /**
  * @private
  */
@@ -66,10 +73,12 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
     minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
     minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
     position: 'absolute',
-    bottom: '0.5rem',
+    bottom: `${_pxToRem(localVideoTileStartPositionPX.bottom)}`,
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+    ...(theme.rtl
+      ? { left: `${_pxToRem(localVideoTileStartPositionPX.right)}` }
+      : { right: `${_pxToRem(localVideoTileStartPositionPX.right)}` })
   };
 };
 
