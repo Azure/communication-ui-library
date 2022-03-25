@@ -12,7 +12,8 @@
     "test": "",
     "test:stable": "",
     "prettier": "",
-    "prettier:check": ""
+    "prettier:check": "",
+    "preprocess": "echo skip"
   },
   "devDependencies": {
     "@octokit/rest": "~18.0.6",

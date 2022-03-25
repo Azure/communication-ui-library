@@ -84,6 +84,15 @@
     },
     {
       "commandKind": "bulk",
+      "name": "preprocess",
+      "summary": "Preprocess all projects for stable build.",
+      "description": "Preprocess all projects for stable build.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "lint",
       "summary": "Run linting in each project.",
       "description": "Run lint in each project.",

@@ -16,7 +16,8 @@
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
     "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
+    "preprocess": "echo skip"
   },
   "dependencies": {
     "@azure/communication-chat": "1.1.0",

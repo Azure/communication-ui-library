@@ -16,7 +16,8 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 */**/*.{ts,tsx}",
     "lint:fix": "eslint */**/*.{ts,tsx} --fix",
-    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
+    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
+    "preprocess": "echo skip"
   },
   "dependencies": {
     "@azure/communication-chat": "1.1.0",

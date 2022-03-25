@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
+const { NodeGlobalsPolyfillPlugin } = NodeGlobalsPolyfillPluginPkg;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,12 +18,14 @@ const ROOT_DIR = path.resolve(__dirname, '..', '..', '..');
 const PACKAGE_DIR = path.resolve(ROOT_DIR, 'packages', 'react-composites');
 console.log(`Project root: ${ROOT_DIR}`);
 console.log(`Sample root: ${PACKAGE_DIR}`);
-
-const { NodeGlobalsPolyfillPlugin } = NodeGlobalsPolyfillPluginPkg;
+const PREPROCESSED_SRC_DIR = process.env.COMMUNICATION_REACT_FLAVOR === 'stable' ? 'preprocessed' : 'src';
 
 const pkgJSON = JSON.parse(readFileSync(path.resolve(PACKAGE_DIR, 'package.json')));
 
 const esbuildOptions = (testSubDir) => {
+  console.log(
+    `Flavor: ${process.env.COMMUNICATION_REACT_FLAVOR}: Using packlet sources from .../${PREPROCESSED_SRC_DIR}.`
+  );
   const testDir = path.resolve(PACKAGE_DIR, testSubDir);
   return {
     bundle: true,
@@ -32,17 +35,14 @@ const esbuildOptions = (testSubDir) => {
     outdir: path.resolve(testDir, 'dist/esbuild'), // Needed by `htmlPlugin`.
     plugins: [
       alias({
-        '@azure/communication-react': path.resolve(ROOT_DIR, 'packages/communication-react/src/index.ts'),
-        '@internal/react-components': path.resolve(ROOT_DIR, 'packages/react-components/src/index.ts'),
-        '@internal/react-composites': path.resolve(ROOT_DIR, 'packages/react-composites/src/index.ts'),
-        '@internal/chat-stateful-client': path.resolve(ROOT_DIR, 'packages/chat-stateful-client/src/index.ts'),
-        '@internal/chat-component-bindings': path.resolve(ROOT_DIR, 'packages/chat-component-bindings/src/index.ts'),
-        '@internal/calling-stateful-client': path.resolve(ROOT_DIR, 'packages/calling-stateful-client/src/index.ts'),
-        '@internal/calling-component-bindings': path.resolve(
-          ROOT_DIR,
-          'packages/calling-component-bindings/src/index.ts'
-        ),
-        '@internal/acs-ui-common': path.resolve(ROOT_DIR, 'packages/acs-ui-common/src/index.ts')
+        '@azure/communication-react': absolutePathToPacklet('communication-react'),
+        '@internal/acs-ui-common': absolutePathToPacklet('acs-ui-common'),
+        '@internal/calling-component-bindings': absolutePathToPacklet('calling-component-bindings'),
+        '@internal/calling-stateful-client': absolutePathToPacklet('calling-stateful-client'),
+        '@internal/chat-component-bindings': absolutePathToPacklet('chat-component-bindings'),
+        '@internal/chat-stateful-client': absolutePathToPacklet('chat-stateful-client'),
+        '@internal/react-components': absolutePathToPacklet('react-components'),
+        '@internal/react-composites': absolutePathToPacklet('react-composites')
       }),
       globCopy({
         targets: ['fonts']
@@ -159,3 +159,6 @@ export async function buildIt(composite) {
   const result = await build(esbuildOptions(testSubDir));
   writeFileSync(path.resolve(testDir, 'dist/esbuild/meta.json'), JSON.stringify(result.metafile, null, 2));
 }
+
+const absolutePathToPacklet = (packlet) =>
+  path.resolve(ROOT_DIR, `packages/${packlet}/${PREPROCESSED_SRC_DIR}/index.ts`);
