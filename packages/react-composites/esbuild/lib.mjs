@@ -42,7 +42,13 @@ const esbuildOptions = (testSubDir) => {
         '@internal/chat-component-bindings': absolutePathToPacklet('chat-component-bindings'),
         '@internal/chat-stateful-client': absolutePathToPacklet('chat-stateful-client'),
         '@internal/react-components': absolutePathToPacklet('react-components'),
-        '@internal/react-composites': absolutePathToPacklet('react-composites')
+        '@internal/react-composites': absolutePathToPacklet('react-composites'),
+        '../../../../src': absolutePathToPacklet('react-composites'),
+        // Hack to dirty even for an FHL. This path should never have been referenced from the app in the first place.
+        '../../../../src/composites/ChatComposite/file-sharing': path.resolve(
+          ROOT_DIR,
+          `packages/react-composites/${PREPROCESSED_SRC_DIR}/composites/ChatComposite/file-sharing`
+        )
       }),
       globCopy({
         targets: ['fonts']
@@ -154,7 +160,8 @@ const API_PATHS = [
 ];
 
 export async function buildIt(composite) {
-  const testSubDir = `tests/browser/${composite}/app`;
+  const testRootSubDir = process.env.COMMUNICATION_REACT_FLAVOR === 'stable' ? 'preprocessed-tests' : 'tests';
+  const testSubDir = `${testRootSubDir}/browser/${composite}/app`;
   const testDir = path.resolve(PACKAGE_DIR, testSubDir);
   const result = await build(esbuildOptions(testSubDir));
   writeFileSync(path.resolve(testDir, 'dist/esbuild/meta.json'), JSON.stringify(result.metafile, null, 2));

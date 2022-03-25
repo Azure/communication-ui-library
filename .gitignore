@@ -94,6 +94,7 @@ temp/
 docGen/
 preprocessed/
 preprocess-dist/
+preprocessed-tests/
 
 # Release outputs
 release/

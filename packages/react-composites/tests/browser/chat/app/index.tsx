@@ -8,12 +8,10 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR,
-  createCompletedFileUpload,
-  useAzureCommunicationChatAdapter
-} from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
+/** @conditional-compile-remove(file-sharing) */
+import { createCompletedFileUpload } from '../../../../src';
+/** @conditional-compile-remove(file-sharing) */
 // eslint-disable-next-line no-restricted-imports
 import { FileUpload } from '../../../../src/composites/ChatComposite/file-sharing';
 import { IDS } from '../../common/constants';
@@ -57,6 +55,7 @@ function App(): JSX.Element {
   });
 
   React.useEffect(() => {
+    /** @conditional-compile-remove(file-sharing) */
     if (adapter && uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
         if (file.error) {
