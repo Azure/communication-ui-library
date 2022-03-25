@@ -22,7 +22,7 @@ const PREPROCESSED_SRC_DIR = process.env.COMMUNICATION_REACT_FLAVOR === 'stable'
 
 const pkgJSON = JSON.parse(readFileSync(path.resolve(PACKAGE_DIR, 'package.json')));
 
-const esbuildOptions = (testSubDir) => {
+const esbuildOptions = (testSubDir, outDir) => {
   console.log(
     `Flavor: ${process.env.COMMUNICATION_REACT_FLAVOR}: Using packlet sources from .../${PREPROCESSED_SRC_DIR}.`
   );
@@ -32,7 +32,7 @@ const esbuildOptions = (testSubDir) => {
     entryPoints: [path.resolve(testDir, 'index.tsx')],
     logLevel: 'error',
     metafile: true, // Needed by `htmlPlugin`.
-    outdir: path.resolve(testDir, 'dist/esbuild'), // Needed by `htmlPlugin`.
+    outdir: outDir, // Needed by `htmlPlugin`.
     plugins: [
       alias({
         '@azure/communication-react': absolutePathToPacklet('communication-react'),
@@ -163,8 +163,9 @@ export async function buildIt(composite) {
   const testRootSubDir = process.env.COMMUNICATION_REACT_FLAVOR === 'stable' ? 'preprocessed-tests' : 'tests';
   const testSubDir = `${testRootSubDir}/browser/${composite}/app`;
   const testDir = path.resolve(PACKAGE_DIR, testSubDir);
-  const result = await build(esbuildOptions(testSubDir));
-  writeFileSync(path.resolve(testDir, 'dist/esbuild/meta.json'), JSON.stringify(result.metafile, null, 2));
+  const outDir = path.resolve(PACKAGE_DIR, `tests/browser/${composite}/app/dist/esbuild`);
+  const result = await build(esbuildOptions(testSubDir, outDir));
+  writeFileSync(path.resolve(outDir, 'meta.json'), JSON.stringify(result.metafile, null, 2));
 }
 
 const absolutePathToPacklet = (packlet) =>
