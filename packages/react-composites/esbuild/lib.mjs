@@ -31,6 +31,7 @@ const esbuildOptions = (testSubDir, outDir) => {
     bundle: true,
     entryPoints: [path.resolve(testDir, 'index.tsx')],
     logLevel: 'error',
+    minify: true,
     metafile: true, // Needed by `htmlPlugin`.
     outdir: outDir, // Needed by `htmlPlugin`.
     plugins: [
