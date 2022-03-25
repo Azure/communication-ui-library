@@ -47,7 +47,7 @@ const esbuildOptions = (testSubDir) => {
         // Hack to dirty even for an FHL. This path should never have been referenced from the app in the first place.
         '../../../../src/composites/ChatComposite/file-sharing': path.resolve(
           ROOT_DIR,
-          `packages/react-composites/${PREPROCESSED_SRC_DIR}/composites/ChatComposite/file-sharing`
+          `packages/react-composites/${PREPROCESSED_SRC_DIR}/composites/ChatComposite/file-sharing/index.ts`
         )
       }),
       globCopy({
