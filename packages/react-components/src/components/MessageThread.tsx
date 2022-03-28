@@ -16,7 +16,8 @@ import {
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
   gutterWithAvatar,
-  gutterWithHiddenAvatar
+  gutterWithHiddenAvatar,
+  FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -171,6 +172,8 @@ export interface MessageThreadStrings {
   removeMessage: string;
   /** String for resending failed message in floating menu */
   resendMessage?: string;
+  /** String for indicating failed to send messages */
+  failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
   /** String for warning on text limit exceeded in EditBox*/
@@ -323,7 +326,10 @@ const memoizeAllMessages = memoizeFnAll(
 
     switch (message.messageType) {
       case 'chat': {
-        const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+        const myChatMessageStyle =
+          styles?.myChatMessageContainer || message.status === 'failed'
+            ? FailedMyChatMessageContainer
+            : defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 

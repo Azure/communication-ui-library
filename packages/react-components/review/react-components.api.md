@@ -674,6 +674,7 @@ export interface MessageThreadStrings {
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
+    failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
     messageReadCount?: string;

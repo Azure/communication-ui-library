@@ -53,7 +53,10 @@ function App(): JSX.Element {
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
-        if (file.progress) {
+        if (file.error) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadFailed(file.error);
+        } else if (file.progress) {
           const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
           fileUploads[0].notifyUploadProgressChanged(file.progress);
         } else {

@@ -5,7 +5,11 @@ import { IStyle, mergeStyles } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
-import { chatMessageEditedTagStyle, chatMessageDateStyle } from '../styles/ChatMessageComponent.styles';
+import {
+  chatMessageEditedTagStyle,
+  chatMessageDateStyle,
+  chatMessageFailedTagStyle
+} from '../styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
@@ -124,7 +128,11 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
             </Text>
           }
           details={
-            message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+            messageStatus === 'failed' ? (
+              <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>
+            ) : message.editedOn ? (
+              <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>
+            ) : undefined
           }
           positionActionMenu={false}
           actionMenu={actionMenuProps}
