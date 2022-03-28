@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "All component strings interface properties changed to required.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
