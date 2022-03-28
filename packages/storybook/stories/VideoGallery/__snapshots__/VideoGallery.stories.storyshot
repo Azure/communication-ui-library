@@ -28,10 +28,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           className="ms-Stack css-3"
         >
           <div
-            aria-label="Tile keyboard movement Dropdown Hidden"
-            aria-live="polite"
-            aria-role="drop down"
+            aria-label="Movable Local Video Tile"
             className="ms-Stack css-4"
+            role="dialog"
             tabIndex={0}
           >
             <div
