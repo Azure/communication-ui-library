@@ -48,7 +48,9 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
  */
 export const chatMessageMenuStyle = mergeStyles({
   minWidth: '8.5rem',
-  cursor: 'pointer'
+  height: 'max-content',
+  cursor: 'pointer',
+  overflow: 'hidden'
 });
 
 /**
