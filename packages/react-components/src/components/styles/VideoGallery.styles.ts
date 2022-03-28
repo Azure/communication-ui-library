@@ -54,7 +54,16 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    {
+      main: {
+        boxShadow: theme.effects.elevation8,
+        ':focus-within': {
+          boxShadow: theme.effects.elevation16,
+          border: `2px solid ${theme.palette.neutralPrimary}`
+        }
+      }
+    },
+    localVideoModalStyles
   );
 };
 
@@ -181,4 +190,19 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
     color: '#FFFFFF',
     background: 'transparent'
   }
+};
+
+/**
+ * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
+ * @private
+ */
+export const localVideoModalStyles: IModalStyles = {
+  keyboardMoveIconContainer: {
+    zIndex: 6 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
+  },
+  root: undefined,
+  main: undefined,
+  scrollableContent: undefined,
+  layer: undefined,
+  keyboardMoveIcon: undefined
 };
