@@ -263,12 +263,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <Stack
-        tabIndex={0}
-        aria-label={strings.localVideoMovementLabel}
-        aria-role={strings.localVideoMovementRole}
-        aria-live={'polite'}
-      >
+      <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} aria-role={strings.localVideoMovementRole}>
         <VideoTile
           key={localParticipant.userId}
           userId={localParticipant.userId}
