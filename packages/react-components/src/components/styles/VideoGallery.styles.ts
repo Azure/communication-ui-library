@@ -196,13 +196,8 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
  * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
  * @private
  */
-export const localVideoModalStyles: IModalStyles = {
+export const localVideoModalStyles: Partial<IModalStyles> = {
   keyboardMoveIconContainer: {
     zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
-  },
-  root: undefined,
-  main: undefined,
-  scrollableContent: undefined,
-  layer: undefined,
-  keyboardMoveIcon: undefined
+  }
 };
