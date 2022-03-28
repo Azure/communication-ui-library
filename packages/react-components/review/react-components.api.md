@@ -87,14 +87,14 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface CameraButtonStrings {
-    cameraButtonSplitRoleDescription?: string;
+    cameraButtonSplitRoleDescription: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
     offLabel: string;
     onLabel: string;
-    tooltipDisabledContent?: string;
-    tooltipOffContent?: string;
-    tooltipOnContent?: string;
+    tooltipDisabledContent: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
     tooltipVideoLoadingContent?: string;
 }
 
@@ -230,20 +230,20 @@ export interface ControlBarButtonProps extends IButtonProps {
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
     showLabel?: boolean;
-    strings?: ControlBarButtonStrings;
+    strings?: Partial<ControlBarButtonStrings>;
     styles?: ControlBarButtonStyles;
     tooltipId?: string;
 }
 
 // @public
 export interface ControlBarButtonStrings {
-    label?: string;
-    offLabel?: string;
-    onLabel?: string;
-    tooltipContent?: string;
-    tooltipDisabledContent?: string;
-    tooltipOffContent?: string;
-    tooltipOnContent?: string;
+    label: string;
+    offLabel: string;
+    onLabel: string;
+    tooltipContent: string;
+    tooltipDisabledContent: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
@@ -358,7 +358,7 @@ export interface DevicesButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
-    tooltipContent?: string;
+    tooltipContent: string;
 }
 
 // @public
@@ -423,13 +423,13 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 // @public
 export interface EndCallButtonProps extends ControlBarButtonProps {
     onHangUp?: () => Promise<void>;
-    strings?: EndCallButtonStrings;
+    strings?: Partial<EndCallButtonStrings>;
 }
 
 // @public
 export interface EndCallButtonStrings {
     label: string;
-    tooltipContent?: string;
+    tooltipContent: string;
 }
 
 // @public
@@ -622,20 +622,20 @@ export interface MessageStatusIndicatorProps {
     messageThreadReadCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
-    strings?: MessageStatusIndicatorStrings;
+    strings?: Partial<MessageStatusIndicatorStrings>;
     styles?: BaseCustomStyles;
 }
 
 // @public
 export interface MessageStatusIndicatorStrings {
-    deliveredAriaLabel?: string;
+    deliveredAriaLabel: string;
     deliveredTooltipText: string;
-    failedToSendAriaLabel?: string;
+    failedToSendAriaLabel: string;
     failedToSendTooltipText: string;
-    readByTooltipText?: string;
-    seenAriaLabel?: string;
+    readByTooltipText: string;
+    seenAriaLabel: string;
     seenTooltipText: string;
-    sendingAriaLabel?: string;
+    sendingAriaLabel: string;
     sendingTooltipText: string;
 }
 
@@ -730,16 +730,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneButtonSplitRoleDescription?: string;
-    microphoneMenuTitle?: string;
-    microphoneMenuTooltip?: string;
+    microphoneButtonSplitRoleDescription: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
     offLabel: string;
     onLabel: string;
-    speakerMenuTitle?: string;
-    speakerMenuTooltip?: string;
-    tooltipDisabledContent?: string;
-    tooltipOffContent?: string;
-    tooltipOnContent?: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+    tooltipDisabledContent: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
@@ -921,8 +921,8 @@ export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
     tooltipDisabledContent?: string;
-    tooltipOffContent?: string;
-    tooltipOnContent?: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public

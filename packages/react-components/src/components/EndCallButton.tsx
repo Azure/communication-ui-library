@@ -20,7 +20,7 @@ export interface EndCallButtonStrings {
    */
   label: string;
   /** Tooltip content. */
-  tooltipContent?: string;
+  tooltipContent: string;
 }
 
 /**
@@ -38,7 +38,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: EndCallButtonStrings;
+  strings?: Partial<EndCallButtonStrings>;
 }
 
 const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;

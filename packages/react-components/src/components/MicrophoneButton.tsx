@@ -25,36 +25,36 @@ export interface MicrophoneButtonStrings {
   /** Label when button is off. */
   offLabel: string;
   /** * Tooltip content when the button is disabled. */
-  tooltipDisabledContent?: string;
+  tooltipDisabledContent: string;
   /** Tooltip content when the button is on. */
-  tooltipOnContent?: string;
+  tooltipOnContent: string;
   /** Tooltip content when the button is off. */
-  tooltipOffContent?: string;
+  tooltipOffContent: string;
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of microphone menu
    */
-  microphoneMenuTitle?: string;
+  microphoneMenuTitle: string;
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of speaker menu
    */
-  speakerMenuTitle?: string;
+  speakerMenuTitle: string;
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of microphone menu
    */
-  microphoneMenuTooltip?: string;
+  microphoneMenuTooltip: string;
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of speaker menu
    */
-  speakerMenuTooltip?: string;
+  speakerMenuTooltip: string;
   /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of microphone button split button role
    */
-  microphoneButtonSplitRoleDescription?: string;
+  microphoneButtonSplitRoleDescription: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */

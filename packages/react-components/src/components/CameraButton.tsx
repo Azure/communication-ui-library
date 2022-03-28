@@ -31,11 +31,11 @@ export interface CameraButtonStrings {
   /** Label when button is off. */
   offLabel: string;
   /** Tooltip content when the button is disabled. */
-  tooltipDisabledContent?: string;
+  tooltipDisabledContent: string;
   /** Tooltip content when the button is on. */
-  tooltipOnContent?: string;
+  tooltipOnContent: string;
   /** Tooltip content when the button is off. */
-  tooltipOffContent?: string;
+  tooltipOffContent: string;
   /** Tooltip content when the button is disabled due to video loading. */
   tooltipVideoLoadingContent?: string;
   /**
@@ -50,7 +50,7 @@ export interface CameraButtonStrings {
   /**
    * description of camera button split button role
    */
-  cameraButtonSplitRoleDescription?: string;
+  cameraButtonSplitRoleDescription: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */

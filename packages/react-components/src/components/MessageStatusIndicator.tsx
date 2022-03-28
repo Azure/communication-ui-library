@@ -19,21 +19,21 @@ import {
  */
 export interface MessageStatusIndicatorStrings {
   /** Aria label to notify user when their message has been delivered. */
-  deliveredAriaLabel?: string;
+  deliveredAriaLabel: string;
   /** Text to display in the delivered message icon tooltip. */
   deliveredTooltipText: string;
   /** Aria label to notify user when their message has been seen by others. */
-  seenAriaLabel?: string;
+  seenAriaLabel: string;
   /** Text to display in the seen message icon tooltip if read number/ participant number is 1 */
   seenTooltipText: string;
   /** Text to display in the seen message icon tooltip if read number logic is working correctly (more than 1 read number and more than 1 particiants)*/
-  readByTooltipText?: string;
+  readByTooltipText: string;
   /** Aria label to notify user when their message is being sent. */
-  sendingAriaLabel?: string;
+  sendingAriaLabel: string;
   /** Text to display in the sending message icon tooltip. */
   sendingTooltipText: string;
   /** Aria label to notify user when their message has failed to be sent. */
-  failedToSendAriaLabel?: string;
+  failedToSendAriaLabel: string;
   /** Text to display in the failed message icon tooltip. */
   failedToSendTooltipText: string;
 }
@@ -61,7 +61,7 @@ export interface MessageStatusIndicatorProps {
   /**
    * Optional strings to override in component
    */
-  strings?: MessageStatusIndicatorStrings;
+  strings?: Partial<MessageStatusIndicatorStrings>;
 }
 
 /**

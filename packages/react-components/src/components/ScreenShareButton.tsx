@@ -20,9 +20,9 @@ export interface ScreenShareButtonStrings {
   /** * Tooltip content when the button is disabled. */
   tooltipDisabledContent?: string;
   /** Tooltip content when the button is on. */
-  tooltipOnContent?: string;
+  tooltipOnContent: string;
   /** Tooltip content when the button is off. */
-  tooltipOffContent?: string;
+  tooltipOffContent: string;
 }
 
 /**

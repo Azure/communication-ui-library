@@ -2,14 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import {
-  DefaultButton,
-  IButtonProps,
-  IRenderFunction,
-  concatStyleSets,
-  IButtonStyles,
-  KeyCodes
-} from '@fluentui/react';
+import { DefaultButton, IButtonProps, IRenderFunction, concatStyleSets, IButtonStyles } from '@fluentui/react';
 import { controlButtonStyles } from './styles/ControlBar.styles';
 import { ControlButtonTooltip } from './ControlButtonTooltip';
 
@@ -22,31 +15,31 @@ export interface ControlBarButtonStrings {
   /**
    * Label of the button. This supersedes onLabel or offLabel if used.
    */
-  label?: string;
+  label: string;
   /**
    * Label of the button shown when the button is checked.
    */
-  onLabel?: string;
+  onLabel: string;
   /**
    * Label of the button shown when the button is not checked.
    */
-  offLabel?: string;
+  offLabel: string;
   /**
    * Tooltip content of the button. This supersedes tooltipDisabledContent, tooltipOnContent and tooltipOffContent if used.
    */
-  tooltipContent?: string;
+  tooltipContent: string;
   /**
    * Tooltip content when the button is disabled.
    */
-  tooltipDisabledContent?: string;
+  tooltipDisabledContent: string;
   /**
    * Tooltip content when the button is in the checked state.
    */
-  tooltipOnContent?: string;
+  tooltipOnContent: string;
   /**
    * Tooltip content when the button is in the unchecked state.
    */
-  tooltipOffContent?: string;
+  tooltipOffContent: string;
 }
 
 /**
@@ -84,7 +77,7 @@ export interface ControlBarButtonProps extends IButtonProps {
   /**
    * Optional strings to override in component.
    */
-  strings?: ControlBarButtonStrings;
+  strings?: Partial<ControlBarButtonStrings>;
 
   /**
    * Icon to render when the button is checked.
@@ -144,8 +137,6 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
         ariaLabel={props.ariaLabel ?? tooltipContent ?? labelText}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
-        aria-roledescription={props.ariaDescription}
-        menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>

@@ -68,7 +68,7 @@ export interface DevicesButtonStrings {
   /**
    * Button tooltip content.
    */
-  tooltipContent?: string;
+  tooltipContent: string;
   /**
    * Title of camera menu
    */
@@ -172,12 +172,12 @@ export interface DeviceMenuProps {
  * @private
  */
 export interface DeviceMenuStrings {
-  cameraMenuTitle?: string;
-  microphoneMenuTitle?: string;
-  speakerMenuTitle?: string;
-  cameraMenuTooltip?: string;
-  microphoneMenuTooltip?: string;
-  speakerMenuTooltip?: string;
+  cameraMenuTitle: string;
+  microphoneMenuTitle: string;
+  speakerMenuTitle: string;
+  cameraMenuTooltip: string;
+  microphoneMenuTooltip: string;
+  speakerMenuTooltip: string;
 }
 
 /**
@@ -197,7 +197,7 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
  */
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
-  strings: DeviceMenuStrings
+  strings: Partial<DeviceMenuStrings>
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
