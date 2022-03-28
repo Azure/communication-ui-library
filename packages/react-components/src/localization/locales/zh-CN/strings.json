@@ -42,7 +42,8 @@
     "tooltipOffContent": "打开摄像头",
     "tooltipVideoLoadingContent": "正在加载视频",
     "cameraMenuTitle": "相机",
-    "cameraMenuTooltip": "选择“相机”"
+    "cameraMenuTooltip": "选择“相机”",
+    "cameraButtonSplitRoleDescription": "拆分按钮"
   },
   "microphoneButton": {
     "onLabel": "静音",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "麦克风",
     "microphoneMenuTooltip": "选择“麦克风”",
     "speakerMenuTitle": "扬声器",
-    "speakerMenuTooltip": "选择“扬声器”"
+    "speakerMenuTooltip": "选择“扬声器”",
+    "microphoneButtonSplitRoleDescription": "拆分按钮"
   },
   "devicesButton": {
     "label": "设备",

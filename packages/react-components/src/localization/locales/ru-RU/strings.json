@@ -42,7 +42,8 @@
     "tooltipOffContent": "Включить камеру",
     "tooltipVideoLoadingContent": "Видео загружается",
     "cameraMenuTitle": "Камера",
-    "cameraMenuTooltip": "Выбор камеры"
+    "cameraMenuTooltip": "Выбор камеры",
+    "cameraButtonSplitRoleDescription": "Разворачивающаяся кнопка"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Микрофон",
     "microphoneMenuTooltip": "Выбрать микрофон",
     "speakerMenuTitle": "Динамик",
-    "speakerMenuTooltip": "Выбрать динамик"
+    "speakerMenuTooltip": "Выбрать динамик",
+    "microphoneButtonSplitRoleDescription": "Разворачивающаяся кнопка"
   },
   "devicesButton": {
     "label": "Устройства",

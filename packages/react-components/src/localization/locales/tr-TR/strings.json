@@ -42,7 +42,8 @@
     "tooltipOffContent": "Kamerayı aç",
     "tooltipVideoLoadingContent": "Video yükleniyor",
     "cameraMenuTitle": "Kamera",
-    "cameraMenuTooltip": "Kamera Seç"
+    "cameraMenuTooltip": "Kamera Seç",
+    "cameraButtonSplitRoleDescription": "Bölünmüş düğme"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Mikrofon Seç",
     "speakerMenuTitle": "Hoparlör",
-    "speakerMenuTooltip": "Hoparlör Seç"
+    "speakerMenuTooltip": "Hoparlör Seç",
+    "microphoneButtonSplitRoleDescription": "Bölünmüş düğme"
   },
   "devicesButton": {
     "label": "Cihazlar",
