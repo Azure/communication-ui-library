@@ -353,42 +353,48 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 }
 
 // @public
-export type CallWithChatAdapterManagement = {
-    removeParticipant(userId: string): Promise<void>;
+export interface CallWithChatAdapterManagement {
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta (undocumented)
+    cancelFileUpload: (id: string) => void;
+    // @beta (undocumented)
+    clearFileUploads: () => void;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    deleteMessage(messageId: string): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    fetchInitialData(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
-    startCamera(options?: VideoStreamOptions): Promise<void>;
-    stopCamera(): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
-    unmute(): Promise<void>;
-    startCall(participants: string[]): Call | undefined;
-    startScreenShare(): Promise<void>;
-    stopScreenShare(): Promise<void>;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
-    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    fetchInitialData(): Promise<void>;
+    // @beta (undocumented)
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // @beta (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
-    deleteMessage(messageId: string): Promise<void>;
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-} & {
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
-    clearFileUploads: () => void;
-    cancelFileUpload: (id: string) => void;
-    updateFileUploadProgress: (id: string, progress: number) => void;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    startCall(participants: string[]): Call | undefined;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    startScreenShare(): Promise<void>;
+    stopCamera(): Promise<void>;
+    stopScreenShare(): Promise<void>;
+    unmute(): Promise<void>;
+    // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
     updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-};
+    // @beta (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
+    updateMessage(messageId: string, content: string): Promise<void>;
+}
 
 // @public
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
