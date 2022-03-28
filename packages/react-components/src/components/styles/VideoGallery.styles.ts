@@ -198,7 +198,7 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
  */
 export const localVideoModalStyles: IModalStyles = {
   keyboardMoveIconContainer: {
-    zIndex: 6 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
   },
   root: undefined,
   main: undefined,
