@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Memoize chat bubble to avoid unnecessary re-render",
+  "packageName": "@internal/react-components",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
