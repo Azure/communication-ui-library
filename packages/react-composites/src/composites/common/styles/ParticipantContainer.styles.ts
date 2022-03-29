@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { ParticipantListStyles } from '@internal/react-components';
 
 /**
  * @private
@@ -45,6 +46,15 @@ export const sidePaneHeaderStyles: IStackItemStyles = {
 /**
  * @private
  */
+export const sidePaneHeaderContainerStyles: IStackStyles = {
+  root: {
+    margin: '0 0.25rem'
+  }
+};
+
+/**
+ * @private
+ */
 export const paneBodyContainer: IStackStyles = { root: { flexDirection: 'column', display: 'flex' } };
 
 /**
@@ -56,7 +66,13 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
  * @private
  */
 export const scrollableContainerContents: IStackItemStyles = {
-  root: { flexGrow: '1', flexBasis: '0', maxWidth: '100%' }
+  root: {
+    flexGrow: '1',
+    flexBasis: '0',
+    maxWidth: '100%',
+    // Create a new stacking context so that `pipStyles` can set zIndex above the container.
+    position: 'relative'
+  }
 };
 
 /**
@@ -100,8 +116,32 @@ export const participantListStack = mergeStyles({
 /**
  * @private
  */
-export const participantListStyle = mergeStyles({
+export const participantListContainerStyle = mergeStyles({
   height: '100%',
   overflowY: 'auto',
   overflowX: 'hidden'
 });
+
+/**
+ * @private
+ */
+export const participantListStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem'
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const participantListMobileStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem 1rem'
+    }
+  }
+};

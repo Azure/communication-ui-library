@@ -16,7 +16,8 @@ import {
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
   gutterWithAvatar,
-  gutterWithHiddenAvatar
+  gutterWithHiddenAvatar,
+  FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -169,6 +170,10 @@ export interface MessageThreadStrings {
   editMessage: string;
   /** String for removing message in floating menu */
   removeMessage: string;
+  /** String for resending failed message in floating menu */
+  resendMessage?: string;
+  /** String for indicating failed to send messages */
+  failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
   /** String for warning on text limit exceeded in EditBox*/
@@ -307,19 +312,24 @@ const memoizeAllMessages = memoizeFnAll(
     messageThreadParticipantCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
-    onDeleteMessage?: (messageId: string) => Promise<void>
+    onDeleteMessage?: (messageId: string) => Promise<void>,
+    onSendMessage?: (content: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message,
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
-      onDeleteMessage
+      onDeleteMessage,
+      onSendMessage
     };
 
     switch (message.messageType) {
       case 'chat': {
-        const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+        const myChatMessageStyle =
+          styles?.myChatMessageContainer || message.status === 'failed'
+            ? FailedMyChatMessageContainer
+            : defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
@@ -535,6 +545,14 @@ export type MessageThreadProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
 
   /**
+   * Optional callback to send a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onSendMessage?: (messageId: string) => Promise<void>;
+
+  /**
   /**
    * Disable editing messages.
    *
@@ -600,6 +618,14 @@ export type MessageProps = {
    *
    */
   onDeleteMessage?: (messageId: string) => Promise<void>;
+
+  /**
+   * Optional callback to send a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 /**
@@ -630,7 +656,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onDeleteMessage
+    onDeleteMessage,
+    onSendMessage
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -881,6 +908,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             inlineAcceptRejectEditButtons={!isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
+            messageStatus={messageProps.message.status}
           />
         );
       }
@@ -964,7 +992,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             messageThreadParticipantCount,
             onRenderMessage,
             onUpdateMessage,
-            onDeleteMessage
+            onDeleteMessage,
+            onSendMessage
           );
         });
       }),
@@ -985,6 +1014,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,
+      onSendMessage,
       strings
     ]
   );

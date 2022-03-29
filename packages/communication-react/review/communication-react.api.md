@@ -77,7 +77,7 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
@@ -580,7 +580,9 @@ export interface CallWithChatAdapterManagement {
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // @beta (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // @beta (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -594,6 +596,12 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // @beta (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
@@ -1301,9 +1309,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @beta
-export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
-
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
@@ -1384,6 +1389,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageEdit: JSX.Element;
     MessageFailed: JSX.Element;
     MessageRemove: JSX.Element;
+    MessageResend: JSX.Element;
     MessageSeen: JSX.Element;
     MessageSending: JSX.Element;
     OptionsCamera: JSX.Element;
@@ -1465,6 +1471,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    MessageResend: JSX.Element;
 };
 
 // @public
@@ -1636,25 +1643,30 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    off(event: 'uploadFail', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    on(event: 'uploadFail', listener: UploadFailedListener): void;
-}
+// @beta
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
 
 // @beta
 export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    file: File;
+    file?: File;
+    id: string;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
@@ -1662,7 +1674,7 @@ export interface FileUploadManager {
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
@@ -1843,6 +1855,7 @@ export type MessageProps = {
     disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1912,6 +1925,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -1931,6 +1945,7 @@ export interface MessageThreadStrings {
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
+    failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
     messageReadCount?: string;
@@ -1940,6 +1955,7 @@ export interface MessageThreadStrings {
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
+    resendMessage?: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -2021,13 +2037,6 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
-}
-
-// @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    fileName: string;
-    id: string;
-    metadata?: FileMetadata;
 }
 
 // @public
@@ -2254,6 +2263,12 @@ export type Selector = (state: ClientState, props: any) => any;
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
 
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
+
 // @public
 export interface SendBoxProps {
     // @beta
@@ -2415,15 +2430,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @beta
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
-
-// @beta
-export type UploadFailedListener = (id: string, message: string) => void;
-
-// @beta
-export type UploadProgressListener = (id: string, value: number) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;

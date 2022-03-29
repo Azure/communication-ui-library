@@ -21,12 +21,7 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import {
-  FileUploadButtonWrapper as FileUploadButton,
-  FileUpload,
-  FileUploadHandler,
-  FileDownloadHandler
-} from './file-sharing';
+import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler, FileDownloadHandler } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -41,6 +36,7 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
+/* @conditional-compile-remove(file-sharing) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
@@ -121,6 +117,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
 
   useEffect(() => {
+    // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
   }, [adapter]);
 
@@ -147,6 +144,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  /* @conditional-compile-remove(file-sharing) */
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = (files: FileList | null): void => {
@@ -154,9 +152,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
 
-    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove(file-sharing) */
-    fileSharing?.uploadHandler && adapter.registerFileUploads(fileUploads);
+    const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
+    /* @conditional-compile-remove(file-sharing) */
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 

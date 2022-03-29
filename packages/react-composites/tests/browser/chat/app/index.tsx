@@ -8,12 +8,8 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR,
-  createCompletedFileUpload,
-  useAzureCommunicationChatAdapter
-} from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
+// eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 
@@ -48,12 +44,25 @@ function App(): JSX.Element {
     }),
     []
   );
-  const adapter = useAzureCommunicationChatAdapter(args);
+  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
+    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+    await adapter.fetchInitialData();
+    return adapter;
+  });
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
-      const files = uploadedFiles.map((file) => createCompletedFileUpload(file));
-      adapter.registerFileUploads(files);
+      uploadedFiles.forEach((file) => {
+        if (file.error) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadFailed(file.error);
+        } else if (file.progress) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadProgressChanged(file.progress);
+        } else {
+          adapter.registerCompletedFileUploads([file]);
+        }
+      });
     }
   }, [adapter]);
 

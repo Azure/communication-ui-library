@@ -33,17 +33,11 @@ export type {
   FileDownloadError,
   FileDownloadHandler,
   FileMetadata,
-  FileUploadEventEmitter,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
-  ObservableFileUpload,
-  UploadCompleteListener,
-  UploadFailedListener,
-  UploadProgressListener
+  FileUploadError
 } from './file-sharing';
-/* @conditional-compile-remove(file-sharing) */
-export { createCompletedFileUpload } from './file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';
 /* @conditional-compile-remove(file-sharing) */

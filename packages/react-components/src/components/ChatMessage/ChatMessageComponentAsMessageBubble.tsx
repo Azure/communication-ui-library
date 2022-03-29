@@ -5,7 +5,11 @@ import { IStyle, mergeStyles } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
-import { chatMessageEditedTagStyle, chatMessageDateStyle } from '../styles/ChatMessageComponent.styles';
+import {
+  chatMessageEditedTagStyle,
+  chatMessageDateStyle,
+  chatMessageFailedTagStyle
+} from '../styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
@@ -23,8 +27,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
   disableEditing?: boolean;
   onEditClick: () => void;
   onRemoveClick?: () => void;
+  onResendClick?: () => void;
   strings: MessageThreadStrings;
   userId: string;
+  messageStatus?: string;
   /**
    * Whether the status indicator for each message is displayed or not.
    */
@@ -43,13 +49,14 @@ type ChatMessageComponentAsMessageBubbleProps = {
 };
 
 /** @private */
-export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
+const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
   const {
     message,
     onRemoveClick,
+    onResendClick,
     disableEditing,
     showDate,
     messageContainerStyle,
@@ -57,7 +64,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     onEditClick,
     remoteParticipantsCount = 0,
     onRenderAvatar,
-    showMessageStatus
+    showMessageStatus,
+    messageStatus
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -120,7 +128,11 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
             </Text>
           }
           details={
-            message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+            messageStatus === 'failed' ? (
+              <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>
+            ) : message.editedOn ? (
+              <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>
+            ) : undefined
           }
           positionActionMenu={false}
           actionMenu={actionMenuProps}
@@ -138,8 +150,10 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onDismiss={onActionFlyoutDismiss}
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
+          onResendClick={onResendClick}
           strings={strings}
           messageReadBy={message.readBy ?? []}
+          messageStatus={messageStatus ?? 'failed'}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}
           showMessageStatus={showMessageStatus}
@@ -150,3 +164,6 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
 
   return chatMessage;
 };
+
+/** @private */
+export const ChatMessageComponentAsMessageBubble = React.memo(MessageBubble);

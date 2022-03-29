@@ -92,6 +92,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
     [props.mobileView]
   );
+  const screenShareButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopScreenShareButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
+  );
   const commonButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
     [props.mobileView, theme]
@@ -153,7 +157,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   <ScreenShare
                     option={options.screenShareButton}
                     displayType={options.displayType}
-                    styles={commonButtonStyles}
+                    styles={screenShareButtonStyles}
                   />
                 )}
                 {props.mobileView && (
@@ -244,6 +248,20 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     background: 'none'
   }
 });
+
+const getDesktopScreenShareButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
+  const overrideStyles = {
+    border: 'none',
+    background: theme.palette.themePrimary,
+    color: theme.palette.white,
+    '* > svg': { fill: theme.palette.white }
+  };
+  const overrides: ControlBarButtonStyles = {
+    rootChecked: overrideStyles,
+    rootCheckedHovered: overrideStyles
+  };
+  return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
+};
 
 const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
   const overrides: ControlBarButtonStyles = {
