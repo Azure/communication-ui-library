@@ -10,7 +10,7 @@ on:
 
 jobs:
   create_release:
-    if: github.events.inputs.branch == 'prerelease-beta/**'
+    if: ${{ startsWith(github.events.inputs.branch, 'prerelease-')}}
     name: Create release branch
     runs_on: ubuntu-latest
     steps:
@@ -67,20 +67,17 @@ jobs:
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
-      # we want to disable the beta CI here if we are doing a stable release.
-      # how should we do that?
-
       # Commit new dependencies
       - name: Commit changes
         run: |
           git add .
           git commit -m "Selected stable sdk's for release branch"
+          git push -u origin ${{github.ref_name}}
 
       # Checkout back to pre-release branch
       - name: Hop back to pre-release branch
         run: git checkout ${{ github.event.inputs.branch }}
 
-      # Create pull request to orphan release branch
       - name: Create pull request for pre-release back to main
         run: |
           curl \
