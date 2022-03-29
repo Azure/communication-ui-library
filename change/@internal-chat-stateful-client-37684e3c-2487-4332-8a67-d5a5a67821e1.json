@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Tests for file download cards in message thread",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
