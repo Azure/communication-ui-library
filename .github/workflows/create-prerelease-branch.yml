@@ -97,6 +97,9 @@ jobs:
       - name: Hop into Groom branch
         run: |
           git checkout -b groom_changelog_${{ steps.version.outputs.version }}
+          touch GROOMME.md
+          echo 'Please groom the changelog and then delete me.' > GROOMME.md
+          git commit -m 'Create groom me file for groom changelog branch'
           git push -u origin ${{github.ref_name}}
 
       # Create a PR from the changes
