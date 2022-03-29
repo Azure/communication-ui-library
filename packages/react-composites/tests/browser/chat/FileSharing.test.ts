@@ -6,7 +6,7 @@ import {
   isTestProfileStableFlavor,
   stubMessageTimestamps
 } from '../common/utils';
-import { chatTestSetup } from '../common/chatTestHelpers';
+import { chatTestSetup, sendMessage } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -172,5 +172,33 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
+  });
+});
+
+test.describe('Filesharing Message Thread', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
+  });
+
+  test('contains File Download Card', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile1.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            uploadComplete: true
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await sendMessage(page, 'Hi');
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-file-download-card.png');
   });
 });
