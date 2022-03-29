@@ -107,11 +107,7 @@ const createChatContext = (): ChatContext =>
 
 /* @conditional-compile-remove(file-sharing) */
 const generateFiles = (quantity: number): File[] => {
-  const files: File[] = [];
-  for (let i = 0; i < quantity; i++) {
-    files.push(new File([], nanoid(), { type: 'text/plain' }));
-  }
-  return files;
+  return Array.from({ length: quantity }, () => new File([], nanoid(), { type: 'text/plain' }));
 };
 
 export default {};

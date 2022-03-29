@@ -102,16 +102,16 @@ export interface FileUploadManager {
 /**
  * A wrapper object for a file that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
- * @internal
+ * @private
  */
 export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   private _emitter: EventEmitter;
-  public id: string;
-  public file?: File;
+  public readonly id: string;
+  public readonly file?: File;
   /**
    * Filename to be displayed in the UI during file upload.
    */
-  public fileName: string;
+  public readonly fileName: string;
   /**
    * Optional object of type {@link FileMetadata}
    */
