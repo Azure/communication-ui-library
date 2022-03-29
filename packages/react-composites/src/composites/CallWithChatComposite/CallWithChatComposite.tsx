@@ -178,7 +178,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     } else {
       setActivePane('chat');
       // timeout is required to give the window time to render the sendbox so we have something to send focus to.
-      // TODO: look into another way to select this/ adjust composite to select this better.
+      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the TextBox.
       const chatFocusTimeout = setInterval(() => {
         const textBox = document.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
         if (textBox !== null) {
@@ -186,6 +186,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           clearInterval(chatFocusTimeout);
         }
       }, 3);
+      setTimeout(() => {
+        clearInterval(chatFocusTimeout);
+      }, 300);
     }
   }, [activePane, setActivePane]);
 
