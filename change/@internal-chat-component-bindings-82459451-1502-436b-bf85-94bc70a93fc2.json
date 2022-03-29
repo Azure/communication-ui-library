@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Disable RR in meeting interop",
+  "comment": "Disable Read Receipt details in meeting interop",
   "packageName": "@internal/chat-component-bindings",
   "email": "jiangnanhello@live.com",
   "dependentChangeType": "patch"
