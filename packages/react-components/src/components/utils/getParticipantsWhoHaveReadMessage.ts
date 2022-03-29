@@ -20,6 +20,9 @@ export const getParticipantsWhoHaveReadMessage = (
   message: ChatMessage,
   readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } }
 ): { id: string; name: string }[] => {
+  if (message.readBy !== undefined) {
+    return message.readBy;
+  }
   return (
     Object.entries(readReceiptForEachSender)
       // Filter to only read receipts that match the message OR the participant has read a different message after this message has been created
