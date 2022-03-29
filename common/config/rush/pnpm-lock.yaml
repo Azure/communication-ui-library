@@ -19894,6 +19894,7 @@ packages:
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
+      tslib: 2.3.1
       typescript: 4.3.5
       uuid: 8.3.2
       webpack: 5.38.1
@@ -19901,7 +19902,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-6aDU88VUUpxdWthncpdC/9XppY3btVdwzWtgua5pipoeccN14czaYV1Lz4bt6JPV8q2rCh8da0hpWYKyUhM/Ww==
+      integrity: sha512-r8iofS1jrEUYsE7GkxpyqBRk/Z89muSdjmcsKM8fDoON38IA/td55TJRCyjCFYyivaMdeaJr96x0fLIkQc8MBw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
