@@ -84,6 +84,11 @@ jobs:
           echo version: $ver
           echo "::set-output name=version::$ver"
 
+      # Set CI type whether it will run beta or not.
+      - name: Set the ci type JSON file
+        if: ${{github.events.inputs.bump_type == 'stable-patch' || 'stable-minor'}}
+        run: node common/scripts/set-ci-mode.js
+
       # Commit changes
       - name: Hop into new branch
         run: git checkout -b prerelease-${{github.events.inputs.bump_type}}/${{ steps.version.outputs.version }}
