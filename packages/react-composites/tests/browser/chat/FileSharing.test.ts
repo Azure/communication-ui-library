@@ -173,6 +173,26 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
   });
+
+  test('shows file upload in progress error', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            progress: 0.5
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await sendMessage(page, 'Hi');
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
+  });
 });
 
 test.describe('Filesharing Message Thread', async () => {

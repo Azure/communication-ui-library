@@ -12,7 +12,7 @@ export const participantItemContainerStyle = (isMe: boolean | undefined): IStyle
     paddingBottom: '0.25rem',
     display: 'flex',
     maxWidth: '100%',
-    minWidth: '12rem',
+    minWidth: '8rem',
     cursor: isMe ? 'default' : 'pointer',
     alignItems: 'center'
   };
