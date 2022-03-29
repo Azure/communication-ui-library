@@ -178,9 +178,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     } else {
       setActivePane('chat');
       // timeout is required to give the window time to render the sendbox so we have something to send focus to.
-      setTimeout(() => {
-        (document.querySelector(`[data-ui-id="sendbox-textfield"]`) as HTMLTextAreaElement)?.focus();
-      }, 10);
+      // TODO: look into another way to select this/ adjust composite to select this better.
+      const chatFocusTimeout = setInterval(() => {
+        const textBox = document.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+        if (textBox !== null) {
+          textBox.focus();
+          clearInterval(chatFocusTimeout);
+        }
+      }, 3);
     }
   }, [activePane, setActivePane]);
 
