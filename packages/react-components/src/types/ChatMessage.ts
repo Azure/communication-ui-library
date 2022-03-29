@@ -54,6 +54,11 @@ export interface ChatMessage extends MessageCommon {
   editedOn?: Date;
   deletedOn?: Date;
   senderId?: string;
+  readBy?: {
+    id: string;
+    name: string;
+  }[];
+  readNumber?: number;
   senderDisplayName?: string;
   status?: MessageStatus;
   attached?: MessageAttachedStatus;
