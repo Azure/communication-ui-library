@@ -1028,13 +1028,6 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
-    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
