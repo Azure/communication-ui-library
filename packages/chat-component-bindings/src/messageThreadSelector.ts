@@ -32,8 +32,8 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     userId: string,
     isSeen: boolean,
     isLargeGroup: boolean,
-    readNumber: number,
-    readBy: { id: string; name: string }[]
+    readNumber?: number,
+    readBy?: { id: string; name: string }[]
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -53,8 +53,8 @@ const convertToUiChatMessage = (
   userId: string,
   isSeen: boolean,
   isLargeGroup: boolean,
-  readNumber: number,
-  readBy: { id: string; name: string }[]
+  readNumber?: number,
+  readBy?: { id: string; name: string }[]
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -143,7 +143,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
     // filter out the non valid participants (no display name)
     // Read Receipt details will be disabled when participant count is 0
     const messageThreadParticipantCount = isTeamsInterop
-      ? 0
+      ? undefined
       : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
 
     // creating key value pairs of senderID: last read message information
@@ -175,10 +175,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) => {
-          const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
-            message,
-            readReceiptForEachSender
-          );
+          const readBy = isTeamsInterop
+            ? undefined
+            : getParticipantsWhoHaveReadMessage(message, readReceiptForEachSender);
 
           return memoizedFn(
             message.id ?? message.clientMessageId,
@@ -186,7 +185,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             userId,
             message.createdOn <= latestReadTime,
             isLargeGroup,
-            readBy.length,
+            readBy?.length,
             readBy
           );
         })
