@@ -49,7 +49,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
 };
 
 /** @private */
-export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
+const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
@@ -164,3 +164,6 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
 
   return chatMessage;
 };
+
+/** @private */
+export const ChatMessageComponentAsMessageBubble = React.memo(MessageBubble);
