@@ -125,7 +125,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           message,
           readReceiptForEachSender
         );
-        messageThreadReadCount = readBy.length;
+        messageThreadReadCount = message.readNumber ?? readBy.length;
       }
 
       return (
