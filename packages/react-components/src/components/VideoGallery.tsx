@@ -259,7 +259,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <Stack tabIndex={0} aria-label={'Movable Local Video Tile'} role={'dialog'}>
+      <Stack tabIndex={0} role={'dialog'}>
         <VideoTile
           key={localParticipant.userId}
           userId={localParticipant.userId}
