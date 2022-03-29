@@ -124,13 +124,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private registerFileUploads(files: File[] | FileMetadata[]): FileUploadManager[] {
     this.deleteErroneousFileUploads();
     const fileUploads: FileUpload[] = [];
-    files.forEach((file) => {
-      if (file instanceof File) {
-        fileUploads.push(new FileUpload({ file }));
-      } else {
-        fileUploads.push(new FileUpload({ metadata: file }));
-      }
-    });
+    files.forEach((file) => fileUploads.push(new FileUpload(file)));
     fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
     this.fileUploads = this.fileUploads.concat(fileUploads);
     this.context.addFileUploads(fileUploads);

@@ -117,13 +117,16 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
    */
   public metadata?: FileMetadata;
 
-  constructor(data: { file?: File; metadata?: FileMetadata }) {
-    this.id = nanoid();
-    this.file = data.file;
-    this.fileName = data.file?.name || data.metadata?.name || '';
-    this.metadata = data.metadata;
+  constructor(data: File | FileMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
+    this.id = nanoid();
+    if (data instanceof File) {
+      this.file = data;
+    } else {
+      this.metadata = data;
+    }
+    this.fileName = data.name;
   }
 
   notifyUploadProgressChanged(value: number): void {
