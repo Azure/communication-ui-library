@@ -111,11 +111,24 @@ const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveErrorMessag
       return false;
     }
 
+    // Explicitly ignore 400 REST error when listParticipants() is called and a BotContact MRI is found in the participants.
+    // This check should be removed when the chat SDK has handled this issue. Note: The this does not stop the error being logged to the console.
+    // To the best of our ability we have confirmed this to have no impact on the participantList returned (all valid participants are still returned), nor
+    // does it have an impact on the participant list updating on other participants joining/leaving or on individual participant actions like removeParticipant.
+    if (isErrorDueToBotContact(error)) {
+      // return false;
+    }
+
     // Chat service returns 403 if a user has been removed from a thread.
     // Chat service returns either 400 or 404 if the thread ID is malformed, depending on how the thread ID is malformed.
     return [400, 403, 404].some((statusCode) => error.innerError['statusCode'] === statusCode);
   });
 };
+
+const botContactMRIPrefix = '28:';
+const isErrorDueToBotContact = (error: ChatError): boolean =>
+  error.innerError['statusCode'] === 400 &&
+  error.innerError.message.includes(`Identifier format is not supported (${botContactMRIPrefix}`);
 
 const latestActiveErrorSatisfying = (
   errors: ChatErrors,
