@@ -19,7 +19,6 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
-import { useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -72,8 +71,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
 
-  const localeStrings = useLocale().strings.messageThread;
-
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via touch press.
   // Undefined indicates the flyout menu should not be being shown.
@@ -110,7 +107,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       <div ref={messageRef}>
         <Chat.Message
           className={mergeStyles(messageContainerStyle as IStyle)}
-          aria-description={localeStrings.chatMessageFlyoutButtonDescription}
           styles={messageContainerStyle}
           content={
             <ChatMessageContent
