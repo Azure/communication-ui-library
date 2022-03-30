@@ -10,14 +10,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  # get matrix for ci-jobs
+  get_matrix:
+    name: Set CI flavors
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # gets the matrix for ci run from the config file
+      - id: get-matrix
+        run: |
+          echo "::set-output name=matrix::$(cat common/config/gh-actions/ci-config.json)"
   build_packages:
     name: Build Packages
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -81,10 +93,7 @@ jobs:
     name: Call Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -145,10 +154,7 @@ jobs:
     name: Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -209,10 +215,7 @@ jobs:
     name: Call With Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -299,10 +302,7 @@ jobs:
     name: Build Calling Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -333,10 +333,7 @@ jobs:
     name: Build Chat Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -367,10 +364,7 @@ jobs:
     name: Build CallWithChat Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -401,10 +395,7 @@ jobs:
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -453,10 +444,7 @@ jobs:
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
