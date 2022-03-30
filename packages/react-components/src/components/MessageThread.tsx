@@ -190,6 +190,8 @@ export interface MessageThreadStrings {
   editBoxCancelButton: string;
   /** String for Submit in EditBox when there is no user input*/
   editBoxSubmitButton: string;
+  /** String for Chat Message Flyout Button aria description*/
+  chatMessageFlyoutButtonDescription: string;
 }
 
 /**

@@ -105,7 +105,8 @@
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
-    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
+    "chatMessageFlyoutButtonDescription": "More options available"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -131,7 +132,8 @@
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
     "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
-    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen."
+    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
+    "dismissButtonAriaLabel": "Close"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
