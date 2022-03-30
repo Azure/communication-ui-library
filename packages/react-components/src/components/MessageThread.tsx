@@ -940,7 +940,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return <></>;
     },
     [
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
       isNarrow,
       participantCount,
