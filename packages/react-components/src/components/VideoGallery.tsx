@@ -31,7 +31,8 @@ import {
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  localVideoTileStartPositionPX
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -155,6 +156,12 @@ const DRAG_OPTIONS: IDragOptions = {
   menu: ContextualMenu,
   keepInBounds: true
 };
+
+// Manually override the max position used to keep the modal in the bounds of its container.
+// This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
+// Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
+// position the modal can be dragged to.
+const maxDragPosition = { x: localVideoTileStartPositionPX.bottom, y: localVideoTileStartPositionPX.right };
 
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
@@ -386,6 +393,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
             layerProps={{ hostId: layerHostId }}
+            maxDragPosition={maxDragPosition}
           >
             {localVideoTile}
           </ModalClone>

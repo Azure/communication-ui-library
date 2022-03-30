@@ -43,6 +43,11 @@ import { useWindow } from '@fluentui/react-window-provider';
 
 // @TODO - need to change this to a panel whenever the breakpoint is under medium (verify the spec)
 
+interface ExtendedIModalProps extends IModalProps {
+  minDragPosition?: ICoordinates;
+  maxDragPosition?: ICoordinates;
+}
+
 const animationDuration = AnimationVariables.durationValue2;
 type ICoordinates = { x: number; y: number };
 
@@ -66,7 +71,7 @@ interface IModalInternalState {
 
 const ZERO: ICoordinates = { x: 0, y: 0 };
 
-const DEFAULT_PROPS: Partial<IModalProps> = {
+const DEFAULT_PROPS: Partial<ExtendedIModalProps> = {
   isOpen: false,
   isDarkOverlay: true,
   className: '',
@@ -103,7 +108,7 @@ const useComponentRef = (props: IModalProps, focusTrapZone: React.RefObject<IFoc
   );
 };
 
-const ModalBase: React.FunctionComponent<IModalProps> = React.forwardRef<HTMLDivElement, IModalProps>(
+const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef<HTMLDivElement, ExtendedIModalProps>(
   (propsWithoutDefaults, ref) => {
     const props = getPropsWithDefaults(DEFAULT_PROPS, propsWithoutDefaults);
     const {
@@ -133,7 +138,9 @@ const ModalBase: React.FunctionComponent<IModalProps> = React.forwardRef<HTMLDiv
       onLayerDidMount,
       isModeless,
       dragOptions,
-      onDismissed
+      onDismissed,
+      minDragPosition,
+      maxDragPosition
     } = props;
 
     const rootRef = React.useRef<HTMLDivElement>(null);
@@ -221,8 +228,8 @@ const ModalBase: React.FunctionComponent<IModalProps> = React.forwardRef<HTMLDiv
 
         if (keepInBounds) {
           // x/y are unavailable in IE, so use the equivalent left/top
-          internalState.minPosition = { x: -modalRectangle.left, y: -modalRectangle.top };
-          internalState.maxPosition = { x: modalRectangle.left, y: modalRectangle.top };
+          internalState.minPosition = minDragPosition ?? { x: -modalRectangle.left, y: -modalRectangle.top };
+          internalState.maxPosition = maxDragPosition ?? { x: modalRectangle.left, y: modalRectangle.top };
         }
       }
     };
@@ -1029,13 +1036,12 @@ const getStyles = (props: IModalStyleProps): IModalStyles => {
 };
 
 /** @private */
-export const ModalClone: React.FunctionComponent<IModalProps> = styled<IModalProps, IModalStyleProps, IModalStyles>(
-  ModalBase,
-  getStyles,
-  undefined,
-  {
-    scope: 'Modal',
-    fields: ['theme', 'styles', 'enableAriaHiddenSiblings']
-  }
-);
+export const ModalClone: React.FunctionComponent<ExtendedIModalProps> = styled<
+  ExtendedIModalProps,
+  IModalStyleProps,
+  IModalStyles
+>(ModalBase, getStyles, undefined, {
+  scope: 'Modal',
+  fields: ['theme', 'styles', 'enableAriaHiddenSiblings']
+});
 ModalClone.displayName = 'Modal';
