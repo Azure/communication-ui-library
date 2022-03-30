@@ -8,7 +8,7 @@ import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(file-sharing) */
-import { ChatAdapterState, ObservableFileUpload } from '..';
+import { ChatAdapterState } from '..';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
@@ -23,23 +23,22 @@ describe('registerFileUploads()', () => {
   test('should create file uploads in state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    adapter.registerFileUploads(generateObservableFileUploads(1));
+    adapter.registerActiveFileUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(1);
   });
 
   test('should append file uploads to state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    adapter.registerFileUploads(generateObservableFileUploads(1));
-    adapter.registerFileUploads(generateObservableFileUploads(1));
+    adapter.registerActiveFileUploads(generateFiles(1));
+    adapter.registerActiveFileUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(2);
   });
 
   test('should append file uploads to state without changing existing file uploads', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    const fileUploads_1 = generateObservableFileUploads(1);
-    adapter.registerFileUploads(fileUploads_1);
+    const fileUploads_1 = adapter.registerActiveFileUploads(generateFiles(1));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.fileUploads?.[fileUploads_1[0].id]) {
@@ -47,8 +46,7 @@ describe('registerFileUploads()', () => {
         }
       })
     );
-    const fileUploads_2 = generateObservableFileUploads(1);
-    adapter.registerFileUploads(fileUploads_2);
+    adapter.registerActiveFileUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(2);
     expect(chatContext.getState().fileUploads?.[fileUploads_1[0].id].progress).toBe(0.75);
   });
@@ -56,8 +54,7 @@ describe('registerFileUploads()', () => {
   test('should remove erroneous file uploads from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    const fileUploads = generateObservableFileUploads(2);
-    adapter.registerFileUploads(fileUploads);
+    const fileUploads = adapter.registerActiveFileUploads(generateFiles(2));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.fileUploads?.[fileUploads[0].id]) {
@@ -65,7 +62,7 @@ describe('registerFileUploads()', () => {
         }
       })
     );
-    adapter.registerFileUploads(generateObservableFileUploads(2));
+    adapter.registerActiveFileUploads(generateFiles(2));
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(3);
   });
 });
@@ -75,7 +72,7 @@ describe('clearFileUploads()', () => {
   test('should remove all file uploads from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    adapter.registerFileUploads(generateObservableFileUploads(5));
+    adapter.registerActiveFileUploads(generateFiles(5));
     adapter.clearFileUploads();
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(0);
   });
@@ -86,8 +83,7 @@ describe('cancelFileUpload()', () => {
   test('should remove file upload from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationFileUploadAdapter(chatContext);
-    const fileUploads = generateObservableFileUploads(5);
-    adapter.registerFileUploads(fileUploads);
+    const fileUploads = adapter.registerActiveFileUploads(generateFiles(5));
     adapter.cancelFileUpload(fileUploads[0].id);
     expect(Object.values(chatContext.getState().fileUploads || {}).length).toBe(4);
     adapter.cancelFileUpload(fileUploads[1].id);
@@ -110,21 +106,8 @@ const createChatContext = (): ChatContext =>
   );
 
 /* @conditional-compile-remove(file-sharing) */
-const generateObservableFileUploads = (quantity: number): ObservableFileUpload[] => {
-  const fileUploads: ObservableFileUpload[] = [];
-  for (let i = 0; i < quantity; i++) {
-    fileUploads.push({
-      fileName: `SampleName-${nanoid()}.pdf`,
-      id: `SampleID-${nanoid()}`,
-      on() {
-        // noop
-      },
-      off() {
-        // noop
-      }
-    });
-  }
-  return fileUploads;
+const generateFiles = (quantity: number): File[] => {
+  return Array.from({ length: quantity }, () => new File([], nanoid(), { type: 'text/plain' }));
 };
 
 export default {};
