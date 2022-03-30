@@ -28,7 +28,7 @@ jobs:
           node-version: '14.x'
       # gets the matrix for ci run from the config file
       - id: get-matrix
-        run: echo "::set-output name=matrix::${node common/scripts/}"
+        run: echo "::set-output name=matrix::${node common/scripts/get-ci-mode.js}"
   build_packages:
     needs: get_matrix
     name: Build Packages
