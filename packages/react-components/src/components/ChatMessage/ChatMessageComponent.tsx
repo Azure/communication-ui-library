@@ -39,7 +39,7 @@ type ChatMessageComponentProps = {
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
-    setMessageReadBy: (readBy: { id: string; name: string }[]) => void
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
   ) => void;
   /**
    * Optional callback to override render of the avatar.

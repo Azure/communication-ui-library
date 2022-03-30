@@ -5,6 +5,7 @@ export { createStatefulChatClient } from './StatefulChatClient';
 
 export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+export type { ReadReceiptsBySenderId } from './types/ReadReceiptsBySenderId';
 export type {
   ChatClientState,
   ChatError,

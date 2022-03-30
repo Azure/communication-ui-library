@@ -32,7 +32,8 @@ import {
   OnRenderAvatarCallback,
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
-  Message
+  Message,
+  ReadReceiptsBySenderId
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -303,15 +304,15 @@ const memoizeAllMessages = memoizeFnAll(
     defaultStatusRenderer: (
       message: ChatMessage,
       status: MessageStatus,
-      readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } },
-      messageThreadParticipantCount: number
+      readReceiptsBySenderId: ReadReceiptsBySenderId,
+      participantCount: number
     ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
-    messageThreadParticipantCount?: number,
-    readReceiptForEachSender?: { [key: string]: { lastReadMessage: string; name: string } },
+    participantCount?: number,
+    readReceiptsBySenderId?: ReadReceiptsBySenderId,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>,
@@ -383,8 +384,8 @@ const memoizeAllMessages = memoizeFnAll(
                       defaultStatusRenderer(
                         message,
                         statusToRender,
-                        readReceiptForEachSender ?? {},
-                        messageThreadParticipantCount ? messageThreadParticipantCount : 0
+                        readReceiptsBySenderId ?? {},
+                        participantCount ? participantCount : 0
                       )
                     )
                   ) : (
@@ -452,11 +453,11 @@ export type MessageThreadProps = {
   /**
    * number of participants in the thread
    */
-  messageThreadParticipantCount?: number;
+  participantCount?: number;
   /**
    * read receipts for each sender in the chat
    */
-  readReceiptForEachSender?: { [key: string]: { lastReadMessage: string; name: string } };
+  readReceiptsBySenderId?: ReadReceiptsBySenderId;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -650,8 +651,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
-    messageThreadParticipantCount,
-    readReceiptForEachSender,
+    participantCount,
+    readReceiptsBySenderId,
     styles,
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
@@ -902,20 +903,16 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
-  const messageThreadParticipantCountRef = useRef(messageThreadParticipantCount);
-  const readReceiptForEachSenderRef = useRef(readReceiptForEachSender);
+  const participantCountRef = useRef(participantCount);
+  const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
 
-  messageThreadParticipantCountRef.current = messageThreadParticipantCount;
-  readReceiptForEachSenderRef.current = readReceiptForEachSender;
+  participantCountRef.current = participantCount;
+  readReceiptsBySenderIdRef.current = readReceiptsBySenderId;
 
   const onActionButtonClickMemo = useCallback(
-    (message: ChatMessage, setMessageReadBy: (readBy: { id: string; name: string }[]) => void) => {
-      if (
-        messageThreadParticipantCountRef.current &&
-        messageThreadParticipantCountRef.current - 1 > 1 &&
-        readReceiptForEachSenderRef.current
-      ) {
-        setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptForEachSenderRef.current));
+    (message: ChatMessage, setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void) => {
+      if (participantCountRef.current && participantCountRef.current - 1 > 1 && readReceiptsBySenderIdRef.current) {
+        setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderIdRef.current));
       }
     },
     []
@@ -931,7 +928,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onRenderFileDownloads={props.onRenderFileDownloads}
             message={messageProps.message}
             userId={props.userId}
-            remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
+            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
@@ -946,7 +943,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
       isNarrow,
-      messageThreadParticipantCount,
+      participantCount,
       onRenderAvatar,
       onActionButtonClickMemo,
       props.onRenderFileDownloads,
@@ -961,23 +958,30 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const defaultStatusRenderer: (
     message: ChatMessage,
     status: MessageStatus,
-    readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } },
-    messageThreadParticipantCount: number
+    readReceiptsBySenderId: ReadReceiptsBySenderId,
+    participantCount: number
   ) => JSX.Element = useCallback(
     (
       message: ChatMessage,
       status: MessageStatus,
-      readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } },
-      messageThreadParticipantCount: number
-    ) => (
-      <MessageStatusIndicator
-        message={message}
-        status={status}
-        readReceiptForEachSender={readReceiptForEachSender}
-        // -1 because participant count does not include myself
-        remoteParticipantsCount={messageThreadParticipantCount ? messageThreadParticipantCount - 1 : 0}
-      />
-    ),
+      readReceiptsBySenderId: ReadReceiptsBySenderId,
+      participantCount: number
+    ) => {
+      let readBy: { id: string; displayName: string }[] = [];
+
+      if (status === 'seen') {
+        readBy = getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderId);
+      }
+
+      return (
+        <MessageStatusIndicator
+          status={status}
+          readCount={readBy ? readBy.length : 0}
+          // -1 because participant count does not include myself
+          remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+        />
+      );
+    },
     []
   );
 
@@ -1029,8 +1033,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
-            messageThreadParticipantCount,
-            readReceiptForEachSender,
+            participantCount,
+            readReceiptsBySenderId,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage,
@@ -1047,12 +1051,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
-      readReceiptForEachSender,
+      readReceiptsBySenderId,
       defaultChatMessageRenderer,
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
-      messageThreadParticipantCount,
+      participantCount,
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,

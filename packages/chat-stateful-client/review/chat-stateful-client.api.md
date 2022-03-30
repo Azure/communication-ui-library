@@ -71,6 +71,14 @@ export type ChatThreadProperties = {
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
+
+// @public
 export interface StatefulChatClient extends ChatClient {
     getState(): ChatClientState;
     offStateChange(handler: (state: ChatClientState) => void): void;

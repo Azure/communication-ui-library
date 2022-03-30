@@ -11,7 +11,7 @@ import {
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus, ReadReceiptsBySenderId } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
@@ -131,20 +131,18 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
   (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
     // get number of participants
     // filter out the non valid participants (no display name)
-    const messageThreadParticipantCount = Object.values(participants).filter(
-      (p) => p.displayName && p.displayName !== ''
-    ).length;
+    const participantCount = Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
 
     // creating key value pairs of senderID: last read message information
 
-    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } } = {};
+    const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
 
-    // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
+    // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
     readReceipts.forEach((r) => {
-      readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
+      readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
         lastReadMessage: r.chatMessageId,
-        name: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+        displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
       };
     });
 
@@ -179,8 +177,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
       userId,
       showMessageStatus: !isLargeGroup,
       messages: convertedMessages,
-      messageThreadParticipantCount,
-      readReceiptForEachSender
+      participantCount,
+      readReceiptsBySenderId
     };
   }
 );

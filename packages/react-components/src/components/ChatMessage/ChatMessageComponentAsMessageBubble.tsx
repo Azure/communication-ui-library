@@ -42,7 +42,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
-    setMessageReadBy: (readBy: { id: string; name: string }[]) => void
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
   ) => void;
   /**
    * Optional callback to override render of the avatar.
@@ -85,7 +85,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
-  const [messageReadBy, setMessageReadBy] = useState<{ id: string; name: string }[]>([]);
+  const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
     ? undefined
