@@ -29,7 +29,7 @@ jobs:
     name: Build Packages
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
