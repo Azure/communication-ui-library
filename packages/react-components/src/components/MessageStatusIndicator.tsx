@@ -3,7 +3,7 @@
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
@@ -46,8 +46,7 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
-  /** how many people have read the message */
-  readCount?: number;
+  onToggleToolTip?: (setReadCount: (readCount: number) => void) => void;
   /** number of participants not including myself */
   remoteParticipantsCount?: number;
   /**
@@ -72,10 +71,11 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, remoteParticipantsCount, readCount } = props;
+  const { status, styles, remoteParticipantsCount, onToggleToolTip } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
+  const [readCount, setReadCount] = useState(0);
 
   switch (status) {
     case 'failed':
@@ -126,6 +126,11 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
                   remoteParticipantsCount: `${remoteParticipantsCount}`
                 })
           }
+          onTooltipToggle={() => {
+            if (onToggleToolTip) {
+              onToggleToolTip(setReadCount);
+            }
+          }}
         >
           <Icon
             role="status"

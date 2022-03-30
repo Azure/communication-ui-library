@@ -11,14 +11,15 @@ import {
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatClientState, ChatMessageWithStatus, ReadReceiptsBySenderId } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
   Message,
   CommunicationParticipant,
   SystemMessage,
-  MessageContentType
+  MessageContentType,
+  ReadReceiptsBySenderId
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';

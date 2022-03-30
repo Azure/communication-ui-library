@@ -302,10 +302,9 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultStatusRenderer: (
-      message: ChatMessage,
       status: MessageStatus,
-      readReceiptsBySenderId: ReadReceiptsBySenderId,
-      participantCount: number
+      participantCount: number,
+      onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
     ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
@@ -354,6 +353,11 @@ const memoizeAllMessages = memoizeFnAll(
         const chatGutterStyles =
           message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
+        const onToggleToolTip = (setReadCount: (readCount: number) => void) => {
+          if (readReceiptsBySenderId) {
+            setReadCount(getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderId).length);
+          }
+        };
         return {
           gutter: {
             styles: chatGutterStyles,
@@ -381,12 +385,7 @@ const memoizeAllMessages = memoizeFnAll(
                     onRenderMessageStatus ? (
                       onRenderMessageStatus({ status: statusToRender })
                     ) : (
-                      defaultStatusRenderer(
-                        message,
-                        statusToRender,
-                        readReceiptsBySenderId ?? {},
-                        participantCount ? participantCount : 0
-                      )
+                      defaultStatusRenderer(statusToRender, participantCount ? participantCount : 0, onToggleToolTip)
                     )
                   ) : (
                     <div className={mergeStyles(noMessageStatusStyle)} />
@@ -956,27 +955,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const defaultStatusRenderer: (
-    message: ChatMessage,
     status: MessageStatus,
-    readReceiptsBySenderId: ReadReceiptsBySenderId,
-    participantCount: number
+    participantCount: number,
+    onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
   ) => JSX.Element = useCallback(
     (
-      message: ChatMessage,
       status: MessageStatus,
-      readReceiptsBySenderId: ReadReceiptsBySenderId,
-      participantCount: number
+      participantCount: number,
+      onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
     ) => {
-      let readBy: { id: string; displayName: string }[] = [];
-
-      if (status === 'seen') {
-        readBy = getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderId);
-      }
-
       return (
         <MessageStatusIndicator
           status={status}
-          readCount={readBy ? readBy.length : 0}
+          onToggleToolTip={onToggleToolTip}
           // -1 because participant count does not include myself
           remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
         />
