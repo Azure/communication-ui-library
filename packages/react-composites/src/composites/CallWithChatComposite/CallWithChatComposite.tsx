@@ -172,17 +172,21 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setActivePane('none');
   }, [setActivePane]);
 
+  /** Constant setting of id for the parent stack of the composite */
+  const compositeParentDivId = 'callWithChatCompositeParentDiv-internal';
+
   const toggleChat = useCallback(() => {
     if (activePane === 'chat') {
       setActivePane('none');
     } else {
       setActivePane('chat');
       // timeout is required to give the window time to render the sendbox so we have something to send focus to.
-      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the TextBox.
+      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
       const chatFocusTimeout = setInterval(() => {
-        const textBox = document.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
-        if (textBox !== null) {
-          textBox.focus();
+        const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
+        const sendbox = callWithChatCompositeRootDiv?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+        if (sendbox !== null) {
+          sendbox.focus();
           clearInterval(chatFocusTimeout);
         }
       }, 3);
@@ -190,7 +194,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         clearInterval(chatFocusTimeout);
       }, 300);
     }
-  }, [activePane, setActivePane]);
+  }, [activePane, setActivePane, compositeParentDivId]);
 
   const togglePeople = useCallback(() => {
     if (activePane === 'people') {
@@ -235,7 +239,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
-    <Stack verticalFill grow styles={compositeOuterContainerStyles}>
+    <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
       <Stack horizontal grow>
         {!isMobileWithActivePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
