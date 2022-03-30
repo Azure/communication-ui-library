@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
       # gets the matrix for ci run from the config file
       - id: get-matrix
-        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
+        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"}]}"
   build_packages:
     needs: get_matrix
     name: Build Packages
