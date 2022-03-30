@@ -42,7 +42,8 @@
     "tooltipOffContent": "カメラをオンにする",
     "tooltipVideoLoadingContent": "ビデオの読み込み中です",
     "cameraMenuTitle": "カメラ",
-    "cameraMenuTooltip": "カメラの選択"
+    "cameraMenuTooltip": "カメラの選択",
+    "cameraButtonSplitRoleDescription": "分割ボタン"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "マイク",
     "microphoneMenuTooltip": "マイクの選択",
     "speakerMenuTitle": "スピーカー",
-    "speakerMenuTooltip": "スピーカーの選択"
+    "speakerMenuTooltip": "スピーカーの選択",
+    "microphoneButtonSplitRoleDescription": "分割ボタン"
   },
   "devicesButton": {
     "label": "デバイス",

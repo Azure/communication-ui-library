@@ -42,7 +42,8 @@
     "tooltipOffContent": "Kamera einschalten",
     "tooltipVideoLoadingContent": "Video wird geladen",
     "cameraMenuTitle": "Kamera",
-    "cameraMenuTooltip": "Kamera auswählen"
+    "cameraMenuTooltip": "Kamera auswählen",
+    "cameraButtonSplitRoleDescription": "Unterteilte Schaltfläche"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Mikrofon auswählen",
     "speakerMenuTitle": "Lautsprecher",
-    "speakerMenuTooltip": "Lautsprecher auswählen"
+    "speakerMenuTooltip": "Lautsprecher auswählen",
+    "microphoneButtonSplitRoleDescription": "Unterteilte Schaltfläche"
   },
   "devicesButton": {
     "label": "Geräte",

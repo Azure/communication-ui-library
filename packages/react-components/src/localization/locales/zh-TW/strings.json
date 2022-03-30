@@ -42,7 +42,8 @@
     "tooltipOffContent": "開啟相機",
     "tooltipVideoLoadingContent": "正在載入影片",
     "cameraMenuTitle": "相機",
-    "cameraMenuTooltip": "選擇攝影機"
+    "cameraMenuTooltip": "選擇攝影機",
+    "cameraButtonSplitRoleDescription": "[分割] 按鈕"
   },
   "microphoneButton": {
     "onLabel": "靜音",
@@ -53,7 +54,8 @@
     "microphoneMenuTitle": "麥克風",
     "microphoneMenuTooltip": "選擇麥克風",
     "speakerMenuTitle": "揚聲器",
-    "speakerMenuTooltip": "選擇揚聲器"
+    "speakerMenuTooltip": "選擇揚聲器",
+    "microphoneButtonSplitRoleDescription": "[分割] 按鈕"
   },
   "devicesButton": {
     "label": "裝置",
