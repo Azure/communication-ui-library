@@ -6,12 +6,12 @@ const parseCIFlavors = () => {
             return 'failed to open CI Flavor config file';
         }
         let configJson = JSON.parse(data);
-        return configJson;
+        console.log(configJson);
     });
 }
 
 const main = () => {
-   return parseCIFlavors();
+   parseCIFlavors();
 }
 
 main();
