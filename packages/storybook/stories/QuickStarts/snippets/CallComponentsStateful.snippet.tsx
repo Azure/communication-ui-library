@@ -8,7 +8,7 @@ import {
   EndCallButton
 } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 function CallingComponents(): JSX.Element {
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -16,6 +16,17 @@ function CallingComponents(): JSX.Element {
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
+
+  const [callEnded, setCallEnded] = useState(false);
+
+  const onHangup = useCallback(async (): Promise<void> => {
+    await endCallProps.onHangUp();
+    setCallEnded(true);
+  }, [endCallProps.onHangUp]);
+
+  if (callEnded) {
+    return <CallEnded />;
+  }
 
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
@@ -27,10 +38,13 @@ function CallingComponents(): JSX.Element {
         {cameraProps && <CameraButton {...cameraProps} />}
         {microphoneProps && <MicrophoneButton {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton {...screenShareProps} />}
-        {endCallProps && <EndCallButton {...endCallProps} />}
+        {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
       </ControlBar>
     </Stack>
   );
 }
 
+function CallEnded(): JSX.Element {
+  return <h1>You ended the call.</h1>;
+}
 export default CallingComponents;
