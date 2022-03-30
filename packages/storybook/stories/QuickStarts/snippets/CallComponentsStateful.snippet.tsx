@@ -47,4 +47,5 @@ function CallingComponents(): JSX.Element {
 function CallEnded(): JSX.Element {
   return <h1>You ended the call.</h1>;
 }
+
 export default CallingComponents;
