@@ -116,7 +116,7 @@ const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveErrorMessag
     // To the best of our ability we have confirmed this to have no impact on the participantList returned (all valid participants are still returned), nor
     // does it have an impact on the participant list updating on other participants joining/leaving or on individual participant actions like removeParticipant.
     if (isErrorDueToBotContact(error)) {
-      // return false;
+      return false;
     }
 
     // Chat service returns 403 if a user has been removed from a thread.
