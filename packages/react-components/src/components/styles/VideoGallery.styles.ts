@@ -54,7 +54,16 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    {
+      main: {
+        boxShadow: theme.effects.elevation8,
+        ':focus-within': {
+          boxShadow: theme.effects.elevation16,
+          border: `0.125rem solid ${theme.palette.neutralPrimary}`
+        }
+      }
+    },
+    localVideoModalStyles
   );
 };
 
@@ -180,5 +189,15 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
     // styles to remove the unwanted white highlight and blue colour after tapping on button.
     color: '#FFFFFF',
     background: 'transparent'
+  }
+};
+
+/**
+ * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
+ * @private
+ */
+export const localVideoModalStyles: Partial<IModalStyles> = {
+  keyboardMoveIconContainer: {
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
   }
 };
