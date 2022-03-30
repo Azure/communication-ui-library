@@ -31,7 +31,8 @@ import {
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  localVideoTileStartPositionPX
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
@@ -156,6 +157,12 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+// Manually override the max position used to keep the modal in the bounds of its container.
+// This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
+// Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
+// position the modal can be dragged to.
+const maxDragPosition = { x: localVideoTileStartPositionPX.bottom, y: localVideoTileStartPositionPX.right };
+
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
  * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
@@ -259,28 +266,30 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <VideoTile
-        key={localParticipant.userId}
-        userId={localParticipant.userId}
-        renderElement={
-          localVideoStream?.renderElement ? (
-            <>
-              {
-                /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-                localCameraCycleButton(localVideoCameraCycleButtonProps)
-              }
-              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-            </>
-          ) : undefined
-        }
-        showLabel={!(shouldFloatLocalVideo && isNarrow)}
-        displayName={isNarrow ? '' : strings.localVideoLabel}
-        initialsName={localParticipant.displayName}
-        styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={localParticipant.isMuted}
-        showMuteIndicator={showMuteIndicator}
-      />
+      <Stack tabIndex={0} role={'dialog'}>
+        <VideoTile
+          key={localParticipant.userId}
+          userId={localParticipant.userId}
+          renderElement={
+            localVideoStream?.renderElement ? (
+              <>
+                {
+                  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+                  localCameraCycleButton(localVideoCameraCycleButtonProps)
+                }
+                <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+              </>
+            ) : undefined
+          }
+          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          displayName={isNarrow ? '' : strings.localVideoLabel}
+          initialsName={localParticipant.displayName}
+          styles={localVideoTileStylesThemed}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={localParticipant.isMuted}
+          showMuteIndicator={showMuteIndicator}
+        />
+      </Stack>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -384,6 +393,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
             layerProps={{ hostId: layerHostId }}
+            maxDragPosition={maxDragPosition}
           >
             {localVideoTile}
           </ModalClone>
