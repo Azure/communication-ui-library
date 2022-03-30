@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -54,8 +55,23 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    {
+      main: {
+        boxShadow: theme.effects.elevation8,
+        ':focus-within': {
+          boxShadow: theme.effects.elevation16,
+          border: `2px solid ${theme.palette.neutralPrimary}`
+        }
+      }
+    },
+    localVideoModalStyles
   );
+};
+
+/** @private */
+export const localVideoTileStartPositionPX = {
+  bottom: 8,
+  right: 8
 };
 
 /**
@@ -66,10 +82,12 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
     minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
     minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
     position: 'absolute',
-    bottom: '0.5rem',
+    bottom: `${_pxToRem(localVideoTileStartPositionPX.bottom)}`,
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+    ...(theme.rtl
+      ? { left: `${_pxToRem(localVideoTileStartPositionPX.right)}` }
+      : { right: `${_pxToRem(localVideoTileStartPositionPX.right)}` })
   };
 };
 
@@ -180,5 +198,15 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
     // styles to remove the unwanted white highlight and blue colour after tapping on button.
     color: '#FFFFFF',
     background: 'transparent'
+  }
+};
+
+/**
+ * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
+ * @private
+ */
+export const localVideoModalStyles: Partial<IModalStyles> = {
+  keyboardMoveIconContainer: {
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
   }
 };

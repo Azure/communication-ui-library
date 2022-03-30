@@ -580,7 +580,9 @@ export interface CallWithChatAdapterManagement {
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     // @beta (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // @beta (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -594,6 +596,12 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // @beta (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
@@ -1294,9 +1302,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @beta
-export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
-
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
@@ -1631,7 +1636,15 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
 // @beta
@@ -1640,22 +1653,13 @@ export type FileUploadError = {
     timestamp: number;
 };
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    off(event: 'uploadFail', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    on(event: 'uploadFail', listener: UploadFailedListener): void;
-}
-
 // @beta
 export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    file: File;
+    file?: File;
+    id: string;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
@@ -2027,13 +2031,6 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
-}
-
-// @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    fileName: string;
-    id: string;
-    metadata?: FileMetadata;
 }
 
 // @public
@@ -2435,15 +2432,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @beta
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
-
-// @beta
-export type UploadFailedListener = (id: string, message: string) => void;
-
-// @beta
-export type UploadProgressListener = (id: string, value: number) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
