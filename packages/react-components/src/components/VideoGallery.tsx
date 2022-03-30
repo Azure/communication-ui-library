@@ -259,28 +259,30 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <VideoTile
-        key={localParticipant.userId}
-        userId={localParticipant.userId}
-        renderElement={
-          localVideoStream?.renderElement ? (
-            <>
-              {
-                /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-                localCameraCycleButton(localVideoCameraCycleButtonProps)
-              }
-              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-            </>
-          ) : undefined
-        }
-        showLabel={!(shouldFloatLocalVideo && isNarrow)}
-        displayName={isNarrow ? '' : strings.localVideoLabel}
-        initialsName={localParticipant.displayName}
-        styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={localParticipant.isMuted}
-        showMuteIndicator={showMuteIndicator}
-      />
+      <Stack tabIndex={0} role={'dialog'}>
+        <VideoTile
+          key={localParticipant.userId}
+          userId={localParticipant.userId}
+          renderElement={
+            localVideoStream?.renderElement ? (
+              <>
+                {
+                  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+                  localCameraCycleButton(localVideoCameraCycleButtonProps)
+                }
+                <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+              </>
+            ) : undefined
+          }
+          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          displayName={isNarrow ? '' : strings.localVideoLabel}
+          initialsName={localParticipant.displayName}
+          styles={localVideoTileStylesThemed}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={localParticipant.isMuted}
+          showMuteIndicator={showMuteIndicator}
+        />
+      </Stack>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
