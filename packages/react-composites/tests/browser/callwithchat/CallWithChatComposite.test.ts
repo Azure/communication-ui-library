@@ -10,6 +10,7 @@ import {
   pageClick,
   stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
+  waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
@@ -75,6 +76,8 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await drawerPeopleMenuDiv?.click();
     }
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
+    await waitForPiPiPToHaveLoaded(page, pages.length);
+
     expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 

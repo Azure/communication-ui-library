@@ -195,6 +195,24 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 };
 
 /**
+ * Page wait for selector helper function - USE INSTEAD OF PAGE.WAITFORSELECTOR
+ * Using this, when the wait for selector fails, we get a screenshot showing why it failed.
+ */
+export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
+  await page.bringToFront();
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const tileNodes = document.querySelectorAll(args.participantTileSelector);
+      const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+      return correctNoOfTiles;
+    },
+    { participantTileSelector: dataUiId('video-tile'), expectedTileCount: videosEnabledCount }
+  );
+};
+
+/**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
