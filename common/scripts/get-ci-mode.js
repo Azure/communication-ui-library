@@ -7,8 +7,7 @@ const parseCIFlavors = () => {
         }
         let configJson = JSON.parse(data);
         let stringifiedConfig = JSON.stringify(configJson);
-        console.log(stringifiedConfig);
-        stringifiedConfig.replace(/"/, '\\"');
+        stringifiedConfig = stringifiedConfig.replace(/"/g, '\\"');
         console.log(stringifiedConfig);
         return stringifiedConfig;
     });
