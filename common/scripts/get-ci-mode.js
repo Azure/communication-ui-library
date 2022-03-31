@@ -8,12 +8,12 @@ const parseCIFlavors = () => {
         let configJson = JSON.parse(data);
         let stringifiedConfig = JSON.stringify(configJson);
         stringifiedConfig = stringifiedConfig.replace(/"/g, '\\"');
-        return stringifiedConfig;
+        console.log(stringifiedConfig);
     });
 }
 
 const main = () => {
-   return parseCIFlavors();
+   parseCIFlavors();
 }
 
 main();
