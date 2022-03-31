@@ -83,8 +83,8 @@ const config: PlaywrightTestConfig = {
         // TODO: update this to support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         // Currently that will cause a scrollbar that is making tests flakey.
         viewport: { width: 732, height: 412 },
-        // Typical small mobile device scale factor (this will scale up the produced snapshot image)
-        deviceScaleFactor: 2,
+        // Do not scale image to prevent artificats appearing in the video
+        deviceScaleFactor: 1,
         isMobile: true,
         hasTouch: true,
         defaultBrowserType: 'chromium',
