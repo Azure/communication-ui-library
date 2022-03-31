@@ -142,6 +142,7 @@ export type {
   GridLayoutProps,
   GridLayoutStyles,
   HorizontalGalleryStyles,
+  ReadReceiptsBySenderId,
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
   Message,

@@ -155,6 +155,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fileSharing?.uploadHandler(userId, fileUploads);
   };
 
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileDownloads = useCallback(
+    (userId, message) => (
+      <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
+    ),
+    [fileSharing?.downloadHandler]
+  );
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -166,9 +174,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={(userId, message) => (
-              <FileDownloadCards userId={userId} message={message} downloadHandler={fileSharing?.downloadHandler} />
-            )}
+            onRenderFileDownloads={onRenderFileDownloads}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
