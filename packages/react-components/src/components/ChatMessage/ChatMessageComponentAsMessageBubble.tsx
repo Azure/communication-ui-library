@@ -144,7 +144,13 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onTouchStart={() => setWasInteractionByTouch(true)}
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}
-          onClick={() => wasInteractionByTouch && setChatMessageActionFlyoutTarget(messageRef)}
+          onClick={() => {
+            if (!wasInteractionByTouch) {
+              return;
+            }
+            props.onActionButtonClick(message, setMessageReadBy);
+            setChatMessageActionFlyoutTarget(messageRef);
+          }}
         />
       </div>
       {chatActionsEnabled && (
