@@ -29,7 +29,7 @@ jobs:
       # gets the matrix for ci run from the config file
       - id: get-matrix
         run: |
-          json=$(jq '.| tostring' common/config/gh-actions/ci-config.json)
+          json="{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
           jsonTrimmed=${json:1:-1}
           echo $jsonTrimmed
           echo "::set-output name=matrix::$jsonTrimmed"
