@@ -29,7 +29,7 @@ jobs:
       # gets the matrix for ci run from the config file
       - name: get-matrix
         run: |
-          echo "::set-output name=matrix::$(node common/scripts/get-ci-mode.js)"
+          echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"}]}"
 
   build_packages:
     needs: get_matrix
