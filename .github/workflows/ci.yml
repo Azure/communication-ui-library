@@ -32,7 +32,7 @@ jobs:
           json=$(jq '.| tostring' common/config/gh-actions/ci-config.json)
           jsonTrimmed=${json:1:-1}
           echo $jsonTrimmed
-          echo '::set-output name=matrix::$jsonTrimmed'
+          echo "::set-output name=matrix::$(echo $jsonTrimmed)"
 
   build_packages:
     needs: get_matrix
