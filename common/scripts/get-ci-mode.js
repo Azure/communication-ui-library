@@ -9,7 +9,9 @@ const parseCIFlavors = () => {
         let stringifiedConfig = JSON.stringify(configJson);
         stringifiedConfig = stringifiedConfig.replace(/"/g, '\\"');
         console.log(stringifiedConfig);
+        fs.writeFile('../config/gh-actions/ci-config.txt', stringifiedConfig);
         return stringifiedConfig;
+
     });
 }
 
