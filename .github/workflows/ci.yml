@@ -30,7 +30,7 @@ jobs:
       - id: get-matrix
         run: |
           json=$(node common/scripts/get-ci-mode.js)
-          echo "::set-output name=matrix::$(echo "$json")"
+          echo "::set-output name=matrix::$(echo json)"
   build_packages:
     needs: get_matrix
     name: Build Packages
