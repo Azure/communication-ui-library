@@ -26,12 +26,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # set the matrix string
-      - name: set json value
-        run: json=$(node common/scripts/get-ci-mode.js)
       # gets the matrix for ci run from the config file
       - name: get-matrix
-        run: echo "::set-output name=matrix::$(echo json)"
+        run: echo "::set-output name=matrix::$(node common/scripts/get-ci-mode.js)"
+
   build_packages:
     needs: get_matrix
     name: Build Packages
