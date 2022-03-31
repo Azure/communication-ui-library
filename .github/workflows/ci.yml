@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '14.x'
       # gets the matrix for ci run from the config file
-      - name: get-matrix
+      - id: get-matrix
         run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"}]}"
 
   build_packages:
