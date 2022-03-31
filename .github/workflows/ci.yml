@@ -29,7 +29,7 @@ jobs:
       # gets the matrix for ci run from the config file
       - id: get-matrix
         run: |
-          JSON=${cat common/config/gh-actions/get-ci-mode.js}
+          JSON=${cat common/config/gh-actions/ci-config.json}
           echo '::set-output name=matrix::$(echo $JSON)'
 
   build_packages:
