@@ -34,6 +34,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  onActionButtonClick: (
+    message: ChatMessage,
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
+  ) => void;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -73,6 +77,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
   >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
     ? undefined
@@ -82,7 +87,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
         forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
         onActionButtonClick: () => {
-          // Open chat action flyout, and set the context menu to target the chat message action button
+          props.onActionButtonClick(message, setMessageReadBy);
           setChatMessageActionFlyoutTarget(messageActionButtonRef);
         },
         theme
@@ -139,7 +144,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
           strings={strings}
-          messageReadBy={message.readBy ?? []}
+          messageReadBy={messageReadBy}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}
           showMessageStatus={showMessageStatus}
