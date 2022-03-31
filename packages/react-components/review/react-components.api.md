@@ -669,7 +669,6 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
-    chatMessageFlyoutButtonDescription: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
