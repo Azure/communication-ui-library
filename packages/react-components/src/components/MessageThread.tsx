@@ -515,6 +515,7 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the message component.
    * @beta
@@ -636,6 +637,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage
   } = props;
+
+  const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -896,7 +899,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return (
           <ChatMessageComponent
             {...messageProps}
-            onRenderFileDownloads={props.onRenderFileDownloads}
+            onRenderFileDownloads={onRenderFileDownloads}
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -916,7 +919,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       participantCount,
       onRenderAvatar,
       onActionButtonClickMemo,
-      props.onRenderFileDownloads,
+      onRenderFileDownloads,
       props.userId,
       showMessageStatus
     ]
@@ -1051,4 +1054,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       </Stack>
     </Ref>
   );
+};
+
+const onRenderFileDownloadsTrampoline = (
+  props: MessageThreadProps
+): ((userId: string, message: ChatMessage) => JSX.Element) | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
+  return props.onRenderFileDownloads;
+  return undefined;
 };
