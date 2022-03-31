@@ -8,12 +8,6 @@ const parseCIFlavors = () => {
         let configJson = JSON.parse(data);
         let stringifiedConfig = JSON.stringify(configJson);
         stringifiedConfig = stringifiedConfig.replace(/"/g, '\\"');
-        console.log(stringifiedConfig);
-        fs.writeFile('../config/gh-actions/ci-config.txt', stringifiedConfig, (err) => {
-            if(err){
-                console.log('error writing file.')
-            }
-        });
         return stringifiedConfig;
 
     });
