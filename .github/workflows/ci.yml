@@ -29,9 +29,9 @@ jobs:
       # gets the matrix for ci run from the config file
       - id: get-matrix
         run: |
-          JSON=$(jq '.| tostring' common/config/gh-actions/ci-config.json)
-          echo $JSON
-          echo '::set-output name=matrix::$JSON'
+          json=$(jq '.| tostring' common/config/gh-actions/ci-config.json)
+          echo $json
+          echo '::set-output name=matrix::$json'
 
   build_packages:
     needs: get_matrix
