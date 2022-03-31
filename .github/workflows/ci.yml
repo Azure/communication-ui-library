@@ -30,8 +30,8 @@ jobs:
       - id: get-matrix
         run: |
           json=$(jq -r '.| tostring' common/config/gh-actions/ci-config.json)
-          echo $json
-          echo '::set-output name=matrix::$json'
+          jsonTrimmed=${json:1:-1}
+          echo '::set-output name=matrix::$jsonTrimmed'
 
   build_packages:
     needs: get_matrix
