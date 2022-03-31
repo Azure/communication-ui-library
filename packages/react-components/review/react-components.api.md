@@ -613,7 +613,9 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 // @public
 export interface MessageStatusIndicatorProps {
     // (undocumented)
-    onToggleToolTip?: (setReadCount: (readCount: number) => void) => void;
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
