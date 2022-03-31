@@ -1036,13 +1036,6 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
-    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -1883,7 +1876,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    messageThreadReadCount?: number;
+    // (undocumented)
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -1910,7 +1906,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    messageThreadParticipantCount?: number;
+    participantCount?: number;
+    readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -2207,6 +2204,14 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
 
 // @public
 export interface RecordingCallFeature {
