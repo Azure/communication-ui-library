@@ -46,7 +46,8 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
-  onToggleToolTip?: (setReadCount: (readCount: number) => void) => void;
+  readCount?: number;
+  onToggleToolTip?: (isToggled: boolean) => void;
   /** number of participants not including myself */
   remoteParticipantsCount?: number;
   /**
@@ -71,11 +72,11 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, remoteParticipantsCount, onToggleToolTip } = props;
+  const { status, styles, remoteParticipantsCount, onToggleToolTip, readCount } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
+  const [isTooltipToggled, setIsTooltipToggled] = useState<boolean>(false);
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
-  const [readCount, setReadCount] = useState(0);
 
   switch (status) {
     case 'failed':
@@ -128,7 +129,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           }
           onTooltipToggle={() => {
             if (onToggleToolTip) {
-              onToggleToolTip(setReadCount);
+              onToggleToolTip(!isTooltipToggled);
+              setIsTooltipToggled(!isTooltipToggled);
             }
           }}
         >

@@ -302,16 +302,17 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultStatusRenderer: (
+      message: ChatMessage,
       status: MessageStatus,
       participantCount: number,
-      onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
+      readCount: number
     ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     participantCount?: number,
-    readReceiptsBySenderId?: ReadReceiptsBySenderId,
+    readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>,
@@ -353,11 +354,6 @@ const memoizeAllMessages = memoizeFnAll(
         const chatGutterStyles =
           message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
-        const onToggleToolTip = (setReadCount: (readCount: number) => void) => {
-          if (readReceiptsBySenderId) {
-            setReadCount(getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderId).length);
-          }
-        };
         return {
           gutter: {
             styles: chatGutterStyles,
@@ -385,7 +381,7 @@ const memoizeAllMessages = memoizeFnAll(
                     onRenderMessageStatus ? (
                       onRenderMessageStatus({ status: statusToRender })
                     ) : (
-                      defaultStatusRenderer(statusToRender, participantCount ? participantCount : 0, onToggleToolTip)
+                      defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
                     )
                   ) : (
                     <div className={mergeStyles(noMessageStatusStyle)} />
@@ -684,6 +680,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [lastDeliveredChatMessage, setLastDeliveredChatMessage] = useState<string | undefined>(undefined);
   const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
 
+  // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
+  const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
   const isAllChatMessagesLoadedRef = useRef(false);
 
   const previousTopRef = useRef<number>(-1);
@@ -954,19 +953,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const defaultStatusRenderer: (
-    status: MessageStatus,
-    participantCount: number,
-    onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
-  ) => JSX.Element = useCallback(
-    (
-      status: MessageStatus,
-      participantCount: number,
-      onToggleToolTip?: (setReadCount: (readCount: number) => void) => void
-    ) => {
+  const defaultStatusRenderer = useCallback(
+    (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
+      const onToggleToolTip = (isToggled: boolean): void => {
+        if (isToggled && readReceiptsBySenderIdRef.current) {
+          setReadCountForHoveredIndicator(
+            getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderIdRef.current).length
+          );
+        } else {
+          setReadCountForHoveredIndicator(undefined);
+        }
+      };
       return (
         <MessageStatusIndicator
           status={status}
+          readCount={readCount}
           onToggleToolTip={onToggleToolTip}
           // -1 because participant count does not include myself
           remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -1025,7 +1026,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
             participantCount,
-            readReceiptsBySenderId,
+            readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage,
@@ -1042,17 +1043,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
-      readReceiptsBySenderId,
       defaultChatMessageRenderer,
-      lastSeenChatMessage,
-      lastSendingChatMessage,
-      lastDeliveredChatMessage,
+      strings,
       participantCount,
+      readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,
       onSendMessage,
-      strings
+      lastSeenChatMessage,
+      lastSendingChatMessage,
+      lastDeliveredChatMessage
     ]
   );
 
