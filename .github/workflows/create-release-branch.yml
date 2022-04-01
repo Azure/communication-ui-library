@@ -59,7 +59,7 @@ jobs:
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
-        if: ${{ startsWith(github.events.inputs.branch, 'prerelease-stable-minor/) || startsWith(github.events.inputs.branch, 'prerelease-stable-patch/)}}
+        if: ${{ startsWith(github.events.inputs.branch, 'prerelease-stable-minor/') || startsWith(github.events.inputs.branch, 'prerelease-stable-patch/')}}
         run: node common/scripts/choose-stable-sdk-deps.js
 
       - name: Choose beta dependency for sdk if beta
