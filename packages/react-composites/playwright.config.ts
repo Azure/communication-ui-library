@@ -43,7 +43,7 @@ const config: PlaywrightTestConfig = {
   retries: 0,
 
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
-  forbidOnly: !!process.env.CI,
+  // forbidOnly: !!process.env.CI,
 
   // Applies to all projects
   use: {
