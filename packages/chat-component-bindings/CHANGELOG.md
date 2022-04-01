@@ -1,8 +1,26 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Fri, 11 Mar 2022 19:20:04 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 20:20:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.1-beta.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.2.1-beta.0)
+
+Fri, 01 Apr 2022 20:20:08 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.2.0...@internal/chat-component-bindings_v1.2.1-beta.0)
+
+### Patches
+
+- do not caculate read receipt details, pass read receipt array down to component level ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- Disable Read Receipt details in meeting interop ([PR #1728](https://github.com/azure/communication-ui-library/pull/1728) by jiangnanhello@live.com)
+- Do not show "Not In Thread" Error Banner shown to user when a BotContact is a participant in Teams Interop Chats ([PR #1737](https://github.com/azure/communication-ui-library/pull/1737) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.1-beta.0 ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by beachball)
+- Bump @internal/chat-stateful-client to v1.2.1-beta.0 ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by beachball)
+- Bump @internal/react-components to v1.2.1-beta.0 ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by beachball)
+
+### Changes
+
+- fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participants ([PR #1639](https://github.com/azure/communication-ui-library/pull/1639) by carolinecao@microsoft.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.2.0)
 

@@ -1,8 +1,20 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 20:20:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.1-beta.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.2.1-beta.0)
+
+Fri, 01 Apr 2022 20:20:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.2.0...@internal/storybook_v1.2.1-beta.0)
+
+### Patches
+
+- storybook: Give user feedback when call ends in stateful example ([PR #1742](https://github.com/azure/communication-ui-library/pull/1742) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update references to headless calling version ([PR #1740](https://github.com/azure/communication-ui-library/pull/1740) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies ([PR #1632](https://github.com/azure/communication-ui-library/pull/1632) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @azure/communication-react to v1.2.1-beta.0 ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by beachball)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.2.0)
 

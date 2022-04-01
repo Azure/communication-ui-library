@@ -2,6 +2,67 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Fri, 01 Apr 2022 20:20:08 GMT",
+      "tag": "@internal/chat-component-bindings_v1.2.1-beta.0",
+      "version": "1.2.1-beta.0",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "b942e0172f5653433dfddf448334f4d2c7e4cd88",
+            "comment": "fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participants"
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          }
+        ],
+        "patch": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "do not caculate read receipt details, pass read receipt array down to component level"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "afbd965062089e677bd01bb5ff3708ff22dab49b",
+            "comment": "Disable Read Receipt details in meeting interop"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "b6bf2d91ccf189584f22058cd6bf38a1c000e860",
+            "comment": "Do not show \"Not In Thread\" Error Banner shown to user when a BotContact is a participant in Teams Interop Chats"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.2.1-beta.0",
+            "commit": "0c054e566fd8b0f7edcf03045ea1374dad3f9980"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.2.1-beta.0",
+            "commit": "0c054e566fd8b0f7edcf03045ea1374dad3f9980"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.2.1-beta.0",
+            "commit": "0c054e566fd8b0f7edcf03045ea1374dad3f9980"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:04 GMT",
       "tag": "@internal/chat-component-bindings_v1.2.0",
       "version": "1.2.0",

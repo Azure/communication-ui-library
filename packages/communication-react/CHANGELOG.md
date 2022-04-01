@@ -1,9 +1,80 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Fri, 11 Mar 2022 19:20:01 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 20:20:07 GMT and should not be manually modified.
 
 <!-- Start content -->
 
+## [1.2.1-beta.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.2.1-beta.0)
+
+Fri, 01 Apr 2022 20:20:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.2.0...@azure/communication-react_v1.2.1-beta.0)
+
+### Minor changes
+
+- `@internal/react-composites`
+  - Add useAzureCommunicationChatAdapter hook ([PR #1627](https://github.com/azure/communication-ui-library/pull/1627) by 82062616+prprabhu-ms@users.noreply.github.com)
+
+### Patches
+
+- `@internal/react-components`
+  - bugfix: Update readBy count for messages when `mobileView` is set ([PR #1746](https://github.com/azure/communication-ui-library/pull/1746) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - New Aria-labels added for screen reader accessibility on ErrorBar and MessageThread ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by edwardlee@microsoft.com)
+  - Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies ([PR #1632](https://github.com/azure/communication-ui-library/pull/1632) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fixes styles to remove undesired scroll bar in context menus on messages. ([PR #1675](https://github.com/azure/communication-ui-library/pull/1675) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Use fela style selector ([PR #1655](https://github.com/azure/communication-ui-library/pull/1655) by jiangnanhello@live.com)
+  - Memoize chat bubble to avoid unnecessary re-render ([PR #1698](https://github.com/azure/communication-ui-library/pull/1698) by jiangnanhello@live.com)
+  - Left align participant pane elements in mobile and desktop ([PR #1671](https://github.com/azure/communication-ui-library/pull/1671) by edwardlee@microsoft.com)
+  - Add tab index to local video tile through a wrapper to allow keyboard navigation of the modal controls. ([PR #1716](https://github.com/azure/communication-ui-library/pull/1716) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix A11y bug where user cannot keyboard outside of local video preview ([PR #1623](https://github.com/azure/communication-ui-library/pull/1623) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix floating local video tile going offscreen in the VideoGallery Component ([PR #1725](https://github.com/azure/communication-ui-library/pull/1725) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Changed the participant item container styles to check if participant is the user and prevent cursor change. ([PR #1690](https://github.com/azure/communication-ui-library/pull/1690) by 94866715+dmceachernmsft@users.noreply.github.com)
+- `@internal/storybook`
+  - storybook: Give user feedback when call ends in stateful example ([PR #1742](https://github.com/azure/communication-ui-library/pull/1742) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Update references to headless calling version ([PR #1740](https://github.com/azure/communication-ui-library/pull/1740) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies ([PR #1632](https://github.com/azure/communication-ui-library/pull/1632) by 2684369+JamesBurnside@users.noreply.github.com)
+- `@internal/chat-component-bindings`
+  - do not caculate read receipt details, pass read receipt array down to component level ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+  - Disable Read Receipt details in meeting interop ([PR #1728](https://github.com/azure/communication-ui-library/pull/1728) by jiangnanhello@live.com)
+  - Do not show "Not In Thread" Error Banner shown to user when a BotContact is a participant in Teams Interop Chats ([PR #1737](https://github.com/azure/communication-ui-library/pull/1737) by 2684369+JamesBurnside@users.noreply.github.com)
+- `@internal/chat-stateful-client`
+  - added new type readreceiptbysenderid ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- `@internal/react-composites`
+  - Bump webpack-cli dependency ([PR #1731](https://github.com/azure/communication-ui-library/pull/1731) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Style update for Screenshare button when checked in CallWithChat composite. ([PR #1653](https://github.com/azure/communication-ui-library/pull/1653) by miguelgamis@microsoft.com)
+  - Switch scroll behavior in chat styles so that the parent wrapper dosen't have scroll behavior when file sharing icon present. ([PR #1689](https://github.com/azure/communication-ui-library/pull/1689) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix styles so that the PIPIP shows over the content in the people and chat panes on mobile. ([PR #1674](https://github.com/azure/communication-ui-library/pull/1674) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Left align participant pane elements in mobile and desktop ([PR #1671](https://github.com/azure/communication-ui-library/pull/1671) by edwardlee@microsoft.com)
+  - Improve Chat composite behavior in CallWithChatComposite to allow autofocus when opening chat pane. ([PR #1717](https://github.com/azure/communication-ui-library/pull/1717) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - [object Object] ([PR #1668](https://github.com/azure/communication-ui-library/pull/1668) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Hide People menu item in MoreDrawer when set in CallControl options ([PR #1695](https://github.com/azure/communication-ui-library/pull/1695) by edwardlee@microsoft.com)
+  - Added local and remote picture-in-picture component in Chat pane of CallWithChat composite in mobile view. ([PR #1617](https://github.com/azure/communication-ui-library/pull/1617) by miguelgamis@microsoft.com)
+  - Fix race condition of "not in chat" ([PR #1652](https://github.com/azure/communication-ui-library/pull/1652) by jiangnanhello@live.com)
+  - optimization to reduce perf regression for onRenderFileDownloads ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+
+### Changes
+
+- `@internal/react-components`
+  - Added resend button to contextual menu ([PR #1676](https://github.com/azure/communication-ui-library/pull/1676) by carolinecao@microsoft.com)
+  - change color for chat bubbles : blue when successfully sent and red when failed, added failed tag ([PR #1681](https://github.com/azure/communication-ui-library/pull/1681) by carolinecao@microsoft.com)
+  - fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participant ([PR #1639](https://github.com/azure/communication-ui-library/pull/1639) by carolinecao@microsoft.com)
+  - Bugfix for inconsistent fileupload sendbox errors ([PR #1673](https://github.com/azure/communication-ui-library/pull/1673) by anjulgarg@live.com)
+  - Preventing text wrapping in file card due to long file names ([PR #1651](https://github.com/azure/communication-ui-library/pull/1651) by anjulgarg@live.com)
+  - Bugfix for text wrapping onto next line in file card ([PR #1684](https://github.com/azure/communication-ui-library/pull/1684) by anjulgarg@live.com)
+  - API fix: Hide FileSharing API from stable build ([PR #1744](https://github.com/azure/communication-ui-library/pull/1744) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - calculate read number and who has read the message on hover tooltip or on click action menu ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+  - FileCard: Do not show progress bar when progress is 0 ([PR #1622](https://github.com/azure/communication-ui-library/pull/1622) by anjulgarg@live.com)
+  - Introduces A11y strings for aria-roles for control bar buttons. ([PR #1628](https://github.com/azure/communication-ui-library/pull/1628) by 94866715+dmceachernmsft@users.noreply.github.com)
+- `@internal/chat-component-bindings`
+  - fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participants ([PR #1639](https://github.com/azure/communication-ui-library/pull/1639) by carolinecao@microsoft.com)
+- `@internal/react-composites`
+  - Flatten pick and omit APIs in CallWithChatComposite ([PR #1630](https://github.com/azure/communication-ui-library/pull/1630) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add error bar to show file download error message in the message thread. ([PR #1625](https://github.com/azure/communication-ui-library/pull/1625) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Reducing un-needed interfaces from File Sharing Public API ([PR #1700](https://github.com/azure/communication-ui-library/pull/1700) by anjulgarg@live.com)
+  - Introduces number of message tracking for the chat button tooltip ([PR #1606](https://github.com/azure/communication-ui-library/pull/1606) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Bugfix for delay in removing file card after a message is sent ([PR #1645](https://github.com/azure/communication-ui-library/pull/1645) by anjulgarg@live.com)
+  - Added resend button to contextual menu ([PR #1676](https://github.com/azure/communication-ui-library/pull/1676) by carolinecao@microsoft.com)
+  - Add filesharing to callwithchat composite ([PR #1667](https://github.com/azure/communication-ui-library/pull/1667) by anjulgarg@live.com)
+  - Bugfix for file upload button's inconsistent behavior ([PR #1673](https://github.com/azure/communication-ui-library/pull/1673) by anjulgarg@live.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/1.2.0)
 
