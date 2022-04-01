@@ -11,7 +11,7 @@ on:
 
 jobs:
   create_release:
-    if: ${{ startsWith(inputs.branch, 'prerelease') }}
+    if: ${{ startsWith(github.events.inputs.branch, prerelease) }}
     name: Create release branch
     runs-on: ubuntu-latest
     steps:
@@ -61,11 +61,11 @@ jobs:
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
-        if: ${{ startsWith(inputs.branch, 'prerelease-stable-minor/') || startsWith(inputs.branch, 'prerelease-stable-patch/')}}
+        if: ${{ startsWith(github.events.inputs.branch, prerelease-stable-minor/) || startsWith(github.events.inputs.branch, prerelease-stable-patch/)}}
         run: node common/scripts/choose-stable-sdk-deps.js
 
       - name: Choose beta dependency for sdk if beta
-        if: ${{ startsWith(inputs.branch, 'prerelease-beta/' )}}
+        if: ${{ startsWith(github.events.inputs.branch, 'prerelease-beta/' )}}
         run: node common/scripts/choose-beta-sdk-deps.js
 
       # Synchronize the telemetry package versions.
@@ -90,4 +90,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
