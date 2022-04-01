@@ -150,6 +150,10 @@ export interface ErrorBarStrings {
    * Mac OS specific message shown when system denies sharing local screen on a call.
    */
   callMacOsScreenShareAccessDenied: string;
+  /**
+   * Dimiss errorbar button aria label read by screen reader accessibility tools
+   */
+  dismissButtonAriaLabel: string;
 }
 
 /**
@@ -216,6 +220,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
+          dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
         >
           {strings[error.type]}
         </MessageBar>
