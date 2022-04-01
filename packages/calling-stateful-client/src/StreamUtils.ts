@@ -17,6 +17,7 @@ import {
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { callingStatefulLogger } from './Logger';
 
 async function createViewRemoteVideo(
   context: CallContext,
@@ -34,14 +35,19 @@ async function createViewRemoteVideo(
   } else {
     participantKey = toFlatCommunicationIdentifier(participantId);
   }
+  const streamLogInfo = `callId: ${callId}, participantKey: ${participantKey}, streamId: ${streamId}`;
+
+  callingStatefulLogger.info(`Start creating view for remote video! ${streamLogInfo}`);
   const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
 
   if (!renderInfo) {
+    callingStatefulLogger.error(`LocalVideoStream not found in state! ${streamLogInfo}`);
     console.warn('RemoteVideoStream not found in state');
     return;
   }
 
   if (renderInfo.status === 'Rendered') {
+    callingStatefulLogger.warning(`RemoteVideoStream is already rendered! ${streamLogInfo}`);
     console.warn('RemoteVideoStream is already rendered');
     return;
   }
@@ -49,6 +55,7 @@ async function createViewRemoteVideo(
   if (renderInfo.status === 'Rendering') {
     // Do not log to console here as this is a very common situation due to UI rerenders while
     // the video rendering is in progress.
+    callingStatefulLogger.warning(`RemoteVideoStream is rendering. ${streamLogInfo}`);
     return;
   }
 
@@ -65,6 +72,7 @@ async function createViewRemoteVideo(
   try {
     view = await renderer.createView(options);
   } catch (e) {
+    callingStatefulLogger.error(`Failed to create view! Error: ${e}. ${streamLogInfo}`);
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
     throw e;
   }
@@ -73,6 +81,7 @@ async function createViewRemoteVideo(
   if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up state.
+    callingStatefulLogger.error(`Cannot find remote render info after create the view! ${streamLogInfo}`);
     renderer.dispose();
     context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
     return;
@@ -91,6 +100,7 @@ async function createViewRemoteVideo(
       undefined
     );
     context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    callingStatefulLogger.info(`Successfully render the remote view! ${streamLogInfo}`);
     return;
   }
 
@@ -118,15 +128,18 @@ async function createViewLocalVideo(
   callId: string,
   options?: CreateViewOptions
 ): Promise<void> {
+  callingStatefulLogger.info('Start creating view for local video');
   // Render LocalVideoStream that is part of a Call
   const renderInfo = internalContext.getLocalRenderInfo(callId);
 
   if (!renderInfo) {
+    callingStatefulLogger.error('LocalVideoStream not found in state');
     console.warn('LocalVideoStream not found in state');
     return;
   }
 
   if (renderInfo.status === 'Rendered') {
+    callingStatefulLogger.warning('LocalVideoStream is already rendered');
     console.warn('LocalVideoStream is already rendered');
     return;
   }
@@ -134,10 +147,12 @@ async function createViewLocalVideo(
   if (renderInfo.status === 'Rendering') {
     // Do not log to console here as this is a very common situation due to UI rerenders while
     // the video rendering is in progress.
+    callingStatefulLogger.warning('LocalVideoStream is rendering.');
     return;
   }
 
   if (renderInfo.status === 'Stopping') {
+    callingStatefulLogger.warning('LocalVideoStream is in the middle of stopping.');
     console.warn('LocalVideoStream is in the middle of stopping');
     return;
   }
@@ -150,6 +165,7 @@ async function createViewLocalVideo(
   try {
     view = await renderer.createView(options);
   } catch (e) {
+    callingStatefulLogger.error(`Failed to create view! Error: ${e}`);
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
     throw e;
   }
@@ -160,6 +176,7 @@ async function createViewLocalVideo(
   if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
     // and clean up the state.
+    callingStatefulLogger.error(`Cannot find local render info for the callId: ${callId}, after create the view! `);
     renderer.dispose();
     context.setLocalVideoStreamRendererView(callId, undefined);
     return;
@@ -168,6 +185,7 @@ async function createViewLocalVideo(
   if (refreshedRenderInfo.status === 'Stopping') {
     // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
     // put the view into the state.
+    callingStatefulLogger.warning(`Render info status is stopping, dispose renderer, callId: ${callId}}`);
     renderer.dispose();
     internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'NotRendered', undefined);
     context.setLocalVideoStreamRendererView(callId, undefined);
@@ -178,6 +196,7 @@ async function createViewLocalVideo(
   // updating the state.
   internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
   context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
+  callingStatefulLogger.info(`Successfully render the local view! callId: ${callId}`);
 }
 
 async function createViewUnparentedVideo(
@@ -263,10 +282,15 @@ function disposeViewRemoteVideo(
     participantKey = toFlatCommunicationIdentifier(participantId);
   }
 
+  const streamLogInfo = `callId: ${callId}, participantKey: ${participantKey}, streamId: ${streamId}`;
+
+  callingStatefulLogger.info(`Start disposing remote stream. ${streamLogInfo}`);
+
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
 
   const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
   if (!renderInfo) {
+    callingStatefulLogger.error(`Cannot find render info when disposing remote stream, ${streamLogInfo}`);
     return;
   }
 
@@ -274,13 +298,17 @@ function disposeViewRemoteVideo(
   // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
   // be cleaned up below so we can set it to undefined here.
   if (renderInfo.status === 'Rendering') {
+    callingStatefulLogger.warning(`Remote stream is still rendering. Changing status to stopping. ${streamLogInfo}`);
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
   } else {
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
   }
 
   if (renderInfo.renderer) {
+    callingStatefulLogger.info(`Disposing remote view renderer. ${streamLogInfo}`);
     renderInfo.renderer.dispose();
+  } else {
+    callingStatefulLogger.warning(`Cannot find remote view renderer!. ${streamLogInfo}`);
   }
 }
 
