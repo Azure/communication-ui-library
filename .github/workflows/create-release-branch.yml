@@ -11,7 +11,7 @@ on:
 
 jobs:
   create_release:
-    if: ${{ startsWith(github.events.inputs.branch, 'prerelease') }}
+    # if: ${{ startsWith(github.events.inputs.branch, 'prerelease') }}
     name: Create release branch
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +30,7 @@ jobs:
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
         run: |
+          echo ${{github.events.inputs.branch}}
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
