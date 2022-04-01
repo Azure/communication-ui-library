@@ -22,7 +22,7 @@ function CallingComponents(): JSX.Element {
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
-  }, [endCallProps.onHangUp]);
+  }, [endCallProps]);
 
   if (callEnded) {
     return <CallEnded />;
