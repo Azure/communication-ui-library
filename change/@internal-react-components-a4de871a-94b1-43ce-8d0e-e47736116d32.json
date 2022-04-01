@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "New Aria-labels added for screen reader accessibility on ErrorBar and MessageThread",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
