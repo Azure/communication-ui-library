@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -41,7 +41,6 @@ export const CallWithChatPane = (props: {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
-  maxDragPosition?: _ICoordinates;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -89,6 +88,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
+  const modalLayerHost = document.getElementById(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const dataUiId =
@@ -115,7 +115,9 @@ export const CallWithChatPane = (props: {
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
-          maxDragPosition={props.maxDragPosition}
+          maxDragPosition={
+            modalLayerHost ? { x: 16, y: modalLayerHost.getBoundingClientRect().height - 52 - 128 } : undefined
+          }
         />
       )}
       {drawerMenuItems.length > 0 && (
