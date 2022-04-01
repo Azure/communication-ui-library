@@ -317,9 +317,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
+  const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
+    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
         callWithChatAdapter={adapter}
