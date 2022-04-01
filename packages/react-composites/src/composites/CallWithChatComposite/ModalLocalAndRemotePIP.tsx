@@ -51,9 +51,6 @@ const _ModalLocalAndRemotePIP = (props: {
 
   const modalStylesThemed = concatStyleSets(modalStyle, props.styles?.modal);
 
-  console.log('minDragPosition: ', props.minDragPosition);
-  console.log('maxDragPosition: ', props.maxDragPosition);
-
   return (
     <Stack styles={rootStyles}>
       <_ModalClone

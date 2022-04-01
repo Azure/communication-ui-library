@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -21,6 +21,7 @@ import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { _ICoordinates } from '@internal/react-components';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -109,15 +110,16 @@ export const CallWithChatPane = (props: {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      {props.mobileView && (
+      {props.mobileView && modalLayerHost && (
         <ModalLocalAndRemotePIP
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
-          maxDragPosition={
-            modalLayerHost ? { x: 16, y: modalLayerHost.getBoundingClientRect().height - 52 - 128 } : undefined
-          }
+          maxDragPosition={{
+            x: modalPipRightPositionPx,
+            y: modalLayerHost.getBoundingClientRect().height - modalPipTopPositionPx - modalPipHeightPx
+          }}
         />
       )}
       {drawerMenuItems.length > 0 && (
@@ -155,9 +157,10 @@ const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
 
-/**
- * @private
- */
+const modalPipRightPositionPx = 16;
+const modalPipTopPositionPx = 52;
+const modalPipHeightPx = 128;
+
 const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
   modal: {
     main: {
@@ -165,8 +168,8 @@ const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
       boxShadow: theme.effects.elevation8,
       // Above the message thread / people pane.
       zIndex: 2,
-      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' }),
-      top: '3.25rem'
+      ...(theme.rtl ? { left: _pxToRem(modalPipRightPositionPx) } : { right: _pxToRem(modalPipRightPositionPx) }),
+      top: _pxToRem(modalPipTopPositionPx)
     }
   }
 });
