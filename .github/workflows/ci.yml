@@ -33,7 +33,7 @@ jobs:
           echo $json
           jsonTrimmed=${json:1:-1}
           echo $jsonTrimmed
-          echo "::set-output name=matrix::{\"include\":$(echo $jsonTrimmed)}"
+          echo ::set-output name=matrix::{\"include\":$(echo $jsonTrimmed)}
 
   build_packages:
     needs: get_matrix
