@@ -107,6 +107,7 @@ jobs:
         run: |
           git checkout -b groom_changelog_${{ steps.version.outputs.version }}
           echo 'Please groom the changelog and then delete me.' > GROOMME.md
+          git add .
           git commit -m 'Create groom me file for groom changelog branch'
           git push -u origin ${{github.ref_name}}
 
