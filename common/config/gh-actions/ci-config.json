@@ -1,1 +1,8 @@
-{"include": [{"flavor": "stable"},{"flavor": "beta"}]}
+[
+    {
+        "flavor": "stable"
+    },
+    {
+        "flavor": "beta"
+    }
+]
