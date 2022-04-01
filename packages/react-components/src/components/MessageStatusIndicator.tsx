@@ -84,7 +84,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.failedToSendTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
-            data-ui-id="chat-composite-message-tooltip-icon"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.failedToSendAriaLabel}
             iconName="MessageFailed"
             className={mergeStyles(
@@ -100,7 +100,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.sendingTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
-            data-ui-id="chat-composite-message-tooltip-icon"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.sendingAriaLabel}
             iconName="MessageSending"
             className={mergeStyles(
@@ -138,7 +138,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           }}
         >
           <Icon
-            data-ui-id="chat-composite-message-tooltip-icon"
+            data-ui-id="chat-composite-message-status-icon"
             role="status"
             aria-label={strings.seenAriaLabel}
             iconName="MessageSeen"
@@ -151,7 +151,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.deliveredTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
-            data-ui-id="chat-composite-message-tooltip-icon"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.deliveredAriaLabel}
             iconName="MessageDelivered"
             className={mergeStyles(
