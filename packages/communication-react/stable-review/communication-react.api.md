@@ -1530,6 +1530,7 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1787,7 +1788,6 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;

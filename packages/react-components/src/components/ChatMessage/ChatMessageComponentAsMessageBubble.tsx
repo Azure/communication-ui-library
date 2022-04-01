@@ -144,7 +144,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onTouchStart={() => setWasInteractionByTouch(true)}
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}
-          onClick={() => wasInteractionByTouch && setChatMessageActionFlyoutTarget(messageRef)}
+          onClick={() => {
+            if (!wasInteractionByTouch) {
+              return;
+            }
+            // If the message was touched via touch we immediately open the menu
+            // flyout (when using mouse the 3-dot menu that appears on hover
+            // must be clicked to open the flyout).
+            // In doing so here we set the target of the flyout to be the message and
+            // not the 3-dot menu button to position the flyout correctly.
+            setChatMessageActionFlyoutTarget(messageRef);
+            props.onActionButtonClick(message, setMessageReadBy);
+          }}
         />
       </div>
       {chatActionsEnabled && (
