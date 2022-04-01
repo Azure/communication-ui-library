@@ -138,6 +138,7 @@ type CallWithChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -267,6 +268,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             activePane={activePane}
             /* @conditional-compile-remove(file-sharing) */
             fileSharing={props.fileSharing}
+            rtl={props.rtl}
           />
         )}
       </Stack>

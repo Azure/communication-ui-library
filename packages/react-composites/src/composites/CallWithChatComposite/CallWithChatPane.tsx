@@ -42,6 +42,7 @@ export const CallWithChatPane = (props: {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -117,7 +118,9 @@ export const CallWithChatPane = (props: {
           hidden={hidden}
           styles={pipStyles}
           maxDragPosition={{
-            x: modalPipRightPositionPx,
+            x: props.rtl
+              ? modalLayerHost.getBoundingClientRect().width - modalPipRightPositionPx - modalPipWidthPx
+              : modalPipRightPositionPx,
             y: modalLayerHost.getBoundingClientRect().height - modalPipTopPositionPx - modalPipHeightPx
           }}
         />
@@ -159,6 +162,7 @@ const sidePaneTokens: IStackTokens = {
 
 const modalPipRightPositionPx = 16;
 const modalPipTopPositionPx = 52;
+const modalPipWidthPx = 88;
 const modalPipHeightPx = 128;
 
 const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
