@@ -28,7 +28,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await pages[0].screenshot()).toMatchSnapshot(`chat-screen.png`);
   });
 
-  test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
+  test.only('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
     const page0 = pages[0];
     await sendMessage(page0, testMessageText);
