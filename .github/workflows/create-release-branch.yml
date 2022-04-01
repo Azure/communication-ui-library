@@ -52,7 +52,10 @@ jobs:
 
       # Create new release branch
       - name: Hop into new branch
-        run: git checkout -b release/${{ steps.version.outputs.version }}
+        id: releasebranch
+        run: |
+          git checkout -b release/${{ steps.version.outputs.version }}
+          echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
@@ -72,7 +75,7 @@ jobs:
         run: |
           git add .
           git commit -m "Selected stable sdk's for release branch"
-          git push -u origin ${{github.ref_name}}
+          git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Checkout back to pre-release branch
       - name: Hop back to pre-release branch
