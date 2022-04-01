@@ -7,3 +7,4 @@ export * from './VideoGalleryParticipant';
 export * from './CommunicationParticipant';
 export * from './ParticipantListParticipant';
 export * from './OnRender';
+export * from './ReadReceiptsBySenderId';
