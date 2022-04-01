@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -232,6 +232,16 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [callWithChatAdapter]);
 
   const modalLayerHostId = useId('modalLayerhost');
+  const modalLayerhostHeight = useRef(0);
+  useEffect(() => {
+    if (modalLayerHostId) {
+      const modalLayerHost = document.getElementById(modalLayerHostId);
+      if (modalLayerHost) {
+        const rect = modalLayerHost.getBoundingClientRect();
+        modalLayerhostHeight.current = rect.height;
+      }
+    }
+  }, [modalLayerHostId]);
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
@@ -267,6 +277,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             activePane={activePane}
             /* @conditional-compile-remove(file-sharing) */
             fileSharing={props.fileSharing}
+            maxDragPosition={
+              modalLayerhostHeight.current > 0 ? { x: 16, y: modalLayerhostHeight.current - 52 - 128 } : undefined
+            }
           />
         )}
       </Stack>

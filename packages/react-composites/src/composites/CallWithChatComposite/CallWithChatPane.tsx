@@ -20,6 +20,7 @@ import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
+import { _ICoordinates } from '@internal/react-components';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -40,6 +41,7 @@ export const CallWithChatPane = (props: {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  maxDragPosition?: _ICoordinates;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -113,6 +115,7 @@ export const CallWithChatPane = (props: {
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
+          maxDragPosition={props.maxDragPosition}
         />
       )}
       {drawerMenuItems.length > 0 && (
@@ -160,7 +163,8 @@ const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
       boxShadow: theme.effects.elevation8,
       // Above the message thread / people pane.
       zIndex: 2,
-      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
+      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' }),
+      top: '3.25rem'
     }
   }
 });
