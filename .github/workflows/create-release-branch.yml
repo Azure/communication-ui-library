@@ -56,8 +56,8 @@ jobs:
       - name: Hop into new branch
         id: releasebranch
         run: |
-          git checkout -b release/${{ steps.version.outputs.version }}
-          echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
+          git checkout -b release-test/${{ steps.version.outputs.version }}
+          echo "::set-output name=releasebranch::release-test/${{ steps.version.outputs.version }}"
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
@@ -90,4 +90,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'

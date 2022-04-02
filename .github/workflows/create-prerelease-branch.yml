@@ -97,8 +97,8 @@ jobs:
       - name: Hop into new branch
         id: prereleasebranch
         run: |
-          git checkout -b prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
-          echo "::set-output name=prereleasebranch::prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
+          git checkout -b prerelease-test-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
+          echo "::set-output name=prereleasebranch::prerelease-test-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
       - name: Commit changes
         run: |
           git add .
@@ -109,8 +109,8 @@ jobs:
       - name: Hop into Groom branch
         id: groom
         run: |
-          git checkout -b groom_changelog_${{ steps.version.outputs.version }}
-          echo "::set-output name=groom::groom_changelog_${{ steps.version.outputs.version }}"
+          git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
+          echo "::set-output name=groom::groom_changelog_test_${{ steps.version.outputs.version }}"
 
       # Push groom changes
       - name: Create groom file and push changes
