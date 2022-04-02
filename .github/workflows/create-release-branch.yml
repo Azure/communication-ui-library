@@ -61,11 +61,11 @@ jobs:
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor/') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch/')}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
         run: node common/scripts/choose-stable-sdk-deps.js
 
       - name: Choose beta dependency for sdk if beta
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta/' )}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: node common/scripts/choose-beta-sdk-deps.js
 
       # Synchronize the telemetry package versions.
