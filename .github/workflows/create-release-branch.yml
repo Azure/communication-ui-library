@@ -11,7 +11,7 @@ on:
 
 jobs:
   create_release:
-    if: ${{ startsWith(${{ github.events.inputs.branch }}, 'prerelease') }}
+    if: ${{ startsWith(${ github.events.inputs.branch }, 'prerelease') }}
     name: Create release branch
     runs-on: ubuntu-latest
     steps:
