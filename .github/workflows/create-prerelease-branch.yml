@@ -76,7 +76,7 @@ jobs:
 
       - name: Bump stable minor package versions
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
-        run: node common/scripts/bump-stable-verions.js minor
+        run: node common/scripts/bump-stable-verion.js minor
       # Generate changelog using beachball
       - name: Generate changelog using beachball
         run: node common/scripts/beachball-changelog-only.js
