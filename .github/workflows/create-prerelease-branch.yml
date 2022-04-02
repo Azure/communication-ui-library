@@ -68,18 +68,18 @@ jobs:
       # Bump package versions
       - name: Bump beta package versions if beta
         if: ${{ github.event.inputs.bump_type == 'beta' }}
-        run: node ./common/scripts/bump-beta-version.js
+        run: node common/scripts/bump-beta-version.js
 
       - name: Bump stable patch package versions
         if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
-        run: node ./common/scripts/bump-stable-version.js patch
+        run: node common/scripts/bump-stable-version.js 'patch'
 
       - name: Bump stable minor package versions
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
-        run: node ./common/scripts/bump-stable-verion.js minor
+        run: node common/scripts/bump-stable-verion.js 'minor'
       # Generate changelog using beachball
       - name: Generate changelog using beachball
-        run: node ./common/scripts/beachball-changelog-only.js
+        run: node common/scripts/beachball-changelog-only.js
 
       # Important to check version consistency again after bumping versions.
       - name: Ensure all package versions are consistent
