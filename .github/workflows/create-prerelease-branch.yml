@@ -67,15 +67,15 @@ jobs:
 
       # Bump package versions
       - name: Bump beta package versions if beta
-        if: ${{ github.events.inputs.bump_type == 'beta' }}
+        if: ${{ github.event.inputs.bump_type == 'beta' }}
         run: node common/scripts/bump-beta-version.js
 
       - name: Bump stable patch package versions
-        if: ${{ github.events.inputs.bump_type == 'stable-patch' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/bump-stable-version.js patch
 
       - name: Bump stable minor package versions
-        if: ${{ github.events.inputs.bump_type == 'stable-minor' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
         run: node common/scripts/bump-stable-verions.js minor
       # Generate changelog using beachball
       - name: Generate changelog using beachball
