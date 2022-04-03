@@ -1,8 +1,41 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
+This log was last generated on Sun, 03 Apr 2022 00:11:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.0)
+
+Sun, 03 Apr 2022 00:11:31 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.2.0...@internal/react-components_v1.3.0)
+
+### Patches
+
+- bugfix: Update readBy count for messages when `mobileView` is set ([PR #1746](https://github.com/azure/communication-ui-library/pull/1746) by 82062616+prprabhu-ms@users.noreply.github.com)
+- New Aria-labels added for screen reader accessibility on ErrorBar and MessageThread ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by edwardlee@microsoft.com)
+- Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies ([PR #1632](https://github.com/azure/communication-ui-library/pull/1632) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixes styles to remove undesired scroll bar in context menus on messages. ([PR #1675](https://github.com/azure/communication-ui-library/pull/1675) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Use fela style selector ([PR #1655](https://github.com/azure/communication-ui-library/pull/1655) by jiangnanhello@live.com)
+- Memoize chat bubble to avoid unnecessary re-render ([PR #1698](https://github.com/azure/communication-ui-library/pull/1698) by jiangnanhello@live.com)
+- Left align participant pane elements in mobile and desktop ([PR #1671](https://github.com/azure/communication-ui-library/pull/1671) by edwardlee@microsoft.com)
+- Add tab index to local video tile through a wrapper to allow keyboard navigation of the modal controls. ([PR #1716](https://github.com/azure/communication-ui-library/pull/1716) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix A11y bug where user cannot keyboard outside of local video preview ([PR #1623](https://github.com/azure/communication-ui-library/pull/1623) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix floating local video tile going offscreen in the VideoGallery Component ([PR #1725](https://github.com/azure/communication-ui-library/pull/1725) by 2684369+JamesBurnside@users.noreply.github.com)
+- Changed the participant item container styles to check if participant is the user and prevent cursor change. ([PR #1690](https://github.com/azure/communication-ui-library/pull/1690) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by beachball)
+
+### Changes
+
+- Added resend button to contextual menu ([PR #1676](https://github.com/azure/communication-ui-library/pull/1676) by carolinecao@microsoft.com)
+- change color for chat bubbles : blue when successfully sent and red when failed, added failed tag ([PR #1681](https://github.com/azure/communication-ui-library/pull/1681) by carolinecao@microsoft.com)
+- fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participant ([PR #1639](https://github.com/azure/communication-ui-library/pull/1639) by carolinecao@microsoft.com)
+- Bugfix for inconsistent fileupload sendbox errors ([PR #1673](https://github.com/azure/communication-ui-library/pull/1673) by anjulgarg@live.com)
+- Preventing text wrapping in file card due to long file names ([PR #1651](https://github.com/azure/communication-ui-library/pull/1651) by anjulgarg@live.com)
+- Bugfix for text wrapping onto next line in file card ([PR #1684](https://github.com/azure/communication-ui-library/pull/1684) by anjulgarg@live.com)
+- API fix: Hide FileSharing API from stable build ([PR #1744](https://github.com/azure/communication-ui-library/pull/1744) by 82062616+prprabhu-ms@users.noreply.github.com)
+- calculate read number and who has read the message on hover tooltip or on click action menu ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- FileCard: Do not show progress bar when progress is 0 ([PR #1622](https://github.com/azure/communication-ui-library/pull/1622) by anjulgarg@live.com)
+- Introduces A11y strings for aria-roles for control bar buttons. ([PR #1628](https://github.com/azure/communication-ui-library/pull/1628) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.2.0)
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added local and remote picture-in-picture component in Chat pane of CallWithChat composite in mobile view.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
