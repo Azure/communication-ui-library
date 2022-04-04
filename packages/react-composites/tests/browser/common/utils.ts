@@ -179,7 +179,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       (args: any) => {
         const videoNodes = document.querySelectorAll('video');
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        const allVideosLoaded = Array.from(videoNodes).every(
+          (videoNode) => videoNode.readyState === 4 && !videoNode?.paused
+        );
         return correctNoOfVideos && allVideosLoaded;
       },
       {

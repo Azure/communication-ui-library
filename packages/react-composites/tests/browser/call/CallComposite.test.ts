@@ -58,11 +58,18 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
-    await waitForFunction(page, () => {
-      const videoNode = document.querySelector('video');
-      const videoLoaded = videoNode?.readyState === 4;
-      return !!videoNode && videoLoaded;
-    });
+    await waitForFunction(
+      page,
+      (args) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const videoNode = document.querySelector<HTMLVideoElement>(`${(args as any).localPreviewSelector} video`);
+        const videoLoaded = videoNode?.readyState === 4 && !videoNode?.paused;
+        return !!videoNode && videoLoaded;
+      },
+      {
+        localPreviewSelector: dataUiId('call-composite-local-preview')
+      }
+    );
     await stubLocalCameraName(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
   });
