@@ -6,7 +6,6 @@ import { MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
-import { useLocale } from '../../localization/LocalizationProvider';
 
 /** @private */
 export type ChatMessageActionMenuProps = MenuProps & {
@@ -20,6 +19,8 @@ export type ChatMessageActionMenuProps = MenuProps & {
  * @private
  */
 export const chatMessageActionMenuProps = (menuProps: {
+  /** String for aria label that is read by Screen readers */
+  ariaLabel: string;
   /** Whether the action menu button is enabled, if not this will always return undefined */
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
@@ -36,8 +37,6 @@ export const chatMessageActionMenuProps = (menuProps: {
     'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
   });
 
-  const localeStrings = useLocale().strings.messageThread;
-
   const actionMenuProps: ChatMessageActionMenuProps = {
     showActionMenu: menuProps.forceShow === true ? true : undefined,
     iconOnly: true,
@@ -49,7 +48,7 @@ export const chatMessageActionMenuProps = (menuProps: {
         children: (
           <Ref innerRef={menuProps.menuButtonRef}>
             <MoreIcon
-              aria-label={localeStrings.actionMenuMoreOptions}
+              aria-label={menuProps.ariaLabel}
               className={iconWrapperStyle}
               {...{
                 outline: true
