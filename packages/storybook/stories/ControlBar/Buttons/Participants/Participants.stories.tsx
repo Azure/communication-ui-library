@@ -144,7 +144,7 @@ const ParticipantsStory = (args): JSX.Element => {
         displayName: p,
         state: i % 3 ? 'Connected' : 'Idle',
         isMuted: i % 3 ? false : true,
-        isScreenSharing: i === 2 ? true : false
+        isScreenSharing: i === 3 ? true : false
       };
     });
 

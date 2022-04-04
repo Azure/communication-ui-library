@@ -411,7 +411,7 @@ describe('Stateful call client', () => {
     call.testHelperPushRemoteParticipant(participant2);
     expect(
       await waitWithBreakCondition(
-        () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length === 2
+        () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length === 3
       )
     ).toBe(true);
 
@@ -451,7 +451,7 @@ describe('Stateful call client', () => {
     call.testHelperPushRemoteParticipant(participant2);
     expect(
       await waitWithBreakCondition(
-        () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length === 2
+        () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length === 3
       )
     ).toBe(true);
 

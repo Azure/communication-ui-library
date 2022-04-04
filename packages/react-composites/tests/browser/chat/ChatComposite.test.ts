@@ -113,7 +113,7 @@ test.describe('Chat Composite custom data model', () => {
     // Participant list is a beta feature
     if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'stable') {
       await waitForFunction(page, () => {
-        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
+        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 3;
       });
     }
     await waitForSelector(page, '#custom-data-model-typing-indicator');
