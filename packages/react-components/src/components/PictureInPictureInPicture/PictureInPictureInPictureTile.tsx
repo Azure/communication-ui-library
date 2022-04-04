@@ -39,7 +39,8 @@ const primaryTileStyles = memoizeFunction(
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '5.5rem' : '8rem',
       width: orientation === 'landscape' ? '8rem' : '5.5rem',
-      boxShadow: themeElevation
+      boxShadow: themeElevation,
+      overflow: 'hidden'
     }
   })
 );
@@ -49,7 +50,8 @@ const secondaryTileStyles = memoizeFunction(
     root: {
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '1.625rem' : '2rem',
-      width: orientation === 'landscape' ? '2rem' : '1.625rem'
+      width: orientation === 'landscape' ? '2rem' : '1.625rem',
+      overflow: 'hidden'
     }
   })
 );
