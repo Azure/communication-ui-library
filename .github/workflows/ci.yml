@@ -28,12 +28,7 @@ jobs:
           node-version: '14.x'
       # gets the matrix for ci run from the config file
       - id: get-matrix
-        run: |
-          json=$(jq '.| tostring' common/config/gh-actions/ci-config.json)
-          echo $json
-          jsonTrimmed=${json:1:-1}
-          echo $jsonTrimmed
-          echo ::set-output name=matrix::{\"include\":$(echo $jsonTrimmed)}
+        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
 
   build_packages:
     needs: get_matrix
