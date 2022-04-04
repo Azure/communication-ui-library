@@ -14,15 +14,21 @@ See the [release checklist](../references/release-checklist.md) for tasks that m
 
 Both beta and stable release follow a two step workflow, aided by github actions.
 
-### Step 1: Prepare for release
+### Step 1: Create a Pre-release branch
 
-Use the <insert workflow name> github action to trigger the release preparation workflow.
+Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-prerelease-branch.yml) github action to trigger the release preparation workflow.
 
-    TODO: Add image showing workflow and options, like there used to be here.
+1. Options for this workflow:
+    1. Branch - This is the branch that the release will be created from. Default option is from `main`.
+    2. Bump Type - This is the type of release that will be created, the options for this are:
+        - `beta`
+        - `stable-minor`
+        - `stable-patch`
 
 This workflow will:
 
 1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
+    1. This step will also create a file called `GROOMME.md` which should be deleted when completing the PR back into the pre-release branch to signify that the changelog has been manually groomed.
 1. Create a Pull Request into the `prerelease/<release-tag>` for manually summarizing the changes collected in the changelog. *Merge this PR before going to step 2*.
 
 For example, when creating a release off of `main` tagged `3.3.0`, the following branches and Pull Requests will be created:
@@ -40,16 +46,21 @@ graph LR
 
 ### Step 2: Create release branch
 
-Use the <insert workflow name> github action to trigger the release branch creation workflow.
+Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
-    TODO: Add image showing workflow and options, like there used to be here.
+1. Options for GH Action:
+    1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
 
 This workflow will:
 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
   1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but *it will never be merged back in the base branch*.
-  1. Commit some release preparation modifications that can not be merged back, like choosing the dependency versions that depend on the type of the release.
+  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch.
+  2. Based on the release type it will update the sdk versions to the latest stable, or latest beta for Calling and Chat.
+  3. The action will synchronize the package telemetry verions.
+  4. will commit these changes automatically on the release branch.
+  5. The workflow will then hop back to the pre-release branch and create a PR back into main.
 
 Continuing the example above, this action should be triggered once `groom_changelog_3.0.0` is merged. It will create the following new branches and Pull Requests:
 
@@ -95,36 +106,6 @@ You are now ready to publish the package!
 1. Complete the post-release verification steps in [Release Checklist](./release-checklist.md).
 1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
 1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.
-
-## Manually creating a release
-
-
-    WARNING: This section is old, and likely wrong.
-
-
-To manually create a release:
-
-1. Checkout onto the branch or tag with the changes you wish to publish.
-1. Create a release branch off from this. e.g.
-
-    ```bash
-    git fetch --all # Ensure you have the latest remote details
-    git checkout v.1.2.3 # Checkout a git tag or release branch
-    git checkout -b release/1.2.4 # Create feature branch
-    ```
-
-1. Bump the package versions
-
-    ```bash
-    npx beachball bump
-    ```
-
-    This will bump the package versions, as well as delete the change files and generate the changelog.
-1. Prune the changelog (see [Pruning a Changelog](../references/pruning-a-changelog.md))
-1. Put up a PR of the changes into main
-1. When the PR is completed, _on your release branch_, upload the packages to azure publishing pipelines and trigger the release pipeline. For information on how to do this, see the [Azure SDK partner release wiki](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline).
-1. Once the action has completed, verify on <https://www.npmjs.com/> that the package(s) published successfully.
-1. Post that a new release has happened on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
 ## Submitting a hotfix
 
