@@ -89,4 +89,8 @@ export interface CallWithChatCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /**
+   * Label for SidePaneHeader dismiss button
+   */
+  dismissSidePaneButton: string;
 }
