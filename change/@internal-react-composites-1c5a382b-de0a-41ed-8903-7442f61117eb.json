@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Show loader in File card until file download promise is resolved",
-  "packageName": "@internal/react-composites",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

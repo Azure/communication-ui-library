@@ -3,7 +3,7 @@
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
@@ -46,8 +46,8 @@ export interface MessageStatusIndicatorStrings {
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
-  /** how many people have read the message */
-  messageThreadReadCount?: number;
+  readCount?: number;
+  onToggleToolTip?: (isToggled: boolean) => void;
   /** number of participants not including myself */
   remoteParticipantsCount?: number;
   /**
@@ -72,8 +72,9 @@ export interface MessageStatusIndicatorProps {
  * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const { status, styles, messageThreadReadCount, remoteParticipantsCount } = props;
+  const { status, styles, remoteParticipantsCount, onToggleToolTip, readCount } = props;
   const localeStrings = useLocale().strings.messageStatusIndicator;
+  const [isTooltipToggled, setIsTooltipToggled] = useState<boolean>(false);
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
 
@@ -115,18 +116,23 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
             // when participant count is 0, we have a bug, show 'seen' to cover up as a fall back
-            (messageThreadReadCount === 1 && remoteParticipantsCount === 1) ||
-            messageThreadReadCount === 0 ||
-            (remoteParticipantsCount && remoteParticipantsCount <= 0) ||
-            !messageThreadReadCount ||
+            readCount === 0 ||
+            (remoteParticipantsCount && remoteParticipantsCount <= 1) ||
+            !readCount ||
             !remoteParticipantsCount ||
             strings.readByTooltipText === undefined
               ? strings.seenTooltipText
               : _formatString(strings.readByTooltipText, {
-                  messageThreadReadCount: `${messageThreadReadCount}`,
+                  messageThreadReadCount: `${readCount}`,
                   remoteParticipantsCount: `${remoteParticipantsCount}`
                 })
           }
+          onTooltipToggle={() => {
+            if (onToggleToolTip) {
+              onToggleToolTip(!isTooltipToggled);
+              setIsTooltipToggled(!isTooltipToggled);
+            }
+          }}
         >
           <Icon
             role="status"

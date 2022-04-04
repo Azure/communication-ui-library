@@ -16,6 +16,7 @@ import {
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
 import { TOC } from './TOC';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 // icons used in stories that are not part of the default component icons
 const storyIcons = {
@@ -28,6 +29,7 @@ const storyIcons = {
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+initializeFileTypeIcons();
 registerIcons({ icons: {...DEFAULT_COMPONENT_ICONS, ...storyIcons} });
 
 export const parameters = {

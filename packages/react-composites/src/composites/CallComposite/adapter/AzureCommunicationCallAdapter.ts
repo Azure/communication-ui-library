@@ -607,7 +607,7 @@ export const createAzureCommunicationCallAdapter = async ({
  * Note that you must memoize the arguments to avoid recreating adapter on each render.
  * See storybook for typical usage examples.
  *
- * @beta
+ * @public
  */
 export const useAzureCommunicationCallAdapter = (
   /**

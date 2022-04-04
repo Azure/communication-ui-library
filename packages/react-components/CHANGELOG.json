@@ -2,6 +2,141 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:02 GMT",
+      "tag": "@internal/react-components_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "96cc5b9a5d8fb2221de5dae2473ec80848520948",
+            "comment": "Switch CallWithChat from Beta to Public and Stable"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "01af4af775fccf047b0631f0e6943759bbac3580",
+            "comment": "Introduce new version of local video tile to address accessibility issues."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a49965d9484252f13eaeec7020c20247389e69dc",
+            "comment": "Added ParticipantList prop onParticipantClick and ParticipantItem prop onClick."
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "6b5703551a947f4ca4b62f3b6626c269abc33d97",
+            "comment": "Add SendboxErrorBar with timeout for showing file upload errors in SendBox"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "40e476507593a812a734c6e071fae5fbad2356ae",
+            "comment": "Show error above sendbox if message is sent before all files are uploaded."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "ed515b487f4763c010bdf577134dba00ba6f0b7c",
+            "comment": "Show loader in File card until file download promise is resolved"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3c16011e51800e23d47de01a509b0865eb590b10",
+            "comment": "Show file upload errors above sendbox in Composites containing Chat features"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9c0dac917f9b8cf98d6edb7dd73b2e66ae46851d",
+            "comment": "Add default implementation of file upload UI to SendBox"
+          }
+        ],
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "e93e7cd6ee217ba2ab24193efe7ea444365a5731",
+            "comment": "Updated PictureInPictureInPicture container styles display property."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "97c1d1ad3fddaed8156846ac18f4c077025ce878",
+            "comment": "Fix ChatMessageActionFlyout useMemo to include exhaustive dependencies to prevent missed re-renders on prop updates"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "5a97910412056c3b3cdb1b214150a9c61851f14a",
+            "comment": "Fix img size for style defined element"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a4b506ca88842bd90c1847d4831a787fa34606a1",
+            "comment": "Update ControlBarButton to read aria strings from other string sources"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6dc9b4b186b91ed0bc792d4ecbe7bce03b6352a0",
+            "comment": "Mobile Participant pane now spans full sidepane width"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "ddc11c9cb522c4376500be8404572ed9e3c12ade",
+            "comment": "Fix ChatMessage border color when editing a message to show inactive colors when not active"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "30ea091ecb5e33b2c44964f9e273c2eaa65a5bce",
+            "comment": "Prevent chat message flyout randomly closing itself by setting preventDismissOnResize property on the chat message flyout"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "5463f944ab18b397f777ed780518db854aa345bf",
+            "comment": "Fix SendBox position shift when border size changes. Update sendbox coloring to use theme.primary instead of theme.blue"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c69a644b5f7da68a011cc87fabc207facbce4757",
+            "comment": "Fix: do not allow sending empty messages when editing chat messages"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          }
+        ],
+        "none": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "c30e6d27e4f2901f07d81665c7ab298b171de3e6",
+            "comment": "Add conditional compile CallWithChat with LocalCameraSwitcher to resolve dependency errors"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:42:57 GMT",
       "tag": "@internal/react-components_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",

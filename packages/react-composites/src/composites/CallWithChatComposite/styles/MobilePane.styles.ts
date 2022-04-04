@@ -22,10 +22,17 @@ export const mobilePaneControlBarStyle: IStackStyles = { root: { height: '3rem' 
  * @private
  */
 export const mobilePaneBackButtonStyles: IButtonStyles = {
-  root: { border: 'none', minWidth: '2.5rem', height: '100%', background: 'none', padding: '0 1rem 0 0.5rem' },
+  root: { border: 'none', minWidth: '2.5rem', height: '100%', background: 'none', padding: '0 1rem' },
   rootChecked: { background: 'none' },
   rootCheckedHovered: { background: 'none' }
 };
+
+/**
+ * @private
+ */
+export const mobilePaneHiddenIconStyles: IButtonStyles = concatStyleSets(mobilePaneBackButtonStyles, {
+  root: { visibility: 'hidden' }
+});
 
 /**
  * @private

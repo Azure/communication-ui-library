@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Preventing text wrapping in file card due to long file names",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "updates pointer events to allow activiation of controls under the 'you are muted' notification",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

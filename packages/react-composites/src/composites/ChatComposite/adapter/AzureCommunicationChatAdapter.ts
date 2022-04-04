@@ -30,13 +30,14 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../file-sharing';
-/* @conditional-compile-remove(file-sharing) */
 import {
   FileUploadAdapter,
   AzureCommunicationFileUploadAdapter,
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
+import { useEffect, useRef, useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata, FileUploadManager } from '../file-sharing';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -153,11 +154,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.registerFileUploads = this.registerFileUploads.bind(this);
+    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.clearFileUploads = this.clearFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
   }
 
   dispose(): void {
@@ -203,15 +212,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
       };
 
-      await this.handlers.onSendMessage(content, options);
-
       /* @conditional-compile-remove(file-sharing) */
       /**
-       * All the current uploads need to be clear from the state after a message has been sent.
-       * This ensures that any component rendering these file uploads doesn't continue to do so.
-       * This also cleans the state for new file uploads with a fresh message.
+       * All the current uploads need to be clear from the state before a message has been sent.
+       * This ensures the following behavior:
+       * 1. File Upload cards are removed from sendbox at the same time text in sendbox is removed.
+       * 2. any component rendering these file uploads doesn't continue to do so.
+       * 3. Cleans the state for new file uploads with a fresh message.
        */
       this.fileUploadAdapter.clearFileUploads();
+
+      await this.handlers.onSendMessage(content, options);
     });
   }
 
@@ -256,8 +267,13 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.fileUploadAdapter.registerFileUploads(fileUploads);
+  registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.fileUploadAdapter.registerActiveFileUploads(files);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.fileUploadAdapter.registerCompletedFileUploads(metadata);
   }
 
   /* @conditional-compile-remove(file-sharing) */
@@ -268,6 +284,21 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(file-sharing) */
   cancelFileUpload(id: string): void {
     this.fileUploadAdapter.cancelFileUpload(id);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  updateFileUploadProgress(id: string, progress: number): void {
+    this.fileUploadAdapter.updateFileUploadProgress(id, progress);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.fileUploadAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+    this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -415,7 +446,112 @@ export const createAzureCommunicationChatAdapter = async ({
   await chatClient.startRealtimeNotifications();
 
   const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
-  await adapter.fetchInitialData();
+
+  return adapter;
+};
+
+/**
+ * A custom React hook to simplify the creation of {@link ChatAdapter}.
+ *
+ * Similar to {@link createAzureCommunicationChatAdapter}, but takes care of asynchronous
+ * creation of the adapter internally.
+ *
+ * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+ * as they are created. The adapter is only created when all arguments are defined.
+ *
+ * Note that you must memoize the arguments to avoid recreating adapter on each render.
+ * See storybook for typical usage examples.
+ *
+ * @public
+ */
+export const useAzureCommunicationChatAdapter = (
+  /**
+   * Arguments to be passed to {@link createAzureCommunicationChatAdapter}.
+   *
+   * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+   * as they are created. The adapter is only created when all arguments are defined.
+   */
+  args: Partial<AzureCommunicationChatAdapterArgs>,
+  /**
+   * Optional callback to modify the adapter once it is created.
+   *
+   * If set, must return the modified adapter.
+   */
+  afterCreate?: (adapter: ChatAdapter) => Promise<ChatAdapter>,
+  /**
+   * Optional callback called before the adapter is disposed.
+   *
+   * This is useful for clean up tasks, e.g., leaving any ongoing calls.
+   */
+  beforeDispose?: (adapter: ChatAdapter) => Promise<void>
+): ChatAdapter | undefined => {
+  const { credential, displayName, endpoint, threadId, userId } = args;
+
+  // State update needed to rerender the parent component when a new adapter is created.
+  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
+  // Ref needed for cleanup to access the old adapter created asynchronously.
+  const adapterRef = useRef<ChatAdapter | undefined>(undefined);
+
+  const afterCreateRef = useRef<((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined>(undefined);
+  const beforeDisposeRef = useRef<((adapter: ChatAdapter) => Promise<void>) | undefined>(undefined);
+  // These refs are updated on *each* render, so that the latest values
+  // are used in the `useEffect` closures below.
+  // Using a Ref ensures that new values for the callbacks do not trigger the
+  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  afterCreateRef.current = afterCreate;
+  beforeDisposeRef.current = beforeDispose;
+
+  useEffect(
+    () => {
+      if (!credential || !displayName || !endpoint || !threadId || !userId) {
+        return;
+      }
+      (async () => {
+        if (adapterRef.current) {
+          // Dispose the old adapter when a new one is created.
+          //
+          // This clean up function uses `adapterRef` because `adapter` can not be added to the dependency array of
+          // this `useEffect` -- we do not want to trigger a new adapter creation because of the first adapter
+          // creation.
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+
+        let newAdapter = await createAzureCommunicationChatAdapter({
+          credential,
+          displayName,
+          endpoint,
+          threadId,
+          userId
+        });
+        if (afterCreateRef.current) {
+          newAdapter = await afterCreateRef.current(newAdapter);
+        }
+        adapterRef.current = newAdapter;
+        setAdapter(newAdapter);
+      })();
+    },
+    // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
+    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, threadId, userId]
+  );
+
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
 
   return adapter;
 };

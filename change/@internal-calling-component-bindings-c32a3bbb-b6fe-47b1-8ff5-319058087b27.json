@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Switch CallWithChat from Beta to Public and Stable",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

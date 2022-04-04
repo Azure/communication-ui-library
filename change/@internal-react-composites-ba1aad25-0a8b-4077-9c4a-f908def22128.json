@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Improve Chat composite behavior in CallWithChatComposite to allow autofocus when opening chat pane.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

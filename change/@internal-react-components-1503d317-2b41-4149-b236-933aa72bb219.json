@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "change color for chat bubbles : blue when successfully sent and red when failed, added failed tag",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
