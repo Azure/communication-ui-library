@@ -195,8 +195,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 };
 
 /**
- * Page wait for selector helper function - USE INSTEAD OF PAGE.WAITFORSELECTOR
- * Using this, when the wait for selector fails, we get a screenshot showing why it failed.
+ * Wait for PiPiP it's videos to have loaded.
  */
 export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
   await page.bringToFront();
