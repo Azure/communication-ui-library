@@ -46,6 +46,7 @@ export const chatMessageActionMenuProps = (menuProps: {
         children: (
           <Ref innerRef={menuProps.menuButtonRef}>
             <MoreIcon
+              data-ui-id="chat-composite-message-action-icon"
               className={iconWrapperStyle}
               {...{
                 outline: true
