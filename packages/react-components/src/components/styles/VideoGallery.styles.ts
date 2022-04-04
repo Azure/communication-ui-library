@@ -60,7 +60,7 @@ export const floatingLocalVideoModalStyle = (
         boxShadow: theme.effects.elevation8,
         ':focus-within': {
           boxShadow: theme.effects.elevation16,
-          border: `0.125rem solid ${theme.palette.neutralPrimary}`
+          border: `${_pxToRem(2)} solid ${theme.palette.neutralPrimary}`
         }
       }
     },
