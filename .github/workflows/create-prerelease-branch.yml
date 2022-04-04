@@ -97,8 +97,8 @@ jobs:
       - name: Hop into new branch
         id: prereleasebranch
         run: |
-          git checkout -b prerelease-test-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
-          echo "::set-output name=prereleasebranch::prerelease-test-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
+          git checkout -b prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
+          echo "::set-output name=prereleasebranch::prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
       - name: Commit changes
         run: |
           git add .
@@ -110,7 +110,7 @@ jobs:
         id: groom
         run: |
           git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
-          echo "::set-output name=groom::groom_changelog_test_${{ steps.version.outputs.version }}"
+          echo "::set-output name=groom::groom_changelog_${{ steps.version.outputs.version }}"
 
       # Push groom changes
       - name: Create groom file and push changes
@@ -128,4 +128,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{steps.groom.outputs.groom}}", "base":"${{steps.prereleasebranch.outputs.prereleasebranch  }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type}} pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{steps.groom.outputs.groom}}", "base":"${{steps.prereleasebranch.outputs.prereleasebranch  }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type }} pre-release branch - create` GitHub action. Please review." }'
