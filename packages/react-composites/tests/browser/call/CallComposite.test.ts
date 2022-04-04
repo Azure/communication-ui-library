@@ -10,8 +10,7 @@ import {
   isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector,
-  hasVideoLoaded
+  waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -64,7 +63,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       (args) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const videoNode = document.querySelector<HTMLVideoElement>(`${(args as any).localPreviewSelector} video`);
-        return hasVideoLoaded(videoNode);
+        return !!videoNode && videoNode.readyState === 4 && !videoNode.paused;
       },
       {
         localPreviewSelector: dataUiId('call-composite-local-preview')
