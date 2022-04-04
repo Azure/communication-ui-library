@@ -21,9 +21,9 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
     2. Bump Type - This is the type of release that will be created, the options for this are:
-        - `beta`
-        - `stable-minor`
-        - `stable-patch`
+        - `beta` - You will want to select this option when you want to do a beta release e.g: `release/1.2.beta.1`
+        - `stable-minor` - This option is best for when you want to release from `1.2.0 -> 1.3.0`
+        - `stable-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1`
 
 This workflow will:
 
@@ -36,13 +36,14 @@ For example, when creating a release off of `main` tagged `3.3.0`, the following
 ```mermaid
 graph LR
   main[branch: main]
-  prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.0<br/>- collect changelog<br/>-trigger string translations]
+  prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.0<br/>- collect changelog]
   pr[branch:groom_changelog_3.0.0]
 
   main -->|Create Branch| prerelease
   prerelease -->|Create Branch| pr
   pr -.-o|Create Pull Request| prerelease
 ```
+* Following the conclusion of this workflow you will need to kick off [the string localization workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) on the `pre-release` branch that results from this.
 
 ### Step 2: Create release branch
 
@@ -54,13 +55,11 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 This workflow will:
 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
-  1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
+    1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but *it will never be merged back in the base branch*.
-  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch.
-  2. Based on the release type it will update the sdk versions to the latest stable, or latest beta for Calling and Chat.
-  3. The action will synchronize the package telemetry verions.
-  4. will commit these changes automatically on the release branch.
-  5. The workflow will then hop back to the pre-release branch and create a PR back into main.
+  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch. based on the selection here it will update the sdk versions.
+  2. The action will synchronize the package telemetry verions on the release branch.
+  3. After making these changes it will make a PR from the pre-release branch back into `main`.
 
 Continuing the example above, this action should be triggered once `groom_changelog_3.0.0` is merged. It will create the following new branches and Pull Requests:
 
@@ -87,7 +86,7 @@ While the release branch is active, some changes might be merged into the branch
 This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
--  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off. This avoids non-trivial merge conflicts when the release branch is eventually merged back into `main`.
+-  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
 ## Publishing the package
 
@@ -104,8 +103,8 @@ You are now ready to publish the package!
 
 1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. Complete the post-release verification steps in [Release Checklist](./release-checklist.md).
-1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
 1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.
+1. Once everything is deployed and published on npm, delete the release branch from github. 
 
 ## Submitting a hotfix
 
@@ -152,7 +151,7 @@ They use beachball's `canary` CLI command to temporarily set all package version
 
 Creating a beta release is the same as creating a regular release, however each package.json version must have the `-beta` suffix and all changelogs must have `prerelease` or `none` as their change type. This will be typically during prerelease phases before a new major version is released.
 
-To create a beta release, ensure the above conditions then follow the instructions for "Creating a release through GitHub actions" or "Manually creating a release".
+To create a beta release, ensure the above conditions then follow the instructions for "Creating a release through GitHub actions" or "Manually creating a release". 
 
 ## Publishing packages
 
