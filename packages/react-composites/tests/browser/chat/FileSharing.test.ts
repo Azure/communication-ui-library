@@ -4,18 +4,11 @@ import {
   waitForChatCompositeToLoad,
   buildUrl,
   isTestProfileStableFlavor,
-  stubMessageTimestamps,
-  dataUiId
+  stubMessageTimestamps
 } from '../common/utils';
-import {
-  chatTestSetup,
-  sendMessage,
-  waitForMessageDelivered,
-  waitForMessageWithContent
-} from '../common/chatTestHelpers';
+import { chatTestSetup, sendMessage, waitForMessageDelivered } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { IDS } from '../common/constants';
 
 test.describe('Filesharing Attach file icon', async () => {
   test.skip(isTestProfileStableFlavor());
@@ -225,23 +218,15 @@ test.describe('Filesharing Message Thread', async () => {
         ])
       })
     );
+    // console.log(`xkcd: ${buildUrl(serverUrl, users[1])}`);
     await waitForChatCompositeToLoad(page0);
     await sendMessage(page0, testMessageText);
     await waitForMessageDelivered(page0);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
 
-    const page1 = pages[1];
-    await waitForChatCompositeToLoad(page1);
-    await waitForMessageWithContent(page1, testMessageText);
-
-    // It could be too slow to get typing indicator here, which makes the test flakey
-    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
-    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
-    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
-
-    await stubMessageTimestamps(page1);
-    expect(await page1.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
+    await page0.goto(buildUrl(serverUrl, users[1]));
+    await waitForChatCompositeToLoad(page0);
+    expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
