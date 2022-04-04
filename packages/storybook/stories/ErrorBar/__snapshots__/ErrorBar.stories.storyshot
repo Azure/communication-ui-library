@@ -58,6 +58,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 />
               </div>
               <button
+                aria-label="Close"
                 className="ms-Button ms-Button--icon ms-MessageBar-dismissal dismissal-15"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -66,6 +67,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                title="Close"
                 type="button"
               >
                 <span

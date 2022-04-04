@@ -31,7 +31,7 @@ export interface ChatMessageActionFlyoutProps {
   onRemoveClick?: () => void;
   onResendClick?: () => void;
   onDismiss: () => void;
-  messageReadBy?: { id: string; name: string }[];
+  messageReadBy?: { id: string; displayName: string }[];
   remoteParticipantsCount?: number;
   messageStatus?: string;
   /**
@@ -63,7 +63,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
-      text: person.name,
+      text: person.displayName,
       styles: {
         root: {
           margin: '0.25rem'
@@ -72,8 +72,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
     const { onRenderAvatar } = props;
     return {
-      key: person.name,
-      text: person.name,
+      key: person.displayName,
+      text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
       onRenderIcon: () =>
         onRenderAvatar ? onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,

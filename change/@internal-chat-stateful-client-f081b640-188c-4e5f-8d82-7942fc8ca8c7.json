@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "added new type readreceiptbysenderid",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
