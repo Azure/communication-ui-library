@@ -107,10 +107,10 @@ jobs:
 
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
-        id: groom
+        id: groombranch
         run: |
           git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
-          echo "::set-output name=groom::groom_changelog_${{ steps.version.outputs.version }}"
+          echo "::set-output name=groombranch::groom_changelog_${{ steps.version.outputs.version }}"
 
       # Push groom changes
       - name: Create groom file and push changes
@@ -118,7 +118,7 @@ jobs:
           echo 'Please groom the changelog and then delete me.' > GROOMME.md
           git add .
           git commit -m 'Create groom me file for groom changelog branch'
-          git push -u origin ${{ steps.groom.outputs.groom }}
+          git push -u origin ${{ steps.groombranch.outputs.groombranch }}
 
       # Create a PR from the changes
       - name: Create PR
