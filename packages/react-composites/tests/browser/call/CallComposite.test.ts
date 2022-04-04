@@ -60,8 +60,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(
       page,
-      (args: any) => {
-        const videoNode = document.querySelector<HTMLVideoElement>(`${args.localPreviewSelector} video`);
+      (args) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const videoNode = document.querySelector<HTMLVideoElement>(`${(args as any).localPreviewSelector} video`);
         const videoLoaded = videoNode?.readyState === 4 && !videoNode?.paused;
         return !!videoNode && videoLoaded;
       },
