@@ -129,7 +129,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   test('participant list loads correctly', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
+    // await turnOffAllVideos(pages);
 
     for (const idx in pages) {
       const page = pages[idx];
@@ -253,7 +253,7 @@ test.describe('Call composite participant menu items injection tests', () => {
   test('injected menu items appear', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
+    // await turnOffAllVideos(pages);
 
     const page = pages[0];
 
@@ -295,7 +295,7 @@ test.describe('Call composite custom button injection tests', () => {
   test('injected buttons appear', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
+    // await turnOffAllVideos(pages);
 
     const page = pages[0];
     expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
@@ -303,13 +303,13 @@ test.describe('Call composite custom button injection tests', () => {
 });
 
 // `timeout` is applied to each individual step that waits for a condition.
-const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
-  for (const page of pages) {
-    await pageClick(page, dataUiId('call-composite-camera-button'));
-  }
-  for (const page of pages) {
-    await waitForFunction(page, () => {
-      return document.querySelectorAll('video').length === 0;
-    });
-  }
-};
+// const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+//   for (const page of pages) {
+//     await pageClick(page, dataUiId('call-composite-camera-button'));
+//   }
+//   for (const page of pages) {
+//     await waitForFunction(page, () => {
+//       return document.querySelectorAll('video').length === 0;
+//     });
+//   }
+// };
