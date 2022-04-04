@@ -40,10 +40,10 @@ const config: PlaywrightTestConfig = {
 
   // Add an extra retry to mitigate flaky issues.
   // This can be removed if we switch to using a mock ACS service.
-  retries: 0,
+  retries: 2,
 
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
-  // forbidOnly: !!process.env.CI,
+  forbidOnly: !!process.env.CI,
 
   // Applies to all projects
   use: {
