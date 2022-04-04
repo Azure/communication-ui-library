@@ -204,14 +204,24 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
     page,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
-      const pipip = document.querySelector(args.pipipSelector);
+      // Check pipip is a valid element on screen
+      const pipip = document.querySelector<HTMLElement>(args.pipipSelector);
       if (!pipip) {
         return false;
       }
 
-      const tileNodes = pipip.querySelectorAll(args.participantTileSelector);
-      const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-      return correctNoOfTiles;
+      // Check there are the correct number of tiles inside the pipip
+      const tileNodes = pipip.querySelectorAll<HTMLElement>(args.participantTileSelector);
+      if (tileNodes.length !== args.expectedTileCount) {
+        return false;
+      }
+
+      // Check the videos are ready in each tile
+      const allVideosLoaded = Array.from(tileNodes).every((tileNode) => {
+        const videoNode = tileNode?.querySelector('video');
+        return videoNode && videoNode.readyState === 4;
+      });
+      return allVideosLoaded;
     },
     {
       pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
