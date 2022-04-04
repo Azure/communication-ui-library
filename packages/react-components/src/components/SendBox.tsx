@@ -305,18 +305,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [props.activeFileUploads, fileUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileUploads = useCallback(
-    () =>
-      props.onRenderFileUploads ? (
-        props.onRenderFileUploads()
-      ) : (
-        <_FileUploadCards
-          activeFileUploads={props.activeFileUploads ? props.activeFileUploads : []}
-          onCancelFileUpload={props.onCancelFileUpload}
-        />
-      ),
-    [props]
-  );
+  const onRenderFileUploads = useCallback(() => {
+    if (props.activeFileUploads?.length === 0) {
+      return null;
+    }
+    return props.onRenderFileUploads ? (
+      props.onRenderFileUploads()
+    ) : (
+      <div style={{ margin: '0.25rem' }}>
+        <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
+      </div>
+    );
+  }, [props]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>

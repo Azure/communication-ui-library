@@ -68,7 +68,8 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   });
 
   const fileNameContainerClassName = mergeStyles({
-    paddingLeft: '0.25rem',
+    paddingLeft: _pxToRem(4),
+    minWidth: '75%',
     maxWidth: '75%'
   });
 
@@ -85,7 +86,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      padding: `${_pxToRem(2)} 0`, // Makes the progress indicator 2px thick
+      padding: 0, // Removes the padding below progress indicator. Makes it flush with the bottom of the card.
       // To make the progress indicator border curve along the bottom of file card.
       borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
     }

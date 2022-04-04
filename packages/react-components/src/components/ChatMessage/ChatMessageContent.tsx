@@ -62,7 +62,7 @@ const MessageContentAsRichTextHTML = (
       {htmlToReactParser.parse(message.content)}
       {
         /* @conditional-compile-remove(file-sharing) */
-        onRenderFileDownloads && onRenderFileDownloads(userId, message)
+        <div style={{ marginTop: '0.25rem' }}>{onRenderFileDownloads && onRenderFileDownloads(userId, message)}</div>
       }
     </div>
   );
@@ -90,7 +90,7 @@ const MessageContentAsText = (
         {message.content}
         {
           /* @conditional-compile-remove(file-sharing) */
-          onRenderFileDownloads && onRenderFileDownloads(userId, message)
+          <div style={{ marginTop: '0.25rem' }}>{onRenderFileDownloads && onRenderFileDownloads(userId, message)}</div>
         }
       </Linkify>
     </div>

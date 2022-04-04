@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { mergeStyles, Stack } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 
 /**
@@ -17,16 +18,15 @@ export interface _FileCardGroupProps {
  * This is a workaround to avoid this issue.
  */
 const fileCardGroupClassName = mergeStyles({
-  margin: '0.25rem',
   flexFlow: 'row wrap',
   '& > *': {
-    margin: '0.25rem'
+    margin: _pxToRem(2)
   },
   /**
    * margin for children is overriden by parent stack, so adding left margin for each child
    */
   '& > *:not(:first-child)': {
-    marginLeft: '0.25rem'
+    marginLeft: _pxToRem(2)
   }
 });
 
