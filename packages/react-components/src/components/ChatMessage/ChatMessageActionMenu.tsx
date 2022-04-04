@@ -6,6 +6,7 @@ import { MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
+import { useLocale } from '../../localization/LocalizationProvider';
 
 /** @private */
 export type ChatMessageActionMenuProps = MenuProps & {
@@ -35,6 +36,8 @@ export const chatMessageActionMenuProps = (menuProps: {
     'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
   });
 
+  const localeStrings = useLocale().strings.messageThread;
+
   const actionMenuProps: ChatMessageActionMenuProps = {
     showActionMenu: menuProps.forceShow === true ? true : undefined,
     iconOnly: true,
@@ -46,6 +49,7 @@ export const chatMessageActionMenuProps = (menuProps: {
         children: (
           <Ref innerRef={menuProps.menuButtonRef}>
             <MoreIcon
+              aria-label={localeStrings.actionMenuMoreOptions}
               className={iconWrapperStyle}
               {...{
                 outline: true
