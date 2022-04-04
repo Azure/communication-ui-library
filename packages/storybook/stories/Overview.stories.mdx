@@ -182,16 +182,20 @@ Details about feature availability in the [UI Library is available here](./?path
 
 ## Platform support
 
-| SDK              | Windows                       | macOS                         | Ubuntu   | Linux    | Android    | iOS          |
-| ---------------- | ----------------------------- | ----------------------------- | -------- | -------- | ---------- | ------------ |
-| UI SDK - Calling | Chrome\*, new Edge            | Chrome\*, Safari\*\*          | Chrome\* | Chrome\* | Chrome\*\* | Safari\*\*\* |
-| UI SDK - Chat    | Firefox\*, Chrome\*, new Edge | Firefox\*, Chrome\*, Safari\* | Chrome\* | Chrome\* | Chrome\*   | Safari\*\*\* |
+The minimum supported browser version depends on the Azure Communication Service modality you use.
 
-\*Note that the latest version is supported in addition to the
+| SDK                             | Windows                       | macOS                         | Ubuntu   | Linux    | Android    | iOS          |
+| ------------------------------- | ----------------------------- | ----------------------------- | -------- | -------- | ---------- | ------------ |
+| [UI SDK - Calling][calling-msv] | Chrome\*, new Edge            | Chrome\*, Safari\*\*          | Chrome\* | Chrome\* | Chrome\*\* | Safari\*\*\* |
+| [UI SDK - Chat][chat-msv]       | Firefox\*, Chrome\*, new Edge | Firefox\*, Chrome\*, Safari\* | Chrome\* | Chrome\* | Chrome\*   | Safari\*\*\* |
+
+\* The latest version is supported in addition to the
 previous two releases.
 
-\*\*Note that outgoing screen sharing is not supported for Chrome on Android.
+\*\* Outgoing screen sharing is not supported for Chrome on Android.
 
-\*\*\*Note that Safari versions 13.1+ are supported. 1:1 calls are not supported on Safari. Outgoing video for Safari
-macOS supported only for Safari 14+/macOS 11+. Outgoing screen sharing
+\*\*\* The latest version is supported in addition to the previous two releases. 1:1 calls are not supported on Safari. Outgoing screen sharing
 is not supported on iOS, device selection(for example choosing Bluetooth headset) is limited by OS, only one device available.
+
+[calling-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#javascript-calling-sdk-support-by-os-and-browser
+[chat-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features#javascript-chat-sdk-support-by-os-and-browser

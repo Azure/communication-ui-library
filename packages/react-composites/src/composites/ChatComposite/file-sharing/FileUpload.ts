@@ -74,9 +74,13 @@ export type FileUploadError = {
  */
 export interface FileUploadManager {
   /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+  /**
    * HTML {@link File} object for the uploaded file.
    */
-  file: File;
+  file?: File;
   /**
    * Update the progress of the upload.
    * @param value - number between 0 and 1
@@ -96,41 +100,33 @@ export interface FileUploadManager {
 }
 
 /**
- * An internal interface used by the Chat Composite to drive the UI for file uploads.
- * @beta
+ * A wrapper object for a file that is being uploaded.
+ * Provides common functions for updating the upload progress, canceling an upload etc.
+ * @private
  */
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
+export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
+  private _emitter: EventEmitter;
+  public readonly id: string;
+  public readonly file?: File;
   /**
    * Filename to be displayed in the UI during file upload.
    */
-  fileName: string;
+  public readonly fileName: string;
   /**
    * Optional object of type {@link FileMetadata}
    */
-  metadata?: FileMetadata;
-}
+  public metadata?: FileMetadata;
 
-/**
- * A wrapper object for a file that is being uploaded.
- * Provides common functions for updating the upload progress, canceling an upload etc.
- * @internal
- */
-export class FileUpload implements FileUploadManager, ObservableFileUpload {
-  private _emitter: EventEmitter;
-  public id: string;
-  public file: File;
-  fileName: string;
-
-  constructor(file: File, maxListeners = _MAX_EVENT_LISTENERS) {
-    this.id = nanoid();
-    this.file = file;
-    this.fileName = file.name;
+  constructor(data: File | FileMetadata) {
     this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(maxListeners);
+    this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
+    this.id = nanoid();
+    if (data instanceof File) {
+      this.file = data;
+    } else {
+      this.metadata = data;
+    }
+    this.fileName = data.name;
   }
 
   notifyUploadProgressChanged(value: number): void {
@@ -174,34 +170,34 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
  * Events emitted by the FileUpload class.
  * @beta
  */
-export type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
+type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
 /**
  * Events listeners supported by the FileUpload class.
  * @beta
  */
-export type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
+type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
 
 /**
  * Listener for `uploadProgressed` event.
  * @beta
  */
-export type UploadProgressListener = (id: string, value: number) => void;
+type UploadProgressListener = (id: string, value: number) => void;
 /**
  * Listener for `uploadComplete` event.
  * @beta
  */
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta
  */
-export type UploadFailedListener = (id: string, message: string) => void;
+type UploadFailedListener = (id: string, message: string) => void;
 
 /**
  * @beta
  */
-export interface FileUploadEventEmitter {
+interface FileUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */
@@ -228,22 +224,3 @@ export interface FileUploadEventEmitter {
    */
   off(event: 'uploadFail', listener: UploadFailedListener): void;
 }
-
-/**
- * Utility function to be used with {@link AzureCommunicationChatAdapter#registerFileUploads}
- * Allows adding already uploaded files to the send box in Chat Composite.
- * @beta
- */
-export const createCompletedFileUpload = (data: FileMetadata): ObservableFileUpload => {
-  return {
-    id: nanoid(),
-    fileName: data.name,
-    metadata: data,
-    on(): void {
-      // noop
-    },
-    off(): void {
-      // noop
-    }
-  };
-};

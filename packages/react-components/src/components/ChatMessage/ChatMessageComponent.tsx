@@ -37,6 +37,10 @@ type ChatMessageComponentProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  onActionButtonClick: (
+    message: ChatMessage,
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
+  ) => void;
   /**
    * Optional callback to override render of the avatar.
    *

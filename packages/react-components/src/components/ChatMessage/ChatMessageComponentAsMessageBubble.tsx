@@ -40,6 +40,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  onActionButtonClick: (
+    message: ChatMessage,
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
+  ) => void;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -49,7 +53,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
 };
 
 /** @private */
-export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
+const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
@@ -81,6 +85,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
   >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
     ? undefined
@@ -90,7 +95,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
         forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
         onActionButtonClick: () => {
-          // Open chat action flyout, and set the context menu to target the chat message action button
+          props.onActionButtonClick(message, setMessageReadBy);
           setChatMessageActionFlyoutTarget(messageActionButtonRef);
         },
         theme
@@ -139,7 +144,18 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onTouchStart={() => setWasInteractionByTouch(true)}
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}
-          onClick={() => wasInteractionByTouch && setChatMessageActionFlyoutTarget(messageRef)}
+          onClick={() => {
+            if (!wasInteractionByTouch) {
+              return;
+            }
+            // If the message was touched via touch we immediately open the menu
+            // flyout (when using mouse the 3-dot menu that appears on hover
+            // must be clicked to open the flyout).
+            // In doing so here we set the target of the flyout to be the message and
+            // not the 3-dot menu button to position the flyout correctly.
+            setChatMessageActionFlyoutTarget(messageRef);
+            props.onActionButtonClick(message, setMessageReadBy);
+          }}
         />
       </div>
       {chatActionsEnabled && (
@@ -152,7 +168,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           onRemoveClick={onRemoveClick}
           onResendClick={onResendClick}
           strings={strings}
-          messageReadBy={message.readBy ?? []}
+          messageReadBy={messageReadBy}
           messageStatus={messageStatus ?? 'failed'}
           remoteParticipantsCount={remoteParticipantsCount}
           onRenderAvatar={onRenderAvatar}
@@ -164,3 +180,6 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
 
   return chatMessage;
 };
+
+/** @private */
+export const ChatMessageComponentAsMessageBubble = React.memo(MessageBubble);
