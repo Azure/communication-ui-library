@@ -204,11 +204,20 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
     page,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
-      const tileNodes = document.querySelectorAll(args.participantTileSelector);
+      const pipip = document.querySelector(args.pipipSelector);
+      if (!pipip) {
+        return false;
+      }
+
+      const tileNodes = pipip.querySelectorAll(args.participantTileSelector);
       const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
       return correctNoOfTiles;
     },
-    { participantTileSelector: dataUiId('video-tile'), expectedTileCount: videosEnabledCount }
+    {
+      pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
+      participantTileSelector: dataUiId('video-tile'),
+      expectedTileCount: videosEnabledCount
+    }
   );
 };
 
