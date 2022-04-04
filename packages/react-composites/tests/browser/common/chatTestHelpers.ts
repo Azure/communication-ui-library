@@ -23,7 +23,9 @@ export const chatTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  users = await createChatThreadAndUsers(TEST_PARTICIPANTS);
+  if (!users.length) {
+    users = await createChatThreadAndUsers(TEST_PARTICIPANTS);
+  }
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
