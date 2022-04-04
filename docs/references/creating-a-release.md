@@ -49,6 +49,8 @@ graph LR
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
+We should manually sync the string translations to this branch 5 days before release from the pre-release branch that this originates from. So it is important to make sure the [translation workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) is triggered with enough time to be completed.
+
 1. Options for GH Action:
     1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
 
