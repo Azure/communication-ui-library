@@ -156,6 +156,9 @@ export const clickOutsideOfPage = async (page: Page): Promise<void> => {
   await page.mouse.click(-1, -1);
 };
 
+export const hasVideoLoaded = (videoNode: HTMLVideoElement | null): boolean =>
+  !!videoNode && videoNode.readyState === 4 && !videoNode.paused;
+
 /**
  * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
  */
@@ -179,9 +182,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       (args: any) => {
         const videoNodes = document.querySelectorAll('video');
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every(
-          (videoNode) => videoNode.readyState === 4 && !videoNode?.paused
-        );
+        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => hasVideoLoaded(videoNode));
         return correctNoOfVideos && allVideosLoaded;
       },
       {
