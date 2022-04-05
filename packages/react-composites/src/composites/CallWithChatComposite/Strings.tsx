@@ -89,4 +89,8 @@ export interface CallWithChatCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /**
+   * Aria label string for return to call button
+   */
+  returnToCallButtonAriaLabel: string;
 }
