@@ -60,10 +60,17 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(
       page,
-      (args) => {
+      async (args) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const videoNode = document.querySelector<HTMLVideoElement>(`${(args as any).localPreviewSelector} video`);
-        return !!videoNode && videoNode.readyState === 4 && !videoNode.paused;
+        const videoReady = !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
+        if (!videoReady) {
+          return false;
+        }
+
+        // Once the video is ready allow DOM to have a render cycle to update to ensure video is shown on the page
+        await new Promise((resolve) => setTimeout(resolve));
+        return true;
       },
       {
         localPreviewSelector: dataUiId('call-composite-local-preview')
