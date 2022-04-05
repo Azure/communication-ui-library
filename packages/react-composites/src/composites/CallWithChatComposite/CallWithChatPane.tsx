@@ -117,6 +117,12 @@ export const CallWithChatPane = (props: {
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
+          minDragPosition={{
+            x: props.rtl
+              ? -1 * modalPipRightPositionPx
+              : modalPipRightPositionPx - modalLayerHost.getBoundingClientRect().width + modalPipWidthPx,
+            y: -1 * modalPipTopPositionPx
+          }}
           maxDragPosition={{
             x: props.rtl
               ? modalLayerHost.getBoundingClientRect().width - modalPipRightPositionPx - modalPipWidthPx
