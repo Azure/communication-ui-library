@@ -88,7 +88,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // Combined top and bottom padding needs to be equal to the progress bar height defined below.
+      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // item progress height won't apply without an explicit padding
       // To make the progress indicator border curve along the bottom of file card.
       borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
     },
