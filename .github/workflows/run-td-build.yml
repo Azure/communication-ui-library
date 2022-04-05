@@ -7,6 +7,9 @@ on:
     branches:
       - main
       - release/**
+      - prerelease-beta/**
+      - prerelease-stable-minor/**
+      - prerelease-stable-patch/**
   workflow_dispatch:
     inputs:
       commit_strings:
