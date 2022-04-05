@@ -93,4 +93,8 @@ export interface CallWithChatCompositeStrings {
    * Label for SidePaneHeader dismiss button
    */
   dismissSidePaneButton: string;
+  /**
+   * Aria label string for return to call button
+   */
+  returnToCallButtonAriaLabel: string;
 }
