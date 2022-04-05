@@ -54,13 +54,12 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.waitForSelector(dataUiId('chat-composite-message-tooltip'));
     expect(await page0.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
 
-    // await stubMessageTimestamps(page0);
-    // await page0.locator(dataUiId('chat-composite-message')).click();
-    // await page0.locator(dataUiId('chat-composite-message-action-icon')).click();
-    // await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
-    // await page0.locator('[id="chat-composite-message-contextual-menu-read-info"]').click();
-    // await page0.waitForTimeout(1000);
-    // expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
+    await stubMessageTimestamps(page0);
+    await page0.locator(dataUiId('chat-composite-message')).click();
+    await page0.locator(dataUiId('chat-composite-message-action-icon')).click();
+    await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await page0.locator('[id="chat-composite-message-contextual-menu-read-info"]').click();
+    expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
   });
 
   test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
