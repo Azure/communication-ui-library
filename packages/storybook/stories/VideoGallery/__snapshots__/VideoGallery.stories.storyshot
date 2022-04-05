@@ -28,10 +28,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           className="ms-Stack css-3"
         >
           <div
-            aria-label="Tile keyboard movement Dropdown Hidden"
-            aria-live="polite"
-            aria-role="Drop down"
             className="ms-Stack css-4"
+            role="dialog"
             tabIndex={0}
           >
             <div
@@ -107,7 +105,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-105"
                       data-icon-name="VideoTileMicOff"
                     >
                       <span
