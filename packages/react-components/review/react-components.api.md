@@ -448,6 +448,7 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -665,6 +666,7 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    actionMenuMoreOptions: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
