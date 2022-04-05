@@ -125,6 +125,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 </div>
               </div>
             </div>
+            <div
+              style={
+                Object {
+                  "margin": "0.25rem",
+                }
+              }
+            />
           </div>
         </div>
       </div>
