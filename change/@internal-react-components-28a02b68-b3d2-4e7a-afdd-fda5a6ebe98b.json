@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add aria-label for ChatMessageActionMenu button",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
