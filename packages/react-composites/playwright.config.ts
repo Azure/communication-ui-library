@@ -73,6 +73,22 @@ const config: PlaywrightTestConfig = {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions }
       }
+    },
+    {
+      name: 'Mobile Android Landscape',
+      use: {
+        // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
+        userAgent:
+          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
+        // TODO: update this to support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
+        // Currently that will cause a scrollbar that is making tests flakey.
+        viewport: { width: 732, height: 412 },
+        deviceScaleFactor: 2,
+        isMobile: true,
+        hasTouch: true,
+        defaultBrowserType: 'chromium',
+        launchOptions: { ...chromeLaunchOptions }
+      }
     }
   ]
 };
