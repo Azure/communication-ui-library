@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update MicrophoneButton story to showcase device selection menu",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

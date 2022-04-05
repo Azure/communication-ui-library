@@ -32,7 +32,7 @@ export type CallControlsProps = {
  * @private
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const options = typeof props.options === 'boolean' ? {} : props.options;
+  const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
   const customButtons = useMemo(
     () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]

@@ -2,10 +2,13 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { Text } from '@fluentui/react';
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { yellowBannerPalette } from '../BetaBanners/BannerPalettes';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { StorybookBanner } from '../BetaBanners/StorybookBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -129,6 +132,11 @@ const getDocs: () => JSX.Element = () => {
         button will cycle through the different camera's in the users device. Typical usage is to enable this button on
         mobile devices. This button is enabled through the use of the `showCameraSwitcherInLocalPreview` prop.
       </Description>
+      <StorybookBanner palette={yellowBannerPalette}>
+        <Text style={{ display: 'inline-block' }}>
+          This feature when enabled will disable the ability to drag the local video tile around the video gallery.
+        </Text>
+      </StorybookBanner>
       <Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
         <LocalCameraSwitcherExample />
       </Canvas>

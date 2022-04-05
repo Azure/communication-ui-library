@@ -21,12 +21,7 @@ import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPerson
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import {
-  FileUploadButtonWrapper as FileUploadButton,
-  FileUpload,
-  FileUploadHandler,
-  FileDownloadHandler
-} from './file-sharing';
+import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler, FileDownloadHandler } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -41,15 +36,18 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadCards } from './FileUploadCards';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 
 /**
  * @private
@@ -113,10 +111,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
+  /* @conditional-compile-remove(file-sharing) */
+  const [downloadErrorMessage, setDownloadErrorMessage] = useState('');
 
   const adapter = useAdapter();
 
   useEffect(() => {
+    // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
   }, [adapter]);
 
@@ -143,6 +144,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  /* @conditional-compile-remove(file-sharing) */
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = (files: FileList | null): void => {
@@ -150,11 +152,26 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
 
-    const fileUploads = Array.from(files).map((file) => new FileUpload(file));
     /* @conditional-compile-remove(file-sharing) */
-    fileSharing?.uploadHandler && adapter.registerFileUploads && adapter.registerFileUploads(fileUploads);
+    const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
+    /* @conditional-compile-remove(file-sharing) */
     fileSharing?.uploadHandler(userId, fileUploads);
   };
+
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileDownloads = useCallback(
+    (userId, message) => (
+      <FileDownloadCards
+        userId={userId}
+        message={message}
+        downloadHandler={fileSharing?.downloadHandler}
+        onDownloadErrorMessage={(errorMessage: string) => {
+          setDownloadErrorMessage(errorMessage);
+        }}
+      />
+    ),
+    [fileSharing?.downloadHandler]
+  );
 
   return (
     <Stack className={chatContainer} grow>
@@ -162,12 +179,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
+          {
+            /* @conditional-compile-remove(file-sharing) */
+            <FileDownloadErrorBar
+              onDismissDownloadErrorMessage={useCallback(() => {
+                setDownloadErrorMessage('');
+              }, [])}
+              fileDownloadErrorMessage={downloadErrorMessage || ''}
+            ></FileDownloadErrorBar>
+          }
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={(userId, message) => <FileDownloadCards userId={userId} message={message} />}
+            onRenderFileDownloads={onRenderFileDownloads}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -181,19 +207,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <SendBox
               {...sendBoxProps}
-              /* @conditional-compile-remove(file-sharing) */
-              onRenderFileUploads={() => <FileUploadCards />}
               autoFocus={options?.autoFocus}
               styles={sendBoxStyles}
               /* @conditional-compile-remove(file-sharing) */
               activeFileUploads={useSelector(fileUploadsSelector).files}
+              /* @conditional-compile-remove(file-sharing) */
+              onCancelFileUpload={adapter.cancelFileUpload}
             />
 
-            <FileUploadButton
-              accept={fileSharing?.accept}
-              multiple={fileSharing?.multiple}
-              onChange={fileUploadButtonOnChange}
-            />
+            {fileSharing?.uploadHandler && (
+              <FileUploadButton
+                accept={fileSharing?.accept}
+                multiple={fileSharing?.multiple}
+                onChange={fileUploadButtonOnChange}
+              />
+            )}
           </Stack>
         </Stack>
         {

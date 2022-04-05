@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -39,6 +40,12 @@ export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
 
 /**
  * @private
+ * z-index to ensure that the local video tile is above the video gallery.
+ */
+export const LOCAL_VIDEO_TILE_ZINDEX = 2;
+
+/**
+ * @private
  */
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
@@ -48,8 +55,23 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    {
+      main: {
+        boxShadow: theme.effects.elevation8,
+        ':focus-within': {
+          boxShadow: theme.effects.elevation16,
+          border: `2px solid ${theme.palette.neutralPrimary}`
+        }
+      }
+    },
+    localVideoModalStyles
   );
+};
+
+/** @private */
+export const localVideoTileStartPositionPX = {
+  bottom: 8,
+  right: 8
 };
 
 /**
@@ -60,11 +82,22 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
     minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
     minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
     position: 'absolute',
-    bottom: '0.5rem',
+    bottom: `${_pxToRem(localVideoTileStartPositionPX.bottom)}`,
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+    ...(theme.rtl
+      ? { left: `${_pxToRem(localVideoTileStartPositionPX.right)}` }
+      : { right: `${_pxToRem(localVideoTileStartPositionPX.right)}` })
   };
+};
+
+/**
+ * @private
+ */
+export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStackStyles => {
+  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
+    root: { boxShadow: theme.effects.elevation8 }
+  });
 };
 
 /**
@@ -73,7 +106,7 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX,
     height: '100%',
     width: '100%'
   }
@@ -84,9 +117,6 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
  */
 export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
-    maxHeight: isNarrow
-      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
-      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     minHeight: isNarrow
       ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
@@ -158,8 +188,8 @@ export const layerHostStyle: IStyle = {
 export const localVideoCameraCycleButtonStyles: IButtonStyles = {
   root: {
     position: 'absolute',
-    right: '0.2rem',
-    top: '0.2rem',
+    right: '0.1rem',
+    top: '0.1rem',
     color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
     zIndex: 2, // shows the button directly over the local video feed.
     background: 'transparent'
@@ -168,5 +198,15 @@ export const localVideoCameraCycleButtonStyles: IButtonStyles = {
     // styles to remove the unwanted white highlight and blue colour after tapping on button.
     color: '#FFFFFF',
     background: 'transparent'
+  }
+};
+
+/**
+ * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
+ * @private
+ */
+export const localVideoModalStyles: Partial<IModalStyles> = {
+  keyboardMoveIconContainer: {
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
   }
 };

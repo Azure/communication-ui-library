@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Left align participant pane elements in mobile and desktop",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

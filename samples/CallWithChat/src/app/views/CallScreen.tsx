@@ -4,15 +4,15 @@
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  createAzureCommunicationCallWithChatAdapter,
   toFlatCommunicationIdentifier,
+  useAzureCommunicationCallWithChatAdapter,
   CallAndChatLocator,
-  CallWithChatAdapter,
   CallWithChatAdapterState,
-  CallWithChatComposite
+  CallWithChatComposite,
+  CallWithChatAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
@@ -30,37 +30,16 @@ export interface CallScreenProps {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, displayName, endpoint, locator } = props;
-  const [adapter, setAdapter] = useState<CallWithChatAdapter>();
   const callIdRef = useRef<string>();
-  const adapterRef = useRef<CallWithChatAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
-  const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
-  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
-  useEffect(() => {
-    const updateIsMobile = (): void => {
-      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
-      setTimeout(() => {
-        setIsMobileSession(detectMobileSession());
-      });
-    };
-    window.addEventListener('resize', updateIsMobile);
-    return () => window.removeEventListener('resize', updateIsMobile);
-  }, []);
+  const credential = useMemo(
+    () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
+    [userId, token]
+  );
 
-  useEffect(() => {
-    (async () => {
-      if (!userId || !displayName || !locator || !token || !endpoint) {
-        return;
-      }
-
-      const adapter = await createAzureCommunicationCallWithChatAdapter({
-        userId,
-        displayName,
-        credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-        endpoint,
-        locator: locator
-      });
+  const afterAdapterCreate = useCallback(
+    async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
       adapter.on('callError', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
@@ -80,14 +59,28 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           console.log(`Call Id: ${callIdRef.current}`);
         }
       });
-      setAdapter(adapter);
-      adapterRef.current = adapter;
-    })();
+      return adapter;
+    },
+    [callIdRef]
+  );
 
-    return () => {
-      adapterRef?.current?.dispose();
+  const adapter = useAzureCommunicationCallWithChatAdapter(
+    { userId, displayName, credential, endpoint, locator },
+    afterAdapterCreate
+  );
+
+  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
+  const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
+  useEffect(() => {
+    const updateIsMobile = (): void => {
+      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
+      setTimeout(() => {
+        setIsMobileSession(detectMobileSession());
+      });
     };
-  }, [displayName, token, userId, locator, endpoint]);
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
+  }, []);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

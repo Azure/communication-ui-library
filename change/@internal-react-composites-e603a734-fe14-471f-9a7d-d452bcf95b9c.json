@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix race condition of \"not in chat\"",
+  "packageName": "@internal/react-composites",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}

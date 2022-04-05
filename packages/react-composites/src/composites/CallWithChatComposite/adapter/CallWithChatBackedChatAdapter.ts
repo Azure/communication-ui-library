@@ -3,6 +3,8 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata, FileUploadManager } from '../../ChatComposite';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -87,6 +89,41 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public setTopic = async (topicName: string): Promise<void> => {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
   };
+
+  /* @conditional-compile-remove(file-sharing) */
+  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.callWithChatAdapter.registerActiveFileUploads(files);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public clearFileUploads(): void {
+    this.callWithChatAdapter.clearFileUploads();
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public cancelFileUpload(id: string): void {
+    this.callWithChatAdapter.cancelFileUpload(id);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadProgress(id: string, progress: number): void {
+    this.callWithChatAdapter.updateFileUploadProgress(id, progress);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.callWithChatAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+    this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
+  }
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(

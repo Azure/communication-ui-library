@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
+import { FileUploadManager } from '../file-sharing';
 import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
@@ -41,5 +42,27 @@ export const useFileUploadAdapter = (): FileUploadAdapter => {
   /* @conditional-compile-remove(file-sharing) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
-  return {};
+  return {
+    registerActiveFileUploads() {
+      return [] as FileUploadManager[];
+    },
+    registerCompletedFileUploads() {
+      return [] as FileUploadManager[];
+    },
+    cancelFileUpload() {
+      // noop
+    },
+    clearFileUploads() {
+      // noop
+    },
+    updateFileUploadErrorMessage() {
+      // noop
+    },
+    updateFileUploadProgress() {
+      // noop
+    },
+    updateFileUploadMetadata() {
+      // noop
+    }
+  };
 };

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create CallWithChatCompositeIcons type. Move ControlBarButtonBadgeIcon out of CallCompositeIcons",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -56,6 +56,9 @@ export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT ext
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @internal
+export const _pxToRem: (px: number) => string;
+
+// @internal
 export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined, space?: string | number | undefined) => string | undefined;
 
 // @public

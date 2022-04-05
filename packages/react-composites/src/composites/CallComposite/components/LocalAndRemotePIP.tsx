@@ -16,7 +16,6 @@ import { CompositeLocale, useLocale } from '../../localization';
  * @private
  */
 export interface LocalAndRemotePIPProps {
-  onClick: () => void;
   localParticipant: { displayName?: string; videoStream?: VideoGalleryStream };
   dominantRemoteParticipant?: {
     userId: string;
@@ -32,6 +31,7 @@ export interface LocalAndRemotePIPProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  onClick?: () => void;
 }
 
 /**

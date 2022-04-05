@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { ParticipantListStyles } from '@internal/react-components';
 
 /**
  * @private
@@ -9,8 +10,7 @@ import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@flue
 export const sidePaneContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
+    padding: '0.5rem 0.25rem',
     width: '21.5rem'
   }
 };
@@ -37,10 +37,18 @@ export const sidePaneContainerTokens: IStackTokens = {
  */
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
-    fontSize: '0.825rem',
     lineHeight: '1.25rem',
     padding: '0.25rem',
     fontWeight: '600'
+  }
+};
+
+/**
+ * @private
+ */
+export const sidePaneHeaderContainerStyles: IStackStyles = {
+  root: {
+    margin: '0 0.25rem'
   }
 };
 
@@ -57,7 +65,15 @@ export const scrollableContainer: IStackStyles = { root: { flexBasis: '0', flexG
 /**
  * @private
  */
-export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow: '1', flexBasis: '0' } };
+export const scrollableContainerContents: IStackItemStyles = {
+  root: {
+    flexGrow: '1',
+    flexBasis: '0',
+    maxWidth: '100%',
+    // Create a new stacking context so that `pipStyles` can set zIndex above the container.
+    position: 'relative'
+  }
+};
 
 /**
  * @private
@@ -65,15 +81,6 @@ export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow:
 export const peopleSubheadingStyle: IStackItemStyles = {
   root: {
     fontSize: '0.75rem'
-  }
-};
-
-/**
- * @private
- */
-export const peoplePaneContainerStyle: IStackItemStyles = {
-  root: {
-    position: 'relative'
   }
 };
 
@@ -102,14 +109,6 @@ export const participantListContainerPadding = { childrenGap: '0.5rem' };
 /**
  * @private
  */
-export const listHeader = mergeStyles({
-  fontSize: '1rem',
-  margin: '1rem'
-});
-
-/**
- * @private
- */
 export const participantListStack = mergeStyles({
   height: '100%'
 });
@@ -117,8 +116,32 @@ export const participantListStack = mergeStyles({
 /**
  * @private
  */
-export const participantListStyle = mergeStyles({
+export const participantListContainerStyle = mergeStyles({
   height: '100%',
   overflowY: 'auto',
   overflowX: 'hidden'
 });
+
+/**
+ * @private
+ */
+export const participantListStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem'
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const participantListMobileStyle: ParticipantListStyles = {
+  root: { padding: '0rem' },
+  participantItemStyles: {
+    root: {
+      padding: '0.5rem 1rem'
+    }
+  }
+};

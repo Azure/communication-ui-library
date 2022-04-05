@@ -69,6 +69,16 @@ export const notificationsContainerStyles: IStackStyles = {
     top: 0,
     left: 0,
     padding: '1rem',
-    zIndex: NOTIFICATION_CONTAINER_Z_INDEX
+    zIndex: NOTIFICATION_CONTAINER_Z_INDEX,
+    pointerEvents: 'none' // to allow the operation of controls underneath the notification container
+  }
+};
+
+/**
+ * @private
+ */
+export const bannerNotificationStyles: IStackStyles = {
+  root: {
+    pointerEvents: 'auto' // to allow the dismissal or error and warning bars in the notification container
   }
 };

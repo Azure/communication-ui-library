@@ -142,6 +142,7 @@ export type {
   GridLayoutProps,
   GridLayoutStyles,
   HorizontalGalleryStyles,
+  ReadReceiptsBySenderId,
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
   Message,
@@ -178,7 +179,6 @@ export type {
   SendBoxProps,
   SendBoxStrings,
   SendBoxStylesProps,
-  ActiveFileUpload,
   StreamMediaProps,
   SystemMessage,
   SystemMessageCommon,
@@ -187,6 +187,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   VideoGalleryLocalParticipant,
+  VideoGalleryLayout,
   VideoGalleryParticipant,
   VideoGalleryProps,
   VideoGalleryRemoteParticipant,
@@ -197,6 +198,8 @@ export type {
   VideoTileProps,
   VideoTileStylesProps
 } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing) */
+export type { ActiveFileUpload, SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 export type { LocalVideoCameraCycleButtonProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';

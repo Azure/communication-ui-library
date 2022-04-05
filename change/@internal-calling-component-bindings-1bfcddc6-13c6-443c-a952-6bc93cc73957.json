@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update acs-common dependency per dependabot",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

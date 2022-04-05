@@ -21,3 +21,12 @@ export const purpleBannerPalette: BannerPalette = {
   header: '#3b2e58',
   link: '#3b2e58'
 };
+
+/**
+ * @private
+ */
+export const yellowBannerPalette: BannerPalette = {
+  background: '#fff4ce',
+  header: '#806400',
+  link: '#806400'
+};

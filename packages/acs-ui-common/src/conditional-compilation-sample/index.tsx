@@ -201,20 +201,32 @@ function propTrampoline(): string {
 /* @conditional-compile-remove(stabilizedDemo) */
 export const thisIsNowStable = 42;
 
-/* The following is not removed because it contains one stabilized feature, along with a beta-only feature.
+/* Sometimes, multiple features may depend on related types. Any of the examples in this file could be labeled
+ * with more than one feature.
  *
  * If some code is needed for more than one feature, the first feature that is stabilized needs it.
- * Thus the code is not stripped from stable flavor build.
+ * Thus, any code labeled with multiple features is included in the stable build if any of the features is stabilized.
  */
-/* @conditional-compile-remove(stabilizedDemo) */
-/* @conditional-compile-remove(demo) */
-export const onlyPartiallyStable = 43;
+export interface SomePulicTypeThatIsGettingLotsOfNewOptions {
+  oldField: string;
+  /**
+   * Two features need the type to be extended with `options`.
+   * One of the features is stabilized, so this field will be included in the stable build.
+   * @conditional-compile-remove(demo) @conditional-compile-remove(stabilizedDemo)
+   */
+  options: partiallyStableOptions;
+}
 
-/* You can also include multiple features' directives in a single comment, like so:
- * @conditional-compile-remove(stabilizedDemo)
- * @conditional-compile-remove(demo)
- */
-export const alsoOnlyPartiallyStable = 44;
+// @conditional-compile-remove(demo)
+// @conditional-compile-remove(stabilizedDemo)
+// This type is also included in the stable build because it is labeled with
+// one stabilized feature (directives in this case use separate comments)
+export interface partiallyStableOptions {
+  // @conditional-compile-remove(demo)
+  thisFeatureIsNotYetStabilized: boolean;
+  // @conditional-compile-remove(stabilizedDemo)
+  thisFeatureIsStabilized: boolean;
+}
 
 /**
  * A common example where a combination of some of the examples above is required is extending a selector.

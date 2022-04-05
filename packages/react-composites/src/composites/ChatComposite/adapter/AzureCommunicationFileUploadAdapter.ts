@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { FileUploadState, ObservableFileUpload } from '../file-sharing';
-
+import { FileUploadManager, FileUploadState, FileMetadata } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileSharingMetadata } from '../file-sharing';
+import { FileSharingMetadata, FileUpload } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
@@ -22,9 +20,13 @@ export type FileUploadsUiState = Record<string, FileUploadState>;
  * @beta
  */
 export interface FileUploadAdapter {
-  registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
-  clearFileUploads?: () => void;
-  cancelFileUpload?: (id: string) => void;
+  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+  clearFileUploads: () => void;
+  cancelFileUpload: (id: string) => void;
+  updateFileUploadProgress: (id: string, progress: number) => void;
+  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
 }
 
 /* @conditional-compile-remove(file-sharing) */
@@ -42,28 +44,25 @@ class FileUploadContext {
     return this.chatContext.getState().fileUploads;
   }
 
-  public setFileUploads(fileUploads: ObservableFileUpload[]): void {
-    const fileUploadsMap = fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
-      map[fileUpload.id] = {
-        id: fileUpload.id,
-        filename: fileUpload.fileName,
-        progress: 0,
-        metadata: fileUpload.metadata
-      };
-      return map;
-    }, {});
-
+  public addFileUploads(fileUploads: FileUpload[]): void {
+    const fileUploadsMap = convertObservableFileUploadToFileUploadsUiState(fileUploads);
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft) => {
-        draft.fileUploads = fileUploadsMap;
+        draft.fileUploads = draft.fileUploads || {};
+        draft.fileUploads = { ...draft.fileUploads, ...fileUploadsMap };
       })
     );
   }
 
-  public updateFileUpload(
-    id: string,
-    data: Partial<Pick<FileUploadState, 'progress' | 'metadata' | 'errorMessage'>>
-  ): void {
+  public clearFileUploads(): void {
+    this.chatContext.setState(
+      produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
+        draft.fileUploads = {};
+      })
+    );
+  }
+
+  public updateFileUpload(id: string, data: Partial<Pick<FileUploadState, 'progress' | 'metadata' | 'error'>>): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.fileUploads?.[id]) {
@@ -76,10 +75,12 @@ class FileUploadContext {
     );
   }
 
-  public deleteFileUpload(id: string): void {
+  public deleteFileUploads(ids: string[]): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        delete draft?.fileUploads?.[id];
+        ids.forEach((id) => {
+          delete draft?.fileUploads?.[id];
+        });
       })
     );
   }
@@ -91,64 +92,93 @@ class FileUploadContext {
  */
 export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private context: FileUploadContext;
-  private fileUploads: ObservableFileUpload[] = [];
+  private fileUploads: FileUpload[] = [];
 
   constructor(chatContext: ChatContext) {
     this.context = new FileUploadContext(chatContext);
   }
 
-  private findFileUpload(id: string): ObservableFileUpload | undefined {
+  private findFileUpload(id: string): FileUpload | undefined {
     return this.fileUploads.find((fileUpload) => fileUpload.id === id);
   }
 
-  private deleteFileUpload(id: string): void {
-    this.fileUploads = this.fileUploads.filter((fileUpload) => fileUpload.id !== id);
+  private deleteFileUploads(ids: string[]): void {
+    this.fileUploads = this.fileUploads.filter((fileUpload) => !ids.includes(fileUpload.id));
+    this.context.deleteFileUploads(ids);
   }
 
-  registerFileUploads(fileUploads: ObservableFileUpload[]): void {
+  private deleteErroneousFileUploads(): void {
+    const fileUploads = this.context.getFileUploads() || {};
+    const ids = Object.values(fileUploads)
+      .filter((item: FileUploadState) => item.error)
+      .map((item: FileUploadState) => item.id);
+
+    ids.forEach((id) => {
+      const fileUpload = this.findFileUpload(id);
+      this.unsubscribeAllEvents(fileUpload);
+    });
+
+    this.deleteFileUploads(ids);
+  }
+
+  private registerFileUploads(files: File[] | FileMetadata[]): FileUploadManager[] {
+    this.deleteErroneousFileUploads();
+    const fileUploads: FileUpload[] = [];
+    files.forEach((file) => fileUploads.push(new FileUpload(file)));
+    fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
     this.fileUploads = this.fileUploads.concat(fileUploads);
-    this.context.setFileUploads(this.fileUploads);
-    this.fileUploads.forEach((fileUpload) => this.subscribeAllEvents(fileUpload));
+    this.context.addFileUploads(fileUploads);
+    return fileUploads;
+  }
+
+  registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.registerFileUploads(files);
+  }
+
+  registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.registerFileUploads(metadata);
   }
 
   clearFileUploads(): void {
-    this.context.setFileUploads([]);
+    this.context.clearFileUploads();
     this.fileUploads.forEach((fileUpload) => this.unsubscribeAllEvents(fileUpload));
     this.fileUploads = [];
   }
 
   cancelFileUpload(id: string): void {
-    this.context.deleteFileUpload(id);
+    this.deleteErroneousFileUploads();
     const fileUpload = this.findFileUpload(id);
-    if (!fileUpload) {
-      throw new Error('File upload not found');
-    }
     this.unsubscribeAllEvents(fileUpload);
-    this.deleteFileUpload(id);
+    this.deleteFileUploads([id]);
   }
 
-  private fileUploadProgressListener(id: string, progress: number): void {
+  updateFileUploadProgress(id: string, progress: number): void {
     this.context.updateFileUpload(id, { progress });
   }
 
-  private fileUploadFailedListener(id: string, errorMessage: string): void {
-    this.context.updateFileUpload(id, { errorMessage });
+  updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.context.updateFileUpload(id, {
+      error: {
+        message: errorMessage,
+        timestamp: Date.now()
+      }
+    });
   }
 
-  private fileUploadCompletedListener(id: string, metadata: FileMetadata): void {
+  updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.context.updateFileUpload(id, { progress: 1, metadata });
   }
 
-  private subscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload.on('uploadProgressed', this.fileUploadProgressListener.bind(this));
-    fileUpload.on('uploadCompleted', this.fileUploadCompletedListener.bind(this));
-    fileUpload.on('uploadFailed', this.fileUploadFailedListener.bind(this));
+  private subscribeAllEvents(fileUpload: FileUpload): void {
+    fileUpload.on('uploadProgressChange', this.updateFileUploadProgress.bind(this));
+    fileUpload.on('uploadComplete', this.updateFileUploadMetadata.bind(this));
+    fileUpload.on('uploadFail', this.updateFileUploadErrorMessage.bind(this));
   }
 
-  private unsubscribeAllEvents(fileUpload: ObservableFileUpload): void {
-    fileUpload?.off('uploadProgressed', this.fileUploadProgressListener.bind(this));
-    fileUpload?.off('uploadCompleted', this.fileUploadCompletedListener.bind(this));
-    fileUpload?.off('uploadFailed', this.fileUploadFailedListener.bind(this));
+  private unsubscribeAllEvents(fileUpload?: FileUpload): void {
+    fileUpload?.off('uploadProgressChange', this.updateFileUploadProgress.bind(this));
+    fileUpload?.off('uploadComplete', this.updateFileUploadMetadata.bind(this));
+    fileUpload?.off('uploadFail', this.updateFileUploadErrorMessage.bind(this));
   }
 }
 
@@ -162,11 +192,27 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
-      if (!file.errorMessage && file.metadata) {
+      if (!file.error && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });
   }
 
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+};
+
+/* @conditional-compile-remove(file-sharing) */
+/**
+ * @private
+ */
+const convertObservableFileUploadToFileUploadsUiState = (fileUploads: FileUpload[]): FileUploadsUiState => {
+  return fileUploads.reduce((map: FileUploadsUiState, fileUpload) => {
+    map[fileUpload.id] = {
+      id: fileUpload.id,
+      filename: fileUpload.fileName,
+      progress: 0,
+      metadata: fileUpload.metadata
+    };
+    return map;
+  }, {});
 };

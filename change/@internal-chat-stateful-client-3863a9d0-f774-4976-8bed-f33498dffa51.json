@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix exception thrown when trying to log stringified state when azure logger is set to verbose",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

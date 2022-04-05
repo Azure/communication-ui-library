@@ -3,7 +3,8 @@
 
 export {
   createAzureCommunicationChatAdapter,
-  createAzureCommunicationChatAdapterFromClient
+  createAzureCommunicationChatAdapterFromClient,
+  useAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 
@@ -29,18 +30,13 @@ export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
 export type {
-  FileDownloadErrorMessage,
+  FileDownloadError,
   FileDownloadHandler,
   FileMetadata,
-  FileUploadEventEmitter,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
-  ObservableFileUpload,
-  UploadCompleteListener,
-  UploadFailedListener,
-  UploadProgressListener,
-  createCompletedFileUpload
+  FileUploadError
 } from './file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';

@@ -11,7 +11,9 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
-export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps, ActiveFileUpload } from './SendBox';
+export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+/* @conditional-compile-remove(file-sharing) */
+export type { ActiveFileUpload } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -41,7 +43,7 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -100,3 +102,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
+/* @conditional-compile-remove(file-sharing) */
+export type { SendBoxErrorBarError } from './SendBoxErrorBar';
+export * from './FileCard';
+export * from './FileCardGroup';

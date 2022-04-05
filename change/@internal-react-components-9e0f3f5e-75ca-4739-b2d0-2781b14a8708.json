@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add metadata attribute to ChatMessage type",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

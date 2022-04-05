@@ -34,10 +34,11 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
+    uploadComplete?: boolean;
 }
 
 // @public
@@ -86,6 +87,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface CameraButtonStrings {
+    cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
     offLabel: string;
@@ -120,13 +122,6 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -309,6 +304,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageEdit: JSX.Element;
     MessageFailed: JSX.Element;
     MessageRemove: JSX.Element;
+    MessageResend: JSX.Element;
     MessageSeen: JSX.Element;
     MessageSending: JSX.Element;
     OptionsCamera: JSX.Element;
@@ -452,6 +448,7 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -466,6 +463,27 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @internal
+export const _FileCard: (props: _FileCardProps) => JSX.Element;
+
+// @internal
+export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
+
+// @internal
+export interface _FileCardGroupProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal
+export interface _FileCardProps {
+    actionHandler?: () => void;
+    actionIcon?: JSX.Element;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+}
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -550,7 +568,7 @@ export type LocalizationProviderProps = {
 // @internal
 export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -584,6 +602,7 @@ export type MessageProps = {
     disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -594,7 +613,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    messageThreadReadCount?: number;
+    // (undocumented)
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -621,7 +643,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    messageThreadParticipantCount?: number;
+    participantCount?: number;
+    readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -636,6 +659,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -648,6 +672,7 @@ export interface MessageThreadStrings {
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
+    failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
     messageReadCount?: string;
@@ -657,6 +682,7 @@ export interface MessageThreadStrings {
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
+    resendMessage?: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -702,6 +728,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -879,6 +906,14 @@ export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps
 }
 
 // @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -899,12 +934,20 @@ export interface ScreenShareButtonStrings {
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
 
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
+
 // @public
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
@@ -919,6 +962,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
+    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
@@ -997,6 +1041,9 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public (undocumented)
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+
 // @public
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
@@ -1012,9 +1059,8 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    layout?: 'default' | 'floatingLocalVideo';
+    layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;

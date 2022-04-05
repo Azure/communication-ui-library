@@ -3,7 +3,8 @@
 
 export {
   createAzureCommunicationCallAdapter,
-  createAzureCommunicationCallAdapterFromClient
+  createAzureCommunicationCallAdapterFromClient,
+  useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 

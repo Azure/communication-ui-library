@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bugfix for messages from teams users having extra margins around the message content.",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

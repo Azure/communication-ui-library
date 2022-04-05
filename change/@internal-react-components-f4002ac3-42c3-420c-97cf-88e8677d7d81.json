@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow setting min and max size of the persona avatar in the Video Tile",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

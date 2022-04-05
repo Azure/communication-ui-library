@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Removed unused conditional compilation and split imports for .../AzureCommunicationCallAdapter",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

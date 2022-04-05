@@ -17,4 +17,8 @@ export type { BaseCompositeProps } from './common/BaseComposite';
 /* @conditional-compile-remove(call-with-chat-composite) */
 export * from './CallWithChatComposite';
 /* @conditional-compile-remove(call-with-chat-composite) */
-export { createAzureCommunicationCallWithChatAdapter } from './CallWithChatComposite';
+export {
+  createAzureCommunicationCallWithChatAdapter,
+  createAzureCommunicationCallWithChatAdapterFromClients,
+  useAzureCommunicationCallWithChatAdapter
+} from './CallWithChatComposite';

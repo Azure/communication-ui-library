@@ -18,10 +18,10 @@ import {
   CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { isMobile, verifyParamExists } from '../../common/testAppUtils';
+import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 // eslint-disable-next-line no-restricted-imports
-import { Icon, IContextualMenuItem, initializeIcons, mergeStyles } from '@fluentui/react';
+import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 
@@ -39,8 +39,7 @@ const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 const injectCustomButtons = Boolean(params.injectCustomButtons);
 
-// Needed to initialize default icons used by Fluent components.
-initializeIcons();
+initializeIconsForUITests();
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);

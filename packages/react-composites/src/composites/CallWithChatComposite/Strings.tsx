@@ -14,9 +14,29 @@ export interface CallWithChatCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipOpen: string;
+  /**
+   * {@link CallWithChatComposite} control bar People button ToolTipContent
+   */
+  peopleButtonTooltipClose: string;
+  /**
    * {@link CallWithChatComposite} control bar Chat button label.
    */
   chatButtonLabel: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipOpen: string;
+  /**
+   * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
+   */
+  chatButtonTooltipClose: string;
+  /**
+   * {@link CallWithChatComposite} control bar Chat button enhanced tooltip string.
+   */
+  chatButtonTooltipClosedWithMessageCount: string;
   /**
    * Title for the microphone selection sub-menu in more buttton drawer.
    *
@@ -29,6 +49,14 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpeakerMenuTitle: string;
+  /**
+   * {@Link CallWithChatComposite} control bar More button label
+   */
+  moreDrawerButtonLabel: string;
+  /**
+   * {@Link CallWithChatComposite} control bar More button tooltip content
+   */
+  moreDrawerButtonTooltip: string;
   /**
    * Side pane People section Title.
    */

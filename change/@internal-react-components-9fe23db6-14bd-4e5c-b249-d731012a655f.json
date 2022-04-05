@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add secondary text field to Drawer Menu Item",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

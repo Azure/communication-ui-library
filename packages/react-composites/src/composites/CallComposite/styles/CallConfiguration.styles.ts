@@ -38,7 +38,7 @@ export const configurationContainerStyleDesktop = mergeStyles({
 export const configurationContainerStyleMobile = mergeStyles({
   ...configurationContainerStyle,
   minWidth: '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
-  minHeight: '21rem'
+  minHeight: '19rem'
 });
 
 /**

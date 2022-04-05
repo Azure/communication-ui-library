@@ -29,9 +29,15 @@ export interface ChatMessageActionFlyoutProps {
   strings: MessageThreadStrings;
   onEditClick?: () => void;
   onRemoveClick?: () => void;
+  onResendClick?: () => void;
   onDismiss: () => void;
-  messageReadBy?: { id: string; name: string }[];
+  messageReadBy?: { id: string; displayName: string }[];
   remoteParticipantsCount?: number;
+  messageStatus?: string;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
+  showMessageStatus?: boolean;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
@@ -57,7 +63,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
-      text: person.name,
+      text: person.displayName,
       styles: {
         root: {
           margin: '0.25rem'
@@ -66,8 +72,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
     const { onRenderAvatar } = props;
     return {
-      key: person.name,
-      text: person.name,
+      key: person.displayName,
+      text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
       onRenderIcon: () =>
         onRenderAvatar ? onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
@@ -103,7 +109,9 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       props.remoteParticipantsCount &&
       messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
-      props.strings.messageReadCount
+      props.showMessageStatus &&
+      props.strings.messageReadCount &&
+      props.messageStatus !== 'failed'
     ) {
       items.push({
         key: 'Read Count',
@@ -124,8 +132,10 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
             props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
           )
         },
+        calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
-          items: messageReadByList ?? []
+          items: messageReadByList ?? [],
+          calloutProps: preventUnwantedDismissProps
         },
         iconProps: {
           iconName: 'MessageSeen',
@@ -141,18 +151,55 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         disabled: messageReadByCount <= 0
       });
+    } else if (props.messageStatus === 'failed' && props.strings.resendMessage) {
+      items.push({
+        key: 'Resend',
+        text: props.strings.resendMessage,
+        itemProps: {
+          styles: concatStyleSets(
+            {
+              linkContent: {
+                color: theme.palette.neutralPrimary
+              },
+              root: {
+                borderTop: `1px solid ${theme.palette.neutralLighter}`
+              }
+            },
+            props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+          )
+        },
+        calloutProps: preventUnwantedDismissProps,
+        iconProps: {
+          iconName: 'MessageResend',
+          styles: {
+            root: {
+              color: theme.palette.themeDarkAlt
+            }
+          }
+        },
+        onClick: props.onResendClick
+      });
     }
 
     return items;
   }, [
+    props.strings.editMessage,
+    props.strings.removeMessage,
+    props.strings.messageReadCount,
+    props.strings.resendMessage,
+    props.messageStatus,
     props.increaseFlyoutItemSize,
     props.onEditClick,
     props.onRemoveClick,
-    props.strings.editMessage,
-    props.strings.removeMessage,
+    props.onResendClick,
     props.remoteParticipantsCount,
-    messageReadByList,
-    messageReadByCount
+    props.showMessageStatus,
+    messageReadByCount,
+    theme.palette.neutralPrimary,
+    theme.palette.neutralTertiary,
+    theme.palette.neutralLighter,
+    theme.palette.themeDarkAlt,
+    messageReadByList
   ]);
 
   // gap space uses pixels
@@ -169,4 +216,19 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       className={chatMessageMenuStyle}
     />
   );
+};
+
+const preventUnwantedDismissProps = {
+  // Disable dismiss on resize to work around a couple Fluent UI bugs
+  // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
+  //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
+  //   by the headless SDK.
+  // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
+  //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
+  //   deterministically avoid dismissal.
+  //
+  // A side effect of this workaround is that the context menu stays open when window is resized, and may
+  // get detached from original target visually. That bug is preferable to the bug when this value is not set -
+  // The Callout (frequently) gets dismissed automatically.
+  preventDismissOnResize: true
 };
