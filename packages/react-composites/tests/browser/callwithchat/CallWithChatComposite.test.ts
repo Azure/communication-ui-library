@@ -10,6 +10,7 @@ import {
   pageClick,
   stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
+  waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
@@ -40,7 +41,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen.png`);
   });
 
-  test('Chat messages are displayed correctly', async ({ pages }) => {
+  test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
     // Open chat pane on page 0 and send a message
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
     await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
@@ -61,6 +62,10 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
 
+    if (!isTestProfileDesktop(testInfo)) {
+      await waitForPiPiPToHaveLoaded(pages[0], 2);
+    }
+
     await stubMessageTimestamps(pages[0]);
     expect(await pages[0].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
   });
@@ -75,6 +80,11 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await drawerPeopleMenuDiv?.click();
     }
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await waitForPiPiPToHaveLoaded(page, 2);
+    }
+
     expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
