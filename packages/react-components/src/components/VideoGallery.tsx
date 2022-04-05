@@ -67,8 +67,6 @@ export interface VideoGalleryStrings {
   localVideoCameraSwitcherLabel: string;
   /** String for announcing the local video tile can be moved by keyboard controls */
   localVideoMovementLabel: string;
-  /** String for announcing the role of the local video tile keyboard movement controls */
-  localVideoMovementRole: string;
 }
 
 /**
