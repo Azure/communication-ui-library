@@ -3,7 +3,9 @@
 
 export const CHAT_TOPIC_NAME = 'Cowabunga';
 
-export const TEST_PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen', 'Dave Pokahl'];
+export const TEST_PARTICIPANTS_CHAT = ['Dorian Gutmann', 'Poppy Bjørgen', 'Dave Pokahl'];
+
+export const TEST_PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
 export const IDS = {
   sendboxTextField: 'sendbox-textfield',

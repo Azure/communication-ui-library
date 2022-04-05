@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from './constants';
+import { IDS, TEST_PARTICIPANTS_CHAT } from './constants';
 import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, waitForSelector } from './utils';
 import { createChatThreadAndUsers } from './fixtureHelpers';
 import { Page } from '@playwright/test';
@@ -23,7 +23,7 @@ export const chatTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  users = await createChatThreadAndUsers(TEST_PARTICIPANTS);
+  users = await createChatThreadAndUsers(TEST_PARTICIPANTS_CHAT);
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
