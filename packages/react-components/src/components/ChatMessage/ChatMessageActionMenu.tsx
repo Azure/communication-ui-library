@@ -19,6 +19,8 @@ export type ChatMessageActionMenuProps = MenuProps & {
  * @private
  */
 export const chatMessageActionMenuProps = (menuProps: {
+  /** String for aria label that is read by Screen readers */
+  ariaLabel: string;
   /** Whether the action menu button is enabled, if not this will always return undefined */
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
@@ -47,6 +49,7 @@ export const chatMessageActionMenuProps = (menuProps: {
           <Ref innerRef={menuProps.menuButtonRef}>
             <MoreIcon
               data-ui-id="chat-composite-message-action-icon"
+              aria-label={menuProps.ariaLabel}
               className={iconWrapperStyle}
               {...{
                 outline: true
