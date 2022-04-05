@@ -21,7 +21,7 @@ jobs:
   # create pre-release branch for beta releases
   create_pre-release:
     name: Bump versions and make changelog for release
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Check-out repo
@@ -59,15 +59,24 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+
       # Bump package versions
       - name: Bump beta package versions if beta
-        if: ${{ github.events.inputs.bump_type == 'beta' }}
+        if: ${{ github.event.inputs.bump_type == 'beta' }}
         run: node common/scripts/bump-beta-version.js
 
-      - name: Bump stable package versions if stable
-        if: ${{ github.events.inputs.bump_type == 'stable-minor' || 'stable-patch' }}
-        run: node common/scripts/bump-stable-version.js
+      - name: Bump stable patch package versions
+        if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
+        run: node common/scripts/bump-stable-version.js patch
 
+      - name: Bump stable minor package versions
+        if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
+        run: node common/scripts/bump-stable-version.js minor
       # Generate changelog using beachball
       - name: Generate changelog using beachball
         run: node common/scripts/beachball-changelog-only.js
@@ -86,20 +95,30 @@ jobs:
 
       # Commit changes
       - name: Hop into new branch
-        run: git checkout -b prerelease-${{github.events.inputs.bump_type}}/${{ steps.version.outputs.version }}
+        id: prereleasebranch
+        run: |
+          git checkout -b prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
+          echo "::set-output name=prereleasebranch::prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
       - name: Commit changes
         run: |
           git add .
-          git commit -m "${{github.events.inputs.bump_type}} version bump pre-release branch"
-          git push -u origin ${{github.ref_name}}
+          git commit -m "${{github.event.inputs.bump_type}} version bump pre-release branch"
+          git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
 
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
+        id: groombranch
         run: |
-          git checkout -b groom_changelog_${{ steps.version.outputs.version }}
+          git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
+          echo "::set-output name=groombranch::groom_changelog_${{ steps.version.outputs.version }}"
+
+      # Push groom changes
+      - name: Create groom file and push changes
+        run: |
           echo 'Please groom the changelog and then delete me.' > GROOMME.md
+          git add .
           git commit -m 'Create groom me file for groom changelog branch'
-          git push -u origin ${{github.ref_name}}
+          git push -u origin ${{ steps.groombranch.outputs.groombranch }}
 
       # Create a PR from the changes
       - name: Create PR
@@ -109,4 +128,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"groom_changelog_${{ steps.version.outputs.version }}", "base":"prerelease-${{github.events.inputs.bump_type}}/${{ steps.version.outputs.version }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} groom branch -> pre-release branch", "head":"${{steps.groom.outputs.groom}}", "base":"${{steps.prereleasebranch.outputs.prereleasebranch  }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type }} pre-release branch - create` GitHub action. Please review." }'
