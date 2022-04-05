@@ -63,9 +63,9 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   });
 
   const fileInfoWrapperClassName = mergeStyles({
-    padding: _pxToRem(14),
+    padding: _pxToRem(12),
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator ? _pxToRem(14 - progressBarThicknessPx * 2) : _pxToRem(14)
+    paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
   });
 
   const fileNameContainerClassName = mergeStyles({
@@ -77,17 +77,18 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const fileNameTextClassName = mergeStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    lineHeight: 'normal',
+    whiteSpace: 'nowrap',
+    paddingRight: _pxToRem(4)
   });
 
   const actionIconClassName = mergeStyles({
-    cursor: 'pointer',
-    padding: '0.25rem'
+    cursor: 'pointer'
   });
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      padding: `${_pxToRem(progressBarThicknessPx)} 0`, // Combined top and bottom padding needs to be equal to the progress bar height defined below.
+      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // Combined top and bottom padding needs to be equal to the progress bar height defined below.
       // To make the progress indicator border curve along the bottom of file card.
       borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
     },
