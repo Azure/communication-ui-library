@@ -56,8 +56,8 @@ jobs:
       - name: Hop into new branch
         id: releasebranch
         run: |
-          git checkout -b release-test/${{ steps.version.outputs.version }}
-          echo "::set-output name=releasebranch::release-test/${{ steps.version.outputs.version }}"
+          git checkout -b release/${{ steps.version.outputs.version }}
+          echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
