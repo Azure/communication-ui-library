@@ -236,7 +236,17 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
+    (function checkForStubbedTimestamps(i) {
+      setTimeout(function () {
+        if (
+          !Array.from(document.querySelectorAll(messageTimestampId)).every((i) => i.textContent === 'timestamp') &&
+          --i > 0
+        ) {
+          checkForStubbedTimestamps(i);
+        }
+      }, 500);
+    })(6);
   }, messageTimestampId);
 };
 
