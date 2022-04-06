@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
-import React from 'react';
+import { IContextualMenuProps, Stack } from '@fluentui/react';
+import React, { useState } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
@@ -13,6 +13,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
+import { Announcer } from './Announcer';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -55,6 +56,14 @@ export interface MicrophoneButtonStrings {
    * description of microphone button split button role
    */
   microphoneButtonSplitRoleDescription?: string;
+  /**
+   * Microphone action turned on string for announcer
+   */
+  microphoneActionTurnedOnAnnouncment: string;
+  /**
+   * Microphone action turned off string for announcer
+   */
+  microphoneActionTurnedOffAnnouncment: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -152,29 +161,36 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
-
-  const onRenderMicOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />
-  );
-  const onRenderMicOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />
-  );
+  const [announcerString, setAnnouncerString] = useState<string>(strings.microphoneActionTurnedOffAnnouncment);
+  const onRenderMicOnIcon = (): JSX.Element => {
+    setAnnouncerString(strings.microphoneActionTurnedOnAnnouncment);
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
+  };
+  const onRenderMicOffIcon = (): JSX.Element => {
+    setAnnouncerString(strings.microphoneActionTurnedOffAnnouncment);
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />;
+  };
 
   return (
-    <ControlBarButton
-      {...props}
-      onClick={props.onToggleMicrophone ?? props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'microphoneButtonLabel'}
-      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
-      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-      ariaDescription={
-        enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
-      }
-    />
+    <Stack>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <ControlBarButton
+        {...props}
+        onClick={props.onToggleMicrophone ?? props.onClick}
+        onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
+        onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'microphoneButtonLabel'}
+        menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
+        menuIconProps={
+          props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined
+        }
+        split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+        ariaDescription={
+          enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
+        }
+      />
+    </Stack>
   );
 };
 

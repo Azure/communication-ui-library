@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuProps, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
@@ -14,6 +14,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
+import { Announcer } from './Announcer';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -51,6 +52,14 @@ export interface CameraButtonStrings {
    * description of camera button split button role
    */
   cameraButtonSplitRoleDescription?: string;
+  /**
+   * Camera action turned on string for announcer
+   */
+  cameraActionTurnedOnAnnouncment: string;
+  /**
+   * Camera action turned off string for announcer
+   */
+  cameraActionTurnedOffAnnouncment: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -139,12 +148,15 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
-  const onRenderCameraOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
-  );
-  const onRenderCameraOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
-  );
+  const [announcerString, setAnnouncerString] = useState<string>(strings.cameraActionTurnedOffAnnouncment);
+  const onRenderCameraOnIcon = (): JSX.Element => {
+    setAnnouncerString(strings.cameraActionTurnedOnAnnouncment);
+    return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />;
+  };
+  const onRenderCameraOffIcon = (): JSX.Element => {
+    setAnnouncerString(strings.cameraActionTurnedOffAnnouncment);
+    return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />;
+  };
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
   }
@@ -162,21 +174,26 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }, [localVideoViewOptions, onToggleCamera]);
 
   return (
-    <ControlBarButton
-      {...props}
-      disabled={props.disabled || waitForCamera}
-      onClick={onToggleCamera ? onToggleClick : props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'cameraButtonLabel'}
-      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
-      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-      ariaDescription={
-        enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
-      }
-    />
+    <Stack>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <ControlBarButton
+        {...props}
+        disabled={props.disabled || waitForCamera}
+        onClick={onToggleCamera ? onToggleClick : props.onClick}
+        onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
+        onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'cameraButtonLabel'}
+        menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
+        menuIconProps={
+          props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined
+        }
+        split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+        ariaDescription={
+          enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
+        }
+      />
+    </Stack>
   );
 };
 
