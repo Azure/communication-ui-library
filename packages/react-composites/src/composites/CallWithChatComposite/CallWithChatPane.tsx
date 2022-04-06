@@ -20,6 +20,8 @@ import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
+import { _ICoordinates } from '@internal/react-components';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -40,6 +42,7 @@ export const CallWithChatPane = (props: {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -87,6 +90,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
+  const modalLayerHost = document.getElementById(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const dataUiId =
@@ -107,12 +111,24 @@ export const CallWithChatPane = (props: {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      {props.mobileView && (
+      {props.mobileView && modalLayerHost && (
         <ModalLocalAndRemotePIP
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
+          minDragPosition={{
+            x: props.rtl
+              ? -1 * modalPipRightPositionPx
+              : modalPipRightPositionPx - modalLayerHost.getBoundingClientRect().width + modalPipWidthPx,
+            y: -1 * modalPipTopPositionPx
+          }}
+          maxDragPosition={{
+            x: props.rtl
+              ? modalLayerHost.getBoundingClientRect().width - modalPipRightPositionPx - modalPipWidthPx
+              : modalPipRightPositionPx,
+            y: modalLayerHost.getBoundingClientRect().height - modalPipTopPositionPx - modalPipHeightPx
+          }}
         />
       )}
       {drawerMenuItems.length > 0 && (
@@ -150,9 +166,11 @@ const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
 
-/**
- * @private
- */
+const modalPipRightPositionPx = 16;
+const modalPipTopPositionPx = 52;
+const modalPipWidthPx = 88;
+const modalPipHeightPx = 128;
+
 const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
   modal: {
     main: {
@@ -160,7 +178,8 @@ const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
       boxShadow: theme.effects.elevation8,
       // Above the message thread / people pane.
       zIndex: 2,
-      ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
+      ...(theme.rtl ? { left: _pxToRem(modalPipRightPositionPx) } : { right: _pxToRem(modalPipRightPositionPx) }),
+      top: _pxToRem(modalPipTopPositionPx)
     }
   }
 });
