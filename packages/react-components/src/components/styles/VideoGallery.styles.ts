@@ -189,11 +189,9 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles =
   return {
     root: {
       position: 'absolute',
-      display: 'flex',
-      width: _pxToRem(36),
+      width: _pxToRem(32),
       height: _pxToRem(32),
-      flexDirection: 'row',
-      left: _pxToRem(32),
+      right: '0rem',
       top: '0rem',
       color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
       zIndex: 2, // shows the button directly over the local video feed.
@@ -206,11 +204,12 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles =
       background: 'rgba(0,0,0,0.4)' // sets opacity of background to be visible on all backdrops in video stream.
     },
     icon: {
-      padding: '0rem',
+      paddingLeft: _pxToRem(3),
+      paddingRight: _pxToRem(3),
       margin: 0
     },
     flexContainer: {
-      height: _pxToRem(24) // sets height to center Icon in button.
+      paddingBottom: _pxToRem(8)
     }
   };
 };
