@@ -5,6 +5,8 @@ import { ChatComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { Stack } from '@fluentui/react';
+import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -24,7 +26,15 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>ChatComposite</Title>
       <Description>
-        ChatComposite brings together key components to provide a full chat experience out of the box.
+        ChatComposite provides a chat experience where user can send and receive
+        messages. Message thread events such as typing indicators, whether the message has been successfully delivered or read, or participants entering
+        and leaving the chat are displayed to the user as part of the chat thread.
+        Here is a visual example of Chat composite.
+        <Stack style={overviewPageImagesStackStyle}>
+          <Stack.Item align="center">
+            <img src="images/chatComposite_NoParticipantsList.png" alt="Chat composite with the participants list" />
+          </Stack.Item>
+        </Stack>
       </Description>
       <Description>
         Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with

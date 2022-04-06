@@ -5,6 +5,8 @@ import { CallComposite } from '@azure/communication-react';
 import { MessageBar } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
+import { Stack } from '@fluentui/react';
+import { overviewPageImagesStackStyle } from '../constants';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
@@ -28,7 +30,46 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>CallComposite</Title>
       <Description>
-        CallComposite brings together key components to provide a full calling experience out of the box.
+      The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience users can configure their
+      devices, participate in the call with video and see other participants, including those with video turn on.
+
+      Here are visual examples of Call composite where participants have their camera turned off, then some ahve them turned on.
+      People speaking with microphone unmuted will have their tile appearing with a blue border.
+
+        <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '2rem' }} style={overviewPageImagesStackStyle}>
+          <Stack.Item align="center">
+            <img
+              src="images/callComposite_CamerasOff.png"
+              alt="Call composite where all participants have their camera turned off"
+            />
+          </Stack.Item>
+          <Stack.Item align="center">
+            <img
+              src="images/callComposite_CamerasOn.png"
+              alt="Call composite where some participants have their camera turned on"
+            />
+          </Stack.Item>
+        </Stack>
+
+      When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the
+      Call Composite includes a lobby experience where the user is waiting to be admitted into the call.
+
+        <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+          <Stack.Item align="center">
+            <img
+              src="images/callComposite_TeamsInterop_WaitingLobby.png"
+              alt="Call composite waiting to be admitted in a Teams meeting"
+            />
+          </Stack.Item>
+          <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
+            <p style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant'}</p>
+            <img
+              src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
+              alt="Popup in Teams to admit ACS participants"
+            />
+          </Stack.Item>
+        </Stack>
+
       </Description>
       <Description>Note that CallComposite has the following min width and height:</Description>
       <Description>- mobile: 17.5rem x 21rem (280px x 336px, with default rem at 16px)</Description>
