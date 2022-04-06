@@ -77,6 +77,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.locator(dataUiId('chat-composite-message-action-icon')).click();
     await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
     await page0.locator('[id="chat-composite-message-contextual-menu-read-info"]').click();
+    await page0.waitForTimeout(1000);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
   });
 
