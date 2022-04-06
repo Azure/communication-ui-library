@@ -109,7 +109,8 @@
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
-    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "More Options"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
