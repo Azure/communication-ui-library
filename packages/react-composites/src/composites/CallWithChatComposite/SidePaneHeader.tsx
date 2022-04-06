@@ -4,6 +4,7 @@ import { CommandBarButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 
 /**
  * @private
@@ -19,10 +20,18 @@ export const SidePaneHeader = (props: { headingText: string; onClose: () => void
     }),
     [theme.palette.neutralSecondary]
   );
+
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+
   return (
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles}>
       <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
-      <CommandBarButton styles={sidePaneCloseButtonStyles} iconProps={{ iconName: 'cancel' }} onClick={props.onClose} />
+      <CommandBarButton
+        ariaLabel={callWithChatStrings.dismissSidePaneButton}
+        styles={sidePaneCloseButtonStyles}
+        iconProps={{ iconName: 'cancel' }}
+        onClick={props.onClose}
+      />
     </Stack>
   );
 };
