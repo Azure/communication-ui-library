@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Introduce announcer component which is to be used for announcing when actions are made  ",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
