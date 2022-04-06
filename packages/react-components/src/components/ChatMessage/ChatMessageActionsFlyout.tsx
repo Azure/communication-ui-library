@@ -59,6 +59,10 @@ export interface ChatMessageActionFlyoutProps {
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
   const messageReadByCount = props.messageReadBy?.length;
+
+  props.messageReadBy?.sort(function (a, b) {
+    return a.displayName.localeCompare(b.displayName);
+  });
   const messageReadByList: IContextualMenuItem[] | undefined = props.messageReadBy?.map((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
