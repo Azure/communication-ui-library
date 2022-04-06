@@ -61,145 +61,163 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       className="ms-Stack css-8"
                     >
                       <div
-                        className="ms-TooltipHost root-9"
-                        onBlurCapture={[Function]}
-                        onFocusCapture={[Function]}
-                        onKeyDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
+                        className="ms-Stack css-3"
                       >
-                        <button
-                          aria-label="Turn on camera"
-                          className="ms-Button ms-Button--default root-10"
-                          data-is-focusable={true}
-                          onClick={[Function]}
+                        <div
+                          aria-label="Your camera has been turned off"
+                          aria-live="polite"
+                          className="ms-Stack css-9"
+                        />
+                        <div
+                          className="ms-TooltipHost root-10"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
                           onKeyDown={[Function]}
-                          onKeyPress={[Function]}
-                          onKeyUp={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
-                          type="button"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <span
-                            className="ms-Button-flexContainer flexContainer-11"
-                            data-automationid="splitbuttonprimary"
+                          <button
+                            aria-label="Turn on camera"
+                            className="ms-Button ms-Button--default root-11"
+                            data-is-focusable={true}
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <i
-                              aria-hidden={true}
-                              className="root-105 root-19"
-                              data-icon-name="ControlButtonCameraOff"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-12"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
+                              <i
                                 aria-hidden={true}
-                                className="root-span"
+                                className="root-105 root-20"
+                                data-icon-name="ControlButtonCameraOff"
                               >
-                                <svg
-                                  className="svg"
-                                  fill="currentColor"
-                                  height={20}
-                                  viewBox="0 0 20 20"
-                                  width={20}
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <span
+                                  aria-hidden={true}
+                                  className="root-span"
                                 >
-                                  <path
-                                    d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
-                                  />
-                                  <path
-                                    d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
-                                  />
-                                  <path
-                                    d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
-                                  />
-                                </svg>
-                              </span>
-                            </i>
-                            <i
-                              aria-hidden={true}
-                              className="ms-Icon root-105 css-20 ms-Button-menuIcon menuIcon-15"
-                              data-icon-name="ChevronDown"
-                              hidden={true}
-                              style={
-                                Object {
-                                  "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
+                                    />
+                                    <path
+                                      d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
+                                    />
+                                    <path
+                                      d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-105 css-21 ms-Button-menuIcon menuIcon-16"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  }
                                 }
-                              }
-                            >
-                              
-                            </i>
-                          </span>
-                        </button>
+                              >
+                                
+                              </i>
+                            </span>
+                          </button>
+                        </div>
                       </div>
                       <div
-                        className="ms-TooltipHost root-9"
-                        onBlurCapture={[Function]}
-                        onFocusCapture={[Function]}
-                        onKeyDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
+                        className="ms-Stack css-3"
                       >
-                        <button
-                          aria-label="Unmute microphone"
-                          className="ms-Button ms-Button--default root-10"
-                          data-is-focusable={true}
-                          onClick={[Function]}
+                        <div
+                          aria-label="Your microphone has been turned off"
+                          aria-live="polite"
+                          className="ms-Stack css-9"
+                        />
+                        <div
+                          className="ms-TooltipHost root-10"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
                           onKeyDown={[Function]}
-                          onKeyPress={[Function]}
-                          onKeyUp={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
-                          type="button"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <span
-                            className="ms-Button-flexContainer flexContainer-11"
-                            data-automationid="splitbuttonprimary"
+                          <button
+                            aria-label="Unmute microphone"
+                            className="ms-Button ms-Button--default root-11"
+                            data-is-focusable={true}
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <i
-                              aria-hidden={true}
-                              className="root-105 root-19"
-                              data-icon-name="ControlButtonMicOff"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-12"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
+                              <i
                                 aria-hidden={true}
-                                className="root-span"
+                                className="root-105 root-20"
+                                data-icon-name="ControlButtonMicOff"
                               >
-                                <svg
-                                  className="svg"
-                                  fill="currentColor"
-                                  height={20}
-                                  viewBox="0 0 20 20"
-                                  width={20}
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <span
+                                  aria-hidden={true}
+                                  className="root-span"
                                 >
-                                  <path
-                                    d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
-                                  />
-                                  <path
-                                    d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
-                                  />
-                                  <path
-                                    d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
-                                  />
-                                </svg>
-                              </span>
-                            </i>
-                            <i
-                              aria-hidden={true}
-                              className="ms-Icon root-105 css-20 ms-Button-menuIcon menuIcon-15"
-                              data-icon-name="ChevronDown"
-                              hidden={true}
-                              style={
-                                Object {
-                                  "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                                    />
+                                    <path
+                                      d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
+                                    />
+                                    <path
+                                      d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-105 css-21 ms-Button-menuIcon menuIcon-16"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+                                  }
                                 }
-                              }
-                            >
-                              
-                            </i>
-                          </span>
-                        </button>
+                              >
+                                
+                              </i>
+                            </span>
+                          </button>
+                        </div>
                       </div>
                       <div
-                        className="ms-TooltipHost root-9"
+                        className="ms-TooltipHost root-10"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
@@ -208,7 +226,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Present your screen"
-                          className="ms-Button ms-Button--default root-22"
+                          className="ms-Button ms-Button--default root-23"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -219,12 +237,12 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-11"
+                            className="ms-Button-flexContainer flexContainer-12"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="root-105 root-19"
+                              className="root-105 root-20"
                               data-icon-name="ControlButtonScreenShareStart"
                             >
                               <span
@@ -249,7 +267,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </button>
                       </div>
                       <div
-                        className="ms-TooltipHost root-9"
+                        className="ms-TooltipHost root-10"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
@@ -258,7 +276,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Leave Call"
-                          className="ms-Button ms-Button--default root-23"
+                          className="ms-Button ms-Button--default root-24"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -269,7 +287,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-11"
+                            className="ms-Button-flexContainer flexContainer-12"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
@@ -296,7 +314,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                               </span>
                             </i>
                             <span
-                              className="ms-Button-textContainer textContainer-12"
+                              className="ms-Button-textContainer textContainer-13"
                             >
                               <span
                                 style={
@@ -316,24 +334,24 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-111 css-25"
+                className="css-111 css-26"
               >
                 <div
-                  className="ms-Stack css-32"
+                  className="ms-Stack css-33"
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="css-29"
+                    className="css-30"
                   />
                   <div
-                    className="ms-Stack css-33"
+                    className="ms-Stack css-34"
                   >
                     <div
-                      className="ms-Stack css-35"
+                      className="ms-Stack css-36"
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size48 root-36"
+                        className="ms-Persona ms-Persona--size48 root-37"
                         style={
                           Object {
                             "height": 100,
@@ -342,11 +360,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size48 coin-43"
+                          className="ms-Persona-coin ms-Persona--size48 coin-44"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-45"
+                            className="ms-Persona-imageArea imageArea-46"
                             role="presentation"
                             style={
                               Object {
@@ -357,7 +375,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-48"
+                              className="ms-Persona-initials initials-49"
                               style={
                                 Object {
                                   "height": 100,
@@ -375,13 +393,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-139 css-51"
+                    className="ms-Stack css-139 css-52"
                   >
                     <div
-                      className="ms-Stack css-140 css-52"
+                      className="ms-Stack css-140 css-53"
                     >
                       <span
-                        className="css-53"
+                        className="css-54"
                         title="Michael"
                       >
                         Michael
