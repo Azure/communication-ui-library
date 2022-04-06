@@ -96,7 +96,8 @@ export const menuIconStyleSet = {
  */
 export const menuSubIconStyleSet = {
   root: {
-    height: 'calc(100% - 10px)',
+    height: 'unset',
+    lineHeight: '100%',
     width: '1.25rem'
   }
 };
