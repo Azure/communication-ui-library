@@ -228,7 +228,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
     return (
-      <>
+      <Stack horizontalAlign="end">
         {showCameraSwitcherInLocalPreview &&
           localVideoCameraCycleButtonProps?.cameras !== undefined &&
           localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
@@ -240,7 +240,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               label={strings.localVideoCameraSwitcherLabel}
             />
           )}
-      </>
+      </Stack>
     );
   };
 
