@@ -192,6 +192,8 @@ export interface MessageThreadStrings {
   editBoxCancelButton: string;
   /** String for Submit in EditBox when there is no user input*/
   editBoxSubmitButton: string;
+  /** String for action menu indicating there are more options */
+  actionMenuMoreOptions: string;
 }
 
 /**
