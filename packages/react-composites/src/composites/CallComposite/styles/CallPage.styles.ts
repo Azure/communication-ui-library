@@ -20,7 +20,7 @@ export const callControlsContainerStyles = mergeStyles(controlBarContainerStyles
 const containerStyle: IStyle = {
   width: '100%',
   position: 'relative',
-  minHeight: '15rem' // linked to minimum space allocated to media gallery
+  minHeight: '13rem' // linked to minimum space allocated to media gallery
 };
 
 /**
@@ -36,7 +36,7 @@ export const containerStyleDesktop = mergeStyles({
  */
 export const containerStyleMobile = mergeStyles({
   ...containerStyle,
-  minWidth: '19.5rem'
+  minWidth: '17.5rem'
 });
 
 /**
