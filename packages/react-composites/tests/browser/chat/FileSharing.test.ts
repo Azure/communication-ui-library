@@ -6,9 +6,15 @@ import {
   isTestProfileStableFlavor,
   stubMessageTimestamps
 } from '../common/utils';
-import { chatTestSetup, sendMessage } from '../common/chatTestHelpers';
+import {
+  chatTestSetup,
+  chatTestSetupWithPerUserArgs,
+  sendMessage,
+  waitForMessageDelivered
+} from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
+import { ChatUserType } from '../common/fixtureTypes';
 
 test.describe('Filesharing Attach file icon', async () => {
   test.skip(isTestProfileStableFlavor());
@@ -192,5 +198,56 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await sendMessage(page, 'Hi');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
+  });
+});
+
+test.describe('Filesharing Message Thread', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    const usersWithArgs: { user: ChatUserType; qArgs?: { [key: string]: string } }[] = [];
+    for (let idx = 0; idx < users.length; idx++) {
+      if (idx === 0) {
+        usersWithArgs.push({
+          user: users[idx],
+          qArgs: {
+            useFileSharing: 'true',
+            uploadedFiles: JSON.stringify([
+              {
+                name: 'SampleFile1.pdf',
+                extension: 'pdf',
+                url: 'https://sample.com/SampleFile.pdf',
+                uploadComplete: true
+              }
+            ])
+          }
+        });
+      } else {
+        usersWithArgs.push({
+          user: users[idx],
+          qArgs: {
+            useFileSharing: 'true'
+          }
+        });
+      }
+    }
+    await chatTestSetupWithPerUserArgs({
+      pages,
+      usersWithArgs,
+      serverUrl
+    });
+  });
+  test('contains File Download Card', async ({ pages }) => {
+    const testMessageText = 'Hello!';
+    const page0 = pages[0];
+    await waitForChatCompositeToLoad(page0);
+    await sendMessage(page0, testMessageText);
+    await waitForMessageDelivered(page0);
+    await stubMessageTimestamps(page0);
+    expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
+
+    const page1 = pages[1];
+    await page1.waitForTimeout(1000);
+    expect(await page1.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
