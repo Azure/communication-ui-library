@@ -74,6 +74,7 @@ const PictureInPictureInPictureContainer = (props: {
       onKeyPress={onKeyPress}
       aria-label={props.ariaLabel}
       tabIndex={props.onClick ? 0 : -1} // Only allow focus to be set if there is a click handler
+      data-ui-id="picture-in-picture-in-picture-root"
     >
       {props.primaryView}
       <div style={secondaryTileFloatingStyles}>{props.secondaryView}</div>
