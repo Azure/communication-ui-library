@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Fix alignment issues on read receipt flyout.",
+  "comment": "Fix chevron alignment issues on message read receipt flyout.",
   "packageName": "@internal/react-components",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
