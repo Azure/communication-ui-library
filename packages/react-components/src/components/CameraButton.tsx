@@ -148,40 +148,40 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(strings.cameraActionTurnedOffAnnouncement);
-  const onRenderCameraOnIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />;
-  };
-  const onRenderCameraOffIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />;
-  };
+  const [announcerString, setAnnouncerString] = useState<string>(
+    props.checked ? strings.cameraActionTurnedOnAnnouncement : strings.cameraActionTurnedOffAnnouncement
+  );
+  const onRenderCameraOnIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
+  );
+  const onRenderCameraOffIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
+  );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
   }
+
+  const toggleAnnouncerString = useCallback(() => {
+    setAnnouncerString(
+      announcerString === strings.cameraActionTurnedOffAnnouncement
+        ? strings.cameraActionTurnedOnAnnouncement
+        : strings.cameraActionTurnedOffAnnouncement
+    );
+  }, [announcerString, strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]);
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
       // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
-      if (announcerString === strings.cameraActionTurnedOffAnnouncement) {
-        setAnnouncerString(strings.cameraActionTurnedOnAnnouncement);
-      } else {
-        setAnnouncerString(strings.cameraActionTurnedOffAnnouncement);
-      }
       setWaitForCamera(true);
       try {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
       } finally {
         setWaitForCamera(false);
+        toggleAnnouncerString();
       }
     }
-  }, [
-    announcerString,
-    localVideoViewOptions,
-    onToggleCamera,
-    strings.cameraActionTurnedOffAnnouncement,
-    strings.cameraActionTurnedOnAnnouncement
-  ]);
+  }, [localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
   return (
     <Stack>

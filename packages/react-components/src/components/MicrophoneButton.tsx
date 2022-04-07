@@ -162,7 +162,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { onToggleMicrophone } = props;
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(strings.microphoneActionTurnedOffAnnouncement);
+  const [announcerString, setAnnouncerString] = useState<string>(
+    props.checked ? strings.microphoneActionTurnedOnAnnouncement : strings.microphoneActionTurnedOffAnnouncement
+  );
   const onRenderMicOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
   };
@@ -170,21 +172,23 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />;
   };
 
+  const toggleAnnouncerString = useCallback(() => {
+    setAnnouncerString(
+      announcerString === strings.microphoneActionTurnedOffAnnouncement
+        ? strings.microphoneActionTurnedOnAnnouncement
+        : strings.microphoneActionTurnedOffAnnouncement
+    );
+  }, [announcerString, strings.microphoneActionTurnedOffAnnouncement, strings.microphoneActionTurnedOnAnnouncement]);
+
   const onToggleClick = useCallback(async () => {
     if (onToggleMicrophone) {
-      if (announcerString === strings.microphoneActionTurnedOffAnnouncement) {
-        setAnnouncerString(strings.microphoneActionTurnedOnAnnouncement);
-      } else {
-        setAnnouncerString(strings.microphoneActionTurnedOffAnnouncement);
+      try {
+        await onToggleMicrophone();
+      } finally {
+        toggleAnnouncerString();
       }
-      onToggleMicrophone();
     }
-  }, [
-    announcerString,
-    onToggleMicrophone,
-    strings.microphoneActionTurnedOffAnnouncement,
-    strings.microphoneActionTurnedOnAnnouncement
-  ]);
+  }, [onToggleMicrophone, toggleAnnouncerString]);
 
   return (
     <Stack>
