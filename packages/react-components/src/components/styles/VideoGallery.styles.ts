@@ -60,7 +60,7 @@ export const floatingLocalVideoModalStyle = (
         boxShadow: theme.effects.elevation8,
         ':focus-within': {
           boxShadow: theme.effects.elevation16,
-          border: `2px solid ${theme.palette.neutralPrimary}`
+          border: `${_pxToRem(2)} solid ${theme.palette.neutralPrimary}`
         }
       }
     },
@@ -185,20 +185,33 @@ export const layerHostStyle: IStyle = {
 /**
  * @private
  */
-export const localVideoCameraCycleButtonStyles: IButtonStyles = {
-  root: {
-    position: 'absolute',
-    right: '0.1rem',
-    top: '0.1rem',
-    color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
-    zIndex: 2, // shows the button directly over the local video feed.
-    background: 'transparent'
-  },
-  rootFocused: {
-    // styles to remove the unwanted white highlight and blue colour after tapping on button.
-    color: '#FFFFFF',
-    background: 'transparent'
-  }
+export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      position: 'absolute',
+      width: _pxToRem(32),
+      height: _pxToRem(32),
+      right: '0rem',
+      top: '0rem',
+      color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
+      zIndex: 2, // shows the button directly over the local video feed.
+      background: 'rgba(0,0,0,0.4)',
+      borderRadius: theme.effects.roundedCorner2
+    },
+    rootFocused: {
+      // styles to remove the unwanted white highlight and blue colour after tapping on button.
+      color: '#FFFFFF',
+      background: 'rgba(0,0,0,0.4)' // sets opacity of background to be visible on all backdrops in video stream.
+    },
+    icon: {
+      paddingLeft: _pxToRem(3),
+      paddingRight: _pxToRem(3),
+      margin: 0
+    },
+    flexContainer: {
+      paddingBottom: _pxToRem(8)
+    }
+  };
 };
 
 /**

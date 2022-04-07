@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IconButton } from '@fluentui/react';
+import { IconButton, useTheme } from '@fluentui/react';
 import React from 'react';
 import { OptionsDevice } from './DevicesButton';
 import { localVideoCameraCycleButtonStyles } from './styles/VideoGallery.styles';
@@ -26,11 +26,12 @@ export interface LocalVideoCameraCycleButtonProps {
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
   const { cameras, selectedCamera, onSelectCamera, label } = props;
+  const theme = useTheme();
 
   return (
     <IconButton
       data-ui-id={'local-camera-switcher-button'}
-      styles={localVideoCameraCycleButtonStyles}
+      styles={localVideoCameraCycleButtonStyles(theme)}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={label}
       aria-live={'polite'}

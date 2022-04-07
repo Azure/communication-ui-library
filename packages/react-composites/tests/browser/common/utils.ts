@@ -179,7 +179,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       (args: any) => {
         const videoNodes = document.querySelectorAll('video');
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        const allVideosLoaded = Array.from(videoNodes).every(
+          (videoNode) => !!videoNode && videoNode.readyState === 4 && !videoNode.paused
+        );
         return correctNoOfVideos && allVideosLoaded;
       },
       {
@@ -192,6 +194,42 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
   for (const page of pages) {
     await clickOutsideOfPage(page);
   }
+};
+
+/**
+ * Wait for PiPiP it's videos to have loaded.
+ */
+export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
+  await page.bringToFront();
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      // Check pipip is a valid element on screen
+      const pipip = document.querySelector<HTMLElement>(args.pipipSelector);
+      if (!pipip) {
+        return false;
+      }
+
+      // Check there are the correct number of tiles inside the pipip
+      const tileNodes = pipip.querySelectorAll<HTMLElement>(args.participantTileSelector);
+      if (tileNodes.length !== args.expectedTileCount) {
+        return false;
+      }
+
+      // Check the videos are ready in each tile
+      const allVideosLoaded = Array.from(tileNodes).every((tileNode) => {
+        const videoNode = tileNode?.querySelector('video');
+        return videoNode && videoNode.readyState === 4;
+      });
+      return allVideosLoaded;
+    },
+    {
+      pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
+      participantTileSelector: dataUiId('video-tile'),
+      expectedTileCount: videosEnabledCount
+    }
+  );
 };
 
 /**

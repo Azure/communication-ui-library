@@ -787,6 +787,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -798,6 +799,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaLabel: string;
 }
 
 // @public
@@ -1591,6 +1593,7 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1936,6 +1939,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    actionMenuMoreOptions: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;

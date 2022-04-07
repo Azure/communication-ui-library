@@ -43,7 +43,7 @@ import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
-import { ModalClone } from './ModalClone/ModalClone';
+import { _ModalClone } from './ModalClone/ModalClone';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -226,7 +226,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
     return (
-      <>
+      <Stack horizontalAlign="end">
         {showCameraSwitcherInLocalPreview &&
           localVideoCameraCycleButtonProps?.cameras !== undefined &&
           localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
@@ -238,7 +238,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               label={strings.localVideoCameraSwitcherLabel}
             />
           )}
-      </>
+      </Stack>
     );
   };
 
@@ -387,7 +387,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
         ) : (
-          <ModalClone
+          <_ModalClone
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
@@ -396,7 +396,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             maxDragPosition={maxDragPosition}
           >
             {localVideoTile}
-          </ModalClone>
+          </_ModalClone>
         ))}
       {
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
