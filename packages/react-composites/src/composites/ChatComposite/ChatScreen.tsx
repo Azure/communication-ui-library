@@ -61,6 +61,7 @@ export type ChatScreenProps = {
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
+  formFactor?: 'desktop' | 'mobile';
 };
 
 /**
@@ -108,7 +109,15 @@ export interface FileSharingOptions {
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    options,
+    styles,
+    fileSharing,
+    formFactor
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
@@ -205,23 +214,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox
-              {...sendBoxProps}
-              autoFocus={options?.autoFocus}
-              styles={sendBoxStyles}
-              /* @conditional-compile-remove(file-sharing) */
-              activeFileUploads={useSelector(fileUploadsSelector).files}
-              /* @conditional-compile-remove(file-sharing) */
-              onCancelFileUpload={adapter.cancelFileUpload}
-            />
-
-            {fileSharing?.uploadHandler && (
-              <FileUploadButton
-                accept={fileSharing?.accept}
-                multiple={fileSharing?.multiple}
-                onChange={fileUploadButtonOnChange}
+            <Stack horizontal={formFactor === 'mobile'}>
+              <SendBox
+                {...sendBoxProps}
+                autoFocus={options?.autoFocus}
+                styles={sendBoxStyles}
+                /* @conditional-compile-remove(file-sharing) */
+                activeFileUploads={useSelector(fileUploadsSelector).files}
+                /* @conditional-compile-remove(file-sharing) */
+                onCancelFileUpload={adapter.cancelFileUpload}
               />
-            )}
+              {fileSharing?.uploadHandler && (
+                <FileUploadButton
+                  accept={fileSharing?.accept}
+                  multiple={fileSharing?.multiple}
+                  onChange={fileUploadButtonOnChange}
+                />
+              )}
+            </Stack>
           </Stack>
         </Stack>
         {
