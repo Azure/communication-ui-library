@@ -59,11 +59,11 @@ export interface MicrophoneButtonStrings {
   /**
    * Microphone action turned on string for announcer
    */
-  microphoneActionTurnedOnAnnouncment: string;
+  microphoneActionTurnedOnAnnouncement: string;
   /**
    * Microphone action turned off string for announcer
    */
-  microphoneActionTurnedOffAnnouncment: string;
+  microphoneActionTurnedOffAnnouncement: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -162,7 +162,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { onToggleMicrophone } = props;
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(strings.microphoneActionTurnedOffAnnouncment);
+  const [announcerString, setAnnouncerString] = useState<string>(strings.microphoneActionTurnedOffAnnouncement);
   const onRenderMicOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
   };
@@ -172,18 +172,18 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const onToggleClick = useCallback(async () => {
     if (onToggleMicrophone) {
-      if (announcerString === strings.microphoneActionTurnedOffAnnouncment) {
-        setAnnouncerString(strings.microphoneActionTurnedOnAnnouncment);
+      if (announcerString === strings.microphoneActionTurnedOffAnnouncement) {
+        setAnnouncerString(strings.microphoneActionTurnedOnAnnouncement);
       } else {
-        setAnnouncerString(strings.microphoneActionTurnedOffAnnouncment);
+        setAnnouncerString(strings.microphoneActionTurnedOffAnnouncement);
       }
       onToggleMicrophone();
     }
   }, [
     announcerString,
     onToggleMicrophone,
-    strings.microphoneActionTurnedOffAnnouncment,
-    strings.microphoneActionTurnedOnAnnouncment
+    strings.microphoneActionTurnedOffAnnouncement,
+    strings.microphoneActionTurnedOnAnnouncement
   ]);
 
   return (

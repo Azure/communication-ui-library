@@ -813,8 +813,8 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export interface CameraButtonStrings {
-    cameraActionTurnedOffAnnouncment: string;
-    cameraActionTurnedOnAnnouncment: string;
+    cameraActionTurnedOffAnnouncement: string;
+    cameraActionTurnedOnAnnouncement: string;
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
@@ -1881,8 +1881,8 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneActionTurnedOffAnnouncment: string;
-    microphoneActionTurnedOnAnnouncment: string;
+    microphoneActionTurnedOffAnnouncement: string;
+    microphoneActionTurnedOnAnnouncement: string;
     microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;

@@ -55,11 +55,11 @@ export interface CameraButtonStrings {
   /**
    * Camera action turned on string for announcer
    */
-  cameraActionTurnedOnAnnouncment: string;
+  cameraActionTurnedOnAnnouncement: string;
   /**
    * Camera action turned off string for announcer
    */
-  cameraActionTurnedOffAnnouncment: string;
+  cameraActionTurnedOffAnnouncement: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -148,7 +148,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(strings.cameraActionTurnedOffAnnouncment);
+  const [announcerString, setAnnouncerString] = useState<string>(strings.cameraActionTurnedOffAnnouncement);
   const onRenderCameraOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />;
   };
@@ -163,10 +163,10 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
       // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
-      if (announcerString === strings.cameraActionTurnedOffAnnouncment) {
-        setAnnouncerString(strings.cameraActionTurnedOnAnnouncment);
+      if (announcerString === strings.cameraActionTurnedOffAnnouncement) {
+        setAnnouncerString(strings.cameraActionTurnedOnAnnouncement);
       } else {
-        setAnnouncerString(strings.cameraActionTurnedOffAnnouncment);
+        setAnnouncerString(strings.cameraActionTurnedOffAnnouncement);
       }
       setWaitForCamera(true);
       try {
@@ -179,8 +179,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     announcerString,
     localVideoViewOptions,
     onToggleCamera,
-    strings.cameraActionTurnedOffAnnouncment,
-    strings.cameraActionTurnedOnAnnouncment
+    strings.cameraActionTurnedOffAnnouncement,
+    strings.cameraActionTurnedOnAnnouncement
   ]);
 
   return (
