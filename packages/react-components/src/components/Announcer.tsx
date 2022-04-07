@@ -15,7 +15,7 @@ export type AnnouncerProps = {
 
 /**
  * @private
- * Announcer component to make Aira announcments on actions
+ * Announcer component to make Aira announcements on actions
  */
 export const Announcer = (props: AnnouncerProps): JSX.Element => {
   const { announcementString, ariaLive } = props;
@@ -24,7 +24,7 @@ export const Announcer = (props: AnnouncerProps): JSX.Element => {
 };
 
 /**
- * Styles to hide the announcer from view but still displaying it so that narration can happen.
+ * Styles to hide the announcer from view but still existing on the DOM tree it so that narration can happen.
  */
 const announcerStyles: IStackStyles = {
   root: {
