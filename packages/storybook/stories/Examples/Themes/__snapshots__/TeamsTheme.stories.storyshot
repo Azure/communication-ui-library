@@ -64,7 +64,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         className="ms-Stack css-3"
                       >
                         <div
-                          aria-label="Your camera has been turned off"
                           aria-live="polite"
                           className="ms-Stack css-9"
                         />
@@ -142,7 +141,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         className="ms-Stack css-3"
                       >
                         <div
-                          aria-label="Your microphone has been turned off"
                           aria-live="polite"
                           className="ms-Stack css-9"
                         />

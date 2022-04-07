@@ -162,9 +162,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const { onToggleMicrophone } = props;
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(
-    props.checked ? strings.microphoneActionTurnedOnAnnouncement : strings.microphoneActionTurnedOffAnnouncement
-  );
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const onRenderMicOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
   };
@@ -172,23 +170,30 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />;
   };
 
-  const toggleAnnouncerString = useCallback(() => {
-    setAnnouncerString(
-      announcerString === strings.microphoneActionTurnedOffAnnouncement
-        ? strings.microphoneActionTurnedOnAnnouncement
-        : strings.microphoneActionTurnedOffAnnouncement
-    );
-  }, [announcerString, strings.microphoneActionTurnedOffAnnouncement, strings.microphoneActionTurnedOnAnnouncement]);
+  const isMicOn = props.checked;
+
+  const toggleAnnouncerString = useCallback(
+    (isMicOn: boolean) => {
+      setAnnouncerString(
+        announcerString === (strings.microphoneActionTurnedOffAnnouncement || undefined) || !isMicOn
+          ? strings.microphoneActionTurnedOnAnnouncement
+          : strings.microphoneActionTurnedOffAnnouncement
+      );
+    },
+    [announcerString, strings.microphoneActionTurnedOffAnnouncement, strings.microphoneActionTurnedOnAnnouncement]
+  );
 
   const onToggleClick = useCallback(async () => {
     if (onToggleMicrophone) {
       try {
         await onToggleMicrophone();
-      } finally {
-        toggleAnnouncerString();
+        // allows for the setting of narrator strings triggering the announcer when microphone is turned on or off.
+        toggleAnnouncerString(isMicOn ? isMicOn : false);
+      } catch {
+        setAnnouncerString(announcerString);
       }
     }
-  }, [onToggleMicrophone, toggleAnnouncerString]);
+  }, [announcerString, isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
   return (
     <Stack>

@@ -148,9 +148,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
-  const [announcerString, setAnnouncerString] = useState<string>(
-    props.checked ? strings.cameraActionTurnedOnAnnouncement : strings.cameraActionTurnedOffAnnouncement
-  );
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const onRenderCameraOnIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
   );
@@ -161,27 +159,32 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
   }
 
-  const toggleAnnouncerString = useCallback(() => {
-    setAnnouncerString(
-      announcerString === strings.cameraActionTurnedOffAnnouncement
-        ? strings.cameraActionTurnedOnAnnouncement
-        : strings.cameraActionTurnedOffAnnouncement
-    );
-  }, [announcerString, strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]);
+  const cameraOn = props.checked;
+
+  const toggleAnnouncerString = useCallback(
+    (isCameraOn: boolean) => {
+      setAnnouncerString(
+        announcerString === (strings.cameraActionTurnedOffAnnouncement || undefined) || !isCameraOn
+          ? strings.cameraActionTurnedOnAnnouncement
+          : strings.cameraActionTurnedOffAnnouncement
+      );
+    },
+    [announcerString, strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]
+  );
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
-      // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
       setWaitForCamera(true);
       try {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
+        // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
+        toggleAnnouncerString(cameraOn ? cameraOn : false);
       } finally {
         setWaitForCamera(false);
-        toggleAnnouncerString();
       }
     }
-  }, [localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
+  }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
   return (
     <Stack>

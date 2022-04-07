@@ -9,7 +9,7 @@ import React from 'react';
  *  aria props for this hidden component.
  */
 export type AnnouncerProps = {
-  announcementString: string;
+  announcementString?: string;
   ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 

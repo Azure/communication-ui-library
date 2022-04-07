@@ -24,7 +24,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
         className="ms-Stack css-1"
       >
         <div
-          aria-label="Your microphone has been turned off"
           aria-live="polite"
           className="ms-Stack css-2"
         />

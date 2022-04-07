@@ -42,7 +42,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               className="ms-Stack css-4"
             >
               <div
-                aria-label="Your camera has been turned off"
                 aria-live="polite"
                 className="ms-Stack css-5"
               />
@@ -120,7 +119,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               className="ms-Stack css-4"
             >
               <div
-                aria-label="Your microphone has been turned off"
                 aria-live="polite"
                 className="ms-Stack css-5"
               />
