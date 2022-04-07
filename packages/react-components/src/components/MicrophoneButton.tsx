@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IContextualMenuProps, Stack } from '@fluentui/react';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
@@ -159,24 +159,39 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
  * @public
  */
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
+  const { onToggleMicrophone } = props;
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string>(strings.microphoneActionTurnedOffAnnouncment);
   const onRenderMicOnIcon = (): JSX.Element => {
-    setAnnouncerString(strings.microphoneActionTurnedOnAnnouncment);
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
   };
   const onRenderMicOffIcon = (): JSX.Element => {
-    setAnnouncerString(strings.microphoneActionTurnedOffAnnouncment);
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />;
   };
+
+  const onToggleClick = useCallback(async () => {
+    if (onToggleMicrophone) {
+      if (announcerString === strings.microphoneActionTurnedOffAnnouncment) {
+        setAnnouncerString(strings.microphoneActionTurnedOnAnnouncment);
+      } else {
+        setAnnouncerString(strings.microphoneActionTurnedOffAnnouncment);
+      }
+      onToggleMicrophone();
+    }
+  }, [
+    announcerString,
+    onToggleMicrophone,
+    strings.microphoneActionTurnedOffAnnouncment,
+    strings.microphoneActionTurnedOnAnnouncment
+  ]);
 
   return (
     <Stack>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <ControlBarButton
         {...props}
-        onClick={props.onToggleMicrophone ?? props.onClick}
+        onClick={props.onToggleMicrophone ? onToggleClick : props.onClick}
         onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
         strings={strings}

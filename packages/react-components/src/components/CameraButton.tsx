@@ -150,11 +150,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string>(strings.cameraActionTurnedOffAnnouncment);
   const onRenderCameraOnIcon = (): JSX.Element => {
-    setAnnouncerString(strings.cameraActionTurnedOnAnnouncment);
     return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />;
   };
   const onRenderCameraOffIcon = (): JSX.Element => {
-    setAnnouncerString(strings.cameraActionTurnedOffAnnouncment);
     return <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />;
   };
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
@@ -164,6 +162,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
+      // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
+      if (announcerString === strings.cameraActionTurnedOffAnnouncment) {
+        setAnnouncerString(strings.cameraActionTurnedOnAnnouncment);
+      } else {
+        setAnnouncerString(strings.cameraActionTurnedOffAnnouncment);
+      }
       setWaitForCamera(true);
       try {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
@@ -171,7 +175,13 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         setWaitForCamera(false);
       }
     }
-  }, [localVideoViewOptions, onToggleCamera]);
+  }, [
+    announcerString,
+    localVideoViewOptions,
+    onToggleCamera,
+    strings.cameraActionTurnedOffAnnouncment,
+    strings.cameraActionTurnedOnAnnouncment
+  ]);
 
   return (
     <Stack>
