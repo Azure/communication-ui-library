@@ -60,7 +60,9 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   const theme = useTheme();
   const messageReadByCount = props.messageReadBy?.length;
 
-  const sortedMessageReadyByList = props.messageReadBy?.sort((a, b) => a.displayName.localeCompare(b.displayName));
+  const sortedMessageReadyByList = [...(props.messageReadBy ?? [])].sort((a, b) =>
+    a.displayName.localeCompare(b.displayName)
+  );
 
   const messageReadByList: IContextualMenuItem[] | undefined = sortedMessageReadyByList?.map((person) => {
     const personaOptions: IPersona = {
@@ -138,6 +140,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
+          id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
           calloutProps: preventUnwantedDismissProps
         },
