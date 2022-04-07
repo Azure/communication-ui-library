@@ -4,7 +4,8 @@ import {
   waitForChatCompositeToLoad,
   buildUrl,
   isTestProfileStableFlavor,
-  stubMessageTimestamps
+  stubMessageTimestamps,
+  dataUiId
 } from '../common/utils';
 import {
   chatTestSetup,
@@ -14,7 +15,7 @@ import {
 } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { ChatUserType } from '../common/fixtureTypes';
+import { IDS } from '../common/constants';
 
 test.describe('Filesharing Attach file icon', async () => {
   test.skip(isTestProfileStableFlavor());
@@ -205,32 +206,27 @@ test.describe('Filesharing Message Thread', async () => {
   test.skip(isTestProfileStableFlavor());
 
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    const usersWithArgs: { user: ChatUserType; qArgs?: { [key: string]: string } }[] = [];
-    for (let idx = 0; idx < users.length; idx++) {
-      if (idx === 0) {
-        usersWithArgs.push({
-          user: users[idx],
-          qArgs: {
-            useFileSharing: 'true',
-            uploadedFiles: JSON.stringify([
-              {
-                name: 'SampleFile1.pdf',
-                extension: 'pdf',
-                url: 'https://sample.com/SampleFile.pdf',
-                uploadComplete: true
-              }
-            ])
+    const firstUserArgs = {
+      user: users[0],
+      qArgs: {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile1.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            uploadComplete: true
           }
-        });
-      } else {
-        usersWithArgs.push({
-          user: users[idx],
-          qArgs: {
-            useFileSharing: 'true'
-          }
-        });
+        ])
       }
-    }
+    };
+    const otherUsersArgs = users.slice(1).map((user) => ({
+      user,
+      qArgs: {
+        useFileSharing: 'true'
+      }
+    }));
+    const usersWithArgs = [firstUserArgs, ...otherUsersArgs];
     await chatTestSetupWithPerUserArgs({
       pages,
       usersWithArgs,
@@ -240,14 +236,24 @@ test.describe('Filesharing Message Thread', async () => {
   test('contains File Download Card', async ({ pages }) => {
     const testMessageText = 'Hello!';
     const page0 = pages[0];
+
     await waitForChatCompositeToLoad(page0);
     await sendMessage(page0, testMessageText);
     await waitForMessageDelivered(page0);
+    await page0.waitForTimeout(1000);
+
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
 
     const page1 = pages[1];
-    await page1.waitForTimeout(1000);
+
+    // It could be too slow to get typing indicator here, which makes the test flakey
+    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
+    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
+    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+
+    await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });

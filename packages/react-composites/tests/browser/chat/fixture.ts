@@ -14,17 +14,17 @@ const APP_DIR = path.join(__dirname, 'app');
 type ChatWorkerFixture = WorkerFixture<ChatUserType>;
 
 /**
- * A worker-scoped test fixture for ChatComposite browser tests.
+ * A test-scoped test fixture for ChatComposite browser tests.
  *
  * The @returns values are available to reference in tests.
  */
-export const test = base.extend<unknown, ChatWorkerFixture>({
+export const test = base.extend<ChatWorkerFixture>({
   /** @returns string URL for the server. */
-  serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
+  serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'test' }],
 
   /** @returns the created users' identities. */
-  users: [createChatUsers(TEST_PARTICIPANTS), { scope: 'worker' }],
+  users: [createChatUsers(TEST_PARTICIPANTS), { scope: 'test' }],
 
   /** @returns Array of Page's loaded. In our case: one for each participant. */
-  pages: [usePagePerParticipant, { scope: 'worker' }]
+  pages: [usePagePerParticipant, { scope: 'test' }]
 });
