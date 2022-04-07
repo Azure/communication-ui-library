@@ -16,7 +16,8 @@ import {
   sendMessage,
   waitForMessageDelivered,
   waitForMessageSeen,
-  waitForMessageWithContent
+  waitForMessageWithContent,
+  waitForTypingIndicatorHidden
 } from '../common/chatTestHelpers';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -38,12 +39,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     const page1 = pages[1];
     await waitForMessageWithContent(page1, testMessageText);
-
-    // It could be too slow to get typing indicator here, which makes the test flakey
-    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
-    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
-    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+    await waitForTypingIndicatorHidden(page1);
 
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
@@ -65,13 +61,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     const page1 = pages[1];
     await waitForMessageWithContent(page1, testMessageText);
-
-    // It could be too slow to get typing indicator here, which makes the test flakey
-    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
-    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
-    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
-
+    await waitForTypingIndicatorHidden(page1);
     await stubMessageTimestamps(page1);
     await page0.locator(dataUiId('chat-composite-message')).click();
     await page0.locator(dataUiId('chat-composite-message-action-icon')).click();
