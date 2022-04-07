@@ -95,7 +95,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 className="ms-Stack css-13"
               >
                 <div
-                  aria-label="Your camera has been turned on"
+                  aria-label="Your camera has been turned off"
                   aria-live="polite"
                   className="ms-Stack css-14"
                 />
@@ -180,7 +180,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 className="ms-Stack css-13"
               >
                 <div
-                  aria-label="Your microphone has been turned on"
+                  aria-label="Your microphone has been turned off"
                   aria-live="polite"
                   className="ms-Stack css-14"
                 />
