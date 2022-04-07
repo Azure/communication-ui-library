@@ -238,18 +238,20 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
-    (function checkForStubbedTimestamps(i) {
-      setTimeout(function () {
-        if (
-          !Array.from(document.querySelectorAll(messageTimestampId)).every((i) => i.textContent === 'timestamp') &&
-          --i > 0
-        ) {
-          checkForStubbedTimestamps(i);
-        }
-      }, 500);
-    })(6);
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
+  // Wait for timestamps to have been updated in the DOM
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await waitForFunction(
+    page,
+    (args: any) => {
+      const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
+      return timestampNodes.every((node) => node.innerHTML === 'timestamp');
+    },
+    {
+      messageTimestampId: messageTimestampId
+    }
+  );
 };
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
