@@ -60,10 +60,9 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   const theme = useTheme();
   const messageReadByCount = props.messageReadBy?.length;
 
-  props.messageReadBy?.sort(function (a, b) {
-    return a.displayName.localeCompare(b.displayName);
-  });
-  const messageReadByList: IContextualMenuItem[] | undefined = props.messageReadBy?.map((person) => {
+  const sortedMessageReadyByList = props.messageReadBy?.sort((a, b) => a.displayName.localeCompare(b.displayName));
+
+  const messageReadByList: IContextualMenuItem[] | undefined = sortedMessageReadyByList?.map((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
@@ -119,6 +118,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     ) {
       items.push({
         key: 'Read Count',
+        'data-ui-id': 'chat-composite-message-contextual-menu-read-info',
         text: _formatString(props.strings.messageReadCount, {
           messageReadByCount: `${messageReadByCount}`,
           remoteParticipantsCount: `${props.remoteParticipantsCount}`
@@ -151,8 +151,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuIconStyleSet,
-          id: 'chat-composite-message-contextual-menu-read-info'
+          styles: menuIconStyleSet
         },
         disabled: messageReadByCount <= 0
       });
