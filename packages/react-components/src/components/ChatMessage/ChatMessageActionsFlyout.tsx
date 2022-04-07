@@ -19,7 +19,8 @@ import { MessageThreadStrings } from '../MessageThread';
 import {
   chatMessageMenuStyle,
   menuIconStyleSet,
-  menuItemIncreasedSizeStyles
+  menuItemIncreasedSizeStyles,
+  menuSubIconStyleSet
 } from '../styles/ChatMessageComponent.styles';
 
 /** @private */
@@ -154,7 +155,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuIconStyleSet
+          styles: menuSubIconStyleSet
         },
         disabled: messageReadByCount <= 0
       });
