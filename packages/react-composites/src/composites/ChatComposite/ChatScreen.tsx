@@ -230,13 +230,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <Stack horizontal={formFactor === 'mobile'} horizontalAlign="start">
+            <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 <Stack verticalAlign="center">
                   <AttachFileButton />
                 </Stack>
               )}
-              <div style={{ width: '100%' }}>
+              <Stack grow>
                 <SendBox
                   {...sendBoxProps}
                   autoFocus={options?.autoFocus}
@@ -246,7 +246,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(file-sharing) */
                   onCancelFileUpload={adapter.cancelFileUpload}
                 />
-              </div>
+              </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>
           </Stack>
