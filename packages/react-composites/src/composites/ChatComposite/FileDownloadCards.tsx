@@ -67,20 +67,22 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   }
 
   return (
-    <_FileCardGroup>
-      {fileDownloads &&
-        fileDownloads.map((file) => (
-          <_FileCard
-            fileName={file.name}
-            key={file.name}
-            fileExtension={extension(file.name)}
-            actionIcon={
-              showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
-            }
-            actionHandler={() => fileDownloadHandler(userId, file)}
-          />
-        ))}
-    </_FileCardGroup>
+    <div style={{ marginTop: '0.25rem' }}>
+      <_FileCardGroup>
+        {fileDownloads &&
+          fileDownloads.map((file) => (
+            <_FileCard
+              fileName={file.name}
+              key={file.name}
+              fileExtension={extension(file.name)}
+              actionIcon={
+                showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
+              }
+              actionHandler={() => fileDownloadHandler(userId, file)}
+            />
+          ))}
+      </_FileCardGroup>
+    </div>
   );
 };
 
