@@ -176,8 +176,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     (isMicOn: boolean) => {
       setAnnouncerString(
         announcerString === strings.microphoneActionTurnedOffAnnouncement || !isMicOn
-          ? strings.microphoneActionTurnedOnAnnouncement
-          : strings.microphoneActionTurnedOffAnnouncement
+          ? strings.microphoneActionTurnedOffAnnouncement
+          : strings.microphoneActionTurnedOnAnnouncement
       );
     },
     [announcerString, strings.microphoneActionTurnedOffAnnouncement, strings.microphoneActionTurnedOnAnnouncement]
@@ -188,7 +188,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       try {
         await onToggleMicrophone();
         // allows for the setting of narrator strings triggering the announcer when microphone is turned on or off.
-        toggleAnnouncerString(isMicOn ? isMicOn : false);
+        toggleAnnouncerString(!isMicOn);
       } catch {
         setAnnouncerString(announcerString);
       }

@@ -165,8 +165,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     (isCameraOn: boolean) => {
       setAnnouncerString(
         announcerString === strings.cameraActionTurnedOffAnnouncement || !isCameraOn
-          ? strings.cameraActionTurnedOnAnnouncement
-          : strings.cameraActionTurnedOffAnnouncement
+          ? strings.cameraActionTurnedOffAnnouncement
+          : strings.cameraActionTurnedOnAnnouncement
       );
     },
     [announcerString, strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]
@@ -179,7 +179,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       try {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
         // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
-        toggleAnnouncerString(cameraOn ? cameraOn : false);
+        toggleAnnouncerString(!cameraOn);
       } finally {
         setWaitForCamera(false);
       }
