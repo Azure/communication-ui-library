@@ -14,6 +14,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
@@ -24,6 +25,7 @@ import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -455,6 +457,14 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @internal (undocumented)
+export interface _ExtendedIModalProps extends IModalProps {
+    // (undocumented)
+    maxDragPosition?: _ICoordinates;
+    // (undocumented)
+    minDragPosition?: _ICoordinates;
+}
+
 // @internal
 export const _FileCard: (props: _FileCardProps) => JSX.Element;
 
@@ -507,6 +517,12 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
     nextButton?: IStyle;
     previousButton?: IStyle;
 }
+
+// @internal (undocumented)
+export type _ICoordinates = {
+    x: number;
+    y: number;
+};
 
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
@@ -735,6 +751,9 @@ export interface MicrophoneButtonStrings {
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
+
+// @internal (undocumented)
+export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
 
 // @public
 export type OnRenderAvatarCallback = (
