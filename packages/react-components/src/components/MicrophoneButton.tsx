@@ -175,7 +175,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const toggleAnnouncerString = useCallback(
     (isMicOn: boolean) => {
       setAnnouncerString(
-        announcerString === (strings.microphoneActionTurnedOffAnnouncement || undefined) || !isMicOn
+        announcerString === strings.microphoneActionTurnedOffAnnouncement || !isMicOn
           ? strings.microphoneActionTurnedOnAnnouncement
           : strings.microphoneActionTurnedOffAnnouncement
       );

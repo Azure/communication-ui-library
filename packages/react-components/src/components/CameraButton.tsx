@@ -164,7 +164,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const toggleAnnouncerString = useCallback(
     (isCameraOn: boolean) => {
       setAnnouncerString(
-        announcerString === (strings.cameraActionTurnedOffAnnouncement || undefined) || !isCameraOn
+        announcerString === strings.cameraActionTurnedOffAnnouncement || !isCameraOn
           ? strings.cameraActionTurnedOnAnnouncement
           : strings.cameraActionTurnedOffAnnouncement
       );
