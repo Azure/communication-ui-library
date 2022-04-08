@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -32,9 +32,11 @@ import {
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle,
-  localVideoTileStartPositionPX
+  localVideoTileOuterPaddingPX,
+  SMALL_FLOATING_MODAL_SIZE_PX,
+  LARGE_FLOATING_MODAL_SIZE_PX
 } from './styles/VideoGallery.styles';
-import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { isNarrowWidth, useContainerHeight, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
@@ -43,7 +45,7 @@ import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
-import { _ModalClone } from './ModalClone/ModalClone';
+import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -163,7 +165,7 @@ const DRAG_OPTIONS: IDragOptions = {
 // This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
 // Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
 // position the modal can be dragged to.
-const maxDragPosition = { x: localVideoTileStartPositionPX.bottom, y: localVideoTileStartPositionPX.right };
+const maxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTileOuterPaddingPX };
 
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
@@ -205,9 +207,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
-  const isNarrow = isNarrowWidth(containerWidth);
+  const containerHeight = useContainerHeight(containerRef);
+  const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+
+  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
+  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
+  const minDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      containerWidth && containerHeight
+        ? {
+            x: -containerWidth + modalWidth + localVideoTileOuterPaddingPX,
+            y: -containerHeight + modalHeight + localVideoTileOuterPaddingPX
+          }
+        : undefined,
+    [containerHeight, containerWidth, modalHeight, modalWidth]
+  );
 
   visibleVideoParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
@@ -396,6 +412,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
             layerProps={{ hostId: layerHostId }}
             maxDragPosition={maxDragPosition}
+            minDragPosition={minDragPosition}
           >
             {localVideoTile}
           </_ModalClone>
