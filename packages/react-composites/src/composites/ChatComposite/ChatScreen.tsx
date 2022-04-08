@@ -37,7 +37,6 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
-/* @conditional-compile-remove(file-sharing) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadCards } from './FileDownloadCards';
@@ -62,6 +61,7 @@ export type ChatScreenProps = {
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
+  formFactor?: 'desktop' | 'mobile';
 };
 
 /**
@@ -109,7 +109,15 @@ export interface FileSharingOptions {
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles, fileSharing } = props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    options,
+    styles,
+    fileSharing,
+    formFactor
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
@@ -145,19 +153,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
-  /* @conditional-compile-remove(file-sharing) */
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
-  const fileUploadButtonOnChange = (files: FileList | null): void => {
-    if (!files) {
-      return;
-    }
+  const fileUploadButtonOnChange = useCallback(
+    (files: FileList | null): void => {
+      if (!files) {
+        return;
+      }
 
-    /* @conditional-compile-remove(file-sharing) */
-    const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
-    /* @conditional-compile-remove(file-sharing) */
-    fileSharing?.uploadHandler(userId, fileUploads);
-  };
+      /* @conditional-compile-remove(file-sharing) */
+      const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
+      /* @conditional-compile-remove(file-sharing) */
+      fileSharing?.uploadHandler(userId, fileUploads);
+    },
+    [adapter, fileSharing, userId]
+  );
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
@@ -173,6 +183,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     ),
     [fileSharing?.downloadHandler]
   );
+
+  const AttachFileButton = useCallback(() => {
+    if (!fileSharing?.uploadHandler) {
+      return null;
+    }
+    return (
+      <FileUploadButton
+        accept={fileSharing?.accept}
+        multiple={fileSharing?.multiple}
+        onChange={fileUploadButtonOnChange}
+      />
+    );
+  }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
 
   return (
     <Stack className={chatContainer} grow>
@@ -206,23 +229,25 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox
-              {...sendBoxProps}
-              autoFocus={options?.autoFocus}
-              styles={sendBoxStyles}
-              /* @conditional-compile-remove(file-sharing) */
-              activeFileUploads={useSelector(fileUploadsSelector).files}
-              /* @conditional-compile-remove(file-sharing) */
-              onCancelFileUpload={adapter.cancelFileUpload}
-            />
-
-            {fileSharing?.uploadHandler && (
-              <FileUploadButton
-                accept={fileSharing?.accept}
-                multiple={fileSharing?.multiple}
-                onChange={fileUploadButtonOnChange}
-              />
-            )}
+            <Stack horizontal={formFactor === 'mobile'}>
+              {formFactor === 'mobile' && (
+                <Stack verticalAlign="center">
+                  <AttachFileButton />
+                </Stack>
+              )}
+              <Stack grow>
+                <SendBox
+                  {...sendBoxProps}
+                  autoFocus={options?.autoFocus}
+                  styles={sendBoxStyles}
+                  /* @conditional-compile-remove(file-sharing) */
+                  activeFileUploads={useSelector(fileUploadsSelector).files}
+                  /* @conditional-compile-remove(file-sharing) */
+                  onCancelFileUpload={adapter.cancelFileUpload}
+                />
+              </Stack>
+              {formFactor !== 'mobile' && <AttachFileButton />}
+            </Stack>
           </Stack>
         </Stack>
         {
