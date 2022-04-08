@@ -75,3 +75,10 @@ export const waitForMessageWithContent = async (page: Page, messageContent: stri
   await page.bringToFront();
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);
 };
+
+export const waitForTypingIndicatorHidden = async (page: Page): Promise<void> => {
+  await page.bringToFront();
+  await page.waitForTimeout(1000); // ensure typing indicator has had time to appear
+  const typingIndicator = await page.$(dataUiId(IDS.typingIndicator));
+  typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+};
