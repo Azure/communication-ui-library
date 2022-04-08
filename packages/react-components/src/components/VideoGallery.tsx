@@ -165,7 +165,7 @@ const DRAG_OPTIONS: IDragOptions = {
 // This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
 // Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
 // position the modal can be dragged to.
-const maxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTileOuterPaddingPX };
+const modalMaxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTileOuterPaddingPX };
 
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
@@ -214,10 +214,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
   const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
-  const minDragPosition: _ICoordinates | undefined = useMemo(
+  // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
+  // to be dragged offscreen and these are the top and left bounds of that calculation.
+  const modalMinDragPosition: _ICoordinates | undefined = useMemo(
     () =>
       containerWidth && containerHeight
         ? {
+            // We use -containerWidth/Height because our modal is positioned to start in the bottom right,
+            // hence (0,0) is the bottom right of the video gallery.
             x: -containerWidth + modalWidth + localVideoTileOuterPaddingPX,
             y: -containerHeight + modalHeight + localVideoTileOuterPaddingPX
           }
@@ -411,8 +415,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
             layerProps={{ hostId: layerHostId }}
-            maxDragPosition={maxDragPosition}
-            minDragPosition={minDragPosition}
+            maxDragPosition={modalMaxDragPosition}
+            minDragPosition={modalMinDragPosition}
           >
             {localVideoTile}
           </_ModalClone>
