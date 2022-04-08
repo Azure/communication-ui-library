@@ -238,7 +238,7 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
   }, messageTimestampId);
   // Wait for timestamps to have been updated in the DOM
   await waitForFunction(
@@ -246,7 +246,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
-      return timestampNodes.every((node) => node.innerHTML === 'timestamp');
+      return timestampNodes.every((node) => node.textContent === 'timestamp');
     },
     {
       messageTimestampId: messageTimestampId
