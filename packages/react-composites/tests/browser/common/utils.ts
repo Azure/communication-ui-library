@@ -241,9 +241,9 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
   // Wait for timestamps to have been updated in the DOM
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await waitForFunction(
     page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
       return timestampNodes.every((node) => node.innerHTML === 'timestamp');
