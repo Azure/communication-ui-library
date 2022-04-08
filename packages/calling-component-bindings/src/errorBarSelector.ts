@@ -90,7 +90,12 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
 
     if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
-      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'invalidMeetingLink');
+      appendActiveErrorIfDefined(
+        activeErrorMessages,
+        latestErrors,
+        'CallAgent.join',
+        'failedToJoinCallInvalidMeetingLink'
+      );
     } else {
       appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
     }
