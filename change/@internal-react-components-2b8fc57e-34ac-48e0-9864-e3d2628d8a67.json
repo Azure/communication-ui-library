@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Bug fix for custom data model. Allows for overriding the display name to match the custom persona in the video gallery.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
