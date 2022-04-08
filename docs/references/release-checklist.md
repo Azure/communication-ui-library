@@ -13,7 +13,7 @@ Before we release a new version or beta version the following checklist should b
 * ✅ All translations have been updated
   * String translations will need to be started manually from pre-release branch using [this](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) workflow. 
   * Ensure that strings for both components and composites have complete translations.
-  * once the string translations are completed they will need to be cherry picked into the release branch before publishing.
+  * Once the string translations are completed they will need to be cherry picked into the release branch before publishing.
 * ✅ APIs
   * Ensure no breaking changes to the public APIs
   * Ensure new API changes have sign off from the Azure Review Board

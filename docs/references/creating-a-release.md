@@ -16,6 +16,8 @@ Both beta and stable release follow a two step workflow, aided by github actions
 
 ### Step 1: Create a Pre-release branch
 
+We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main.
+
 Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-prerelease-branch.yml) github action to trigger the release preparation workflow.
 
 1. Options for this workflow:
@@ -49,7 +51,7 @@ graph LR
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
-We should manually sync the string translations to this branch 5 days before release from the pre-release branch that this originates from. So it is important to make sure the [translation workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) is triggered with enough time to be completed.
+String translations should have been updated in this branch 5 days before release. if they have not, run [translation workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) in the pre-release branch and cherry pick the string changes into the release branch.
 
 1. Options for GH Action:
     1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
@@ -154,7 +156,7 @@ They use beachball's `canary` CLI command to temporarily set all package version
 
 Creating a beta release is the same as creating a regular release, however each package.json version must have the `-beta` suffix and all changelogs must have `prerelease` or `none` as their change type. This will be typically during prerelease phases before a new major version is released.
 
-To create a beta release, ensure the above conditions then follow the instructions for "Creating a release through GitHub actions" or "Manually creating a release". 
+To create a beta release, ensure the above conditions then follow the instructions for "Creating a release through GitHub actions" or "Manually creating a release".
 
 ## Publishing packages
 
