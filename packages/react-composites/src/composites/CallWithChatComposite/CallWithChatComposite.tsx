@@ -12,6 +12,7 @@ import {
   compositeOuterContainerStyles,
   controlBarContainerStyles,
   drawerContainerStyles,
+  hiddenStackItemStyle,
   modalLayerHostStyle
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
@@ -242,17 +243,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
       <Stack horizontal grow>
-        {!isMobileWithActivePane && (
-          <Stack.Item grow styles={callCompositeContainerStyles}>
-            <CallComposite
-              {...props}
-              formFactor={formFactor}
-              options={{ callControls: false }}
-              adapter={callAdapter}
-              fluentTheme={fluentTheme}
-            />
-          </Stack.Item>
-        )}
+        <Stack.Item grow styles={isMobileWithActivePane ? hiddenStackItemStyle : callCompositeContainerStyles}>
+          <CallComposite
+            {...props}
+            formFactor={formFactor}
+            options={{ callControls: false }}
+            adapter={callAdapter}
+            fluentTheme={fluentTheme}
+          />
+        </Stack.Item>
         {chatProps.adapter && callAdapter && hasJoinedCall && (
           <CallWithChatPane
             chatCompositeProps={chatProps}

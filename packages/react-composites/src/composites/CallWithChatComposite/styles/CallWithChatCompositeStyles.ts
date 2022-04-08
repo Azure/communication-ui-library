@@ -25,6 +25,13 @@ export const callCompositeContainerStyles: IStackStyles = {
 };
 
 /** @private */
+export const hiddenStackItemStyle: IStackStyles = {
+  root: {
+    display: 'none'
+  }
+};
+
+/** @private */
 export const controlBarContainerStyles: IStackStyles = {
   root: {
     // Start a new stacking context so that any `position:absolute` elements
