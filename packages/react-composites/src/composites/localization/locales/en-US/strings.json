@@ -44,11 +44,12 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "People",
-    "peopleButtonTooltipContentOpen": "Show Participants",
-    "peopleButtonTooltipContentClose": "Hide Participants",
+    "peopleButtonTooltipOpen": "Show participants",
+    "peopleButtonTooltipClose": "Hide participants",
     "chatButtonLabel": "Chat",
-    "chatButtonTooltipContentOpen": "Show Chat",
-    "chatButtonTooltipContentClose": "Hide Chat",
+    "chatButtonTooltipClosedWithMessageCount": "Show chat ({unreadMessagesCount} unread)",
+    "chatButtonTooltipOpen": "Show chat",
+    "chatButtonTooltipClose": "Hide chat",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "moreDrawerButtonLabel": "More options",
@@ -59,6 +60,8 @@
     "chatButtonNewMessageNotificationLabel": "New Message",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
-    "copyInviteLinkButtonLabel": "Copy invite link"
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "dismissSidePaneButton": "Close",
+    "returnToCallButtonAriaLabel": "Return to Call"
   }
 }

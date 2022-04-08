@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Added ParticipantList prop onParticipantClick and ParticipantItem prop onClick.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

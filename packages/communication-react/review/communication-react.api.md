@@ -50,7 +50,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
-import type { PermissionConstraints } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
@@ -77,7 +77,7 @@ export interface ActiveErrorMessage {
 
 // @beta
 export interface ActiveFileUpload {
-    errorMessage?: string;
+    error?: SendBoxErrorBarError;
     filename: string;
     id: string;
     progress: number;
@@ -132,7 +132,7 @@ export type AzureCommunicationCallAdapterArgs = {
     locator: CallAdapterLocator;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
     endpoint: string;
     userId: CommunicationUserIdentifier;
@@ -141,7 +141,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
     callAgent: CallAgent;
@@ -270,8 +270,9 @@ export interface CallAgentState {
     displayName?: string;
 }
 
-// @beta
+// @public
 export interface CallAndChatLocator {
+    // Warning: (ae-incompatible-release-tags) The symbol "callLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
     callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
@@ -556,20 +557,59 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
 }
 
-// @beta
+// @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
-// @beta
-export interface CallWithChatAdapterManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView' | 'joinCall' | 'leaveCall' | 'startCall'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'>, Pick<FileUploadAdapter, 'registerFileUploads' | 'clearFileUploads' | 'cancelFileUpload'> {
+// @public
+export interface CallWithChatAdapterManagement {
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta (undocumented)
+    cancelFileUpload: (id: string) => void;
+    // @beta (undocumented)
+    clearFileUploads: () => void;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    deleteMessage(messageId: string): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    fetchInitialData(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    leaveCall(forEveryone?: boolean): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    mute(): Promise<void>;
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // @beta (undocumented)
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // @beta (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendTypingIndicator(): Promise<void>;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    startCall(participants: string[]): Call | undefined;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    startScreenShare(): Promise<void>;
+    stopCamera(): Promise<void>;
+    stopScreenShare(): Promise<void>;
+    unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // @beta (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
-// @beta
+// @public
 export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
 }
 
-// @beta
+// @public
 export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
@@ -633,24 +673,30 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'chatError', listener: (e: AdapterError) => void): void;
 }
 
-// @beta
-export interface CallWithChatAdapterUiState extends CallAdapterUiState, Omit<ChatAdapterUiState, 'error'> {
+// @public
+export interface CallWithChatAdapterUiState {
+    // @beta
+    fileUploads?: FileUploadsUiState;
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
 }
 
-// @beta
-export interface CallWithChatClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
+// @public
+export interface CallWithChatClientState {
     call?: CallState;
     chat?: ChatThreadClientState;
+    devices: DeviceManagerState;
     displayName: string | undefined;
+    isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     userId: CommunicationIdentifierKind;
 }
 
-// @beta
+// @public
 export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
 
-// @beta
+// @public
 export type CallWithChatCompositeIcons = {
     ChevronLeft?: JSX.Element;
     ControlBarChatButtonActive?: JSX.Element;
@@ -716,13 +762,13 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
 };
 
-// @beta
+// @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
 };
 
-// @beta
+// @public
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     adapter: CallWithChatAdapter;
@@ -736,30 +782,40 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 export interface CallWithChatCompositeStrings {
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
-    chatButtonTooltipContentClose: string;
-    chatButtonTooltipContentOpen: string;
+    chatButtonTooltipClose: string;
+    chatButtonTooltipClosedWithMessageCount: string;
+    chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     peopleButtonLabel: string;
-    peopleButtonTooltipContentClose: string;
-    peopleButtonTooltipContentOpen: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaLabel: string;
 }
 
-// @beta
-export interface CallWithChatControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+// @public
+export interface CallWithChatControlOptions {
+    cameraButton?: boolean;
     chatButton?: boolean;
+    displayType?: CallControlDisplayType;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
     peopleButton?: boolean;
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
 }
 
-// @beta
+// @public
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
@@ -792,6 +848,7 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export interface CameraButtonStrings {
+    cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
     offLabel: string;
@@ -981,13 +1038,6 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
-    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -1171,8 +1221,6 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 // @public
 export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
-// Warning: (ae-incompatible-release-tags) The symbol "CompositeIcons" is marked as @public, but its signature references "CallWithChatCompositeIcons" which is marked as @beta
-//
 // @public
 export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
 
@@ -1244,10 +1292,10 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
-// @beta
+// @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
-// @beta
+// @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
@@ -1255,9 +1303,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
-
-// @beta
-export const createCompletedFileUpload: (data: FileMetadata) => ObservableFileUpload;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -1339,6 +1384,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageEdit: JSX.Element;
     MessageFailed: JSX.Element;
     MessageRemove: JSX.Element;
+    MessageResend: JSX.Element;
     MessageSeen: JSX.Element;
     MessageSending: JSX.Element;
     OptionsCamera: JSX.Element;
@@ -1420,6 +1466,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    MessageResend: JSX.Element;
 };
 
 // @public
@@ -1546,6 +1593,7 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1591,25 +1639,30 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    off(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    off(event: 'uploadFail', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
-    on(event: 'uploadComplete', listener: UploadCompleteListener): void;
-    on(event: 'uploadFail', listener: UploadFailedListener): void;
-}
+// @beta
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
 
 // @beta
 export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    file: File;
+    file?: File;
+    id: string;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
@@ -1617,7 +1670,7 @@ export interface FileUploadManager {
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
@@ -1746,7 +1799,7 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     cameras?: OptionsDevice[];
     label?: string;
@@ -1798,6 +1851,7 @@ export type MessageProps = {
     disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1825,7 +1879,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    messageThreadReadCount?: number;
+    // (undocumented)
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -1852,7 +1909,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    messageThreadParticipantCount?: number;
+    participantCount?: number;
+    readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -1867,6 +1925,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -1880,12 +1939,14 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    actionMenuMoreOptions: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
+    failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
     messageReadCount?: string;
@@ -1895,6 +1956,7 @@ export interface MessageThreadStrings {
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
+    resendMessage?: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1950,6 +2012,7 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -1975,13 +2038,6 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
-}
-
-// @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    fileName: string;
-    id: string;
-    metadata?: FileMetadata;
 }
 
 // @public
@@ -2154,6 +2210,14 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
+
+// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -2207,6 +2271,12 @@ export type Selector = (state: ClientState, props: any) => any;
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
+
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
 
 // @public
 export interface SendBoxProps {
@@ -2370,20 +2440,14 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
-// @beta
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
-
-// @beta
-export type UploadFailedListener = (id: string, message: string) => void;
-
-// @beta
-export type UploadProgressListener = (id: string, value: number) => void;
-
-// @beta
+// @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
-// @beta
+// @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+
+// @public
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
@@ -2435,7 +2499,6 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    // Warning: (ae-incompatible-release-tags) The symbol "localVideoCameraCycleButtonProps" is marked as @public, but its signature references "LocalVideoCameraCycleButtonProps" which is marked as @beta
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
@@ -2480,6 +2543,7 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }

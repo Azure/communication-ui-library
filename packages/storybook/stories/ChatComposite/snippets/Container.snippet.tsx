@@ -1,12 +1,7 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  ChatAdapter,
-  ChatComposite,
-  CompositeLocale,
-  createAzureCommunicationChatAdapter
-} from '@azure/communication-react';
+import { ChatComposite, CompositeLocale, useAzureCommunicationChatAdapter } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -31,26 +26,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  // Creating an adapter is asynchronous.
-  // An update to `config` triggers a new adapter creation, via the useEffect block.
-  // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
-  const [adapter, setAdapter] = useState<ChatAdapter>();
-  useEffect(() => {
-    if (!!credential && props) {
-      const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter({
-            endpoint: props.endpointUrl,
-            userId: props.userId,
-            displayName: props.displayName,
-            credential,
-            threadId: props.threadId
-          })
-        );
-      };
-      createAdapter(credential);
-    }
-  }, [props, credential]);
+  const adapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId: props.userId,
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
 
   if (adapter) {
     return (

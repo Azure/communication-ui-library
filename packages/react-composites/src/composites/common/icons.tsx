@@ -205,7 +205,7 @@ export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>)
 /**
  * Icons that can be overridden for {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeIcons = {
   // CallWithChat Specific Icons

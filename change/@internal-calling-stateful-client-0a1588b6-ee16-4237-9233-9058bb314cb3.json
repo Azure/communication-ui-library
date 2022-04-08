@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump package version to 1.1.1-beta.1",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

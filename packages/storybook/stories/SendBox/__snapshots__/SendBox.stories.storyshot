@@ -98,7 +98,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                       >
                         <i
                           aria-hidden={true}
-                          className="root-94 css-115 root-30"
+                          className="root-105 css-115 root-30"
                           data-icon-name="SendBoxSend"
                         >
                           <span
@@ -125,9 +125,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack css-122 css-31"
-            />
           </div>
         </div>
       </div>

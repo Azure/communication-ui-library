@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update styles on new modal to use rem not px for border thickness.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "메시지를 입력하세요",
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
-    "sendButtonAriaLabel": "메시지 보내기"
+    "sendButtonAriaLabel": "메시지 보내기",
+    "fileUploadsPendingError": "업로드 중... 잠시만 기다려 주세요."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",

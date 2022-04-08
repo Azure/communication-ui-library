@@ -14,11 +14,13 @@ import {
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
- * @beta
+ * @internal
+ * _FileCard Component Props.
  */
-export interface FileCardProps {
+export interface _FileCardProps {
   /**
    * File name.
    */
@@ -43,62 +45,73 @@ export interface FileCardProps {
 }
 
 /**
- * @beta
+ * @internal
+ * A component for displaying a file card with file icon and progress bar.
  */
-export const FileCard = (props: FileCardProps): JSX.Element => {
+export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
 
-  const showProgressIndicator = (): boolean => progress !== undefined && progress < 1;
+  const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
+  const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({
-    width: '14rem',
+    width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    boxShadow: theme.effects.elevation8
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
   });
 
   const fileInfoWrapperClassName = mergeStyles({
-    padding: '0.75rem',
+    padding: _pxToRem(12),
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator() ? '0.5rem' : '0.75rem'
+    paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
   });
-  const fileInfoClassName = mergeStyles({
-    paddingLeft: '0.25rem'
+
+  const fileNameContainerClassName = mergeStyles({
+    paddingLeft: _pxToRem(4),
+    minWidth: '75%',
+    maxWidth: '75%'
+  });
+
+  const fileNameTextClassName = mergeStyles({
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineHeight: 'normal',
+    whiteSpace: 'nowrap',
+    paddingRight: _pxToRem(4)
   });
 
   const actionIconClassName = mergeStyles({
-    cursor: 'pointer',
-    padding: '0.25rem'
+    cursor: 'pointer'
   });
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      // A hack to make the progress indicator match the design specs.
-      height: 0,
-      padding: '2px 0',
+      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // item progress height won't apply without an explicit padding
       // To make the progress indicator border curve along the bottom of file card.
       borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
+    },
+    progressBar: {
+      height: _pxToRem(progressBarThicknessPx)
     }
   };
 
   return (
     <Stack className={containerClassName}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <Stack horizontal verticalAlign="center">
-          <Stack>
-            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-            <Icon
-              {...getFileTypeIconProps({
-                extension: fileExtension,
-                size: 24,
-                imageFileType: 'svg'
-              })}
-            />
-          </Stack>
-          <Stack className={fileInfoClassName}>
-            <Text>{fileName}</Text>
-          </Stack>
+        <Stack>
+          {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+          <Icon
+            {...getFileTypeIconProps({
+              extension: fileExtension,
+              size: 24,
+              imageFileType: 'svg'
+            })}
+          />
+        </Stack>
+        <Stack className={fileNameContainerClassName}>
+          <Text className={fileNameTextClassName}>{fileName}</Text>
         </Stack>
         <Stack
           className={actionIconClassName}
@@ -109,7 +122,7 @@ export const FileCard = (props: FileCardProps): JSX.Element => {
           {actionIcon && actionIcon}
         </Stack>
       </Stack>
-      {showProgressIndicator() && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
+      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
     </Stack>
   );
 };

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, IStyle, FontWeights, Theme, IContextualMenuItemStyles } from '@fluentui/react';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -46,9 +47,17 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
 /**
  * @private
  */
+export const chatMessageFailedTagStyle = (theme: Theme): string =>
+  mergeStyles({ fontWeight: FontWeights.light, color: isDarkThemed(theme) ? '#f1707b' : '#a80000' });
+
+/**
+ * @private
+ */
 export const chatMessageMenuStyle = mergeStyles({
   minWidth: '8.5rem',
-  cursor: 'pointer'
+  height: 'max-content',
+  cursor: 'pointer',
+  overflow: 'hidden'
 });
 
 /**
@@ -78,6 +87,17 @@ export const menuItemIncreasedSizeStyles: IContextualMenuItemStyles = {
 export const menuIconStyleSet = {
   root: {
     height: 'calc(100% - 8px)', // Adjust for the pixel margin Fluent applies
+    width: '1.25rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const menuSubIconStyleSet = {
+  root: {
+    height: 'unset',
+    lineHeight: '100%',
     width: '1.25rem'
   }
 };

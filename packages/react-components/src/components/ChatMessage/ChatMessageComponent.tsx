@@ -17,7 +17,16 @@ type ChatMessageComponentProps = {
   disableEditing?: boolean;
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
+  /**
+   * Optional callback called when message is sent
+   */
+  onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
+  messageStatus?: string;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
+  showMessageStatus?: boolean;
   /**
    * Inline the accept and reject edit buttons when editing a message.
    * Setting to false will mean they are on a new line inside the editable chat message.
@@ -28,6 +37,10 @@ type ChatMessageComponentProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
+  onActionButtonClick: (
+    message: ChatMessage,
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
+  ) => void;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -44,12 +57,16 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, message } = props;
+  const { onDeleteMessage, onSendMessage, message } = props;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
   }, [message.messageId, onDeleteMessage]);
+  const onResendClick = useCallback(() => {
+    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
+    onSendMessage && onSendMessage(message.content ?? '');
+  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
 
   if (props.message.messageType !== 'chat') {
     return <></>;
@@ -76,6 +93,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         {...props}
         onRemoveClick={onRemoveClick}
         onEditClick={onEditClick}
+        onResendClick={onResendClick}
         onRenderAvatar={props.onRenderAvatar}
       />
     );

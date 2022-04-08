@@ -102,3 +102,8 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
+/* @conditional-compile-remove(file-sharing) */
+export type { SendBoxErrorBarError } from './SendBoxErrorBar';
+export * from './FileCard';
+export * from './FileCardGroup';
+export * from './ModalClone/ModalClone';
