@@ -10,6 +10,7 @@ export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } fro
 export * from './theming';
 
 export type {
+  AvatarPersonaDataCallback,
   BaseCustomStyles,
   CallParticipantListParticipant,
   ChatMessage,

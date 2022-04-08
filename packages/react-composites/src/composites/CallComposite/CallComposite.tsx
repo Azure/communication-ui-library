@@ -2,9 +2,12 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  AvatarPersonaDataCallback
+} from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
+import { AvatarPersonaDataCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
 
 /**
@@ -34,13 +35,6 @@ export type AvatarPersonaData = {
    */
   initialsTextColor?: string;
 };
-
-/**
- * Callback function used to provide custom data to build an avatar for a user.
- *
- * @public
- */
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 /**
  * @private

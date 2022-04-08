@@ -113,6 +113,7 @@ export {
 export type {
   _IdentifierProviderProps,
   _Identifiers,
+  AvatarPersonaDataCallback,
   ActiveErrorMessage,
   BaseCustomStyles,
   CallParticipantListParticipant,

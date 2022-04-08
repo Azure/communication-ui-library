@@ -44,6 +44,9 @@ export interface ActiveFileUpload {
 }
 
 // @public
+export type AvatarPersonaDataCallback = (userId: string) => Promise<CustomAvatarOptions>;
+
+// @public
 export interface BaseCustomStyles {
     root?: IStyle;
 }
@@ -1088,6 +1091,7 @@ export interface VideoGalleryProps {
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;

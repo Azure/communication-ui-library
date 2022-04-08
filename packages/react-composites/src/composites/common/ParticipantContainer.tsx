@@ -9,13 +9,14 @@ import {
   participantListWrapper
 } from './styles/ParticipantContainer.styles';
 import {
+  AvatarPersonaDataCallback,
   OnRenderAvatarCallback,
   ParticipantList,
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import { FocusZone, Stack, useTheme } from '@fluentui/react';
-import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { AvatarPersona } from './AvatarPersona';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;

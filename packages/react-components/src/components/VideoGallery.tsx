@@ -13,7 +13,8 @@ import {
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
-  VideoStreamOptions
+  VideoStreamOptions,
+  AvatarPersonaDataCallback
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -128,6 +129,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
+  /** Callback to provide data for custom participant information */
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /**
    * Whether to display the local video camera switcher button
@@ -309,6 +312,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+      // Async call to retrieve custom data model information to replace display name in remote tiles with camera on.
+      const newParticipantName = async (): Promise<void> => {
+        if (props.onFetchAvatarPersonaData) {
+          const newPaticipantData = await props.onFetchAvatarPersonaData(participant.userId);
+          participant.displayName = newPaticipantData.text;
+        }
+      };
+      newParticipantName();
       return (
         <RemoteVideoTile
           key={participant.userId}
@@ -323,7 +334,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator,
+      props
+    ]
   );
 
   const videoTiles = onRenderRemoteVideoTile

@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { AvatarPersonaDataCallback } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
@@ -66,9 +67,6 @@ export type AvatarPersonaData = {
     initialsColor?: PersonaInitialsColor | string;
     initialsTextColor?: string;
 };
-
-// @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {

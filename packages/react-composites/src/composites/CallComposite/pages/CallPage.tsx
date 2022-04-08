@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+import { AvatarPersonaDataCallback } from '@internal/react-components';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
-import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';

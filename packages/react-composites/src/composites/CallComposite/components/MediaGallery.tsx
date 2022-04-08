@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { AvatarPersona } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
@@ -13,6 +13,7 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { AvatarPersonaDataCallback } from '@internal/react-components';
 
 const VideoGalleryStyles = {
   root: {
@@ -78,6 +79,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
           </Stack>
         )}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     );
   }, [

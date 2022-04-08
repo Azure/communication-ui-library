@@ -2,11 +2,14 @@
 // Licensed under the MIT license.
 
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
-import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  FluentThemeProvider,
+  ParticipantMenuItemsCallback,
+  AvatarPersonaDataCallback
+} from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
-import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 /* @conditional-compile-remove(call-with-chat-composite) */
 import { CallWithChatCompositeIcons } from './icons';

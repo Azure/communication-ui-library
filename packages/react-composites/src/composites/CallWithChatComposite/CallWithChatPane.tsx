@@ -1,12 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
-import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
+import {
+  ParticipantMenuItemsCallback,
+  useTheme,
+  _DrawerMenu,
+  _DrawerMenuItemProps,
+  AvatarPersonaDataCallback
+} from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import {
   paneBodyContainer,
   scrollableContainer,

@@ -3,6 +3,7 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import {
+  AvatarPersonaDataCallback,
   CommunicationParticipant,
   ErrorBar,
   MessageProps,
@@ -16,7 +17,7 @@ import {
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { AvatarPersona } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';

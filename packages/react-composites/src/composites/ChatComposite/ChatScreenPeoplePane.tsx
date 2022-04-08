@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ParticipantList, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ParticipantList, ParticipantMenuItemsCallback, AvatarPersonaDataCallback } from '@internal/react-components';
 import React from 'react';
-import { AvatarPersonaDataCallback } from '..';
 import { ParticipantContainer } from '../common/ParticipantContainer';
 import { useLocale } from '../localization';
 import { usePropsFor } from './hooks/usePropsFor';

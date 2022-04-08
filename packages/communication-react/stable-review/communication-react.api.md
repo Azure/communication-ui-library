@@ -113,7 +113,7 @@ export type AvatarPersonaData = {
 };
 
 // @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
+export type AvatarPersonaDataCallback = (userId: string) => Promise<CustomAvatarOptions>;
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
@@ -2360,6 +2360,7 @@ export interface VideoGalleryProps {
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;

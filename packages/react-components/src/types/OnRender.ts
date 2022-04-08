@@ -35,6 +35,13 @@ export type CustomAvatarOptions = {
 };
 
 /**
+ * Callback function used to provide custom data to build an avatar for a user.
+ *
+ * @public
+ */
+export type AvatarPersonaDataCallback = (userId: string) => Promise<CustomAvatarOptions>;
+
+/**
  * A custom rendered callback that allows users to customize the rendering of a Persona Component.
  *
  * @public

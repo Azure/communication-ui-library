@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import {
+  AvatarPersonaDataCallback,
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
@@ -14,7 +15,6 @@ import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { ChatAdapter } from '../ChatComposite';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
