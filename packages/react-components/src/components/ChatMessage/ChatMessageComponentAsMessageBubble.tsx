@@ -90,6 +90,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const actionMenuProps = wasInteractionByTouch
     ? undefined
     : chatMessageActionMenuProps({
+        ariaLabel: strings.actionMenuMoreOptions,
         enabled: chatActionsEnabled,
         menuButtonRef: messageActionButtonRef,
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
@@ -111,15 +112,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     <>
       <div ref={messageRef}>
         <Chat.Message
+          data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
           content={
-            <ChatMessageContent
-              message={message}
-              liveAuthorIntro={strings.liveAuthorIntro}
-              onRenderFileDownloads={props.onRenderFileDownloads}
-              userId={props.userId}
-            />
+            <div>
+              <ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />
+              {
+                /* @conditional-compile-remove(file-sharing) */
+                props.onRenderFileDownloads && props.onRenderFileDownloads(props.userId, message)
+              }
+            </div>
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}

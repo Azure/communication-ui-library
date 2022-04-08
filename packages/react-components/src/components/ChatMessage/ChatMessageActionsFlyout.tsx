@@ -19,7 +19,8 @@ import { MessageThreadStrings } from '../MessageThread';
 import {
   chatMessageMenuStyle,
   menuIconStyleSet,
-  menuItemIncreasedSizeStyles
+  menuItemIncreasedSizeStyles,
+  menuSubIconStyleSet
 } from '../styles/ChatMessageComponent.styles';
 
 /** @private */
@@ -59,7 +60,12 @@ export interface ChatMessageActionFlyoutProps {
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
   const messageReadByCount = props.messageReadBy?.length;
-  const messageReadByList: IContextualMenuItem[] | undefined = props.messageReadBy?.map((person) => {
+
+  const sortedMessageReadyByList = [...(props.messageReadBy ?? [])].sort((a, b) =>
+    a.displayName.localeCompare(b.displayName)
+  );
+
+  const messageReadByList: IContextualMenuItem[] | undefined = sortedMessageReadyByList?.map((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
@@ -115,6 +121,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     ) {
       items.push({
         key: 'Read Count',
+        'data-ui-id': 'chat-composite-message-contextual-menu-read-info',
         text: _formatString(props.strings.messageReadCount, {
           messageReadByCount: `${messageReadByCount}`,
           remoteParticipantsCount: `${props.remoteParticipantsCount}`
@@ -134,6 +141,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
+          id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
           calloutProps: preventUnwantedDismissProps
         },
@@ -147,7 +155,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuIconStyleSet
+          styles: menuSubIconStyleSet
         },
         disabled: messageReadByCount <= 0
       });
@@ -205,6 +213,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
+      id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
       gapSpace={5 /*px*/}
       isBeakVisible={false}

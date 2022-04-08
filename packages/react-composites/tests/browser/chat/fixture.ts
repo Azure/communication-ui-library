@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TEST_PARTICIPANTS } from '../common/constants';
+import { TEST_PARTICIPANTS_CHAT } from '../common/constants';
 import { createChatUsers, usePagePerParticipant } from '../common/fixtureHelpers';
 import { WorkerFixture, ChatUserType } from '../common/fixtureTypes';
 import { createTestServer } from '../../server';
@@ -23,7 +23,7 @@ export const test = base.extend<unknown, ChatWorkerFixture>({
   serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
 
   /** @returns the created users' identities. */
-  users: [createChatUsers(TEST_PARTICIPANTS), { scope: 'worker' }],
+  users: [createChatUsers(TEST_PARTICIPANTS_CHAT), { scope: 'worker' }],
 
   /** @returns Array of Page's loaded. In our case: one for each participant. */
   pages: [usePagePerParticipant, { scope: 'worker' }]

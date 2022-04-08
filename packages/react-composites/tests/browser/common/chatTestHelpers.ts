@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from './constants';
+import { IDS, TEST_PARTICIPANTS_CHAT } from './constants';
 import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, waitForSelector } from './utils';
 import { createChatThreadAndUsers } from './fixtureHelpers';
 import { Page } from '@playwright/test';
@@ -23,7 +23,7 @@ export const chatTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  users = await createChatThreadAndUsers(TEST_PARTICIPANTS);
+  users = await createChatThreadAndUsers(TEST_PARTICIPANTS_CHAT);
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
@@ -59,4 +59,11 @@ export const waitForMessageSeen = async (page: Page): Promise<void> => {
 export const waitForMessageWithContent = async (page: Page, messageContent: string): Promise<void> => {
   await page.bringToFront();
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);
+};
+
+export const waitForTypingIndicatorHidden = async (page: Page): Promise<void> => {
+  await page.bringToFront();
+  await page.waitForTimeout(1000); // ensure typing indicator has had time to appear
+  const typingIndicator = await page.$(dataUiId(IDS.typingIndicator));
+  typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
 };

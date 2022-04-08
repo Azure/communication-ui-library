@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add aria-label for SidePaneHeader dismiss button",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

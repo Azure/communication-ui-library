@@ -6,13 +6,14 @@ on:
     inputs:
       branch:
         description: 'Pre-release branch to release from'
+        type: string
         required: true
 
 jobs:
   create_release:
-    if: ${{ startsWith(github.events.inputs.branch, 'prerelease-')}}
+    if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}
     name: Create release branch
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
@@ -29,6 +30,7 @@ jobs:
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
         run: |
+          echo "running generation of release branch from ${{github.event.inputs.branch}}"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
@@ -52,15 +54,18 @@ jobs:
 
       # Create new release branch
       - name: Hop into new branch
-        run: git checkout -b release/${{ steps.version.outputs.version }}
+        id: releasebranch
+        run: |
+          git checkout -b release/${{ steps.version.outputs.version }}
+          echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
 
       # Choose stable dependency for sdk
       - name: Choose stable dependency for sdk if stable
-        if: ${{ startsWith(github.events.inputs.branch, 'prerelease-stable-minor/) || startsWith(github.events.inputs.branch, 'prerelease-stable-patch/)}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
         run: node common/scripts/choose-stable-sdk-deps.js
 
       - name: Choose beta dependency for sdk if beta
-        if: ${{ startsWith(github.events.inputs.branch, 'prerelease-beta/' )}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: node common/scripts/choose-beta-sdk-deps.js
 
       # Synchronize the telemetry package versions.
@@ -72,7 +77,7 @@ jobs:
         run: |
           git add .
           git commit -m "Selected stable sdk's for release branch"
-          git push -u origin ${{github.ref_name}}
+          git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Checkout back to pre-release branch
       - name: Hop back to pre-release branch
@@ -85,4 +90,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Orphan release branch from working tree ${{ steps.version.outputs.version }}. Created by the `Stable pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
