@@ -30,7 +30,6 @@ import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-cal
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
-import { PersonaInitialsColor } from '@fluentui/react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
@@ -58,15 +57,6 @@ export interface AdapterState<TState> {
     offStateChange(handler: (state: TState) => void): void;
     onStateChange(handler: (state: TState) => void): void;
 }
-
-// @public
-export type AvatarPersonaData = {
-    text?: string;
-    imageUrl?: string;
-    imageInitials?: string;
-    initialsColor?: PersonaInitialsColor | string;
-    initialsTextColor?: string;
-};
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {

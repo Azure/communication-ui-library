@@ -11,6 +11,7 @@ export * from './theming';
 
 export type {
   AvatarPersonaDataCallback,
+  AvatarPersonaData,
   BaseCustomStyles,
   CallParticipantListParticipant,
   ChatMessage,

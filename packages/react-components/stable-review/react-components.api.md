@@ -22,6 +22,7 @@ import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
+import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
@@ -35,7 +36,16 @@ export interface ActiveErrorMessage {
 }
 
 // @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<CustomAvatarOptions>;
+export type AvatarPersonaData = {
+    text?: string;
+    imageUrl?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
+};
+
+// @public
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 // @public
 export interface BaseCustomStyles {

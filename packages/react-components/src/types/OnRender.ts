@@ -5,6 +5,7 @@ import {
   IPersonaStyleProps,
   IPersonaStyles,
   IStyleFunctionOrObject,
+  PersonaInitialsColor,
   PersonaPresence,
   PersonaSize
 } from '@fluentui/react';
@@ -35,11 +36,42 @@ export type CustomAvatarOptions = {
 };
 
 /**
+ * Custom data attributes for displaying avatar for a user.
+ *
+ * @public
+ */
+export type AvatarPersonaData = {
+  /**
+   * Primary text to display, usually the name of the person.
+   */
+  text?: string;
+  /**
+   * Image URL to use, should be a square aspect ratio and big enough to fit in the image area.
+   */
+  imageUrl?: string;
+  /**
+   * The user's initials to display in the image area when there is no image.
+   * @defaultvalue Derived from `text`
+   */
+  imageInitials?: string;
+  /**
+   * The background color when the user's initials are displayed.
+   * @defaultvalue Derived from `text`
+   */
+  initialsColor?: PersonaInitialsColor | string;
+  /**
+   * The text color when the user's initials are displayed
+   * @defaultvalue `white`
+   */
+  initialsTextColor?: string;
+};
+
+/**
  * Callback function used to provide custom data to build an avatar for a user.
  *
  * @public
  */
-export type AvatarPersonaDataCallback = (userId: string) => Promise<CustomAvatarOptions>;
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 /**
  * A custom rendered callback that allows users to customize the rendering of a Persona Component.

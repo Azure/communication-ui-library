@@ -186,6 +186,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onCreateLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
+    onFetchAvatarPersonaData,
     styles,
     layout,
     onRenderAvatar,
@@ -314,8 +315,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       // Async call to retrieve custom data model information to replace display name in remote tiles with camera on.
       const newParticipantName = async (): Promise<void> => {
-        if (props.onFetchAvatarPersonaData) {
-          const newPaticipantData = await props.onFetchAvatarPersonaData(participant.userId);
+        if (onFetchAvatarPersonaData) {
+          const newPaticipantData = await onFetchAvatarPersonaData(participant.userId);
           participant.displayName = newPaticipantData.text;
         }
       };
@@ -340,7 +341,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteVideoViewOptions,
       onRenderAvatar,
       showMuteIndicator,
-      props
+      onFetchAvatarPersonaData
     ]
   );
 
