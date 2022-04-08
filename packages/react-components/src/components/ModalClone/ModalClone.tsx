@@ -421,7 +421,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         internalState.onModalCloseTimer = setTimeout(handleModalClose, parseFloat(animationDuration) * 1000);
         setIsVisible(false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates.
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates or if min/max drag bounds are updated.
     }, [isModalOpen, isOpen, minDragPosition, maxDragPosition]);
 
     useUnmount(() => {

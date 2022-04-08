@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
