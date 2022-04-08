@@ -1,4 +1,4 @@
-import { Stack } from '@fluentui/react';
+import { Stack, Image } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
 import { overviewPageImagesStackStyle } from './constants';
 
@@ -64,18 +64,40 @@ Azure Communication Services support UI Library across Web (React) and Native Mo
 npm i @azure/communication-react
 ```
 
+## UI Artifacts
+
 <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    CallwithChat Composite
+  <Stack.Item align="center" style={{ width: '100%', textAlign: 'center' }}>
+    <a href="/docs/composites-call-with-chat-basicexample--basic-example">
+      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
+        <p style={{ fontSize: '20px' }}>Call with Chat Composite</p>
+        Turn-key experience that combines calling and chat.
+      </div>
+    </a>
   </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
-    Call Composite
+  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
+    <a href="/docs/composites-call-basicexample--basic-example">
+      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
+        <p style={{ fontSize: '20px' }}>Call Composite</p>
+        Turn-key experience for calling.
+      </div>
+    </a>
   </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
-    Chat Composite
+  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
+    <a href="/docs/composites-chat-basicexample--basic-example">
+      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
+        <p style={{ fontSize: '20px' }}>Chat Composite</p>
+        Turn-key experience for chat.
+      </div>
+    </a>
   </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
-    UI Components
+  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
+    <a href="/docs/overview-uicomponents--page">
+      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
+        <p style={{ fontSize: '20px' }}>UI Components</p>
+        Composable components for calling and chat experiences.
+      </div>
+    </a>
   </Stack.Item>
 </Stack>
 

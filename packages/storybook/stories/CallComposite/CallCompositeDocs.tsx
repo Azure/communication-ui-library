@@ -30,47 +30,60 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>CallComposite</Title>
       <Description>
-      The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience users can configure their
-      devices, participate in the call with video and see other participants, including those with video turn on.
-
-      Here are visual examples of Call composite where participants have their camera turned off, then some ahve them turned on.
-      People speaking with microphone unmuted will have their tile appearing with a blue border.
-
-        <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '2rem' }} style={overviewPageImagesStackStyle}>
-          <Stack.Item align="center">
-            <img
-              src="images/callComposite_CamerasOff.png"
-              alt="Call composite where all participants have their camera turned off"
-            />
-          </Stack.Item>
-          <Stack.Item align="center">
-            <img
-              src="images/callComposite_CamerasOn.png"
-              alt="Call composite where some participants have their camera turned on"
-            />
-          </Stack.Item>
-        </Stack>
-
-      When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the
-      Call Composite includes a lobby experience where the user is waiting to be admitted into the call.
-
-        <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-          <Stack.Item align="center">
-            <img
-              src="images/callComposite_TeamsInterop_WaitingLobby.png"
-              alt="Call composite waiting to be admitted in a Teams meeting"
-            />
-          </Stack.Item>
-          <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
-            <p style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant'}</p>
-            <img
-              src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
-              alt="Popup in Teams to admit ACS participants"
-            />
-          </Stack.Item>
-        </Stack>
-
+        The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience
+        users can configure their devices, participate in the call with video and see other participants, including
+        those with video turn on. Here are visual examples of Call composite where participants have their camera turned
+        off, then some ahve them turned on. People speaking with microphone unmuted will have their tile appearing with
+        a blue border.
       </Description>
+      <Stack
+        horizontal
+        horizontalAlign="space-between"
+        tokens={{ childrenGap: '2rem' }}
+        style={overviewPageImagesStackStyle}
+      >
+        <Stack.Item grow={3} align="center">
+          <img
+            style={{ width: '100%' }}
+            src="images/callComposite_CamerasOff.png"
+            alt="Call composite where all participants have their camera turned off"
+          />
+        </Stack.Item>
+        <Stack.Item grow={3} align="center">
+          <img
+            style={{ width: '100%' }}
+            src="images/callComposite_CamerasOn.png"
+            alt="Call composite where some participants have their camera turned on"
+          />
+        </Stack.Item>
+      </Stack>
+      <Description>
+        When joining a Microsoft Teams call ([Teams Interop
+        experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the Call Composite
+        includes a lobby experience where the user is waiting to be admitted into the call.
+      </Description>
+      <Stack
+        horizontal
+        horizontalAlign="space-between"
+        tokens={{ childrenGap: '3rem' }}
+        style={overviewPageImagesStackStyle}
+      >
+        <Stack.Item grow={3} align="center">
+          <img
+            style={{ width: '100%' }}
+            src="images/callComposite_TeamsInterop_WaitingLobby.png"
+            alt="Call composite waiting to be admitted in a Teams meeting"
+          />
+        </Stack.Item>
+        <Stack.Item grow={3} align="center" tokens={{ childrenGap: '2rem' }}>
+          <p style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant'}</p>
+          <img
+            style={{ width: '100%' }}
+            src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
+            alt="Popup in Teams to admit ACS participants"
+          />
+        </Stack.Item>
+      </Stack>
       <Description>Note that CallComposite has the following min width and height:</Description>
       <Description>- mobile: 17.5rem x 21rem (280px x 336px, with default rem at 16px)</Description>
       <Description>- desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)</Description>
