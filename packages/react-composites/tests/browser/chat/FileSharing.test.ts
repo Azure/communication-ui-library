@@ -4,9 +4,11 @@ import {
   waitForChatCompositeToLoad,
   buildUrl,
   isTestProfileStableFlavor,
-  stubMessageTimestamps
+  stubMessageTimestamps,
+  dataUiId,
+  waitForSelector
 } from '../common/utils';
-import { chatTestSetup, sendMessage } from '../common/chatTestHelpers';
+import { chatTestSetup, sendMessage, waitForMessageDelivered } from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -192,5 +194,37 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await sendMessage(page, 'Hi');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
+  });
+});
+
+test.describe('Filesharing Global Errorbar', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
+  });
+
+  test('shows file download error', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'Unauthorized.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf'
+          }
+        ])
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    const testMessageText = 'Hello!';
+    await sendMessage(page, testMessageText);
+    await waitForMessageDelivered(page);
+    await waitForSelector(page, dataUiId('file-download-card-group'));
+    await stubMessageTimestamps(page);
+
+    await page.locator(dataUiId('file-download-card-download-icon')).click();
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-download-error.png');
   });
 });

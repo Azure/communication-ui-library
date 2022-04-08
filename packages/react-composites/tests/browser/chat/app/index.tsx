@@ -8,7 +8,13 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
+import {
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  FileDownloadError,
+  FileDownloadHandler,
+  useAzureCommunicationChatAdapter
+} from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
@@ -66,6 +72,16 @@ function App(): JSX.Element {
     }
   }, [adapter]);
 
+  const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
+    return new Promise((resolve) => {
+      if (fileData.name !== 'Unauthorized.pdf') {
+        resolve(new URL(fileData.url));
+      } else {
+        resolve({ errorMessage: 'You don’t have permission to download this file.' });
+      }
+    });
+  };
+
   return (
     <>
       {!adapter && 'Initializing chat adapter...'}
@@ -114,6 +130,7 @@ function App(): JSX.Element {
               participantPane: true,
               fileSharing: useFileSharing
                 ? {
+                    downloadHandler: fileDownloadHandler,
                     uploadHandler: () => {
                       //noop
                     },
