@@ -139,6 +139,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     <ControlButtonTooltip content={tooltipContent} id={tooltipId}>
       <DefaultButton
         {...props}
+        role={props.split ? 'menu' : undefined}
         styles={componentStyles}
         onRenderText={props.showLabel && props.onRenderText ? props.onRenderText : undefined}
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
