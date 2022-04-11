@@ -577,11 +577,13 @@ export type MessageThreadProps = {
 
   /* @conditional-compile-remove(file-sharing) */
   /**
+   * @beta
    * Optional function called when someone clicks on the file download icon.
    */
   fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(file-sharing) */
   /**
+   * @beta
    * Property name that contains information about file downloads in `message.metadata` object.
    * @defaultValue fileSharingMetadata
    */

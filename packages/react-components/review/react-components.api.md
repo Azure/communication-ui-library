@@ -514,9 +514,7 @@ export interface FileDownloadError {
     errorMessage: string;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "FileDownloadHandler" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
@@ -1196,10 +1194,6 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// Warnings were encountered during analysis:
-//
-// src/components/MessageThread.tsx:582:3 - (ae-incompatible-release-tags) The symbol "fileDownloadHandler" is marked as @public, but its signature references "FileDownloadHandler" which is marked as @internal
 
 // (No @packageDocumentation comment for this package)
 
