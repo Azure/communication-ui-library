@@ -13,8 +13,7 @@ import {
   SendBox,
   SendBoxStylesProps,
   TypingIndicator,
-  TypingIndicatorStylesProps,
-  _FileDownloadCards
+  TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -45,6 +44,8 @@ import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
+/* @conditional-compile-remove(file-sharing) */
+import { _FileDownloadCards } from '@internal/react-components';
 
 /**
  * @private
