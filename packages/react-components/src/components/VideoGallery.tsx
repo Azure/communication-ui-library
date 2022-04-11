@@ -65,6 +65,8 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
+  /** String for announcing the local video tile can be moved by keyboard controls */
+  localVideoMovementLabel: string;
 }
 
 /**
@@ -266,7 +268,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <Stack tabIndex={0} role={'dialog'}>
+      <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
         <VideoTile
           key={localParticipant.userId}
           userId={localParticipant.userId}

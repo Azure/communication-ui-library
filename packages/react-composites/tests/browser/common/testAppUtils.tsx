@@ -28,6 +28,7 @@ export function initializeIconsForUITests(): void {
   // Register icons that are normally downloaded from Fluent's CDN that are causing flakiness
   registerIcons({
     icons: {
+      Accept: <Checkmark16Regular />,
       Cancel: <Dismiss16Regular />,
       Clear: <Dismiss20Regular />,
       CheckMark: <Checkmark16Regular />,

@@ -975,6 +975,7 @@ export type ChatCompositeOptions = {
 // @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    formFactor?: 'desktop' | 'mobile';
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
@@ -2543,6 +2544,7 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
