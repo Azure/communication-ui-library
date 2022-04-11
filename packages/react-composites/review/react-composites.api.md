@@ -22,6 +22,8 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { FileDownloadHandler } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -884,21 +886,6 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
-}
-
-// @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
 }
 
 // @beta

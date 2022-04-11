@@ -4,7 +4,9 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 

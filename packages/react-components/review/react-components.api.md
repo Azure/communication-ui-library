@@ -500,7 +500,7 @@ export interface _FileCardProps {
 // @internal (undocumented)
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
-    fileDownloadMetadataKey: string;
+    fileDownloadMetadataKey?: string;
     message: ChatMessage;
     onDownloadErrorMessage?: (errMsg: string) => void;
     userId: string;

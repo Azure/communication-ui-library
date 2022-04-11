@@ -39,7 +39,7 @@ export interface FileDownloadError {
 }
 
 /**
- * @internal
+ * @beta
  *
  * A callback function for handling file downloads.
  * The function needs to return a promise that resolves to a file download URL.

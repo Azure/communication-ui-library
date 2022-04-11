@@ -14,6 +14,8 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -36,7 +38,7 @@ import {
   ParticipantsAddedListener
 } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,

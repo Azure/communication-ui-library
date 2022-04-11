@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-export * from './FileDownloadHandler';
 export * from './FileUpload';
 export * from './FileUploadButton';
 export * from './FileUploadHandler';
