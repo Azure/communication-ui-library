@@ -143,12 +143,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           content={
             <div>
               <ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />
-              {
-                /* @conditional-compile-remove(file-sharing) */
-                props.onRenderFileDownloads
-                  ? props.onRenderFileDownloads(userId, message)
-                  : defaultOnRenderFileDownloads()
-              }
+              {props.onRenderFileDownloads
+                ? props.onRenderFileDownloads(userId, message)
+                : defaultOnRenderFileDownloads()}
             </div>
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}

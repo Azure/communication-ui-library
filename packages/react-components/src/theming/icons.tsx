@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontIcon, mergeStyles } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(file-sharing) */
+import { FontIcon } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
