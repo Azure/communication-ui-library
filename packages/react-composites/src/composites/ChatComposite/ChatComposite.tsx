@@ -33,11 +33,17 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * A callback for customizing the typing indicator renderer.
    */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-
   /**
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optimizes the composite form factor for either desktop or mobile.
+   * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue 'desktop'
+   */
+  formFactor?: 'desktop' | 'mobile';
 }
 
 /**
@@ -83,7 +89,7 @@ export type ChatCompositeOptions = {
 /**
  * A customizable UI composite for the chat experience.
  *
- * @remarks Chat composite min width and height are respectively 19.5rem and 20rem (312px and 320px, with default rem at 16px)
+ * @remarks Chat composite min width and height are respectively 17.5rem and 20rem (280px and 320px, with default rem at 16px)
  *
  * @public
  */
@@ -96,6 +102,8 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onRenderMessage,
     onFetchParticipantMenuItems
   } = props;
+
+  const formFactor = props['formFactor'] || 'desktop';
 
   /**
    * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
@@ -115,6 +123,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
+            formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}

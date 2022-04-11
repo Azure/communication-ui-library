@@ -578,6 +578,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -589,6 +590,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaLabel: string;
 }
 
 // @public
@@ -694,6 +696,7 @@ export type ChatCompositeOptions = {
 // @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    formFactor?: 'desktop' | 'mobile';
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
