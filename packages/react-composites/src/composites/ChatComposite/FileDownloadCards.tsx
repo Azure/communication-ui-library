@@ -67,7 +67,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
   }
 
   return (
-    <div style={{ marginTop: '0.25rem' }}>
+    <div style={{ marginTop: '0.25rem' }} data-ui-id="file-download-card-group">
       <_FileCardGroup>
         {fileDownloads &&
           fileDownloads.map((file) => (
@@ -88,7 +88,7 @@ export const FileDownloadCards = (props: FileDownloadCards): JSX.Element => {
 
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <ChatCompositeIcon iconName="Download" />;
+  return <ChatCompositeIcon data-ui-id="file-download-card-download-icon" iconName="Download" />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };

@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS_CHAT } from './constants';
+import { IDS } from './constants';
 import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, waitForSelector } from './utils';
-import { createChatThreadAndUsers } from './fixtureHelpers';
 import { Page } from '@playwright/test';
 import { ChatUserType } from './fixtureTypes';
 
@@ -23,11 +22,27 @@ export const chatTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  users = await createChatThreadAndUsers(TEST_PARTICIPANTS_CHAT);
+  const usersWithArgs = users.map((user) => ({
+    user,
+    qArgs
+  }));
+  await chatTestSetupWithPerUserArgs({ pages, usersWithArgs, serverUrl });
+};
+
+export const chatTestSetupWithPerUserArgs = async ({
+  pages,
+  usersWithArgs,
+  serverUrl
+}: {
+  pages: Page[];
+  usersWithArgs: { user: ChatUserType; qArgs?: { [key: string]: string } }[];
+  serverUrl: string;
+}): Promise<void> => {
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
-    const user = users[idx];
+    const user: ChatUserType = usersWithArgs[idx].user;
+    const qArgs = usersWithArgs[idx].qArgs ? usersWithArgs[idx].qArgs : {};
     await page.goto(buildUrl(serverUrl, user, qArgs));
     pageLoadPromises.push(waitForChatCompositeToLoad(page));
     await stubMessageTimestamps(pages[idx]);
