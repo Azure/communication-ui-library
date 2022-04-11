@@ -288,6 +288,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    Cancel: JSX.Element;
+    Download: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -495,6 +497,35 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileDownloadMetadataKey: string;
+    message: ChatMessage;
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "FileDownloadHandler" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -678,6 +709,8 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    fileDownloadHandler?: FileDownloadHandler;
+    fileDownloadMetadataKey?: string;
 };
 
 // @public
@@ -1163,6 +1196,10 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// Warnings were encountered during analysis:
+//
+// src/components/MessageThread.tsx:582:3 - (ae-incompatible-release-tags) The symbol "fileDownloadHandler" is marked as @public, but its signature references "FileDownloadHandler" which is marked as @internal
 
 // (No @packageDocumentation comment for this package)
 

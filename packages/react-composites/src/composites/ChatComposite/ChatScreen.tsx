@@ -13,7 +13,8 @@ import {
   SendBox,
   SendBoxStylesProps,
   TypingIndicator,
-  TypingIndicatorStylesProps
+  TypingIndicatorStylesProps,
+  _FileDownloadCards
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -38,13 +39,9 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadCards } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(file-sharing) */
-import { useState } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 
@@ -120,7 +117,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
-  const [downloadErrorMessage, setDownloadErrorMessage] = useState('');
+  const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
 
   const adapter = useAdapter();
 
@@ -171,7 +168,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
     (userId, message) => (
-      <FileDownloadCards
+      <_FileDownloadCards
         userId={userId}
         message={message}
         downloadHandler={fileSharing?.downloadHandler}
@@ -209,7 +206,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 setDownloadErrorMessage('');
               }, [])}
               fileDownloadErrorMessage={downloadErrorMessage || ''}
-            ></FileDownloadErrorBar>
+            />
           }
           <MessageThread
             {...messageThreadProps}

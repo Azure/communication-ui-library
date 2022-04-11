@@ -8,6 +8,7 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
+import { FileDownloadHandler } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -36,6 +37,15 @@ type ChatMessageComponentProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /**
+   * Optional function called when someone clicks on the file download icon.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
+  /**
+   * Property name that contains information about file downloads in `message.metadata` object.
+   * @defaultValue fileSharingMetadata
+   */
+  fileDownloadMetadataKey?: string;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,

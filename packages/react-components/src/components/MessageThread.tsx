@@ -42,6 +42,8 @@ import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from './FileDownloadCards';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -572,6 +574,18 @@ export type MessageThreadProps = {
    * Optional strings to override in component
    */
   strings?: Partial<MessageThreadStrings>;
+
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional function called when someone clicks on the file download icon.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Property name that contains information about file downloads in `message.metadata` object.
+   * @defaultValue fileSharingMetadata
+   */
+  fileDownloadMetadataKey?: string;
 };
 
 /**
