@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fixed bug when deleting failed to send messages",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
