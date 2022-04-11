@@ -486,6 +486,33 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileDownloadMetadataKey?: string;
+    message: ChatMessage;
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
