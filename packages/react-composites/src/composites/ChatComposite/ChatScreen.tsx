@@ -172,7 +172,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     (userId, message) => (
       <_FileDownloadCards
         userId={userId}
-        message={message}
+        metadata={message.metadata}
         downloadHandler={fileSharing?.downloadHandler}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);

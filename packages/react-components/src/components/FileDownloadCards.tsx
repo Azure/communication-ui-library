@@ -79,9 +79,9 @@ export interface _FileDownloadCards {
    */
   userId: string;
   /**
-   * A chat message that inculdes file metadata
+   * A chat message metadata that inculdes file metadata
    */
-  message: ChatMessage;
+  metadata: Record<string, string>;
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -89,7 +89,7 @@ export interface _FileDownloadCards {
    */
   downloadHandler?: FileDownloadHandler;
   /**
-   * Property name that contains information about file downloads in `message.metadata` object.
+   * Property name that contains information about file downloads in `metadata` object.
    * @defaultValue fileSharingMetadata
    */
   fileDownloadMetadataKey?: string;
@@ -106,15 +106,17 @@ const extractFileMetadata = (metadata: Record<string, string>, key: string): Fil
   return metadata[key] ? JSON.parse(metadata[key]) : [];
 };
 
+const fileDownloadCardsStyle = {
+  marginTop: '0.25rem'
+};
+
 /**
  * @internal
  */
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
-  const { userId, message, fileDownloadMetadataKey = 'fileSharingMetadata' } = props;
+  const { userId, metadata, fileDownloadMetadataKey = 'fileSharingMetadata' } = props;
   const [showSpinner, setShowSpinner] = useState(false);
-  const fileDownloads: FileMetadata[] = message.metadata
-    ? extractFileMetadata(message.metadata, fileDownloadMetadataKey)
-    : [];
+  const fileDownloads: FileMetadata[] = metadata ? extractFileMetadata(metadata, fileDownloadMetadataKey) : [];
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
       if (!props.downloadHandler) {
@@ -144,7 +146,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   }
 
   return (
-    <div style={{ marginTop: '0.25rem' }} data-ui-id="file-download-card-group">
+    <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_FileCardGroup>
         {fileDownloads &&
           fileDownloads.map((file) => (
@@ -168,7 +170,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <Icon data-ui-id="file-download-card-download-icon" iconName="Download" />;
+  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" />;
 };

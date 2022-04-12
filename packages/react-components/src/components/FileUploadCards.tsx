@@ -43,7 +43,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<Icon iconName="Cancel" />}
+              actionIcon={<Icon iconName="CancelFileUpload" />}
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}

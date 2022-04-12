@@ -49,11 +49,11 @@ const coffeeIconStyle = {
  */
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(file-sharing) */
-  Cancel: <Dismiss16Regular />,
+  CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   ChevronLeft: <FontIcon iconName="ChevronLeft" />,
   /* @conditional-compile-remove(file-sharing) */
-  Download: <ArrowDownload16Regular />,
+  DownloadFile: <ArrowDownload16Regular />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   Link: <FontIcon iconName="Link" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
@@ -124,9 +124,9 @@ export type ChatCompositeIcons = {
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile?: JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  Download?: JSX.Element;
+  DownloadFile?: JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  Cancel?: JSX.Element;
+  CancelFileUpload?: JSX.Element;
 };
 
 /**

@@ -79,9 +79,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(file-sharing) */
-  Cancel: <Dismiss16Regular />,
+  CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
-  Download: <ArrowDownload16Regular />,
+  DownloadFile: <ArrowDownload16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
