@@ -322,7 +322,7 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @public
-export const DevicesButton: (props: DevicesButtonProps & Responsive) => JSX.Element;
+export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
 
 // @public
 export interface DevicesButtonContextualMenuStyles extends IContextualMenuStyles {
@@ -863,7 +863,7 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
 }
 
 // @public
-export const ParticipantsButton: (props: ParticipantsButtonProps & Responsive) => JSX.Element;
+export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
 export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
@@ -933,12 +933,6 @@ export type ReadReceiptsBySenderId = {
         lastReadMessage: string;
         displayName: string;
     };
-};
-
-// @public (undocumented)
-export type Responsive = {
-    w?: number;
-    h?: number;
 };
 
 // @public

@@ -26,7 +26,6 @@ import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-import { Responsive } from './Responsive';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -155,7 +154,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
  *
  * @public
  */
-export const ParticipantsButton = (props: ParticipantsButtonProps & Responsive): JSX.Element => {
+export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
   const {
     callInvitationURL,
     styles,
@@ -328,9 +327,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps & Responsive):
     excludeMe,
     ids.participantButtonPeopleMenuItem,
     generateDefaultParticipantsSubMenuProps,
-    onCopyCallback,
-    props.w,
-    props.h
+    onCopyCallback
   ]);
 
   return (

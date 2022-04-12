@@ -9,11 +9,10 @@ import {
   IContextualMenuStyles,
   merge
 } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-import { Responsive } from './Responsive';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 
 /**
@@ -339,16 +338,14 @@ export const generateDefaultDeviceMenuProps = (
  *
  * @public
  */
-export const DevicesButton = (props: DevicesButtonProps & Responsive): JSX.Element => {
+export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const devicesButtonMenu = useMemo(
-    () => props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings),
-    [props.w, props.h]
-  );
+  const devicesButtonMenu =
+    props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
   const onRenderOptionsIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
