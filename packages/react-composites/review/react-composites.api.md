@@ -869,6 +869,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
     MessageResend: JSX.Element;
 };
 
