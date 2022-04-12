@@ -33,6 +33,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 const useFileSharing = Boolean(params.useFileSharing);
+const failFileDownload = Boolean(params.failDownload);
 const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
 
 // Needed to initialize default icons used by Fluent components.
@@ -81,10 +82,10 @@ function App(): JSX.Element {
 
   const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
     return new Promise((resolve) => {
-      if (fileData.name !== 'Unauthorized.pdf') {
-        resolve(new URL(fileData.url));
-      } else {
+      if (failFileDownload) {
         resolve({ errorMessage: 'You don’t have permission to download this file.' });
+      } else {
+        resolve(new URL(fileData.url));
       }
     });
   };

@@ -6,7 +6,8 @@ import {
   isTestProfileStableFlavor,
   stubMessageTimestamps,
   dataUiId,
-  waitForSelector
+  waitForSelector,
+  clickOutsideOfPage
 } from '../common/utils';
 import {
   chatTestSetup,
@@ -216,11 +217,12 @@ test.describe('Filesharing Global Errorbar', async () => {
         useFileSharing: 'true',
         uploadedFiles: JSON.stringify([
           {
-            name: 'Unauthorized.pdf',
+            name: 'Sample.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf'
           }
-        ])
+        ]),
+        failDownload: 'true'
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -231,6 +233,7 @@ test.describe('Filesharing Global Errorbar', async () => {
     await stubMessageTimestamps(page);
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
+    await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-download-error.png');
   });
 });
