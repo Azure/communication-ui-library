@@ -154,6 +154,16 @@ export interface ErrorBarStrings {
    * Dimiss errorbar button aria label read by screen reader accessibility tools
    */
   dismissButtonAriaLabel: string;
+
+  /**
+   * An error message when joining a call fails.
+   */
+  failedToJoinCallGeneric: string;
+
+  /**
+   * An error message when joining a call fails specifically due to an invalid meeting link.
+   */
+  failedToJoinCallInvalidMeetingLink: string;
 }
 
 /**
