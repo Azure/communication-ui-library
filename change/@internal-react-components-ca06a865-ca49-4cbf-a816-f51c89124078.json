@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added a min width of 320px to Message thread to render file cards completely in mobile view",
+  "packageName": "@internal/react-components",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
