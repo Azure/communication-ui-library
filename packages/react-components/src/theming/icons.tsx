@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(file-sharing) */
-import { FontIcon } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -39,6 +37,10 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(file-sharing) */
+import { ArrowDown16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+
 import React from 'react';
 
 /**
@@ -77,9 +79,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(file-sharing) */
-  Cancel: <FontIcon iconName="Cancel" />,
+  Cancel: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
-  Download: <FontIcon iconName="Download" />,
+  Download: <ArrowDown16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
