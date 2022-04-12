@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "change tooltip color in dark mode",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

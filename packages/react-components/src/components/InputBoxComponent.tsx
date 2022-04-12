@@ -10,7 +10,8 @@ import {
   ITextField,
   concatStyleSets,
   IconButton,
-  TooltipHost
+  TooltipHost,
+  ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -169,8 +170,18 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
+
+  const theme = useTheme();
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+
+  // Place callout with no gap between it and the button.
+  const calloutProps = {
+    gapSpace: 0,
+    styles: calloutStyle,
+    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
+  };
   return (
-    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent}>
+    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
       <IconButton
         className={mergedButtonStyle}
         ariaLabel={ariaLabel}
