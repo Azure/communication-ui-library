@@ -25,6 +25,7 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+import { callingStatefulLogger } from './Logger';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -582,6 +583,7 @@ export class CallContext {
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
+        callingStatefulLogger.info(`Calling stateful client target function called: ${target}`);
         return action(...args);
       } catch (error) {
         const callError = toCallError(target, error);
