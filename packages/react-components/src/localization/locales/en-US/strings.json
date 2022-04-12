@@ -143,6 +143,6 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "selected"
+    "localVideoSelectedDescription": "{cameraName} selected"
   }
 }
