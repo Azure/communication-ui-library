@@ -63,6 +63,6 @@
     "copyInviteLinkButtonLabel": "Copy invite link",
     "dismissSidePaneButton": "Close",
     "returnToCallButtonAriaDescription": "Return to Call",
-    "returnToCallBackButtonAriaLabel": "Back"
+    "returnToCallButtonAriaLabel": "Back"
   }
 }

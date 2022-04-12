@@ -100,5 +100,5 @@ export interface CallWithChatCompositeStrings {
   /**
    * Aria label string for return to call back button
    */
-  returnToCallBackButtonAriaLabel: string;
+  returnToCallButtonAriaLabel: string;
 }
