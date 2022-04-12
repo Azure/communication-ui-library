@@ -140,6 +140,7 @@
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Cycle camera",
-    "localVideoMovementLabel": "Movable Local Video Tile"
+    "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoSelectedDescription": "selected"
   }
 }

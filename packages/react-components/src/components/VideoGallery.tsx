@@ -67,6 +67,8 @@ export interface VideoGalleryStrings {
   localVideoCameraSwitcherLabel: string;
   /** String for announcing the local video tile can be moved by keyboard controls */
   localVideoMovementLabel: string;
+  /** String for announcing the selected camera */
+  localVideoSelectedDescription: string;
 }
 
 /**
@@ -238,6 +240,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
               onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
               label={strings.localVideoCameraSwitcherLabel}
+              description={
+                localVideoCameraCycleButtonProps.selectedCamera.name + ' ' + strings.localVideoSelectedDescription
+              }
             />
           )}
       </Stack>

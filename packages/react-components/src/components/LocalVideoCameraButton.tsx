@@ -18,6 +18,8 @@ export interface LocalVideoCameraCycleButtonProps {
   onSelectCamera?: (device: OptionsDevice) => Promise<void>;
   /** label for local video camera switcher */
   label?: string;
+  /** description for local video camera switcher */
+  description?: string;
 }
 
 /**
@@ -25,7 +27,7 @@ export interface LocalVideoCameraCycleButtonProps {
  * @internal
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
-  const { cameras, selectedCamera, onSelectCamera, label } = props;
+  const { cameras, selectedCamera, onSelectCamera, label, description } = props;
   const theme = useTheme();
 
   return (
@@ -34,6 +36,7 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
       styles={localVideoCameraCycleButtonStyles(theme)}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={label}
+      ariaDescription={description}
       aria-live={'polite'}
       onClick={() => {
         if (cameras && cameras.length > 1 && selectedCamera !== undefined) {
