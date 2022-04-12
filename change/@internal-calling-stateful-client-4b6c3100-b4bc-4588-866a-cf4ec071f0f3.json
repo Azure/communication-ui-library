@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add telemetry for rendering problems",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
