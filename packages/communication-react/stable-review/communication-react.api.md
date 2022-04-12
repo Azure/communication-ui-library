@@ -1533,6 +1533,8 @@ export interface ErrorBarStrings {
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
     dismissButtonAriaLabel: string;
+    failedToJoinCallGeneric: string;
+    failedToJoinCallInvalidMeetingLink: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
