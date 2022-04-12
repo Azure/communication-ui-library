@@ -310,8 +310,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
   /** Update an existing message. */
-  public async updateMessage(messageId: string, content: string): Promise<void> {
-    return await this.chatAdapter.updateMessage(messageId, content);
+  public async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content, metadata);
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
