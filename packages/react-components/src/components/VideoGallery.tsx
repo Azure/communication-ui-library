@@ -44,6 +44,7 @@ import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from '.
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ModalClone } from './ModalClone/ModalClone';
+import { _formatString } from '@internal/acs-ui-common';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -229,6 +230,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
+    const ariaDescription = _formatString('{selectedCameraName} {localVideoSelectedDescription}', {
+      selectedCameraName: localVideoCameraCycleButtonProps.selectedCamera.name,
+      localVideoSelectedDescription: strings.localVideoSelectedDescription
+    });
     return (
       <Stack horizontalAlign="end">
         {showCameraSwitcherInLocalPreview &&
@@ -240,9 +245,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
               onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
               label={strings.localVideoCameraSwitcherLabel}
-              description={
-                localVideoCameraCycleButtonProps.selectedCamera.name + ' ' + strings.localVideoSelectedDescription
-              }
+              ariaDescription={ariaDescription}
             />
           )}
       </Stack>

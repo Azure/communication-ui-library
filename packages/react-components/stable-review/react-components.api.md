@@ -579,8 +579,8 @@ export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonPro
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
+    ariaDescription?: string;
     cameras?: OptionsDevice[];
-    description?: string;
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
