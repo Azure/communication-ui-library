@@ -27,7 +27,7 @@ import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
-import { Attach20Regular, ArrowDown16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+import { Attach20Regular, ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
@@ -53,7 +53,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(call-with-chat-composite) */
   ChevronLeft: <FontIcon iconName="ChevronLeft" />,
   /* @conditional-compile-remove(file-sharing) */
-  Download: <ArrowDown16Regular />,
+  Download: <ArrowDownload16Regular />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   Link: <FontIcon iconName="Link" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,

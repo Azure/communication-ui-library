@@ -39,7 +39,7 @@ import {
 } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
-import { ArrowDown16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+import { ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
 
 import React from 'react';
 
@@ -81,7 +81,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(file-sharing) */
   Cancel: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
-  Download: <ArrowDown16Regular />,
+  Download: <ArrowDownload16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
