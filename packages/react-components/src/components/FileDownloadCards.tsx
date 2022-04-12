@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 import { Icon, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
-import { ChatMessage } from '../types';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
