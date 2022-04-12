@@ -56,7 +56,8 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
   return (
     <Stack horizontal grow styles={mobilePaneControlBarStyle}>
       <DefaultButton
-        ariaLabel={strings.returnToCallButtonAriaLabel}
+        ariaLabel={strings.returnToCallBackButtonAriaLabel}
+        ariaDescription={strings.returnToCallButtonAriaDescription}
         onClick={props.onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <ChevronLeftIconTrampoline />}
