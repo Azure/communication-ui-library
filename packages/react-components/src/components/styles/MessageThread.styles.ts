@@ -31,7 +31,8 @@ export const messageThreadContainerStyle = mergeStyles({
   maxHeight: '100%',
   overflow: 'auto',
   position: 'relative',
-  alignSelf: 'center'
+  alignSelf: 'center',
+  minWidth: '320px'
 });
 
 /**
