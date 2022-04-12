@@ -141,7 +141,8 @@
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
-    "localVideoCameraSwitcherLabel": "Cycle camera",
-    "localVideoMovementLabel": "Movable Local Video Tile"
+    "localVideoCameraSwitcherLabel": "Switch camera",
+    "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoSelectedDescription": "{cameraName} selected"
   }
 }
