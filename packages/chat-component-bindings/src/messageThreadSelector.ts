@@ -138,7 +138,9 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
     // Read Receipt details will be disabled when participant count is 0
     const participantCount = isTeamsInterop
       ? undefined
-      : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
+      : Object.values(participants).filter(
+          (p) => p.displayName && p.displayName !== '' && p.id && toFlatCommunicationIdentifier(p.id) !== userId
+        ).length;
 
     // creating key value pairs of senderID: last read message information
 

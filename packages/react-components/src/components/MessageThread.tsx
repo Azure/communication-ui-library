@@ -914,7 +914,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const onActionButtonClickMemo = useCallback(
     (message: ChatMessage, setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void) => {
-      if (participantCountRef.current && participantCountRef.current - 1 > 1 && readReceiptsBySenderIdRef.current) {
+      if (participantCountRef.current && participantCountRef.current > 1 && readReceiptsBySenderIdRef.current) {
         setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderIdRef.current));
       }
     },
@@ -931,7 +931,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onRenderFileDownloads={onRenderFileDownloads}
             message={messageProps.message}
             userId={props.userId}
-            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+            remoteParticipantsCount={participantCount ?? 0}
             inlineAcceptRejectEditButtons={!isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
@@ -974,8 +974,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           status={status}
           readCount={readCount}
           onToggleToolTip={onToggleToolTip}
-          // -1 because participant count does not include myself
-          remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+          remoteParticipantsCount={participantCount ?? 0}
         />
       );
     },
