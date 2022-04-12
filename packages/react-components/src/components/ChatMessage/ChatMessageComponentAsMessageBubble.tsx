@@ -125,7 +125,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     () => (
       <_FileDownloadCards
         userId={userId}
-        message={message}
+        metadata={message.metadata || {}}
         downloadHandler={fileDownloadHandler}
         fileDownloadMetadataKey={fileDownloadMetadataKey}
       />
