@@ -230,9 +230,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
-    const ariaDescription = _formatString('{selectedCameraName} {localVideoSelectedDescription}', {
-      selectedCameraName: localVideoCameraCycleButtonProps.selectedCamera.name,
-      localVideoSelectedDescription: strings.localVideoSelectedDescription
+    const ariaDescription = _formatString(strings.localVideoSelectedDescription, {
+      cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
     });
     return (
       <Stack horizontalAlign="end">
