@@ -155,8 +155,6 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         };
       });
 
-    console.log(userId);
-
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Object.values(chatMessages)
