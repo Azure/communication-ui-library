@@ -146,12 +146,16 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
 
     // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
-    readReceipts.forEach((r) => {
-      readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
-        lastReadMessage: r.chatMessageId,
-        displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
-      };
-    });
+    readReceipts
+      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+      .forEach((r) => {
+        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+          lastReadMessage: r.chatMessageId,
+          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+        };
+      });
+
+    console.log(userId);
 
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
