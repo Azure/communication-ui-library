@@ -39,8 +39,8 @@ export const chatActionsCSS: IStyle = {
 export const iconWrapperStyle = (theme: ITheme, isSubMenuOpen: boolean): IIconStyles => ({
   root: {
     margin: _pxToRem(3),
-    color: theme.palette.neutralPrimary,
-    // Show the extra stroke width when the Edit/Delete menu is showing
+    // Show hover styles when the Edit/Delete menu is showing as this action button is still considered 'active'
+    color: isSubMenuOpen ? theme.palette.black : theme.palette.neutralPrimary,
     strokeWidth: isSubMenuOpen ? _pxToRem(0.5) : _pxToRem(0),
     stroke: theme.palette.black,
     ':hover, :focus': {
