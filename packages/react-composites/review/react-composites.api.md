@@ -682,8 +682,8 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
-    Download?: JSX.Element;
-    Cancel?: JSX.Element;
+    DownloadFile?: JSX.Element;
+    CancelFileUpload?: JSX.Element;
 };
 
 // @public
@@ -819,8 +819,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
-    Download: JSX.Element;
-    Cancel: JSX.Element;
+    DownloadFile: JSX.Element;
+    CancelFileUpload: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;

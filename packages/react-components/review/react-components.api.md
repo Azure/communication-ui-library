@@ -288,8 +288,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    Cancel: JSX.Element;
-    Download: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -503,7 +503,7 @@ export interface _FileCardProps {
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
     fileDownloadMetadataKey?: string;
-    message: ChatMessage;
+    metadata: Record<string, string>;
     onDownloadErrorMessage?: (errMsg: string) => void;
     userId: string;
 }

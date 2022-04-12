@@ -959,8 +959,8 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
-    Download?: JSX.Element;
-    Cancel?: JSX.Element;
+    DownloadFile?: JSX.Element;
+    CancelFileUpload?: JSX.Element;
 };
 
 // @public
@@ -1367,8 +1367,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    Cancel: JSX.Element;
-    Download: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -1417,8 +1417,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
-    Download: JSX.Element;
-    Cancel: JSX.Element;
+    DownloadFile: JSX.Element;
+    CancelFileUpload: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
