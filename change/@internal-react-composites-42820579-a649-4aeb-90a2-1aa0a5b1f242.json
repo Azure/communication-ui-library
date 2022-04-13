@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "make sure badge text color is white in both light and dark mode",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
