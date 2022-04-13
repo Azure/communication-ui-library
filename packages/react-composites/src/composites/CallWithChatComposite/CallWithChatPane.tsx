@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -21,11 +21,7 @@ import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 
-/**
- * Pane that is used to store chat and people for CallWithChat composite
- * @private
- */
-export const CallWithChatPane = (props: {
+export type CallWithChatPaneProps = {
   chatCompositeProps: Partial<ChatCompositeProps>;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
@@ -40,11 +36,56 @@ export const CallWithChatPane = (props: {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
-}): JSX.Element => {
+};
+
+/**
+ * Pane that is used to store chat and people for CallWithChat composite
+ * @private
+ */
+export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
+
+  const statePushed = useRef(false);
+
+  useEffect(() => {
+    console.log('useRef');
+    if (statePushed.current === false && props.activePane !== 'none') {
+      console.log('STATE PUSHED');
+      window.history.pushState(null, document.title, location.href);
+      statePushed.current = true;
+    }
+  }, [props.activePane]);
+
+  useEffect(() => {
+    if (props.activePane !== 'none') {
+      console.log('READY TO GO FORWARD');
+      window.onpopstate = function () {
+        console.log('GOING FORWARD');
+        window.onpopstate = null;
+        window.history.forward();
+        props.onClose();
+      };
+    } else {
+      window.onpopstate = null;
+      if (statePushed.current === true) {
+        console.log('READY TO DOUBLE BACK');
+        window.onpopstate = function () {
+          console.log('DOUBLING BACK');
+          window.onpopstate = null;
+          window.history.back();
+        };
+        console.log('DONE READYING TO DOUBLE BACK');
+      }
+    }
+    console.log('DONE useEffect');
+    return () => {
+      console.log('LIFETIME');
+      window.onpopstate = null;
+    };
+  }, [props.activePane]);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
