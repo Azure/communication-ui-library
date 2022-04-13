@@ -22,7 +22,7 @@ const config = {
     port: 3000,
     client: false,
     open: true,
-    static: { directory: path.resolve(__dirname, 'public') },
+    static: { directory: path.resolve(__dirname, 'dist') },
     proxy: [
       {
         path: '/token',
