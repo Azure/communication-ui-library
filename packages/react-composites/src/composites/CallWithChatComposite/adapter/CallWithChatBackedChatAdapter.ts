@@ -77,8 +77,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
         return this.callWithChatAdapter.off(event, listener);
     }
   };
-  public updateMessage = async (messageId: string, content: string): Promise<void> =>
-    await this.callWithChatAdapter.updateMessage(messageId, content);
+  public updateMessage = async (messageId: string, content: string, metadata?: Record<string, string>): Promise<void> =>
+    await this.callWithChatAdapter.updateMessage(messageId, content, metadata);
   public deleteMessage = async (messageId: string): Promise<void> =>
     await this.callWithChatAdapter.deleteMessage(messageId);
 
