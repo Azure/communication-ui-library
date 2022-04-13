@@ -117,7 +117,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const defaultOnRenderFileDownloads = useCallback(
     () => (
-      <_FileDownloadCards userId={userId} metadata={message.metadata || {}} downloadHandler={fileDownloadHandler} />
+      <_FileDownloadCards
+        userId={userId}
+        fileMetadata={message.attachedFilesMetadata || []}
+        downloadHandler={fileDownloadHandler}
+      />
     ),
     [message, fileDownloadHandler, userId]
   );

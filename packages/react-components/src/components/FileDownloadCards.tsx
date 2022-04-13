@@ -5,7 +5,6 @@ import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
-import { _FILE_SHARING_METADATA_KEY } from '@internal/acs-ui-common';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -81,7 +80,7 @@ export interface _FileDownloadCards {
   /**
    * A chat message metadata that inculdes file metadata
    */
-  metadata: Record<string, string>;
+  fileMetadata: FileMetadata[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -89,22 +88,10 @@ export interface _FileDownloadCards {
    */
   downloadHandler?: FileDownloadHandler;
   /**
-   * Property name that contains information about file downloads in `metadata` object.
-   * @defaultValue {@link _FILE_SHARING_METADATA_KEY}
-   */
-  fileDownloadMetadataKey?: string;
-  /**
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
 }
-
-/**
- * @private
- */
-const extractFileMetadata = (metadata: Record<string, string>, key: string): FileMetadata[] => {
-  return metadata[key] ? JSON.parse(metadata[key]) : [];
-};
 
 const fileDownloadCardsStyle = {
   marginTop: '0.25rem'
@@ -116,9 +103,8 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
-  const { userId, metadata, fileDownloadMetadataKey = _FILE_SHARING_METADATA_KEY } = props;
+  const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
-  const fileDownloads: FileMetadata[] = metadata ? extractFileMetadata(metadata, fileDownloadMetadataKey) : [];
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
       if (!props.downloadHandler) {
@@ -143,15 +129,15 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props]
   );
 
-  if (!fileDownloads || fileDownloads.length === 0) {
+  if (!fileMetadata || fileMetadata.length === 0) {
     return <></>;
   }
 
   return (
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_FileCardGroup>
-        {fileDownloads &&
-          fileDownloads.map((file) => (
+        {fileMetadata &&
+          fileMetadata.map((file) => (
             <_FileCard
               fileName={file.name}
               key={file.name}

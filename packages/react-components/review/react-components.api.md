@@ -109,6 +109,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -502,8 +504,7 @@ export interface _FileCardProps {
 // @internal (undocumented)
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
-    fileDownloadMetadataKey?: string;
-    metadata: Record<string, string>;
+    fileMetadata: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     userId: string;
 }

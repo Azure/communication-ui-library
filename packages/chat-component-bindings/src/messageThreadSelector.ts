@@ -25,6 +25,9 @@ import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
+
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
@@ -46,6 +49,17 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   }
 );
 
+/* @conditional-compile-remove(file-sharing) */
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+  const fileMetadata = metadata['fileSharingMetadata'];
+  if (!fileMetadata) return [];
+  try {
+    return JSON.parse(fileMetadata);
+  } catch (e) {
+    return [];
+  }
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -66,7 +80,9 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    metadata: message.metadata
+    metadata: message.metadata,
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 

@@ -1021,6 +1021,8 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
