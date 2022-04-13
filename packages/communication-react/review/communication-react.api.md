@@ -1933,7 +1933,6 @@ export type MessageThreadProps = {
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
-    fileDownloadMetadataKey?: string;
 };
 
 // @public
