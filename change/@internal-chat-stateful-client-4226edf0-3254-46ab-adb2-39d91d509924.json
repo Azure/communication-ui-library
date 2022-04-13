@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Log the function called from stateful client",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
