@@ -109,6 +109,8 @@ const fileDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
 
+const actionIconStyle = { height: '1rem' };
+
 /**
  * @internal
  */
@@ -169,7 +171,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" />;
+  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
   // Return _some_ available icon, as the real icon is beta-only.
-  return <Icon iconName="EditBoxCancel" />;
+  return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
