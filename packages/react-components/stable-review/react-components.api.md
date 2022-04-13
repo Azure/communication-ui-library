@@ -491,8 +491,7 @@ export interface _FileCardProps {
 // @internal (undocumented)
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
-    fileDownloadMetadataKey?: string;
-    metadata: Record<string, string>;
+    fileMetadata: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     userId: string;
 }
