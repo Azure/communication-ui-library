@@ -20,9 +20,9 @@ const config = {
   },
   devServer: {
     port: 3000,
-    injectClient: false,
+    client: false,
     open: true,
-    contentBase: path.join(__dirname, 'dist'),
+    static: { directory: path.resolve(__dirname, 'public') },
     proxy: [
       {
         path: '/token',
