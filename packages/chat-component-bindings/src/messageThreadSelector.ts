@@ -52,7 +52,9 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 /* @conditional-compile-remove(file-sharing) */
 const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
   const fileMetadata = metadata['fileSharingMetadata'];
-  if (!fileMetadata) return [];
+  if (!fileMetadata) {
+    return [];
+  }
   try {
     return JSON.parse(fileMetadata);
   } catch (e) {
