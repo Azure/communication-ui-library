@@ -492,7 +492,7 @@ export interface _FileCardProps {
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
     fileDownloadMetadataKey?: string;
-    message: ChatMessage;
+    metadata: Record<string, string>;
     onDownloadErrorMessage?: (errMsg: string) => void;
     userId: string;
 }
