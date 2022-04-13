@@ -27,7 +27,7 @@ import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../../ChatComposite';
+import { FileMetadata, FileUploadManager } from '../../ChatComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -237,7 +237,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  updateMessage(messageId: string, content: string): Promise<void>;
+  updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
   /**
    * Delete a message in the thread.
    *
@@ -253,16 +253,27 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  registerFileUploads: (fileUploads: ObservableFileUpload[]) => void;
+  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  /* @conditional-compile-remove(file-sharing) */
+  /** @beta */
+  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   clearFileUploads: () => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   cancelFileUpload: (id: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
+  /** @beta */
+  updateFileUploadProgress: (id: string, progress: number) => void;
+  /* @conditional-compile-remove(file-sharing) */
+  /** @beta */
+  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
+  /** @beta */
+  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
 }
 
 /**

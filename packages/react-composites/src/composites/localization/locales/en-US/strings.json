@@ -60,6 +60,8 @@
     "chatButtonNewMessageNotificationLabel": "New Message",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
-    "copyInviteLinkButtonLabel": "Copy invite link"
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "dismissSidePaneButton": "Close",
+    "returnToCallButtonAriaLabel": "Return to Call"
   }
 }

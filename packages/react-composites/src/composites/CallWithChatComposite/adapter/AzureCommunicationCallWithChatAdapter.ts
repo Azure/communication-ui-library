@@ -36,7 +36,7 @@ import {
   ParticipantsAddedListener
 } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../../ChatComposite';
+import { FileMetadata, FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
@@ -170,11 +170,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.on.bind(this);
     this.off.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.registerFileUploads.bind(this);
+    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.clearFileUploads.bind(this);
+    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.cancelFileUpload.bind(this);
+    this.clearFileUploads = this.clearFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
   }
 
   /** Join existing Call. */
@@ -300,16 +308,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
   /** Update an existing message. */
-  public async updateMessage(messageId: string, content: string): Promise<void> {
-    return await this.chatAdapter.updateMessage(messageId, content);
+  public async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content, metadata);
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
   }
   /* @conditional-compile-remove(file-sharing) */
-  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.chatAdapter.registerFileUploads(fileUploads);
+  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.chatAdapter.registerActiveFileUploads(files);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.chatAdapter.registerCompletedFileUploads(metadata);
   }
   /* @conditional-compile-remove(file-sharing) */
   public clearFileUploads(): void {
@@ -318,6 +330,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(file-sharing) */
   public cancelFileUpload(id: string): void {
     this.chatAdapter.cancelFileUpload(id);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadProgress(id: string, progress: number): void {
+    this.chatAdapter.updateFileUploadProgress(id, progress);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+    this.chatAdapter.updateFileUploadMetadata(id, metadata);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

@@ -32,5 +32,6 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
-  VideoStreamOptions
+  VideoStreamOptions,
+  ReadReceiptsBySenderId
 } from './types';
