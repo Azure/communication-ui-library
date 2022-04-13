@@ -58,6 +58,7 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   try {
     return JSON.parse(fileMetadata);
   } catch (e) {
+    console.error(e);
     return [];
   }
 };
