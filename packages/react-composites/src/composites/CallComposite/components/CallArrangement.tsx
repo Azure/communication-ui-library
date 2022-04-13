@@ -4,6 +4,7 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
+import { containerDivStyles } from '../../common/ContainerRectProps';
 import { useContainerHeight, useContainerWidth } from '../../common/responsive';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
@@ -50,7 +51,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const containerHeight = useContainerHeight(containerRef);
 
   return (
-    <div ref={containerRef} className={mergeStyles({ position: 'relative', width: '100%', height: '100%' })}>
+    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
         <Stack.Item styles={notificationsContainerStyles}>
           <Stack styles={bannerNotificationStyles}>

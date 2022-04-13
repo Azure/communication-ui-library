@@ -31,6 +31,7 @@ import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { useContainerHeight, useContainerWidth } from '../common/responsive';
+import { containerDivStyles } from '../common/ContainerRectProps';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -245,7 +246,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
-    <div ref={containerRef} className={mergeStyles({ position: 'relative', width: '100%', height: '100%' })}>
+    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
         <Stack horizontal grow>
           {!isMobileWithActivePane && (
