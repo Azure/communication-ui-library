@@ -237,7 +237,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  updateMessage(messageId: string, content: string): Promise<void>;
+  updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
   /**
    * Delete a message in the thread.
    *
