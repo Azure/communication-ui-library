@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add a constant for file sharing metadata key",
+  "packageName": "@internal/acs-ui-common",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
