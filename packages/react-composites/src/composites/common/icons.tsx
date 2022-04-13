@@ -119,10 +119,6 @@ export type ChatCompositeIcons = {
   SendBoxSendHovered?: JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile?: JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
-  DownloadFile?: JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
-  CancelFileUpload?: JSX.Element;
 };
 
 /**
