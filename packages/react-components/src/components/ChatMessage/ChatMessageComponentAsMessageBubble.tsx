@@ -44,11 +44,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function called when someone clicks on the file download icon.
    */
   fileDownloadHandler?: FileDownloadHandler;
-  /**
-   * Property name that contains information about file downloads in `message.metadata` object.
-   * @defaultValue fileSharingMetadata
-   */
-  fileDownloadMetadataKey?: string;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -81,8 +76,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    fileDownloadHandler,
-    fileDownloadMetadataKey
+    fileDownloadHandler
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -123,14 +117,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const defaultOnRenderFileDownloads = useCallback(
     () => (
-      <_FileDownloadCards
-        userId={userId}
-        metadata={message.metadata || {}}
-        downloadHandler={fileDownloadHandler}
-        fileDownloadMetadataKey={fileDownloadMetadataKey}
-      />
+      <_FileDownloadCards userId={userId} metadata={message.metadata || {}} downloadHandler={fileDownloadHandler} />
     ),
-    [message, fileDownloadHandler, userId, fileDownloadMetadataKey]
+    [message, fileDownloadHandler, userId]
   );
 
   const chatMessage = (

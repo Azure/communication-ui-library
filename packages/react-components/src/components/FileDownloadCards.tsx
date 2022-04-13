@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
+import { _FILE_SHARING_METADATA_KEY } from '@internal/acs-ui-common';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -89,7 +90,7 @@ export interface _FileDownloadCards {
   downloadHandler?: FileDownloadHandler;
   /**
    * Property name that contains information about file downloads in `metadata` object.
-   * @defaultValue fileSharingMetadata
+   * @defaultValue {@link _FILE_SHARING_METADATA_KEY}
    */
   fileDownloadMetadataKey?: string;
   /**
@@ -115,7 +116,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
-  const { userId, metadata, fileDownloadMetadataKey = 'fileSharingMetadata' } = props;
+  const { userId, metadata, fileDownloadMetadataKey = _FILE_SHARING_METADATA_KEY } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const fileDownloads: FileMetadata[] = metadata ? extractFileMetadata(metadata, fileDownloadMetadataKey) : [];
   const fileDownloadHandler = useCallback(

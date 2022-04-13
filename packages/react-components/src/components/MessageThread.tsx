@@ -579,15 +579,10 @@ export type MessageThreadProps = {
   /**
    * @beta
    * Optional function called when someone clicks on the file download icon.
+   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
+   * this function will be called with the data inside `fileSharingMetadata` key.
    */
   fileDownloadHandler?: FileDownloadHandler;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * @beta
-   * Property name that contains information about file downloads in `message.metadata` object.
-   * @defaultValue fileSharingMetadata
-   */
-  fileDownloadMetadataKey?: string;
 };
 
 /**

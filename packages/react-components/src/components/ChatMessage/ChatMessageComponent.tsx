@@ -41,11 +41,6 @@ type ChatMessageComponentProps = {
    * Optional function called when someone clicks on the file download icon.
    */
   fileDownloadHandler?: FileDownloadHandler;
-  /**
-   * Property name that contains information about file downloads in `message.metadata` object.
-   * @defaultValue fileSharingMetadata
-   */
-  fileDownloadMetadataKey?: string;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,

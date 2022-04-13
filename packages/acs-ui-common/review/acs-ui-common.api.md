@@ -29,6 +29,9 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @internal
+export const _FILE_SHARING_METADATA_KEY = "fileSharingMetadata";
+
+// @internal
 export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
 // @public
