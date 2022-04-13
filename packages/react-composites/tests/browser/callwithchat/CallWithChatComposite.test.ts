@@ -71,7 +71,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }, testInfo) => {
-    // Open chat pane on page 0 and send two messages
+    // Open chat pane on page 0 and send a message
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
     await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
     await sendMessage(pages[0], 'Call with Chat composite is awesome!');
@@ -91,7 +91,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }, testInfo) => {
-    // Open chat pane on page 0 and send two messages
+    // Open chat pane on page 0 and send 16 messages
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
     await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
     await sendMessage(pages[0], 'Call with Chat composite is awesome!');
