@@ -38,6 +38,18 @@ export type CallWithChatPaneProps = {
   fileSharing?: FileSharingOptions;
 };
 
+const f = () => {
+  console.log('f');
+  window.removeEventListener('popstate', f);
+  window.history.forward();
+};
+
+const db = () => {
+  console.log('db');
+  window.removeEventListener('popstate', db);
+  window.history.back();
+};
+
 /**
  * Pane that is used to store chat and people for CallWithChat composite
  * @private
@@ -55,25 +67,20 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
       statePushed.current = true;
       window.history.pushState(null, document.title, location.href);
     }
-  }, [props.activePane]);
-
-  const f = () => {
-    console.log('f');
-    window.history.forward();
-  };
-
-  useEffect(() => {
     const h = () => {
       f();
       props.onClose();
     };
     if (props.activePane !== 'none') {
+      window.removeEventListener('popstate', db);
       window.addEventListener('popstate', h);
     } else {
       window.removeEventListener('popstate', h);
+      window.addEventListener('popstate', db);
     }
     return () => {
       window.removeEventListener('popstate', h);
+      window.removeEventListener('popstate', db);
     };
   }, [props.activePane]);
 
