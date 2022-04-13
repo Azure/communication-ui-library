@@ -347,7 +347,7 @@ export class ChatContext {
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
-        chatStatefulLogger.info(`Stateful client target function called: ${target}`);
+        chatStatefulLogger.info(`Chat stateful client target function called: ${target}`);
         return f(...args);
       } catch (error) {
         const chatError = toChatError(target, error);
