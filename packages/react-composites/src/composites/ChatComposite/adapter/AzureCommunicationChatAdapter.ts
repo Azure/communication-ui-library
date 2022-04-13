@@ -254,9 +254,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async updateMessage(messageId: string, content: string): Promise<void> {
+  async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.handlers.onUpdateMessage(messageId, content);
+      return await this.handlers.onUpdateMessage(messageId, content, metadata);
     });
   }
 

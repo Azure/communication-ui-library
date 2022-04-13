@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Set menu role for Split Buttons in controlBar",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

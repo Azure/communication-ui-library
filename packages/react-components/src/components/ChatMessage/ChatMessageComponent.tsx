@@ -62,7 +62,11 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
-  }, [message.messageId, onDeleteMessage]);
+    // when fail to send, message does not have message id, delete message using clientmessageid
+    else if (onDeleteMessage && message.clientMessageId) {
+      onDeleteMessage(message.clientMessageId);
+    }
+  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
   const onResendClick = useCallback(() => {
     onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
     onSendMessage && onSendMessage(message.content ?? '');
