@@ -123,10 +123,6 @@ export const CallWithChatPane = (props: {
     [modalHostHeight, modalHostWidth, props.rtl]
   );
 
-  console.log('modalHostRef: ', modalHostRef);
-  console.log('minDragPosition: ', minDragPosition);
-  console.log('maxDragPosition: ', maxDragPosition);
-
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const dataUiId =
