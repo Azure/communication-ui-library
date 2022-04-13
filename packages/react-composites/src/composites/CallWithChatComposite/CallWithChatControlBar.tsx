@@ -19,6 +19,7 @@ import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { ContainerRectProps } from '../common/ContainerRectProps';
 
 /**
  * @private
@@ -60,7 +61,7 @@ const inferCallWithChatControlOptions = (
 /**
  * @private
  */
-export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.Element => {
+export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
@@ -138,14 +139,14 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   occluding some of its content.
                 */}
               <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                {isEnabled(options.microphoneButton) && (
+                {isEnabled(options.microphoneButton) && props.containerWidth && props.containerHeight && (
                   <Microphone
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {isEnabled(options.cameraButton) && (
+                {isEnabled(options.cameraButton) && props.containerWidth && props.containerHeight && (
                   <Camera
                     displayType={options.displayType}
                     styles={commonButtonStyles}

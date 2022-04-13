@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
+import { useContainerHeight, useContainerWidth } from '../../common/responsive';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -44,33 +45,43 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = useContainerWidth(containerRef);
+  const containerHeight = useContainerHeight(containerRef);
+
   return (
-    <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-      <Stack.Item styles={notificationsContainerStyles}>
-        <Stack styles={bannerNotificationStyles}>
-          <ComplianceBanner {...props.complianceBannerProps} />
-        </Stack>
-        {props.errorBarProps !== false && (
+    <div ref={containerRef} className={mergeStyles({ position: 'relative', width: '100%', height: '100%' })}>
+      <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
+        <Stack.Item styles={notificationsContainerStyles}>
           <Stack styles={bannerNotificationStyles}>
-            <ErrorBar {...props.errorBarProps} />
+            <ComplianceBanner {...props.complianceBannerProps} />
           </Stack>
-        )}
-        {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
-      </Stack.Item>
-
-      <Stack.Item styles={callGalleryStyles} grow>
-        {props.onRenderGalleryContent && (
-          <Stack verticalFill styles={mediaGalleryContainerStyles}>
-            {props.onRenderGalleryContent()}
-          </Stack>
-        )}
-      </Stack.Item>
-
-      {props.callControlProps?.options !== false && (
-        <Stack.Item className={callControlsContainerStyles}>
-          <CallControls {...props.callControlProps} />
+          {props.errorBarProps !== false && (
+            <Stack styles={bannerNotificationStyles}>
+              <ErrorBar {...props.errorBarProps} />
+            </Stack>
+          )}
+          {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
         </Stack.Item>
-      )}
-    </Stack>
+
+        <Stack.Item styles={callGalleryStyles} grow>
+          {props.onRenderGalleryContent && (
+            <Stack verticalFill styles={mediaGalleryContainerStyles}>
+              {props.onRenderGalleryContent()}
+            </Stack>
+          )}
+        </Stack.Item>
+
+        {props.callControlProps?.options !== false && (
+          <Stack.Item className={callControlsContainerStyles}>
+            <CallControls
+              {...props.callControlProps}
+              containerWidth={containerWidth}
+              containerHeight={containerHeight}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
+    </div>
   );
 };
