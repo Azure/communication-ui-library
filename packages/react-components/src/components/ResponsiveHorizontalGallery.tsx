@@ -28,7 +28,7 @@ export const ResponsiveHorizontalGallery = (props: {
 
   const childrenPerPage = calculateChildrenPerPage({
     numberOfChildren: React.Children.count(props.children),
-    containerWidth: containerWidth - leftPadding - rightPadding,
+    containerWidth: (containerWidth ?? 0) - leftPadding - rightPadding,
     childWidthRem,
     gapWidthRem,
     buttonWidthRem

@@ -232,6 +232,12 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
           // x/y are unavailable in IE, so use the equivalent left/top
           internalState.minPosition = minDragPosition ?? { x: -modalRectangle.left, y: -modalRectangle.top };
           internalState.maxPosition = maxDragPosition ?? { x: modalRectangle.left, y: modalRectangle.top };
+
+          // Make sure the initial co-ordinates are within clamp bounds.
+          setCoordinates({
+            x: getClampedAxis('x', coordinates.x),
+            y: getClampedAxis('y', coordinates.y)
+          });
         }
       }
     };
@@ -415,8 +421,8 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         internalState.onModalCloseTimer = setTimeout(handleModalClose, parseFloat(animationDuration) * 1000);
         setIsVisible(false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates.
-    }, [isModalOpen, isOpen]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates or if min/max drag bounds are updated.
+    }, [isModalOpen, isOpen, minDragPosition, maxDragPosition]);
 
     useUnmount(() => {
       internalState.events.dispose();
