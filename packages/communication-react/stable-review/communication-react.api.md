@@ -570,7 +570,7 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -752,6 +752,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -763,6 +764,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaLabel: string;
 }
 
 // @public
@@ -861,7 +863,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -969,7 +971,7 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
@@ -992,13 +994,6 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -1537,6 +1532,9 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
+    failedToJoinCallGeneric: string;
+    failedToJoinCallInvalidMeetingLink: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1673,6 +1671,7 @@ export type LocalizationProviderProps = {
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
+    ariaDescription?: string;
     cameras?: OptionsDevice[];
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -1751,7 +1750,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    messageThreadReadCount?: number;
+    // (undocumented)
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -1778,7 +1780,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    messageThreadParticipantCount?: number;
+    participantCount?: number;
+    readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -1790,7 +1793,6 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
@@ -1807,6 +1809,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    actionMenuMoreOptions: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -2075,6 +2078,14 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
 
 // @public
 export interface RecordingCallFeature {
@@ -2389,6 +2400,8 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementLabel: string;
+    localVideoSelectedDescription: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }

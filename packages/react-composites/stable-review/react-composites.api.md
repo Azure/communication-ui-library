@@ -369,7 +369,7 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -551,6 +551,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -562,6 +563,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaLabel: string;
 }
 
 // @public
@@ -614,7 +616,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public

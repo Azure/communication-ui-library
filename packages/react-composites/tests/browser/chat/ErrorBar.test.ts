@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl } from '../common/utils';
+import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, dataUiId } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import {
@@ -40,6 +40,14 @@ test.describe('ErrorBar is shown correctly', async () => {
     await waitForSendMessageFailure(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
+    // test resend button in contextual menu
+    await page.click(dataUiId('chat-composite-message'));
+    await page.click(dataUiId('chat-composite-message-action-icon'));
+    await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+
+    expect(await page.screenshot()).toMatchSnapshot(
+      'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'
+    );
   });
 
   test('with expired token', async ({ page, serverUrl, users }) => {

@@ -138,6 +138,7 @@ type CallWithChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -172,13 +173,29 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setActivePane('none');
   }, [setActivePane]);
 
+  /** Constant setting of id for the parent stack of the composite */
+  const compositeParentDivId = 'callWithChatCompositeParentDiv-internal';
+
   const toggleChat = useCallback(() => {
     if (activePane === 'chat') {
       setActivePane('none');
     } else {
       setActivePane('chat');
+      // timeout is required to give the window time to render the sendbox so we have something to send focus to.
+      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
+      const chatFocusTimeout = setInterval(() => {
+        const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
+        const sendbox = callWithChatCompositeRootDiv?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+        if (sendbox !== null) {
+          sendbox.focus();
+          clearInterval(chatFocusTimeout);
+        }
+      }, 3);
+      setTimeout(() => {
+        clearInterval(chatFocusTimeout);
+      }, 300);
     }
-  }, [activePane, setActivePane]);
+  }, [activePane, setActivePane, compositeParentDivId]);
 
   const togglePeople = useCallback(() => {
     if (activePane === 'people') {
@@ -223,7 +240,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
-    <Stack verticalFill grow styles={compositeOuterContainerStyles}>
+    <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
       <Stack horizontal grow>
         {!isMobileWithActivePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
@@ -251,6 +268,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             activePane={activePane}
             /* @conditional-compile-remove(file-sharing) */
             fileSharing={props.fileSharing}
+            rtl={props.rtl}
           />
         )}
       </Stack>
@@ -301,9 +319,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
+  const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
+    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
         callWithChatAdapter={adapter}

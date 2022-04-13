@@ -53,6 +53,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const theme = useTheme();
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
+  const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({
     width: '12rem',
@@ -62,32 +63,37 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   });
 
   const fileInfoWrapperClassName = mergeStyles({
-    padding: '0.75rem',
+    padding: _pxToRem(12),
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator ? '0.5rem' : '0.75rem'
+    paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
   });
 
   const fileNameContainerClassName = mergeStyles({
-    paddingLeft: '0.25rem',
+    paddingLeft: _pxToRem(4),
+    minWidth: '75%',
     maxWidth: '75%'
   });
 
   const fileNameTextClassName = mergeStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    lineHeight: 'normal',
+    whiteSpace: 'nowrap',
+    paddingRight: _pxToRem(4)
   });
 
   const actionIconClassName = mergeStyles({
-    cursor: 'pointer',
-    padding: '0.25rem'
+    cursor: 'pointer'
   });
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
     itemProgress: {
-      padding: `${_pxToRem(2)} 0`, // Makes the progress indicator 2px thick
+      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // item progress height won't apply without an explicit padding
       // To make the progress indicator border curve along the bottom of file card.
       borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
+    },
+    progressBar: {
+      height: _pxToRem(progressBarThicknessPx)
     }
   };
 

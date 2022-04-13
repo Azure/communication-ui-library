@@ -14,6 +14,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
@@ -24,6 +25,7 @@ import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -122,13 +124,6 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // (undocumented)
-    readBy?: {
-        id: string;
-        name: string;
-    }[];
-    // (undocumented)
-    readNumber?: number;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -455,6 +450,9 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    dismissButtonAriaLabel: string;
+    failedToJoinCallGeneric: string;
+    failedToJoinCallInvalidMeetingLink: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -469,6 +467,14 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @internal (undocumented)
+export interface _ExtendedIModalProps extends IModalProps {
+    // (undocumented)
+    maxDragPosition?: _ICoordinates;
+    // (undocumented)
+    minDragPosition?: _ICoordinates;
+}
 
 // @internal
 export const _FileCard: (props: _FileCardProps) => JSX.Element;
@@ -523,6 +529,12 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
     previousButton?: IStyle;
 }
 
+// @internal (undocumented)
+export type _ICoordinates = {
+    x: number;
+    y: number;
+};
+
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
@@ -576,6 +588,7 @@ export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonPro
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
+    ariaDescription?: string;
     cameras?: OptionsDevice[];
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -619,7 +632,10 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    messageThreadReadCount?: number;
+    // (undocumented)
+    onToggleToolTip?: (isToggled: boolean) => void;
+    // (undocumented)
+    readCount?: number;
     remoteParticipantsCount?: number;
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
@@ -646,7 +662,8 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    messageThreadParticipantCount?: number;
+    participantCount?: number;
+    readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
@@ -668,6 +685,7 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    actionMenuMoreOptions: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -746,6 +764,9 @@ export interface MicrophoneButtonStrings {
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
+
+// @internal (undocumented)
+export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -906,6 +927,14 @@ export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps
     // (undocumented)
     orientation: _TileOrientation;
 }
+
+// @public
+export type ReadReceiptsBySenderId = {
+    [key: string]: {
+        lastReadMessage: string;
+        displayName: string;
+    };
+};
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1091,6 +1120,8 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementLabel: string;
+    localVideoSelectedDescription: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }

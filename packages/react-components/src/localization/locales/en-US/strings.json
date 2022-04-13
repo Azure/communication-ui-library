@@ -105,7 +105,8 @@
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
-    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "More Options"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -131,12 +132,17 @@
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
     "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
-    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen."
+    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
+    "dismissButtonAriaLabel": "Close",
+    "failedToJoinCallGeneric": "Failed to join call.",
+    "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
-    "localVideoCameraSwitcherLabel": "Cycle camera"
+    "localVideoCameraSwitcherLabel": "Switch camera",
+    "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoSelectedDescription": "{cameraName} selected"
   }
 }
