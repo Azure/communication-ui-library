@@ -341,12 +341,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
       // Async call to retrieve custom data model information to replace display name in remote tiles with camera on.
-      const newParticipantName = async (): Promise<void> => {
-        if (onFetchAvatarPersonaData) {
+      if (onFetchAvatarPersonaData) {
+        (async () => {
           const newPaticipantData = await onFetchAvatarPersonaData(participant.userId);
           participant.displayName = newPaticipantData.text;
-        }
-      };
+        })();
+      }
+      const newParticipantName = async (): Promise<void> => {};
       newParticipantName();
       return (
         <RemoteVideoTile
