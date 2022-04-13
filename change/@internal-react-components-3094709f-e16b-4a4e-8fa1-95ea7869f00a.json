@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add aria description to indicate selected camera in LocalVideoCameraButton",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
