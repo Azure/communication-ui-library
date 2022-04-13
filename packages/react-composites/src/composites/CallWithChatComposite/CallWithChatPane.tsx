@@ -51,39 +51,29 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
   const statePushed = useRef(false);
 
   useEffect(() => {
-    console.log('useRef');
-    if (statePushed.current === false && props.activePane !== 'none') {
-      console.log('STATE PUSHED');
-      window.history.pushState(null, document.title, location.href);
+    if (statePushed.current === false) {
       statePushed.current = true;
+      window.history.pushState(null, document.title, location.href);
     }
   }, [props.activePane]);
 
+  const f = () => {
+    console.log('f');
+    window.history.forward();
+  };
+
   useEffect(() => {
+    const h = () => {
+      f();
+      props.onClose();
+    };
     if (props.activePane !== 'none') {
-      console.log('READY TO GO FORWARD');
-      window.onpopstate = function () {
-        console.log('GOING FORWARD');
-        window.onpopstate = null;
-        window.history.forward();
-        props.onClose();
-      };
+      window.addEventListener('popstate', h);
     } else {
-      window.onpopstate = null;
-      if (statePushed.current === true) {
-        console.log('READY TO DOUBLE BACK');
-        window.onpopstate = function () {
-          console.log('DOUBLING BACK');
-          window.onpopstate = null;
-          window.history.back();
-        };
-        console.log('DONE READYING TO DOUBLE BACK');
-      }
+      window.removeEventListener('popstate', h);
     }
-    console.log('DONE useEffect');
     return () => {
-      console.log('LIFETIME');
-      window.onpopstate = null;
+      window.removeEventListener('popstate', h);
     };
   }, [props.activePane]);
 
