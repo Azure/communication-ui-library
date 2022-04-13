@@ -119,8 +119,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
           } else {
             props.onDownloadErrorMessage && props.onDownloadErrorMessage(response.errorMessage);
           }
-        } catch (error) {
-          console.error(error);
         } finally {
           setShowSpinner(false);
         }
