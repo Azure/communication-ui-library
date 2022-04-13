@@ -16,6 +16,7 @@ import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
+import { callingStatefulLogger } from './Logger';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -252,6 +253,7 @@ export const createStatefulCallClient = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
+  callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
     new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
