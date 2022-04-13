@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "filter participant list to not include myself",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
