@@ -70,6 +70,61 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await pages[0].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
   });
 
+  test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }, testInfo) => {
+    // Open chat pane on page 0 and send two messages
+    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
+    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await waitForMessageDelivered(pages[0]);
+
+    // Ensure typing indicator has disappeared to prevent flakey test
+    await pages[0].bringToFront();
+    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await waitForPiPiPToHaveLoaded(pages[0], 2);
+    }
+    await pages[1].waitForTimeout(1000); // ensure badge has had time to appear
+    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
+    expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
+  });
+
+  test.only('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }, testInfo) => {
+    // Open chat pane on page 0 and send two messages
+    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
+    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
+    await sendMessage(pages[0], 'Another message!');
+    await waitForMessageDelivered(pages[0]);
+
+    // Ensure typing indicator has disappeared to prevent flakey test
+    await pages[0].bringToFront();
+    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await waitForPiPiPToHaveLoaded(pages[0], 2);
+    }
+    await pages[1].waitForTimeout(1000); // ensure badge has had time to appear
+    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
+    expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-16-unread-messages.png`);
+  });
+
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
     const page = pages[1];
     if (isTestProfileDesktop(testInfo)) {
