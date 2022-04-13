@@ -44,7 +44,7 @@ export interface FileDownloadError {
  * The function needs to return a promise that resolves to a file download URL.
  * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
  *
- * Sample Usage:
+ * @example
  * ```ts
  * const fileDownloadHandler: FileDownloadHandler = async (userId, fileData) => {
  *   if (isUnauthorizedUser(userId)) {
