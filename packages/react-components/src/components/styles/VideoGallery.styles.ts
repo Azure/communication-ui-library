@@ -31,12 +31,12 @@ export const videoGalleryContainerStyle: IStackStyles = {
 /**
  * Small floating modal width and height in rem for small screen
  */
-export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 4, height: 5.5 };
+export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 64, height: 88 };
 
 /**
  * Large floating modal width and height in rem for large screen
  */
-export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
+export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 160, height: 120 };
 
 /**
  * @private
@@ -68,26 +68,27 @@ export const floatingLocalVideoModalStyle = (
   );
 };
 
-/** @private */
-export const localVideoTileStartPositionPX = {
-  bottom: 8,
-  right: 8
-};
+/**
+ * Padding equal to the amount the modal should stay inside the bounds of the container.
+ * i.e. if this is 8px, the modal should always be at least 8px inside the container at all times on all sides.
+ * @private
+ */
+export const localVideoTileOuterPaddingPX = 8;
 
 /**
  * @private
  */
 export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
   return {
-    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    minWidth: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
+    minHeight: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height),
     position: 'absolute',
-    bottom: `${_pxToRem(localVideoTileStartPositionPX.bottom)}`,
+    bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
     ...(theme.rtl
-      ? { left: `${_pxToRem(localVideoTileStartPositionPX.right)}` }
-      : { right: `${_pxToRem(localVideoTileStartPositionPX.right)}` })
+      ? { left: _pxToRem(localVideoTileOuterPaddingPX) }
+      : { right: _pxToRem(localVideoTileOuterPaddingPX) })
   };
 };
 
@@ -122,8 +123,8 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     width: shouldFloatLocalVideo
       ? isNarrow
-        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
-        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
+        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
+        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
       : '100%',
     paddingRight: '0.5rem'
   };
