@@ -719,7 +719,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // the avatar on top of the chat message and moving the chat accept/reject edit buttons
   // to a new line
   const chatThreadWidth = useContainerWidth(chatThreadRef);
-  const isNarrow = isNarrowWidth(chatThreadWidth);
+  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
