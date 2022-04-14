@@ -15,7 +15,7 @@ export type AnnouncerProps = {
 
 /**
  * @private
- * Announcer component to make Aira announcements on actions
+ * Announcer component to maker aria announcements on actions
  */
 export const Announcer = (props: AnnouncerProps): JSX.Element => {
   const { announcementString, ariaLive } = props;
