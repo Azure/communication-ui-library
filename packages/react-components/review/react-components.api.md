@@ -110,6 +110,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -290,6 +292,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -499,6 +503,32 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileMetadata: FileMetadata[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -683,6 +713,7 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    fileDownloadHandler?: FileDownloadHandler;
 };
 
 // @public

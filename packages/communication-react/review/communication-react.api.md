@@ -959,8 +959,6 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
-    Download?: JSX.Element;
-    Cancel?: JSX.Element;
 };
 
 // @public
@@ -1023,6 +1021,8 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1368,6 +1368,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -1416,8 +1418,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
-    Download?: JSX.Element | undefined;
-    Cancel?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1469,6 +1469,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     MessageResend: JSX.Element;
 };
 
@@ -1934,6 +1936,7 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    fileDownloadHandler?: FileDownloadHandler;
 };
 
 // @public

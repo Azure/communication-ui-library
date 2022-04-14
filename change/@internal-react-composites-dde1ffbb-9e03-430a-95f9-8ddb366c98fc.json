@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move file download renderer to MessageThread component",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
