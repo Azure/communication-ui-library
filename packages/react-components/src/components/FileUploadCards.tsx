@@ -24,6 +24,8 @@ export interface FileUploadCardsProps {
   onCancelFileUpload?: (fileId: string) => void;
 }
 
+const actionIconStyle = { height: '1rem' };
+
 /**
  * @internal
  */
@@ -43,7 +45,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<Icon iconName="Cancel" />}
+              actionIcon={<Icon iconName="CancelFileUpload" style={actionIconStyle} />}
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}

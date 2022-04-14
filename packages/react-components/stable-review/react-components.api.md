@@ -26,6 +26,7 @@ import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -488,6 +489,32 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileMetadata: FileMetadata[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -579,6 +606,7 @@ export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonPro
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
+    ariaDescription?: string;
     cameras?: OptionsDevice[];
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -1034,6 +1062,12 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
+// @internal
+export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
+// @internal
+export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
 // @public
 export const useTheme: () => Theme;
 
@@ -1097,6 +1131,7 @@ export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;
+    localVideoSelectedDescription: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }

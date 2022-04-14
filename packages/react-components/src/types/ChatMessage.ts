@@ -3,6 +3,8 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '../components/FileDownloadCards';
 
 /**
  * Indicate whether a chat message should be displayed merged with the message before / after it.
@@ -65,6 +67,13 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * @beta
+   * A list of files attached to the message.
+   * {@link FileMetadata}
+   */
+  attachedFilesMetadata?: FileMetadata[];
 }
 /**
  * A system message notifying that a participant was added to the chat thread.

@@ -37,7 +37,9 @@ import {
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../file-sharing';
+import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadManager } from '../file-sharing';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -254,9 +256,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async updateMessage(messageId: string, content: string): Promise<void> {
+  async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.handlers.onUpdateMessage(messageId, content);
+      return await this.handlers.onUpdateMessage(messageId, content, metadata);
     });
   }
 
