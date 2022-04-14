@@ -8,9 +8,9 @@ import { convertRemToPx } from './common';
  * A utility hook for providing the width of a parent element.
  * Returns updated width if parent/window resizes.
  * @param containerRef - Ref of a parent element whose width will be returned.
- * @private
+ * @internal
  */
-export const useContainerWidth = (containerRef: RefObject<HTMLElement>): number | undefined => {
+export const _useContainerWidth = (containerRef: RefObject<HTMLElement>): number | undefined => {
   const [width, setWidth] = useState<number | undefined>(undefined);
 
   const observer = useRef(
@@ -38,9 +38,9 @@ export const useContainerWidth = (containerRef: RefObject<HTMLElement>): number 
  * A utility hook for providing the height of a parent element.
  * Returns updated height if parent/window resizes.
  * @param containerRef - Ref of a parent element whose height will be returned.
- * @private
+ * @internal
  */
-export const useContainerHeight = (containerRef: RefObject<HTMLElement>): number | undefined => {
+export const _useContainerHeight = (containerRef: RefObject<HTMLElement>): number | undefined => {
   const [height, setHeight] = useState<number | undefined>(undefined);
 
   const observer = useRef(
