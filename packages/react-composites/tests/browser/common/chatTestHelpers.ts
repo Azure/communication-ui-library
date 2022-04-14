@@ -93,6 +93,7 @@ export const waitForTypingIndicatorHidden = async (page: Page): Promise<void> =>
 export const waitForNSeenMessages = async (page: Page, n: number): Promise<void> => {
   await waitForFunction(
     page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (args: any) => {
       // fun fact: everything inside this function body is executed by the headless browser page and not the playwright node process
       const seenMessages = document.querySelectorAll(`[data-ui-status="seen"]`);

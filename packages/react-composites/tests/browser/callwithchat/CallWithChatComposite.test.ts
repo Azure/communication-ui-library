@@ -10,7 +10,6 @@ import {
   pageClick,
   stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
-  waitForFunction,
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../common/utils';
