@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { generateCustomButtons } from './buttons/Custom';
@@ -44,6 +44,14 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     return <></>;
   }
 
+  // This useState and useEffect is to rerender the control bar when the container height and/or width change
+  const [, setWindowSize] = useState<[number, number]>([0, 0]);
+  useEffect(() => {
+    if (props.containerHeight && props.containerWidth) {
+      setWindowSize([props.containerHeight, props.containerWidth]);
+    }
+  }, [props.containerHeight, props.containerWidth]);
+
   return (
     <Stack horizontalAlign="center">
       <Stack.Item>
@@ -64,7 +72,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
           {customButtons['afterScreenShareButton']}
-          {isEnabled(options?.participantsButton) && props.containerHeight && props.containerWidth && (
+          {isEnabled(options?.participantsButton) && (
             <Participants
               option={options?.participantsButton}
               callInvitationURL={props.callInvitationURL}
@@ -74,7 +82,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {customButtons['afterParticipantsButton']}
-          {isEnabled(options?.devicesButton) && props.containerHeight && props.containerWidth && (
+          {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
           {customButtons['afterDevicesButton']}

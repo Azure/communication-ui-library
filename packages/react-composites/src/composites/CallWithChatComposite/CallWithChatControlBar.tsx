@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -106,6 +106,14 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     [props.mobileView, theme]
   );
 
+  // This useState and useEffect is to rerender the control bar when the container height and/or width change
+  const [, setWindowSize] = useState<[number, number]>([0, 0]);
+  useEffect(() => {
+    if (props.containerHeight && props.containerWidth) {
+      setWindowSize([props.containerHeight, props.containerWidth]);
+    }
+  }, [props.containerHeight, props.containerWidth]);
+
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
     return <></>;
@@ -139,14 +147,14 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                   occluding some of its content.
                 */}
               <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                {isEnabled(options.microphoneButton) && props.containerWidth && props.containerHeight && (
+                {isEnabled(options.microphoneButton) && (
                   <Microphone
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
                   />
                 )}
-                {isEnabled(options.cameraButton) && props.containerWidth && props.containerHeight && (
+                {isEnabled(options.cameraButton) && (
                   <Camera
                     displayType={options.displayType}
                     styles={commonButtonStyles}
