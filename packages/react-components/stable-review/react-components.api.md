@@ -26,6 +26,7 @@ import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -1060,6 +1061,12 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @internal
+export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
+// @internal
+export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
 
 // @public
 export const useTheme: () => Theme;
