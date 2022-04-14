@@ -66,7 +66,7 @@ const notificationIconContainerStyles = memoizeFunction(
 const notificationTextStyles = memoizeFunction(
   (theme: ITheme): IStackStyles => ({
     root: {
-      color: theme.palette.white,
+      color: 'white',
       fontSize: theme.fonts.xSmall.fontSize
     }
   })
