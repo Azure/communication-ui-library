@@ -85,7 +85,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
   });
 
-  test.only('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }, testInfo) => {
+  test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }, testInfo) => {
     // Open chat pane on page 0 and send 10 messages
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
     await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
