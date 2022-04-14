@@ -25,6 +25,9 @@ import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
+
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
@@ -46,6 +49,20 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   }
 );
 
+/* @conditional-compile-remove(file-sharing) */
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+  const fileMetadata = metadata['fileSharingMetadata'];
+  if (!fileMetadata) {
+    return [];
+  }
+  try {
+    return JSON.parse(fileMetadata);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -66,7 +83,9 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    metadata: message.metadata
+    metadata: message.metadata,
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 
@@ -146,12 +165,14 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
 
     // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
-    readReceipts.forEach((r) => {
-      readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
-        lastReadMessage: r.chatMessageId,
-        displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
-      };
-    });
+    readReceipts
+      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+      .forEach((r) => {
+        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+          lastReadMessage: r.chatMessageId,
+          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+        };
+      });
 
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>

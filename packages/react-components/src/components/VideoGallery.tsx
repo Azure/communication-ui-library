@@ -36,7 +36,7 @@ import {
   SMALL_FLOATING_MODAL_SIZE_PX,
   LARGE_FLOATING_MODAL_SIZE_PX
 } from './styles/VideoGallery.styles';
-import { isNarrowWidth, useContainerHeight, useContainerWidth } from './utils/responsive';
+import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
@@ -209,8 +209,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = useContainerWidth(containerRef);
-  const containerHeight = useContainerHeight(containerRef);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);

@@ -18,6 +18,7 @@ import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { chatStatefulLogger } from './Logger';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -346,6 +347,7 @@ export class ChatContext {
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
+        chatStatefulLogger.info(`Chat stateful client target function called: ${target}`);
         return f(...args);
       } catch (error) {
         const chatError = toChatError(target, error);
