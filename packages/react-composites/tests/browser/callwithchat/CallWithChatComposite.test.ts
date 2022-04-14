@@ -10,12 +10,19 @@ import {
   pageClick,
   stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
+  waitForFunction,
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../common/chatTestHelpers';
+import {
+  sendMessage,
+  waitForMessageDelivered,
+  waitForMessageSeen,
+  waitForNSeenMessages,
+  waitForTypingIndicatorHidden
+} from '../common/chatTestHelpers';
 import { createCallWithChatObjectsAndUsers } from '../common/fixtureHelpers';
 import { CallWithChatUserType } from '../common/fixtureTypes';
 
@@ -78,9 +85,8 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await waitForMessageDelivered(pages[0]);
 
     // Ensure typing indicator has disappeared to prevent flakey test
-    await pages[1].bringToFront();
-    const typingIndicator = await pages[1].$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+    await waitForTypingIndicatorHidden(pages[1]);
+
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
     expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
   });
@@ -93,21 +99,11 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     for (let i = 0; i < 10; i++) {
       await sendMessage(pages[0], 'Call with Chat composite is awesome!');
       // timeout between each messages to prevent chat throttling
-      await pages[0].waitForTimeout(100);
+      await waitForNSeenMessages(pages[0], i + 1);
     }
 
     // Ensure typing indicator has disappeared to prevent flakey test
-    await pages[1].bringToFront();
-    const typingIndicator = await pages[1].$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
-
-    await waitForMessageSeen(pages[0]);
-    let seenMessages = await pages[0].$$('[data-ui-status="seen"]');
-    // make sure all messages are delivered and received before taking a screenshot
-    while (seenMessages.length < 10) {
-      seenMessages = await pages[0].$$('[data-ui-status="seen"]');
-    }
-
+    await waitForTypingIndicatorHidden(pages[1]);
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
     expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
   });
