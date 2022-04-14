@@ -25,12 +25,11 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { PreparedMoreDrawer } from './PreparedMoreDrawer';
-import { ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ParticipantMenuItemsCallback, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
 import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
-import { useContainerHeight, useContainerWidth } from '../common/responsive';
 import { containerDivStyles } from '../common/ContainerRectProps';
 
 /**
@@ -161,8 +160,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const [activePane, setActivePane] = useState<CallWithChatPaneOption>('none');
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = useContainerWidth(containerRef);
-  const containerHeight = useContainerHeight(containerRef);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
 
   useEffect(() => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {

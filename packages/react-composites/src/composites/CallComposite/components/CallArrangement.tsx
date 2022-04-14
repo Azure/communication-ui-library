@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
+import { ErrorBar, ErrorBarProps, useTheme, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-import { useContainerHeight, useContainerWidth } from '../../common/responsive';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -47,8 +46,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = useContainerWidth(containerRef);
-  const containerHeight = useContainerHeight(containerRef);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
