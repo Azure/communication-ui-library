@@ -37,6 +37,10 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(file-sharing) */
+import { ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+
 import React from 'react';
 
 /**
@@ -74,6 +78,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipants: <People20Filled />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  /* @conditional-compile-remove(file-sharing) */
+  CancelFileUpload: <Dismiss16Regular />,
+  /* @conditional-compile-remove(file-sharing) */
+  DownloadFile: <ArrowDownload16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
