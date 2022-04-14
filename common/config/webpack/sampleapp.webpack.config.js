@@ -63,7 +63,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       port: 3000,
       hot: true,
       open: true,
-      contentBase: path.resolve(sampleAppDir, 'public'),
+      static: { directory: path.resolve(sampleAppDir, 'public') },
       proxy: [
         {
           path: '/token',
