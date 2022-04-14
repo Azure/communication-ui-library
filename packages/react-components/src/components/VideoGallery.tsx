@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
+import {
+  concatStyleSets,
+  ContextualMenu,
+  IDragOptions,
+  IStyle,
+  LayerHost,
+  memoizeFunction,
+  mergeStyles,
+  Stack
+} from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -337,18 +346,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
+  // Async call to retrieve custom data model information to replace display name in remote tiles with camera on.
+  const fetchAvatarPersonaDataAsync = memoizeFunction(
+    async (participant: VideoGalleryRemoteParticipant): Promise<void> => {
+      if (onFetchAvatarPersonaData) {
+        const newPaticipantData = await onFetchAvatarPersonaData(participant.userId);
+        participant.displayName = newPaticipantData.text;
+      }
+    }
+  );
+
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
       // Async call to retrieve custom data model information to replace display name in remote tiles with camera on.
-      if (onFetchAvatarPersonaData) {
-        (async () => {
-          const newPaticipantData = await onFetchAvatarPersonaData(participant.userId);
-          participant.displayName = newPaticipantData.text;
-        })();
-      }
-      const newParticipantName = async (): Promise<void> => {};
-      newParticipantName();
+      fetchAvatarPersonaDataAsync(participant);
       return (
         <RemoteVideoTile
           key={participant.userId}
@@ -364,12 +376,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     },
     [
+      fetchAvatarPersonaDataAsync,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
       onRenderAvatar,
-      showMuteIndicator,
-      onFetchAvatarPersonaData
+      showMuteIndicator
     ]
   );
 
