@@ -73,12 +73,14 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     };
     if (props.activePane !== 'none') {
       window.removeEventListener('popstate', db);
-      window.addEventListener('popstate', h);
+      setTimeout(() => window.addEventListener('popstate', h));
     } else {
       window.removeEventListener('popstate', h);
-      window.addEventListener('popstate', db);
+      setTimeout(() => window.addEventListener('popstate', db));
     }
+    console.log('useEffect');
     return () => {
+      console.log('DONE useEffect');
       window.removeEventListener('popstate', h);
       window.removeEventListener('popstate', db);
     };
