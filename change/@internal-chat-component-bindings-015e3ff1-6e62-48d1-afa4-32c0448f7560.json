@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding file metadata parsing to selectors",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
