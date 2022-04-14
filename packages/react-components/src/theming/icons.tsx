@@ -61,6 +61,13 @@ const WifiWarning16Filled = (): JSX.Element => (
   </div>
 );
 
+const MoreHorizontal18Regular = (): JSX.Element => (
+  // MoreHorizontal icons are 16px x 16px or 20px x 20px so scaling to get desired size
+  <div className={mergeStyles({ transform: 'scale(0.9)' })}>
+    <MoreHorizontal20Regular />
+  </div>
+);
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -69,6 +76,7 @@ const WifiWarning16Filled = (): JSX.Element => (
  * @public
  */
 export const DEFAULT_COMPONENT_ICONS = {
+  ChatMessageOptions: <MoreHorizontal18Regular />,
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,
   ControlButtonEndCall: <CallEnd20Filled />,
