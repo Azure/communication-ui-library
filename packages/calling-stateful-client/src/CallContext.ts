@@ -169,6 +169,7 @@ export class CallContext {
   public setCallId(newCallId: string, oldCallId: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[oldCallId];
+      call.id = newCallId;
       if (call) {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
