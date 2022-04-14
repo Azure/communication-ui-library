@@ -5,7 +5,7 @@ import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { HorizontalGallery, HorizontalGalleryStyles } from './HorizontalGallery';
 import { convertRemToPx } from './utils/common';
-import { useContainerWidth } from './utils/responsive';
+import { _useContainerWidth } from './utils/responsive';
 
 /**
  * Wrapped HorizontalGallery that adjusts the number of items per page based on the
@@ -21,7 +21,7 @@ export const ResponsiveHorizontalGallery = (props: {
 }): JSX.Element => {
   const { childWidthRem, gapWidthRem, buttonWidthRem = 0 } = props;
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = useContainerWidth(containerRef);
+  const containerWidth = _useContainerWidth(containerRef);
 
   const leftPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingLeft) : 0;
   const rightPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingRight) : 0;
