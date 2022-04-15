@@ -369,7 +369,7 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -616,7 +616,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -815,6 +815,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
     MessageResend: JSX.Element;
 };
 

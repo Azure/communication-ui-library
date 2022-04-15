@@ -14,6 +14,8 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -36,7 +38,7 @@ import {
   ParticipantsAddedListener
 } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
@@ -308,8 +310,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
   /** Update an existing message. */
-  public async updateMessage(messageId: string, content: string): Promise<void> {
-    return await this.chatAdapter.updateMessage(messageId, content);
+  public async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content, metadata);
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {

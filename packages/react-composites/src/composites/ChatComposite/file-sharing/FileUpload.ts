@@ -3,27 +3,7 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-
-/**
- * Meta Data containing information about the uploaded file.
- * @beta
- */
-export interface FileMetadata {
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
-   */
-  extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
-}
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * Contains the state attibutes of a file upload like name, progress etc.

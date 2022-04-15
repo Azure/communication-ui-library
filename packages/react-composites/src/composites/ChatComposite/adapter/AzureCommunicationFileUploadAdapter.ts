@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { FileUploadManager, FileUploadState, FileMetadata } from '../file-sharing';
+
+import { FileMetadata } from '@internal/react-components';
+import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
