@@ -1298,6 +1298,7 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
+    ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1405,6 +1406,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
     MessageResend: JSX.Element;
 };
 
