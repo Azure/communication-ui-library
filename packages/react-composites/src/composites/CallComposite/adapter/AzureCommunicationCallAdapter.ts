@@ -170,6 +170,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         callClient.offStateChange(onStateChange);
         return;
       }
+      if (this.call?.id) {
+        this.context.setCallId(this.call.id);
+      }
       this.context.updateClientState(clientState);
     };
 
