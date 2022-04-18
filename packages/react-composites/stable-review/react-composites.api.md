@@ -816,6 +816,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
     MessageResend: JSX.Element;
 };
 
