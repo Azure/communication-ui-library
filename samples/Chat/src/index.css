@@ -15,6 +15,11 @@ html,
   min-height: '420px';
 }
 
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
 .wrapper {
   height: 100%;
   display: flex;
