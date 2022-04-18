@@ -17,6 +17,7 @@ html,
 
 html,
 body {
+  /* Prevent pull down to refresh behavior on mobile */
   overscroll-behavior-y: contain;
 }
 
