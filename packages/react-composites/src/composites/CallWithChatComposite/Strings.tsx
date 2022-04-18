@@ -94,7 +94,11 @@ export interface CallWithChatCompositeStrings {
    */
   dismissSidePaneButton: string;
   /**
-   * Aria label string for return to call button
+   * Aria Description string for return to call button
+   */
+  returnToCallButtonAriaDescription: string;
+  /**
+   * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel: string;
 }
