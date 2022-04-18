@@ -19,6 +19,7 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
+import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -39,6 +40,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /**
+   * Optional function called when someone clicks on the file download icon.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -58,6 +63,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const theme = useTheme();
 
   const {
+    userId,
     message,
     onRemoveClick,
     onResendClick,
@@ -69,7 +75,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     remoteParticipantsCount = 0,
     onRenderAvatar,
     showMessageStatus,
-    messageStatus
+    messageStatus,
+    fileDownloadHandler
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -108,6 +115,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  const defaultOnRenderFileDownloads = useCallback(
+    () => (
+      <_FileDownloadCards
+        userId={userId}
+        fileMetadata={message['attachedFilesMetadata'] || []}
+        downloadHandler={fileDownloadHandler}
+      />
+    ),
+    [message, fileDownloadHandler, userId]
+  );
+
   const chatMessage = (
     <>
       <div ref={messageRef}>
@@ -118,10 +136,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           content={
             <div>
               <ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />
-              {
-                /* @conditional-compile-remove(file-sharing) */
-                props.onRenderFileDownloads && props.onRenderFileDownloads(props.userId, message)
-              }
+              {props.onRenderFileDownloads
+                ? props.onRenderFileDownloads(userId, message)
+                : defaultOnRenderFileDownloads()}
             </div>
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
