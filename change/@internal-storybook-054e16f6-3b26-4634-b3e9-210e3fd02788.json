@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "storybook: Give user feedback when call ends in stateful example",
+  "packageName": "@internal/storybook",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

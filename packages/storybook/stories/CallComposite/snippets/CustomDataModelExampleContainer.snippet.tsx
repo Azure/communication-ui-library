@@ -5,11 +5,11 @@ import {
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  createAzureCommunicationCallAdapter,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -25,40 +25,25 @@ export type ContainerProps = {
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
-  const [adapter, setAdapter] = useState<CallAdapter>();
-
-  useEffect(() => {
-    if (props.token && props.locator) {
-      const callLocator = isTeamsMeetingLink(props.locator)
-        ? { meetingLink: props.locator }
-        : { groupId: props.locator };
-      const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationCallAdapter({
-            userId: props.userId,
-            displayName: props.displayName,
-            credential: new AzureCommunicationTokenCredential(props.token),
-            locator: callLocator
-          })
-        );
-      };
-      createAdapter();
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
+  const locator = useMemo(
+    () => (isTeamsMeetingLink(props.locator) ? { meetingLink: props.locator } : { groupId: props.locator }),
+    [props.locator]
+  );
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      userId: props.userId,
+      displayName: props.displayName,
+      credential,
+      locator
+    },
+    undefined,
+    async (adapter: CallAdapter): Promise<void> => {
+      await adapter.leaveCall().catch((e) => {
+        console.error('Failed to leave call', e);
+      });
     }
-  }, [props]);
-
-  useEffect(() => {
-    return () => {
-      (async () => {
-        if (!adapter) {
-          return;
-        }
-        await adapter.leaveCall().catch((e) => {
-          console.error('Failed to leave call', e);
-        });
-        adapter.dispose();
-      })();
-    };
-  }, [adapter]);
+  );
 
   // Data model injection: Contoso provides custom initials for the user avatar.
   //

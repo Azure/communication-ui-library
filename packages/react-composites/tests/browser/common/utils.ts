@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page } from '@playwright/test';
-import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
+import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
+import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
@@ -109,10 +109,10 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
- * Wait for the MeetingComposite on a page to fully load.
+ * Wait for the CallWithChatComposite on a page to fully load.
  */
-export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> => {
-  // Meeting composite initial page is the same as call composite
+export const waitForCallWithChatCompositeToLoad = async (page: Page): Promise<void> => {
+  // CallWithChatComposite initial page is the same as call composite
   await waitForCallCompositeToLoad(page);
 };
 
@@ -141,6 +141,11 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
       },
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
+  }
+
+  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
+  for (const page of pages) {
+    await clickOutsideOfPage(page);
   }
 };
 
@@ -174,7 +179,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       (args: any) => {
         const videoNodes = document.querySelectorAll('video');
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        const allVideosLoaded = Array.from(videoNodes).every(
+          (videoNode) => !!videoNode && videoNode.readyState === 4 && !videoNode.paused
+        );
         return correctNoOfVideos && allVideosLoaded;
       },
       {
@@ -182,6 +189,47 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       }
     );
   }
+
+  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
+  for (const page of pages) {
+    await clickOutsideOfPage(page);
+  }
+};
+
+/**
+ * Wait for PiPiP it's videos to have loaded.
+ */
+export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
+  await page.bringToFront();
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      // Check pipip is a valid element on screen
+      const pipip = document.querySelector<HTMLElement>(args.pipipSelector);
+      if (!pipip) {
+        return false;
+      }
+
+      // Check there are the correct number of tiles inside the pipip
+      const tileNodes = pipip.querySelectorAll<HTMLElement>(args.participantTileSelector);
+      if (tileNodes.length !== args.expectedTileCount) {
+        return false;
+      }
+
+      // Check the videos are ready in each tile
+      const allVideosLoaded = Array.from(tileNodes).every((tileNode) => {
+        const videoNode = tileNode?.querySelector('video');
+        return videoNode && videoNode.readyState === 4;
+      });
+      return allVideosLoaded;
+    },
+    {
+      pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
+      participantTileSelector: dataUiId('video-tile'),
+      expectedTileCount: videosEnabledCount
+    }
+  );
 };
 
 /**
@@ -190,8 +238,20 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
   }, messageTimestampId);
+  // Wait for timestamps to have been updated in the DOM
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
+      return timestampNodes.every((node) => node.textContent === 'timestamp');
+    },
+    {
+      messageTimestampId: messageTimestampId
+    }
+  );
 };
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
@@ -211,10 +271,34 @@ export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
  */
 export const buildUrl = (
   serverUrl: string,
-  user: ChatUserType | CallUserType | MeetingUserType,
+  user: ChatUserType | CallUserType | CallWithChatUserType,
   qArgs?: { [key: string]: string }
 ): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
 
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
+export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
+  const testName = testInfo.project.name.toLowerCase();
+  return testName.includes('desktop') ? true : false;
+};
+
+/**
+ * Helper function to determine whether to skip a test for a beta feature in stable test run.
+ */
+export const isTestProfileStableFlavor = (): boolean => {
+  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
+  if (flavor === 'stable') {
+    return true;
+  } else if (flavor === 'beta') {
+    return false;
+  } else {
+    throw 'Faled to find Communication React Flavor env variable';
+  }
+};

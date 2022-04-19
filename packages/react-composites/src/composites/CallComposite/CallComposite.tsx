@@ -5,12 +5,11 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallControlOptions } from './components/CallControls';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
@@ -18,6 +17,7 @@ import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import { CallControlOptions } from './types/CallControlOptions';
 
 /**
  * Props for {@link CallComposite}.
@@ -151,7 +151,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  * A customizable UI composite for calling experience.
  *
  * @remarks Call composite min width/height are as follow:
- * - mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)
+ * - mobile: 17.5rem x 21rem (280px x 336px, with default rem at 16px)
  * - desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)
  *
  * @public
@@ -182,7 +182,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   return (
     <div className={mainScreenContainerClassName}>
-      <BaseComposite {...props}>
+      <BaseProvider {...props}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
@@ -192,7 +192,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             options={options}
           />
         </CallAdapterProvider>
-      </BaseComposite>
+      </BaseProvider>
     </div>
   );
 };

@@ -6,22 +6,52 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage } from '../../types';
+import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
+import { FileDownloadHandler } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
+  userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
+  /**
+   * Optional callback called when message is sent
+   */
+  onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
+  messageStatus?: string;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
+  showMessageStatus?: boolean;
   /**
    * Inline the accept and reject edit buttons when editing a message.
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineAcceptRejectEditButtons: boolean;
+  /**
+   * Optional callback to render uploaded files in the message component.
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /**
+   * Optional function called when someone clicks on the file download icon.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
+  remoteParticipantsCount?: number;
+  onActionButtonClick: (
+    message: ChatMessage,
+    setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void
+  ) => void;
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 };
 
 /**
@@ -32,12 +62,20 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, message } = props;
+  const { onDeleteMessage, onSendMessage, message } = props;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
-  }, [message.messageId, onDeleteMessage]);
+    // when fail to send, message does not have message id, delete message using clientmessageid
+    else if (onDeleteMessage && message.clientMessageId) {
+      onDeleteMessage(message.clientMessageId);
+    }
+  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
+  const onResendClick = useCallback(() => {
+    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
+    onSendMessage && onSendMessage(message.content ?? '');
+  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
 
   if (props.message.messageType !== 'chat') {
     return <></>;
@@ -59,6 +97,14 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       />
     );
   } else {
-    return <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />;
+    return (
+      <ChatMessageComponentAsMessageBubble
+        {...props}
+        onRemoveClick={onRemoveClick}
+        onEditClick={onEditClick}
+        onResendClick={onResendClick}
+        onRenderAvatar={props.onRenderAvatar}
+      />
+    );
   }
 };

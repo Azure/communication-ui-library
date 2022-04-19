@@ -5,7 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatMessage, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
+import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 /**
@@ -23,7 +23,7 @@ export type ChatHandlers = {
   onRemoveParticipant: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-  onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
@@ -40,6 +40,7 @@ export type ChatHandlers = {
 export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatHandlers => {
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
+    let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions) => {
         const sendMessageRequest = {
@@ -48,8 +49,8 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.sendMessage(sendMessageRequest, options);
       },
-      onUpdateMessage: async (messageId: string, content: string) => {
-        await chatThreadClient.updateMessage(messageId, { content });
+      onUpdateMessage: async (messageId: string, content: string, metadata?: Record<string, string>) => {
+        await chatThreadClient.updateMessage(messageId, { content, metadata });
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);
@@ -73,19 +74,35 @@ export const createDefaultChatHandlers = memoizeOne(
           // Also allows recovery via retries in case of transient errors.
           messageIterator = chatThreadClient.listMessages({ maxPageSize: 50 });
         }
-
+        if (readReceiptIterator === undefined) {
+          readReceiptIterator = chatThreadClient.listReadReceipts();
+        }
+        // get the earliest message time
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
+        let earliestTime = Number.MAX_SAFE_INTEGER;
         while (remainingMessagesToGet >= 1) {
           const message = await messageIterator.next();
+          if (message?.value?.id) {
+            if (parseInt(message.value.id) < earliestTime) {
+              earliestTime = parseInt(message.value.id);
+            }
+          }
+
           if (message.value?.type && message.value.type === 'text') {
             remainingMessagesToGet--;
           }
+
           // We have traversed all messages in this thread
           if (message.done) {
             isAllChatMessagesLoaded = true;
             break;
           }
+        }
+        // keep fetching read receipts until read receipt time < earlist message time
+        let readReceipt = await readReceiptIterator.next();
+        while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
+          readReceipt = await readReceiptIterator.next();
         }
         return isAllChatMessagesLoaded;
       }

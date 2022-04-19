@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatBaseSelectorProps, getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import {
+  ChatBaseSelectorProps,
+  getChatMessages,
+  getIsLargeGroup,
+  getLatestReadTime,
+  getParticipants,
+  getReadReceipts,
+  getUserId
+} from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
@@ -10,11 +18,15 @@ import {
   Message,
   CommunicationParticipant,
   SystemMessage,
-  MessageContentType
+  MessageContentType,
+  ReadReceiptsBySenderId
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
+
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -37,6 +49,20 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   }
 );
 
+/* @conditional-compile-remove(file-sharing) */
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+  const fileMetadata = metadata['fileSharingMetadata'];
+  if (!fileMetadata) {
+    return [];
+  }
+  try {
+    return JSON.parse(fileMetadata);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -57,7 +83,9 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    metadata: message.metadata
+    metadata: message.metadata,
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 
@@ -119,8 +147,33 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  * @public
  */
 export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
-  (userId, chatMessages, latestReadTime, isLargeGroup) => {
+  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
+    const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
+
+    // get number of participants
+    // filter out the non valid participants (no display name)
+    // Read Receipt details will be disabled when participant count is 0
+    const participantCount = isTeamsInterop
+      ? undefined
+      : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
+
+    // creating key value pairs of senderID: last read message information
+
+    const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
+
+    // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
+    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+    readReceipts
+      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+      .forEach((r) => {
+        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+          lastReadMessage: r.chatMessageId,
+          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+        };
+      });
+
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
       Object.values(chatMessages)
@@ -136,22 +189,24 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             message.clientMessageId !== undefined
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
-        .map((message) =>
-          memoizedFn(
+        .map((message) => {
+          return memoizedFn(
             message.id ?? message.clientMessageId,
             message,
             userId,
             message.createdOn <= latestReadTime,
             isLargeGroup
-          )
-        )
+          );
+        })
     );
 
-    updateMessagesWithAttached(convertedMessages, userId);
+    updateMessagesWithAttached(convertedMessages);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
-      messages: convertedMessages
+      messages: convertedMessages,
+      participantCount,
+      readReceiptsBySenderId
     };
   }
 );

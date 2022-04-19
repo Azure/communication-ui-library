@@ -66,8 +66,13 @@ export const navigateToHomePage = (): void => {
   window.location.href = window.location.href.split('?')[0];
 };
 
+export const WEB_APP_TITLE = document.title;
+
 declare let __BUILDTIME__: string; // Injected by webpack
 export const buildTime = __BUILDTIME__;
 
 declare let __CALLINGVERSION__: string; // Injected by webpack
 export const callingSDKVersion = __CALLINGVERSION__;
+
+declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
+export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;

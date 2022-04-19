@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add joincall failure strings to ErrorBar component",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

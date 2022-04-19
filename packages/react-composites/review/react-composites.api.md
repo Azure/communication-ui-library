@@ -6,10 +6,9 @@
 
 /// <reference types="react" />
 
-import type { AudioDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
@@ -19,31 +18,28 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationUserKind } from '@azure/communication-common';
-import { ComponentIcons } from '@internal/react-components';
+import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { FileDownloadHandler } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
-import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
-import type { PermissionConstraints } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
-import { PhoneNumberKind } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import type { SendMessageOptions } from '@azure/communication-chat';
+import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { UnknownIdentifierKind } from '@azure/communication-common';
-import type { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
@@ -86,21 +82,30 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @public
+export type AzureCommunicationCallWithChatAdapterArgs = {
+    endpoint: string;
+    userId: CommunicationUserIdentifier;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+};
+
+// @public
+export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
+    callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
+    callAgent: CallAgent;
+    callClient: StatefulCallClient;
+    chatClient: StatefulChatClient;
+    chatThreadClient: ChatThreadClient;
+};
+
+// @public
 export type AzureCommunicationChatAdapterArgs = {
     endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
-};
-
-// @beta
-export type AzureCommunicationMeetingAdapterArgs = {
-    endpoint: string;
-    userId: CommunicationUserIdentifier;
-    displayName: string;
-    credential: CommunicationTokenCredential;
-    meetingLocator: CallAndChatLocator | TeamsMeetingLinkLocator;
 };
 
 // @public
@@ -158,7 +163,7 @@ export interface CallAdapterDeviceManagement {
 // Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
 //
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -193,9 +198,10 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
-// @beta
+// @public
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+    // Warning: (ae-incompatible-release-tags) The symbol "callLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
+    callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -203,7 +209,50 @@ export interface CallAndChatLocator {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
-export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'ErrorBarCallCameraAccessDenied' | 'ErrorBarCallCameraAlreadyInUse' | 'ErrorBarCallLocalVideoFreeze' | 'ErrorBarCallMacOsCameraAccessDenied' | 'ErrorBarCallMacOsMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneAccessDenied' | 'ErrorBarCallMicrophoneMutedBySystem' | 'ErrorBarCallNetworkQualityLow' | 'ErrorBarCallNoMicrophoneFound' | 'ErrorBarCallNoSpeakerFound' | 'HorizontalGalleryLeftButton' | 'HorizontalGalleryRightButton' | 'LobbyScreenConnectingToCall' | 'LobbyScreenWaitingToBeAdmitted' | 'LocalDeviceSettingsCamera' | 'LocalDeviceSettingsMic' | 'LocalDeviceSettingsSpeaker' | 'LocalPreviewPlaceholder' | 'Muted' | 'NetworkReconnectIcon' | 'NoticePageAccessDeniedTeamsMeeting' | 'NoticePageJoinCallFailedDueToNoNetwork' | 'NoticePageLeftCall' | 'NoticePageRemovedFromCall' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'ParticipantItemScreenShareStart' | 'VideoTileMicOff' | /* @conditional-compile-remove-from(stable) */ 'LocalCameraSwitch' | /* @conditional-compile-remove-from(stable) Chat_Notification_Icon */ 'ControlBarButtonBadgeIcon'>>;
+export type CallCompositeIcons = {
+    ControlButtonCameraOff?: JSX.Element;
+    ControlButtonCameraOn?: JSX.Element;
+    ControlButtonEndCall?: JSX.Element;
+    ControlButtonMicOff?: JSX.Element;
+    ControlButtonMicOn?: JSX.Element;
+    ControlButtonOptions?: JSX.Element;
+    ControlButtonParticipants?: JSX.Element;
+    ControlButtonScreenShareStart?: JSX.Element;
+    ControlButtonScreenShareStop?: JSX.Element;
+    ErrorBarCallCameraAccessDenied?: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse?: JSX.Element;
+    ErrorBarCallLocalVideoFreeze?: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallNetworkQualityLow?: JSX.Element;
+    ErrorBarCallNoMicrophoneFound?: JSX.Element;
+    ErrorBarCallNoSpeakerFound?: JSX.Element;
+    HorizontalGalleryLeftButton?: JSX.Element;
+    HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
+    LocalDeviceSettingsCamera?: JSX.Element;
+    LocalDeviceSettingsMic?: JSX.Element;
+    LocalDeviceSettingsSpeaker?: JSX.Element;
+    LocalPreviewPlaceholder?: JSX.Element;
+    Muted?: JSX.Element;
+    NetworkReconnectIcon?: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
+    NoticePageLeftCall?: JSX.Element;
+    NoticePageRemovedFromCall?: JSX.Element;
+    OptionsCamera?: JSX.Element;
+    OptionsMic?: JSX.Element;
+    OptionsSpeaker?: JSX.Element;
+    ParticipantItemMicOff?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    ParticipantItemScreenShareStart?: JSX.Element;
+    VideoTileMicOff?: JSX.Element;
+    LocalCameraSwitch?: JSX.Element;
+};
 
 // @public
 export type CallCompositeOptions = {
@@ -301,6 +350,268 @@ export type CallParticipantsLocator = {
     participantIDs: string[];
 };
 
+// @public
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+}
+
+// @public
+export interface CallWithChatAdapterManagement {
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta (undocumented)
+    cancelFileUpload: (id: string) => void;
+    // @beta (undocumented)
+    clearFileUploads: () => void;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    deleteMessage(messageId: string): Promise<void>;
+    disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    fetchInitialData(): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    leaveCall(forEveryone?: boolean): Promise<void>;
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    mute(): Promise<void>;
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // @beta (undocumented)
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // @beta (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    removeParticipant(userId: string): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendTypingIndicator(): Promise<void>;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    startCall(participants: string[]): Call | undefined;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
+    startScreenShare(): Promise<void>;
+    stopCamera(): Promise<void>;
+    stopScreenShare(): Promise<void>;
+    unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // @beta (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+}
+
+// @public
+export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, CallWithChatClientState {
+}
+
+// @public
+export interface CallWithChatAdapterSubscriptions {
+    // (undocumented)
+    off(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+    // (undocumented)
+    off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    off(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    off(event: 'chatError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
+    // (undocumented)
+    on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    on(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
+    // (undocumented)
+    on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+    // (undocumented)
+    on(event: 'chatError', listener: (e: AdapterError) => void): void;
+}
+
+// @public
+export interface CallWithChatAdapterUiState {
+    // @beta
+    fileUploads?: FileUploadsUiState;
+    isLocalPreviewMicrophoneEnabled: boolean;
+    page: CallCompositePage;
+}
+
+// @public
+export interface CallWithChatClientState {
+    call?: CallState;
+    chat?: ChatThreadClientState;
+    devices: DeviceManagerState;
+    displayName: string | undefined;
+    isTeamsCall: boolean;
+    latestCallErrors: AdapterErrors;
+    latestChatErrors: AdapterErrors;
+    userId: CommunicationIdentifierKind;
+}
+
+// @public
+export const CallWithChatComposite: (props: CallWithChatCompositeProps) => JSX.Element;
+
+// @public
+export type CallWithChatCompositeIcons = {
+    ChevronLeft?: JSX.Element;
+    ControlBarChatButtonActive?: JSX.Element;
+    ControlBarChatButtonInactive?: JSX.Element;
+    ControlBarPeopleButton?: JSX.Element;
+    Link?: JSX.Element;
+    MoreDrawerMicrophones?: JSX.Element;
+    MoreDrawerPeople?: JSX.Element;
+    MoreDrawerSelectedMicrophone?: JSX.Element;
+    MoreDrawerSelectedSpeaker?: JSX.Element;
+    MoreDrawerSpeakers?: JSX.Element;
+    ControlButtonCameraOff?: JSX.Element;
+    ControlButtonCameraOn?: JSX.Element;
+    ControlButtonEndCall?: JSX.Element;
+    ControlButtonMicOff?: JSX.Element;
+    ControlButtonMicOn?: JSX.Element;
+    ControlButtonOptions?: JSX.Element;
+    ControlButtonScreenShareStart?: JSX.Element;
+    ControlButtonScreenShareStop?: JSX.Element;
+    ErrorBarCallCameraAccessDenied?: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse?: JSX.Element;
+    ErrorBarCallLocalVideoFreeze?: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallNetworkQualityLow?: JSX.Element;
+    ErrorBarCallNoMicrophoneFound?: JSX.Element;
+    ErrorBarCallNoSpeakerFound?: JSX.Element;
+    HorizontalGalleryLeftButton?: JSX.Element;
+    HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
+    LocalDeviceSettingsCamera?: JSX.Element;
+    LocalDeviceSettingsMic?: JSX.Element;
+    LocalDeviceSettingsSpeaker?: JSX.Element;
+    LocalPreviewPlaceholder?: JSX.Element;
+    Muted?: JSX.Element;
+    NetworkReconnectIcon?: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
+    NoticePageLeftCall?: JSX.Element;
+    NoticePageRemovedFromCall?: JSX.Element;
+    OptionsCamera?: JSX.Element;
+    OptionsMic?: JSX.Element;
+    OptionsSpeaker?: JSX.Element;
+    ParticipantItemMicOff?: JSX.Element;
+    ParticipantItemScreenShareStart?: JSX.Element;
+    VideoTileMicOff?: JSX.Element;
+    LocalCameraSwitch?: JSX.Element;
+    EditBoxCancel?: JSX.Element;
+    EditBoxSubmit?: JSX.Element;
+    MessageDelivered?: JSX.Element;
+    MessageEdit?: JSX.Element;
+    MessageFailed?: JSX.Element;
+    MessageRemove?: JSX.Element;
+    MessageSeen?: JSX.Element;
+    MessageSending?: JSX.Element;
+    SendBoxSend?: JSX.Element;
+    SendBoxSendHovered?: JSX.Element;
+    SendBoxAttachFile?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+};
+
+// @public
+export type CallWithChatCompositeOptions = {
+    callControls?: boolean | CallWithChatControlOptions;
+    fileSharing?: FileSharingOptions;
+};
+
+// @public
+export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
+    // (undocumented)
+    adapter: CallWithChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    formFactor?: 'desktop' | 'mobile';
+    joinInvitationURL?: string;
+    options?: CallWithChatCompositeOptions;
+}
+
+// @public
+export interface CallWithChatCompositeStrings {
+    chatButtonLabel: string;
+    chatButtonNewMessageNotificationLabel: string;
+    chatButtonTooltipClose: string;
+    chatButtonTooltipClosedWithMessageCount: string;
+    chatButtonTooltipOpen: string;
+    chatPaneTitle: string;
+    copyInviteLinkButtonLabel: string;
+    dismissSidePaneButton: string;
+    moreDrawerButtonLabel: string;
+    moreDrawerButtonTooltip: string;
+    moreDrawerMicrophoneMenuTitle: string;
+    moreDrawerSpeakerMenuTitle: string;
+    peopleButtonLabel: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
+    pictureInPictureTileAriaLabel: string;
+    removeMenuLabel: string;
+    returnToCallButtonAriaDescription: string;
+    returnToCallButtonAriaLabel: string;
+}
+
+// @public
+export interface CallWithChatControlOptions {
+    cameraButton?: boolean;
+    chatButton?: boolean;
+    displayType?: CallControlDisplayType;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    peopleButton?: boolean;
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+}
+
+// @public
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+
 // Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
 //
 // @public
@@ -337,7 +648,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
 }
 
 // @public
@@ -358,20 +669,35 @@ export type ChatCompositeClientState = {
 };
 
 // @public
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit' | /* @conditional-compile-remove-from(stable): FILE_SHARING */ 'SendBoxAttachFile'>>;
+export type ChatCompositeIcons = {
+    EditBoxCancel?: JSX.Element;
+    EditBoxSubmit?: JSX.Element;
+    MessageDelivered?: JSX.Element;
+    MessageEdit?: JSX.Element;
+    MessageFailed?: JSX.Element;
+    MessageRemove?: JSX.Element;
+    MessageSeen?: JSX.Element;
+    MessageSending?: JSX.Element;
+    ParticipantItemOptions?: JSX.Element;
+    ParticipantItemOptionsHovered?: JSX.Element;
+    SendBoxSend?: JSX.Element;
+    SendBoxSendHovered?: JSX.Element;
+    SendBoxAttachFile?: JSX.Element;
+};
 
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
-    autoFocus?: 'sendBoxTextField' | false;
+    autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
 };
 
 // @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    formFactor?: 'desktop' | 'mobile';
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
@@ -425,26 +751,10 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
-export const COMPOSITE_ONLY_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
-};
+export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
 // @public
-export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
 
 // @public
 export interface CompositeLocale {
@@ -455,8 +765,8 @@ export interface CompositeLocale {
 // @public
 export interface CompositeStrings {
     call: CallCompositeStrings;
+    callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
-    meeting: MeetingCompositeStrings;
 }
 
 // @public
@@ -466,13 +776,16 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+
+// @public
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+
+// @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
-
-// @beta
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, meetingLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -483,7 +796,7 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
 
 // @beta
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
@@ -492,21 +805,19 @@ export interface CustomCallControlButtonProps extends ControlBarButtonProps {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    LobbyScreenConnectingToCall: JSX.Element;
-    LobbyScreenWaitingToBeAdmitted: JSX.Element;
-    LocalDeviceSettingsCamera: JSX.Element;
-    LocalDeviceSettingsMic: JSX.Element;
-    LocalDeviceSettingsSpeaker: JSX.Element;
-    LocalPreviewPlaceholder: JSX.Element;
-    LocalCameraSwitch: JSX.Element;
-    ControlBarButtonBadgeIcon: JSX.Element;
-    Muted: JSX.Element;
-    NetworkReconnectIcon: JSX.Element;
-    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
-    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
-    NoticePageLeftCall: JSX.Element;
-    NoticePageRemovedFromCall: JSX.Element;
-    SendBoxAttachFile: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    SendBoxAttachFile?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -516,8 +827,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -530,22 +839,39 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallNoSpeakerFound: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element | undefined;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
+    LocalDeviceSettingsCamera?: JSX.Element | undefined;
+    LocalDeviceSettingsMic?: JSX.Element | undefined;
+    LocalDeviceSettingsSpeaker?: JSX.Element | undefined;
+    LocalPreviewPlaceholder?: JSX.Element | undefined;
+    Muted?: JSX.Element | undefined;
+    NetworkReconnectIcon?: JSX.Element | undefined;
+    NoticePageAccessDeniedTeamsMeeting?: JSX.Element | undefined;
+    NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
+    NoticePageLeftCall?: JSX.Element | undefined;
+    NoticePageRemovedFromCall?: JSX.Element | undefined;
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
     ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    LocalCameraSwitch?: JSX.Element | undefined;
+    ChevronLeft?: JSX.Element | undefined;
+    ControlBarChatButtonActive?: JSX.Element | undefined;
+    ControlBarChatButtonInactive?: JSX.Element | undefined;
+    ControlBarPeopleButton?: JSX.Element | undefined;
+    Link?: JSX.Element | undefined;
+    MoreDrawerMicrophones?: JSX.Element | undefined;
+    MoreDrawerPeople?: JSX.Element | undefined;
+    MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
+    MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
+    MoreDrawerSpeakers?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
+    MessageResend: JSX.Element;
 };
 
 // @public
@@ -563,15 +889,9 @@ export interface Disposable {
 }
 
 // @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
-// @beta
 export interface FileSharingOptions {
     accept?: string;
+    downloadHandler?: FileDownloadHandler;
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -579,37 +899,42 @@ export interface FileSharingOptions {
 // @beta (undocumented)
 export interface FileUploadAdapter {
     // (undocumented)
-    cancelFileUpload?: (id: string) => void;
+    cancelFileUpload: (id: string) => void;
     // (undocumented)
-    clearFileUploads?: () => void;
+    clearFileUploads: () => void;
     // (undocumented)
-    registerFileUploads?: (fileUploads: ObservableFileUpload[]) => void;
-}
-
-// @beta (undocumented)
-export interface FileUploadEventEmitter {
-    off(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    off(event: 'uploadFailed', listener: UploadFailedListener): void;
-    on(event: 'uploadProgressed', listener: UploadProgressListener): void;
-    on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-    on(event: 'uploadFailed', listener: UploadFailedListener): void;
+    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    // (undocumented)
+    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // (undocumented)
+    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    // (undocumented)
+    updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
 // @beta
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadError = {
+    message: string;
+    timestamp: number;
+};
+
+// @beta
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {
-    file: File;
+    file?: File;
+    id: string;
     notifyUploadCompleted: (metadata: FileMetadata) => void;
     notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressed: (value: number) => void;
+    notifyUploadProgressChanged: (value: number) => void;
 }
 
 // @beta
 export interface FileUploadState {
-    errorMessage?: string;
+    error?: FileUploadError;
     filename: string;
     id: string;
     metadata?: FileMetadata;
@@ -641,147 +966,6 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
 };
 
-// @beta
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
-}
-
-// @beta
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
-    displayName: string | undefined;
-    meeting: MeetingState | undefined;
-    userId: CommunicationIdentifierKind;
-}
-
-// @beta
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
-    joinMeeting(microphoneOn?: boolean): Call | undefined;
-    leaveMeeting(): Promise<void>;
-    removeParticipant(userId: string): Promise<void>;
-    startMeeting(participants: string[]): Call | undefined;
-}
-
-// @beta
-export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {
-}
-
-// @beta
-export interface MeetingAdapterSubscriptions {
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    off(event: 'meetingEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    on(event: 'meetingEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    on(event: 'messageRead', listener: MessageReadListener): void;
-}
-
-// @beta
-export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
-    page: MeetingCompositePage;
-}
-
-// @beta
-export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
-    chatButton?: boolean;
-    peopleButton?: boolean;
-}
-
-// @beta
-export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
-
-// @beta
-export type MeetingCompositeOptions = {
-    callControls?: boolean | MeetingCallControlOptions;
-};
-
-// @beta
-export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
-
-// @beta
-export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
-    fluentTheme?: PartialTheme | Theme;
-    formFactor?: 'desktop' | 'mobile';
-    // (undocumented)
-    meetingAdapter: MeetingAdapter;
-    meetingInvitationURL?: string;
-    options?: MeetingCompositeOptions;
-}
-
-// @public
-export interface MeetingCompositeStrings {
-    chatButtonLabel: string;
-    chatPaneTitle: string;
-    peopleButtonLabel: string;
-    peoplePaneSubTitle: string;
-    peoplePaneTitle: string;
-    pictureInPictureTileAriaLabel: string;
-}
-
-// @beta
-export type MeetingEndReason = CallEndReason;
-
-// @beta
-export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
-
-// @beta
-export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-    meetingEndReason?: MeetingEndReason;
-}
-
-// @beta
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
-    id: string;
-    meetingEndReason?: MeetingEndReason;
-    participants: {
-        [key: string]: MeetingParticipant;
-    };
-    participantsEnded: {
-        [keys: string]: MeetingParticipant;
-    };
-}
-
 // @public
 export type MessageReadListener = (event: {
     message: ChatMessage;
@@ -800,12 +984,6 @@ export type MessageSentListener = MessageReceivedListener;
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
     type: 'network';
 };
-
-// @beta
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-    file: File;
-    id: string;
-}
 
 // @public
 export type ParticipantsAddedListener = (event: {
@@ -834,14 +1012,14 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-// @beta
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+// @public
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
-// @beta
-export type UploadFailedListener = (id: string, message: string) => void;
+// @public
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
 
-// @beta
-export type UploadProgressListener = (id: string, value: number) => void;
+// @public
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
 
 // (No @packageDocumentation comment for this package)
 

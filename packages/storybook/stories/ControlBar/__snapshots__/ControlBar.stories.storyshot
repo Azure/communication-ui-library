@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control Bar 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-117 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-117"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -185,7 +185,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
-                aria-label="Share your screen"
+                aria-label="Present your screen"
                 className="ms-Button ms-Button--default root-17"
                 data-is-focusable={true}
                 onClick={[Function]}

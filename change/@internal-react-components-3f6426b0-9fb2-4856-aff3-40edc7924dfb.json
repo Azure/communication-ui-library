@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "add data-ui-id to message tooltips and contextual menu for ui tests, also sort read receipt list for contextual menu",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

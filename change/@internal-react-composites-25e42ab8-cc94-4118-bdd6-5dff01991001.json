@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add adapter ui state and selectors for file sharing",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

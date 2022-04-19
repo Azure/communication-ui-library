@@ -46,7 +46,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
-      diagnostics?.network.latest.networkReceiveQuality?.value == DiagnosticQuality.Poor
+      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
     }
@@ -88,6 +88,17 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.startVideo', 'startVideoGeneric');
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
+
+    if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
+      appendActiveErrorIfDefined(
+        activeErrorMessages,
+        latestErrors,
+        'CallAgent.join',
+        'failedToJoinCallInvalidMeetingLink'
+      );
+    } else {
+      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
+    }
 
     // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
     activeErrorMessages.splice(maxErrorCount);

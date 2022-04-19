@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { FileUploadManager } from './FileUpload';
 
 /**
@@ -11,4 +10,4 @@ import { FileUploadManager } from './FileUpload';
  * @param userId - The user ID of the user uploading the file.
  * @param fileUploads - The list of uploaded files. Each file is represented by an {@link FileUpload} object.
  */
-export type FileUploadHandler = (userId: CommunicationIdentifierKind, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;

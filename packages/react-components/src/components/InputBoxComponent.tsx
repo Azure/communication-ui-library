@@ -2,7 +2,17 @@
 // Licensed under the MIT license.
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
-import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets, IconButton } from '@fluentui/react';
+import {
+  Stack,
+  TextField,
+  mergeStyles,
+  IStyle,
+  ITextField,
+  concatStyleSets,
+  IconButton,
+  TooltipHost,
+  ICalloutContentStyles
+} from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
   inputBoxStyle,
@@ -12,7 +22,8 @@ import {
   textContainerStyle,
   inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
-  inputBoxNewLineSpaceAffordance
+  inputBoxNewLineSpaceAffordance,
+  inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -52,7 +63,7 @@ type InputBoxComponentProps = {
   errorMessage?: string | React.ReactElement;
   disabled?: boolean;
   styles?: InputBoxStylesProps;
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField';
 };
 
 /**
@@ -85,16 +96,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
-  const mergedTextFieldStyle = concatStyleSets(
-    textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-    {
-      fieldGroup: styles?.textField,
-      errorMessage: styles?.systemMessage
-    }
-  );
+  const mergedTextFieldStyle = concatStyleSets(textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000'), {
+    fieldGroup: styles?.textField,
+    errorMessage: styles?.systemMessage
+  });
 
   const onTexFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+        return;
+      }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
@@ -148,28 +160,41 @@ export type InputBoxButtonProps = {
   className?: string;
   id?: string;
   ariaLabel?: string;
+  tooltipContent?: string;
 };
 
 /**
  * @private
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, ariaLabel, className, id } = props;
+  const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
+
+  const theme = useTheme();
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+
+  // Place callout with no gap between it and the button.
+  const calloutProps = {
+    gapSpace: 0,
+    styles: calloutStyle,
+    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
+  };
   return (
-    <IconButton
-      className={mergedButtonStyle}
-      ariaLabel={ariaLabel}
-      onClick={onClick}
-      id={id}
-      onMouseEnter={() => {
-        setIsHover(true);
-      }}
-      onMouseLeave={() => {
-        setIsHover(false);
-      }}
-      onRenderIcon={() => onRenderIcon(isHover)}
-    />
+    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
+      <IconButton
+        className={mergedButtonStyle}
+        ariaLabel={ariaLabel}
+        onClick={onClick}
+        id={id}
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+        onRenderIcon={() => onRenderIcon(isHover)}
+      />
+    </TooltipHost>
   );
 };

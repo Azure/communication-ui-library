@@ -32,7 +32,7 @@ export const videoTileStyles = {
 /**
  * @private
  */
-export const moreDetailsStyle = (palette, isVideoReady): IStyle => ({
+export const moreDetailsStyle = (palette: IPalette, isVideoReady: boolean): IStyle => ({
   fontSize: '1rem',
   color: isVideoReady ? 'white' : palette.neutralPrimary,
   textAlign: 'center'

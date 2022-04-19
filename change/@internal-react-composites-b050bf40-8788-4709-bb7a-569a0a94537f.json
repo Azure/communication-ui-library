@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "create selectors and pipe through local and dominant participants into the PiP",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

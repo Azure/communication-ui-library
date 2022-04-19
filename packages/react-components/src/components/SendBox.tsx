@@ -2,13 +2,26 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
-import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
+import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
+import {
+  sendBoxStyle,
+  sendButtonStyle,
+  sendIconStyle,
+  sendBoxWrapperStyles,
+  borderAndBoxShadowStyle
+} from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
+
+import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { SendBoxErrors } from './SendBoxErrors';
+/* @conditional-compile-remove(file-sharing) */
+import { _FileUploadCards } from './FileUploadCards';
+import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -32,6 +45,42 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 /**
+ * Attributes required for SendBox to show file uploads like name, progress etc.
+ * @beta
+ */
+export interface ActiveFileUpload {
+  /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+
+  /**
+   * File name to be rendered for uploaded file.
+   */
+  filename: string;
+
+  /**
+   * A number between 0 and 1 indicating the progress of the upload.
+   * This is unrelated to the `uploadComplete` property.
+   * It is only used to show the progress of the upload.
+   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
+   * property to true to mark the upload as complete.
+   */
+  progress: number;
+
+  /**
+   * Error to be displayed to the user if the upload fails.
+   */
+  error?: SendBoxErrorBarError;
+
+  /**
+   * `true` means that the upload is completed.
+   * This is independent of the upload `progress`.
+   */
+  uploadComplete?: boolean;
+}
+
+/**
  * Strings of {@link SendBox} that can be overridden.
  *
  * @public
@@ -49,6 +98,11 @@ export interface SendBoxStrings {
    * Aria label for send message button
    */
   sendButtonAriaLabel: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Error message indicating that all file uploads are not complete.
+   */
+  fileUploadsPendingError: string;
 }
 
 /**
@@ -102,9 +156,32 @@ export interface SendBoxProps {
    */
   strings?: Partial<SendBoxStrings>;
   /**
-   * boolean to determine if the input box has focus on render or not.
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
    */
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to render uploaded files in the SendBox. The sendbox will expand
+   * veritcally to accomodate the uploaded files. File uploads will
+   * be rendered below the text area in sendbox.
+   * @beta
+   */
+  onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional array of active file uploads where each object has attibutes
+   * of a file upload like name, progress, errorMessage etc.
+   * @beta
+   */
+  activeFileUploads?: ActiveFileUpload[];
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to remove the file upload before sending by clicking on
+   * cancel icon.
+   * @beta
+   */
+  onCancelFileUpload?: (fileId: string) => void;
 }
 
 /**
@@ -137,11 +214,24 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  /* @conditional-compile-remove(file-sharing) */
+  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
     if (disabled || textValueOverflow) {
       return;
     }
+
+    // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
+    setFileUploadsPendingError(undefined);
+    /* @conditional-compile-remove(file-sharing) */
+    if (hasIncompleteFileUploads(props)) {
+      setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+      return;
+    }
+
     // we dont want to send empty messages including spaces, newlines, tabs
     if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
       onSendMessage && onSendMessage(textValue);
@@ -173,7 +263,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [styles?.sendMessageIconContainer]
   );
 
-  const mergedStyles = useMemo(() => concatStyleSets(sendBoxStyleSet, styles), [styles]);
+  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
   const mergedSendIconStyle = useMemo(
@@ -198,41 +288,104 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
+  // Ensure that errors are cleared when there are no files in sendbox
+  React.useEffect(() => {
+    if (!props.activeFileUploads?.filter((upload) => !upload.error).length) {
+      setFileUploadsPendingError(undefined);
+    }
+  }, [props.activeFileUploads]);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const sendBoxErrorsProps = useMemo(() => {
+    return {
+      fileUploadsPendingError: fileUploadsPendingError,
+      fileUploadError: props.activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+    };
+  }, [props.activeFileUploads, fileUploadsPendingError]);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileUploads = useCallback(() => {
+    if (!props.activeFileUploads?.filter((upload) => !upload.error).length) {
+      return null;
+    }
+    return props.onRenderFileUploads ? (
+      props.onRenderFileUploads()
+    ) : (
+      <div style={{ margin: '0.25rem' }}>
+        <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
+      </div>
+    );
+  }, [props]);
+
   return (
-    <InputBoxComponent
-      autoFocus={autoFocus}
-      data-ui-id={ids.sendboxTextField}
-      inlineChildren={true}
-      disabled={disabled}
-      errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-      textFieldRef={sendTextFieldRef}
-      id="sendbox"
-      inputClassName={sendBoxStyle}
-      placeholderText={strings.placeholderText}
-      textValue={textValue}
-      onChange={setText}
-      onKeyDown={() => {
-        onTyping && onTyping();
-      }}
-      onEnterKeyDown={() => {
-        sendMessageOnClick();
-      }}
-      styles={mergedStyles}
-      supportNewline={supportNewline}
-      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-    >
-      <InputBoxButton
-        onRenderIcon={onRenderSendIcon}
-        onClick={(e) => {
-          if (!textValueOverflow) {
+    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
+      {
+        /* @conditional-compile-remove(file-sharing) */
+        <SendBoxErrors {...sendBoxErrorsProps} />
+      }
+      <Stack
+        className={mergeStyles(
+          borderAndBoxShadowStyle({
+            theme,
+            errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
+            hasErrorMessage: !!errorMessage,
+            disabled: !!disabled
+          })
+        )}
+      >
+        <InputBoxComponent
+          autoFocus={autoFocus}
+          data-ui-id={ids.sendboxTextField}
+          inlineChildren={true}
+          disabled={disabled}
+          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+          textFieldRef={sendTextFieldRef}
+          id="sendbox"
+          inputClassName={sendBoxStyle}
+          placeholderText={strings.placeholderText}
+          textValue={textValue}
+          onChange={setText}
+          onKeyDown={() => {
+            onTyping && onTyping();
+          }}
+          onEnterKeyDown={() => {
             sendMessageOnClick();
-          }
-          e.stopPropagation();
-        }}
-        id={'sendIconWrapper'}
-        className={mergedSendButtonStyle}
-        ariaLabel={localeStrings.sendButtonAriaLabel}
-      />
-    </InputBoxComponent>
+          }}
+          styles={mergedStyles}
+          supportNewline={supportNewline}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        >
+          <InputBoxButton
+            onRenderIcon={onRenderSendIcon}
+            onClick={(e) => {
+              if (!textValueOverflow) {
+                sendMessageOnClick();
+              }
+              e.stopPropagation();
+            }}
+            id={'sendIconWrapper'}
+            className={mergedSendButtonStyle}
+            ariaLabel={localeStrings.sendButtonAriaLabel}
+            tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </InputBoxComponent>
+        {
+          /* @conditional-compile-remove(file-sharing) */
+          onRenderFileUploads()
+        }
+      </Stack>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(file-sharing) */
+/**
+ * @private
+ */
+const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
+  return !!(
+    props.activeFileUploads?.length &&
+    !props.activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
   );
 };

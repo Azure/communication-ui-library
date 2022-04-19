@@ -1,8 +1,36 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Mon, 24 Jan 2022 23:18:54 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Mar 2022 19:20:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.2.0)
+
+Fri, 11 Mar 2022 19:20:03 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.1.1-beta.1...@internal/calling-stateful-client_v1.2.0)
+
+### Patches
+
+- Bump @azure/communication-calling to 1.4.3 ([PR #1610](https://github.com/azure/communication-ui-library/pull/1610) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+
+### Changes
+
+- Upgrading calling to 1.4.3-beta.1 ([PR #1607](https://github.com/azure/communication-ui-library/pull/1607) by edwardlee@microsoft.com)
+
+## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.1.1-beta.1)
+
+Tue, 01 Mar 2022 16:42:56 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.1...@internal/calling-stateful-client_v1.1.1-beta.1)
+
+### Patches
+
+- Fix exception thrown when trying to log stringified state when azure logger is set to verbose ([PR #1543](https://github.com/azure/communication-ui-library/pull/1543) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.1.1-beta.1 ([commit](https://github.com/azure/communication-ui-library/commit/ad59ff742c9fad2fceb1b819cb259c1ee8f29e62) by beachball)
+
+### Changes
+
+- upgrading calling to 1.4.2-beta.1 ([PR #1509](https://github.com/azure/communication-ui-library/pull/1509) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.1)
 

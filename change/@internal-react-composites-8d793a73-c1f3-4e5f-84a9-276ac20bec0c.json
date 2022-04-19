@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add file sharing option props to ChatComposite",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
