@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -20,6 +20,7 @@ import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
+import { BackButtonOverride } from './BackButtonOverride';
 
 export type CallWithChatPaneProps = {
   chatCompositeProps: Partial<ChatCompositeProps>;
@@ -38,14 +39,14 @@ export type CallWithChatPaneProps = {
   fileSharing?: FileSharingOptions;
 };
 
+const i = () => window.history.pushState(null, document.title, location.href);
+
 const f = () => {
-  console.log('f');
   window.removeEventListener('popstate', f);
   window.history.forward();
 };
 
 const db = () => {
-  console.log('db');
   window.removeEventListener('popstate', db);
   window.history.back();
 };
@@ -59,32 +60,6 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
 
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
-
-  const statePushed = useRef(false);
-
-  useEffect(() => {
-    if (statePushed.current === false) {
-      statePushed.current = true;
-      window.history.pushState(null, document.title, location.href);
-    }
-    const h = () => {
-      f();
-      props.onClose();
-    };
-    if (props.activePane !== 'none') {
-      window.removeEventListener('popstate', db);
-      setTimeout(() => window.addEventListener('popstate', h));
-    } else {
-      window.removeEventListener('popstate', h);
-      setTimeout(() => window.addEventListener('popstate', db));
-    }
-    console.log('useEffect');
-    return () => {
-      console.log('DONE useEffect');
-      window.removeEventListener('popstate', h);
-      window.removeEventListener('popstate', db);
-    };
-  }, [props.activePane]);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
@@ -167,6 +142,13 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
+      <BackButtonOverride
+        active={!hidden}
+        onClose={props.onClose}
+        onInitialize={i}
+        onBackButtonClickActive={f}
+        onBackButtonClickInactive={db}
+      />
     </Stack>
   );
 };
