@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Picture-In-Picture component in mobile composites going outside the screen when the mobile device is rotated from portrait to landscape",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

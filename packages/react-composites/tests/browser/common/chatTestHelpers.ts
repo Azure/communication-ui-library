@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, waitForSelector } from './utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  buildUrl,
+  waitForSelector,
+  waitForFunction
+} from './utils';
 import { Page } from '@playwright/test';
 import { ChatUserType } from './fixtureTypes';
 
@@ -81,4 +88,20 @@ export const waitForTypingIndicatorHidden = async (page: Page): Promise<void> =>
   await page.waitForTimeout(1000); // ensure typing indicator has had time to appear
   const typingIndicator = await page.$(dataUiId(IDS.typingIndicator));
   typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+};
+
+export const waitForNSeenMessages = async (page: Page, n: number): Promise<void> => {
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (args: any) => {
+      // fun fact: everything inside this function body is executed by the headless browser page and not the playwright node process
+      const seenMessages = document.querySelectorAll(`[data-ui-status="seen"]`);
+      return seenMessages.length === args.expectedSeenMessageCount;
+    },
+    // args parameter to pass from the node process to the headless browser page
+    {
+      expectedSeenMessageCount: n
+    }
+  );
 };

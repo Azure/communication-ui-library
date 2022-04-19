@@ -22,7 +22,8 @@ import { AvatarPersona } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler, FileDownloadHandler } from './file-sharing';
+import { FileDownloadHandler } from '@internal/react-components';
+import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -39,15 +40,13 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadCards } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from './selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(file-sharing) */
-import { useState } from 'react';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
+/* @conditional-compile-remove(file-sharing) */
+import { _FileDownloadCards } from '@internal/react-components';
 
 /**
  * @private
@@ -121,7 +120,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
-  const [downloadErrorMessage, setDownloadErrorMessage] = useState('');
+  const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
 
   const adapter = useAdapter();
 
@@ -172,9 +171,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
     (userId, message) => (
-      <FileDownloadCards
+      <_FileDownloadCards
         userId={userId}
-        message={message}
+        fileMetadata={message.attachedFilesMetadata || []}
         downloadHandler={fileSharing?.downloadHandler}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
@@ -210,7 +209,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 setDownloadErrorMessage('');
               }, [])}
               fileDownloadErrorMessage={downloadErrorMessage || ''}
-            ></FileDownloadErrorBar>
+            />
           }
           <MessageThread
             {...messageThreadProps}

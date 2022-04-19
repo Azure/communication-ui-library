@@ -551,6 +551,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaDescription: string;
     returnToCallButtonAriaLabel: string;
 }
 
@@ -803,6 +804,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
     MessageResend: JSX.Element;
 };
 
