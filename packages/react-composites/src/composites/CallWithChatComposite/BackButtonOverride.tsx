@@ -6,13 +6,7 @@ import React, { useEffect, useRef } from 'react';
 /**
  * @private
  */
-export const BackButtonOverride = (props: {
-  active: boolean;
-  onClose: () => void;
-  onInitialize: () => void;
-  onBackButtonClickActive: () => void;
-  onBackButtonClickInactive: () => void;
-}): JSX.Element => {
+export const BackButtonOverride = (props: { onInitialize: () => void; onBackButtonClick: () => void }): JSX.Element => {
   const statePushed = useRef(false);
 
   useEffect(() => {
@@ -20,22 +14,11 @@ export const BackButtonOverride = (props: {
       statePushed.current = true;
       props.onInitialize();
     }
-    const h = () => {
-      props.onBackButtonClickActive();
-      props.onClose();
-    };
-    if (props.active) {
-      window.removeEventListener('popstate', props.onBackButtonClickInactive);
-      setTimeout(() => window.addEventListener('popstate', h));
-    } else {
-      window.removeEventListener('popstate', h);
-      setTimeout(() => window.addEventListener('popstate', props.onBackButtonClickInactive));
-    }
+    setTimeout(() => window.addEventListener('popstate', props.onBackButtonClick));
     return () => {
-      window.removeEventListener('popstate', h);
-      window.removeEventListener('popstate', props.onBackButtonClickInactive);
+      window.removeEventListener('popstate', props.onBackButtonClick);
     };
-  }, [props.active]);
+  }, [props.onBackButtonClick, props.onInitialize]);
 
   return <></>;
 };

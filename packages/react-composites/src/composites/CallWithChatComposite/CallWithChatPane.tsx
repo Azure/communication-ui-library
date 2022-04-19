@@ -39,18 +39,6 @@ export type CallWithChatPaneProps = {
   fileSharing?: FileSharingOptions;
 };
 
-const i = () => window.history.pushState(null, document.title, location.href);
-
-const f = () => {
-  window.removeEventListener('popstate', f);
-  window.history.forward();
-};
-
-const db = () => {
-  window.removeEventListener('popstate', db);
-  window.history.back();
-};
-
 /**
  * Pane that is used to store chat and people for CallWithChat composite
  * @private
@@ -111,6 +99,19 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
   );
 
+  const backButtonOverrideInitialized = () => window.history.pushState(null, document.title, location.href);
+
+  const onBackButtonWhenPaneClosed = () => {
+    window.removeEventListener('popstate', onBackButtonWhenPaneClosed);
+    window.history.back();
+  };
+
+  const onBackButtonWhenPaneOpen = () => {
+    window.removeEventListener('popstate', onBackButtonWhenPaneOpen);
+    window.history.forward();
+    props.onClose();
+  };
+
   return (
     <Stack
       verticalFill
@@ -143,11 +144,8 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
         </Stack>
       )}
       <BackButtonOverride
-        active={!hidden}
-        onClose={props.onClose}
-        onInitialize={i}
-        onBackButtonClickActive={f}
-        onBackButtonClickInactive={db}
+        onInitialize={backButtonOverrideInitialized}
+        onBackButtonClick={hidden ? onBackButtonWhenPaneClosed : onBackButtonWhenPaneOpen}
       />
     </Stack>
   );
