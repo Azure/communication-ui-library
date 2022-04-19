@@ -391,17 +391,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-<<<<<<< HEAD
-                    className="ms-Stack css-139 css-52"
+                    className="ms-Stack css-138 css-52"
                   >
                     <div
-                      className="ms-Stack css-140 css-53"
-=======
-                    className="ms-Stack css-138 css-51"
-                  >
-                    <div
-                      className="ms-Stack css-139 css-52"
->>>>>>> 85608367a4ff6098e7521d1df487ecaedc5a1304
+                      className="ms-Stack css-139 css-53"
                     >
                       <span
                         className="css-54"
