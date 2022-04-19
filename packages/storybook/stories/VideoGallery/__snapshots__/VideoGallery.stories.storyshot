@@ -21,13 +21,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-142"
+        className="css-141"
         data-ui-id="video-gallery"
       >
         <div
           className="ms-Stack css-3"
         >
           <div
+            aria-label="Movable Local Video Tile"
             className="ms-Stack css-4"
             role="dialog"
             tabIndex={0}
@@ -89,10 +90,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-139 css-31"
+                className="ms-Stack css-138 css-31"
               >
                 <div
-                  className="ms-Stack css-140 css-32"
+                  className="ms-Stack css-139 css-32"
                 >
                   <span
                     className="css-33"
@@ -201,10 +202,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-139 css-31"
+                className="ms-Stack css-138 css-31"
               >
                 <div
-                  className="ms-Stack css-140 css-32"
+                  className="ms-Stack css-139 css-32"
                 >
                   <span
                     className="css-33"
@@ -272,10 +273,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-139 css-31"
+                className="ms-Stack css-138 css-31"
               >
                 <div
-                  className="ms-Stack css-140 css-32"
+                  className="ms-Stack css-139 css-32"
                 >
                   <span
                     className="css-33"
@@ -343,10 +344,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-139 css-31"
+                className="ms-Stack css-138 css-31"
               >
                 <div
-                  className="ms-Stack css-140 css-32"
+                  className="ms-Stack css-139 css-32"
                 >
                   <span
                     className="css-33"
@@ -414,10 +415,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-139 css-31"
+                className="ms-Stack css-138 css-31"
               >
                 <div
-                  className="ms-Stack css-140 css-32"
+                  className="ms-Stack css-139 css-32"
                 >
                   <span
                     className="css-33"

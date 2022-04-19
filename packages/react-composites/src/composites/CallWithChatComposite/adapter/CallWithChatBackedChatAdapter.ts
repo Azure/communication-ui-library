@@ -4,7 +4,9 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -77,8 +79,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
         return this.callWithChatAdapter.off(event, listener);
     }
   };
-  public updateMessage = async (messageId: string, content: string): Promise<void> =>
-    await this.callWithChatAdapter.updateMessage(messageId, content);
+  public updateMessage = async (messageId: string, content: string, metadata?: Record<string, string>): Promise<void> =>
+    await this.callWithChatAdapter.updateMessage(messageId, content, metadata);
   public deleteMessage = async (messageId: string): Promise<void> =>
     await this.callWithChatAdapter.deleteMessage(messageId);
 

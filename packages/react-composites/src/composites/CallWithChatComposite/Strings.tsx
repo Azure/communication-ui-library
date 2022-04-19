@@ -90,7 +90,15 @@ export interface CallWithChatCompositeStrings {
    */
   copyInviteLinkButtonLabel: string;
   /**
-   * Aria label string for return to call button
+   * Label for SidePaneHeader dismiss button
+   */
+  dismissSidePaneButton: string;
+  /**
+   * Aria Description string for return to call button
+   */
+  returnToCallButtonAriaDescription: string;
+  /**
+   * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel: string;
 }

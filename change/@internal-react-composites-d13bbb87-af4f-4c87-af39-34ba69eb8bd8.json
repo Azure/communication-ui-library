@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Show Error Bar to user when joining a call fails",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

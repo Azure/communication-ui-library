@@ -179,7 +179,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       (args: any) => {
         const videoNodes = document.querySelectorAll('video');
         const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        const allVideosLoaded = Array.from(videoNodes).every(
+          (videoNode) => !!videoNode && videoNode.readyState === 4 && !videoNode.paused
+        );
         return correctNoOfVideos && allVideosLoaded;
       },
       {
@@ -236,8 +238,20 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
   }, messageTimestampId);
+  // Wait for timestamps to have been updated in the DOM
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
+      return timestampNodes.every((node) => node.textContent === 'timestamp');
+    },
+    {
+      messageTimestampId: messageTimestampId
+    }
+  );
 };
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {

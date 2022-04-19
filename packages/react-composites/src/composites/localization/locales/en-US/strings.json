@@ -61,6 +61,8 @@
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
     "copyInviteLinkButtonLabel": "Copy invite link",
-    "returnToCallButtonAriaLabel": "Return to Call"
+    "dismissSidePaneButton": "Close",
+    "returnToCallButtonAriaDescription": "Return to Call",
+    "returnToCallButtonAriaLabel": "Back"
   }
 }

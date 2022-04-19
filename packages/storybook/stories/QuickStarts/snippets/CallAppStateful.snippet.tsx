@@ -42,7 +42,7 @@ function App(): JSX.Element {
     }
   }, [callAgent]);
 
-  return <>{statefulCallClient && callAgent && call && <h1>Hooray! You set up chat client 🎉🎉🎉</h1>}</>;
+  return <>{statefulCallClient && callAgent && call && <h1>Hooray! You set up calling client 🎉🎉🎉</h1>}</>;
 }
 
 export default App;

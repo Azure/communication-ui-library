@@ -43,23 +43,25 @@ import { useWindow } from '@fluentui/react-window-provider';
 
 // @TODO - need to change this to a panel whenever the breakpoint is under medium (verify the spec)
 
-interface ExtendedIModalProps extends IModalProps {
-  minDragPosition?: ICoordinates;
-  maxDragPosition?: ICoordinates;
+/** @internal */
+export interface _ExtendedIModalProps extends IModalProps {
+  minDragPosition?: _ICoordinates;
+  maxDragPosition?: _ICoordinates;
 }
 
 const animationDuration = AnimationVariables.durationValue2;
-type ICoordinates = { x: number; y: number };
+/** @internal */
+export type _ICoordinates = { x: number; y: number };
 
 interface IModalInternalState {
   onModalCloseTimer: number;
   allowTouchBodyScroll?: boolean;
   scrollableContent: HTMLDivElement | null;
-  lastSetCoordinates: ICoordinates;
+  lastSetCoordinates: _ICoordinates;
   /** Minimum clamped position, if dragging and clamping (`dragOptions.keepInBounds`) are enabled */
-  minPosition?: ICoordinates;
+  minPosition?: _ICoordinates;
   /** Maximum clamped position, if dragging and clamping (`dragOptions.keepInBounds`) are enabled */
-  maxPosition?: ICoordinates;
+  maxPosition?: _ICoordinates;
   events: EventGroup;
   /** Ensures we dispose the same keydown callback as was registered */
   disposeOnKeyDown?: () => void;
@@ -69,9 +71,9 @@ interface IModalInternalState {
   hasBeenOpened?: boolean;
 }
 
-const ZERO: ICoordinates = { x: 0, y: 0 };
+const ZERO: _ICoordinates = { x: 0, y: 0 };
 
-const DEFAULT_PROPS: Partial<ExtendedIModalProps> = {
+const DEFAULT_PROPS: Partial<_ExtendedIModalProps> = {
   isOpen: false,
   isDarkOverlay: true,
   className: '',
@@ -108,7 +110,7 @@ const useComponentRef = (props: IModalProps, focusTrapZone: React.RefObject<IFoc
   );
 };
 
-const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef<HTMLDivElement, ExtendedIModalProps>(
+const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRef<HTMLDivElement, _ExtendedIModalProps>(
   (propsWithoutDefaults, ref) => {
     const props = getPropsWithDefaults(DEFAULT_PROPS, propsWithoutDefaults);
     const {
@@ -158,7 +160,7 @@ const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef
 
     const [isModalOpen, setIsModalOpen] = React.useState(isOpen);
     const [isVisible, setIsVisible] = React.useState(isOpen);
-    const [coordinates, setCoordinates] = React.useState<ICoordinates>(ZERO);
+    const [coordinates, setCoordinates] = React.useState<_ICoordinates>(ZERO);
     const [modalRectangleTop, setModalRectangleTop] = React.useState<number | undefined>();
 
     const [isModalMenuOpen, { toggle: toggleModalMenuOpen, setFalse: setModalMenuClose }] = useBoolean(false);
@@ -230,6 +232,12 @@ const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef
           // x/y are unavailable in IE, so use the equivalent left/top
           internalState.minPosition = minDragPosition ?? { x: -modalRectangle.left, y: -modalRectangle.top };
           internalState.maxPosition = maxDragPosition ?? { x: modalRectangle.left, y: modalRectangle.top };
+
+          // Make sure the initial co-ordinates are within clamp bounds.
+          setCoordinates({
+            x: getClampedAxis('x', coordinates.x),
+            y: getClampedAxis('y', coordinates.y)
+          });
         }
       }
     };
@@ -241,7 +249,7 @@ const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef
      * @param position The position on the axis.
      */
     const getClampedAxis = React.useCallback(
-      (axis: keyof ICoordinates, position: number) => {
+      (axis: keyof _ICoordinates, position: number) => {
         const { minPosition, maxPosition } = internalState;
         if (keepInBounds && minPosition && maxPosition) {
           position = Math.max(minPosition[axis], position);
@@ -413,8 +421,8 @@ const ModalBase: React.FunctionComponent<ExtendedIModalProps> = React.forwardRef
         internalState.onModalCloseTimer = setTimeout(handleModalClose, parseFloat(animationDuration) * 1000);
         setIsVisible(false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates.
-    }, [isModalOpen, isOpen]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates or if min/max drag bounds are updated.
+    }, [isModalOpen, isOpen, minDragPosition, maxDragPosition]);
 
     useUnmount(() => {
       internalState.events.dispose();
@@ -538,9 +546,9 @@ const getDraggableZoneClassNames = memoizeFunction((className: string, isDraggin
 });
 
 interface IDragData {
-  position: ICoordinates;
-  lastPosition?: ICoordinates;
-  delta: ICoordinates;
+  position: _ICoordinates;
+  lastPosition?: _ICoordinates;
+  delta: _ICoordinates;
 }
 
 interface IDraggableZoneProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -560,7 +568,7 @@ interface IDraggableZoneProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * the X and Y coordinates to use as an offest to position the draggable content
    */
-  position?: ICoordinates;
+  position?: _ICoordinates;
 
   /**
    * Callback for when dragging starts
@@ -580,8 +588,8 @@ interface IDraggableZoneProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface IDraggableZoneState {
   isDragging: boolean;
-  position: ICoordinates;
-  lastPosition?: ICoordinates;
+  position: _ICoordinates;
+  lastPosition?: _ICoordinates;
 }
 
 const eventMapping = {
@@ -793,7 +801,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
    * Get the control position based off the event that fired
    * @param event - The event to get offsets from
    */
-  private _getControlPosition(event: MouseTouchEvent<HTMLElement>): ICoordinates | undefined {
+  private _getControlPosition(event: MouseTouchEvent<HTMLElement>): _ICoordinates | undefined {
     const touchObj = this._getActiveTouch(event);
 
     // did we get the right touch?
@@ -875,7 +883,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
    * Create DragData based off of the last known position and the new position passed in
    * @param position The new position as part of the drag
    */
-  private _createDragDataFromPosition(position: ICoordinates): IDragData {
+  private _createDragDataFromPosition(position: _ICoordinates): IDragData {
     const { lastPosition } = this.state;
 
     // If we have no lastPosition, use the given position
@@ -1035,13 +1043,13 @@ const getStyles = (props: IModalStyleProps): IModalStyles => {
   };
 };
 
-/** @private */
-export const ModalClone: React.FunctionComponent<ExtendedIModalProps> = styled<
-  ExtendedIModalProps,
+/** @internal */
+export const _ModalClone: React.FunctionComponent<_ExtendedIModalProps> = styled<
+  _ExtendedIModalProps,
   IModalStyleProps,
   IModalStyles
 >(ModalBase, getStyles, undefined, {
   scope: 'Modal',
   fields: ['theme', 'styles', 'enableAriaHiddenSiblings']
 });
-ModalClone.displayName = 'Modal';
+_ModalClone.displayName = 'Modal';

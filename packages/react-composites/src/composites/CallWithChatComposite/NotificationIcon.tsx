@@ -31,7 +31,12 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   };
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles(theme)}>
+    <Stack
+      data-ui-id="call-with-chat-composite-chat-button-unread-icon"
+      horizontalAlign="center"
+      verticalAlign="center"
+      styles={notificationIconContainerStyles(theme)}
+    >
       <Stack>{renderNumber(chatMessagesCount)}</Stack>
     </Stack>
   );
@@ -61,7 +66,7 @@ const notificationIconContainerStyles = memoizeFunction(
 const notificationTextStyles = memoizeFunction(
   (theme: ITheme): IStackStyles => ({
     root: {
-      color: theme.palette.white,
+      color: 'white',
       fontSize: theme.fonts.xSmall.fontSize
     }
   })

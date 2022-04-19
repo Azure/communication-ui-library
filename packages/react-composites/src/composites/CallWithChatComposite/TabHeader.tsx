@@ -57,6 +57,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
     <Stack horizontal grow styles={mobilePaneControlBarStyle}>
       <DefaultButton
         ariaLabel={strings.returnToCallButtonAriaLabel}
+        ariaDescription={strings.returnToCallButtonAriaDescription}
         onClick={props.onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <ChevronLeftIconTrampoline />}
@@ -67,6 +68,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             onClick={props.onChatButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={props.activeTab === 'chat'}
+            role={'tab'}
           >
             {strings.chatButtonLabel}
           </DefaultButton>
@@ -78,6 +80,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             onClick={props.onPeopleButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={props.activeTab === 'people'}
+            role={'tab'}
           >
             {strings.peopleButtonLabel}
           </DefaultButton>

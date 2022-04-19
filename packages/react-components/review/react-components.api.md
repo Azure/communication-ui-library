@@ -14,6 +14,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
@@ -24,6 +25,8 @@ import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
+import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -107,6 +110,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -277,6 +282,7 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
+    ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -286,6 +292,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -449,6 +457,8 @@ export interface ErrorBarStrings {
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
     dismissButtonAriaLabel: string;
+    failedToJoinCallGeneric: string;
+    failedToJoinCallInvalidMeetingLink: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -463,6 +473,14 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
+
+// @internal (undocumented)
+export interface _ExtendedIModalProps extends IModalProps {
+    // (undocumented)
+    maxDragPosition?: _ICoordinates;
+    // (undocumented)
+    minDragPosition?: _ICoordinates;
+}
 
 // @internal
 export const _FileCard: (props: _FileCardProps) => JSX.Element;
@@ -483,6 +501,32 @@ export interface _FileCardProps {
     fileExtension: string;
     fileName: string;
     progress?: number;
+}
+
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileMetadata: FileMetadata[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
 }
 
 // @public
@@ -516,6 +560,12 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
     nextButton?: IStyle;
     previousButton?: IStyle;
 }
+
+// @internal (undocumented)
+export type _ICoordinates = {
+    x: number;
+    y: number;
+};
 
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
@@ -570,6 +620,7 @@ export const LocalVideoCameraCycleButton: (props: LocalVideoCameraCycleButtonPro
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
+    ariaDescription?: string;
     cameras?: OptionsDevice[];
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -662,6 +713,7 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    fileDownloadHandler?: FileDownloadHandler;
 };
 
 // @public
@@ -745,6 +797,9 @@ export interface MicrophoneButtonStrings {
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
+
+// @internal (undocumented)
+export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -1036,6 +1091,12 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
+// @internal
+export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
+// @internal
+export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
 // @public
 export const useTheme: () => Theme;
 
@@ -1098,6 +1159,8 @@ export interface VideoGalleryStream {
 export interface VideoGalleryStrings {
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementLabel: string;
+    localVideoSelectedDescription: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
