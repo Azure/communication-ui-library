@@ -109,7 +109,7 @@ jobs:
       - name: Hop into Groom branch
         id: groombranch
         run: |
-          git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
+          git checkout -b groom_changelog_${{ steps.version.outputs.version }}
           echo "::set-output name=groombranch::groom_changelog_${{ steps.version.outputs.version }}"
 
       # Push groom changes
