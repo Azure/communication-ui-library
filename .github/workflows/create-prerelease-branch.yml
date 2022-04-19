@@ -106,6 +106,10 @@ jobs:
           git commit -m "${{github.event.inputs.bump_type}} version bump pre-release branch"
           git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
 
+      # we will want to run rush changelog with type none make sure that all packlets have change files
+      - name: Add beachball changelog
+        run: rush changelog --message Bumped versions for ${{steps.version.outputs.version}} release --type none
+
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
         id: groombranch
