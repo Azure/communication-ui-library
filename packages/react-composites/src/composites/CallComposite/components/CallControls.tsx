@@ -39,11 +39,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [options]
   );
 
-  // when props.options is false then we want to hide the whole control bar.
-  if (props.options === false) {
-    return <></>;
-  }
-
   // This useState and useEffect is to rerender the control bar when the container height and/or width change
   const [, setWindowSize] = useState<[number, number]>([0, 0]);
   useEffect(() => {
@@ -51,6 +46,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       setWindowSize([props.containerHeight, props.containerWidth]);
     }
   }, [props.containerHeight, props.containerWidth]);
+
+  // when props.options is false then we want to hide the whole control bar.
+  if (props.options === false) {
+    return <></>;
+  }
 
   return (
     <Stack horizontalAlign="center">
