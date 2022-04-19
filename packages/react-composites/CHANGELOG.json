@@ -2,6 +2,318 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 20:46:14 GMT",
+      "tag": "@internal/react-composites_v1.2.2-beta.1",
+      "version": "1.2.2-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fc374c6e87d41a0c3dcaac476cf10ea9703734b9",
+            "comment": {
+              "title": "",
+              "value": ""
+            }
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e3932dfb5f1619309d3f7f40ef3c59f4413e5456",
+            "comment": "Show Error Bar to user when joining a call fails"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "2cea7896ea6737a3ecd4c0548acb13d4ee739cd1",
+            "comment": "Hide People menu item in MoreDrawer when set in CallControl options"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "8f4a7309d914c00af26450653f18cef643369b7c",
+            "comment": "Added local and remote picture-in-picture component in Chat pane of CallWithChat composite in mobile view."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "6ca4a1908f1ba49e3fa27f83b44561e5d1caa6e4",
+            "comment": "Fix race condition of \"not in chat\""
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "19b769c3ce685c802c35ece123f21392c8a979a2",
+            "comment": "Reduce min-width and min-height of the composites to support a galaxy fold portrait screen"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "optimization to reduce perf regression for onRenderFileDownloads"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "340c7f5b35404a2c0408f7eeb897925aec9e2103",
+            "comment": "Bump webpack-cli dependency"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "647ab742678cce3349ed24d1048be46cdfa5be4f",
+            "comment": "Introduce Aria-label for the return to call button on mobile."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "a25b449a72d435ff2ec7a9a15831fa4c448b172c",
+            "comment": "Add aria-label for SidePaneHeader dismiss button"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "a343dde6b701b19d134061e3dec289202dda7d72",
+            "comment": "Style update for Screenshare button when checked in CallWithChat composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "43e788b8702813498426c83b5ce19b21afdf9ef6",
+            "comment": "Switch scroll behavior in chat styles so that the parent wrapper dosen't have scroll behavior when file sharing icon present."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d56479c7b2be516c5d0d6221eb4d31cfaa2b3975",
+            "comment": "Fix styles so that the PIPIP shows over the content in the people and chat panes on mobile."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "f5980eaf16586d969bb22cc97164ae8b5df3e65d",
+            "comment": "Left align participant pane elements in mobile and desktop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9ae1c9d5610799ef743c71dd00df16afccde19aa",
+            "comment": "Update mobile people and chat tabs to have 'tab' roles for narration."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "85608367a4ff6098e7521d1df487ecaedc5a1304",
+            "comment": "Add aria label and aria description to back button on TabHeader for mobile view"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "ded9427c563ab19fe29f99c2fb47c4e1ceb7e2bf",
+            "comment": "Moved starting position of PiPiP higher in chat/people pane of CallWithChat composite. Also fixed PiPiP bounds such that it that does not go off screen."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "73f1ac671a48acc7573b6b9d10edc4e7318f7687",
+            "comment": "Improve Chat composite behavior in CallWithChatComposite to allow autofocus when opening chat pane."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "edae5c218a60be1d42adcaef9da8a40bbc0665e7",
+            "comment": "Make Chat Message action button icon customizable"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "6e9610b12dd601940e6b826b5cfdf4e806d02fdb",
+            "comment": "Fix Picture-In-Picture component in mobile composites going outside the screen when the mobile device is rotated from portrait to landscape"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9d54cded4514615aafaf8839faf2a83204679cbe",
+            "comment": "Remove beta API from stable build"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "dd6fd2f775a9fcbc6565bfe788fcaa6f40a9705b",
+            "comment": "Updating docs"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7e78a0a3534e5d6e0fba45a1cd056890d81699be",
+            "comment": "make sure badge text color is white in both light and dark mode"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b1a9409b1dc0c9cab51e915264e0626e46c18ed6",
+            "comment": "Add tests for filesharing upload button and file cards in sendbox"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "6e5d0f2409d345f92c948c14eb9f1a60506f832b",
+            "comment": "Update webpack-dev-server in the sample apps and composites package."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b62d2174339f59deb3c322b6f20308a8bc9ca2eb",
+            "comment": "Converting filesharing functions to arrow functions in CallWithChatBackendChatAdapter"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "2df08c6f303ca8cdb638cf0dcdbd8df7ecef90e6",
+            "comment": "Attached data ui id for chat unread message badge "
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "a6b840a923d78c7dc4bf32e0a67c6aedfb4cdf1e",
+            "comment": "Cleaning up duplicate file sharing code from react-composites"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b8389062d4d46c5a2766a462f2214feb009deb73",
+            "comment": "Bugfix for file upload button's inconsistent behavior"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Move file download renderer to MessageThread component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fde859e57fba12604773a278f2dfed86352f5608",
+            "comment": "Flatten pick and omit APIs in CallWithChatComposite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ae665dc277b80ecbf26bc6bfd514ec3026b12ac3",
+            "comment": "Add error bar to show file download error message in the message thread."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "ebdaeadf3bba0ffa7a473fe2fef7986cafe83eb5",
+            "comment": "Reducing un-needed interfaces from File Sharing Public API"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "4c0a64adec1576372ecc417ab2c82d55d40b55f6",
+            "comment": "Adding gap between downloadable files and message content"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d888514c586daf87be33c6875d8ad61b6f4c9946",
+            "comment": "Changing attach file icon position basis on form factor"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f13219e2610936c3ecf7cc1f637f28eaa85dd863",
+            "comment": "Introduces number of message tracking for the chat button tooltip"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a4d2c97cb1ca80630a538244daa97f9720972222",
+            "comment": "Added chat test setup with per user query arguments & UI tests for file download card"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "58fe34d53c7e37d6c4d14dab52acc4320d761846",
+            "comment": "Modifying the updateMessage chat adapter method to allow passing metadata as a parameter"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d82dfc2da392d64f37cb5896fc4f7bab44ed5540",
+            "comment": "Bugfix for delay in removing file card after a message is sent"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c214edcf472f26abc559b0c28c9dfabd81de0fac",
+            "comment": "Added resend button to contextual menu"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "1f7d42376b0ddedb7823acf6298881a30609c835",
+            "comment": "Add filesharing to callwithchat composite"
+          }
+        ],
+        "minor": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a92c49984340bce7274a7c5cd58591a39dd6a12b",
+            "comment": "Add useAzureCommunicationChatAdapter hook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:02 GMT",
       "tag": "@internal/react-composites_v1.2.0",
       "version": "1.2.0",

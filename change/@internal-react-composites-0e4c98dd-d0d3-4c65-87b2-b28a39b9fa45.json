@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Reducing un-needed interfaces from File Sharing Public API",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
