@@ -29,8 +29,8 @@ export const Announcer = (props: AnnouncerProps): JSX.Element => {
 const announcerStyles: IStackStyles = {
   root: {
     position: 'absolute',
-    width: '1px',
-    height: '1px',
+    width: '0px',
+    height: '0px',
     padding: 0,
     top: -1000,
     margin: '-1px',
