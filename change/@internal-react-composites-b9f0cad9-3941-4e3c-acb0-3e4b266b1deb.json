@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Attached data ui id for chat unread message badge ",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

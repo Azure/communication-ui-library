@@ -2,10 +2,15 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { TooltipHost, ITooltipHostStyles, ITooltipHostProps, mergeStyleSets } from '@fluentui/react';
-
-// Place callout with no gap between it and the button.
-const calloutProps = { gapSpace: 0 };
+import {
+  TooltipHost,
+  ITooltipHostStyles,
+  ITooltipHostProps,
+  ICalloutContentStyles,
+  mergeStyleSets,
+  useTheme
+} from '@fluentui/react';
+import { isDarkThemed } from '../theming/themeUtils';
 
 // The TooltipHost root uses display: inline by default.
 // To prevent sizing issues or tooltip positioning issues, we override to inline-block.
@@ -18,6 +23,15 @@ const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block
  * @private
  */
 export const ControlButtonTooltip = (props: ITooltipHostProps): JSX.Element => {
+  const theme = useTheme();
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+
+  // Place callout with no gap between it and the button.
+  const calloutProps = {
+    gapSpace: 0,
+    styles: calloutStyle,
+    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
+  };
   return (
     <TooltipHost
       {...props}

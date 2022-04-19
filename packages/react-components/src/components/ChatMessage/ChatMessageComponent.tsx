@@ -8,6 +8,7 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
+import { FileDownloadHandler } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -36,6 +37,10 @@ type ChatMessageComponentProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /**
+   * Optional function called when someone clicks on the file download icon.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -62,7 +67,11 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
-  }, [message.messageId, onDeleteMessage]);
+    // when fail to send, message does not have message id, delete message using clientmessageid
+    else if (onDeleteMessage && message.clientMessageId) {
+      onDeleteMessage(message.clientMessageId);
+    }
+  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
   const onResendClick = useCallback(() => {
     onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
     onSendMessage && onSendMessage(message.content ?? '');

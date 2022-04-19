@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
+import { ICalloutContentStyles, Icon, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
+import { isDarkThemed } from '../theming/themeUtils';
 import { BaseCustomStyles } from '../types';
 import {
   MessageStatusIndicatorErrorIconStyle,
@@ -78,12 +79,26 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
 
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+
+  // Place callout with no gap between it and the button.
+  const calloutProps = {
+    gapSpace: 0,
+    styles: calloutStyle,
+    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
+  };
+
   switch (status) {
     case 'failed':
       return (
-        <TooltipHost content={strings.failedToSendTooltipText}>
+        <TooltipHost
+          content={strings.failedToSendTooltipText}
+          data-ui-id="chat-composite-message-tooltip"
+          calloutProps={{ ...calloutProps }}
+        >
           <Icon
             role="status"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.failedToSendAriaLabel}
             iconName="MessageFailed"
             className={mergeStyles(
@@ -96,9 +111,14 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'sending':
       return (
-        <TooltipHost content={strings.sendingTooltipText}>
+        <TooltipHost
+          content={strings.sendingTooltipText}
+          data-ui-id="chat-composite-message-tooltip"
+          calloutProps={{ ...calloutProps }}
+        >
           <Icon
             role="status"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.sendingAriaLabel}
             iconName="MessageSending"
             className={mergeStyles(
@@ -112,6 +132,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost
+          calloutProps={{ ...calloutProps }}
+          data-ui-id="chat-composite-message-tooltip"
           content={
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
@@ -135,6 +157,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           }}
         >
           <Icon
+            data-ui-id="chat-composite-message-status-icon"
             role="status"
             aria-label={strings.seenAriaLabel}
             iconName="MessageSeen"
@@ -144,9 +167,14 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'delivered':
       return (
-        <TooltipHost content={strings.deliveredTooltipText}>
+        <TooltipHost
+          calloutProps={{ ...calloutProps }}
+          content={strings.deliveredTooltipText}
+          data-ui-id="chat-composite-message-tooltip"
+        >
           <Icon
             role="status"
+            data-ui-id="chat-composite-message-status-icon"
             aria-label={strings.deliveredAriaLabel}
             iconName="MessageDelivered"
             className={mergeStyles(
