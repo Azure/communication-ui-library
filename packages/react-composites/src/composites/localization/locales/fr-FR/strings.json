@@ -42,11 +42,23 @@
   "chat": {
     "chatListHeader": "Dans cette conversation"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "Personnes",
+    "peopleButtonTooltipContentOpen": "Afficher les participants",
+    "peopleButtonTooltipContentClose": "Masquer les participants",
     "chatButtonLabel": "Clavardage",
+    "chatButtonTooltipContentOpen": "Afficher la conversation",
+    "chatButtonTooltipContentClose": "Masquer la conversation",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Haut-parleur",
+    "moreDrawerButtonLabel": "Autres options",
+    "moreDrawerButtonTooltip": "Autres options",
     "peoplePaneTitle": "Personnes",
-    "peoplePaneSubTitle": "Dans cette réunion",
-    "chatPaneTitle": "Clavardage"
+    "peoplePaneSubTitle": "Pendant cet appel",
+    "chatPaneTitle": "Clavardage",
+    "chatButtonNewMessageNotificationLabel": "Nouveau message",
+    "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",
+    "removeMenuLabel": "Supprimer",
+    "copyInviteLinkButtonLabel": "Copier le lien d'invitation"
   }
 }

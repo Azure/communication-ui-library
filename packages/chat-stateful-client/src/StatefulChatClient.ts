@@ -13,6 +13,7 @@ import {
   CommunicationUserIdentifier,
   getIdentifierKind
 } from '@azure/communication-common';
+import { chatStatefulLogger } from './Logger';
 
 /**
  * Defines the methods that allow {@Link @azure/communication-chat#ChatClient} to be used with a centralized generated state.
@@ -160,6 +161,7 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
+  chatStatefulLogger.info(`Creating chat stateful client using library version: ${_getApplicationId()}`);
   const tweakedOptions = {
     ...options,
     chatClientOptions: {

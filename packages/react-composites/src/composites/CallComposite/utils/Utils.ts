@@ -3,7 +3,7 @@
 
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { CallControlOptions } from '../components/CallControls';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;

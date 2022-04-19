@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -9,6 +9,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
+import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -35,15 +37,18 @@ export type ChatMessageComponentAsEditBoxProps = {
   inlineEditButtons: boolean;
 };
 
+type MessageState = 'OK' | 'too short' | 'too long';
+
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
-  const [textValueOverflow, setTextValueOverflow] = useState(false);
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
+  const messageState = getMessageState(textValue);
+  const submitEnabled = messageState === 'OK';
 
   useEffect(() => {
     editTextFieldRef.current?.focus();
@@ -53,21 +58,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
   ): void => {
-    if (newValue === undefined) {
-      return;
-    }
-
-    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
-    } else {
-      setTextValueOverflow(false);
-    }
-    setTextValue(newValue);
+    setTextValue(newValue ?? '');
   };
 
-  const textTooLongMessage = textValueOverflow
-    ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-    : undefined;
+  const textTooLongMessage =
+    messageState === 'too long'
+      ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
+      : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
     () => onRenderCancelIcon(theme.palette.neutralSecondary),
@@ -84,43 +81,59 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   return (
-    <InputBoxComponent
-      inlineChildren={props.inlineEditButtons}
-      id={'editbox'}
-      textFieldRef={editTextFieldRef}
-      inputClassName={editBoxStyle(props.inlineEditButtons)}
-      placeholderText={strings.editBoxPlaceholderText}
-      textValue={textValue}
-      onChange={setText}
-      onEnterKeyDown={() => {
-        onSubmit(textValue);
-      }}
-      supportNewline={false}
-      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-      errorMessage={textTooLongMessage}
-      styles={editBoxStyles}
+    <Stack
+      className={mergeStyles(
+        borderAndBoxShadowStyle({
+          theme,
+          errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
+          hasErrorMessage: false,
+          disabled: false
+        })
+      )}
     >
-      <InputBoxButton
-        className={editingButtonStyle}
-        ariaLabel={strings.editBoxCancelButton}
-        onRenderIcon={onRenderThemedCancelIcon}
-        onClick={() => {
-          onCancel && onCancel();
+      <InputBoxComponent
+        inlineChildren={props.inlineEditButtons}
+        id={'editbox'}
+        textFieldRef={editTextFieldRef}
+        inputClassName={editBoxStyle(props.inlineEditButtons)}
+        placeholderText={strings.editBoxPlaceholderText}
+        textValue={textValue}
+        onChange={setText}
+        onEnterKeyDown={() => {
+          submitEnabled && onSubmit(textValue);
         }}
-        id={'dismissIconWrapper'}
-      />
-      <InputBoxButton
-        className={editingButtonStyle}
-        ariaLabel={strings.editBoxSubmitButton}
-        onRenderIcon={onRenderThemedSubmitIcon}
-        onClick={(e) => {
-          if (!textValueOverflow && textValue !== '') {
-            onSubmit(textValue);
-          }
-          e.stopPropagation();
-        }}
-        id={'submitIconWrapper'}
-      />
-    </InputBoxComponent>
+        supportNewline={false}
+        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+        errorMessage={textTooLongMessage}
+        styles={editBoxStyles}
+      >
+        <InputBoxButton
+          className={editingButtonStyle}
+          ariaLabel={strings.editBoxCancelButton}
+          tooltipContent={strings.editBoxCancelButton}
+          onRenderIcon={onRenderThemedCancelIcon}
+          onClick={() => {
+            onCancel && onCancel();
+          }}
+          id={'dismissIconWrapper'}
+        />
+        <InputBoxButton
+          className={editingButtonStyle}
+          ariaLabel={strings.editBoxSubmitButton}
+          tooltipContent={strings.editBoxSubmitButton}
+          onRenderIcon={onRenderThemedSubmitIcon}
+          onClick={(e) => {
+            submitEnabled && onSubmit(textValue);
+            e.stopPropagation();
+          }}
+          id={'submitIconWrapper'}
+        />
+      </InputBoxComponent>
+    </Stack>
   );
 };
+
+const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
+const isMessageEmpty = (messageText: string): boolean => messageText.trim().length === 0;
+const getMessageState = (messageText: string): MessageState =>
+  isMessageEmpty(messageText) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';

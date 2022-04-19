@@ -3,13 +3,13 @@
 
 export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
-export type { CallControlDisplayType, CallControlOptions } from './components/CallControls';
-/* @conditional-compile-remove-from(stable): custom button injection */
+export type { CallControlDisplayType, CallControlOptions } from './types/CallControlOptions';
+/* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallControlButtonPlacement,
   CustomCallControlButtonCallback,
   CustomCallControlButtonCallbackArgs,
   CustomCallControlButtonProps
-} from './components/CallControls';
+} from './types/CallControlOptions';
 export * from './adapter';
 export * from './Strings';

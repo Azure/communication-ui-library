@@ -9,8 +9,13 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 
+type ChatMessageContentProps = {
+  message: ChatMessage;
+  liveAuthorIntro: string;
+};
+
 /** @private */
-export const ChatMessageContent = (props: { message: ChatMessage; liveAuthorIntro: string }): JSX.Element => {
+export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   switch (props.message.contentType) {
     case 'text':
       return MessageContentAsText(props.message, props.liveAuthorIntro);

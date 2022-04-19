@@ -55,6 +55,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version),
         __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
         __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
+        __COMMUNICATIONREACTVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-react']),
         __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
       }),
     ],
@@ -62,7 +63,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       port: 3000,
       hot: true,
       open: true,
-      contentBase: path.resolve(sampleAppDir, 'public'),
+      static: { directory: path.resolve(sampleAppDir, 'public') },
       proxy: [
         {
           path: '/token',

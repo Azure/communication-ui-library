@@ -22,9 +22,8 @@ addons.setConfig({
     zoom: { hidden: true },
     eject: {hidden: true },
     copy: {hidden: true },
-    fullscreen: {hidden: true}
-  },
-  enableShortcuts: false
+    fullscreen: {hidden: false}
+  }
 });
 
 addons.register('toolbar', () => {

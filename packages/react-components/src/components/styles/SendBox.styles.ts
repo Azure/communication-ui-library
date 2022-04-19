@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, IStyle, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -14,11 +14,16 @@ export const suppressIconStyle = {
 /**
  * @private
  */
-export const sendBoxStyleSet = {
-  root: {
-    padding: '0.25rem'
+export const sendBoxWrapperStyles = mergeStyles({
+  margin: '0.25rem',
+  overflow: 'hidden',
+  /**
+   * margin-top set for all the child components of sendbox except first
+   */
+  ':not(:first-child)': {
+    marginTop: '0.25rem'
   }
-};
+});
 
 /**
  * @private
@@ -44,3 +49,45 @@ export const sendIconStyle = mergeStyles({
   height: '1.25rem',
   margin: 'auto'
 });
+
+/**
+ * @private
+ */
+export const fileCardBoxStyle = mergeStyles({
+  width: '100%',
+  padding: '0.50rem'
+});
+
+const defaultSendBoxInactiveBorderThicknessREM = 0.0625;
+const defaultSendBoxActiveBorderThicknessREM = 0.125;
+
+/**
+ * @private
+ */
+export const borderAndBoxShadowStyle = (props: {
+  theme: Theme;
+  errorColor: string;
+  hasErrorMessage: boolean;
+  disabled: boolean;
+}): IStyle => {
+  const { theme, errorColor, hasErrorMessage, disabled } = props;
+  const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
+  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.themePrimary;
+
+  const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
+  const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
+
+  return {
+    borderRadius: theme.effects.roundedCorner4,
+    border: `${borderThickness}rem solid ${borderColor}`,
+
+    // The border thickness of the sendbox wrapper changes on hover, to prevent the border thickness change causing the
+    // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
+    margin: `${defaultSendBoxActiveBorderThicknessREM - borderThickness}rem`,
+
+    ':hover, :active, :focus, :focus-within': {
+      border: `${borderActiveThickness}rem solid ${borderColorActive}`,
+      margin: `${defaultSendBoxActiveBorderThicknessREM - borderActiveThickness}rem`
+    }
+  };
+};

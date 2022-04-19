@@ -1,3 +1,0 @@
-# Add breaking-change label if the appropriate api file has been changed
-breaking-change:
-- packages/communication-react/review/communication-react.api.md

@@ -16,7 +16,6 @@ import { CompositeLocale, useLocale } from '../../localization';
  * @private
  */
 export interface LocalAndRemotePIPProps {
-  onClick: () => void;
   localParticipant: { displayName?: string; videoStream?: VideoGalleryStream };
   dominantRemoteParticipant?: {
     userId: string;
@@ -32,6 +31,7 @@ export interface LocalAndRemotePIPProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  onClick?: () => void;
 }
 
 /**
@@ -104,8 +104,8 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
 const safeGetArialLabel = (locale: CompositeLocale): string => {
   // eslint-disable-next-line prefer-const
   let ariaLabel = '';
-  /* @conditional-compile-remove-from(stable) meeting-composite */
-  ariaLabel = locale.strings.meeting.pictureInPictureTileAriaLabel;
+  /* @conditional-compile-remove(call-with-chat-composite) */
+  ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
   return ariaLabel;
 };
 

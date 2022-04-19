@@ -10,11 +10,11 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
 import { reduceCallControlsForMobile } from '../utils';
-import { CallControlOptions } from '../components/CallControls';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
-import { Icon } from '@fluentui/react';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
+import { CallCompositeIcon } from '../../common/icons';
 
 /**
  * @private
@@ -82,16 +82,16 @@ const disableLobbyPageControls = (
 };
 
 const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
-  inLobby ? overlayPropsWaitingToBeAdmitted(strings, inLobby) : overlayPropsConnectingToCall(strings, inLobby);
+  inLobby ? overlayPropsWaitingToBeAdmitted(strings) : overlayPropsConnectingToCall(strings);
 
-const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
   moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: <Icon iconName="LobbyScreenConnectingToCall" />
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenConnectingToCall" />
 });
 
-const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
-  overlayIcon: <Icon iconName="LobbyScreenWaitingToBeAdmitted" />
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });

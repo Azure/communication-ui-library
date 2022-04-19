@@ -6,7 +6,7 @@ import { mergeStyles, Theme } from '@fluentui/react';
 /**
  * @private
  */
-export const mediaContainer = (theme: Theme) =>
+export const mediaContainer = (theme: Theme): string =>
   mergeStyles({
     position: 'relative',
     height: '100%',
@@ -21,7 +21,7 @@ export const mediaContainer = (theme: Theme) =>
 /**
  * @private
  */
-export const invertedVideoStyle = (theme: Theme) =>
+export const invertedVideoStyle = (theme: Theme): string =>
   mergeStyles(mediaContainer(theme), {
     transform: 'rotateY(180deg)'
   });

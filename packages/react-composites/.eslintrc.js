@@ -44,6 +44,15 @@ module.exports = {
           // Do not allow references to node_modules' /es/ folder. These will break jest tests and the npm package as those imports won't be transpiled.
           '**/dist/**/es/*',
           '**/lib/**/es/*'
+        ],
+        paths: [
+          // Encourage use of typeguarded icon types
+          {
+            name: '@fluentui/react',
+            importNames: ['Icon', 'FontIcon'],
+            message:
+              'Avoid directly using the Icon component from Fluent. Instead use, as appropriate, CallCompositeIcon, ChatCompositeIcon or CallWithChatCompositeIcon'
+          }
         ]
       }
     ],

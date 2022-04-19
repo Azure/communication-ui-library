@@ -150,6 +150,20 @@ export interface ErrorBarStrings {
    * Mac OS specific message shown when system denies sharing local screen on a call.
    */
   callMacOsScreenShareAccessDenied: string;
+  /**
+   * Dimiss errorbar button aria label read by screen reader accessibility tools
+   */
+  dismissButtonAriaLabel: string;
+
+  /**
+   * An error message when joining a call fails.
+   */
+  failedToJoinCallGeneric: string;
+
+  /**
+   * An error message when joining a call fails specifically due to an invalid meeting link.
+   */
+  failedToJoinCallInvalidMeetingLink: string;
 }
 
 /**
@@ -208,7 +222,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
 
   return (
-    <Stack>
+    <Stack data-ui-id="error-bar-stack">
       {toShow.map((error) => (
         <MessageBar
           {...props}
@@ -216,6 +230,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
+          dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
         >
           {strings[error.type]}
         </MessageBar>

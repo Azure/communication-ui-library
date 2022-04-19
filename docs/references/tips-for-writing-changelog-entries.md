@@ -15,7 +15,7 @@ After running `rush changelog` it will ask you to describe your changes made to 
 
 #### Examples of great changelog entries
 
-* Add support for Node v14
+* Add support for Node v14  (14.19.0 and above)
 * Add new feature `typingIndicator`
 * Update the number of supported active videos from 3 to 9
 * Fix `ParticipantItem` to only show context menu if the participant was not you

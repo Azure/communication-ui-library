@@ -6,6 +6,8 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   PER_STEP_TIMEOUT_MS,
+  isTestProfileDesktop,
+  isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector
@@ -57,9 +59,8 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(page, () => {
-      const videoNode = document.querySelector('video');
-      const videoLoaded = videoNode?.readyState === 4;
-      return !!videoNode && videoLoaded;
+      const videoNode = document.querySelector<HTMLVideoElement>(`video`);
+      return !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
     });
     await stubLocalCameraName(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
@@ -108,6 +109,8 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
       await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
+      // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
+      await page.mouse.move(0, 0);
     }
 
     await loadCallPageWithParticipantVideos(pages);
@@ -123,10 +126,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 
   test('participant list loads correctly', async ({ pages }) => {
-    // TODO: Remove this function when we fix unstable contextual menu bug
-    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
-
     for (const idx in pages) {
       const page = pages[idx];
       await pageClick(page, dataUiId('call-composite-participants-button'));
@@ -145,6 +144,41 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       return document.querySelectorAll('video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
+  });
+});
+
+/**
+ * Mobile only tests for the call screen.
+ * Each test should use the call:
+ * ${test.skip(skipTestIfDesktop(testInfo));}
+ * to ensure that the test is only run in the mobile project.
+ */
+test.describe('Call Composite E2E CallPage [Mobile Only]', () => {
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(buildUrl(serverUrl, user));
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('local camera switcher button cycles camera', async ({ pages }, testInfo) => {
+    // Mobile check
+    test.skip(isTestProfileDesktop(testInfo));
+    // Build Flavor check
+    test.skip(isTestProfileStableFlavor());
+
+    const page = pages[0];
+    await pageClick(page, dataUiId('local-camera-switcher-button'));
   });
 });
 
@@ -212,10 +246,6 @@ test.describe('Call composite participant menu items injection tests', () => {
   });
 
   test('injected menu items appear', async ({ pages }) => {
-    // TODO: Remove this function when we fix unstable contextual menu bug
-    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
-
     const page = pages[0];
 
     // Open participants flyout.
@@ -254,23 +284,7 @@ test.describe('Call composite custom button injection tests', () => {
   });
 
   test('injected buttons appear', async ({ pages }) => {
-    // TODO: Remove this function when we fix unstable contextual menu bug
-    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
-
     const page = pages[0];
     expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
   });
 });
-
-// `timeout` is applied to each individual step that waits for a condition.
-const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
-  for (const page of pages) {
-    await pageClick(page, dataUiId('call-composite-camera-button'));
-  }
-  for (const page of pages) {
-    await waitForFunction(page, () => {
-      return document.querySelectorAll('video').length === 0;
-    });
-  }
-};

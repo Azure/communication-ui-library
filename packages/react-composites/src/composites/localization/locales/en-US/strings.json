@@ -42,12 +42,27 @@
   "chat": {
     "chatListHeader": "In this chat"
   },
-  "meeting": {
+  "callWithChat": {
     "peopleButtonLabel": "People",
+    "peopleButtonTooltipOpen": "Show participants",
+    "peopleButtonTooltipClose": "Hide participants",
     "chatButtonLabel": "Chat",
+    "chatButtonTooltipClosedWithMessageCount": "Show chat ({unreadMessagesCount} unread)",
+    "chatButtonTooltipOpen": "Show chat",
+    "chatButtonTooltipClose": "Hide chat",
+    "moreDrawerMicrophoneMenuTitle": "Microphone",
+    "moreDrawerSpeakerMenuTitle": "Speaker",
+    "moreDrawerButtonLabel": "More options",
+    "moreDrawerButtonTooltip": "More options",
     "peoplePaneTitle": "People",
     "peoplePaneSubTitle": "In this call",
     "chatPaneTitle": "Chat",
-    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen."
+    "chatButtonNewMessageNotificationLabel": "New Message",
+    "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
+    "removeMenuLabel": "Remove",
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "dismissSidePaneButton": "Close",
+    "returnToCallButtonAriaDescription": "Return to Call",
+    "returnToCallButtonAriaLabel": "Back"
   }
 }

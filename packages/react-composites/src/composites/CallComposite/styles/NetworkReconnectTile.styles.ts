@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontWeights, IStyle } from '@fluentui/react';
+import { FontWeights, IPalette, IStyle } from '@fluentui/react';
 
 /**
  * @private
@@ -22,7 +22,7 @@ export const titleContainerStyle: IStyle = {
 /**
  * @private
  */
-export const titleStyle = (palette, isVideoReady): IStyle => ({
+export const titleStyle = (palette: IPalette, isVideoReady: boolean): IStyle => ({
   fontSize: '1.25rem',
   fontWeight: FontWeights.semibold,
   color: isVideoReady ? 'white' : palette.neutralPrimary,
@@ -32,7 +32,7 @@ export const titleStyle = (palette, isVideoReady): IStyle => ({
 /**
  * @private
  */
-export const moreDetailsStyle = (palette, isVideoReady): IStyle => ({
+export const moreDetailsStyle = (palette: IPalette, isVideoReady: boolean): IStyle => ({
   fontSize: '1rem',
   color: isVideoReady ? 'white' : palette.neutralPrimary,
   textAlign: 'center'

@@ -16,7 +16,8 @@ import {
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
   gutterWithAvatar,
-  gutterWithHiddenAvatar
+  gutterWithHiddenAvatar,
+  FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -31,14 +32,18 @@ import {
   OnRenderAvatarCallback,
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
-  Message
+  Message,
+  ReadReceiptsBySenderId
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
-import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
+import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from './FileDownloadCards';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -169,6 +174,10 @@ export interface MessageThreadStrings {
   editMessage: string;
   /** String for removing message in floating menu */
   removeMessage: string;
+  /** String for resending failed message in floating menu */
+  resendMessage?: string;
+  /** String for indicating failed to send messages */
+  failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
   /** String for warning on text limit exceeded in EditBox*/
@@ -177,12 +186,16 @@ export interface MessageThreadStrings {
   editBoxPlaceholderText: string;
   /** String for new messages indicator*/
   newMessagesIndicator: string;
+  /** String for showing message read status in floating menu */
+  messageReadCount?: string;
   /** String for replacing display name when there is none*/
   noDisplayNameSub: string;
   /** String for Cancel button in EditBox*/
   editBoxCancelButton: string;
   /** String for Submit in EditBox when there is no user input*/
   editBoxSubmitButton: string;
+  /** String for action menu indicating there are more options */
+  actionMenuMoreOptions: string;
 }
 
 /**
@@ -292,26 +305,38 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
-    defaultStatusRenderer: (status: MessageStatus) => JSX.Element,
+    defaultStatusRenderer: (
+      message: ChatMessage,
+      status: MessageStatus,
+      participantCount: number,
+      readCount: number
+    ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
+    participantCount?: number,
+    readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
-    onDeleteMessage?: (messageId: string) => Promise<void>
+    onDeleteMessage?: (messageId: string) => Promise<void>,
+    onSendMessage?: (content: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message,
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
-      onDeleteMessage
+      onDeleteMessage,
+      onSendMessage
     };
 
     switch (message.messageType) {
       case 'chat': {
-        const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+        const myChatMessageStyle =
+          styles?.myChatMessageContainer || message.status === 'failed'
+            ? FailedMyChatMessageContainer
+            : defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
@@ -360,7 +385,7 @@ const memoizeAllMessages = memoizeFnAll(
                     onRenderMessageStatus ? (
                       onRenderMessageStatus({ status: statusToRender })
                     ) : (
-                      defaultStatusRenderer(statusToRender)
+                      defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
                     )
                   ) : (
                     <div className={mergeStyles(noMessageStatusStyle)} />
@@ -424,6 +449,14 @@ export type MessageThreadProps = {
    * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
    */
   messages: (ChatMessage | SystemMessage | CustomMessage)[];
+  /**
+   * number of participants in the thread
+   */
+  participantCount?: number;
+  /**
+   * read receipts for each sender in the chat
+   */
+  readReceiptsBySenderId?: ReadReceiptsBySenderId;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -496,7 +529,12 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to render uploaded files in the message component.
+   * @beta
+   */
+  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -515,6 +553,14 @@ export type MessageThreadProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
 
   /**
+   * Optional callback to send a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onSendMessage?: (messageId: string) => Promise<void>;
+
+  /**
   /**
    * Disable editing messages.
    *
@@ -528,6 +574,15 @@ export type MessageThreadProps = {
    * Optional strings to override in component
    */
   strings?: Partial<MessageThreadStrings>;
+
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * @beta
+   * Optional function called when someone clicks on the file download icon.
+   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
+   * this function will be called with the data inside `fileSharingMetadata` key.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
 };
 
 /**
@@ -580,6 +635,14 @@ export type MessageProps = {
    *
    */
   onDeleteMessage?: (messageId: string) => Promise<void>;
+
+  /**
+   * Optional callback to send a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 /**
@@ -597,6 +660,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
+    participantCount,
+    readReceiptsBySenderId,
     styles,
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
@@ -609,8 +674,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onDeleteMessage
+    onDeleteMessage,
+    onSendMessage
   } = props;
+
+  const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -628,6 +696,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [lastDeliveredChatMessage, setLastDeliveredChatMessage] = useState<string | undefined>(undefined);
   const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
 
+  // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
+  const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
   const isAllChatMessagesLoadedRef = useRef(false);
 
   const previousTopRef = useRef<number>(-1);
@@ -642,8 +713,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // When the chat thread is narrow, we perform space optimizations such as overlapping
   // the avatar on top of the chat message and moving the chat accept/reject edit buttons
   // to a new line
-  const chatThreadWidth = useContainerWidth(chatThreadRef);
-  const isNarrow = isNarrowWidth(chatThreadWidth);
+  const chatThreadWidth = _useContainerWidth(chatThreadRef);
+  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
@@ -681,7 +752,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     const lastMessage: ChatMessage = messagesWithId[messagesWithId.length - 1] as ChatMessage;
-
     try {
       if (
         onMessageSeen &&
@@ -847,6 +917,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const participantCountRef = useRef(participantCount);
+  const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
+
+  participantCountRef.current = participantCount;
+  readReceiptsBySenderIdRef.current = readReceiptsBySenderId;
+
+  const onActionButtonClickMemo = useCallback(
+    (message: ChatMessage, setMessageReadBy: (readBy: { id: string; displayName: string }[]) => void) => {
+      if (participantCountRef.current && participantCountRef.current - 1 > 1 && readReceiptsBySenderIdRef.current) {
+        setMessageReadBy(getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderIdRef.current));
+      }
+    },
+    []
+  );
+
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -854,22 +939,57 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return (
           <ChatMessageComponent
             {...messageProps}
+            onRenderFileDownloads={onRenderFileDownloads}
             message={messageProps.message}
+            userId={props.userId}
+            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
+            onRenderAvatar={onRenderAvatar}
+            showMessageStatus={showMessageStatus}
+            messageStatus={messageProps.message.status}
+            onActionButtonClick={onActionButtonClickMemo}
           />
         );
       }
       return <></>;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString(), isNarrow]
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      new Date().toDateString(),
+      isNarrow,
+      participantCount,
+      onRenderAvatar,
+      onActionButtonClickMemo,
+      onRenderFileDownloads,
+      props.userId,
+      showMessageStatus
+    ]
   );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const defaultStatusRenderer: (status: MessageStatus) => JSX.Element = useCallback(
-    (status: MessageStatus) => <MessageStatusIndicator status={status} />,
+  const defaultStatusRenderer = useCallback(
+    (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
+      const onToggleToolTip = (isToggled: boolean): void => {
+        if (isToggled && readReceiptsBySenderIdRef.current) {
+          setReadCountForHoveredIndicator(
+            getParticipantsWhoHaveReadMessage(message, readReceiptsBySenderIdRef.current).length
+          );
+        } else {
+          setReadCountForHoveredIndicator(undefined);
+        }
+      };
+      return (
+        <MessageStatusIndicator
+          status={status}
+          readCount={readCount}
+          onToggleToolTip={onToggleToolTip}
+          // -1 because participant count does not include myself
+          remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+        />
+      );
+    },
     []
   );
 
@@ -921,9 +1041,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
             statusToRender,
+            participantCount,
+            readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
-            onDeleteMessage
+            onDeleteMessage,
+            onSendMessage
           );
         });
       }),
@@ -937,13 +1060,16 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderMessageStatus,
       defaultStatusRenderer,
       defaultChatMessageRenderer,
-      lastSeenChatMessage,
-      lastSendingChatMessage,
-      lastDeliveredChatMessage,
+      strings,
+      participantCount,
+      readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
       onDeleteMessage,
-      strings
+      onSendMessage,
+      lastSeenChatMessage,
+      lastSendingChatMessage,
+      lastDeliveredChatMessage
     ]
   );
 
@@ -971,4 +1097,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       </Stack>
     </Ref>
   );
+};
+
+const onRenderFileDownloadsTrampoline = (
+  props: MessageThreadProps
+): ((userId: string, message: ChatMessage) => JSX.Element) | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
+  return props.onRenderFileDownloads;
+  return undefined;
 };

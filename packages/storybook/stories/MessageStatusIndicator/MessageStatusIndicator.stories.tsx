@@ -46,6 +46,7 @@ const MessageStatusIndicatorStory = (args): JSX.Element => {
         deliveredTooltipText: args.deliveredTooltipText,
         sendingTooltipText: args.sendingTooltipText,
         seenTooltipText: args.seenTooltipText,
+        readByTooltipText: args.readByTooltipText,
         failedToSendTooltipText: args.failedToSendTooltipText
       }}
     />
@@ -65,6 +66,7 @@ export default {
     deliveredTooltipText: controlsToAdd.messageDeliveredTooltipText,
     sendingTooltipText: controlsToAdd.messageSendingTooltipText,
     seenTooltipText: controlsToAdd.messageSeenTooltipText,
+    readByTooltipText: controlsToAdd.messageReadByTooltipText,
     failedToSendTooltipText: controlsToAdd.messageFailedToSendTooltipText,
     // Hiding auto-generated controls
     styles: hiddenControl,
