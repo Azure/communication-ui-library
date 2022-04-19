@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
 import {
+  AvatarPersonaDataCallback,
   _DrawerMenu,
   _DrawerMenuItemProps,
   _useContainerHeight,
