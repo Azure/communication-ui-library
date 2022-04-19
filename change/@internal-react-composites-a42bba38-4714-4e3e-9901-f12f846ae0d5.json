@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add aria label and aria description to back button on TabHeader for mobile view",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

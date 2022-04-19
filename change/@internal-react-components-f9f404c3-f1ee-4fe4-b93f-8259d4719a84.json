@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update chat message action button icon styles: increase contrast in dark mode for MessageThread and Chat Composites. Make icon customizable.",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
