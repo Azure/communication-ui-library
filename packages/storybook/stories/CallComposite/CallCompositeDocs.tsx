@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import { CallComposite } from '@azure/communication-react';
-import { MessageBar } from '@fluentui/react';
+import { Stack, MessageBar } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
-import { Stack } from '@fluentui/react';
 import { overviewPageImagesStackStyle } from '../constants';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 

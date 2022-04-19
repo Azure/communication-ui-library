@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { ChatComposite } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { Stack } from '@fluentui/react';
 import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
