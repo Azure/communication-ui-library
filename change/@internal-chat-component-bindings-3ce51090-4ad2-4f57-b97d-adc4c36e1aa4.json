@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Modifying the updateMessage handler method to allow passing metadata as a parameter",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

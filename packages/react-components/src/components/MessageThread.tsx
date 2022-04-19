@@ -40,8 +40,10 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
-import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from './FileDownloadCards';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -572,6 +574,15 @@ export type MessageThreadProps = {
    * Optional strings to override in component
    */
   strings?: Partial<MessageThreadStrings>;
+
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * @beta
+   * Optional function called when someone clicks on the file download icon.
+   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
+   * this function will be called with the data inside `fileSharingMetadata` key.
+   */
+  fileDownloadHandler?: FileDownloadHandler;
 };
 
 /**
@@ -702,8 +713,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // When the chat thread is narrow, we perform space optimizations such as overlapping
   // the avatar on top of the chat message and moving the chat accept/reject edit buttons
   // to a new line
-  const chatThreadWidth = useContainerWidth(chatThreadRef);
-  const isNarrow = isNarrowWidth(chatThreadWidth);
+  const chatThreadWidth = _useContainerWidth(chatThreadRef);
+  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {

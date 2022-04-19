@@ -1,8 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
-import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import {
+  _DrawerMenu,
+  _DrawerMenuItemProps,
+  _useContainerHeight,
+  _useContainerWidth,
+  ParticipantMenuItemsCallback,
+  useTheme
+} from '@internal/react-components';
+import React, { useMemo, useRef, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -90,7 +97,32 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
-  const modalLayerHost = document.getElementById(props.modalLayerHostId);
+  // Use document.getElementById until Fluent's Stack supports componentRef property: https://github.com/microsoft/fluentui/issues/20410
+  const modalLayerHostElement = document.getElementById(props.modalLayerHostId);
+  const modalHostRef = useRef<HTMLElement>(modalLayerHostElement);
+  const modalHostWidth = _useContainerWidth(modalHostRef);
+  const modalHostHeight = _useContainerHeight(modalHostRef);
+  const minDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      modalHostWidth === undefined
+        ? undefined
+        : {
+            x: props.rtl ? -1 * modalPipRightPositionPx : modalPipRightPositionPx - modalHostWidth + modalPipWidthPx,
+            y: -1 * modalPipTopPositionPx
+          },
+    [modalHostWidth, props.rtl]
+  );
+  const maxDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      modalHostWidth === undefined || modalHostHeight === undefined
+        ? undefined
+        : {
+            x: props.rtl ? modalHostWidth - modalPipRightPositionPx - modalPipWidthPx : modalPipRightPositionPx,
+            y: modalHostHeight - modalPipTopPositionPx - modalPipHeightPx
+          },
+    [modalHostHeight, modalHostWidth, props.rtl]
+  );
+
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const dataUiId =
@@ -111,24 +143,14 @@ export const CallWithChatPane = (props: {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      {props.mobileView && modalLayerHost && (
+      {props.mobileView && (
         <ModalLocalAndRemotePIP
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
-          minDragPosition={{
-            x: props.rtl
-              ? -1 * modalPipRightPositionPx
-              : modalPipRightPositionPx - modalLayerHost.getBoundingClientRect().width + modalPipWidthPx,
-            y: -1 * modalPipTopPositionPx
-          }}
-          maxDragPosition={{
-            x: props.rtl
-              ? modalLayerHost.getBoundingClientRect().width - modalPipRightPositionPx - modalPipWidthPx
-              : modalPipRightPositionPx,
-            y: modalLayerHost.getBoundingClientRect().height - modalPipTopPositionPx - modalPipHeightPx
-          }}
+          minDragPosition={minDragPosition}
+          maxDragPosition={maxDragPosition}
         />
       )}
       {drawerMenuItems.length > 0 && (

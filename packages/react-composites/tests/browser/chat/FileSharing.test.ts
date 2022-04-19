@@ -4,9 +4,18 @@ import {
   waitForChatCompositeToLoad,
   buildUrl,
   isTestProfileStableFlavor,
-  stubMessageTimestamps
+  stubMessageTimestamps,
+  dataUiId,
+  waitForSelector,
+  clickOutsideOfPage
 } from '../common/utils';
-import { chatTestSetup, sendMessage } from '../common/chatTestHelpers';
+import {
+  chatTestSetup,
+  chatTestSetupWithPerUserArgs,
+  sendMessage,
+  waitForMessageDelivered,
+  waitForTypingIndicatorHidden
+} from '../common/chatTestHelpers';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -192,5 +201,90 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await sendMessage(page, 'Hi');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
+  });
+});
+
+test.describe('Filesharing Global Errorbar', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
+  });
+
+  test('shows file download error', async ({ serverUrl, users, page }) => {
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'Sample.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf'
+          }
+        ]),
+        failDownload: 'true'
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    const testMessageText = 'Hello!';
+    await sendMessage(page, testMessageText);
+    await waitForMessageDelivered(page);
+    await waitForSelector(page, dataUiId('file-download-card-group'));
+    await stubMessageTimestamps(page);
+
+    await page.locator(dataUiId('file-download-card-download-icon')).click();
+    await clickOutsideOfPage(page);
+    expect(await page.screenshot()).toMatchSnapshot('filesharing-download-error.png');
+  });
+});
+
+test.describe('Filesharing Message Thread', async () => {
+  test.skip(isTestProfileStableFlavor());
+
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    const firstUserArgs = {
+      user: users[0],
+      qArgs: {
+        useFileSharing: 'true',
+        uploadedFiles: JSON.stringify([
+          {
+            name: 'SampleFile1.pdf',
+            extension: 'pdf',
+            url: 'https://sample.com/SampleFile.pdf',
+            uploadComplete: true
+          }
+        ])
+      }
+    };
+    const otherUsersArgs = users.slice(1).map((user) => ({
+      user,
+      qArgs: {
+        useFileSharing: 'true'
+      }
+    }));
+    const usersWithArgs = [firstUserArgs, ...otherUsersArgs];
+    await chatTestSetupWithPerUserArgs({
+      pages,
+      usersWithArgs,
+      serverUrl
+    });
+  });
+  test('contains File Download Card', async ({ pages }) => {
+    const testMessageText = 'Hello!';
+    const page0 = pages[0];
+
+    await waitForChatCompositeToLoad(page0);
+    await sendMessage(page0, testMessageText);
+    await waitForMessageDelivered(page0);
+    await page0.waitForSelector(dataUiId('file-download-card-group'));
+
+    await stubMessageTimestamps(page0);
+    expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
+
+    const page1 = pages[1];
+    await waitForTypingIndicatorHidden(page1);
+
+    await stubMessageTimestamps(page1);
+    expect(await page1.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
