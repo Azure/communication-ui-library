@@ -5,7 +5,7 @@ import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, Spinner, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   buildTime,
@@ -29,6 +29,8 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
+import { Header } from './Header';
+import { _GraphToolkitEnabledProvider } from '@internal/acs-ui-common';
 
 setLogLevel('warning');
 initializeIcons();
@@ -49,7 +51,7 @@ console.log(
   `ACS sample Call with Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}, @azure/communication-chat:${chatSDKVersion}, and @azure/communication-react:${communicationReactSDKVersion}`
 );
 
-const App = (): JSX.Element => {
+const AppBody = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
 
@@ -110,6 +112,25 @@ const App = (): JSX.Element => {
   }
 };
 
+const App = (): JSX.Element => {
+  const [enableGraphUiToolkit, setEnableGraphUiToolkit] = useState(true);
+
+  return (
+    <_GraphToolkitEnabledProvider isEnabled={enableGraphUiToolkit}>
+      <Stack verticalFill>
+        <Stack.Item>
+          <Header graphUiToolkitEnabled={enableGraphUiToolkit} setEnableGraphUiToolkit={setEnableGraphUiToolkit} />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Stack verticalFill verticalAlign="center">
+            <AppBody />
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </_GraphToolkitEnabledProvider>
+  );
+};
+
 export default App;
 
 const generateCallWithChatArgs = async (
@@ -117,6 +138,8 @@ const generateCallWithChatArgs = async (
   teamsLink?: TeamsMeetingLinkLocator
 ): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
+  console.log(user);
+  console.log(token);
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 

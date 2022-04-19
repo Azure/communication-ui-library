@@ -26,6 +26,8 @@ import {
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/PeoplePaneContent.styles';
+import { PeoplePicker } from '@microsoft/mgt-react';
+import { _useIsSignedIn } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -128,19 +130,27 @@ export const PeoplePaneContent = (props: {
       </Stack>
     );
   }
+
+  const [isSignedIn] = _useIsSignedIn();
+
   return (
-    <Stack tokens={peoplePaneContainerTokens}>
-      {inviteLink && (
-        <Stack styles={copyLinkButtonStackStyles}>
-          <DefaultButton
-            text={strings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <LinkIconTrampoline />}
-            onClick={() => copy(inviteLink)}
-            styles={copyLinkButtonStylesThemed}
-          />
-        </Stack>
-      )}
-      {participantList}
+    <Stack verticalFill tokens={peoplePaneContainerTokens}>
+      <Stack.Item>
+        <PeoplePicker groupId={isSignedIn ? '3688a8e8-5685-470b-b274-842bd3192a82' : undefined} />
+      </Stack.Item>
+      <Stack.Item grow>{participantList}</Stack.Item>
+      <Stack.Item>
+        {inviteLink && (
+          <Stack styles={copyLinkButtonStackStyles}>
+            <DefaultButton
+              text={strings.copyInviteLinkButtonLabel}
+              onRenderIcon={() => <LinkIconTrampoline />}
+              onClick={() => copy(inviteLink)}
+              styles={copyLinkButtonStylesThemed}
+            />
+          </Stack>
+        )}
+      </Stack.Item>
     </Stack>
   );
 };

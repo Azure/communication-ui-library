@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -12,7 +12,9 @@ import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { LocalVideoCameraCycleButton, CustomAvatarOptions } from '@internal/react-components';
+import { _useIsSignedIn } from '@internal/acs-ui-common';
+import { GraphPersona } from '../../common/GraphPersona';
 
 const VideoGalleryStyles = {
   root: {
@@ -60,6 +62,21 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
+  const [isSignedIn] = _useIsSignedIn();
+
+  const onRenderAvatar = useCallback(
+    (userId: string, options: CustomAvatarOptions): JSX.Element => {
+      const avatar = isSignedIn ? (
+        <GraphPersona personQuery="me" />
+      ) : (
+        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+      );
+
+      return <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>{avatar}</Stack>;
+    },
+    [isSignedIn, props.onFetchAvatarPersonaData]
+  );
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -73,17 +90,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={(userId, options) => (
-          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          </Stack>
-        )}
+        onRenderAvatar={onRenderAvatar}
       />
     );
   }, [
+    onRenderAvatar,
     videoGalleryProps,
     props.isMobile,
-    props.onFetchAvatarPersonaData,
     /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     cameraSwitcherProps
   ]);

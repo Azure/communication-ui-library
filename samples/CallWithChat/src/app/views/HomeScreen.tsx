@@ -18,10 +18,11 @@ import {
   buttonStyle
 } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
-import { localStorageAvailable } from '../utils/localStorage';
-import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
+import { localStorageAvailable, saveDisplayNameToLocalStorage } from '../utils/localStorage';
+import { getDisplayNameFromLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { _useMe, _useIsSignedIn } from '@internal/acs-ui-common';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
@@ -41,13 +42,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
-  const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
+  const [manualDisplayName, setManualDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
+
+  const [isSignedIn] = _useIsSignedIn();
+  const [me] = _useMe();
+  const graphDisplayName = !me ? undefined : me.displayName ?? 'name not found';
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
+  const buttonEnabled =
+    ((isSignedIn && graphDisplayName) || (!isSignedIn && manualDisplayName)) && (!teamsCallChosen || teamsLink);
 
   return (
     <Stack
@@ -64,36 +70,42 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           {headerTitle}
         </Text>
         <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
-          <Stack tokens={callContainerStackTokens}>
-            {!props.joiningExistingCall && (
-              <ChoiceGroup
-                styles={callOptionsGroupStyles}
-                label={callOptionsGroupLabel}
-                defaultSelectedKey="ACSCallWithChat"
-                options={callOptions}
-                required={true}
-                onChange={(_, option) => option && setChosenCallOption(option)}
-              />
-            )}
-            {teamsCallChosen && (
-              <TextField
-                className={teamsItemStyle}
-                iconProps={{ iconName: 'Link' }}
-                placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
-              />
-            )}
-          </Stack>
-          <DisplayNameField defaultName={displayName} setName={setDisplayName} />
+          {(!props.joiningExistingCall || teamsCallChosen) && (
+            <Stack tokens={callContainerStackTokens}>
+              {!props.joiningExistingCall && (
+                <ChoiceGroup
+                  styles={callOptionsGroupStyles}
+                  label={callOptionsGroupLabel}
+                  defaultSelectedKey="ACSCallWithChat"
+                  options={callOptions}
+                  required={true}
+                  onChange={(_, option) => option && setChosenCallOption(option)}
+                />
+              )}
+              {teamsCallChosen && (
+                <TextField
+                  className={teamsItemStyle}
+                  iconProps={{ iconName: 'Link' }}
+                  placeholder={'Enter a Teams meeting link'}
+                  onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                />
+              )}
+            </Stack>
+          )}
+
+          {!isSignedIn && <DisplayNameField defaultName={manualDisplayName} setName={setManualDisplayName} />}
+          {isSignedIn && <Stack>Display Name: {graphDisplayName ?? 'Login first'}</Stack>}
 
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
             text={buttonText}
             onClick={() => {
-              if (displayName) {
-                saveDisplayNameToLocalStorage(displayName);
-                startCallHandler({ displayName, teamsLink });
+              if (isSignedIn && graphDisplayName) {
+                startCallHandler({ displayName: graphDisplayName, teamsLink });
+              } else if (!isSignedIn && manualDisplayName) {
+                saveDisplayNameToLocalStorage(manualDisplayName);
+                startCallHandler({ displayName: manualDisplayName, teamsLink });
               }
             }}
           />

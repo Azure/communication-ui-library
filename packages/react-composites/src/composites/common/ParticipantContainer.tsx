@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   participantListContainerStyle,
   participantListMobileStyle,
@@ -16,6 +16,10 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { CustomAvatarOptions } from '@internal/react-components';
+import { GraphPersona } from './GraphPersona';
+import { _useIsSignedIn } from '@internal/acs-ui-common';
+import { PersonViewType } from '@microsoft/mgt-react';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -60,6 +64,27 @@ export const ParticipantListWithHeading = (props: {
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
   );
 
+  const [isSignedIn] = _useIsSignedIn();
+
+  const onRenderAvatar = useCallback(
+    (userId: string, options: CustomAvatarOptions): JSX.Element => {
+      console.log(`userId: ${userId}`);
+      const avatar = isSignedIn ? (
+        <GraphPersona personQuery="me" view={PersonViewType.oneline} avatarSize="small" />
+      ) : (
+        <AvatarPersona
+          data-ui-id="chat-composite-participant-custom-avatar"
+          userId={userId}
+          {...options}
+          dataProvider={onFetchAvatarPersonaData}
+        />
+      );
+
+      return avatar;
+    },
+    [isSignedIn, onFetchAvatarPersonaData]
+  );
+
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
@@ -67,14 +92,7 @@ export const ParticipantListWithHeading = (props: {
         <ParticipantList
           {...participantListProps}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
-          onRenderAvatar={(userId, options) => (
-            <AvatarPersona
-              data-ui-id="chat-composite-participant-custom-avatar"
-              userId={userId}
-              {...options}
-              dataProvider={onFetchAvatarPersonaData}
-            />
-          )}
+          onRenderAvatar={onRenderAvatar}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </FocusZone>

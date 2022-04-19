@@ -24,3 +24,14 @@ html,
 .ui-provider {
   height: 0;
 }
+
+.graph-ui-theme {
+  --padding: 12px 20px;
+  --button-color: #201f1e;
+  --button-color--hover: var(--theme-primary-color);
+  --button-background-color: transparent;
+  --button-background-color--hover: #edebe9;
+  --popup-background-color: white;
+  --popup-command-font-size: 12px;
+  --popup-color: #201f1e;
+}

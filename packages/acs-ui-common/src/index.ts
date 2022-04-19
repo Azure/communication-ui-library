@@ -16,3 +16,7 @@ export type { _IObjectMap } from './localizationUtils';
 export { _MAX_EVENT_LISTENERS } from './constants';
 
 export { _pxToRem } from './cssUtils';
+
+export { _useIsSignedIn } from './graphHooks/useIsSignedIn';
+export { _useMe } from './graphHooks/useMe';
+export { _GraphToolkitEnabledProvider, _useGraphToolkitEnabled } from './graphHooks/useGraphToolkitEnabled';

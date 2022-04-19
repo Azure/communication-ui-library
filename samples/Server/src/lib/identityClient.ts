@@ -25,3 +25,8 @@ export const getToken = (
 ): Promise<CommunicationAccessToken> => getIdentityClient().getToken(user, scopes);
 export const createUserAndToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
   getIdentityClient().createUserAndToken(scopes);
+
+export const getTokenForTeamsUser = (
+  teamsUserAadToken: string,
+  scopes: TokenScope[]
+): Promise<CommunicationAccessToken> => getIdentityClient().getTokenForTeamsUser(teamsUserAadToken, scopes);

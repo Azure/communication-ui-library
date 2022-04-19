@@ -25,6 +25,7 @@ import { FileDownloadHandler } from '@internal/react-components';
 import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
+import { _useIsSignedIn } from '@internal/acs-ui-common';
 
 import {
   chatArea,
@@ -46,6 +47,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+import { GraphPersona } from '../common/GraphPersona';
+import { PersonViewType } from '@microsoft/mgt-react';
 
 /**
  * @private
@@ -134,9 +137,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  const [isSignedIn] = _useIsSignedIn();
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
-      return (
+      const avatar = isSignedIn ? (
+        <GraphPersona personQuery="me" avatarSize="small" />
+      ) : (
         <AvatarPersona
           userId={userId}
           hidePersonaDetails={true}
@@ -144,8 +150,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           dataProvider={onFetchAvatarPersonaData}
         />
       );
+
+      return avatar;
     },
-    [onFetchAvatarPersonaData]
+    [isSignedIn, onFetchAvatarPersonaData]
   );
 
   const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);

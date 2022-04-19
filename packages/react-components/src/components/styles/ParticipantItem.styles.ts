@@ -14,7 +14,8 @@ export const participantItemContainerStyle = (isMe: boolean | undefined): IStyle
     maxWidth: '100%',
     minWidth: '8rem',
     cursor: isMe ? 'default' : 'pointer',
-    alignItems: 'center'
+    alignItems: 'center',
+    overflow: 'hidden'
   };
 };
 

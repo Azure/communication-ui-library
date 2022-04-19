@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { User } from '@microsoft/microsoft-graph-types';
 
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -63,6 +64,12 @@ export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, ke
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
+
+// @internal (undocumented)
+export const _useIsSignedIn: () => [boolean];
+
+// @internal (undocumented)
+export const _useMe: () => [User | undefined];
 
 // (No @packageDocumentation comment for this package)
 

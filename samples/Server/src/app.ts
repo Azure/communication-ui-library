@@ -9,6 +9,7 @@ import logger from 'morgan';
 import path from 'path';
 
 import issueToken from './routes/issueToken';
+import issueTeamsToken from './routes/issueTeamsToken';
 import refreshToken from './routes/refreshToken';
 import getEndpointUrl from './routes/getEndpointUrl';
 import isValidThread from './routes/isValidThread';
@@ -53,6 +54,12 @@ app.use('/getEndpointUrl', cors(), getEndpointUrl);
  * purpose: Chat,Calling: get ACS token with the given scope
  */
 app.use('/token', cors(), issueToken);
+
+/**
+ * route: /issueTeamsToken
+ * purpose: Chat,Calling: get token for a Teams AAD user with a provided scope
+ */
+app.use('/teamsToken', cors(), issueTeamsToken);
 
 /**
  * route: /isValidThread

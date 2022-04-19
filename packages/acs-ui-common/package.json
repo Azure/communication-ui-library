@@ -28,7 +28,10 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-common": "1.1.0"
+    "@azure/communication-common": "1.1.0",
+    "@microsoft/mgt-element": "~2.4.0",
+    "@microsoft/mgt-msal2-provider": "~2.4.0",
+    "@microsoft/mgt-react": "~2.4.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <18.0.0",
@@ -39,6 +42,7 @@
     "@babel/core": "~7.16.0",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
+    "@microsoft/microsoft-graph-types": "2.19.0",
     "@types/jest": "~26.0.22",
     "@types/react": "^16.9.49",
     "@typescript-eslint/eslint-plugin": "^4.12.0",

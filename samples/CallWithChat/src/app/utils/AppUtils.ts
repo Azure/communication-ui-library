@@ -23,6 +23,24 @@ export const fetchTokenResponse = async (): Promise<any> => {
 };
 
 /**
+ * Get user token for Teams AAD from the Contoso server.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fetchTeamsToken = async (teamsUserAadToken: string): Promise<any> => {
+  console.log(`fetching teams token for ${teamsUserAadToken}`);
+  const response = await fetch(`/token?teamsUserAadToken=${teamsUserAadToken}`);
+  console.log(response);
+  if (response.ok) {
+    const responseAsJson = await response.json();
+    const token = responseAsJson.token;
+    if (token) {
+      return responseAsJson;
+    }
+  }
+  throw 'Invalid token response';
+};
+
+/**
  * Get group id from the url's query params.
  */
 export const getGroupIdFromUrl = (): GroupLocator | undefined => {
