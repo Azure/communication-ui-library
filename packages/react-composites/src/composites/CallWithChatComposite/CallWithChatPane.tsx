@@ -29,7 +29,7 @@ import { TabHeader } from './TabHeader';
 import { FileSharingOptions } from '../ChatComposite';
 import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { BackButtonOverride } from './BackButtonOverride';
+import { BrowserBackButtonOverride } from './BackButtonOverride';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -177,7 +177,7 @@ export const CallWithChatPane = (props: {
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
-      <BackButtonOverride onBackButtonClick={onBrowserBackButtonClick} />
+      <BrowserBackButtonOverride onBackButtonClick={onBrowserBackButtonClick} />
     </Stack>
   );
 };
