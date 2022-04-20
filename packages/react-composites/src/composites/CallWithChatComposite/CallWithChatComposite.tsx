@@ -220,8 +220,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             activePane={activePane}
-            onInitialize={callWithChatAdapter.onMobilePaneInitialize}
-            onBackButtonClick={callWithChatAdapter.onBackButtonClick}
+            onOpen={callWithChatAdapter.onOpenMobilePane}
+            onBrowserBackButtonClick={callWithChatAdapter.onBrowserBackButtonClick}
           />
         )}
       </Stack>

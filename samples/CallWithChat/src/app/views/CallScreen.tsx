@@ -82,12 +82,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
 
+  const compositeInitialized = useRef(false);
+
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  adapter.onMobilePaneInitialize = () => window.history.pushState(null, document.title, location.href);
-  adapter.onBackButtonClick = (paneOpen: boolean) => {
+  // Using a reference to ensure only one push is done to the history stack
+  adapter.onOpenMobilePane = () => {
+    if (!compositeInitialized.current) {
+      compositeInitialized.current = true;
+      window.history.pushState(null, document.title, location.href);
+    }
+  };
+  adapter.onBrowserBackButtonClick = (paneOpen: boolean) => {
     if (paneOpen) {
       return () => window.history.forward();
     }

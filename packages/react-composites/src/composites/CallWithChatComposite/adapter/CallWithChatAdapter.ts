@@ -75,8 +75,14 @@ export interface CallWithChatAdapterManagement
    * @param userId - UserId of the participant to remove.
    */
   removeParticipant(userId: string): Promise<void>;
-  onMobilePaneInitialize: () => void;
-  onBackButtonClick(paneOpen?: boolean): () => void;
+  /**
+   * Callback to execute when mobile pane is opened
+   */
+  onOpenMobilePane: () => void;
+  /**
+   * Callback to execute when browser back button is clicked
+   */
+  onBrowserBackButtonClick(paneOpen?: boolean): () => void;
 }
 
 /**

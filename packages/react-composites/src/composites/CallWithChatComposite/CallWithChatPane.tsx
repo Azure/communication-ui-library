@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IStackStyles, Stack } from '@fluentui/react';
 import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -37,8 +37,8 @@ export type CallWithChatPaneProps = {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
-  onInitialize?: () => void;
-  onBackButtonClick?: (paneOpen?: boolean) => () => void;
+  onOpen?: () => void;
+  onBrowserBackButtonClick?: (paneOpen?: boolean) => () => void;
 };
 
 /**
@@ -101,18 +101,24 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
   );
 
+  useEffect(() => {
+    if (!hidden) {
+      props.onOpen?.();
+    }
+  }, [hidden]);
+
   const onBackButtonClickWhenPaneClosed = () => {
     window.removeEventListener('popstate', onBackButtonClickWhenPaneClosed);
-    props.onBackButtonClick?.(false)();
+    props.onBrowserBackButtonClick?.(false)();
   };
 
   const onBackButtonClickWhenPaneOpen = () => {
     window.removeEventListener('popstate', onBackButtonClickWhenPaneOpen);
-    props.onBackButtonClick?.(true)();
+    props.onBrowserBackButtonClick?.(true)();
     props.onClose();
   };
 
-  const onBackButtonClick = props.onBackButtonClick
+  const onBackButtonClick = props.onBrowserBackButtonClick
     ? hidden
       ? onBackButtonClickWhenPaneClosed
       : onBackButtonClickWhenPaneOpen
@@ -149,7 +155,7 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
-      <BackButtonOverride onInitialize={props.onInitialize} onBackButtonClick={onBackButtonClick} />
+      <BackButtonOverride onBackButtonClick={onBackButtonClick} />
     </Stack>
   );
 };

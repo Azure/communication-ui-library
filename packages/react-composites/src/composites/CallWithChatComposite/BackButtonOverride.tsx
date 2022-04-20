@@ -1,27 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 /**
  * @private
  */
 export const BackButtonOverride = (props: {
-  /** This callback is only executed once and is intended for pushing states to the browser history */
-  onInitialize?: () => void;
   /** This callback is executed when the browser back button is clicked with this component on the DOM tree */
   onBackButtonClick?: () => void;
 }): JSX.Element => {
-  const initialized = useRef(false);
-
   useEffect(() => {
-    if (props.onInitialize && initialized.current === false) {
-      initialized.current = true;
-      props.onInitialize();
-    }
     if (props.onBackButtonClick) {
       const onBackButtonClick: () => void = props.onBackButtonClick;
-      // This needs to be inside a setTimeout with no delay because newly listeners added are executed immediately
+      // This needs to be inside a setTimeout with no delay because newly event listeners added are executed immediately
       // from a previous popstate event
       setTimeout(() => window.addEventListener('popstate', onBackButtonClick));
     }
@@ -31,7 +23,7 @@ export const BackButtonOverride = (props: {
         window.removeEventListener('popstate', onBackButtonClick);
       }
     };
-  }, [props.onBackButtonClick, props.onInitialize]);
+  }, [props.onBackButtonClick]);
 
   return <></>;
 };
