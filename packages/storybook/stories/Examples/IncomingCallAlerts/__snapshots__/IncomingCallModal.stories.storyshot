@@ -133,7 +133,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                           >
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-28 ms-Button-icon icon-23"
+                              className="ms-Icon root-105 css-28 ms-Button-icon icon-23"
                               data-icon-name="Cancel"
                               style={
                                 Object {
