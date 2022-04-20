@@ -76,11 +76,11 @@ export interface CallWithChatAdapterManagement
    */
   removeParticipant(userId: string): Promise<void>;
   /**
-   * Callback to execute when mobile pane is opened
+   * Callback to execute when a mobile pane is opened. Mobile pane includes the chat and people pane.
    */
   onOpenMobilePane: () => void;
   /**
-   * Callback to execute when browser back button is clicked
+   * Callback to execute when browser back button is clicked.
    */
   onBrowserBackButtonClick(mobilePaneOpen?: boolean): () => void;
 }
