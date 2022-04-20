@@ -78,11 +78,11 @@ export interface CallWithChatAdapterManagement
   /**
    * Callback to execute when a mobile pane is opened. Mobile pane includes the chat and people pane.
    */
-  onOpenMobilePane: () => void;
+  onOpenMobilePane?: () => void;
   /**
    * Callback to execute when browser back button is clicked.
    */
-  onBrowserBackButtonClick(mobilePaneOpen?: boolean): () => void;
+  onBrowserBackButtonClick?: (mobilePaneOpen?: boolean) => () => void;
 }
 
 /**
