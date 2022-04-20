@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -105,14 +105,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
     [props.mobileView, theme]
   );
-
-  // This useState and useEffect is to rerender the control bar when the container height and/or width change
-  const [, setWindowSize] = useState<[number, number]>([0, 0]);
-  useEffect(() => {
-    if (props.containerHeight && props.containerWidth) {
-      setWindowSize([props.containerHeight, props.containerWidth]);
-    }
-  }, [props.containerHeight, props.containerWidth]);
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {

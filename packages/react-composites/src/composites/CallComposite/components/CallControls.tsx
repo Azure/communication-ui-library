@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { generateCustomButtons } from './buttons/Custom';
@@ -38,14 +38,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
-
-  // This useState and useEffect is to rerender the control bar when the container height and/or width change
-  const [, setWindowSize] = useState<[number, number]>([0, 0]);
-  useEffect(() => {
-    if (props.containerHeight && props.containerWidth) {
-      setWindowSize([props.containerHeight, props.containerWidth]);
-    }
-  }, [props.containerHeight, props.containerWidth]);
 
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
