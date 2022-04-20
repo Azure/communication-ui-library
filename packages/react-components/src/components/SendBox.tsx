@@ -234,7 +234,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
     // we dont want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile) {
+    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile()) {
       // Chat SDK doesn't send messages with empty content. For sending files without text message,
       // we need to send a message with a space.
       if (EMPTY_MESSAGE_REGEX.test(textValue)) {
@@ -274,18 +274,19 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasTextOrFile = () => {
+  const hasFile = () => {
     /* @conditional-compile-remove(file-sharing) */
-    return hasText || props.activeFileUploads?.find((file) => !file.error);
-    return hasText;
+    return props.activeFileUploads?.find((file) => !file.error);
+    return false;
   };
+  const hasTextOrFile = hasText || hasFile();
 
   const mergedSendIconStyle = useMemo(
     () =>
       mergeStyles(
         sendIconStyle,
         {
-          color: !!errorMessage || !hasTextOrFile() ? theme.palette.neutralTertiary : theme.palette.themePrimary
+          color: !!errorMessage || !hasTextOrFile ? theme.palette.neutralTertiary : theme.palette.themePrimary
         },
         styles?.sendMessageIcon
       ),
