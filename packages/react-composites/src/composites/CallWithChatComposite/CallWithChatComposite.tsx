@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useImperativeHandle } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -141,7 +141,14 @@ type CallWithChatScreenProps = {
   rtl?: boolean;
 };
 
-const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
+/** @beta */
+export type CallWithChatCompositeRefProps = {
+  closeSidePane: () => void;
+  openSidePane: (subPane: 'chat' | 'people') => void;
+};
+
+const CallWithChatScreen = React.forwardRef<CallWithChatCompositeRefProps, CallWithChatScreenProps>(
+  (props: CallWithChatScreenProps, ref): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   const mobileView = formFactor === 'mobile';
 
@@ -239,6 +246,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
+  useImperativeHandle(ref, () => ({
+    closeSidePane: closePane,
+    openSidePane: (subPane: 'chat' | 'people') => {
+      if (subPane === 'chat') {
+        selectChat();
+      } else if (subPane === 'people') {
+        selectPeople();
+      }
+    }
+  }));
+
   return (
     <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
       <Stack horizontal grow>
@@ -311,19 +329,22 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       }
     </Stack>
   );
-};
+}
+);
 
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
  * @public
  */
-export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
+export const CallWithChatComposite = React.forwardRef<CallWithChatCompositeRefProps, CallWithChatCompositeProps>(
+  (props: CallWithChatCompositeProps, ref): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
+        ref={ref}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}
@@ -334,7 +355,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
       />
     </BaseProvider>
   );
-};
+}
+);
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
   page === 'call' && callStatus === 'Connected';

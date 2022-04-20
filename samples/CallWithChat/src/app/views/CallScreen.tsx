@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  CallWithChatCompositeRefProps
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -30,8 +31,13 @@ export interface CallScreenProps {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, displayName, endpoint, locator } = props;
+  const compositeRef = useRef<CallWithChatCompositeRefProps>(null);
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+
+  useEffect(() => {
+    compositeRef.current?.openSidePane('chat'); // start the composite with chat open
+  }, [compositeRef]);
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -88,6 +94,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   return (
     <CallWithChatComposite
+      ref={compositeRef}
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
