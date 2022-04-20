@@ -118,9 +118,16 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     onMouseUp={[Function]}
                     type="button"
                   >
+<<<<<<< HEAD
                     <span
                       className="ms-Button-flexContainer flexContainer-17"
                       data-automationid="splitbuttonprimary"
+=======
+                    <i
+                      aria-hidden={true}
+                      className="root-94 root-23"
+                      data-icon-name="ControlButtonCameraOn"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                     >
                       <i
                         aria-hidden={true}
@@ -158,6 +165,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                           Turn off
                         </span>
                       </span>
+<<<<<<< HEAD
                       <i
                         aria-hidden={true}
                         className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-21"
@@ -167,6 +175,17 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                           Object {
                             "fontFamily": "\\"FabricMDL2Icons\\"",
                           }
+=======
+                    </span>
+                    <i
+                      aria-hidden={true}
+                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-19"
+                      data-icon-name="ChevronDown"
+                      hidden={true}
+                      style={
+                        Object {
+                          "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                         }
                       >
                         
@@ -202,9 +221,16 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     onMouseUp={[Function]}
                     type="button"
                   >
+<<<<<<< HEAD
                     <span
                       className="ms-Button-flexContainer flexContainer-17"
                       data-automationid="splitbuttonprimary"
+=======
+                    <i
+                      aria-hidden={true}
+                      className="root-94 root-23"
+                      data-icon-name="ControlButtonMicOn"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                     >
                       <i
                         aria-hidden={true}
@@ -242,6 +268,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                           Mute
                         </span>
                       </span>
+<<<<<<< HEAD
                       <i
                         aria-hidden={true}
                         className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-21"
@@ -251,6 +278,17 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                           Object {
                             "fontFamily": "\\"FabricMDL2Icons\\"",
                           }
+=======
+                    </span>
+                    <i
+                      aria-hidden={true}
+                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-19"
+                      data-icon-name="ChevronDown"
+                      hidden={true}
+                      style={
+                        Object {
+                          "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                         }
                       >
                         
@@ -285,7 +323,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
+<<<<<<< HEAD
                       className="root-105 root-25"
+=======
+                      className="root-94 root-23"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -318,7 +360,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
+<<<<<<< HEAD
                       className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-28"
+=======
+                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-26"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -364,7 +410,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105"
+                      className="root-94"
                       data-icon-name="ControlButtonEndCall"
                     >
                       <span

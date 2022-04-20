@@ -87,9 +87,16 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             onMouseUp={[Function]}
                             type="button"
                           >
+<<<<<<< HEAD
                             <span
                               className="ms-Button-flexContainer flexContainer-12"
                               data-automationid="splitbuttonprimary"
+=======
+                            <i
+                              aria-hidden={true}
+                              className="root-94 root-19"
+                              data-icon-name="ControlButtonCameraOff"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                             >
                               <i
                                 aria-hidden={true}
@@ -100,6 +107,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                                   aria-hidden={true}
                                   className="root-span"
                                 >
+<<<<<<< HEAD
                                   <svg
                                     className="svg"
                                     fill="currentColor"
@@ -129,6 +137,28 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                                   Object {
                                     "fontFamily": "\\"FabricMDL2Icons\\"",
                                   }
+=======
+                                  <path
+                                    d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
+                                  />
+                                  <path
+                                    d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
+                                  />
+                                  <path
+                                    d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
+                                  />
+                                </svg>
+                              </span>
+                            </i>
+                            <i
+                              aria-hidden={true}
+                              className="ms-Icon root-94 css-20 ms-Button-menuIcon menuIcon-15"
+                              data-icon-name="ChevronDown"
+                              hidden={true}
+                              style={
+                                Object {
+                                  "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                                 }
                               >
                                 
@@ -164,9 +194,16 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             onMouseUp={[Function]}
                             type="button"
                           >
+<<<<<<< HEAD
                             <span
                               className="ms-Button-flexContainer flexContainer-12"
                               data-automationid="splitbuttonprimary"
+=======
+                            <i
+                              aria-hidden={true}
+                              className="root-94 root-19"
+                              data-icon-name="ControlButtonMicOff"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                             >
                               <i
                                 aria-hidden={true}
@@ -177,6 +214,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                                   aria-hidden={true}
                                   className="root-span"
                                 >
+<<<<<<< HEAD
                                   <svg
                                     className="svg"
                                     fill="currentColor"
@@ -206,6 +244,28 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                                   Object {
                                     "fontFamily": "\\"FabricMDL2Icons\\"",
                                   }
+=======
+                                  <path
+                                    d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                                  />
+                                  <path
+                                    d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
+                                  />
+                                  <path
+                                    d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
+                                  />
+                                </svg>
+                              </span>
+                            </i>
+                            <i
+                              aria-hidden={true}
+                              className="ms-Icon root-94 css-20 ms-Button-menuIcon menuIcon-15"
+                              data-icon-name="ChevronDown"
+                              hidden={true}
+                              style={
+                                Object {
+                                  "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                                 }
                               >
                                 
@@ -240,7 +300,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
+<<<<<<< HEAD
                               className="root-105 root-20"
+=======
+                              className="root-94 root-19"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                               data-icon-name="ControlButtonScreenShareStart"
                             >
                               <span
@@ -290,7 +354,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-105"
+                              className="root-94"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span

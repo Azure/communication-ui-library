@@ -93,9 +93,16 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               onMouseUp={[Function]}
                               type="button"
                             >
+<<<<<<< HEAD
                               <span
                                 className="ms-Button-flexContainer flexContainer-23"
                                 data-automationid="splitbuttonprimary"
+=======
+                              <i
+                                aria-hidden={true}
+                                className="root-94 root-29"
+                                data-icon-name="ControlButtonCameraOn"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                               >
                                 <i
                                   aria-hidden={true}
@@ -106,6 +113,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                     aria-hidden={true}
                                     className="root-span"
                                   >
+<<<<<<< HEAD
                                     <svg
                                       className="svg"
                                       fill="currentColor"
@@ -132,6 +140,25 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                     Object {
                                       "fontFamily": "\\"FabricMDL2Icons\\"",
                                     }
+=======
+                                    <path
+                                      d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
+                                    />
+                                    <path
+                                      d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-94 css-30 ms-Button-menuIcon menuIcon-25"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                                   }
                                 >
                                   
@@ -167,9 +194,16 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               onMouseUp={[Function]}
                               type="button"
                             >
+<<<<<<< HEAD
                               <span
                                 className="ms-Button-flexContainer flexContainer-23"
                                 data-automationid="splitbuttonprimary"
+=======
+                              <i
+                                aria-hidden={true}
+                                className="root-94 root-29"
+                                data-icon-name="ControlButtonMicOn"
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                               >
                                 <i
                                   aria-hidden={true}
@@ -180,6 +214,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                     aria-hidden={true}
                                     className="root-span"
                                   >
+<<<<<<< HEAD
                                     <svg
                                       className="svg"
                                       fill="currentColor"
@@ -206,6 +241,25 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                     Object {
                                       "fontFamily": "\\"FabricMDL2Icons\\"",
                                     }
+=======
+                                    <path
+                                      d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                                    />
+                                    <path
+                                      d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-94 css-30 ms-Button-menuIcon menuIcon-25"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
+>>>>>>> 47a6591cacffbe174c9a7a7ce42ffedf713bd3d1
                                   }
                                 >
                                   
