@@ -250,23 +250,25 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return this.startCall(this.locator.participantIDs);
     }
 
-    const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
-    // TODO: find a way to expose stream to here
-    const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+    return this.teeErrorToEventEmitter(() => {
+      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
+      // TODO: find a way to expose stream to here
+      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-    const isTeamsMeeting = !('groupId' in this.locator);
-    const call = isTeamsMeeting
-      ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        })
-      : this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
+      const isTeamsMeeting = !('groupId' in this.locator);
+      const call = isTeamsMeeting
+        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          })
+        : this.callAgent.join(this.locator as GroupCallLocator, {
+            audioOptions,
+            videoOptions
+          });
 
-    this.processNewCall(call);
-    return call;
+      this.processNewCall(call);
+      return call;
+    });
   }
 
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
@@ -530,6 +532,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw error;
     }
   }
+
+  private teeErrorToEventEmitter<T>(f: () => T): T {
+    try {
+      return f();
+    } catch (error) {
+      if (isCallError(error)) {
+        this.emitter.emit('error', error as AdapterError);
+      }
+      throw error;
+    }
+  }
 }
 
 /* @conditional-compile-remove(teams-adhoc-call) */
@@ -607,7 +620,7 @@ export const createAzureCommunicationCallAdapter = async ({
  * Note that you must memoize the arguments to avoid recreating adapter on each render.
  * See storybook for typical usage examples.
  *
- * @beta
+ * @public
  */
 export const useAzureCommunicationCallAdapter = (
   /**

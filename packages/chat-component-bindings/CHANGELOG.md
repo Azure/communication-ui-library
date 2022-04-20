@@ -1,8 +1,19 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Tue, 01 Mar 2022 16:42:56 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Mar 2022 19:20:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.2.0)
+
+Fri, 11 Mar 2022 19:20:04 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.1.1-beta.1...@internal/chat-component-bindings_v1.2.0)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/chat-stateful-client to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
+- Bump @internal/react-components to v1.2.0 ([commit](https://github.com/azure/communication-ui-library/commit/8840a94fa6175db937f697b1c6a6a64cc2fb743f) by beachball)
 
 ## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.1.1-beta.1)
 

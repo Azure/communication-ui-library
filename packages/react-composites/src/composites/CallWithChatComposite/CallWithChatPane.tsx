@@ -1,8 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IStackStyles, Stack } from '@fluentui/react';
-import { ParticipantMenuItemsCallback, useTheme, _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-import React, { useEffect, useMemo, useState } from 'react';
+import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
+import {
+  _DrawerMenu,
+  _DrawerMenuItemProps,
+  _useContainerHeight,
+  _useContainerWidth,
+  ParticipantMenuItemsCallback,
+  useTheme
+} from '@internal/react-components';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -12,7 +19,7 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
-import { BasicHeader } from './BasicHeader';
+import { SidePaneHeader } from './SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from './PeoplePaneContent';
@@ -20,32 +27,33 @@ import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
+import { _ICoordinates } from '@internal/react-components';
+import { _pxToRem } from '@internal/acs-ui-common';
 import { BackButtonOverride } from './BackButtonOverride';
 
-export type CallWithChatPaneProps = {
+/**
+ * Pane that is used to store chat and people for CallWithChat composite
+ * @private
+ */
+export const CallWithChatPane = (props: {
   chatCompositeProps: Partial<ChatCompositeProps>;
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  onChatButtonClicked: () => void;
-  onPeopleButtonClicked: () => void;
+  onChatButtonClicked?: () => void;
+  onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
   activePane: CallWithChatPaneOption;
   mobileView?: boolean;
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
   onOpen?: () => void;
   onBrowserBackButtonClick?: (paneOpen?: boolean) => () => void;
-};
-
-/**
- * Pane that is used to store chat and people for CallWithChat composite
- * @private
- */
-export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
+}): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
   const hidden = props.activePane === 'none';
@@ -58,10 +66,14 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     props.activePane === 'none' ? null : props.mobileView ? (
       <TabHeader {...props} activeTab={props.activePane} />
     ) : (
-      <BasicHeader
+      <SidePaneHeader
         {...props}
         headingText={
-          props.activePane === 'chat' ? callWithChatStrings.chatPaneTitle : callWithChatStrings.peoplePaneTitle
+          props.activePane === 'chat'
+            ? callWithChatStrings.chatPaneTitle
+            : props.activePane === 'people'
+            ? callWithChatStrings.peoplePaneTitle
+            : ''
         }
       />
     );
@@ -88,51 +100,59 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     </CallAdapterProvider>
   );
 
-  const pipStyles: ModalLocalAndRemotePIPStyles = useMemo(
-    () => ({
-      modal: {
-        main: {
-          borderRadius: theme.effects.roundedCorner4,
-          boxShadow: theme.effects.elevation8,
-          ...(theme.rtl ? { left: '1rem' } : { right: '1rem' })
-        }
-      }
-    }),
-    [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
+  // Use document.getElementById until Fluent's Stack supports componentRef property: https://github.com/microsoft/fluentui/issues/20410
+  const modalLayerHostElement = document.getElementById(props.modalLayerHostId);
+  const modalHostRef = useRef<HTMLElement>(modalLayerHostElement);
+  const modalHostWidth = _useContainerWidth(modalHostRef);
+  const modalHostHeight = _useContainerHeight(modalHostRef);
+  const minDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      modalHostWidth === undefined
+        ? undefined
+        : {
+            x: props.rtl ? -1 * modalPipRightPositionPx : modalPipRightPositionPx - modalHostWidth + modalPipWidthPx,
+            y: -1 * modalPipTopPositionPx
+          },
+    [modalHostWidth, props.rtl]
+  );
+  const maxDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      modalHostWidth === undefined || modalHostHeight === undefined
+        ? undefined
+        : {
+            x: props.rtl ? modalHostWidth - modalPipRightPositionPx - modalPipWidthPx : modalPipRightPositionPx,
+            y: modalHostHeight - modalPipTopPositionPx - modalPipHeightPx
+          },
+    [modalHostHeight, modalHostWidth, props.rtl]
   );
 
+  const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
+
+  const dataUiId =
+    props.activePane === 'chat'
+      ? 'call-with-chat-composite-chat-pane'
+      : props.activePane === 'people'
+      ? 'call-with-chat-composite-people-pane'
+      : '';
+
   useEffect(() => {
-    if (!hidden) {
+    const paneOpen = props.activePane !== 'none';
+    if (paneOpen) {
       props.onOpen?.();
     }
-  }, [hidden]);
+  }, [props.activePane]);
 
-  const onBackButtonClickWhenPaneClosed = () => {
-    window.removeEventListener('popstate', onBackButtonClickWhenPaneClosed);
-    props.onBrowserBackButtonClick?.(false)();
-  };
-
-  const onBackButtonClickWhenPaneOpen = () => {
-    window.removeEventListener('popstate', onBackButtonClickWhenPaneOpen);
-    props.onBrowserBackButtonClick?.(true)();
-    props.onClose();
-  };
-
-  const onBackButtonClick = props.onBrowserBackButtonClick
-    ? hidden
-      ? onBackButtonClickWhenPaneClosed
-      : onBackButtonClickWhenPaneOpen
-    : undefined;
+  const onBrowserBackButtonClick = useCallback(() => {
+    const paneOpen = props.activePane !== 'none';
+    window.removeEventListener('popstate', onBrowserBackButtonClick);
+    props.onBrowserBackButtonClick?.(paneOpen)();
+    if (paneOpen) {
+      props.onClose();
+    }
+  }, [props.activePane]);
 
   return (
-    <Stack
-      verticalFill
-      grow
-      styles={paneStyles}
-      data-ui-id={
-        props.activePane === 'chat' ? 'call-with-chat-composite-chat-pane' : 'call-with-chat-composite-people-pane'
-      }
-    >
+    <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
       {header}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
@@ -148,6 +168,8 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
+          minDragPosition={minDragPosition}
+          maxDragPosition={maxDragPosition}
         />
       )}
       {drawerMenuItems.length > 0 && (
@@ -155,7 +177,7 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
-      <BackButtonOverride onBackButtonClick={onBackButtonClick} />
+      <BackButtonOverride onBackButtonClick={onBrowserBackButtonClick} />
     </Stack>
   );
 };
@@ -181,3 +203,25 @@ const sidePaneStyles: IStackStyles = {
 };
 
 const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
+
+const sidePaneTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+const modalPipRightPositionPx = 16;
+const modalPipTopPositionPx = 52;
+const modalPipWidthPx = 88;
+const modalPipHeightPx = 128;
+
+const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
+  modal: {
+    main: {
+      borderRadius: theme.effects.roundedCorner4,
+      boxShadow: theme.effects.elevation8,
+      // Above the message thread / people pane.
+      zIndex: 2,
+      ...(theme.rtl ? { left: _pxToRem(modalPipRightPositionPx) } : { right: _pxToRem(modalPipRightPositionPx) }),
+      top: _pxToRem(modalPipTopPositionPx)
+    }
+  }
+});

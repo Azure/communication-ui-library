@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallCompositePage, CallControlOptions } from '../CallComposite';
+import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
@@ -34,7 +34,7 @@ import { FileSharingOptions } from '../ChatComposite';
 /**
  * Props required for the {@link CallWithChatComposite}
  *
- * @beta
+ * @public
  */
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
   adapter: CallWithChatAdapter;
@@ -48,7 +48,6 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
    * @defaultValue 'desktop'
-   * @beta
    */
   formFactor?: 'desktop' | 'mobile';
   /**
@@ -64,7 +63,7 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 /**
  * Optional features of the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeOptions = {
   /**
@@ -80,13 +79,43 @@ export type CallWithChatCompositeOptions = {
    */
   fileSharing?: FileSharingOptions;
 };
+
 /**
  * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
  *
- * @beta
+ * @public
  */
-export interface CallWithChatControlOptions
-  extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'displayType'> {
+export interface CallWithChatControlOptions {
+  /**
+   * {@link CallControlDisplayType} to change how the call controls are displayed.
+   * `'compact'` display type will decreases the size of buttons and hide the labels.
+   *
+   * @remarks
+   * If the composite `formFactor` is set to `'mobile'`, the control bar will always use compact view.
+   *
+   * @defaultValue 'default'
+   */
+  displayType?: CallControlDisplayType;
+  /**
+   * Show or Hide Microphone button during a call.
+   * @defaultValue true
+   */
+  microphoneButton?: boolean;
+  /**
+   * Show or Hide Camera Button during a call
+   * @defaultValue true
+   */
+  cameraButton?: boolean;
+  /**
+   * Show, Hide or Disable the screen share button during a call.
+   * @defaultValue true
+   */
+  screenShareButton?: boolean | { disabled: boolean };
+  /**
+   * Show or Hide EndCall button during a call.
+   * @defaultValue true
+   */
+  endCallButton?: boolean;
   /**
    * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true
@@ -109,6 +138,7 @@ type CallWithChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  rtl?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -143,13 +173,29 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setActivePane('none');
   }, [setActivePane]);
 
+  /** Constant setting of id for the parent stack of the composite */
+  const compositeParentDivId = 'callWithChatCompositeParentDiv-internal';
+
   const toggleChat = useCallback(() => {
     if (activePane === 'chat') {
       setActivePane('none');
     } else {
       setActivePane('chat');
+      // timeout is required to give the window time to render the sendbox so we have something to send focus to.
+      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
+      const chatFocusTimeout = setInterval(() => {
+        const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
+        const sendbox = callWithChatCompositeRootDiv?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+        if (sendbox !== null) {
+          sendbox.focus();
+          clearInterval(chatFocusTimeout);
+        }
+      }, 3);
+      setTimeout(() => {
+        clearInterval(chatFocusTimeout);
+      }, 300);
     }
-  }, [activePane, setActivePane]);
+  }, [activePane, setActivePane, compositeParentDivId]);
 
   const togglePeople = useCallback(() => {
     if (activePane === 'people') {
@@ -194,7 +240,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
-    <Stack verticalFill grow styles={compositeOuterContainerStyles}>
+    <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
       <Stack horizontal grow>
         {!isMobileWithActivePane && (
           <Stack.Item grow styles={callCompositeContainerStyles}>
@@ -215,11 +261,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             chatAdapter={chatProps.adapter}
             callAdapter={callAdapter}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-            onChatButtonClicked={selectChat}
-            onPeopleButtonClicked={selectPeople}
+            onChatButtonClicked={showShowChatTabHeaderButton(props.callControls) ? selectChat : undefined}
+            onPeopleButtonClicked={showShowPeopleTabHeaderButton(props.callControls) ? selectPeople : undefined}
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             activePane={activePane}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={props.fileSharing}
+            rtl={props.rtl}
             onOpen={callWithChatAdapter.onOpenMobilePane}
             onBrowserBackButtonClick={callWithChatAdapter.onBrowserBackButtonClick}
           />
@@ -247,15 +296,19 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <ChatAdapterProvider adapter={chatProps.adapter}>
           <CallAdapterProvider adapter={callAdapter}>
             <Stack styles={drawerContainerStyles}>
-              <PreparedMoreDrawer onLightDismiss={closeDrawer} onPeopleButtonClicked={onMoreDrawerPeopleClicked} />
+              <PreparedMoreDrawer
+                callControls={props.callControls}
+                onLightDismiss={closeDrawer}
+                onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+              />
             </Stack>
           </CallAdapterProvider>
         </ChatAdapterProvider>
       )}
       {
-        // This layer host is for Modal wrapping the PiPiP in the mobile EmbeddedPeoplePane. This LayerHost can't be inside the EmbeddedPeoplePane
-        // because when the EmbeddedPeoplePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-        // the Modal because the draggable bounds is no space and will always returns to its initial position after dragging.
+        // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
+        // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+        // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
         mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
       }
     </Stack>
@@ -265,12 +318,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
- * @beta
+ * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, formFactor, joinInvitationURL, options } = props;
+  const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
+    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
         callWithChatAdapter={adapter}
@@ -287,3 +340,23 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
   page === 'call' && callStatus === 'Connected';
+
+const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.chatButton !== false;
+};
+
+const showShowPeopleTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.peopleButton !== false;
+};

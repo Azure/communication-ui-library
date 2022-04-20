@@ -48,12 +48,8 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
-  /* @conditional-compile-remove(file-sharing) */
-  Cancel: <FontIcon iconName="Cancel" />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   ChevronLeft: <FontIcon iconName="ChevronLeft" />,
-  /* @conditional-compile-remove(file-sharing) */
-  Download: <FontIcon iconName="Download" />,
   /* @conditional-compile-remove(call-with-chat-composite) */
   Link: <FontIcon iconName="Link" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
@@ -123,10 +119,6 @@ export type ChatCompositeIcons = {
   SendBoxSendHovered?: JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile?: JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
-  Download?: JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
-  Cancel?: JSX.Element;
 };
 
 /**
@@ -205,7 +197,7 @@ export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>)
 /**
  * Icons that can be overridden for {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export type CallWithChatCompositeIcons = {
   // CallWithChat Specific Icons

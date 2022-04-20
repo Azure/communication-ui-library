@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { mergeStyles, Stack } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 
 /**
- * @beta
+ * @internal
+ * Props for `_FileCardGroup` component.
  */
-export interface FileCardGroupProps {
+export interface _FileCardGroupProps {
   children: React.ReactNode;
 }
 
@@ -18,22 +20,27 @@ export interface FileCardGroupProps {
 const fileCardGroupClassName = mergeStyles({
   flexFlow: 'row wrap',
   '& > *': {
-    margin: '0.5rem',
-    marginRight: 'auto'
+    margin: _pxToRem(2)
   },
   /**
    * margin for children is overriden by parent stack, so adding left margin for each child
    */
   '& > *:not(:first-child)': {
-    marginLeft: '0.625rem'
+    marginLeft: _pxToRem(2)
   }
 });
 
 /**
- * @beta
+ * @internal
+ * Used with `_FileCard` component where `_FileCard` components are passed as children.
+ * Renders the children equally spaced in multiple rows.
  */
-export const FileCardGroup = (props: FileCardGroupProps): JSX.Element => {
+export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
   const { children } = props;
+
+  if (!children) {
+    return <></>;
+  }
 
   return (
     <Stack horizontal className={fileCardGroupClassName}>

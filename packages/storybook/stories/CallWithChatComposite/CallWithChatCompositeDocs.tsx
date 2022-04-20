@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MessageBar } from '@fluentui/react';
+import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
@@ -16,11 +15,17 @@ const formFactorSnippet = `
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <DetailedBetaBanner />
       <Title>CallWithChatComposite</Title>
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
       </Description>
+      <Stack horizontalAlign="center">
+        <Image
+          src="images/call-with-chat-composite-hero.png"
+          alt="Call with chat composite preview image"
+          width="85%"
+        />
+      </Stack>
       <Heading>Basic usage</Heading>
       <Description>
         A CallWithChatComposite is comprised of two key underlying parts: an ACS Call and an ACS Chat thread. As such
@@ -49,8 +54,14 @@ export const getDocs: () => JSX.Element = () => {
         to be optimized for a mobile device.
       </Description>
       <Source code={formFactorSnippet} />
+      <Stack horizontalAlign="center">
+        <Image
+          src="images/call-with-chat-composite-mobile-hero.png"
+          alt="Call with chat composite mobile preview image"
+        />
+      </Stack>
       <MessageBar>
-        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+        Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
       </MessageBar>
       <Description>
         You can try out the form factor property in the [CallWithChatComposite Basic

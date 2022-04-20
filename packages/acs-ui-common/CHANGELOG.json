@@ -2,6 +2,33 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:05 GMT",
+      "tag": "@internal/acs-ui-common_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "60bb94ab5abdf0e7a4721a79b8c949dac9846395",
+            "comment": "Add conditional compilation example where multiple features label a node"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "97c1d1ad3fddaed8156846ac18f4c077025ce878",
+            "comment": "Fix eslint warnings. Update builds to fail on eslint warnings."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:43:00 GMT",
       "tag": "@internal/acs-ui-common_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",

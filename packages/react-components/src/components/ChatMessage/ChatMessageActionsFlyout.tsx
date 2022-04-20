@@ -19,7 +19,8 @@ import { MessageThreadStrings } from '../MessageThread';
 import {
   chatMessageMenuStyle,
   menuIconStyleSet,
-  menuItemIncreasedSizeStyles
+  menuItemIncreasedSizeStyles,
+  menuSubIconStyleSet
 } from '../styles/ChatMessageComponent.styles';
 
 /** @private */
@@ -29,9 +30,15 @@ export interface ChatMessageActionFlyoutProps {
   strings: MessageThreadStrings;
   onEditClick?: () => void;
   onRemoveClick?: () => void;
+  onResendClick?: () => void;
   onDismiss: () => void;
-  messageReadBy?: { id: string; name: string }[];
+  messageReadBy?: { id: string; displayName: string }[];
   remoteParticipantsCount?: number;
+  messageStatus?: string;
+  /**
+   * Whether the status indicator for each message is displayed or not.
+   */
+  showMessageStatus?: boolean;
   /**
    * Increase the height of the flyout items.
    * Recommended when interacting with the chat message using touch.
@@ -53,11 +60,16 @@ export interface ChatMessageActionFlyoutProps {
 export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const theme = useTheme();
   const messageReadByCount = props.messageReadBy?.length;
-  const messageReadByList: IContextualMenuItem[] | undefined = props.messageReadBy?.map((person) => {
+
+  const sortedMessageReadyByList = [...(props.messageReadBy ?? [])].sort((a, b) =>
+    a.displayName.localeCompare(b.displayName)
+  );
+
+  const messageReadByList: IContextualMenuItem[] | undefined = sortedMessageReadyByList?.map((person) => {
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
       size: PersonaSize.size24,
-      text: person.name,
+      text: person.displayName,
       styles: {
         root: {
           margin: '0.25rem'
@@ -66,8 +78,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
     const { onRenderAvatar } = props;
     return {
-      key: person.name,
-      text: person.name,
+      key: person.displayName,
+      text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
       onRenderIcon: () =>
         onRenderAvatar ? onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
@@ -103,10 +115,13 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       props.remoteParticipantsCount &&
       messageReadByCount !== undefined &&
       props.remoteParticipantsCount >= 2 &&
-      props.strings.messageReadCount
+      props.showMessageStatus &&
+      props.strings.messageReadCount &&
+      props.messageStatus !== 'failed'
     ) {
       items.push({
         key: 'Read Count',
+        'data-ui-id': 'chat-composite-message-contextual-menu-read-info',
         text: _formatString(props.strings.messageReadCount, {
           messageReadByCount: `${messageReadByCount}`,
           remoteParticipantsCount: `${props.remoteParticipantsCount}`
@@ -126,6 +141,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
+          id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
           calloutProps: preventUnwantedDismissProps
         },
@@ -139,9 +155,37 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuIconStyleSet
+          styles: menuSubIconStyleSet
         },
         disabled: messageReadByCount <= 0
+      });
+    } else if (props.messageStatus === 'failed' && props.strings.resendMessage) {
+      items.push({
+        key: 'Resend',
+        text: props.strings.resendMessage,
+        itemProps: {
+          styles: concatStyleSets(
+            {
+              linkContent: {
+                color: theme.palette.neutralPrimary
+              },
+              root: {
+                borderTop: `1px solid ${theme.palette.neutralLighter}`
+              }
+            },
+            props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+          )
+        },
+        calloutProps: preventUnwantedDismissProps,
+        iconProps: {
+          iconName: 'MessageResend',
+          styles: {
+            root: {
+              color: theme.palette.themeDarkAlt
+            }
+          }
+        },
+        onClick: props.onResendClick
       });
     }
 
@@ -150,10 +194,14 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     props.strings.editMessage,
     props.strings.removeMessage,
     props.strings.messageReadCount,
+    props.strings.resendMessage,
+    props.messageStatus,
     props.increaseFlyoutItemSize,
     props.onEditClick,
     props.onRemoveClick,
+    props.onResendClick,
     props.remoteParticipantsCount,
+    props.showMessageStatus,
     messageReadByCount,
     theme.palette.neutralPrimary,
     theme.palette.neutralTertiary,
@@ -165,6 +213,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
+      id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
       gapSpace={5 /*px*/}
       isBeakVisible={false}

@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  concatStyleSets,
-  ContextualMenu,
-  IDragOptions,
-  IStyle,
-  LayerHost,
-  mergeStyles,
-  Modal,
-  Stack
-} from '@fluentui/react';
+import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -40,9 +31,12 @@ import {
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  localVideoTileOuterPaddingPX,
+  SMALL_FLOATING_MODAL_SIZE_PX,
+  LARGE_FLOATING_MODAL_SIZE_PX
 } from './styles/VideoGallery.styles';
-import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
@@ -51,6 +45,8 @@ import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
+import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
+import { _formatString } from '@internal/acs-ui-common';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -72,6 +68,10 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
+  /** String for announcing the local video tile can be moved by keyboard controls */
+  localVideoMovementLabel: string;
+  /** String for announcing the selected camera */
+  localVideoSelectedDescription: string;
 }
 
 /**
@@ -164,6 +164,12 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+// Manually override the max position used to keep the modal in the bounds of its container.
+// This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
+// Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
+// position the modal can be dragged to.
+const modalMaxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTileOuterPaddingPX };
+
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
  * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
@@ -203,10 +209,28 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = useContainerWidth(containerRef);
-  const isNarrow = isNarrowWidth(containerWidth);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
+  const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+
+  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
+  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
+  // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
+  // to be dragged offscreen and these are the top and left bounds of that calculation.
+  const modalMinDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      containerWidth && containerHeight
+        ? {
+            // We use -containerWidth/Height because our modal is positioned to start in the bottom right,
+            // hence (0,0) is the bottom right of the video gallery.
+            x: -containerWidth + modalWidth + localVideoTileOuterPaddingPX,
+            y: -containerHeight + modalHeight + localVideoTileOuterPaddingPX
+          }
+        : undefined,
+    [containerHeight, containerWidth, modalHeight, modalWidth]
+  );
 
   visibleVideoParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
@@ -226,8 +250,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
+    const ariaDescription = _formatString(strings.localVideoSelectedDescription, {
+      cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
+    });
     return (
-      <>
+      <Stack horizontalAlign="end">
         {showCameraSwitcherInLocalPreview &&
           localVideoCameraCycleButtonProps?.cameras !== undefined &&
           localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
@@ -237,9 +264,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
               onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
               label={strings.localVideoCameraSwitcherLabel}
+              ariaDescription={ariaDescription}
             />
           )}
-      </>
+      </Stack>
     );
   };
 
@@ -267,28 +295,30 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
     return (
-      <VideoTile
-        key={localParticipant.userId}
-        userId={localParticipant.userId}
-        renderElement={
-          localVideoStream?.renderElement ? (
-            <>
-              {
-                /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-                localCameraCycleButton(localVideoCameraCycleButtonProps)
-              }
-              <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-            </>
-          ) : undefined
-        }
-        showLabel={!(shouldFloatLocalVideo && isNarrow)}
-        displayName={isNarrow ? '' : strings.localVideoLabel}
-        initialsName={localParticipant.displayName}
-        styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={localParticipant.isMuted}
-        showMuteIndicator={showMuteIndicator}
-      />
+      <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
+        <VideoTile
+          key={localParticipant.userId}
+          userId={localParticipant.userId}
+          renderElement={
+            localVideoStream?.renderElement ? (
+              <>
+                {
+                  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+                  localCameraCycleButton(localVideoCameraCycleButtonProps)
+                }
+                <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+              </>
+            ) : undefined
+          }
+          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          displayName={isNarrow ? '' : strings.localVideoLabel}
+          initialsName={localParticipant.displayName}
+          styles={localVideoTileStylesThemed}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={localParticipant.isMuted}
+          showMuteIndicator={showMuteIndicator}
+        />
+      </Stack>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -386,15 +416,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
         ) : (
-          <Modal
+          <_ModalClone
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
             layerProps={{ hostId: layerHostId }}
+            maxDragPosition={modalMaxDragPosition}
+            minDragPosition={modalMinDragPosition}
           >
             {localVideoTile}
-          </Modal>
+          </_ModalClone>
         ))}
       {
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */

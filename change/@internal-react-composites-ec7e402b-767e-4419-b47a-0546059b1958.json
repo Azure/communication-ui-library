@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "optimization to reduce perf regression for onRenderFileDownloads",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

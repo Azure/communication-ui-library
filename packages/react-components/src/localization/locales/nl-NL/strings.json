@@ -16,7 +16,8 @@
   "sendBox": {
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
-    "sendButtonAriaLabel": "Bericht verzenden"
+    "sendButtonAriaLabel": "Bericht verzenden",
+    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld."
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",

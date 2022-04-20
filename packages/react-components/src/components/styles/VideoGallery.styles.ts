@@ -14,6 +14,7 @@ import {
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -30,12 +31,12 @@ export const videoGalleryContainerStyle: IStackStyles = {
 /**
  * Small floating modal width and height in rem for small screen
  */
-export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 4, height: 5.5 };
+export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 64, height: 88 };
 
 /**
  * Large floating modal width and height in rem for large screen
  */
-export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
+export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 160, height: 120 };
 
 /**
  * @private
@@ -54,22 +55,40 @@ export const floatingLocalVideoModalStyle = (
     {
       main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: { boxShadow: theme.effects.elevation8 } }
+    {
+      main: {
+        boxShadow: theme.effects.elevation8,
+        ':focus-within': {
+          boxShadow: theme.effects.elevation16,
+          border: `${_pxToRem(2)} solid ${theme.palette.neutralPrimary}`
+        }
+      }
+    },
+    localVideoModalStyles
   );
 };
+
+/**
+ * Padding equal to the amount the modal should stay inside the bounds of the container.
+ * i.e. if this is 8px, the modal should always be at least 8px inside the container at all times on all sides.
+ * @private
+ */
+export const localVideoTileOuterPaddingPX = 8;
 
 /**
  * @private
  */
 export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
   return {
-    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    minWidth: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
+    minHeight: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height),
     position: 'absolute',
-    bottom: '0.5rem',
+    bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+    ...(theme.rtl
+      ? { left: _pxToRem(localVideoTileOuterPaddingPX) }
+      : { right: _pxToRem(localVideoTileOuterPaddingPX) })
   };
 };
 
@@ -104,8 +123,8 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     width: shouldFloatLocalVideo
       ? isNarrow
-        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
-        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
+        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
+        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
       : '100%',
     paddingRight: '0.5rem'
   };
@@ -167,18 +186,41 @@ export const layerHostStyle: IStyle = {
 /**
  * @private
  */
-export const localVideoCameraCycleButtonStyles: IButtonStyles = {
-  root: {
-    position: 'absolute',
-    right: '0.1rem',
-    top: '0.1rem',
-    color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
-    zIndex: 2, // shows the button directly over the local video feed.
-    background: 'transparent'
-  },
-  rootFocused: {
-    // styles to remove the unwanted white highlight and blue colour after tapping on button.
-    color: '#FFFFFF',
-    background: 'transparent'
+export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      position: 'absolute',
+      width: _pxToRem(32),
+      height: _pxToRem(32),
+      right: '0rem',
+      top: '0rem',
+      color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
+      zIndex: 2, // shows the button directly over the local video feed.
+      background: 'rgba(0,0,0,0.4)',
+      borderRadius: theme.effects.roundedCorner2
+    },
+    rootFocused: {
+      // styles to remove the unwanted white highlight and blue colour after tapping on button.
+      color: '#FFFFFF',
+      background: 'rgba(0,0,0,0.4)' // sets opacity of background to be visible on all backdrops in video stream.
+    },
+    icon: {
+      paddingLeft: _pxToRem(3),
+      paddingRight: _pxToRem(3),
+      margin: 0
+    },
+    flexContainer: {
+      paddingBottom: _pxToRem(8)
+    }
+  };
+};
+
+/**
+ * Styles for the local video tile modal when it is focused, will cause keyboard move icon to appear over video
+ * @private
+ */
+export const localVideoModalStyles: Partial<IModalStyles> = {
+  keyboardMoveIconContainer: {
+    zIndex: LOCAL_VIDEO_TILE_ZINDEX + 1 // zIndex to set the keyboard movement Icon above the other layers in the video tile.
   }
 };

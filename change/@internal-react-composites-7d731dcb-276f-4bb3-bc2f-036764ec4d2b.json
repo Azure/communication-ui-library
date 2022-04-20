@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "bugfix: Dispose adapter in hook when component unmounts",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

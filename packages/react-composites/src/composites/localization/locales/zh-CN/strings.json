@@ -44,13 +44,21 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "人员",
+    "peopleButtonTooltipContentOpen": "显示参与者",
+    "peopleButtonTooltipContentClose": "隐藏参与者",
     "chatButtonLabel": "聊天",
-    "moreDrawerMicrophoneMenuTitle": "Microphone",
-    "moreDrawerSpeakerMenuTitle": "Speaker",
+    "chatButtonTooltipContentOpen": "显示聊天",
+    "chatButtonTooltipContentClose": "隐藏聊天",
+    "moreDrawerMicrophoneMenuTitle": "麦克风",
+    "moreDrawerSpeakerMenuTitle": "扬声器",
+    "moreDrawerButtonLabel": "更多选项",
+    "moreDrawerButtonTooltip": "更多选项",
     "peoplePaneTitle": "人员",
     "peoplePaneSubTitle": "在此通话中",
     "chatPaneTitle": "聊天",
     "chatButtonNewMessageNotificationLabel": "新建消息",
-    "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。"
+    "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。",
+    "removeMenuLabel": "删除",
+    "copyInviteLinkButtonLabel": "复制邀请链接"
   }
 }

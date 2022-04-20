@@ -14,6 +14,8 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -36,7 +38,7 @@ import {
   ParticipantsAddedListener
 } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
@@ -170,11 +172,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.on.bind(this);
     this.off.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.registerFileUploads.bind(this);
+    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.clearFileUploads.bind(this);
+    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.cancelFileUpload.bind(this);
+    this.clearFileUploads = this.clearFileUploads.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    /* @conditional-compile-remove(file-sharing) */
+    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
   }
 
   /** Join existing Call. */
@@ -300,16 +310,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
   /** Update an existing message. */
-  public async updateMessage(messageId: string, content: string): Promise<void> {
-    return await this.chatAdapter.updateMessage(messageId, content);
+  public async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content, metadata);
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
   }
   /* @conditional-compile-remove(file-sharing) */
-  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.chatAdapter.registerFileUploads(fileUploads);
+  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.chatAdapter.registerActiveFileUploads(files);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.chatAdapter.registerCompletedFileUploads(metadata);
   }
   /* @conditional-compile-remove(file-sharing) */
   public clearFileUploads(): void {
@@ -318,6 +332,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(file-sharing) */
   public cancelFileUpload(id: string): void {
     this.chatAdapter.cancelFileUpload(id);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadProgress(id: string, progress: number): void {
+    this.chatAdapter.updateFileUploadProgress(id, progress);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  }
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+    this.chatAdapter.updateFileUploadMetadata(id, metadata);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -462,7 +488,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 /**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Call with an associated Chat thread.
  *
- * @beta
+ * @public
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
@@ -474,7 +500,7 @@ export interface CallAndChatLocator {
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapter}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterArgs = {
   endpoint: string;
@@ -488,7 +514,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
  * Create a CallWithChatAdapter backed by Azure Communication services
  * to plug into the {@link CallWithChatComposite}.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapter = async ({
   userId,
@@ -532,7 +558,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
  * Note that you must memoize the arguments to avoid recreating adapter on each render.
  * See storybook for typical usage examples.
  *
- * @beta
+ * @public
  */
 export const useAzureCommunicationCallWithChatAdapter = (
   /**
@@ -631,7 +657,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callLocator: CallAdapterLocator | TeamsMeetingLinkLocator;
@@ -647,7 +673,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
- * @beta
+ * @public
  */
 export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callClient,

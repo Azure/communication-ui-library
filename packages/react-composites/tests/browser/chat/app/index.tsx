@@ -2,20 +2,22 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-
-import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import {
-  ChatAdapter,
-  createAzureCommunicationChatAdapter,
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR
-} from '../../../../src';
-import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { Stack } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { initializeIcons, Stack } from '@fluentui/react';
+import { MessageProps, _IdentifierProvider } from '@internal/react-components';
+import React, { useMemo } from 'react';
+import ReactDOM from 'react-dom';
+import {
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  FileDownloadError,
+  FileDownloadHandler,
+  useAzureCommunicationChatAdapter
+} from '../../../../src';
+// eslint-disable-next-line no-restricted-imports
+import { IDS } from '../../common/constants';
+import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -30,39 +32,71 @@ const userId = verifyParamExists(params.userId, 'userId');
 // Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
+const useFileSharing = Boolean(params.useFileSharing);
+const failFileDownload = Boolean(params.failDownload);
+const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
 
 // Needed to initialize default icons used by Fluent components.
-initializeIcons();
+initializeFileTypeIcons();
+initializeIconsForUITests();
 
 function App(): JSX.Element {
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
+  const args = useMemo(
+    () => ({
+      endpoint,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential: new AzureCommunicationTokenCredential(token),
+      threadId
+    }),
+    []
+  );
+  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
+    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+    await adapter.fetchInitialData();
+    return adapter;
+  });
 
-  useEffect(() => {
-    const initialize = async (): Promise<void> => {
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter({
-          endpoint,
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          threadId
-        })
-      );
-    };
+  React.useEffect(() => {
+    if (adapter && uploadedFiles.length) {
+      uploadedFiles.forEach((file) => {
+        if (file.uploadComplete) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadCompleted({
+            name: file.name,
+            extension: file.extension,
+            url: file.url
+          });
+        } else if (file.error) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadFailed(file.error);
+        } else if (file.progress) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadProgressChanged(file.progress);
+        } else {
+          adapter.registerCompletedFileUploads([file]);
+        }
+      });
+    }
+  }, [adapter]);
 
-    initialize();
-
-    return () => chatAdapter && chatAdapter.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
+    return new Promise((resolve) => {
+      if (failFileDownload) {
+        resolve({ errorMessage: 'You don’t have permission to download this file.' });
+      } else {
+        resolve(new URL(fileData.url));
+      }
+    });
+  };
 
   return (
     <>
-      {!chatAdapter && 'Initializing chat adapter...'}
-      {chatAdapter && (
+      {!adapter && 'Initializing chat adapter...'}
+      {adapter && (
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
-            adapter={chatAdapter}
+            adapter={adapter}
             onRenderTypingIndicator={
               customDataModel
                 ? (typingUsers) => (
@@ -100,7 +134,18 @@ function App(): JSX.Element {
                 : undefined
             }
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-            options={{ participantPane: true }}
+            options={{
+              participantPane: true,
+              fileSharing: useFileSharing
+                ? {
+                    downloadHandler: fileDownloadHandler,
+                    uploadHandler: () => {
+                      //noop
+                    },
+                    multiple: true
+                  }
+                : undefined
+            }}
           />
         </_IdentifierProvider>
       )}

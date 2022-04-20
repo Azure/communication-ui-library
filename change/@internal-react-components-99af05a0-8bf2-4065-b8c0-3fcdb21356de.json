@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix ChatMessage border color when editing a message to show inactive colors when not active",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

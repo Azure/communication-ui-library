@@ -4,7 +4,9 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { ObservableFileUpload } from '../../ChatComposite';
+import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -77,8 +79,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
         return this.callWithChatAdapter.off(event, listener);
     }
   };
-  public updateMessage = async (messageId: string, content: string): Promise<void> =>
-    await this.callWithChatAdapter.updateMessage(messageId, content);
+  public updateMessage = async (messageId: string, content: string, metadata?: Record<string, string>): Promise<void> =>
+    await this.callWithChatAdapter.updateMessage(messageId, content, metadata);
   public deleteMessage = async (messageId: string): Promise<void> =>
     await this.callWithChatAdapter.deleteMessage(messageId);
 
@@ -89,17 +91,40 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public setTopic = async (topicName: string): Promise<void> => {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
   };
+
   /* @conditional-compile-remove(file-sharing) */
-  public registerFileUploads(fileUploads: ObservableFileUpload[]): void {
-    this.callWithChatAdapter.registerFileUploads(fileUploads);
+  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+    return this.callWithChatAdapter.registerActiveFileUploads(files);
   }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+    return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
+  }
+
   /* @conditional-compile-remove(file-sharing) */
   public clearFileUploads(): void {
     this.callWithChatAdapter.clearFileUploads();
   }
+
   /* @conditional-compile-remove(file-sharing) */
   public cancelFileUpload(id: string): void {
     this.callWithChatAdapter.cancelFileUpload(id);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadProgress(id: string, progress: number): void {
+    this.callWithChatAdapter.updateFileUploadProgress(id, progress);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+    this.callWithChatAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+    this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
   }
 }
 

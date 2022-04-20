@@ -8,7 +8,6 @@ import {
   IModalStyles,
   IStackStyles,
   IStyleFunctionOrObject,
-  Modal,
   Stack
 } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -18,6 +17,7 @@ import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
+import { _ModalClone, _ICoordinates } from '@internal/react-components';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -38,6 +38,8 @@ const _ModalLocalAndRemotePIP = (props: {
   hidden: boolean;
   modalLayerHostId: string;
   styles?: ModalLocalAndRemotePIPStyles;
+  minDragPosition?: _ICoordinates;
+  maxDragPosition?: _ICoordinates;
 }): JSX.Element => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
@@ -51,19 +53,21 @@ const _ModalLocalAndRemotePIP = (props: {
 
   return (
     <Stack styles={rootStyles}>
-      <Modal
+      <_ModalClone
         isOpen={true}
         isModeless={true}
         dragOptions={DRAG_OPTIONS}
         styles={modalStylesThemed}
         layerProps={{ hostId: props.modalLayerHostId }}
+        minDragPosition={props.minDragPosition}
+        maxDragPosition={props.maxDragPosition}
       >
         {
           // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
           // possession of the dominant remote participant video stream
           !props.hidden && localAndRemotePIP
         }
-      </Modal>
+      </_ModalClone>
     </Stack>
   );
 };
@@ -79,6 +83,8 @@ export const ModalLocalAndRemotePIP = (props: {
   modalLayerHostId: string;
   children?: React.ReactNode;
   styles?: ModalLocalAndRemotePIPStyles;
+  minDragPosition?: _ICoordinates;
+  maxDragPosition?: _ICoordinates;
 }): JSX.Element => {
   return (
     <CallAdapterProvider adapter={props.callAdapter}>
@@ -98,7 +104,6 @@ const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
     minWidth: 'min-content',
     minHeight: 'min-content',
     position: 'absolute',
-    zIndex: 1,
     overflow: 'hidden',
     // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
     pointerEvents: 'auto',

@@ -2,6 +2,93 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 19:20:02 GMT",
+      "tag": "@internal/storybook_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "96cc5b9a5d8fb2221de5dae2473ec80848520948",
+            "comment": "Switch local-camera-switcher from Beta to Public and Stable"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "eefcc4af3d5d844f3157e8fdfb34bb47b2f809aa",
+            "comment": "Use useAzureCommunicationCallAdapter hook"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "cf1e71d0dc1bac5a506fb0e6800e20127304eb26",
+            "comment": "Add images of call with chat to documentation"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "4270f0ad78369c5fe2cfeabcd678cad78db409a3",
+            "comment": "Simplify callwithchat code snippets"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ee3ed768c47fbd95b794da561462dac5af824cce",
+            "comment": "Add useAzureCommunicationCallWithChatAdapter hook"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "fed7eafe04f692c5210d8702dfe47f3067fc4df1",
+            "comment": "Upgrading calling to 1.4.3-beta.1"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "90510f339a17d66eed782cd58c3faadefac15967",
+            "comment": "Bump package version to 1.1.1-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f44da1cf8d2d375f0f0d0735335e18fb032da2dc",
+            "comment": "Update story book docs for local camera switcher. Update SingleLineBanner to StoryBookBanner. Add Warning colour scheme to StoryBookBanner. "
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "353247a9e3a414826e3a55d53a88e08148b3753a",
+            "comment": "Rename CallWithChatComposite adapter prop from `callWithChatAdapter` to `adapter`"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a8454e2d0a360defafc04b7ec7820cb260e9f77a",
+            "comment": "Bump @azure/communication-calling to 1.4.3"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "857e16220273d5d960d5bc3a904fdea0c4099497",
+            "comment": "Re-enable storybook fullscreen button"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.2.0",
+            "commit": "8840a94fa6175db937f697b1c6a6a64cc2fb743f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Mar 2022 16:42:54 GMT",
       "tag": "@internal/storybook_v1.1.1-beta.1",
       "version": "1.1.1-beta.1",
