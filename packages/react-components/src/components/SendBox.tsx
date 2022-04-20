@@ -233,12 +233,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     // we dont want to send empty messages including spaces, newlines, tabs
-    if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage && onSendMessage(textValue);
+    // Message can be empty if there is a valid file upload
+    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile) {
+      // Chat SDK doesn't send messages with empty content. For sending files without tex message,
+      // we need to send a message with a space.
+      if (EMPTY_MESSAGE_REGEX.test(textValue)) {
+        onSendMessage && onSendMessage(' ');
+      } else {
+        onSendMessage && onSendMessage(textValue);
+      }
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
   };
+
   const setText = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
@@ -266,16 +274,19 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
+  const hasFile = props.activeFileUploads?.find((file) => !file.error);
+  const hasTextOrFile = hasText || hasFile;
+
   const mergedSendIconStyle = useMemo(
     () =>
       mergeStyles(
         sendIconStyle,
         {
-          color: !!errorMessage || !hasText ? theme.palette.neutralTertiary : theme.palette.themePrimary
+          color: !!errorMessage || !hasTextOrFile ? theme.palette.neutralTertiary : theme.palette.themePrimary
         },
         styles?.sendMessageIcon
       ),
-    [errorMessage, hasText, theme, styles?.sendMessageIcon]
+    [errorMessage, hasTextOrFile, theme, styles?.sendMessageIcon]
   );
 
   const onRenderSendIcon = useCallback(
