@@ -274,9 +274,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasFile = () => {
+  const hasFile = (): boolean => {
     /* @conditional-compile-remove(file-sharing) */
-    return props.activeFileUploads?.find((file) => !file.error);
+    return !!props.activeFileUploads?.find((file) => !file.error);
     return false;
   };
   const hasTextOrFile = hasText || hasFile();
