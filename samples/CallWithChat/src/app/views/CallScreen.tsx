@@ -86,6 +86,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  adapter.onMobilePaneInitialize = () => window.history.pushState(null, document.title, location.href);
+  adapter.onBackButtonClick = (paneOpen: boolean) => {
+    if (paneOpen) {
+      return () => window.history.forward();
+    }
+    return () => window.history.back();
+  };
+
   return (
     <CallWithChatComposite
       adapter={adapter}

@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 export const BackButtonOverride = (props: {
   /** This callback is only executed once and is intended for pushing states to the browser history */
   onInitialize?: () => void;
-  /** This callback is executed when the browser back button is clicked with this component on the page */
+  /** This callback is executed when the browser back button is clicked with this component on the DOM tree */
   onBackButtonClick?: () => void;
 }): JSX.Element => {
   const initialized = useRef(false);
@@ -18,7 +18,6 @@ export const BackButtonOverride = (props: {
     if (props.onInitialize && initialized.current === false) {
       initialized.current = true;
       props.onInitialize();
-      console.log('BackButtonOverride initialized');
     }
     if (props.onBackButtonClick) {
       const onBackButtonClick: () => void = props.onBackButtonClick;

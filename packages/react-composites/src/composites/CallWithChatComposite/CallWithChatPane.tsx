@@ -37,6 +37,8 @@ export type CallWithChatPaneProps = {
   inviteLink?: string;
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
+  onInitialize?: () => void;
+  onBackButtonClick?: (paneOpen?: boolean) => () => void;
 };
 
 /**
@@ -99,18 +101,22 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
     [theme.effects.roundedCorner4, theme.effects.elevation8, theme.rtl]
   );
 
-  const backButtonOverrideInitialized = () => window.history.pushState(null, document.title, location.href);
-
   const onBackButtonClickWhenPaneClosed = () => {
     window.removeEventListener('popstate', onBackButtonClickWhenPaneClosed);
-    window.history.back();
+    props.onBackButtonClick?.(false)();
   };
 
   const onBackButtonClickWhenPaneOpen = () => {
     window.removeEventListener('popstate', onBackButtonClickWhenPaneOpen);
-    window.history.forward();
+    props.onBackButtonClick?.(true)();
     props.onClose();
   };
+
+  const onBackButtonClick = props.onBackButtonClick
+    ? hidden
+      ? onBackButtonClickWhenPaneClosed
+      : onBackButtonClickWhenPaneOpen
+    : undefined;
 
   return (
     <Stack
@@ -143,10 +149,7 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
-      <BackButtonOverride
-        onInitialize={backButtonOverrideInitialized}
-        onBackButtonClick={hidden ? onBackButtonClickWhenPaneClosed : onBackButtonClickWhenPaneOpen}
-      />
+      <BackButtonOverride onInitialize={props.onInitialize} onBackButtonClick={onBackButtonClick} />
     </Stack>
   );
 };
