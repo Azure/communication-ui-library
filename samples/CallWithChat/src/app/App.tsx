@@ -137,7 +137,7 @@ const generateCallWithChatArgs = async (
   displayName: string,
   teamsLink?: TeamsMeetingLinkLocator
 ): Promise<CallWithChatArgs> => {
-  const { token, user } = await fetchTokenResponse();
+  const { token, user } = await fetchTokenResponse(); // replace with a teams token fetch here tomorrow... 🍅 🍅 🍅
   console.log(user);
   console.log(token);
   const credentials = { userId: user, token: token };

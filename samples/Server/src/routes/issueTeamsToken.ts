@@ -20,7 +20,7 @@ const handleTeamsUserTokenRequest = async (
 };
 
 /**
- * route: /token/
+ * route: /teamsToken
  *
  * purpose: To get Azure Communication Services token with the given scope.
  *

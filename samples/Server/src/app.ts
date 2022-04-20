@@ -56,7 +56,7 @@ app.use('/getEndpointUrl', cors(), getEndpointUrl);
 app.use('/token', cors(), issueToken);
 
 /**
- * route: /issueTeamsToken
+ * route: /teamsToken
  * purpose: Chat,Calling: get token for a Teams AAD user with a provided scope
  */
 app.use('/teamsToken', cors(), issueTeamsToken);

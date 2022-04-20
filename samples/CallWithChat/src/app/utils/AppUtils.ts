@@ -28,7 +28,7 @@ export const fetchTokenResponse = async (): Promise<any> => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTeamsToken = async (teamsUserAadToken: string): Promise<any> => {
   console.log(`fetching teams token for ${teamsUserAadToken}`);
-  const response = await fetch(`/token?teamsUserAadToken=${teamsUserAadToken}`);
+  const response = await fetch(`/teamsToken?teamsUserAadToken=${teamsUserAadToken}`);
   console.log(response);
   if (response.ok) {
     const responseAsJson = await response.json();
