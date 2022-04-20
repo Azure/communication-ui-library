@@ -274,15 +274,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasFile = props.activeFileUploads?.find((file) => !file.error);
-  const hasTextOrFile = hasText || hasFile;
+  const hasTextOrFile = () => {
+    /* @conditional-compile-remove(file-sharing) */
+    return hasText || props.activeFileUploads?.find((file) => !file.error);
+    return hasText;
+  };
 
   const mergedSendIconStyle = useMemo(
     () =>
       mergeStyles(
         sendIconStyle,
         {
-          color: !!errorMessage || !hasTextOrFile ? theme.palette.neutralTertiary : theme.palette.themePrimary
+          color: !!errorMessage || !hasTextOrFile() ? theme.palette.neutralTertiary : theme.palette.themePrimary
         },
         styles?.sendMessageIcon
       ),
