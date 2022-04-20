@@ -188,7 +188,8 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             // message.type === ACSKnownMessageType.topicUpdated ||
             message.clientMessageId !== undefined
         )
-        .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
+        // Filter out deleted messages
+        .filter((message) => message.content && !message.deletedOn)
         .map((message) => {
           return memoizedFn(
             message.id ?? message.clientMessageId,
