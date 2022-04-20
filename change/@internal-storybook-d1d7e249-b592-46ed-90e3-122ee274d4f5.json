@@ -1,7 +1,7 @@
 {
-  "type": "prerelease",
+  "type": "none",
   "comment": "Updating @azure/communication-chat to 1.2.0",
   "packageName": "@internal/storybook",
   "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
