@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Use deletedOn property of a message to detect deleted messages instead of check for empty content",
+  "comment": "Use deletedOn property of a message to detect deleted messages instead of checking for empty content",
   "packageName": "@internal/chat-component-bindings",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
