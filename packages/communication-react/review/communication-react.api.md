@@ -799,6 +799,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaDescription: string;
     returnToCallButtonAriaLabel: string;
 }
 
