@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added optional callback properties to CallWithChatAdapter interface. `onOpenMobilePane` added to add behavior when mobile pane is opened. `onBrowserBackButtonClick` added to add behavior when browser back button is clicked.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
