@@ -77,6 +77,7 @@ jobs:
       - name: Bump stable minor package versions
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
         run: node common/scripts/bump-stable-version.js minor
+
       # Generate changelog using beachball
       - name: Generate changelog using beachball
         run: node common/scripts/beachball-changelog-only.js
@@ -105,12 +106,16 @@ jobs:
           git commit -m "${{github.event.inputs.bump_type}} version bump pre-release branch"
           git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
 
+      # we will want to run rush changelog with type none make sure that all packlets have change files
+      - name: Add beachball changelog
+        run: rush changelog --message Bumped versions for release --type none
+
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
         id: groombranch
         run: |
-          git checkout -b groom_changelog_test_${{ steps.version.outputs.version }}
-          echo "::set-output name=groombranch::groom_changelog_${{ steps.version.outputs.version }}"
+          git checkout -b groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}
+          echo "::set-output name=groombranch::groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}"
 
       # Push groom changes
       - name: Create groom file and push changes
