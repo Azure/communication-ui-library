@@ -82,7 +82,7 @@ export interface CallWithChatAdapterManagement
   /**
    * Callback to execute when browser back button is clicked
    */
-  onBrowserBackButtonClick(paneOpen?: boolean): () => void;
+  onBrowserBackButtonClick(mobilePaneOpen?: boolean): () => void;
 }
 
 /**

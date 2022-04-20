@@ -95,8 +95,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       window.history.pushState(null, document.title, location.href);
     }
   };
-  adapter.onBrowserBackButtonClick = (paneOpen: boolean) => {
-    if (paneOpen) {
+  adapter.onBrowserBackButtonClick = (mobilePaneOpen: boolean) => {
+    if (mobilePaneOpen) {
       return () => window.history.forward();
     }
     return () => window.history.back();
