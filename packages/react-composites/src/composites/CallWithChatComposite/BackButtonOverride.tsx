@@ -6,17 +6,31 @@ import React, { useEffect, useRef } from 'react';
 /**
  * @private
  */
-export const BackButtonOverride = (props: { onInitialize: () => void; onBackButtonClick: () => void }): JSX.Element => {
-  const statePushed = useRef(false);
+export const BackButtonOverride = (props: {
+  /** This callback is only executed once and is intended for pushing states to the browser history */
+  onInitialize?: () => void;
+  /** This callback is executed when the browser back button is clicked with this component on the page */
+  onBackButtonClick?: () => void;
+}): JSX.Element => {
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (statePushed.current === false) {
-      statePushed.current = true;
+    if (props.onInitialize && initialized.current === false) {
+      initialized.current = true;
       props.onInitialize();
+      console.log('BackButtonOverride initialized');
     }
-    setTimeout(() => window.addEventListener('popstate', props.onBackButtonClick));
+    if (props.onBackButtonClick) {
+      const onBackButtonClick: () => void = props.onBackButtonClick;
+      // This needs to be inside a setTimeout with no delay because newly listeners added are executed immediately
+      // from a previous popstate event
+      setTimeout(() => window.addEventListener('popstate', onBackButtonClick));
+    }
     return () => {
-      window.removeEventListener('popstate', props.onBackButtonClick);
+      if (props.onBackButtonClick) {
+        const onBackButtonClick: () => void = props.onBackButtonClick;
+        window.removeEventListener('popstate', onBackButtonClick);
+      }
     };
   }, [props.onBackButtonClick, props.onInitialize]);
 

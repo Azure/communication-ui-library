@@ -101,13 +101,13 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
 
   const backButtonOverrideInitialized = () => window.history.pushState(null, document.title, location.href);
 
-  const onBackButtonWhenPaneClosed = () => {
-    window.removeEventListener('popstate', onBackButtonWhenPaneClosed);
+  const onBackButtonClickWhenPaneClosed = () => {
+    window.removeEventListener('popstate', onBackButtonClickWhenPaneClosed);
     window.history.back();
   };
 
-  const onBackButtonWhenPaneOpen = () => {
-    window.removeEventListener('popstate', onBackButtonWhenPaneOpen);
+  const onBackButtonClickWhenPaneOpen = () => {
+    window.removeEventListener('popstate', onBackButtonClickWhenPaneOpen);
     window.history.forward();
     props.onClose();
   };
@@ -145,7 +145,7 @@ export const CallWithChatPane = (props: CallWithChatPaneProps): JSX.Element => {
       )}
       <BackButtonOverride
         onInitialize={backButtonOverrideInitialized}
-        onBackButtonClick={hidden ? onBackButtonWhenPaneClosed : onBackButtonWhenPaneOpen}
+        onBackButtonClick={hidden ? onBackButtonClickWhenPaneClosed : onBackButtonClickWhenPaneOpen}
       />
     </Stack>
   );
