@@ -494,9 +494,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private callIdChanged(): void {
-    this.context.setCallId(this.call?.id);
-    // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
