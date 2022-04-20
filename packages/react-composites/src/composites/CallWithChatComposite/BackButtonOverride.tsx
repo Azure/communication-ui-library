@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
  * @private
  */
 export const BrowserBackButtonOverride = (props: {
-  /** This callback is executed when the browser back button is clicked with this component on the DOM tree */
+  /** This callback is executed when the browser back button is clicked with this component in the DOM tree */
   onBackButtonClick?: () => void;
 }): JSX.Element => {
   useEffect(() => {
