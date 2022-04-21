@@ -3,7 +3,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient } from '@azure/communication-chat';
 
 export type IdentityType = {
-  userId: string;
+  userIdentifer: string;
   token: string;
   endpointUrl: string;
   displayName: string;
@@ -29,7 +29,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   });
 
   return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
+    userIdentifer: userAndTokens[i].user.communicationUserId,
     token: userAndTokens[i].token,
     endpointUrl,
     displayName,
