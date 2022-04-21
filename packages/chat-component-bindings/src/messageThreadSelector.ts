@@ -189,7 +189,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             message.clientMessageId !== undefined
         )
         // Filter out deleted messages
-        .filter((message) => message.content && !message.deletedOn)
+        .filter((message) => !message.deletedOn)
         .map((message) => {
           return memoizedFn(
             message.id ?? message.clientMessageId,
