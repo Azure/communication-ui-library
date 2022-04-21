@@ -536,7 +536,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     : locator.chatThreadId;
   const createChatAdapterPromise = createAzureCommunicationChatAdapter({
     endpoint,
-    userId,
+    userIdentifier: userId,
     displayName,
     credential,
     threadId

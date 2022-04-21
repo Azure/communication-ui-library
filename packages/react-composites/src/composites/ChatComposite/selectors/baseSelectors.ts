@@ -7,7 +7,7 @@ import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapt
 /**
  * @private
  */
-export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind => state.userId;
+export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind => state.userIdentifier;
 
 /**
  * @private

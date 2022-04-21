@@ -136,7 +136,7 @@ function chatAdapterStateFromCallWithChatAdapterState(
   }
 
   return {
-    userId: callWithChatAdapterState.userId,
+    userIdentifier: callWithChatAdapterState.userId,
     displayName: callWithChatAdapterState.displayName || '',
     thread: callWithChatAdapterState.chat,
     latestErrors: callWithChatAdapterState.latestChatErrors,

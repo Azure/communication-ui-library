@@ -33,7 +33,7 @@ export type ChatAdapterUiState = {
  * @public
  */
 export type ChatCompositeClientState = {
-  userId: CommunicationIdentifierKind;
+  userIdentifier: CommunicationIdentifierKind;
   displayName: string;
   thread: ChatThreadClientState;
   /**

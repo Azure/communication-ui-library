@@ -102,7 +102,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpoint: string;
-    userId: CommunicationUserIdentifier;
+    userIdentifier: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
@@ -662,7 +662,7 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: CommunicationIdentifierKind;
+    userIdentifier: CommunicationIdentifierKind;
     displayName: string;
     thread: ChatThreadClientState;
     latestErrors: AdapterErrors;
@@ -782,7 +782,7 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userIdentifier, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;

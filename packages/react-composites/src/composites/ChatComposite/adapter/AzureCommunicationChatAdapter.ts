@@ -57,7 +57,7 @@ export class ChatContext {
       throw 'Cannot find threadId, please initialize thread before use!';
     }
     this.state = {
-      userId: clientState.userId,
+      userIdentifier: clientState.userId,
       displayName: clientState.displayName,
       thread,
       latestErrors: clientState.latestErrors
@@ -92,7 +92,7 @@ export class ChatContext {
     }
 
     let updatedState: ChatAdapterState = {
-      userId: clientState.userId,
+      userIdentifier: clientState.userId,
       displayName: clientState.displayName,
       thread,
       latestErrors: clientState.latestErrors
@@ -418,7 +418,7 @@ const convertEventType = (type: string): ChatMessageType => {
  */
 export type AzureCommunicationChatAdapterArgs = {
   endpoint: string;
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   threadId: string;
@@ -433,13 +433,13 @@ export type AzureCommunicationChatAdapterArgs = {
  */
 export const createAzureCommunicationChatAdapter = async ({
   endpoint: endpointUrl,
-  userId,
+  userIdentifier,
   displayName,
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
-    userId,
+    userIdentifier,
     displayName,
     endpoint: endpointUrl,
     credential: credential
@@ -487,7 +487,7 @@ export const useAzureCommunicationChatAdapter = (
    */
   beforeDispose?: (adapter: ChatAdapter) => Promise<void>
 ): ChatAdapter | undefined => {
-  const { credential, displayName, endpoint, threadId, userId } = args;
+  const { credential, displayName, endpoint, threadId, userIdentifier } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -505,7 +505,7 @@ export const useAzureCommunicationChatAdapter = (
 
   useEffect(
     () => {
-      if (!credential || !displayName || !endpoint || !threadId || !userId) {
+      if (!credential || !displayName || !endpoint || !threadId || !userIdentifier) {
         return;
       }
       (async () => {
@@ -527,7 +527,7 @@ export const useAzureCommunicationChatAdapter = (
           displayName,
           endpoint,
           threadId,
-          userId
+          userIdentifier
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -537,7 +537,7 @@ export const useAzureCommunicationChatAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, threadId, userId]
+    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, threadId, userIdentifier]
   );
 
   // Dispose any existing adapter when the component unmounts.

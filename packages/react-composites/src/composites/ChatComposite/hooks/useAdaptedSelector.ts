@@ -92,7 +92,7 @@ const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.
 
 const adaptCompositeState = (compositeState: ChatAdapterState): ChatClientState => {
   return memoizeState(
-    compositeState.userId,
+    compositeState.userIdentifier,
     compositeState.displayName,
     memoizeThreads(compositeState.thread),
     // This is an unsafe type expansion.

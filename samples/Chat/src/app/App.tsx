@@ -30,7 +30,7 @@ const webAppTitle = document.title;
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [token, setToken] = useState('');
-  const [userId, setUserId] = useState('');
+  const [userIdentifier, setUserIdentifier] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
@@ -49,7 +49,7 @@ export default (): JSX.Element => {
               setPage('chat');
             }}
             setToken={setToken}
-            setUserId={setUserId}
+            setUserId={setUserIdentifier}
             setDisplayName={setDisplayName}
             setThreadId={setThreadId}
             setEndpointUrl={setEndpointUrl}
@@ -58,11 +58,11 @@ export default (): JSX.Element => {
       }
       case 'chat': {
         document.title = `chat - ${webAppTitle}`;
-        if (token && userId && displayName && threadId && endpointUrl) {
+        if (token && userIdentifier && displayName && threadId && endpointUrl) {
           return (
             <ChatScreen
               token={token}
-              userId={userId}
+              userIdentifier={userIdentifier}
               displayName={displayName}
               endpointUrl={endpointUrl}
               threadId={threadId}
@@ -89,7 +89,7 @@ export default (): JSX.Element => {
             homeHandler={() => {
               window.location.href = window.location.origin;
             }}
-            userId={userId}
+            userId={userIdentifier}
             displayName={displayName}
           />
         );

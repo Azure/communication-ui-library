@@ -22,7 +22,7 @@ import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvide
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
   token: string;
-  userId: string;
+  userIdentifier: string;
   displayName: string;
   endpointUrl: string;
   threadId: string;
@@ -30,7 +30,7 @@ interface ChatScreenProps {
 }
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
+  const { displayName, endpointUrl, threadId, token, userIdentifier, endChatHandler } = props;
 
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
@@ -43,9 +43,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         const removedParticipantIds = listener.participantsRemoved.map(
           (p) => (p.id as CommunicationUserIdentifier).communicationUserId
         );
-        if (removedParticipantIds.includes(userId)) {
+        if (removedParticipantIds.includes(userIdentifier)) {
           const removedBy = (listener.removedBy.id as CommunicationUserIdentifier).communicationUserId;
-          endChatHandler(removedBy !== userId);
+          endChatHandler(removedBy !== userIdentifier);
         }
       });
       adapter.on('error', (e) => {
@@ -53,18 +53,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
       return adapter;
     },
-    [endChatHandler, userId]
+    [endChatHandler, userIdentifier]
   );
 
   const adapterArgs = useMemo(
     () => ({
       endpoint: endpointUrl,
-      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      userIdentifier: fromFlatCommunicationIdentifier(userIdentifier) as CommunicationUserIdentifier,
       displayName,
-      credential: createAutoRefreshingCredential(userId, token),
+      credential: createAutoRefreshingCredential(userIdentifier, token),
       threadId
     }),
-    [endpointUrl, userId, displayName, token, threadId]
+    [endpointUrl, userIdentifier, displayName, token, threadId]
   );
   const adapter = useAzureCommunicationChatAdapter(adapterArgs, adapterAfterCreate);
 
@@ -91,7 +91,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         </Stack.Item>
         <ChatHeader
           isParticipantsDisplayed={hideParticipants !== true}
-          onEndChat={() => adapter.removeParticipant(userId)}
+          onEndChat={() => adapter.removeParticipant(userIdentifier)}
           setHideParticipants={setHideParticipants}
         />
       </Stack>

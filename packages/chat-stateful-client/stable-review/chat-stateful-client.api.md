@@ -79,7 +79,7 @@ export interface StatefulChatClient extends ChatClient {
 
 // @public
 export type StatefulChatClientArgs = {
-    userId: CommunicationUserIdentifier;
+    userIdentifier: CommunicationUserIdentifier;
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;

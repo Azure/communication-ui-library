@@ -127,7 +127,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
  * @public
  */
 export type StatefulChatClientArgs = {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
   credential: CommunicationTokenCredential;
@@ -201,7 +201,7 @@ export const createStatefulChatClientWithDeps = (
   const context = new ChatContext(options?.maxStateChangeListeners);
   let eventSubscriber: EventSubscriber;
 
-  context.updateChatConfig(getIdentifierKind(args.userId), args.displayName);
+  context.updateChatConfig(getIdentifierKind(args.userIdentifier), args.displayName);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 
