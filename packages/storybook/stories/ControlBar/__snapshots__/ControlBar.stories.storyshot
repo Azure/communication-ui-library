@@ -71,7 +71,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-16"
+                      className="root-94 root-16"
                       data-icon-name="ControlButtonCameraOff"
                     >
                       <span
@@ -100,7 +100,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                     </i>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-17 ms-Button-menuIcon menuIcon-12"
+                      className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-12"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -148,7 +148,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-16"
+                      className="root-94 root-16"
                       data-icon-name="ControlButtonMicOff"
                     >
                       <span
@@ -177,7 +177,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                     </i>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-17 ms-Button-menuIcon menuIcon-12"
+                      className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-12"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -218,7 +218,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-16"
+                    className="root-94 root-16"
                     data-icon-name="ControlButtonScreenShareStart"
                   >
                     <span
@@ -271,7 +271,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-16"
+                    className="root-94 root-16"
                     data-icon-name="ControlButtonParticipants"
                   >
                     <span
@@ -294,7 +294,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-17 ms-Button-menuIcon menuIcon-12"
+                    className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-12"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -337,7 +337,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-16"
+                    className="root-94 root-16"
                     data-icon-name="ControlButtonOptions"
                   >
                     <span
@@ -360,7 +360,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-17 ms-Button-menuIcon menuIcon-12"
+                    className="ms-Icon root-94 css-17 ms-Button-menuIcon menuIcon-12"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -400,7 +400,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105"
+                    className="root-94"
                     data-icon-name="ControlButtonEndCall"
                   >
                     <span

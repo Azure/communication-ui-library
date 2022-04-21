@@ -124,7 +124,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <i
                         aria-hidden={true}
-                        className="root-105 root-25"
+                        className="root-94 root-25"
                         data-icon-name="ControlButtonCameraOn"
                       >
                         <span
@@ -160,7 +160,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                       <i
                         aria-hidden={true}
-                        className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-21"
+                        className="ms-Icon root-94 css-26 ms-Button-menuIcon menuIcon-21"
                         data-icon-name="ChevronDown"
                         hidden={true}
                         style={
@@ -208,7 +208,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <i
                         aria-hidden={true}
-                        className="root-105 root-25"
+                        className="root-94 root-25"
                         data-icon-name="ControlButtonMicOn"
                       >
                         <span
@@ -244,7 +244,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                       <i
                         aria-hidden={true}
-                        className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-21"
+                        className="ms-Icon root-94 css-26 ms-Button-menuIcon menuIcon-21"
                         data-icon-name="ChevronDown"
                         hidden={true}
                         style={
@@ -285,7 +285,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-25"
+                      className="root-94 root-25"
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -318,7 +318,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-26 ms-Button-menuIcon menuIcon-28"
+                      className="ms-Icon root-94 css-26 ms-Button-menuIcon menuIcon-28"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -364,7 +364,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105"
+                      className="root-94"
                       data-icon-name="ControlButtonEndCall"
                     >
                       <span

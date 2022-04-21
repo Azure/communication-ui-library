@@ -99,7 +99,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               >
                                 <i
                                   aria-hidden={true}
-                                  className="root-105 root-31"
+                                  className="root-94 root-31"
                                   data-icon-name="ControlButtonCameraOn"
                                 >
                                   <span
@@ -125,7 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                 </i>
                                 <i
                                   aria-hidden={true}
-                                  className="ms-Icon root-105 css-32 ms-Button-menuIcon menuIcon-27"
+                                  className="ms-Icon root-94 css-32 ms-Button-menuIcon menuIcon-27"
                                   data-icon-name="ChevronDown"
                                   hidden={true}
                                   style={
@@ -173,7 +173,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               >
                                 <i
                                   aria-hidden={true}
-                                  className="root-105 root-31"
+                                  className="root-94 root-31"
                                   data-icon-name="ControlButtonMicOn"
                                 >
                                   <span
@@ -199,7 +199,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                                 </i>
                                 <i
                                   aria-hidden={true}
-                                  className="ms-Icon root-105 css-32 ms-Button-menuIcon menuIcon-27"
+                                  className="ms-Icon root-94 css-32 ms-Button-menuIcon menuIcon-27"
                                   data-icon-name="ChevronDown"
                                   hidden={true}
                                   style={
