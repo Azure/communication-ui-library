@@ -43,7 +43,7 @@ export const App = (props: AppProps): JSX.Element => {
 
   const chatAdapter = useAzureCommunicationChatAdapter({
     endpoint: props.endpointUrl,
-    userId: props.userId,
+    userIdentifier: props.userId,
     displayName: props.displayName,
     credential,
     threadId: props.threadId

@@ -44,7 +44,7 @@ function App(): JSX.Element {
   const args = useMemo(
     () => ({
       endpoint,
-      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      userIdentifier: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
       displayName,
       credential: new AzureCommunicationTokenCredential(token),
       threadId

@@ -10,7 +10,7 @@ export const loadChatComposite = async function (args, htmlElement, props) {
   const { userId, token, endpoint, threadId, displayName } = args;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
-    userId,
+    userIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     threadId
