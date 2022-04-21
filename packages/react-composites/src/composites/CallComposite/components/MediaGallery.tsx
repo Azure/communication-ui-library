@@ -2,10 +2,15 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import {
+  VideoGallery,
+  VideoStreamOptions,
+  OnRenderAvatarCallback,
+  VideoGalleryRemoteParticipant
+} from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { memoizeFunction, mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
@@ -59,6 +64,25 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       ...cameraSwitcherCameras
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
+
+  // Async function to retrieve custom data model information to replace display name in remote tiles with camera on.
+  const fetchAvatarPersonaDataAsync = memoizeFunction(
+    async (participant: VideoGalleryRemoteParticipant): Promise<void> => {
+      if (props.onFetchAvatarPersonaData) {
+        const newParticipantData = await props.onFetchAvatarPersonaData(participant.userId);
+        participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
+      }
+    }
+  );
+
+  // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
+  if (props.onFetchAvatarPersonaData) {
+    (videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]).forEach(
+      (participant: VideoGalleryRemoteParticipant) => {
+        fetchAvatarPersonaDataAsync(participant);
+      }
+    );
+  }
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
