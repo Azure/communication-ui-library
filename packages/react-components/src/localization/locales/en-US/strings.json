@@ -45,7 +45,8 @@
     "cameraMenuTooltip": "Choose Camera",
     "cameraButtonSplitRoleDescription": "Split button",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
-    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
+    "cameraActionFailedAnnouncement": "There was a problem toggling your camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -59,7 +60,8 @@
     "speakerMenuTooltip": "Choose Speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
-    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off"
+    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
+    "microphoneActionFailedAnnouncement": "There was a problem toggling your microphone"
   },
   "devicesButton": {
     "label": "Devices",

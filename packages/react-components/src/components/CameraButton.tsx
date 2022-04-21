@@ -60,6 +60,10 @@ export interface CameraButtonStrings {
    * Camera action turned off string for announcer
    */
   cameraActionTurnedOffAnnouncement: string;
+  /**
+   * Camera action failed string for announcer
+   */
+  cameraActionFailedAnnouncement: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -180,11 +184,13 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
         // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
         toggleAnnouncerString(!cameraOn);
+      } catch {
+        setAnnouncerString(strings.cameraActionFailedAnnouncement);
       } finally {
         setWaitForCamera(false);
       }
     }
-  }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
+  }, [cameraOn, localVideoViewOptions, onToggleCamera, strings.cameraActionFailedAnnouncement, toggleAnnouncerString]);
 
   return (
     <Stack>
