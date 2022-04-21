@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Rename the userId prop for the chat composite adapter to userIdentifier.",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
