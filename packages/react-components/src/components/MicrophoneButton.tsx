@@ -64,10 +64,6 @@ export interface MicrophoneButtonStrings {
    * Microphone action turned off string for announcer
    */
   microphoneActionTurnedOffAnnouncement: string;
-  /**
-   * Microphone failed to switch string for announcer
-   */
-  microphoneActionFailedAnnouncement: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -193,11 +189,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         await onToggleMicrophone();
         // allows for the setting of narrator strings triggering the announcer when microphone is turned on or off.
         toggleAnnouncerString(!isMicOn);
-      } catch {
-        setAnnouncerString(strings.microphoneActionFailedAnnouncement);
+        // eslint-disable-next-line no-empty
+      } finally {
       }
     }
-  }, [isMicOn, onToggleMicrophone, strings.microphoneActionFailedAnnouncement, toggleAnnouncerString]);
+  }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
   return (
     <Stack>
