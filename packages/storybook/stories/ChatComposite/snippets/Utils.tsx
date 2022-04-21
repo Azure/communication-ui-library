@@ -79,7 +79,7 @@ export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
 };
 
 export type ChatCompositeSetupProps = {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   token: string;
   endpointUrl: string;
   displayName: string;
@@ -87,14 +87,14 @@ export type ChatCompositeSetupProps = {
 };
 
 export const createThreadAndAddUser = async (
-  userId: string,
+  userIdentifier: string,
   token: string,
   endpointUrl: string,
   displayName: string
 ): Promise<ChatCompositeSetupProps> => {
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
 
-  const user = { communicationUserId: userId };
+  const user = { communicationUserId: userIdentifier };
   const threadId =
     (
       await chatClient.createChatThread(
@@ -105,5 +105,5 @@ export const createThreadAndAddUser = async (
       )
     ).chatThread?.id ?? '';
 
-  return { userId: user, token, endpointUrl, displayName, threadId };
+  return { userIdentifier: user, token, endpointUrl, displayName, threadId };
 };

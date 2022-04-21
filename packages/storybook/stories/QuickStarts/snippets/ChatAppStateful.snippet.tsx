@@ -9,14 +9,14 @@ function App(): JSX.Element {
 
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
   const userAccessToken = '<Azure Communication Services Resource Access Token>';
-  const userId = '<User Id associated to the token>';
+  const userIdentifier = '<User Id associated to the token>';
   const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
   const threadId = '<Get thread id from chat service>';
   const displayName = '<Display Name>';
 
   // Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: { communicationUserId: userId },
+    userIdentifier: { communicationUserId: userIdentifier },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential

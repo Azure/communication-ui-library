@@ -10,7 +10,7 @@ import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -26,7 +26,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
   const adapter = useAzureCommunicationChatAdapter({
     endpoint: props.endpointUrl,
-    userId: props.userId,
+    userIdentifier: props.userIdentifier,
     // Data model injection: The display name for the local user comes from Contoso's data model.
     displayName: props.displayName,
     credential,

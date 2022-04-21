@@ -3,7 +3,7 @@ import { ChatComposite, useAzureCommunicationChatAdapter } from '@azure/communic
 import React, { useMemo } from 'react';
 
 type ChatAdapterExampleProps = {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   accessToken: string;
   endpointUrl: string;
   threadId: string;
@@ -14,7 +14,7 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
   const credential = useMemo(() => new AzureCommunicationTokenCredential(props.accessToken), [props.accessToken]);
   const adapter = useAzureCommunicationChatAdapter({
     endpoint: props.endpointUrl,
-    userId: props.userId,
+    userIdentifier: props.userIdentifier,
     displayName: props.displayName,
     credential,
     threadId: props.threadId

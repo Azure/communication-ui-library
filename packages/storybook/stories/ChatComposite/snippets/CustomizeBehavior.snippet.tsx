@@ -8,7 +8,7 @@ import {
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: CommunicationUserIdentifier;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -22,7 +22,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   const adapter = useAzureCommunicationChatAdapter(
     {
       endpoint: props.endpointUrl,
-      userId: props.userId,
+      userIdentifier: props.userIdentifier,
       // Data model injection: The display name for the local user comes from Contoso's data model.
       displayName: props.displayName,
       credential,

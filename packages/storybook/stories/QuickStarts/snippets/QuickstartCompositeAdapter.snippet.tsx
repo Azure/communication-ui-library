@@ -47,7 +47,7 @@ function App(): JSX.Element {
   const chatAdapterArgs = useMemo(
     () => ({
       endpoint: endpointUrl,
-      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      userIdentifier: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
       displayName,
       credential,
       threadId
