@@ -10,7 +10,13 @@
 
 Azure Communication Services UI Library is a collection of JavaScript libraries that can be used to easily build fast, responsive communication web applications.
 
-We have interactive storybook pages in our storybook 📖 to try out features and examples to get your development kick started 🚀.
+We have interactive storybook pages in our [storybook 📖](https://azure.github.io/communication-ui-library/) to try out features and examples to get your development kick started 🚀.
+
+Azure Communication Services support UI Library across Web (React) and Native Mobile ([iOS](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) and [Android](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-android)). For Native Mobile, please refer to our [documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-library/ui-library-overview?pivots=platform-mobile).
+
+### Design your experience with Design Kit
+
+The same components and composites offered in the UI Library are available in the [Design Kit for Figma](https://www.figma.com/community/file/1095841357293210472), so you can quickly design and prototype your calling and chat experiences.
 
 ## Getting Started
 
