@@ -439,7 +439,7 @@ export const createAzureCommunicationChatAdapter = async ({
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
-    userIdentifier,
+    userId: userIdentifier,
     displayName,
     endpoint: endpointUrl,
     credential: credential

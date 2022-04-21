@@ -22,7 +22,7 @@ function App(): JSX.Element {
 
   // Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userIdentifier: { communicationUserId: userIdentifier },
+    userId: { communicationUserId: userIdentifier },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
