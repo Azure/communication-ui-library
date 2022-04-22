@@ -7,16 +7,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  # get matrix for ci-jobs
+  get_matrix:
+    name: Set CI flavors
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      # gets the matrix for ci run from the config file
+      - id: get-matrix
+        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
+
   update_examples_snapshot:
     name: Update component examples snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -102,10 +119,7 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -191,10 +205,7 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
