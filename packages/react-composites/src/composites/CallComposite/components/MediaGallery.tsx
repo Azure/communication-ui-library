@@ -89,22 +89,21 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
   useEffect(() => {
     // flag to stop race conditions caused by participants joining the call
-    let changingNames = true;
+    let newestFetch = true;
     const augmentDisplayName = async (): Promise<void> => {
       if (props.onFetchAvatarPersonaData) {
-        if (changingNames) {
-          setAugmentedParticipants(
-            await fetchAvatarPersonaDataAsync(
-              props.onFetchAvatarPersonaData,
-              videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]
-            )
-          );
+        const tempParticipants = await fetchAvatarPersonaDataAsync(
+          props.onFetchAvatarPersonaData,
+          videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]
+        );
+        if (newestFetch) {
+          setAugmentedParticipants(tempParticipants);
         }
       }
     };
     augmentDisplayName();
     return () => {
-      changingNames = false;
+      newestFetch = false;
     };
   }, [fetchAvatarPersonaDataAsync, props.onFetchAvatarPersonaData, videoGalleryProps.remoteParticipants]);
 
