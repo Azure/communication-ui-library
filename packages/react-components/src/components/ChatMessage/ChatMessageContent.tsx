@@ -7,7 +7,6 @@ import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
-import { IStyle, mergeStyles, Theme, useTheme } from '@fluentui/react';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -32,9 +31,8 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
-  const theme = useTheme();
   return (
-    <div data-ui-status={message.status} className={mergeStyles(linkStyles(theme))}>
+    <div data-ui-status={message.status}>
       <LiveMessage
         message={`${message.mine ? '' : liveAuthor} ${extractContent(message.content || '')}`}
         aria-live="polite"
@@ -46,9 +44,8 @@ const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: str
 
 const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
-  const theme = useTheme();
   return (
-    <div data-ui-status={message.status} className={mergeStyles(linkStyles(theme))}>
+    <div data-ui-status={message.status}>
       <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
       <Linkify>{message.content}</Linkify>
     </div>
@@ -60,21 +57,4 @@ const extractContent = (s: string): string => {
   const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
-};
-
-const linkStyles = (theme: Theme): IStyle => {
-  return {
-    '& a:link': {
-      color: theme.palette.themePrimary
-    },
-    '& a:visited': {
-      color: theme.palette.themeDarker
-    },
-    '& a:hover': {
-      color: theme.palette.themeDarker
-    },
-    '& a:selected': {
-      color: theme.palette.themeDarker
-    }
-  };
 };
