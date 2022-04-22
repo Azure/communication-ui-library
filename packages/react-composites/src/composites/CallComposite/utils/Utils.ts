@@ -5,6 +5,8 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
+import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
@@ -183,4 +185,29 @@ export const computeVariant = (
   } else {
     return 'NO_STATE';
   }
+};
+
+/**
+ * Edits the display name of the reomte participant based on the onFetchAvatarPersonaData function given to the call composite
+ *
+ * @param onFetchAvatarPersonaData Callback function for mutating persona data
+ * @param participants Array of remote participants
+ * @returns Array of participants with their display name altered
+ *
+ * @private
+ */
+export const fetchAvatarPersonaDataAsync = async (
+  onFetchAvatarPersonaData: AvatarPersonaDataCallback,
+  participants: VideoGalleryRemoteParticipant[]
+): Promise<VideoGalleryRemoteParticipant[] | undefined> => {
+  if (onFetchAvatarPersonaData) {
+    await Promise.all(
+      participants.map(async (participant) => {
+        const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
+        participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
+      })
+    );
+    return participants;
+  }
+  return;
 };

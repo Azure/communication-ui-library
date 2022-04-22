@@ -10,7 +10,7 @@ import {
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { memoizeFunction, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
@@ -18,6 +18,7 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { fetchAvatarPersonaDataAsync } from '../utils';
 
 const VideoGalleryStyles = {
   root: {
@@ -69,25 +70,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     undefined
   );
 
-  // Async function to retrieve custom data model information to replace display name in remote tiles with camera on.
-  const fetchAvatarPersonaDataAsync = memoizeFunction(
-    async (
-      onFetchAvatarPersonaData: AvatarPersonaDataCallback,
-      participants: VideoGalleryRemoteParticipant[]
-    ): Promise<VideoGalleryRemoteParticipant[] | undefined> => {
-      if (props.onFetchAvatarPersonaData) {
-        await Promise.all(
-          participants.map(async (participant) => {
-            const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
-            participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
-          })
-        );
-        return participants;
-      }
-      return;
-    }
-  );
-
   // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
   useEffect(() => {
     // flag to stop race conditions caused by participants joining the call
@@ -96,7 +78,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       if (props.onFetchAvatarPersonaData) {
         const tempParticipants = await fetchAvatarPersonaDataAsync(
           props.onFetchAvatarPersonaData,
-          videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]
+          videoGalleryProps.remoteParticipants
         );
         if (newestFetch) {
           setAugmentedParticipants(tempParticipants);
@@ -107,7 +89,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return () => {
       newestFetch = false;
     };
-  }, [fetchAvatarPersonaDataAsync, props.onFetchAvatarPersonaData, videoGalleryProps.remoteParticipants]);
+  }, [props.onFetchAvatarPersonaData, videoGalleryProps.remoteParticipants]);
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
