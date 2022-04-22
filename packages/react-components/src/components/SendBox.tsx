@@ -268,7 +268,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasTextOrFile = hasText || hasFile(props.activeFileUploads);
+  const hasTextOrFile = hasText || hasFile(props['activeFileUploads']);
 
   const mergedSendIconStyle = useMemo(
     () =>
