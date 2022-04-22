@@ -188,8 +188,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             // message.type === ACSKnownMessageType.topicUpdated ||
             message.clientMessageId !== undefined
         )
-        // Filter out deleted messages
-        .filter((message) => !message.deletedOn)
+        .filter(messagesWithContentOrFileSharingMetadata)
         .map((message) => {
           return memoizedFn(
             message.id ?? message.clientMessageId,
@@ -217,4 +216,14 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
   return lowerCaseType === 'text' || lowerCaseType === 'html' || lowerCaseType === 'richtext/html'
     ? lowerCaseType
     : 'unknown';
+};
+
+const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus) => {
+  if (message.deletedOn) {
+    return false;
+  }
+  if (message.metadata?.['fileSharingMetadata']) {
+    return true;
+  }
+  return message.content?.message !== '';
 };
