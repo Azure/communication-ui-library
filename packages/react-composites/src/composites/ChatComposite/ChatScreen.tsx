@@ -48,7 +48,6 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
 import { GraphPersona } from '../common/GraphPersona';
-import { PersonViewType } from '@microsoft/mgt-react';
 
 /**
  * @private

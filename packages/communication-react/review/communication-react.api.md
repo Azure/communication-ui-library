@@ -67,6 +67,7 @@ import { Theme } from '@fluentui/react';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
+import { User } from '@microsoft/microsoft-graph-types';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
@@ -1319,6 +1320,9 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
+export const createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+
+// @public
 export type CustomAvatarOptions = {
     coinSize?: number;
     hidePersonaDetails?: boolean;
@@ -1712,6 +1716,12 @@ export type GetChatSelector<Component extends (props: any) => JSX.Element | unde
 
 // @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+
+// @public (undocumented)
+export const _GraphToolkitEnabledProvider: (props: {
+    isEnabled: boolean;
+    children: React_2.ReactNode;
+}) => JSX.Element;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -2476,6 +2486,15 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const _useGraphToolkitEnabled: () => [boolean];
+
+// @public (undocumented)
+export const _useIsSignedIn: () => [boolean];
+
+// @public (undocumented)
+export const _useMe: () => [User | undefined];
 
 // @public
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;

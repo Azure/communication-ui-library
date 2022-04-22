@@ -5,7 +5,7 @@ import { Providers, ProviderState } from '@microsoft/mgt-element';
 import { useEffect, useState } from 'react';
 import { _useGraphToolkitEnabled } from './useGraphToolkitEnabled';
 
-/** @internal */
+/** @public */
 export const _useIsSignedIn = (): [boolean] => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [graphToolkitEnabled] = _useGraphToolkitEnabled();

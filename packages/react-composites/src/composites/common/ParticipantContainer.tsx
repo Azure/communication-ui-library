@@ -68,9 +68,8 @@ export const ParticipantListWithHeading = (props: {
 
   const onRenderAvatar = useCallback(
     (userId: string, options: CustomAvatarOptions): JSX.Element => {
-      console.log('userId: ', userId);
       const avatar = isSignedIn ? (
-        <GraphPersona personQuery={`/users/${userId}/people`} view={PersonViewType.oneline} avatarSize="small" />
+        <GraphPersona userId={userId} view={PersonViewType.oneline} avatarSize="small" />
       ) : (
         <AvatarPersona
           data-ui-id="chat-composite-participant-custom-avatar"
@@ -92,7 +91,8 @@ export const ParticipantListWithHeading = (props: {
         <ParticipantList
           {...participantListProps}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
-          onRenderAvatar={onRenderAvatar}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onRenderAvatar={onRenderAvatar as any}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </FocusZone>

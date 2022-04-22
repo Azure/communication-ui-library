@@ -90,7 +90,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onRenderAvatar={onRenderAvatar as any}
       />
     );
   }, [

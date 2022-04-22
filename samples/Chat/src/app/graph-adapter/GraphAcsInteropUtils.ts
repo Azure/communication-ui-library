@@ -3,13 +3,13 @@
 
 import {
   ChatMessage as GraphChatMessage,
-  ConversationMember as GraphChatParticipant
+  AadUserConversationMember as GraphChatParticipant
 } from '@microsoft/microsoft-graph-types';
 
 import { ChatParticipant as ACSChatParticipant, ChatMessage as ACSChatMessage } from '@azure/communication-chat';
 
 export const graphParticipantToACSParticipant = (graphParticipant: GraphChatParticipant): ACSChatParticipant => {
-  if (!graphParticipant.id) {
+  if (!graphParticipant.userId) {
     throw new Error('Cannot convert graph participant to ACS participant. No ID found on graph participant');
   }
 

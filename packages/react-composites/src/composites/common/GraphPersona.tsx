@@ -9,7 +9,6 @@ import { AvatarPersonaData } from './AvatarPersona';
 
 /** @private */
 export interface GraphPersonaProps extends PersonProps {
-  personQuery: string;
   overrideData?: AvatarPersonaData;
 }
 

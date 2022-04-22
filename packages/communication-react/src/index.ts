@@ -18,7 +18,15 @@
  * @packageDocumentation
  */
 
-export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
+export {
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
+  _useIsSignedIn,
+  _useMe,
+  _GraphToolkitEnabledProvider,
+  _useGraphToolkitEnabled
+} from '../../acs-ui-common/src';
+
 export type {
   AreEqual,
   CommonProperties,

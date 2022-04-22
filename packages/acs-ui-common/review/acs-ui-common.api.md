@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { default as React_2 } from 'react';
 import { User } from '@microsoft/microsoft-graph-types';
 
 // @public
@@ -41,6 +42,12 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 // @internal
 export const _getApplicationId: () => string;
 
+// @public (undocumented)
+export const _GraphToolkitEnabledProvider: (props: {
+    isEnabled: boolean;
+    children: React_2.ReactNode;
+}) => JSX.Element;
+
 // @internal (undocumented)
 export interface _IObjectMap<T> {
     // (undocumented)
@@ -65,10 +72,13 @@ export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, ke
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
-// @internal (undocumented)
+// @public (undocumented)
+export const _useGraphToolkitEnabled: () => [boolean];
+
+// @public (undocumented)
 export const _useIsSignedIn: () => [boolean];
 
-// @internal (undocumented)
+// @public (undocumented)
 export const _useMe: () => [User | undefined];
 
 // (No @packageDocumentation comment for this package)

@@ -11,7 +11,7 @@ import { MicrosoftGraphChatClient } from './MicrosoftGraphChatClient';
 import { Model } from './Model';
 import { IChatClient } from './types';
 
-const participantId = '08381377-19e1-48df-876d-a45998dd5910';
+const participantId = 'TEST08381377-19e1-48df-876d-a45998dd5910';
 const displayName = 'James  Burnside';
 const threadId = '19:08381377-19e1-48df-876d-a45998dd5910_71ad4812-19d8-4fd6-8ceb-0f14c2101e5e@unq.gbl.spaces';
 

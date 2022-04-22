@@ -192,6 +192,8 @@ export type ChatStateModifier = (state: ChatClientState) => void;
  * Internal implementation of {@link createStatefulChatClient} for dependency injection.
  *
  * Used by tests. Should not be exported out of this package.
+ *
+ * @public
  */
 export const createStatefulChatClientWithDeps = (
   chatClient: ChatClient,

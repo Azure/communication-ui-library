@@ -6,7 +6,7 @@ import { Providers } from '@microsoft/mgt-element';
 import { useEffect, useState } from 'react';
 import { _useIsSignedIn } from './useIsSignedIn';
 
-/** @internal */
+/** @public */
 export const _useMe = (): [User | undefined] => {
   const [me, setMe] = useState<User | undefined>();
 
