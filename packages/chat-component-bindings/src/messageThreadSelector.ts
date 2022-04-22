@@ -218,12 +218,12 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     : 'unknown';
 };
 
-const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus) => {
+const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
   if (message.metadata?.['fileSharingMetadata']) {
     return true;
   }
-  return message.content && message.content?.message !== '';
+  return !!(message.content && message.content?.message !== '');
 };
