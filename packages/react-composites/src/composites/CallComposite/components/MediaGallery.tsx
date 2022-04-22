@@ -65,7 +65,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>([]);
+  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
+    undefined
+  );
 
   // Async function to retrieve custom data model information to replace display name in remote tiles with camera on.
   const fetchAvatarPersonaDataAsync = memoizeFunction(
