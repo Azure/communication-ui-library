@@ -76,10 +76,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       participants: VideoGalleryRemoteParticipant[]
     ): Promise<VideoGalleryRemoteParticipant[] | undefined> => {
       if (props.onFetchAvatarPersonaData) {
-        participants.forEach(async (participant: VideoGalleryRemoteParticipant) => {
-          const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
-          participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
-        });
+        await Promise.all(
+          participants.map(async (participant) => {
+            const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
+            participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
+          })
+        );
         return participants;
       }
       return;
