@@ -67,152 +67,144 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         className="ms-Stack css-18"
                       >
                         <div
+                          aria-live="polite"
                           className="ms-Stack css-19"
+                        />
+                        <div
+                          className="ms-TooltipHost root-20"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <div
-                            aria-live="polite"
-                            className="ms-Stack css-20"
-                          />
-                          <div
-                            className="ms-TooltipHost root-21"
-                            onBlurCapture={[Function]}
-                            onFocusCapture={[Function]}
+                          <button
+                            aria-label="Turn off camera"
+                            className="ms-Button ms-Button--default is-checked root-21"
+                            data-is-focusable={true}
+                            onClick={[Function]}
                             onKeyDown={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <button
-                              aria-label="Turn off camera"
-                              className="ms-Button ms-Button--default is-checked root-22"
-                              data-is-focusable={true}
-                              onClick={[Function]}
-                              onKeyDown={[Function]}
-                              onKeyPress={[Function]}
-                              onKeyUp={[Function]}
-                              onMouseDown={[Function]}
-                              onMouseUp={[Function]}
-                              type="button"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-22"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
-                                className="ms-Button-flexContainer flexContainer-23"
-                                data-automationid="splitbuttonprimary"
+                              <i
+                                aria-hidden={true}
+                                className="root-105 root-30"
+                                data-icon-name="ControlButtonCameraOn"
                               >
-                                <i
+                                <span
                                   aria-hidden={true}
-                                  className="root-94 root-31"
-                                  data-icon-name="ControlButtonCameraOn"
+                                  className="root-span"
                                 >
-                                  <span
-                                    aria-hidden={true}
-                                    className="root-span"
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
                                   >
-                                    <svg
-                                      className="svg"
-                                      fill="currentColor"
-                                      height={20}
-                                      viewBox="0 0 20 20"
-                                      width={20}
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
-                                      />
-                                      <path
-                                        d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
-                                      />
-                                    </svg>
-                                  </span>
-                                </i>
-                                <i
-                                  aria-hidden={true}
-                                  className="ms-Icon root-94 css-32 ms-Button-menuIcon menuIcon-27"
-                                  data-icon-name="ChevronDown"
-                                  hidden={true}
-                                  style={
-                                    Object {
-                                      "fontFamily": "\\"FabricMDL2Icons\\"",
-                                    }
+                                    <path
+                                      d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
+                                    />
+                                    <path
+                                      d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-105 css-31 ms-Button-menuIcon menuIcon-26"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
                                   }
-                                >
-                                  
-                                </i>
-                              </span>
-                            </button>
-                          </div>
+                                }
+                              >
+                                
+                              </i>
+                            </span>
+                          </button>
                         </div>
                         <div
+                          aria-live="polite"
                           className="ms-Stack css-19"
+                        />
+                        <div
+                          className="ms-TooltipHost root-20"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <div
-                            aria-live="polite"
-                            className="ms-Stack css-20"
-                          />
-                          <div
-                            className="ms-TooltipHost root-21"
-                            onBlurCapture={[Function]}
-                            onFocusCapture={[Function]}
+                          <button
+                            aria-label="Mute microphone"
+                            className="ms-Button ms-Button--default is-checked root-21"
+                            data-is-focusable={true}
+                            onClick={[Function]}
                             onKeyDown={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <button
-                              aria-label="Mute microphone"
-                              className="ms-Button ms-Button--default is-checked root-22"
-                              data-is-focusable={true}
-                              onClick={[Function]}
-                              onKeyDown={[Function]}
-                              onKeyPress={[Function]}
-                              onKeyUp={[Function]}
-                              onMouseDown={[Function]}
-                              onMouseUp={[Function]}
-                              type="button"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-22"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
-                                className="ms-Button-flexContainer flexContainer-23"
-                                data-automationid="splitbuttonprimary"
+                              <i
+                                aria-hidden={true}
+                                className="root-105 root-30"
+                                data-icon-name="ControlButtonMicOn"
                               >
-                                <i
+                                <span
                                   aria-hidden={true}
-                                  className="root-94 root-31"
-                                  data-icon-name="ControlButtonMicOn"
+                                  className="root-span"
                                 >
-                                  <span
-                                    aria-hidden={true}
-                                    className="root-span"
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
                                   >
-                                    <svg
-                                      className="svg"
-                                      fill="currentColor"
-                                      height={20}
-                                      viewBox="0 0 20 20"
-                                      width={20}
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
-                                      />
-                                      <path
-                                        d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
-                                      />
-                                    </svg>
-                                  </span>
-                                </i>
-                                <i
-                                  aria-hidden={true}
-                                  className="ms-Icon root-94 css-32 ms-Button-menuIcon menuIcon-27"
-                                  data-icon-name="ChevronDown"
-                                  hidden={true}
-                                  style={
-                                    Object {
-                                      "fontFamily": "\\"FabricMDL2Icons\\"",
-                                    }
+                                    <path
+                                      d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                                    />
+                                    <path
+                                      d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                              <i
+                                aria-hidden={true}
+                                className="ms-Icon root-105 css-31 ms-Button-menuIcon menuIcon-26"
+                                data-icon-name="ChevronDown"
+                                hidden={true}
+                                style={
+                                  Object {
+                                    "fontFamily": "\\"FabricMDL2Icons\\"",
                                   }
-                                >
-                                  
-                                </i>
-                              </span>
-                            </button>
-                          </div>
+                                }
+                              >
+                                
+                              </i>
+                            </span>
+                          </button>
                         </div>
                       </div>
                     </div>
