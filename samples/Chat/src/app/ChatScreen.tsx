@@ -10,7 +10,7 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
 import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
@@ -18,6 +18,10 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
+
+import { Providers } from '@microsoft/mgt-element';
+import { _useIsSignedIn } from '@internal/acs-ui-common';
+import { createMicrosoftGraphChatAdapter } from './graph-adapter/MicrosoftGraphChatAdapter';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -31,7 +35,25 @@ interface ChatScreenProps {
 }
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler } = props;
+  const { displayName, endpointUrl, endChatHandler } = props;
+
+  const [isSignedIn] = _useIsSignedIn();
+  const threadId = isSignedIn
+    ? '19:08381377-19e1-48df-876d-a45998dd5910_71ad4812-19d8-4fd6-8ceb-0f14c2101e5e@unq.gbl.spaces'
+    : props.threadId;
+  const userId = isSignedIn ? '08381377-19e1-48df-876d-a45998dd5910' : props.userId;
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      if (!isSignedIn) {
+        setToken(props.token);
+        return;
+      }
+      const providerCreatedToken = await Providers.globalProvider.getAccessToken();
+      setToken(providerCreatedToken);
+    })();
+  }, []);
 
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
@@ -51,24 +73,35 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
       adapter.on('error', (e) => {
         console.error(e);
-        errorHandler();
       });
       return adapter;
     },
-    [endChatHandler, errorHandler, userId]
+    [endChatHandler, userId]
   );
 
   const adapterArgs = useMemo(
-    () => ({
-      endpoint: endpointUrl,
-      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-      displayName,
-      credential: createAutoRefreshingCredential(userId, token),
-      threadId
-    }),
+    () =>
+      token
+        ? {
+            endpoint: endpointUrl,
+            userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+            displayName,
+            credential: createAutoRefreshingCredential(userId, token),
+            threadId
+          }
+        : undefined,
     [endpointUrl, userId, displayName, token, threadId]
   );
-  const adapter = useAzureCommunicationChatAdapter(adapterArgs, adapterAfterCreate);
+  // const adapter = useAzureCommunicationChatAdapter(adapterArgs ?? {}, adapterAfterCreate);
+
+  const [adapter, setAdapter] = useState<ChatAdapter | undefined>();
+  useEffect(() => {
+    (async () => {
+      const graphAdapter = await createMicrosoftGraphChatAdapter();
+      console.log('graphAdapter:', graphAdapter);
+      setAdapter(graphAdapter);
+    })();
+  }, []);
 
   if (adapter) {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>

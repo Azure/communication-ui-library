@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner } from '@fluentui/react';
-import React, { useState } from 'react';
+import { initializeIcons, Spinner, Stack } from '@fluentui/react';
+import React, { useEffect, useState } from 'react';
 import { ChatScreen } from './ChatScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
@@ -12,6 +12,10 @@ import HomeScreen from './HomeScreen';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { getBuildTime, getChatSDKVersion, getCommnicationReactSDKVersion } from './utils/utils';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+import { Header } from './Header';
+import { _GraphToolkitEnabledProvider, _useIsSignedIn } from '@internal/acs-ui-common';
+import { getChat, getChatMessages, getChatParticipants } from './graph-adapter/GraphQueries';
+import { createMicrosoftGraphChatAdapter } from './graph-adapter/MicrosoftGraphChatAdapter';
 
 setLogLevel('warning');
 
@@ -28,13 +32,28 @@ const ERROR_PAGE_TITLE_REMOVED = 'You have been removed from the chat.';
 
 const webAppTitle = document.title;
 
-export default (): JSX.Element => {
+const AppBody = (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
+  const [isSignedIn] = _useIsSignedIn();
+
+  // Quick tests
+  useEffect(() => {
+    if (isSignedIn) {
+      console.log('running some test fns:');
+      (async () => {
+        const chatThreadId =
+          '19:08381377-19e1-48df-876d-a45998dd5910_71ad4812-19d8-4fd6-8ceb-0f14c2101e5e@unq.gbl.spaces';
+        await getChat(chatThreadId);
+        await getChatParticipants(chatThreadId);
+        await getChatMessages(chatThreadId);
+      })();
+    }
+  }, [isSignedIn]);
 
   const getComponent = (): JSX.Element => {
     switch (page) {
@@ -132,3 +151,28 @@ export default (): JSX.Element => {
 
   return getComponent();
 };
+
+export default (): JSX.Element => {
+  const [enableGraphUiToolkit, setEnableGraphUiToolkit] = useState<boolean>(getEnabledFromLocalStorage());
+
+  return (
+    <_GraphToolkitEnabledProvider isEnabled={enableGraphUiToolkit}>
+      <Stack verticalFill>
+        <Stack.Item>
+          <Header graphUiToolkitEnabled={enableGraphUiToolkit} setEnableGraphUiToolkit={setEnableGraphUiToolkit} />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Stack verticalFill verticalAlign="center" horizontalAlign="center">
+            <AppBody />
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </_GraphToolkitEnabledProvider>
+  );
+};
+
+const localStorageAvailable = typeof Storage !== 'undefined';
+const localStorageKey = 'GraphUIToolkitEnabled';
+
+const getEnabledFromLocalStorage = (): boolean =>
+  localStorageAvailable && window.localStorage.getItem(localStorageKey) === 'true';

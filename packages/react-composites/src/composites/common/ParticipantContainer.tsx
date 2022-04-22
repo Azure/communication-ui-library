@@ -68,9 +68,9 @@ export const ParticipantListWithHeading = (props: {
 
   const onRenderAvatar = useCallback(
     (userId: string, options: CustomAvatarOptions): JSX.Element => {
-      console.log(`userId: ${userId}`);
+      console.log('userId: ', userId);
       const avatar = isSignedIn ? (
-        <GraphPersona personQuery="me" view={PersonViewType.oneline} avatarSize="small" />
+        <GraphPersona personQuery={`/users/${userId}/people`} view={PersonViewType.oneline} avatarSize="small" />
       ) : (
         <AvatarPersona
           data-ui-id="chat-composite-participant-custom-avatar"

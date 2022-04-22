@@ -3,7 +3,13 @@
 
 import React, { createContext, useContext } from 'react';
 
-const GraphToolkitEnabledContext = createContext(true);
+const localStorageAvailable = typeof Storage !== 'undefined';
+const localStorageKey = 'GraphUIToolkitEnabled';
+
+const getEnabledFromLocalStorage = (): boolean =>
+  localStorageAvailable && window.localStorage.getItem(localStorageKey) === 'true';
+
+const GraphToolkitEnabledContext = createContext(getEnabledFromLocalStorage());
 
 /** @internal */
 export const _GraphToolkitEnabledProvider = (props: { isEnabled: boolean; children: React.ReactNode }): JSX.Element => {
