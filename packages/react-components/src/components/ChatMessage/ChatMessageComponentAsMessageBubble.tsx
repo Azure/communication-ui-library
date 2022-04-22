@@ -130,11 +130,15 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     <>
       <div ref={messageRef}>
         <Chat.Message
-          aria-label={`${message.content}${message.senderDisplayName}${
-            showDate
-              ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-              : formatTimeForChatMessage(message.createdOn)
-          }`}
+          aria-label={_formatString(strings.messageContentDescription, {
+            displayName: `${message.mine ? strings.myself : message.senderDisplayName}`,
+            timeStamp: `${
+              showDate
+                ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+                : formatTimeForChatMessage(message.createdOn)
+            }`,
+            content: `${message.content}`
+          })}
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}

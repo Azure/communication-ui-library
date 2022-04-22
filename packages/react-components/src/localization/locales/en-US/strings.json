@@ -106,7 +106,9 @@
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "More Options"
+    "actionMenuMoreOptions": "More Options",
+    "messageContentDescription": "Message sent by {displayName} at {timeStamp}. {displayName} says {content}",
+    "myself": "myself"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

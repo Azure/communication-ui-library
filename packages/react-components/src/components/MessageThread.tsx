@@ -196,6 +196,10 @@ export interface MessageThreadStrings {
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
   actionMenuMoreOptions: string;
+  /** String for the screen reader to read out message content */
+  messageContentDescription: string;
+  /** String for the screem reader to read out when message is sent by myself */
+  myself: string;
 }
 
 /**
