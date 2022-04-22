@@ -225,5 +225,5 @@ const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus
   if (message.metadata?.['fileSharingMetadata']) {
     return true;
   }
-  return message.content?.message !== '';
+  return message.content && message.content?.message !== '';
 };
