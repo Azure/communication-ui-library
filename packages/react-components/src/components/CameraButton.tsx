@@ -187,7 +187,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
   return (
-    <Stack>
+    <>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <ControlBarButton
         {...props}
@@ -206,7 +206,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
           enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
         }
       />
-    </Stack>
+    </>
   );
 };
 

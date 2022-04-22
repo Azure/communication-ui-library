@@ -196,7 +196,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
   return (
-    <Stack>
+    <>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <ControlBarButton
         {...props}
@@ -214,7 +214,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
         }
       />
-    </Stack>
+    </>
   );
 };
 
