@@ -1102,7 +1102,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         />
       </LiveAnnouncer>
     );
-  }, [styles?.chatContainer, messagesToDisplay]);
+  }, [theme, styles?.chatContainer, messagesToDisplay]);
 
   return (
     <Ref innerRef={chatThreadRef}>
