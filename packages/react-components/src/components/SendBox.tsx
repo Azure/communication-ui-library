@@ -234,7 +234,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
     // we dont want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props.activeFileUploads)) {
+    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props['activeFileUploads'])) {
       // Chat SDK doesn't allow sending messages with NULL content. For sending files without text message,
       // we need to send a message with an empty string.
       if (EMPTY_MESSAGE_REGEX.test(textValue)) {
