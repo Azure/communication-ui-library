@@ -65,30 +65,55 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
+  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>([]);
+
   // Async function to retrieve custom data model information to replace display name in remote tiles with camera on.
   const fetchAvatarPersonaDataAsync = memoizeFunction(
-    async (participant: VideoGalleryRemoteParticipant): Promise<void> => {
+    async (
+      onFetchAvatarPersonaData: AvatarPersonaDataCallback,
+      participants: VideoGalleryRemoteParticipant[]
+    ): Promise<VideoGalleryRemoteParticipant[] | undefined> => {
       if (props.onFetchAvatarPersonaData) {
-        const newParticipantData = await props.onFetchAvatarPersonaData(participant.userId);
-        participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
+        participants.forEach(async (participant: VideoGalleryRemoteParticipant) => {
+          const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
+          participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
+        });
+        return participants;
       }
+      return;
     }
   );
 
   // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
-  if (props.onFetchAvatarPersonaData) {
-    (videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]).forEach(
-      (participant: VideoGalleryRemoteParticipant) => {
-        fetchAvatarPersonaDataAsync(participant);
+  useEffect(() => {
+    // flag to stop race conditions caused by participants joining the call
+    let changingNames = true;
+    const augmentDisplayName = async (): Promise<void> => {
+      if (props.onFetchAvatarPersonaData) {
+        if (changingNames) {
+          setAugmentedParticipants(
+            await fetchAvatarPersonaDataAsync(
+              props.onFetchAvatarPersonaData,
+              videoGalleryProps.remoteParticipants as VideoGalleryRemoteParticipant[]
+            )
+          );
+        }
       }
-    );
-  }
+    };
+    augmentDisplayName();
+    return () => {
+      changingNames = false;
+    };
+  }, [fetchAvatarPersonaDataAsync, props.onFetchAvatarPersonaData, videoGalleryProps.remoteParticipants]);
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
         {...videoGalleryProps}
+        remoteParticipants={
+          augmentedParticipants !== undefined ? augmentedParticipants : videoGalleryProps.remoteParticipants
+        }
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
@@ -108,6 +133,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     videoGalleryProps,
     props.isMobile,
     props.onFetchAvatarPersonaData,
+    augmentedParticipants,
     /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     cameraSwitcherProps
   ]);
