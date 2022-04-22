@@ -234,7 +234,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
     // we dont want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props['activeFileUploads'])) {
+    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(textValue));
       setTextValue('');
     }
@@ -268,7 +268,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasTextOrFile = hasText || hasFile(props['activeFileUploads']);
+  const hasTextOrFile = hasText || hasFile(props);
 
   const mergedSendIconStyle = useMemo(
     () =>
@@ -394,9 +394,9 @@ const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
   );
 };
 
-const hasFile = (fileUploads?: ActiveFileUpload[]): boolean => {
+const hasFile = (props: SendBoxProps): boolean => {
   /* @conditional-compile-remove(file-sharing) */
-  return !!fileUploads?.find((file) => !file.error);
+  return !!props.activeFileUploads?.find((file) => !file.error);
   return false;
 };
 
