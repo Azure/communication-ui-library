@@ -96,7 +96,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-105 root-30"
+                                className="root-94 root-30"
                                 data-icon-name="ControlButtonCameraOn"
                               >
                                 <span
@@ -122,7 +122,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-105 css-31 ms-Button-menuIcon menuIcon-26"
+                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
@@ -166,7 +166,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-105 root-30"
+                                className="root-94 root-30"
                                 data-icon-name="ControlButtonMicOn"
                               >
                                 <span
@@ -192,7 +192,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-105 css-31 ms-Button-menuIcon menuIcon-26"
+                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={

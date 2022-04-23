@@ -50,7 +50,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
           >
             <i
               aria-hidden={true}
-              className="root-105 root-12"
+              className="root-94 root-12"
               data-icon-name="ControlButtonMicOff"
             >
               <span
@@ -79,7 +79,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-105 css-13 ms-Button-menuIcon menuIcon-8"
+              className="ms-Icon root-94 css-13 ms-Button-menuIcon menuIcon-8"
               data-icon-name="ChevronDown"
               hidden={true}
               style={
