@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   chatMessageEditedTagStyle,
   chatMessageDateStyle,
@@ -126,19 +126,25 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     [message, fileDownloadHandler, userId]
   );
 
+  const messageAriaLabel = useMemo(
+    () =>
+      _formatString(strings.messageContentAriaLabel, {
+        displayName: `${message.mine ? strings.localSenderAriaLabel : message.senderDisplayName}`,
+        timeStamp: `${
+          showDate
+            ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+            : formatTimeForChatMessage(message.createdOn)
+        }`,
+        content: `${message.content?.toString()}`
+      }),
+    [message, showDate, strings]
+  );
+
   const chatMessage = (
     <>
       <div ref={messageRef}>
         <Chat.Message
-          aria-label={_formatString(strings.messageContentAriaLabel, {
-            displayName: `${message.mine ? strings.localSenderAriaLabel : message.senderDisplayName}`,
-            timeStamp: `${
-              showDate
-                ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-                : formatTimeForChatMessage(message.createdOn)
-            }`,
-            content: `${message.content}`
-          })}
+          aria-label={messageAriaLabel}
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
