@@ -22,6 +22,8 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { FileDownloadHandler } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -590,6 +592,7 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
+    returnToCallButtonAriaDescription: string;
     returnToCallButtonAriaLabel: string;
 }
 
@@ -680,8 +683,6 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
-    Download?: JSX.Element;
-    Cancel?: JSX.Element;
 };
 
 // @public
@@ -817,8 +818,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
-    Download?: JSX.Element | undefined;
-    Cancel?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -869,6 +868,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    ChatMessageOptions: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     MessageResend: JSX.Element;
 };
 
@@ -884,21 +886,6 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
-}
-
-// @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
 }
 
 // @beta

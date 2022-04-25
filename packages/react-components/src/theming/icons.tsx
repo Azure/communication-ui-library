@@ -37,6 +37,10 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(file-sharing) */
+import { ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+
 import React from 'react';
 
 /**
@@ -57,6 +61,13 @@ const WifiWarning16Filled = (): JSX.Element => (
   </div>
 );
 
+const MoreHorizontal18Regular = (): JSX.Element => (
+  // MoreHorizontal icons are 16px x 16px or 20px x 20px so scaling to get desired size
+  <div className={mergeStyles({ transform: 'scale(0.9)' })}>
+    <MoreHorizontal20Regular />
+  </div>
+);
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -65,6 +76,7 @@ const WifiWarning16Filled = (): JSX.Element => (
  * @public
  */
 export const DEFAULT_COMPONENT_ICONS = {
+  ChatMessageOptions: <MoreHorizontal18Regular />,
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,
   ControlButtonEndCall: <CallEnd20Filled />,
@@ -74,6 +86,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipants: <People20Filled />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  /* @conditional-compile-remove(file-sharing) */
+  CancelFileUpload: <Dismiss16Regular />,
+  /* @conditional-compile-remove(file-sharing) */
+  DownloadFile: <ArrowDownload16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,

@@ -114,6 +114,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
           <Text className={fileNameTextClassName}>{fileName}</Text>
         </Stack>
         <Stack
+          verticalAlign="center"
           className={actionIconClassName}
           onClick={() => {
             props.actionHandler && props.actionHandler();

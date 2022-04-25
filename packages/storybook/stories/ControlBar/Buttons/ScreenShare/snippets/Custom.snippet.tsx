@@ -1,6 +1,17 @@
-import { ScreenShareButton } from '@azure/communication-react';
+import { ControlBarButtonStyles, ScreenShareButton } from '@azure/communication-react';
 import { IButtonProps, Icon, Label } from '@fluentui/react';
 import React from 'react';
+
+// Remove default height constraints to accomodate
+// our more elaborate content.
+const buttonStyles: ControlBarButtonStyles = {
+  root: {
+    height: 'none'
+  },
+  rootChecked: {
+    height: 'none'
+  }
+};
 
 export const CustomScreenShareButtonExample: () => JSX.Element = () => {
   const customOnRenderIcon = (props?: IButtonProps): JSX.Element => {
@@ -36,8 +47,14 @@ export const CustomScreenShareButtonExample: () => JSX.Element = () => {
         showLabel={true}
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
+        styles={buttonStyles}
       />
-      <ScreenShareButton showLabel={true} onRenderIcon={customOnRenderIcon} onRenderText={customOnRenderText} />
+      <ScreenShareButton
+        showLabel={true}
+        onRenderIcon={customOnRenderIcon}
+        onRenderText={customOnRenderText}
+        styles={buttonStyles}
+      />
     </>
   );
 };

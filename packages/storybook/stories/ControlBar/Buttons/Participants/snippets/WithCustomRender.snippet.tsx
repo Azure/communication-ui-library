@@ -1,4 +1,9 @@
-import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
+import {
+  CallParticipantListParticipant,
+  ControlBarButtonStyles,
+  FluentThemeProvider,
+  ParticipantsButton
+} from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
 
@@ -66,6 +71,17 @@ const onMuteAll = (): void => {
   // your implementation to mute all participants
 };
 
+// Remove default height constraints to accomodate
+// our more elaborate content.
+const buttonStyles: ControlBarButtonStyles = {
+  root: {
+    height: 'none'
+  },
+  rootChecked: {
+    height: 'none'
+  }
+};
+
 export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () => {
   const customOnRenderIcon = (): JSX.Element => {
     return <Icon key={'participantsCustomIconKey'} iconName={'Group'} style={{ color: 'orange', fontSize: '20px' }} />;
@@ -89,6 +105,7 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
         onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
+        styles={buttonStyles}
       />
     </FluentThemeProvider>
   );
