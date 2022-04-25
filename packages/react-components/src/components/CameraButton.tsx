@@ -46,6 +46,16 @@ export interface CameraButtonStrings {
    * Tooltip of camera menu
    */
   cameraMenuTooltip: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
+  /**
+   * description of camera button split button role
+   */
+  cameraButtonSplitRoleDescription?: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
+  /**
+   * Camera split button aria label.
+   */
+  cameraButtonSplitAriaLabel?: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -168,6 +178,10 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
       menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
       split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+      aria-roldescription={
+        enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
+      }
+      splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitAriaLabel : undefined}
     />
   );
 };
