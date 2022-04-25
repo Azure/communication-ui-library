@@ -172,6 +172,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       }
       // Always use current call.id value to access client state
       // Since call.id could be change during the call
+      // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
         this.context.setCallId(this.call.id);
       }
