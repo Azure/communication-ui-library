@@ -108,7 +108,7 @@
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "messageContentAriaLabel": "Message sent by {displayName} at {timeStamp}. {displayName} says {content}",
-    "localSenderAriaLabel": "message sent by you"
+    "localSenderAriaLabel": "you"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

@@ -198,7 +198,7 @@ export interface MessageThreadStrings {
   actionMenuMoreOptions: string;
   /** String for the screen reader to read out message content */
   messageContentAriaLabel: string;
-  /** String for the screem reader to read out when message is sent by localSenderAriaLabel */
+  /** String for the screem reader to read out when message is sent by myself */
   localSenderAriaLabel: string;
 }
 
