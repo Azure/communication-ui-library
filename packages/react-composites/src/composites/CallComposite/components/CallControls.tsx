@@ -13,6 +13,7 @@ import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
+import { ContainerRectProps } from '../../common/ContainerRectProps';
 
 /**
  * @private
@@ -31,7 +32,7 @@ export type CallControlsProps = {
 /**
  * @private
  */
-export const CallControls = (props: CallControlsProps): JSX.Element => {
+export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
   const customButtons = useMemo(
     () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),

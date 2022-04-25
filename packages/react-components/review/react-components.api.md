@@ -26,6 +26,7 @@ import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -109,6 +110,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -279,6 +282,7 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
+    ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -288,6 +292,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    CancelFileUpload: JSX.Element;
+    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -497,6 +503,32 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @internal (undocumented)
+export interface _FileDownloadCards {
+    downloadHandler?: FileDownloadHandler;
+    fileMetadata: FileMetadata[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    userId: string;
+}
+
+// @internal (undocumented)
+export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @beta
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -681,6 +713,7 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    fileDownloadHandler?: FileDownloadHandler;
 };
 
 // @public
@@ -1057,6 +1090,12 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @internal
+export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
+// @internal
+export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
 
 // @public
 export const useTheme: () => Theme;
