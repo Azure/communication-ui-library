@@ -11,8 +11,9 @@ Before we release a new version or beta version the following checklist should b
 * ✅ Manual and automated tests pass
   * See [Test Plan](#test-plan) below.
 * ✅ All translations have been updated
+  * String translations will need to be started manually from pre-release branch using [this](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) workflow. 
   * Ensure that strings for both components and composites have complete translations.
-  * If necessary, merge translations into `main` and cherry-pick updated translations to release branch.
+  * Once the string translations are completed they will need to be cherry picked into the release branch before publishing.
 * ✅ APIs
   * Ensure no breaking changes to the public APIs
   * Ensure new API changes have sign off from the Azure Review Board
@@ -30,6 +31,7 @@ Before we release a new version or beta version the following checklist should b
   * Ensure the documentation on the public storybook site matches the latest release.
   * Open the storybook site and ensure the console log that lists the npm package version number matches the released package version number.
 * ✅ Post about release on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+* ✅ Delete the release branch from github wihtout merging back in so to not leave it hanging.
 
 ## Test Plan
 

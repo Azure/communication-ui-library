@@ -27,11 +27,10 @@ interface ChatScreenProps {
   endpointUrl: string;
   threadId: string;
   endChatHandler(isParticipantRemoved: boolean): void;
-  errorHandler(): void;
 }
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler } = props;
+  const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
 
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
@@ -51,11 +50,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
       adapter.on('error', (e) => {
         console.error(e);
-        errorHandler();
       });
       return adapter;
     },
-    [endChatHandler, errorHandler, userId]
+    [endChatHandler, userId]
   );
 
   const adapterArgs = useMemo(

@@ -27,7 +27,9 @@ import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata, FileUploadManager } from '../../ChatComposite';
+import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadManager } from '../../ChatComposite';
 
 /**
  * Functionality for managing the current call with chat.
