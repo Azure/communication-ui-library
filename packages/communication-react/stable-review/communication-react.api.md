@@ -1822,10 +1822,10 @@ export interface MessageThreadStrings {
     failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
-    messageContentDescription: string;
+    messageContentAriaLabel: string;
     messageReadCount?: string;
     monday: string;
-    myself: string;
+    localSenderAriaLabel: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
     participantJoined: string;

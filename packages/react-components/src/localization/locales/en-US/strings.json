@@ -107,8 +107,8 @@
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
-    "messageContentDescription": "Message sent by {displayName} at {timeStamp}. {displayName} says {content}",
-    "myself": "myself"
+    "messageContentAriaLabel": "Message sent by {displayName} at {timeStamp}. {displayName} says {content}",
+    "localSenderAriaLabel": "message sent by you"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
