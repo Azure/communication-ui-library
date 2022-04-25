@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove the aria description strings from the split buttons. Remove the aria-role of menu from the split buttons.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
