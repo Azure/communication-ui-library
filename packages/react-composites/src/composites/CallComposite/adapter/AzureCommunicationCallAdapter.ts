@@ -90,7 +90,8 @@ class CallContext {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
 
-  public setCallId(callId: string | undefined): void {
+  // This is the key to find current call object in client state
+  public setCurrentCallId(callId: string | undefined): void {
     this.callId = callId;
   }
 
@@ -170,11 +171,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         callClient.offStateChange(onStateChange);
         return;
       }
-      // Always use current call.id value to access client state
-      // Since call.id could be change during the call
+
+      // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
+      // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
+      // calling `updateClientState` so that we find the correct state object for the call even when `call.id`
+      // has changed.
       // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
-        this.context.setCallId(this.call.id);
+        this.context.setCurrentCallId(this.call.id);
       }
       this.context.updateClientState(clientState);
     };
@@ -299,7 +303,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.unsubscribeCallEvents();
     this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
-    this.context.setCallId(undefined);
+    this.context.setCurrentCallId(undefined);
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
@@ -399,7 +403,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   private processNewCall(call: Call): void {
     this.call = call;
-    this.context.setCallId(call.id);
+    this.context.setCurrentCallId(call.id);
 
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
