@@ -178,7 +178,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
       menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
       split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-      aria-roldescription={
+      aria-roledescription={
         enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
       }
       splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitAriaLabel : undefined}
