@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add tooltip to inputBox buttons",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

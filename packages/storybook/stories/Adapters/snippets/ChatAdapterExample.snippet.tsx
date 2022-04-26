@@ -1,6 +1,6 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import { ChatComposite, useAzureCommunicationChatAdapter } from '@azure/communication-react';
+import React, { useMemo } from 'react';
 
 type ChatAdapterExampleProps = {
   userId: CommunicationUserIdentifier;
@@ -11,32 +11,17 @@ type ChatAdapterExampleProps = {
 };
 
 export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element => {
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
-  useEffect(() => {
-    if (props) {
-      const createAdapter = async (): Promise<void> => {
-        setChatAdapter(
-          await createAzureCommunicationChatAdapter({
-            endpoint: props.endpointUrl,
-            userId: props.userId,
-            displayName: props.displayName,
-            credential: new AzureCommunicationTokenCredential(props.accessToken),
-            threadId: props.threadId
-          })
-        );
-      };
-      createAdapter();
-    }
-    return () => {
-      if (chatAdapter) {
-        chatAdapter.dispose();
-      }
-    };
-  }, [props, chatAdapter]);
-
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(props.accessToken), [props.accessToken]);
+  const adapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId: props.userId,
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      {chatAdapter ? <ChatComposite adapter={chatAdapter} /> : <>Initializing </>}
+      {adapter ? <ChatComposite adapter={adapter} /> : <>Initializing </>}
     </div>
   );
 };

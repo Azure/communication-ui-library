@@ -8,7 +8,6 @@ import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
@@ -19,6 +18,8 @@ import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
+import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { ContainerRectProps } from '../common/ContainerRectProps';
 
 /**
  * @private
@@ -60,14 +61,41 @@ const inferCallWithChatControlOptions = (
 /**
  * @private
  */
-export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.Element => {
+export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
+  const chatButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.chatButtonLabel,
+      tooltipOffContent: callWithChatStrings.chatButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.chatButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const peopleButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.peopleButtonLabel,
+      tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
+      tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
+    }),
+    [callWithChatStrings]
+  );
+  const moreButtonStrings = useMemo(
+    () => ({
+      label: callWithChatStrings.moreDrawerButtonLabel,
+      tooltipContent: callWithChatStrings.moreDrawerButtonTooltip
+    }),
+    [callWithChatStrings]
+  );
 
   const centerContainerStyles = useMemo(
     () => (!props.mobileView ? desktopControlBarStyles : undefined),
     [props.mobileView]
+  );
+  const screenShareButtonStyles = useMemo(
+    () => (!props.mobileView ? getDesktopScreenShareButtonStyles(theme) : undefined),
+    [props.mobileView, theme]
   );
   const commonButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopCommonButtonStyles(theme) : undefined),
@@ -91,7 +119,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
       isChatPaneVisible={props.chatButtonChecked}
       onClick={props.onChatButtonClicked}
       disabled={props.disableButtonsForLobbyPage}
-      label={callWithChatStrings.chatButtonLabel}
+      strings={chatButtonStrings}
       styles={commonButtonStyles}
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
@@ -130,10 +158,16 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                   <ScreenShare
                     option={options.screenShareButton}
                     displayType={options.displayType}
-                    styles={commonButtonStyles}
+                    styles={screenShareButtonStyles}
                   />
                 )}
-                {props.mobileView && <MoreButton onClick={props.onMoreButtonClicked} />}
+                {props.mobileView && (
+                  <MoreButton
+                    data-ui-id="call-with-chat-composite-more-button"
+                    strings={moreButtonStrings}
+                    onClick={props.onMoreButtonClicked}
+                  />
+                )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>
@@ -149,7 +183,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
-              label={callWithChatStrings.peopleButtonLabel}
+              strings={peopleButtonStrings}
               styles={commonButtonStyles}
             />
           )}
@@ -173,23 +207,41 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
-    minHeight: '2.5rem'
+    minHeight: '2.5rem',
+    maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
   },
   flexContainer: {
+    display: 'flex',
     flexFlow: 'row nowrap'
   },
   textContainer: {
     // Override the default so that label doesn't introduce a new block.
-    display: 'inline'
+    display: 'inline',
+
+    // Ensure width is set to permit child to show ellipsis when there is a label that is too long
+    maxWidth: '100%'
   },
   label: {
-    // Override styling from ControlBarButton so that label doesn't introduce a new block.
-    display: 'inline',
-    fontSize: theme.fonts.medium.fontSize
+    fontSize: theme.fonts.medium.fontSize,
+
+    // Ensure there is enough space between the icon and text to allow for the unread messages badge in the chat button
+    marginLeft: '0.625rem',
+
+    // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
+    lineHeight: '1.5rem',
+
+    // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
+    display: 'block',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   splitButtonMenuButton: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderTopRightRadius: theme.effects.roundedCorner4,
+    borderBottomRightRadius: theme.effects.roundedCorner4,
+    borderTopLeftRadius: '0',
+    borderBottomLeftRadius: '0'
   },
   splitButtonMenuButtonChecked: {
     // Default colors the menu half similarly for :hover and when button is checked.
@@ -197,6 +249,20 @@ const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => 
     background: 'none'
   }
 });
+
+const getDesktopScreenShareButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
+  const overrideStyles = {
+    border: 'none',
+    background: theme.palette.themePrimary,
+    color: theme.palette.white,
+    '* > svg': { fill: theme.palette.white }
+  };
+  const overrides: ControlBarButtonStyles = {
+    rootChecked: overrideStyles,
+    rootCheckedHovered: overrideStyles
+  };
+  return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
+};
 
 const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles => {
   const overrides: ControlBarButtonStyles = {

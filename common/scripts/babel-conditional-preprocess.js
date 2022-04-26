@@ -5,49 +5,60 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const babelHelper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
+
+// Note: This uses the non-greedy `*?` so that the first closing `)` finishes the tag.
+const CONDITIONAL_FEATURE_RE = /@conditional-compile-remove\(.*?\)/g;
+
+function createFeatureSet(features) {
+  const featureSet = {}
+  features.forEach(f => featureSet[`@conditional-compile-remove(${f})`] = true);
+  return featureSet;
+}
+
+
 exports.default = babelHelper.declare((_api, opts) => {
-  const {
-    annotations
-  } = opts;
+  const { features, stabilizedFeatures } = opts;
+  const featureSet = createFeatureSet(features);
+  const stabilizedFeatureSet = createFeatureSet(stabilizedFeatures);
 
   return {
     name: 'babel-conditional-preprocess',
     // Check types/visitors supported: https://babeljs.io/docs/en/babel-types#typescript
     visitor: {
       ObjectProperty(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       FunctionDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       Statement(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       VariableDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ImportDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ExportNamedDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ExportAllDeclaration(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       JSXAttribute(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       TSPropertySignature(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       // TSType is fairly broad, but it is necessary for sanely extending existing types by adding disjuncts or conjucts.
@@ -63,62 +74,89 @@ exports.default = babelHelper.declare((_api, opts) => {
       // As this only applies to TypeScript types, it is safe from a code-flow perspective: This does not enable any new
       // conditional business logic flows.
       TSType(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       TSDeclareMethod(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       Expression(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ClassMethod(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
 
       ClassProperty(path) {
-        Handle(path, annotations);
+        Handle(path, featureSet, stabilizedFeatureSet);
       },
     }
   };
 });
 
-function Handle(path, annotations) {
+function Handle(path, featureSet, stabilizedFeatureSet) {
   let { node } = path;
-  let removed = false;
 
-  for (const annotation of annotations) {
-    const {
-      match
-    } = annotation;
+  if (!node.leadingComments) {
+    return;
+  }
+  const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
+  if (!shouldRemoveNode(removalInstructions)) {
+    return;
+  }
 
-    if (node.leadingComments && node.leadingComments.length > 0) {
-      for (const comment of node.leadingComments) {
-        if (comment.value.includes(match)) {
-          removed = true;
-        }
-        if (removed) {
-          comment.ignore = true;
-          // Comment will be inherit to next line even it is set to 'ignore'
-          // this will cause some unexpected removals of code
-          // clear the comment to ensure nothing gets wrong
-          comment.value = '';
-        }
-      }
-    }
+  const firstRemovalInstructionIdx = node.leadingComments.findIndex((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) === 'remove');
+  if (firstRemovalInstructionIdx === -1) {
+    return;
+  }
 
-    if (removed) {
-      // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
-      // Replacing it with jSXEmptyExpression will get us the same result
-      // There will always be only one expression under JSXExpressionContainer
-      if (path?.container?.type === 'JSXExpressionContainer') {
-        path.replaceWith(t.jSXEmptyExpression());
-      } else {
-        path.remove();
-      }
-    }
+  // Remove the first removal instruction as well as all following comments so that
+  // those comments aren't added to the AST node that follows the removed node.
+  node.leadingComments.slice(firstRemovalInstructionIdx).forEach((comment) => {
+    comment.ignore = true;
+    // Comment is inherited by next line even it is set to 'ignore'.
+    // Clear the conditional compilation directive to avoid removing the
+    // next line.
+    comment.value = '';
+  })
+  // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
+  // Replacing it with jSXEmptyExpression will get us the same result
+  // There will always be only one expression under JSXExpressionContainer
+  if (path?.container?.type === 'JSXExpressionContainer') {
+    path.replaceWith(t.jSXEmptyExpression());
+  } else {
+    path.remove();
   }
 }
 
+function nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) {
+  const featuresInComment = comment.value.match(CONDITIONAL_FEATURE_RE);
+  if (!featuresInComment) {
+    return 'none';
+  }
+
+  // Check for validity first to catch errors even when valid features exist.
+  const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] || stabilizedFeatureSet[f]))
+  if (unknownFeatures.length > 0) {
+    throw new Error(`Unknown conditional compilation features ${unknownFeatures} in file ${node.loc?.filename} at line ${node.loc?.start?.line}`);
+  }
+  // If any of the directives reference a stabilized feature, do not remove the associated node.
+  // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
+  // that node in the stable build.
+  if (featuresInComment.some(f => stabilizedFeatureSet[f])) {
+    return 'keep';
+  }
+  return 'remove';
+}
+
+function shouldRemoveNode(instructions) {
+  // If any of the directives reference a stabilized feature, do not remove the associated node.
+  // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
+  // that node in the stable build.
+  if (instructions.includes('keep')) {
+    return false;
+  }
+  return instructions.includes('remove');
+}

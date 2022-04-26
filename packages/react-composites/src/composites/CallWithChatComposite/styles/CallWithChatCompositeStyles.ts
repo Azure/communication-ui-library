@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles } from '@fluentui/react';
+import { IStackStyles, IStyle } from '@fluentui/react';
 
 /**
  * @private
@@ -9,13 +9,6 @@ import { IStackStyles } from '@fluentui/react';
 export const compositeOuterContainerStyles: IStackStyles = {
   root: {
     width: '100%',
-
-    // This allows the composite to correctly contain the call composite by calculating a height for the available space.
-    // Items inside the call composite that fill 100% of the height will now fill the height of this container instead
-    // of the height of the child items.
-    // If this css property is to be removed, test the participant pane correctly uses the scroll overflow when there a lot
-    // of participants (i.e. beyond screen height) and where one participant is sharing their screen.
-    flexWrap: 'wrap',
 
     // Create a new stacking context so that DrawerMenu can be positioned absolutely.
     position: 'relative'
@@ -63,4 +56,20 @@ export const ChatButtonContainerStyles: IStackStyles = {
   root: {
     position: 'relative'
   }
+};
+
+/**
+ * Styles for layer host to bound the modal wrapping PiPiP in the mobile pane.
+ * @private
+ */
+export const modalLayerHostStyle: IStyle = {
+  display: 'flex',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  // pointer events for layerHost set to none to make descendants interactive
+  pointerEvents: 'none'
 };

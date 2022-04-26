@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add data ui id to local Camera switcher button",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

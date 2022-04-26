@@ -13,6 +13,7 @@ import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
+import { ContainerRectProps } from '../../common/ContainerRectProps';
 
 /**
  * @private
@@ -31,8 +32,8 @@ export type CallControlsProps = {
 /**
  * @private
  */
-export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const options = typeof props.options === 'boolean' ? {} : props.options;
+export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
+  const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
   const customButtons = useMemo(
     () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -92,7 +93,7 @@ const onFetchCustomButtonPropsTrampoline = (
   options?: CallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove-from(stable): custom button injection */
+  /* @conditional-compile-remove(control-bar-button-injection) */
   response = options?.onFetchCustomButtonProps;
   return response;
 };

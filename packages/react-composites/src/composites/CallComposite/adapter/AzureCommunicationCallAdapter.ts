@@ -48,6 +48,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
+import { useEffect, useRef, useState } from 'react';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -243,29 +244,31 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
-    /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+    /* @conditional-compile-remove(teams-adhoc-call) */
     // Check if we should be starting a new call or joining an existing call
     if (isAdhocCall(this.locator)) {
       return this.startCall(this.locator.participantIDs);
     }
 
-    const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
-    // TODO: find a way to expose stream to here
-    const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+    return this.teeErrorToEventEmitter(() => {
+      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
+      // TODO: find a way to expose stream to here
+      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-    const isTeamsMeeting = !('groupId' in this.locator);
-    const call = isTeamsMeeting
-      ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        })
-      : this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
+      const isTeamsMeeting = !('groupId' in this.locator);
+      const call = isTeamsMeeting
+        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+            audioOptions,
+            videoOptions
+          })
+        : this.callAgent.join(this.locator as GroupCallLocator, {
+            audioOptions,
+            videoOptions
+          });
 
-    this.processNewCall(call);
-    return call;
+      this.processNewCall(call);
+      return call;
+    });
   }
 
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
@@ -529,9 +532,20 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw error;
     }
   }
+
+  private teeErrorToEventEmitter<T>(f: () => T): T {
+    try {
+      return f();
+    } catch (error) {
+      if (isCallError(error)) {
+        this.emitter.emit('error', error as AdapterError);
+      }
+      throw error;
+    }
+  }
 }
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/* @conditional-compile-remove(teams-adhoc-call) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -557,7 +571,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -595,6 +609,111 @@ export const createAzureCommunicationCallAdapter = async ({
 };
 
 /**
+ * A custom React hook to simplify the creation of {@link CallAdapter}.
+ *
+ * Similar to {@link createAzureCommunicationCallAdapter}, but takes care of asynchronous
+ * creation of the adapter internally.
+ *
+ * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+ * as they are created. The adapter is only created when all arguments are defined.
+ *
+ * Note that you must memoize the arguments to avoid recreating adapter on each render.
+ * See storybook for typical usage examples.
+ *
+ * @public
+ */
+export const useAzureCommunicationCallAdapter = (
+  /**
+   * Arguments to be passed to {@link createAzureCommunicationCallAdapter}.
+   *
+   * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
+   * as they are created. The adapter is only created when all arguments are defined.
+   */
+  args: Partial<AzureCommunicationCallAdapterArgs>,
+  /**
+   * Optional callback to modify the adapter once it is created.
+   *
+   * If set, must return the modified adapter.
+   */
+  afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>,
+  /**
+   * Optional callback called before the adapter is disposed.
+   *
+   * This is useful for clean up tasks, e.g., leaving any ongoing calls.
+   */
+  beforeDispose?: (adapter: CallAdapter) => Promise<void>
+): CallAdapter | undefined => {
+  const { credential, displayName, locator, userId } = args;
+
+  // State update needed to rerender the parent component when a new adapter is created.
+  const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
+  // Ref needed for cleanup to access the old adapter created asynchronously.
+  const adapterRef = useRef<CallAdapter | undefined>(undefined);
+
+  const afterCreateRef = useRef<((adapter: CallAdapter) => Promise<CallAdapter>) | undefined>(undefined);
+  const beforeDisposeRef = useRef<((adapter: CallAdapter) => Promise<void>) | undefined>(undefined);
+  // These refs are updated on *each* render, so that the latest values
+  // are used in the `useEffect` closures below.
+  // Using a Ref ensures that new values for the callbacks do not trigger the
+  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  afterCreateRef.current = afterCreate;
+  beforeDisposeRef.current = beforeDispose;
+
+  useEffect(
+    () => {
+      if (!credential || !displayName || !locator || !userId) {
+        return;
+      }
+      (async () => {
+        if (adapterRef.current) {
+          // Dispose the old adapter when a new one is created.
+          //
+          // This clean up function uses `adapterRef` because `adapter` can not be added to the dependency array of
+          // this `useEffect` -- we do not want to trigger a new adapter creation because of the first adapter
+          // creation.
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+
+        let newAdapter = await createAzureCommunicationCallAdapter({
+          credential,
+          displayName,
+          locator,
+          userId
+        });
+        if (afterCreateRef.current) {
+          newAdapter = await afterCreateRef.current(newAdapter);
+        }
+        adapterRef.current = newAdapter;
+        setAdapter(newAdapter);
+      })();
+    },
+    // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
+    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, locator, userId]
+  );
+
+  // Dispose any existing adapter when the component unmounts.
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (adapterRef.current) {
+          if (beforeDisposeRef.current) {
+            await beforeDisposeRef.current(adapterRef.current);
+          }
+          adapterRef.current.dispose();
+          adapterRef.current = undefined;
+        }
+      })();
+    };
+  }, []);
+
+  return adapter;
+};
+
+/**
  * Create a {@link CallAdapter} using the provided {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulCallClient}.
@@ -615,7 +734,7 @@ const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
 };
 
-/* @conditional-compile-remove-from(stable) TEAMS_ADHOC_CALLING */
+/* @conditional-compile-remove(teams-adhoc-call) */
 const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };

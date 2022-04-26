@@ -4,11 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       npm-tag:
-        description: 'Npm tag for the release, e.g. latest, next, dev'
+        description: 'Npm tag for the release. Use latest for latest stable release, next for latest beta releases and dev for latest alpha releases.'
         required: true
+        type: choice
+        options:
+          - dev
+          - next
+          - latest
       release-flavor:
-        description: 'Beta release or stable release. Will be determined by branch name if left empty.'
-        required: false
+        description: 'Beta release or stable release.'
+        required: true
+        type: choice
+        options:
+          - stable
+          - beta
 
 jobs:
   publish:
@@ -38,7 +47,7 @@ jobs:
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         # If no param for release flavor, get it from branch name
-        if: ${{ !github.event.inputs.release-flavor && !contains(github.ref, 'beta') || github.event.inputs.release-flavor == 'stable' }}
+        if: ${{ github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
 
       # Builds
@@ -58,24 +67,6 @@ jobs:
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
           echo "::set-output name=version::$ver"
-
-      # Push git tags
-      - name: Create and push git tags
-        run: |
-          git tag ${{ steps.version.outputs.version }}
-          git push --tags
-
-      # Upload releases
-      - name: Upload Public Preview Release
-        uses: softprops/action-gh-release@v1
-        with:
-          name: PublicPreview ${{ steps.version.outputs.version }}
-          tag_name: PublicPreview/${{ steps.version.outputs.version }}
-          files: |
-            ./samples/StaticHtmlComposites/dist/callComposite.js
-            ./samples/StaticHtmlComposites/dist/chatComposite.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Publish package
       - name: Package packages for release
@@ -103,3 +94,21 @@ jobs:
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "${{ github.event.inputs.npm-tag }}"}'
+
+      # Push git tags
+      - name: Create and push git tags
+        run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push --tags
+
+      # Upload non-react releases
+      - name: Upload Public Preview Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: PublicPreview ${{ steps.version.outputs.version }}
+          tag_name: PublicPreview/${{ steps.version.outputs.version }}
+          files: |
+            ./samples/StaticHtmlComposites/dist/callComposite.js
+            ./samples/StaticHtmlComposites/dist/chatComposite.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

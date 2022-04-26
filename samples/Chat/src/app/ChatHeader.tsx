@@ -27,16 +27,21 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const theme = useTheme();
 
   const leaveString = 'Leave';
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
+  const participantListExpandedString = 'Participants list Button Expanded';
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
+  const participantListCollapsedString = 'Participants list Button Collapsed';
 
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
       <div className={paneButtonContainerStyle}>
         {
-          /* @conditional-compile-remove-from(stable) chat-composite-participant-pane*/
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           <IconButton
             onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
             className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
             onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
+            ariaLabel={props.isParticipantsDisplayed ? participantListExpandedString : participantListCollapsedString}
           />
         }
       </div>

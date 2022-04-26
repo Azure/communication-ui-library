@@ -21,7 +21,7 @@ export const EndCall = (props: {
         compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle,
         props.styles ?? {}
       ),
-    [props.styles]
+    [compactMode, props.styles]
   );
   return (
     <EndCallButton

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Theme } from '@fluentui/react';
-import { MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
+import { Icon, mergeStyles, Theme } from '@fluentui/react';
+import { MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
@@ -19,6 +19,8 @@ export type ChatMessageActionMenuProps = MenuProps & {
  * @private
  */
 export const chatMessageActionMenuProps = (menuProps: {
+  /** String for aria label that is read by Screen readers */
+  ariaLabel: string;
   /** Whether the action menu button is enabled, if not this will always return undefined */
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
@@ -45,11 +47,11 @@ export const chatMessageActionMenuProps = (menuProps: {
       {
         children: (
           <Ref innerRef={menuProps.menuButtonRef}>
-            <MoreIcon
-              className={iconWrapperStyle}
-              {...{
-                outline: true
-              }}
+            <Icon
+              iconName="ChatMessageOptions"
+              data-ui-id="chat-composite-message-action-icon"
+              aria-label={menuProps.ariaLabel}
+              styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
             />
           </Ref>
         ),

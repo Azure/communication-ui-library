@@ -22,7 +22,7 @@ addons.setConfig({
     zoom: { hidden: true },
     eject: {hidden: true },
     copy: {hidden: true },
-    fullscreen: {hidden: true}
+    fullscreen: {hidden: false}
   }
 });
 

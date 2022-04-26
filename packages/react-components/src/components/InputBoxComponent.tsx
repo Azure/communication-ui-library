@@ -10,7 +10,8 @@ import {
   ITextField,
   concatStyleSets,
   IconButton,
-  TooltipHost
+  TooltipHost,
+  ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -62,7 +63,7 @@ type InputBoxComponentProps = {
   errorMessage?: string | React.ReactElement;
   disabled?: boolean;
   styles?: InputBoxStylesProps;
-  autoFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField';
 };
 
 /**
@@ -102,7 +103,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTexFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if (ev.nativeEvent.isComposing) {
+      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
         return;
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -168,8 +170,18 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
+
+  const theme = useTheme();
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+
+  // Place callout with no gap between it and the button.
+  const calloutProps = {
+    gapSpace: 0,
+    styles: calloutStyle,
+    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
+  };
   return (
-    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent}>
+    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
       <IconButton
         className={mergedButtonStyle}
         ariaLabel={ariaLabel}

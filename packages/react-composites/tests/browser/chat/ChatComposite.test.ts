@@ -16,7 +16,8 @@ import {
   sendMessage,
   waitForMessageDelivered,
   waitForMessageSeen,
-  waitForMessageWithContent
+  waitForMessageWithContent,
+  waitForTypingIndicatorHidden
 } from '../common/chatTestHelpers';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -38,25 +39,42 @@ test.describe('Chat Composite E2E Tests', () => {
 
     const page1 = pages[1];
     await waitForMessageWithContent(page1, testMessageText);
-
-    // It could be too slow to get typing indicator here, which makes the test flakey
-    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
-    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
-    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+    await waitForTypingIndicatorHidden(page1);
 
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
-
     await waitForMessageSeen(page0);
+
     await stubMessageTimestamps(page0);
-    expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
+    await page0.locator(dataUiId('chat-composite-message-status-icon')).click();
+    await page0.waitForSelector(dataUiId('chat-composite-message-tooltip'));
+    expect(await page0.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
+  });
+
+  test('page[0] can receive read receipt from page[1] and show it in contextual menu', async ({ pages }) => {
+    const testMessageText = 'How the turn tables';
+    const page0 = pages[0];
+    await sendMessage(page0, testMessageText);
+    await waitForMessageDelivered(page0);
+    await stubMessageTimestamps(page0);
+    expect(await page0.screenshot()).toMatchSnapshot('sent-messages.png');
+
+    const page1 = pages[1];
+    await waitForMessageWithContent(page1, testMessageText);
+    await waitForTypingIndicatorHidden(page1);
+    await stubMessageTimestamps(page1);
+    await page0.locator(dataUiId('chat-composite-message')).click();
+    await page0.locator(dataUiId('chat-composite-message-action-icon')).click();
+    await page0.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await page0.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
+    await page0.waitForSelector('[id="chat-composite-message-contextual-menu-read-name-list"]');
+    expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
   });
 
   test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
     const page0 = pages[0];
-    const page1 = pages[1];
 
+    const page1 = pages[1];
     await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await waitForSelector(page0, dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
@@ -94,6 +112,8 @@ test.describe('Chat Composite E2E Tests', () => {
     // await waitForSelector(page1, `[data-ui-status="seen"]`);
     await waitForMessageWithContent(page1, testMessageText);
     await stubMessageTimestamps(page1);
+    // we are getting read receipt for previous messages, so the message here should be seen, otherwise it could cause flaky test
+    await waitForMessageSeen(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
@@ -111,7 +131,7 @@ test.describe('Chat Composite custom data model', () => {
     // Participant list is a beta feature
     if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'stable') {
       await waitForFunction(page, () => {
-        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
+        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 3;
       });
     }
     await waitForSelector(page, '#custom-data-model-typing-indicator');

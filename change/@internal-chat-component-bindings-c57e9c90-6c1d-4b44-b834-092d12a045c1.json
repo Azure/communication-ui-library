@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Filter read receipt to not include myself",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -12,6 +12,8 @@ export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+/* @conditional-compile-remove(file-sharing) */
+export type { ActiveFileUpload } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -41,7 +43,7 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -49,7 +51,7 @@ export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton'
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 export type { CameraButtonContextualMenuStyles, CameraButtonStyles } from './CameraButton';
 
 export { ControlBar } from './ControlBar';
@@ -63,7 +65,7 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
-/* @conditional-compile-remove-from(stable) meeting-composite control-bar-split-buttons */
+/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';
@@ -100,3 +102,11 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
+/* @conditional-compile-remove(file-sharing) */
+export type { SendBoxErrorBarError } from './SendBoxErrorBar';
+export * from './FileCard';
+export * from './FileCardGroup';
+export * from './ModalClone/ModalClone';
+export * from './FileDownloadCards';
+
+export { _useContainerHeight, _useContainerWidth } from './utils/responsive';

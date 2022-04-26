@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "submenu showing who read the message (name and avatar)",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

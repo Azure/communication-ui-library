@@ -7,16 +7,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  # get matrix for ci-jobs
+  get_matrix:
+    name: Set CI flavors
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      # gets the matrix for ci run from the config file
+      - id: get-matrix
+        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
+
   update_examples_snapshot:
+    needs: get_matrix
     name: Update component examples snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -33,12 +51,12 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -97,15 +115,13 @@ jobs:
           git push
 
   update_bundle_snapshot:
+    needs: get_matrix
     name: Update embed html bundle snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -122,12 +138,12 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -186,15 +202,13 @@ jobs:
           git push
 
   update_composite_snapshot:
+    needs: get_matrix
     name: Update composite snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v2
@@ -211,12 +225,13 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # If run from a PR, checkout PR branch and merge in latest changes from main branch
-      - name: Checkout PR branch and merge main
+
+      - name: If run on a PR, merge base branch to get existing snapshot updates
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+          git merge ${{ env.GITHUB_BASE_REF }}
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -254,9 +269,6 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Update call with chat snapshot
         id: update-call-with-chat-snapshots
-        # Don't run CallWithChat snapshot in stable, CallWithChat is only working in beta
-        # TODO: Remove this while CallWithChat is in stable
-        if: ${{ matrix.flavor != 'stable' }}
         run: rushx test:e2e:callwithchat:update
         working-directory: ./packages/react-composites
         env:

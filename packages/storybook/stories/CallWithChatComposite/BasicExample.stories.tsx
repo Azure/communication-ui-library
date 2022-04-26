@@ -5,11 +5,11 @@ import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './CallWithChatCompositeDocs';
-import { CallWithChatExperience, CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
@@ -34,7 +34,7 @@ const BasicStory = (args, context): JSX.Element => {
             callLocator,
             chatThreadId
           },
-          callWithChatControlOptions: args.callWithChatControlOptions
+          compositeOptions: { callControls: args.callWithChatControlOptions }
         });
       } else {
         setCallWithChatProps(undefined);
@@ -45,10 +45,9 @@ const BasicStory = (args, context): JSX.Element => {
 
   return (
     <>
-      <FloatingSingleLineBetaBanner />
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
-          <CallWithChatExperience fluentTheme={context.theme} {...callWithChatProps} />
+          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...callWithChatProps} />
         ) : (
           <ConfigHintBanner />
         )}

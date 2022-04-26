@@ -11,7 +11,7 @@ import {
   CallState as CallStatus,
   RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   CallClientState,
@@ -25,6 +25,7 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+import { callingStatefulLogger } from './Logger';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -44,7 +45,6 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
-  private _batchMode: boolean;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -66,7 +66,6 @@ export class CallContext {
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
-    this._batchMode = false;
     this._atomicId = 0;
   }
 
@@ -75,13 +74,14 @@ export class CallContext {
   }
 
   public modifyState(modifier: (draft: CallClientState) => void): void {
+    const priorState = this._state;
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
         // Log to `info` because AzureLogger.verbose() doesn't show up in console.
-        this._logger.info(`State change: ${JSON.stringify(patches)}`);
+        this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
       }
     });
-    if (!this._batchMode) {
+    if (this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
@@ -582,6 +582,7 @@ export class CallContext {
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
+        callingStatefulLogger.info(`Calling stateful client target function called: ${target}`);
         return action(...args);
       } catch (error) {
         const callError = toCallError(target, error);

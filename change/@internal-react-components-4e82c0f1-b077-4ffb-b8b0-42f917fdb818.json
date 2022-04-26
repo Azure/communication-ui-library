@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "contextual menu showing read by x of y",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

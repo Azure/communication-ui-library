@@ -8,6 +8,7 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps
 } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { CallWithChatControlOptions } from '../CallWithChatComposite';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -48,24 +49,38 @@ export interface MoreDrawerDevicesMenuProps {
 export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
+  callControls?: boolean | CallWithChatControlOptions;
   strings: MoreDrawerStrings;
 }
+
+const inferCallWithChatControlOptions = (
+  callWithChatControls?: boolean | CallWithChatControlOptions
+): CallWithChatControlOptions | false => {
+  if (callWithChatControls === false) {
+    return false;
+  }
+  const options = callWithChatControls === true || callWithChatControls === undefined ? {} : callWithChatControls;
+  return options;
+};
 
 /** @private */
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
-  const onSelectSpeaker = useCallback(
+  const { speakers, onSelectSpeaker } = props;
+  const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
-      const selected = props.speakers?.find((speaker) => speaker.id === itemKey);
+      const selected = speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
-        props.onSelectSpeaker(selected as AudioDeviceInfo);
+        onSelectSpeaker(selected as AudioDeviceInfo);
       }
     },
-    [props.speakers, props.onSelectSpeaker]
+    [speakers, onSelectSpeaker]
   );
+
+  const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
@@ -80,21 +95,24 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerSpeakers'
         },
         text: speaker.name,
-        onItemClick: onSelectSpeaker
-      }))
+        onItemClick: onSpeakerItemClick,
+        secondaryIconProps: isDeviceSelected(speaker, props.selectedSpeaker) ? { iconName: 'Accept' } : undefined
+      })),
+      secondaryText: props.selectedSpeaker?.name
     });
   }
 
-  const onSelectMicrophone = useCallback(
+  const { microphones, onSelectMicrophone } = props;
+  const onMicrophoneItemClick = useCallback(
     (_ev, itemKey) => {
-      const selected = props.microphones?.find((mic) => mic.id === itemKey);
+      const selected = microphones?.find((mic) => mic.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
         // But this is a known issue in our state.
-        props.onSelectMicrophone(selected as AudioDeviceInfo);
+        onSelectMicrophone(selected as AudioDeviceInfo);
       }
     },
-    [props.speakers, props.onSelectSpeaker]
+    [microphones, onSelectMicrophone]
   );
 
   if (props.microphones && props.microphones.length > 0) {
@@ -110,20 +128,26 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
             : 'MoreDrawerMicrophones'
         },
         text: mic.name,
-        onItemClick: onSelectMicrophone
-      }))
+        onItemClick: onMicrophoneItemClick,
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
+      })),
+      secondaryText: props.selectedMicrophone?.name
     });
   }
 
-  drawerMenuItems.push({
-    itemKey: 'people',
-    text: props.strings.peopleButtonLabel,
-    iconProps: { iconName: 'MoreDrawerPeople' },
-    onItemClick: props.onPeopleButtonClicked
-  });
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
+    drawerMenuItems.push({
+      itemKey: 'people',
+      text: props.strings.peopleButtonLabel,
+      iconProps: { iconName: 'MoreDrawerPeople' },
+      onItemClick: props.onPeopleButtonClicked
+    });
+  }
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
 
 const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevice): boolean =>
   !!selectedSpeaker && speaker.id === selectedSpeaker.id;
+
+const isEnabled = (option: unknown): boolean => option !== false;

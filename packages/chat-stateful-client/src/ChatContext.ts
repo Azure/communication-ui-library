@@ -15,9 +15,10 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { chatStatefulLogger } from './Logger';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -50,21 +51,15 @@ export class ChatContext {
     return this._state;
   }
 
-  public setState(state: ChatClientState): void {
-    this._state = state;
-    if (!this._batchMode) {
-      this._emitter.emit('stateChanged', this._state);
-    }
-  }
-
   public modifyState(modifier: (draft: ChatClientState) => void): void {
+    const priorState = this._state;
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
         // Log to `info` because AzureLogger.verbose() doesn't show up in console.
-        this._logger.info(`State change: ${JSON.stringify(patches)}`);
+        this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
       }
     });
-    if (!this._batchMode) {
+    if (!this._batchMode && this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
   }
@@ -243,36 +238,32 @@ export class ChatContext {
   }
 
   private startTypingIndicatorCleanUp(): void {
-    if (!this.typingIndicatorInterval) {
-      this.typingIndicatorInterval = window.setInterval(() => {
-        let isTypingActive = false;
-        let isStateChanged = false;
-        const newState = produce(this._state, (draft: ChatClientState) => {
-          for (const thread of Object.values(draft.threads)) {
-            const filteredTypingIndicators = thread.typingIndicators.filter((typingIndicator) => {
-              const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
-              return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
-            });
-
-            if (thread.typingIndicators.length !== filteredTypingIndicators.length) {
-              isStateChanged = true;
-              thread.typingIndicators = filteredTypingIndicators;
-            }
-            if (thread.typingIndicators.length > 0) {
-              isTypingActive = true;
-            }
-          }
-        });
-
-        if (isStateChanged) {
-          this.setState(newState);
-        }
-        if (!isTypingActive && this.typingIndicatorInterval) {
-          window.clearInterval(this.typingIndicatorInterval);
-          this.typingIndicatorInterval = undefined;
-        }
-      }, 1000);
+    if (this.typingIndicatorInterval) {
+      return;
     }
+    this.typingIndicatorInterval = window.setInterval(() => {
+      let isTypingActive = false;
+      this.modifyState((draft: ChatClientState) => {
+        for (const thread of Object.values(draft.threads)) {
+          const filteredTypingIndicators = thread.typingIndicators.filter((typingIndicator) => {
+            const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
+            return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
+          });
+
+          if (thread.typingIndicators.length !== filteredTypingIndicators.length) {
+            thread.typingIndicators = filteredTypingIndicators;
+          }
+          if (thread.typingIndicators.length > 0) {
+            isTypingActive = true;
+          }
+        }
+      });
+
+      if (!isTypingActive && this.typingIndicatorInterval) {
+        window.clearInterval(this.typingIndicatorInterval);
+        this.typingIndicatorInterval = undefined;
+      }
+    }, 1000);
   }
 
   public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void {
@@ -346,6 +337,7 @@ export class ChatContext {
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
+        chatStatefulLogger.info(`Chat stateful client target function called: ${target}`);
         return f(...args);
       } catch (error) {
         const chatError = toChatError(target, error);
@@ -401,7 +393,7 @@ export class ChatContext {
     } catch (e) {
       this._state = priorState;
       if (getLogLevel() === 'verbose') {
-        this._logger.warning(`State rollback to: ${JSON.stringify(priorState)}`);
+        this._logger.warning(`State rollback to: ${_safeJSONStringify(priorState)}`);
       }
       throw e;
     } finally {

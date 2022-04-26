@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Icon, IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
+import { IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
 
 /**
  * @private
@@ -31,28 +31,34 @@ export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   };
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={notificationIconContainerStyles}>
-      <Icon styles={notificationIconStyles(theme)} iconName="ControlBarButtonBadgeIcon" />
-      {renderNumber(chatMessagesCount)}
+    <Stack
+      data-ui-id="call-with-chat-composite-chat-button-unread-icon"
+      horizontalAlign="center"
+      verticalAlign="center"
+      styles={notificationIconContainerStyles(theme)}
+    >
+      <Stack>{renderNumber(chatMessagesCount)}</Stack>
     </Stack>
   );
 };
 
-const notificationIconContainerStyles = memoizeFunction(
-  (): IIconStyles => ({
-    root: {
-      // positioning to place the badge within the button appropriately.
-      position: 'absolute',
-      top: '-0.5rem',
-      right: '-0.5rem'
-    }
-  })
-);
+const notificationIconPaddingREM = 0.225;
+const notificationSizeREM = 1;
 
-const notificationIconStyles = memoizeFunction(
+const notificationIconContainerStyles = memoizeFunction(
   (theme: ITheme): IIconStyles => ({
     root: {
-      color: theme.palette.themePrimary
+      borderRadius: `${notificationSizeREM}rem`, // Create a css circle. This should match the height.
+      height: `${notificationSizeREM}rem`,
+      minWidth: `${notificationSizeREM}rem`, // use min-width over width as we want to extend the width of the notification icon when contents is more than one character (e.g. 9+)
+      background: theme.palette.themePrimary,
+      border: `0.0625rem solid white`, // border should always be white
+      padding: `${notificationIconPaddingREM}rem`,
+
+      // positioning to place the badge within the button appropriately.
+      position: 'absolute',
+      top: `-${0.5 - notificationIconPaddingREM / 2}rem`,
+      left: `${0.5 + notificationIconPaddingREM / 2}rem`
     }
   })
 );
@@ -60,10 +66,8 @@ const notificationIconStyles = memoizeFunction(
 const notificationTextStyles = memoizeFunction(
   (theme: ITheme): IStackStyles => ({
     root: {
-      position: 'absolute',
-      top: '0.1rem',
-      color: theme.palette.white,
-      fontSize: theme.fonts.smallPlus.fontSize
+      color: 'white',
+      fontSize: theme.fonts.xSmall.fontSize
     }
   })
 );

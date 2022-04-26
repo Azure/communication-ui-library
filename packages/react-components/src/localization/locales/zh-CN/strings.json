@@ -16,14 +16,15 @@
   "sendBox": {
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
-    "sendButtonAriaLabel": "发送消息"
+    "sendButtonAriaLabel": "发送消息",
+    "fileUploadsPendingError": "正在上载...请稍候。"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
     "deliveredTooltipText": "已发送",
     "seenAriaLabel": "其他人已查看消息",
     "seenTooltipText": "已查看",
-    "readByTooltipText": "按 {participantCountNotIncludingSelf} 的 {messageThreadReadCount} 读取",
+    "readByTooltipText": "{messageThreadReadCount}/{remoteParticipantsCount} 人已读",
     "sendingAriaLabel": "消息发送",
     "sendingTooltipText": "正在发送",
     "failedToSendAriaLabel": "消息发送失败",
@@ -100,7 +101,7 @@
     "noDisplayNameSub": "无名称",
     "editBoxCancelButton": "取消",
     "editBoxSubmitButton": "提交",
-    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}"
+    "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

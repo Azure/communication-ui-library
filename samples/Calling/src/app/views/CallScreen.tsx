@@ -7,14 +7,15 @@ import {
   CallAdapter,
   CallAdapterState,
   CallComposite,
-  createAzureCommunicationCallAdapter,
-  toFlatCommunicationIdentifier
+  toFlatCommunicationIdentifier,
+  useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
+import { WEB_APP_TITLE } from '../utils/AppUtils';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -23,15 +24,12 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
-  webAppTitle: string;
   onCallEnded: () => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, webAppTitle, onCallEnded } = props;
-  const [adapter, setAdapter] = useState<CallAdapter>();
+  const { token, userId, callLocator, displayName, onCallEnded } = props;
   const callIdRef = useRef<string>();
-  const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
@@ -47,14 +45,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const adapter = await createAzureCommunicationCallAdapter({
-        userId,
-        displayName,
-        credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-        locator: callLocator
-      });
+  const afterCreate = useCallback(
+    async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
         onCallEnded();
       });
@@ -65,21 +57,31 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       });
       adapter.onStateChange((state: CallAdapterState) => {
         const pageTitle = convertPageStateToString(state);
-        document.title = `${pageTitle} - ${webAppTitle}`;
+        document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
       });
-      setAdapter(adapter);
-      adapterRef.current = adapter;
-    })();
+      return adapter;
+    },
+    [callIdRef, onCallEnded]
+  );
 
-    return () => {
-      adapterRef?.current?.dispose();
-    };
-  }, [callLocator, displayName, token, userId, onCallEnded]);
+  const credential = useMemo(
+    () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
+    [token, userId]
+  );
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      userId,
+      displayName,
+      credential,
+      locator: callLocator
+    },
+    afterCreate
+  );
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

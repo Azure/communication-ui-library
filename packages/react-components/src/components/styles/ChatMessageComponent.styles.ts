@@ -1,7 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, IStyle, FontWeights, Theme, IContextualMenuItemStyles } from '@fluentui/react';
+import {
+  mergeStyles,
+  IStyle,
+  FontWeights,
+  Theme,
+  IContextualMenuItemStyles,
+  ITheme,
+  IIconStyles
+} from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -12,7 +22,7 @@ export const chatActionsCSS: IStyle = {
   'ul&': {
     right: '0',
     left: 'auto',
-    top: '-1.625rem',
+    top: '-1.2rem',
     bottom: 'auto',
     position: 'absolute'
   },
@@ -26,10 +36,18 @@ export const chatActionsCSS: IStyle = {
 /**
  * @private
  */
-export const iconWrapperStyle = mergeStyles({
-  padding: '0.375rem',
-  webkitBoxPack: 'center',
-  justifyContent: 'center'
+export const iconWrapperStyle = (theme: ITheme, isSubMenuOpen: boolean): IIconStyles => ({
+  root: {
+    margin: _pxToRem(3),
+    // Show hover styles when the Edit/Delete menu is showing as this action button is still considered 'active'
+    color: isSubMenuOpen ? theme.palette.black : theme.palette.neutralPrimary,
+    strokeWidth: isSubMenuOpen ? _pxToRem(0.5) : _pxToRem(0),
+    stroke: theme.palette.black,
+    ':hover, :focus': {
+      color: theme.palette.black,
+      strokeWidth: _pxToRem(0.5)
+    }
+  }
 });
 
 /**
@@ -46,9 +64,17 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
 /**
  * @private
  */
+export const chatMessageFailedTagStyle = (theme: Theme): string =>
+  mergeStyles({ fontWeight: FontWeights.light, color: isDarkThemed(theme) ? '#f1707b' : '#a80000' });
+
+/**
+ * @private
+ */
 export const chatMessageMenuStyle = mergeStyles({
   minWidth: '8.5rem',
-  cursor: 'pointer'
+  height: 'max-content',
+  cursor: 'pointer',
+  overflow: 'hidden'
 });
 
 /**
@@ -78,6 +104,17 @@ export const menuItemIncreasedSizeStyles: IContextualMenuItemStyles = {
 export const menuIconStyleSet = {
   root: {
     height: 'calc(100% - 8px)', // Adjust for the pixel margin Fluent applies
+    width: '1.25rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const menuSubIconStyleSet = {
+  root: {
+    height: 'unset',
+    lineHeight: '100%',
     width: '1.25rem'
   }
 };

@@ -38,6 +38,11 @@ export interface _DrawerMenuItemProps {
   secondaryIconProps?: IIconProps;
   styles?: BaseCustomStyles;
   subMenuProps?: _DrawerMenuItemProps[];
+  /**
+   * Whether the menu item is disabled
+   * @defaultvalue false
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -64,6 +69,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
       horizontal
       className={mergeStyles(
         drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
+        props.disabled ? disabledDrawerMenuItemRootStyles(theme.palette.neutralQuaternaryAlt) : undefined,
         props.styles?.root
       )}
       onKeyPress={onKeyPress}
@@ -71,16 +77,27 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
       tokens={menuItemChildrenGap}
     >
       {props.iconProps && (
-        <Stack.Item role="presentation">
+        <Stack.Item
+          role="presentation"
+          styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}
+        >
           <MenuItemIcon {...props.iconProps} />
         </Stack.Item>
       )}
       <Stack.Item styles={drawerMenuItemTextStyles} grow>
-        <Text>{props.text}</Text>
+        <Text styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}>
+          {props.text}
+        </Text>
       </Stack.Item>
       {props.secondaryText && (
-        <Stack.Item styles={drawerMenuItemTextStyles}>
-          <Text className={mergeStyles({ color: theme.palette.neutralSecondary })}>{props.secondaryText}</Text>
+        <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
+          <Text
+            styles={{
+              root: { color: props.disabled ? theme.palette.neutralTertiaryAlt : theme.palette.neutralSecondary }
+            }}
+          >
+            {props.secondaryText}
+          </Text>
         </Stack.Item>
       )}
       {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
@@ -105,6 +122,14 @@ const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle):
   }
 });
 
+const disabledDrawerMenuItemRootStyles = (background: string): IStyle => ({
+  pointerEvents: 'none',
+  background: background,
+  ':hover, :focus': {
+    background: background
+  }
+});
+
 /** Ensure long text entries appropriately show ellipsis instead of wrapping to a new line or showing a scrollbar */
 const drawerMenuItemTextStyles: IStackStyles = {
   root: {
@@ -126,4 +151,9 @@ const iconStyles: IStyle = {
     alignItems: 'center',
     height: '100%'
   }
+};
+
+const secondaryTextStyles: IStyle = {
+  // limit width for secondaryText in the menu item so it does not overlap with text on left.
+  maxWidth: '50%'
 };

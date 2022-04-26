@@ -3,27 +3,7 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-
-/**
- * Meta Data containing information about the uploaded file.
- * @beta
- */
-export interface FileMetadata {
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
-   */
-  extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
-}
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * Contains the state attibutes of a file upload like name, progress etc.
@@ -54,8 +34,17 @@ export interface FileUploadState {
   /**
    * Error message to be displayed to the user if the upload fails.
    */
-  errorMessage?: string;
+  error?: FileUploadError;
 }
+
+/**
+ * @beta
+ * Error message to be displayed to the user if the upload fails.
+ */
+export type FileUploadError = {
+  message: string;
+  timestamp: number;
+};
 
 /**
  * A wrapper object for a file that is being uploaded.
@@ -65,14 +54,18 @@ export interface FileUploadState {
  */
 export interface FileUploadManager {
   /**
+   * Unique identifier for the file upload.
+   */
+  id: string;
+  /**
    * HTML {@link File} object for the uploaded file.
    */
-  file: File;
+  file?: File;
   /**
    * Update the progress of the upload.
    * @param value - number between 0 and 1
    */
-  notifyUploadProgressed: (value: number) => void;
+  notifyUploadProgressChanged: (value: number) => void;
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
@@ -87,52 +80,50 @@ export interface FileUploadManager {
 }
 
 /**
- * An internal interface used by the Chat Composite to drive the UI for file uploads.
- * @beta
- */
-export interface ObservableFileUpload extends FileUploadEventEmitter {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-  /**
-   * The {@link File} object for the file being uploaded.
-   */
-  file: File;
-}
-
-/**
  * A wrapper object for a file that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
- * @internal
+ * @private
  */
-export class FileUpload implements FileUploadManager, ObservableFileUpload {
+export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   private _emitter: EventEmitter;
-  public id: string;
-  public file: File;
+  public readonly id: string;
+  public readonly file?: File;
+  /**
+   * Filename to be displayed in the UI during file upload.
+   */
+  public readonly fileName: string;
+  /**
+   * Optional object of type {@link FileMetadata}
+   */
+  public metadata?: FileMetadata;
 
-  constructor(file: File, maxListeners = _MAX_EVENT_LISTENERS) {
-    this.id = nanoid();
-    this.file = file;
+  constructor(data: File | FileMetadata) {
     this._emitter = new EventEmitter();
-    this._emitter.setMaxListeners(maxListeners);
+    this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
+    this.id = nanoid();
+    if (data instanceof File) {
+      this.file = data;
+    } else {
+      this.metadata = data;
+    }
+    this.fileName = data.name;
   }
 
-  notifyUploadProgressed(value: number): void {
-    this._emitter.emit('uploadProgressed', this.id, value);
+  notifyUploadProgressChanged(value: number): void {
+    this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
   notifyUploadCompleted(metadata: FileMetadata): void {
-    this._emitter.emit('uploadCompleted', this.id, metadata);
+    this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
   notifyUploadFailed(message: string): void {
-    this._emitter.emit('uploadFailed', this.id, message);
+    this._emitter.emit('uploadFail', this.id, message);
   }
 
-  on(event: 'uploadProgressed', listener: UploadProgressListener): void;
-  on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-  on(event: 'uploadFailed', listener: UploadFailedListener): void;
+  on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+  on(event: 'uploadComplete', listener: UploadCompleteListener): void;
+  on(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
    * File upload event subscriber.
    * @param event - {@link FileUploadEvents}
@@ -142,9 +133,9 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
     this._emitter.addListener(event, listener);
   }
 
-  off(event: 'uploadProgressed', listener: UploadProgressListener): void;
-  off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
-  off(event: 'uploadFailed', listener: UploadFailedListener): void;
+  off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
+  off(event: 'uploadComplete', listener: UploadCompleteListener): void;
+  off(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
    * File upload event unsubscriber.
    * @param event - {@link FileUploadEvents}
@@ -159,57 +150,57 @@ export class FileUpload implements FileUploadManager, ObservableFileUpload {
  * Events emitted by the FileUpload class.
  * @beta
  */
-export type FileUploadEvents = 'uploadProgressed' | 'uploadCompleted' | 'uploadFailed';
+type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
 /**
  * Events listeners supported by the FileUpload class.
  * @beta
  */
-export type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
+type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
 
 /**
  * Listener for `uploadProgressed` event.
  * @beta
  */
-export type UploadProgressListener = (id: string, value: number) => void;
+type UploadProgressListener = (id: string, value: number) => void;
 /**
  * Listener for `uploadComplete` event.
  * @beta
  */
-export type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta
  */
-export type UploadFailedListener = (id: string, message: string) => void;
+type UploadFailedListener = (id: string, message: string) => void;
 
 /**
  * @beta
  */
-export interface FileUploadEventEmitter {
+interface FileUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */
-  on(event: 'uploadProgressed', listener: UploadProgressListener): void;
+  on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   /**
    * Subscriber function for `uploadComplete` event.
    */
-  on(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+  on(event: 'uploadComplete', listener: UploadCompleteListener): void;
   /**
    * Subscriber function for `uploadFailed` event.
    */
-  on(event: 'uploadFailed', listener: UploadFailedListener): void;
+  on(event: 'uploadFail', listener: UploadFailedListener): void;
 
   /**
    * Unsubscriber function for `uploadProgressed` event.
    */
-  off(event: 'uploadProgressed', listener: UploadProgressListener): void;
+  off(event: 'uploadProgressChange', listener: UploadProgressListener): void;
   /**
    * Unsubscriber function for `uploadComplete` event.
    */
-  off(event: 'uploadCompleted', listener: UploadCompleteListener): void;
+  off(event: 'uploadComplete', listener: UploadCompleteListener): void;
   /**
    * Unsubscriber function for `uploadFailed` event.
    */
-  off(event: 'uploadFailed', listener: UploadFailedListener): void;
+  off(event: 'uploadFail', listener: UploadFailedListener): void;
 }

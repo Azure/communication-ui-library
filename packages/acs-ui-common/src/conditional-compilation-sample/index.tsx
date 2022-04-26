@@ -56,10 +56,10 @@ import * as utils from './utils';
 /**
  * Conditionally define a type or interface.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 type A = number;
 
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 interface B {
   c: number;
 }
@@ -67,19 +67,19 @@ interface B {
 /**
  * Conditionally import from a package.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 import { Dir } from 'fs';
 
 /**
  * Conditionally export from a module.
  */
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export interface C {
   a: A;
   b: B;
 }
 
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export type MyDir = Dir;
 
 /**
@@ -87,7 +87,7 @@ export type MyDir = Dir;
  */
 export interface B2 {
   sameOld: number;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   somethingNew: number;
 }
 
@@ -96,8 +96,8 @@ export interface B2 {
  *
  * Watchout: A common pitfall here is adding the conditional directive before the binary operator.
  */
-export type Unionize = number | /* @conditional-compile-remove-from(stable) */ boolean;
-export type Impossible = number & /* @conditional-compile-remove-from(stable) */ boolean;
+export type Unionize = number | /* @conditional-compile-remove(demo) */ boolean;
+export type Impossible = number & /* @conditional-compile-remove(demo) */ boolean;
 
 /**
  * Add a parameter to an existing function
@@ -114,15 +114,23 @@ export type Impossible = number & /* @conditional-compile-remove-from(stable) */
  *
  * cf: https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads.
  */
-export function d(e: number, /* @conditional-compile-remove-from(stable) */ f: number): void;
-/* @conditional-compile-remove-from(stable) */
+export function d(e: number, /* @conditional-compile-remove(demo) */ f: number): void;
+/* @conditional-compile-remove(demo) */
 export function d(e: number, f: number, g: number): void;
 export function d(e: number, f?: number, g?: number): void {
   console.log(e);
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   console.log(f, g);
 }
 
+// @conditional-compile-remove(demo)
+// Add comments after the directive
+export const v1 = 0;
+/**
+ * @conditional-compile-remove(demo)
+ * Or in the same comment block
+ */
+export const v2 = 1;
 /******************************************************************************
  *
  * Conditional business logic
@@ -133,8 +141,8 @@ export function d(e: number, f?: number, g?: number): void {
  * Call a function with conditional parameters.
  */
 export function dCaller(): void {
-  d(1, /* @conditional-compile-remove-from(stable) */ 2);
-  d(1, /* @conditional-compile-remove-from(stable) */ 2, /* @conditional-compile-remove-from(stable) */ 3);
+  d(1, /* @conditional-compile-remove(demo) */ 2);
+  d(1, /* @conditional-compile-remove(demo) */ 2, /* @conditional-compile-remove(demo) */ 3);
 
   // The following would stable flavor build because the function overload signature for `d` only allows one
   // argument in stable flavor.
@@ -148,7 +156,7 @@ export function GottaHaveAnExtraStackItem(): JSX.Element {
   return (
     <ul>
       <li>Old kid</li>
-      {/* @conditional-compile-remove-from(stable) */ <li>New Kid</li>}
+      {/* @conditional-compile-remove(demo) */ <li>New Kid</li>}
     </ul>
   );
 }
@@ -164,7 +172,7 @@ export function OverrideSomePropInBeta(): JSX.Element {
 }
 function propTrampoline(): string {
   let propValue = 'general';
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   propValue = 'II class';
   return propValue;
 }
@@ -174,6 +182,51 @@ function propTrampoline(): string {
  * Common complex patterns
  *
  */
+
+/**
+ * Conditional compilation directives can refer to one or more predefined features.
+ *
+ * When working on a beta feature, define a new feature tag in common/config/babel/.babelrc.js
+ * Then use that tag in all the conditional compilation directives for your feature.
+ *
+ * Most examples in this file use the `demo` feature.
+ *
+ * When your feature is ready for stable builds: Move the feature flag to the `stabilizedFeatures` list.
+ * The tagged code will no longer be removed from stable builds.
+ *
+ * Using an undeclared feature in conditional compilation directive will cause a build failure (prevents typos).
+ *
+ * The following code is not removed because it contains a stabilized feature tag.
+ */
+/* @conditional-compile-remove(stabilizedDemo) */
+export const thisIsNowStable = 42;
+
+/* Sometimes, multiple features may depend on related types. Any of the examples in this file could be labeled
+ * with more than one feature.
+ *
+ * If some code is needed for more than one feature, the first feature that is stabilized needs it.
+ * Thus, any code labeled with multiple features is included in the stable build if any of the features is stabilized.
+ */
+export interface SomePulicTypeThatIsGettingLotsOfNewOptions {
+  oldField: string;
+  /**
+   * Two features need the type to be extended with `options`.
+   * One of the features is stabilized, so this field will be included in the stable build.
+   * @conditional-compile-remove(demo) @conditional-compile-remove(stabilizedDemo)
+   */
+  options: partiallyStableOptions;
+}
+
+// @conditional-compile-remove(demo)
+// @conditional-compile-remove(stabilizedDemo)
+// This type is also included in the stable build because it is labeled with
+// one stabilized feature (directives in this case use separate comments)
+export interface partiallyStableOptions {
+  // @conditional-compile-remove(demo)
+  thisFeatureIsNotYetStabilized: boolean;
+  // @conditional-compile-remove(stabilizedDemo)
+  thisFeatureIsStabilized: boolean;
+}
 
 /**
  * A common example where a combination of some of the examples above is required is extending a selector.
@@ -189,7 +242,7 @@ export type MyExtensibleSelector = (
 ) => {
   memoizedA: boolean;
   memoizedB: boolean;
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   memoizedC: boolean;
 };
 
@@ -199,7 +252,7 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
     return {
       memoizedA: a,
       memoizedB: b,
-      /* @conditional-compile-remove-from(stable) */
+      /* @conditional-compile-remove(demo) */
       memoizedC: c
     };
   }
@@ -222,7 +275,7 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
  */
 
 type ThisIsUnstableType = string;
-/* @conditional-compile-remove-from(stable) */
+/* @conditional-compile-remove(demo) */
 export type { ThisIsUnstableType };
 
 class InternalImplementation {
@@ -245,7 +298,7 @@ export function StableAPIThatGainsNewUnstableBehavior(): void {
 }
 
 function shouldIncludeUnstableFeature(): boolean {
-  /* @conditional-compile-remove-from(stable) */
+  /* @conditional-compile-remove(demo) */
   return true;
   return false;
 }

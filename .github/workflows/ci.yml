@@ -10,14 +10,32 @@ on:
   workflow_dispatch:
 
 jobs:
+  # get matrix for ci-jobs
+  get_matrix:
+    name: Set CI flavors
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      # gets the matrix for ci run from the config file
+      - id: get-matrix
+        run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
+
   build_packages:
+    needs: get_matrix
     name: Build Packages
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -76,15 +94,20 @@ jobs:
       # Tests
       - name: Test Packages
         run: rush test -t @azure/communication-react
+      # Upload azure-communication api.md files for easy access
+      - name: Upload communication-react api files
+        uses: actions/upload-artifact@v2
+        with:
+          name: communication-react.${{ matrix.flavor }}.api.json
+          path: |
+            packages/communication-react/temp/communication-react.api.json
 
   call_composite_automation_test:
+    needs: get_matrix
     name: Call Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -142,13 +165,11 @@ jobs:
             })
 
   chat_composite_automation_test:
+    needs: get_matrix
     name: Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -206,13 +227,11 @@ jobs:
             })
 
   call_with_chat_composite_automation_test:
+    needs: get_matrix
     name: Call With Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          # CallWithChatComposite is only in beta for now
-          - flavor: 'beta'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
@@ -296,13 +315,11 @@ jobs:
         working-directory: packages/storybook
 
   build_calling_sample:
+    needs: get_matrix
     name: Build Calling Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -330,13 +347,11 @@ jobs:
         run: rush test -o calling
 
   build_chat_sample:
+    needs: get_matrix
     name: Build Chat Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -364,13 +379,11 @@ jobs:
         run: rush test -o chat
 
   build_call_with_chat_sample:
+    needs: get_matrix
     name: Build CallWithChat Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -398,13 +411,11 @@ jobs:
         run: rush test -o callwithchat
 
   build_static_html_composites_sample:
+    needs: get_matrix
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -450,13 +461,11 @@ jobs:
             })
 
   build_component_examples:
+    needs: get_matrix
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - flavor: 'beta'
-          - flavor: 'stable'
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
         with:

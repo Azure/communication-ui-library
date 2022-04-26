@@ -3,16 +3,16 @@
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-import { People20Regular } from '@fluentui/react-icons';
 import { concatStyleSets } from '@fluentui/react';
+import { CallWithChatCompositeIcon } from '../common/icons';
 
-const icon = (): JSX.Element => <People20Regular key={'peopleOffIconKey'} primaryFill="currentColor" />;
+const icon = (): JSX.Element => <CallWithChatCompositeIcon iconName={'ControlBarPeopleButton'} />;
 
 /**
  * @private
  */
 export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
-  const strings = { label: props.label, ...props.strings };
+  const { strings, onRenderOnIcon, onRenderOffIcon, onClick } = props;
   const theme = useTheme();
   const styles: ControlBarButtonStyles = useMemo(
     () =>
@@ -24,7 +24,7 @@ export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
         },
         props.styles ?? {}
       ),
-    [theme]
+    [props.styles, theme.palette.neutralLight]
   );
 
   return (
@@ -32,9 +32,9 @@ export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
       {...props}
       strings={strings}
       labelKey={'peopleButtonLabelKey'}
-      onRenderOnIcon={props.onRenderOnIcon ?? icon}
-      onRenderOffIcon={props.onRenderOffIcon ?? icon}
-      onClick={props.onClick}
+      onRenderOnIcon={onRenderOnIcon ?? icon}
+      onRenderOffIcon={onRenderOffIcon ?? icon}
+      onClick={onClick}
       styles={styles}
     />
   );

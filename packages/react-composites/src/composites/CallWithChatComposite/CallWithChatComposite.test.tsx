@@ -60,7 +60,7 @@ describe('CallWithChatComposite', () => {
     const mockCallWithChatAdapter = createMockCallWithChatAdapter();
 
     const callWithChatComposite = Enzyme.mount(
-      <CallWithChatComposite callWithChatAdapter={mockCallWithChatAdapter} {...mockBaseCompositeProps} />
+      <CallWithChatComposite adapter={mockCallWithChatAdapter} {...mockBaseCompositeProps} />
     );
 
     const callComposites = callWithChatComposite.find(CallComposite);

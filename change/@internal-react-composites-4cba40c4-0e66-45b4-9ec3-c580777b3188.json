@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Logic introduced to media gallery to allow for mobile detection for local camera switcher.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

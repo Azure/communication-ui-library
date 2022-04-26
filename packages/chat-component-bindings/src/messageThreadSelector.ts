@@ -18,12 +18,15 @@ import {
   Message,
   CommunicationParticipant,
   SystemMessage,
-  MessageContentType
+  MessageContentType,
+  ReadReceiptsBySenderId
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
-import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -31,9 +34,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     chatMessage: ChatMessageWithStatus,
     userId: string,
     isSeen: boolean,
-    isLargeGroup: boolean,
-    readNumber: number,
-    readBy: { id: string; name: string }[]
+    isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     if (
@@ -41,20 +42,32 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
     ) {
-      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup, readNumber, readBy);
+      return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
     } else {
       return convertToUiSystemMessage(chatMessage);
     }
   }
 );
 
+/* @conditional-compile-remove(file-sharing) */
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+  const fileMetadata = metadata['fileSharingMetadata'];
+  if (!fileMetadata) {
+    return [];
+  }
+  try {
+    return JSON.parse(fileMetadata);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
-  isLargeGroup: boolean,
-  readNumber: number,
-  readBy: { id: string; name: string }[]
+  isLargeGroup: boolean
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
@@ -70,9 +83,9 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    readNumber,
-    readBy,
-    metadata: message.metadata
+    metadata: message.metadata,
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 
@@ -136,24 +149,30 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
 export const messageThreadSelector: MessageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
   (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
+    const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
+
     // get number of participants
     // filter out the non valid participants (no display name)
-    const messageThreadParticipantCount = Object.values(participants).filter(
-      (p) => p.displayName && p.displayName !== ''
-    ).length;
+    // Read Receipt details will be disabled when participant count is 0
+    const participantCount = isTeamsInterop
+      ? undefined
+      : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
 
     // creating key value pairs of senderID: last read message information
 
-    const readReceiptForEachSender: { [key: string]: { lastReadMessage: string; name: string } } = {};
+    const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
 
-    // readReceiptForEachSender[senderID] gets updated everytime a new message is read by this sender
+    // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
     // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
-    readReceipts.forEach((r) => {
-      readReceiptForEachSender[toFlatCommunicationIdentifier(r.sender)] = {
-        lastReadMessage: r.chatMessageId,
-        name: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
-      };
-    });
+    readReceipts
+      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+      .forEach((r) => {
+        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+          lastReadMessage: r.chatMessageId,
+          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+        };
+      });
 
     // A function takes parameter above and generate return value
     const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
@@ -171,29 +190,23 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
         )
         .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) => {
-          const readBy: { id: string; name: string }[] = getParticipantsWhoHaveReadMessage(
-            message,
-            readReceiptForEachSender
-          );
-
           return memoizedFn(
             message.id ?? message.clientMessageId,
             message,
             userId,
             message.createdOn <= latestReadTime,
-            isLargeGroup,
-            readBy.length,
-            readBy
+            isLargeGroup
           );
         })
     );
 
-    updateMessagesWithAttached(convertedMessages, userId);
+    updateMessagesWithAttached(convertedMessages);
     return {
       userId,
       showMessageStatus: !isLargeGroup,
       messages: convertedMessages,
-      messageThreadParticipantCount
+      participantCount,
+      readReceiptsBySenderId
     };
   }
 );

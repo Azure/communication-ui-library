@@ -335,7 +335,7 @@ export const defaultChatCompositeHiddenControls = {
 };
 
 export const defaultCallWithChatCompositeHiddenControls = {
-  callWithChatAdapter: hiddenControl,
+  adapter: hiddenControl,
   fluentTheme: hiddenControl,
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
