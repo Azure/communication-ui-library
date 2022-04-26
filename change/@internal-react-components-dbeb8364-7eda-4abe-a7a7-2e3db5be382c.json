@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "change tooltip color in dark mode",
+  "comment": "bump package versions for release",
   "packageName": "@internal/react-components",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "none"

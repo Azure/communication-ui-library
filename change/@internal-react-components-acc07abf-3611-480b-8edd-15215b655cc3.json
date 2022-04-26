@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Set overflow to hidden in PiPiP (only currently impacting end to end tests)",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

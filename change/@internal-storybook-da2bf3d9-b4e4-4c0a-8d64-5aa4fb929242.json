@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add FileCard story as internal story to storybook",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}
