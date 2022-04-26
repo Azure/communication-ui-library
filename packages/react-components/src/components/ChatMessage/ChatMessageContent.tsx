@@ -7,6 +7,7 @@ import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
+import { Link } from '@fluentui/react';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -47,7 +48,17 @@ const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JS
   return (
     <div data-ui-status={message.status}>
       <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
-      <Linkify>{message.content}</Linkify>
+      <Linkify
+        componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
+          return (
+            <Link target="_blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </Link>
+          );
+        }}
+      >
+        {message.content}
+      </Linkify>
     </div>
   );
 };
