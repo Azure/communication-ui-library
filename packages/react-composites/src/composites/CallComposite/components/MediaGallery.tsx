@@ -9,7 +9,7 @@ import {
   VideoGalleryRemoteParticipant
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { AvatarPersona, AvatarPersonaDataCallback, useDataProvider } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
@@ -140,27 +140,34 @@ const useOnFetchAvatarPersonaData = (
   remoteParticipants: VideoGalleryRemoteParticipant[],
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback
 ): VideoGalleryRemoteParticipant[] => {
-  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
-    undefined
-  );
+  // const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
+  //   undefined
+  // );
+  const userIds = useMemo(() => {
+    return remoteParticipants.map((p) => p.userId);
+  }, [remoteParticipants]);
 
-  // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
-  useEffect(() => {
-    // flag to stop race conditions caused by participants joining the call
-    let newestFetch = true;
-    const augmentDisplayName = async (): Promise<void> => {
-      if (onFetchAvatarPersonaData) {
-        const tempParticipants = await fetchAvatarPersonaDataAsync(onFetchAvatarPersonaData, remoteParticipants);
-        if (newestFetch) {
-          setAugmentedParticipants(tempParticipants);
-        }
-      }
-    };
-    augmentDisplayName();
-    return () => {
-      newestFetch = false;
-    };
-  }, [onFetchAvatarPersonaData, remoteParticipants]);
+  const avatarPersonaData = useDataProvider(userIds, onFetchAvatarPersonaData);
+  remoteParticipants.forEach((p, i) => {
+    p.displayName = avatarPersonaData[i]?.text;
+  });
+  // // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
+  // useEffect(() => {
+  //   // flag to stop race conditions caused by participants joining the call
+  //   let newestFetch = true;
+  //   const augmentDisplayName = async (): Promise<void> => {
+  //     if (onFetchAvatarPersonaData) {
+  //       const tempParticipants = await fetchAvatarPersonaDataAsync(onFetchAvatarPersonaData, remoteParticipants);
+  //       if (newestFetch) {
+  //         setAugmentedParticipants(tempParticipants);
+  //       }
+  //     }
+  //   };
+  //   augmentDisplayName();
+  //   return () => {
+  //     newestFetch = false;
+  //   };
+  // }, [onFetchAvatarPersonaData, remoteParticipants]);
 
-  return augmentedParticipants ?? remoteParticipants;
+  return remoteParticipants;
 };

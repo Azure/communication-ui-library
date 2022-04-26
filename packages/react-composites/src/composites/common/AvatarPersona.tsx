@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -65,8 +65,11 @@ export interface AvatarPersonaProps extends IPersonaProps {
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
+  const userIds = useMemo(() => {
+    return [userId];
+  }, [userId]);
 
-  const [data] = useDataProvider([userId], dataProvider);
+  const [data] = useDataProvider(userIds, dataProvider);
 
   return (
     <Persona
@@ -91,16 +94,20 @@ export const useDataProvider = (
   useEffect(() => {
     (async () => {
       if (dataProvider) {
-        setData(
-          await Promise.all(
-            userIds.map(async (userId: string | undefined) => {
-              if (!userId) {
-                return undefined;
-              }
-              return await dataProvider(userId);
-            })
-          )
+        const newData = await Promise.all(
+          userIds.map(async (userId: string | undefined) => {
+            if (!userId) {
+              return undefined;
+            }
+            return await dataProvider(userId);
+            // if the data is the same as the original list. we skip setData if the data is the same. move out of set data, compare against data and then skip if the same
+          })
         );
+        if (newData === data) {
+          return;
+        } else {
+          setData(newData);
+        }
       }
     })();
   }, [dataProvider, userIds]);
