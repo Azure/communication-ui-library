@@ -58,9 +58,14 @@ export interface MicrophoneButtonStrings {
   microphoneButtonSplitRoleDescription: string;
   /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
-   * Microphone split button aria label.
+   * Microphone split button aria label when mic is enabled.
    */
-  microphoneButtonSplitAriaLabel?: string;
+  microphoneButtonEnabledSplitAriaLabel?: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
+  /**
+   * Microphone split button aria label when mic is disabled.
+   */
+  microphoneButtonDisabledSplitAriaLabel?: string;
   /**
    * Microphone action turned on string for announcer
    */
@@ -177,6 +182,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const isMicOn = props.checked;
 
+  const splitButtonAriaString = isMicOn
+    ? strings.microphoneButtonEnabledSplitAriaLabel
+    : strings.microphoneButtonDisabledSplitAriaLabel;
+
   const toggleAnnouncerString = useCallback(
     (isMicOn: boolean) => {
       setAnnouncerString(
@@ -216,9 +225,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         aria-roledescription={
           enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
         }
-        splitButtonAriaLabel={
-          enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitAriaLabel : undefined
-        }
+        splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? splitButtonAriaString : undefined}
       />
     </>
   );

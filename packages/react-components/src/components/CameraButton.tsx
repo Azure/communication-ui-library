@@ -54,9 +54,14 @@ export interface CameraButtonStrings {
   cameraButtonSplitRoleDescription?: string;
   /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
-   * Camera split button aria label.
+   * Camera split button aria label for when button is enabled.
    */
-  cameraButtonSplitAriaLabel?: string;
+  cameraButtonEnabledSplitAriaLabel?: string;
+  /* @conditional-compile-remove(control-bar-split-buttons) */
+  /**
+   * Camera split button aria label for when button is disabled.
+   */
+  cameraButtonDisabledSplitAriaLabel?: string;
   /**
    * Camera action turned on string for announcer
    */
@@ -165,6 +170,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }
 
   const cameraOn = props.checked;
+  const splitButtonAriaString = cameraOn
+    ? strings.cameraButtonEnabledSplitAriaLabel
+    : strings.cameraButtonDisabledSplitAriaLabel;
 
   const toggleAnnouncerString = useCallback(
     (isCameraOn: boolean) => {
@@ -208,9 +216,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         aria-roledescription={
           enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
         }
-        splitButtonAriaLabel={
-          enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitAriaLabel : undefined
-        }
+        splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? splitButtonAriaString : undefined}
       />
     </>
   );
