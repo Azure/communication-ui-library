@@ -1,8 +1,22 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Fri, 11 Mar 2022 19:20:04 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Apr 2022 20:46:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.2-beta.1)
+
+Tue, 19 Apr 2022 20:46:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.2.0...@internal/chat-stateful-client_v1.2.2-beta.1)
+
+### Patches
+
+- added new type readreceiptbysenderid ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
+
+### Changes
+
+- Log the function called from stateful client ([PR #1793](https://github.com/azure/communication-ui-library/pull/1793) by jiangnanhello@live.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.0)
 

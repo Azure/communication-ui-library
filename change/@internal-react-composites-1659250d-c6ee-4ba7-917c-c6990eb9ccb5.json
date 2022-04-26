@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Introduce Aria-label for the return to call button on mobile.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

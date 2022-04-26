@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Add version to azure log(telemetry)",
+  "comment": "bump package versions for release",
   "packageName": "@internal/chat-stateful-client",
-  "email": "jiangnanhello@live.com",
+  "email": "carolinecao@microsoft.com",
   "dependentChangeType": "none"
 }

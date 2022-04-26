@@ -2,6 +2,49 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 20:46:16 GMT",
+      "tag": "@internal/chat-stateful-client_v1.2.2-beta.1",
+      "version": "1.2.2-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "fa9f3484b9a76ee3438d9371088efcc41f085829",
+            "comment": "Add version to azure log(telemetry)"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "763bfb6933e29401dbc5a5229ed12eff7d7ac055",
+            "comment": "Log the function called from stateful client"
+          }
+        ],
+        "patch": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "added new type readreceiptbysenderid"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:04 GMT",
       "tag": "@internal/chat-stateful-client_v1.2.0",
       "version": "1.2.0",

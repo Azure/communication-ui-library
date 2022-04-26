@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "make sure badge text color is white in both light and dark mode",
+  "comment": "bump package versions for release",
   "packageName": "@internal/react-composites",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "none"
