@@ -65,16 +65,8 @@ export interface AvatarPersonaProps extends IPersonaProps {
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
-  const [data, setData] = React.useState<AvatarPersonaData | undefined>();
 
-  useEffect(() => {
-    (async () => {
-      if (dataProvider && userId) {
-        const data = await dataProvider(userId);
-        setData(data);
-      }
-    })();
-  }, [dataProvider, userId]);
+  const data = useDataProvider(userId, dataProvider);
 
   return (
     <Persona
@@ -86,4 +78,20 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
     />
   );
+};
+
+/**
+ * @private
+ */
+const useDataProvider = (userId?: string, dataProvider?: AvatarPersonaDataCallback): AvatarPersonaData | undefined => {
+  const [data, setData] = React.useState<AvatarPersonaData | undefined>();
+  useEffect(() => {
+    (async () => {
+      if (dataProvider && userId) {
+        const data = await dataProvider(userId);
+        setData(data);
+      }
+    })();
+  }, [dataProvider, userId]);
+  return data;
 };
