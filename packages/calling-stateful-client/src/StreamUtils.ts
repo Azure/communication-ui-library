@@ -451,8 +451,8 @@ export function disposeAllViewsFromCall(
  * @private
  */
 export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
-  const remoteStreamAndRenderers = internalContext.getRemoteRenderInfos();
-  for (const [callId] of remoteStreamAndRenderers.entries()) {
+  const callIds = internalContext.getCallIds();
+  for (const callId of callIds) {
     disposeAllViewsFromCall(context, internalContext, callId);
   }
 }
