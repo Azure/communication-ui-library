@@ -12,7 +12,7 @@ export const CustomIconExample: () => JSX.Element = () => (
         onTyping={async () => {
           return;
         }}
-        styles={{ sendMessageIconContainer: { marginTop: '0.65rem' } }}
+        styles={{ sendMessageIconContainer: { marginTop: '0.08rem' } }}
         onRenderIcon={() => <Icon iconName="AirplaneSolid" />}
       />
     </div>
