@@ -7,7 +7,7 @@ const localStorageAvailable = typeof Storage !== 'undefined';
 const localStorageKey = 'GraphUIToolkitEnabled';
 
 const getEnabledFromLocalStorage = (): boolean =>
-  localStorageAvailable && window.localStorage.getItem(localStorageKey) === 'true';
+  localStorageAvailable && window.localStorage.getItem(localStorageKey) !== 'false';
 
 const GraphToolkitEnabledContext = createContext(getEnabledFromLocalStorage());
 

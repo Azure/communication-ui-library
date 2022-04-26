@@ -20823,6 +20823,10 @@ packages:
       '@fluentui/react-window-provider': 2.2.0_31347e879eca8fbed0f611d143439f58
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
+      '@microsoft/mgt-element': 2.4.0
+      '@microsoft/mgt-msal2-provider': 2.4.0
+      '@microsoft/mgt-react': 2.4.0
+      '@microsoft/microsoft-graph-types': 2.19.0
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.3
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
@@ -20887,7 +20891,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-KTee+Sy7AuTbX6kzeIGLy+XOBea3Van6zmEz9m2BZAJ6wDeY5Ed6TfZGwbzhydi8P8rkpT94nscZ7vi8CmbD3g==
+      integrity: sha512-WnH17Hn81JpHvEBTuvtfjNvYxyAOfzQo9oUkmzqpafqctx2G/1aBs9aTZqp5vf3NhwVT2Gtr6791KBKGTEipRA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:

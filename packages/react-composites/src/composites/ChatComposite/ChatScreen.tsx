@@ -140,7 +140,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
       const avatar = isSignedIn ? (
-        <GraphPersona personQuery="me" avatarSize="small" />
+        <GraphPersona userId={userId} avatarSize="small" />
       ) : (
         <AvatarPersona
           userId={userId}
