@@ -18,8 +18,6 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
-import { fetchAvatarPersonaDataAsync } from '../utils';
-import { RemoteParticipant } from '@azure/communication-calling';
 
 const VideoGalleryStyles = {
   root: {
