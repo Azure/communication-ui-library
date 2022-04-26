@@ -14,8 +14,8 @@
     "test:stable": "echo skip",
     "test:coverage": "echo skip",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts,tsx}\"",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:quiet": "npm run lint -- --quiet"
+    "lint:fix": "rushx lint -- --fix",
+    "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
     "@internal/acs-ui-common": "1.2.1-beta.0",
