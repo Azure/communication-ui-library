@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "bump package versions for release",
+  "packageName": "@internal/storybook",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

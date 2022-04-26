@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update docs to note change on new min height and min width",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

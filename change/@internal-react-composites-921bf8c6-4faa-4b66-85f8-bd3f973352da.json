@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added chat test setup with per user query arguments & UI tests for file download card",
-  "packageName": "@internal/react-composites",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
