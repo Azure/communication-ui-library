@@ -19,6 +19,7 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { fetchAvatarPersonaDataAsync } from '../utils';
+import { RemoteParticipant } from '@azure/communication-calling';
 
 const VideoGalleryStyles = {
   root: {
@@ -66,39 +67,17 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
-    undefined
+  const remoteParticipants = useOnFetchAvatarPersonaData(
+    videoGalleryProps.remoteParticipants,
+    props.onFetchAvatarPersonaData
   );
-
-  // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
-  useEffect(() => {
-    // flag to stop race conditions caused by participants joining the call
-    let newestFetch = true;
-    const augmentDisplayName = async (): Promise<void> => {
-      if (props.onFetchAvatarPersonaData) {
-        const tempParticipants = await fetchAvatarPersonaDataAsync(
-          props.onFetchAvatarPersonaData,
-          videoGalleryProps.remoteParticipants
-        );
-        if (newestFetch) {
-          setAugmentedParticipants(tempParticipants);
-        }
-      }
-    };
-    augmentDisplayName();
-    return () => {
-      newestFetch = false;
-    };
-  }, [props.onFetchAvatarPersonaData, videoGalleryProps.remoteParticipants]);
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
         {...videoGalleryProps}
-        remoteParticipants={
-          augmentedParticipants !== undefined ? augmentedParticipants : videoGalleryProps.remoteParticipants
-        }
+        remoteParticipants={remoteParticipants}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
@@ -118,7 +97,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     videoGalleryProps,
     props.isMobile,
     props.onFetchAvatarPersonaData,
-    augmentedParticipants,
+    remoteParticipants,
     /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     cameraSwitcherProps
   ]);
@@ -151,4 +130,37 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
       setIsButtonStatusSynced(true);
     }
   }, [shouldTransition, isButtonStatusSynced, isPreviewCameraOn, isLocalVideoAvailable, mediaGalleryHandlers]);
+};
+
+/**
+ *
+ * @param onFetchAvatarPersonaData
+ */
+const useOnFetchAvatarPersonaData = (
+  remoteParticipants: VideoGalleryRemoteParticipant[],
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback
+): VideoGalleryRemoteParticipant[] => {
+  const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
+    undefined
+  );
+
+  // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
+  useEffect(() => {
+    // flag to stop race conditions caused by participants joining the call
+    let newestFetch = true;
+    const augmentDisplayName = async (): Promise<void> => {
+      if (onFetchAvatarPersonaData) {
+        const tempParticipants = await fetchAvatarPersonaDataAsync(onFetchAvatarPersonaData, remoteParticipants);
+        if (newestFetch) {
+          setAugmentedParticipants(tempParticipants);
+        }
+      }
+    };
+    augmentDisplayName();
+    return () => {
+      newestFetch = false;
+    };
+  }, [onFetchAvatarPersonaData, remoteParticipants]);
+
+  return augmentedParticipants ?? remoteParticipants;
 };

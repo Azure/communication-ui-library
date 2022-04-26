@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  AvatarPersonaData
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -86,6 +87,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  const onFetchAvatarPersonaData = async (userId: string): Promise<AvatarPersonaData> => ({
+    text: 'apples'
+  });
+
   return (
     <CallWithChatComposite
       adapter={adapter}
@@ -93,6 +98,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
     />
   );
 };
