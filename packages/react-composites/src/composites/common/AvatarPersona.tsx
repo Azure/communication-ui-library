@@ -84,6 +84,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
 };
 
 /**
+ * Hook to override the avatar persona data of the users
  * @private
  */
 export const useDataProvider = (
@@ -102,8 +103,6 @@ export const useDataProvider = (
             return await dataProvider(userId);
           })
         );
-        console.log(data);
-        console.log(newData);
         if (shouldUpdate(data, newData)) {
           setData(newData);
         }
@@ -127,17 +126,14 @@ const shouldUpdate = (
     return true;
   }
   currentData.forEach((p, i) => {
-    if (
+    newDataPresent =
       p?.text !== newData[i]?.text &&
       p?.imageUrl !== newData[i]?.imageUrl &&
       p?.initialsColor !== newData[i]?.initialsColor &&
       p?.imageInitials !== newData[i]?.imageInitials &&
       p?.initialsTextColor !== newData[i]?.initialsTextColor
-    ) {
-      newDataPresent = true;
-    } else {
-      newDataPresent = false;
-    }
+        ? true
+        : false;
   });
   return newDataPresent;
 };

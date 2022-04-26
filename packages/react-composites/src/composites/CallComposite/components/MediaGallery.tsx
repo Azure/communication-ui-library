@@ -131,16 +131,16 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
 };
 
 /**
- *
+ * Hook to fetch new participant avatar and video gallery displayName information if it is present.
  * @param onFetchAvatarPersonaData
  */
 const useOnFetchAvatarPersonaData = (
   remoteParticipants: VideoGalleryRemoteParticipant[],
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback
 ): VideoGalleryRemoteParticipant[] => {
-  // const [augmentedParticipants, setAugmentedParticipants] = useState<VideoGalleryRemoteParticipant[] | undefined>(
-  //   undefined
-  // );
+  // Sort the remote participants so that they are always in order
+  remoteParticipants.sort((a, b) => (a.userId < b.userId ? 1 : -1));
+
   const userIds = useMemo(() => {
     return remoteParticipants.map((p) => p.userId);
   }, [remoteParticipants]);
@@ -152,23 +152,6 @@ const useOnFetchAvatarPersonaData = (
     }
     p.displayName = avatarPersonaData[i]?.text;
   });
-  // // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
-  // useEffect(() => {
-  //   // flag to stop race conditions caused by participants joining the call
-  //   let newestFetch = true;
-  //   const augmentDisplayName = async (): Promise<void> => {
-  //     if (onFetchAvatarPersonaData) {
-  //       const tempParticipants = await fetchAvatarPersonaDataAsync(onFetchAvatarPersonaData, remoteParticipants);
-  //       if (newestFetch) {
-  //         setAugmentedParticipants(tempParticipants);
-  //       }
-  //     }
-  //   };
-  //   augmentDisplayName();
-  //   return () => {
-  //     newestFetch = false;
-  //   };
-  // }, [onFetchAvatarPersonaData, remoteParticipants]);
 
   return remoteParticipants;
 };

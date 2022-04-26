@@ -87,10 +87,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  const onFetchAvatarPersonaData = async (userId: string): Promise<AvatarPersonaData> => ({
-    text: 'apples'
-  });
-
   return (
     <CallWithChatComposite
       adapter={adapter}
@@ -98,7 +94,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
-      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
     />
   );
 };
