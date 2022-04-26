@@ -9,8 +9,7 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter,
-  AvatarPersonaData
+  CallWithChatAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
