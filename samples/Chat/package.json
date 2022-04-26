@@ -20,11 +20,11 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "dependencies": {
-    "@azure/communication-chat": "1.1.0",
-    "@azure/communication-common": "1.1.0",
+    "@azure/communication-chat": "1.2.0",
+    "@azure/communication-common": "2.0.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.2.2-beta.1",
-    "@azure/communication-signaling": "1.0.0-beta.12",
+    "@azure/communication-signaling": "1.0.0-beta.13",
     "@azure/core-http": "1.2.4",
     "@azure/logger": "1.0.3",
     "@fluentui/react": "~8.17.2",
