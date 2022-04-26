@@ -67,7 +67,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         className="ms-Stack css-18"
                       >
                         <div
-                          className="ms-TooltipHost root-19"
+                          aria-live="polite"
+                          className="ms-Stack css-19"
+                        />
+                        <div
+                          className="ms-TooltipHost root-20"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
@@ -76,7 +80,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         >
                           <button
                             aria-label="Turn off camera"
-                            className="ms-Button ms-Button--default is-checked root-20"
+                            className="ms-Button ms-Button--default is-checked root-21"
                             data-is-focusable={true}
                             onClick={[Function]}
                             onKeyDown={[Function]}
@@ -87,12 +91,16 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             type="button"
                           >
                             <span
-                              className="ms-Button-flexContainer flexContainer-21"
+                              className="ms-Button-flexContainer flexContainer-22"
                               data-automationid="splitbuttonprimary"
                             >
                               <i
                                 aria-hidden={true}
+<<<<<<< HEAD
                                 className="root-105 root-29"
+=======
+                                className="root-94 root-30"
+>>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ControlButtonCameraOn"
                               >
                                 <span
@@ -118,7 +126,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
+<<<<<<< HEAD
                                 className="ms-Icon root-105 css-30 ms-Button-menuIcon menuIcon-25"
+=======
+                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
+>>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
@@ -133,7 +145,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           </button>
                         </div>
                         <div
-                          className="ms-TooltipHost root-19"
+                          aria-live="polite"
+                          className="ms-Stack css-19"
+                        />
+                        <div
+                          className="ms-TooltipHost root-20"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
@@ -142,7 +158,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         >
                           <button
                             aria-label="Mute microphone"
-                            className="ms-Button ms-Button--default is-checked root-20"
+                            className="ms-Button ms-Button--default is-checked root-21"
                             data-is-focusable={true}
                             onClick={[Function]}
                             onKeyDown={[Function]}
@@ -153,12 +169,16 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             type="button"
                           >
                             <span
-                              className="ms-Button-flexContainer flexContainer-21"
+                              className="ms-Button-flexContainer flexContainer-22"
                               data-automationid="splitbuttonprimary"
                             >
                               <i
                                 aria-hidden={true}
+<<<<<<< HEAD
                                 className="root-105 root-29"
+=======
+                                className="root-94 root-30"
+>>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ControlButtonMicOn"
                               >
                                 <span
@@ -184,7 +204,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
+<<<<<<< HEAD
                                 className="ms-Icon root-105 css-30 ms-Button-menuIcon menuIcon-25"
+=======
+                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
+>>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
