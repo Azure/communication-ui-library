@@ -3,6 +3,7 @@
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
+import { CallIdHistory } from './CallIdHistory';
 
 /**
  * Internally tracked render status. Stores the status of a video render of a stream as rendering could take a long
@@ -50,8 +51,10 @@ export class InternalCallContext {
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
   // The key is the stream ID. We assume each stream ID to only have one owning render info
   private _unparentedRenderInfos = new Map<string, LocalRenderInfo>();
+  private _callIdHistory = new CallIdHistory();
 
   public setCallId(newCallId: string, oldCallId: string): void {
+    this._callIdHistory.updateCallIdHistory(newCallId, oldCallId);
     const remoteRenderInfos = this._remoteRenderInfos.get(oldCallId);
     if (remoteRenderInfos) {
       this._remoteRenderInfos.delete(oldCallId);
@@ -65,12 +68,12 @@ export class InternalCallContext {
     }
   }
 
-  public getRemoteRenderInfos(): Map<string, Map<string, Map<number, RemoteRenderInfo>>> {
-    return this._remoteRenderInfos;
+  public getCallIds(): IterableIterator<string> {
+    return this._remoteRenderInfos.keys();
   }
 
   public getRemoteRenderInfoForCall(callId: string): Map<string, Map<number, RemoteRenderInfo>> | undefined {
-    return this._remoteRenderInfos.get(callId);
+    return this._remoteRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
   public getRemoteRenderInfoForParticipant(
@@ -78,7 +81,7 @@ export class InternalCallContext {
     participantKey: string,
     streamId: number
   ): RemoteRenderInfo | undefined {
-    const callRenderInfos = this._remoteRenderInfos.get(callId);
+    const callRenderInfos = this._remoteRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!callRenderInfos) {
       return undefined;
     }
@@ -97,10 +100,10 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    let callRenderInfos = this._remoteRenderInfos.get(callId);
+    let callRenderInfos = this._remoteRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!callRenderInfos) {
       callRenderInfos = new Map<string, Map<number, RemoteRenderInfo>>();
-      this._remoteRenderInfos.set(callId, callRenderInfos);
+      this._remoteRenderInfos.set(this._callIdHistory.latestCallId(callId), callRenderInfos);
     }
 
     let participantRenderInfos = callRenderInfos.get(participantKey);
@@ -113,7 +116,7 @@ export class InternalCallContext {
   }
 
   public deleteRemoteRenderInfo(callId: string, participantKey: string, streamId: number): void {
-    const callRenderInfos = this._remoteRenderInfos.get(callId);
+    const callRenderInfos = this._remoteRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!callRenderInfos) {
       return;
     }
@@ -132,15 +135,15 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    this._localRenderInfos.set(callId, { stream, status, renderer });
+    this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), { stream, status, renderer });
   }
 
   public getLocalRenderInfo(callId: string): LocalRenderInfo | undefined {
-    return this._localRenderInfos.get(callId);
+    return this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
   public deleteLocalRenderInfo(callId: string): void {
-    this._localRenderInfos.delete(callId);
+    this._localRenderInfos.delete(this._callIdHistory.latestCallId(callId));
   }
 
   public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
