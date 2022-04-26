@@ -14,6 +14,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
+import { Announcer } from './Announcer';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -51,6 +52,14 @@ export interface CameraButtonStrings {
    * description of camera button split button role
    */
   cameraButtonSplitRoleDescription?: string;
+  /**
+   * Camera action turned on string for announcer
+   */
+  cameraActionTurnedOnAnnouncement: string;
+  /**
+   * Camera action turned off string for announcer
+   */
+  cameraActionTurnedOffAnnouncement: string;
 }
 
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
@@ -139,6 +148,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const onRenderCameraOnIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
   );
@@ -149,34 +159,52 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
   }
 
+  const cameraOn = props.checked;
+
+  const toggleAnnouncerString = useCallback(
+    (isCameraOn: boolean) => {
+      setAnnouncerString(
+        !isCameraOn ? strings.cameraActionTurnedOffAnnouncement : strings.cameraActionTurnedOnAnnouncement
+      );
+    },
+    [strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]
+  );
+
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
       setWaitForCamera(true);
       try {
         await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
+        // allows for the setting of narrator strings triggering the announcer when camera is turned on or off.
+        toggleAnnouncerString(!cameraOn);
       } finally {
         setWaitForCamera(false);
       }
     }
-  }, [localVideoViewOptions, onToggleCamera]);
+  }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
   return (
-    <ControlBarButton
-      {...props}
-      disabled={props.disabled || waitForCamera}
-      onClick={onToggleCamera ? onToggleClick : props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'cameraButtonLabel'}
-      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
-      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-      ariaDescription={
-        enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
-      }
-    />
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <ControlBarButton
+        {...props}
+        disabled={props.disabled || waitForCamera}
+        onClick={onToggleCamera ? onToggleClick : props.onClick}
+        onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
+        onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'cameraButtonLabel'}
+        menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
+        menuIconProps={
+          props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined
+        }
+        split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+        ariaDescription={
+          enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
+        }
+      />
+    </>
   );
 };
 
