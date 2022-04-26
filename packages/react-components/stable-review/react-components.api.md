@@ -81,9 +81,9 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface CameraButtonStrings {
-    cameraButtonSplitAriaLabel?: string;
     cameraActionTurnedOffAnnouncement: string;
     cameraActionTurnedOnAnnouncement: string;
+    cameraButtonSplitAriaLabel?: string;
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
@@ -769,11 +769,10 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneButtonSplitAriaLabel?: string;
-    microphoneButtonSplitRoleDescription: string;
     microphoneActionTurnedOffAnnouncement: string;
     microphoneActionTurnedOnAnnouncement: string;
-    microphoneButtonSplitRoleDescription?: string;
+    microphoneButtonSplitAriaLabel?: string;
+    microphoneButtonSplitRoleDescription: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
