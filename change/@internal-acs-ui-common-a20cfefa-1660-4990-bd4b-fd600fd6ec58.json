@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Add util function for converting px to rem",
+  "comment": "bump package versions for release",
   "packageName": "@internal/acs-ui-common",
-  "email": "anjulgarg@live.com",
+  "email": "carolinecao@microsoft.com",
   "dependentChangeType": "none"
 }

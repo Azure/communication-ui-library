@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "UI Library Desing Kit",
+  "comment": "bump package versions for release",
   "packageName": "@internal/storybook",
-  "email": "dademath@microsoft.com",
+  "email": "carolinecao@microsoft.com",
   "dependentChangeType": "none"
 }
