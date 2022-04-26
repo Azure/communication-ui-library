@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix whole app re-render when callId changes",
+  "packageName": "@internal/react-composites",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
