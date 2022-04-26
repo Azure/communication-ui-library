@@ -100,16 +100,44 @@ export const useDataProvider = (
               return undefined;
             }
             return await dataProvider(userId);
-            // if the data is the same as the original list. we skip setData if the data is the same. move out of set data, compare against data and then skip if the same
           })
         );
-        if (newData === data) {
-          return;
-        } else {
+        console.log(data);
+        console.log(newData);
+        if (shouldUpdate(data, newData)) {
           setData(newData);
         }
       }
     })();
-  }, [dataProvider, userIds]);
+  });
   return data;
+};
+
+/**
+ * function to determine if there is new user avatar data in current render pass.
+ * @param currentData
+ * @param newData
+ */
+const shouldUpdate = (
+  currentData: (AvatarPersonaData | undefined)[],
+  newData: (AvatarPersonaData | undefined)[]
+): boolean => {
+  let newDataPresent = false;
+  if (currentData.length !== newData.length) {
+    return true;
+  }
+  currentData.forEach((p, i) => {
+    if (
+      p?.text !== newData[i]?.text &&
+      p?.imageUrl !== newData[i]?.imageUrl &&
+      p?.initialsColor !== newData[i]?.initialsColor &&
+      p?.imageInitials !== newData[i]?.imageInitials &&
+      p?.initialsTextColor !== newData[i]?.initialsTextColor
+    ) {
+      newDataPresent = true;
+    } else {
+      newDataPresent = false;
+    }
+  });
+  return newDataPresent;
 };

@@ -147,6 +147,9 @@ const useOnFetchAvatarPersonaData = (
 
   const avatarPersonaData = useDataProvider(userIds, onFetchAvatarPersonaData);
   remoteParticipants.forEach((p, i) => {
+    if (avatarPersonaData[i]?.text === undefined) {
+      return;
+    }
     p.displayName = avatarPersonaData[i]?.text;
   });
   // // if we have the onFetchAvatarPersonaData callback set go through and edit the remote participant data.
