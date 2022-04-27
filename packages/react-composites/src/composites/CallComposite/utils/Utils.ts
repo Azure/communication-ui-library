@@ -195,25 +195,17 @@ export const computeVariant = (
  */
 export const useCustomAvatarPersonaData = (
   userIds: (string | undefined)[],
-  callBack?: AvatarPersonaDataCallback
+  callback?: AvatarPersonaDataCallback
 ): (AvatarPersonaData | undefined)[] => {
-  const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>([]);
+  const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>(Array(userIds.length).fill(undefined));
   useEffect(() => {
     (async () => {
-      if (!callBack) {
-        const undefinedData: undefined[] = [];
-        for (let i = 0; i < userIds.length; i++) {
-          undefinedData.push(undefined);
-        }
-        setData(undefinedData);
-        return;
-      }
       const newData = await Promise.all(
         userIds.map(async (userId: string | undefined) => {
-          if (!userId) {
+          if (!userId || !callback) {
             return undefined;
           }
-          return await callBack(userId);
+          return await callback(userId);
         })
       );
       if (shouldUpdate(data, newData)) {

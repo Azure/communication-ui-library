@@ -144,7 +144,7 @@ const useRemoteParticipantsWithCustomDisplayNames = (
   }, [remoteParticipants]);
 
   const avatarPersonaData = useCustomAvatarPersonaData(userIds, onFetchAvatarPersonaData);
-  const newParticipantData = remoteParticipants.map((p, i) => {
+  const newParticipants = remoteParticipants.map((p, i) => {
     const newName = avatarPersonaData[i]?.text;
     if (!newName) {
       return p;
@@ -152,5 +152,5 @@ const useRemoteParticipantsWithCustomDisplayNames = (
     return { ...p, displayName: newName };
   });
 
-  return newParticipantData;
+  return newParticipants;
 };
