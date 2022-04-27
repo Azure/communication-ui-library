@@ -9,6 +9,7 @@ import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import {
+  ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   FileDownloadError,
@@ -18,6 +19,7 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
+import { FakeChatService } from './fake/ChatService';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -40,6 +42,13 @@ const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : 
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
+let fakeChat = undefined;
+try {
+  fakeChat = JSON.parse(params.fakeChat);
+} catch (e) {
+  console.log('Query parameter fakeChat could not be parsed: ', params.fakeChat);
+}
+
 function App(): JSX.Element {
   const args = useMemo(
     () => ({
@@ -51,11 +60,13 @@ function App(): JSX.Element {
     }),
     []
   );
-  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
-    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-    await adapter.fetchInitialData();
-    return adapter;
-  });
+  const adapter: ChatAdapter = fakeChat
+    ? createFakeChatAdapter()
+    : useAzureCommunicationChatAdapter(args, async (adapter) => {
+        // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+        await adapter.fetchInitialData();
+        return adapter;
+      });
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
@@ -177,4 +188,8 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
     default:
       'CUSTOM MESSAGE';
   }
+}
+
+function createFakeChatAdapter(): ChatAdapter {
+  return new FakeChatService();
 }
