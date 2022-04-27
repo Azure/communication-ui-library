@@ -139,18 +139,18 @@ const useRemoteParticipantsWithCustomDisplayNames = (
   remoteParticipants: VideoGalleryRemoteParticipant[],
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback
 ): VideoGalleryRemoteParticipant[] => {
-  const newParticipants = remoteParticipants;
   const userIds = useMemo(() => {
-    return newParticipants.map((p) => p.userId);
-  }, [newParticipants]);
+    return remoteParticipants.map((p) => p.userId);
+  }, [remoteParticipants]);
 
   const avatarPersonaData = useCustomAvatarPersonaData(userIds, onFetchAvatarPersonaData);
-  newParticipants.forEach((p, i) => {
+  const newParticipantData = remoteParticipants.map((p, i) => {
     const newName = avatarPersonaData[i]?.text;
-    if (newName) {
-      p.displayName = avatarPersonaData[i]?.text;
+    if (!newName) {
+      return p;
     }
+    return { ...p, displayName: newName };
   });
 
-  return newParticipants;
+  return newParticipantData;
 };

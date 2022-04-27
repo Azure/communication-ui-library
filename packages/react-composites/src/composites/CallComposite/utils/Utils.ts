@@ -194,25 +194,30 @@ export const computeVariant = (
  * @private
  */
 export const useCustomAvatarPersonaData = (
-  // move this to utils
   userIds: (string | undefined)[],
   callBack?: AvatarPersonaDataCallback
 ): (AvatarPersonaData | undefined)[] => {
   const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>([]);
   useEffect(() => {
     (async () => {
-      if (callBack) {
-        const newData = await Promise.all(
-          userIds.map(async (userId: string | undefined) => {
-            if (!userId) {
-              return undefined;
-            }
-            return await callBack(userId);
-          })
-        );
-        if (shouldUpdate(data, newData)) {
-          setData(newData);
+      if (!callBack) {
+        const undefinedData: undefined[] = [];
+        for (let i = 0; i < userIds.length; i++) {
+          undefinedData.push(undefined);
         }
+        setData(undefinedData);
+        return;
+      }
+      const newData = await Promise.all(
+        userIds.map(async (userId: string | undefined) => {
+          if (!userId) {
+            return undefined;
+          }
+          return await callBack(userId);
+        })
+      );
+      if (shouldUpdate(data, newData)) {
+        setData(newData);
       }
     })();
   });
@@ -230,31 +235,21 @@ const shouldUpdate = (
   currentData: (AvatarPersonaData | undefined)[],
   newData: (AvatarPersonaData | undefined)[]
 ): boolean => {
-  let newDataPresent = false;
   if (currentData.length !== newData.length) {
     return true;
   }
-  newDataPresent = avatarDeepEqual(currentData, newData);
-  return newDataPresent;
+  return currentData.some((data, i) => avatarDeepEqual(data, newData[i]));
 };
 
 /**
  * @private
  */
-const avatarDeepEqual = (
-  currentData: (AvatarPersonaData | undefined)[],
-  newData: (AvatarPersonaData | undefined)[]
-): boolean => {
-  let newDataPresent;
-  currentData.forEach((p, i) => {
-    newDataPresent =
-      p?.text !== newData[i]?.text &&
-      p?.imageUrl !== newData[i]?.imageUrl &&
-      p?.initialsColor !== newData[i]?.initialsColor &&
-      p?.imageInitials !== newData[i]?.imageInitials &&
-      p?.initialsTextColor !== newData[i]?.initialsTextColor
-        ? true
-        : false;
-  });
-  return newDataPresent;
+const avatarDeepEqual = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
+  return currentData?.text !== newData?.text &&
+    currentData?.imageUrl !== newData?.imageUrl &&
+    currentData?.initialsColor !== newData?.initialsColor &&
+    currentData?.imageInitials !== newData?.imageInitials &&
+    currentData?.initialsTextColor !== newData?.initialsTextColor
+    ? true
+    : false;
 };
