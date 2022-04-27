@@ -65,7 +65,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const remoteParticipants = useOnFetchAvatarPersonaData(
+  const remoteParticipants = useRemoteParticipantsWithCustomDisplayNames(
     videoGalleryProps.remoteParticipants,
     props.onFetchAvatarPersonaData
   );
@@ -134,24 +134,22 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
  * Hook to fetch new participant avatar and video gallery displayName information if it is present.
  * @param onFetchAvatarPersonaData
  */
-const useOnFetchAvatarPersonaData = (
+const useRemoteParticipantsWithCustomDisplayNames = (
   remoteParticipants: VideoGalleryRemoteParticipant[],
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback
 ): VideoGalleryRemoteParticipant[] => {
-  // Sort the remote participants so that they are always in order
-  remoteParticipants.sort((a, b) => (a.userId < b.userId ? 1 : -1));
-
+  const newParticipants = remoteParticipants;
   const userIds = useMemo(() => {
-    return remoteParticipants.map((p) => p.userId);
-  }, [remoteParticipants]);
+    return newParticipants.map((p) => p.userId);
+  }, [newParticipants]);
 
   const avatarPersonaData = useDataProvider(userIds, onFetchAvatarPersonaData);
-  remoteParticipants.forEach((p, i) => {
-    if (avatarPersonaData[i]?.text === undefined) {
-      return;
+  newParticipants.forEach((p, i) => {
+    const newName = avatarPersonaData[i]?.text;
+    if (newName) {
+      p.displayName = avatarPersonaData[i]?.text;
     }
-    p.displayName = avatarPersonaData[i]?.text;
   });
 
-  return remoteParticipants;
+  return newParticipants;
 };
