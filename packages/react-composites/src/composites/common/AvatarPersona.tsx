@@ -69,7 +69,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     return [userId];
   }, [userId]);
 
-  const [data] = useDataProvider(userIds, dataProvider);
+  const [data] = useCustomAvatarPersonaData(userIds, dataProvider);
 
   return (
     <Persona
@@ -85,22 +85,25 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
 
 /**
  * Hook to override the avatar persona data of the users
+ * - Calls {@link AvatarPersonaDataCallback} on each render for provided `userIds`
+ * - Returns an array of the same length as `userIds`. Entries in the array may be undefined if there is no data to return.
  * @private
  */
-export const useDataProvider = (
+export const useCustomAvatarPersonaData = (
+  // move this to utils
   userIds: (string | undefined)[],
-  dataProvider?: AvatarPersonaDataCallback
+  callBack?: AvatarPersonaDataCallback
 ): (AvatarPersonaData | undefined)[] => {
   const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>([]);
   useEffect(() => {
     (async () => {
-      if (dataProvider) {
+      if (callBack) {
         const newData = await Promise.all(
           userIds.map(async (userId: string | undefined) => {
             if (!userId) {
               return undefined;
             }
-            return await dataProvider(userId);
+            return await callBack(userId);
           })
         );
         if (shouldUpdate(data, newData)) {
@@ -113,9 +116,11 @@ export const useDataProvider = (
 };
 
 /**
- * function to determine if there is new user avatar data in current render pass.
- * @param currentData
- * @param newData
+ * Function to determine if there is new user avatar data in current render pass.
+ * @param currentData current set set of avatar persona data present from the custom settings from the previous render
+ * @param newData new set of avatar persona data after a run of {@link useCustomAvatarPersonData}
+ * @returns Boolean whether there is new avatar persona data present.
+ * @private
  */
 const shouldUpdate = (
   currentData: (AvatarPersonaData | undefined)[],
@@ -125,6 +130,18 @@ const shouldUpdate = (
   if (currentData.length !== newData.length) {
     return true;
   }
+  newDataPresent = avatarDeepEqual(currentData, newData);
+  return newDataPresent;
+};
+
+/**
+ * @private
+ */
+const avatarDeepEqual = (
+  currentData: (AvatarPersonaData | undefined)[],
+  newData: (AvatarPersonaData | undefined)[]
+): boolean => {
+  let newDataPresent;
   currentData.forEach((p, i) => {
     newDataPresent =
       p?.text !== newData[i]?.text &&

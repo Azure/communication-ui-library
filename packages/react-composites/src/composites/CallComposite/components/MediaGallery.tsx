@@ -9,7 +9,7 @@ import {
   VideoGalleryRemoteParticipant
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback, useDataProvider } from '../../common/AvatarPersona';
+import { AvatarPersona, AvatarPersonaDataCallback, useCustomAvatarPersonaData } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
@@ -143,7 +143,7 @@ const useRemoteParticipantsWithCustomDisplayNames = (
     return newParticipants.map((p) => p.userId);
   }, [newParticipants]);
 
-  const avatarPersonaData = useDataProvider(userIds, onFetchAvatarPersonaData);
+  const avatarPersonaData = useCustomAvatarPersonaData(userIds, onFetchAvatarPersonaData);
   newParticipants.forEach((p, i) => {
     const newName = avatarPersonaData[i]?.text;
     if (newName) {
