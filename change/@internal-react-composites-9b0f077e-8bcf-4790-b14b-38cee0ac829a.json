@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Modifying the updateMessage chat adapter method to allow passing metadata as a parameter",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -32,7 +32,6 @@ export const localPreviewContainerStyleMobile = mergeStyles({
  * @private
  */
 export const cameraOffLabelStyle = mergeStyles({
-  fontFamily: 'Segoe UI Regular',
   fontSize: '0.75rem' // 12px
 });
 

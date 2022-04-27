@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Moved starting position of PiPiP higher in chat/people pane of CallWithChat composite. Also fixed PiPiP bounds such that it that does not go off screen.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
