@@ -19,7 +19,8 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatService } from './fake/ChatService';
+import { InMemoryChatClient } from './mock/InMemoryTestChatClient';
+import { TestChatAdapter } from './mock/TestChatAdapter';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -191,5 +192,20 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 }
 
 function createFakeChatAdapter(): ChatAdapter {
-  return new FakeChatService();
+  return new TestChatAdapter(
+    { id: '1', displayName: 'user1' },
+    new InMemoryChatClient({
+      chatMessages: {
+        '1': {
+          id: '1',
+          type: 'text',
+          version: '1',
+          sequenceId: '1',
+          createdOn: new Date(),
+          status: 'delivered',
+          content: { message: 'test' }
+        }
+      }
+    })
+  );
 }
