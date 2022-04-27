@@ -6,7 +6,6 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { AvatarPersonaData, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 import React, { useEffect } from 'react';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
