@@ -35,13 +35,6 @@ const defaultTheme = mergeThemes(getTheme(), lightTheme);
 const ThemeContext = createContext<Theme>(defaultTheme);
 
 const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
-  componentVariables: {
-    // suppressing chat message links style from teamsTheme to get better styling from Fluent UI Link
-    ChatMessage: {
-      linkColor: undefined,
-      linkColorMine: undefined
-    }
-  },
   componentStyles: {
     ChatMessage: {
       root: {

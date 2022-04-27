@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
+import {
+  Chat,
+  ChatItemProps,
+  Flex,
+  Ref,
+  ShorthandValue,
+  mergeStyles as mergeNorthstarThemes
+} from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -19,7 +26,17 @@ import {
   gutterWithHiddenAvatar,
   FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
+import {
+  Icon,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaSize,
+  PrimaryButton,
+  Stack,
+  IPersona,
+  Theme
+} from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
@@ -44,6 +61,7 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
+import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -1073,13 +1091,18 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     ]
   );
 
+  const theme = useTheme();
+
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
+        <Chat
+          styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
+          items={messagesToDisplay}
+        />
       </LiveAnnouncer>
     );
-  }, [styles?.chatContainer, messagesToDisplay]);
+  }, [theme, styles?.chatContainer, messagesToDisplay]);
 
   return (
     <Ref innerRef={chatThreadRef}>
@@ -1105,4 +1128,21 @@ const onRenderFileDownloadsTrampoline = (
   /* @conditional-compile-remove(file-sharing) */
   return props.onRenderFileDownloads;
   return undefined;
+};
+
+const linkStyles = (theme: Theme): ComponentSlotStyle => {
+  return {
+    '& a:link': {
+      color: theme.palette.themePrimary
+    },
+    '& a:visited': {
+      color: theme.palette.themeDarker
+    },
+    '& a:hover': {
+      color: theme.palette.themeDarker
+    },
+    '& a:selected': {
+      color: theme.palette.themeDarker
+    }
+  };
 };
