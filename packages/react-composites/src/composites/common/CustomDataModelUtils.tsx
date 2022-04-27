@@ -47,18 +47,18 @@ const shouldUpdate = (
   if (currentData.length !== newData.length) {
     return true;
   }
-  return currentData.some((data, i) => avatarDeepEqual(data, newData[i]));
+  return currentData.some((data, i) => avatarDeepDifferenceCheck(data, newData[i]));
 };
 
 /**
  * @private
  */
-const avatarDeepEqual = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
-  return currentData?.text !== newData?.text ||
+const avatarDeepDifferenceCheck = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
+  return (
+    currentData?.text !== newData?.text ||
     currentData?.imageUrl !== newData?.imageUrl ||
     currentData?.initialsColor !== newData?.initialsColor ||
     currentData?.imageInitials !== newData?.imageInitials ||
     currentData?.initialsTextColor !== newData?.initialsTextColor
-    ? true
-    : false;
+  );
 };
