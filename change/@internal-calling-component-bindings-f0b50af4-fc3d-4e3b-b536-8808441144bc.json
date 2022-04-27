@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update Error bar selector to handle call agent join failures",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

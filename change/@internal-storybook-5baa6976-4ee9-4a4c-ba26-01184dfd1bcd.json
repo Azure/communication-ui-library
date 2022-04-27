@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "[CallWithChat][A11y] Add aria-label for ChatMessageActionMenu button (#1760)",
-  "packageName": "@internal/storybook",
-  "email": "dademath@microsoft.com",
-  "dependentChangeType": "none"
-}
