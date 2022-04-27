@@ -44,8 +44,8 @@
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
     "cameraButtonSplitRoleDescription": "Split button",
-    "cameraButtonEnabledSplitAriaLabel": "Turn off camera and camera options",
-    "cameraButtonDisabledSplitAriaLabel": "Turn on camera and camera options",
+    "onSplitButtonAriaLabel": "Turn off camera and camera options",
+    "offSplitButtonAriaLabel": "Turn on camera and camera options",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
   },
@@ -60,8 +60,8 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose Speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
-    "microphoneButtonEnabledSplitAriaLabel": "Mute microphone and audio options",
-    "microphoneButtonDisabledSplitAriaLabel": "Unmute microphone and Audio options",
+    "onSplitButtonAriaLabel": "Mute microphone and audio options",
+    "offSplitButtonAriaLabel": "Unmute microphone and audio options",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off"
   },
