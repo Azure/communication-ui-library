@@ -9,7 +9,7 @@ import {
   VideoGalleryRemoteParticipant
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { AvatarPersona, AvatarPersonaDataCallback, useCustomAvatarPersonaData } from '../../common/AvatarPersona';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
@@ -18,6 +18,7 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { useCustomAvatarPersonaData } from '../utils';
 
 const VideoGalleryStyles = {
   root: {

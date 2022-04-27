@@ -5,8 +5,9 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
-import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { AvatarPersonaData, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
+import React, { useEffect } from 'react';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
@@ -188,26 +189,73 @@ export const computeVariant = (
 };
 
 /**
- * Edits the display name of the reomte participant based on the onFetchAvatarPersonaData function given to the call composite
- *
- * @param onFetchAvatarPersonaData Callback function for mutating persona data
- * @param participants Array of remote participants
- * @returns Array of participants with their display name altered
- *
+ * Hook to override the avatar persona data of the users
+ * - Calls {@link AvatarPersonaDataCallback} on each render for provided `userIds`
+ * - Returns an array of the same length as `userIds`. Entries in the array may be undefined if there is no data to return.
  * @private
  */
-export const fetchAvatarPersonaDataAsync = async (
-  onFetchAvatarPersonaData: AvatarPersonaDataCallback,
-  participants: VideoGalleryRemoteParticipant[]
-): Promise<VideoGalleryRemoteParticipant[] | undefined> => {
-  if (onFetchAvatarPersonaData) {
-    await Promise.all(
-      participants.map(async (participant) => {
-        const newParticipantData = await onFetchAvatarPersonaData(participant.userId);
-        participant.displayName = newParticipantData.text ? newParticipantData.text : participant.displayName;
-      })
-    );
-    return participants;
+export const useCustomAvatarPersonaData = (
+  // move this to utils
+  userIds: (string | undefined)[],
+  callBack?: AvatarPersonaDataCallback
+): (AvatarPersonaData | undefined)[] => {
+  const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>([]);
+  useEffect(() => {
+    (async () => {
+      if (callBack) {
+        const newData = await Promise.all(
+          userIds.map(async (userId: string | undefined) => {
+            if (!userId) {
+              return undefined;
+            }
+            return await callBack(userId);
+          })
+        );
+        if (shouldUpdate(data, newData)) {
+          setData(newData);
+        }
+      }
+    })();
+  });
+  return data;
+};
+
+/**
+ * Function to determine if there is new user avatar data in current render pass.
+ * @param currentData current set set of avatar persona data present from the custom settings from the previous render
+ * @param newData new set of avatar persona data after a run of {@link useCustomAvatarPersonData}
+ * @returns Boolean whether there is new avatar persona data present.
+ * @private
+ */
+const shouldUpdate = (
+  currentData: (AvatarPersonaData | undefined)[],
+  newData: (AvatarPersonaData | undefined)[]
+): boolean => {
+  let newDataPresent = false;
+  if (currentData.length !== newData.length) {
+    return true;
   }
-  return;
+  newDataPresent = avatarDeepEqual(currentData, newData);
+  return newDataPresent;
+};
+
+/**
+ * @private
+ */
+const avatarDeepEqual = (
+  currentData: (AvatarPersonaData | undefined)[],
+  newData: (AvatarPersonaData | undefined)[]
+): boolean => {
+  let newDataPresent;
+  currentData.forEach((p, i) => {
+    newDataPresent =
+      p?.text !== newData[i]?.text &&
+      p?.imageUrl !== newData[i]?.imageUrl &&
+      p?.initialsColor !== newData[i]?.initialsColor &&
+      p?.imageInitials !== newData[i]?.imageInitials &&
+      p?.initialsTextColor !== newData[i]?.initialsTextColor
+        ? true
+        : false;
+  });
+  return newDataPresent;
 };
