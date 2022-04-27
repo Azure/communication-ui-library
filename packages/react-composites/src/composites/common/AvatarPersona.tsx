@@ -3,7 +3,7 @@
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { useCustomAvatarPersonaData } from '../CallComposite/utils';
+import { useCustomAvatarPersonaData } from './CustomDataModelUtils';
 
 /**
  * Custom data attributes for displaying avatar for a user.
