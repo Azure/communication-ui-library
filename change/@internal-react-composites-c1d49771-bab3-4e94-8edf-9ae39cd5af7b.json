@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Use rushx to enable error report for rush build",
+  "packageName": "@internal/react-composites",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "none"
+}
