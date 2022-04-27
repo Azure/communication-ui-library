@@ -1,8 +1,20 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Apr 2022 20:46:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.2.2-beta.1)
+
+Tue, 19 Apr 2022 20:46:15 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.2.0...@internal/calling-component-bindings_v1.2.2-beta.1)
+
+### Patches
+
+- Update Error bar selector to handle call agent join failures ([PR #1788](https://github.com/azure/communication-ui-library/pull/1788) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
+- Bump @internal/calling-stateful-client to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
+- Bump @internal/react-components to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.2.0)
 
