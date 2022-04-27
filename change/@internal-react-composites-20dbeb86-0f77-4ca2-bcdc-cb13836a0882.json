@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix param value in callId change event",
+  "packageName": "@internal/react-composites",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
