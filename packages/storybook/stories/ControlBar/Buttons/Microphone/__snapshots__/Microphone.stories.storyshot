@@ -50,11 +50,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
           >
             <i
               aria-hidden={true}
-<<<<<<< HEAD
-              className="root-105 root-11"
-=======
               className="root-94 root-12"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
               data-icon-name="ControlButtonMicOff"
             >
               <span
@@ -83,11 +79,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
             </i>
             <i
               aria-hidden={true}
-<<<<<<< HEAD
-              className="ms-Icon root-105 css-12 ms-Button-menuIcon menuIcon-7"
-=======
               className="ms-Icon root-94 css-13 ms-Button-menuIcon menuIcon-8"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
               data-icon-name="ChevronDown"
               hidden={true}
               style={

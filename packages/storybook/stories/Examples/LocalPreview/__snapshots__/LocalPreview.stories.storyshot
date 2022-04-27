@@ -96,11 +96,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-<<<<<<< HEAD
-                                className="root-105 root-29"
-=======
                                 className="root-94 root-30"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ControlButtonCameraOn"
                               >
                                 <span
@@ -126,11 +122,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-<<<<<<< HEAD
-                                className="ms-Icon root-105 css-30 ms-Button-menuIcon menuIcon-25"
-=======
                                 className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
@@ -174,11 +166,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-<<<<<<< HEAD
-                                className="root-105 root-29"
-=======
                                 className="root-94 root-30"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ControlButtonMicOn"
                               >
                                 <span
@@ -204,11 +192,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-<<<<<<< HEAD
-                                className="ms-Icon root-105 css-30 ms-Button-menuIcon menuIcon-25"
-=======
                                 className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
->>>>>>> 37ec47469 (Add announcer to camera and mic buttons (#1772))
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
