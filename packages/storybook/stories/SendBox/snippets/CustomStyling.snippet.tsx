@@ -5,9 +5,9 @@ export const CustomStylingExample: () => JSX.Element = () => {
   const sendBoxStyles = {
     root: { border: '2px solid gray', borderRadius: '10px', padding: '10px' },
     systemMessage: { border: '1px solid darkred', background: 'lightpink' },
+    sendMessageIconContainer: { marginBottom: '1.35rem' },
     textField: { background: 'ghostwhite' }
     // The sub-components below are also available
-    // sendMessageIconContainer: { },
     // sendMessageIcon: { }
   };
   return (
