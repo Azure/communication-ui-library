@@ -2,6 +2,33 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 20:46:15 GMT",
+      "tag": "@internal/acs-ui-common_v1.2.2-beta.1",
+      "version": "1.2.2-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "73706d8ed333f8263480c70c8aa80d04d5d7ec8d",
+            "comment": "Set dummy telemetry version on `main`"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "b1a9409b1dc0c9cab51e915264e0626e46c18ed6",
+            "comment": "Add util function for converting px to rem"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:05 GMT",
       "tag": "@internal/acs-ui-common_v1.2.0",
       "version": "1.2.0",

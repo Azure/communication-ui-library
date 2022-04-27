@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Style update for Screenshare button when checked in CallWithChat composite.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
