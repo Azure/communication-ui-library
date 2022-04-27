@@ -2,6 +2,737 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 20:46:13 GMT",
+      "tag": "@azure/communication-react_v1.2.2-beta.1",
+      "version": "1.2.2-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fc374c6e87d41a0c3dcaac476cf10ea9703734b9",
+            "comment": {
+              "title": "",
+              "value": ""
+            }
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e3932dfb5f1619309d3f7f40ef3c59f4413e5456",
+            "comment": "Show Error Bar to user when joining a call fails"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "2cea7896ea6737a3ecd4c0548acb13d4ee739cd1",
+            "comment": "Hide People menu item in MoreDrawer when set in CallControl options"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "8f4a7309d914c00af26450653f18cef643369b7c",
+            "comment": "Added local and remote picture-in-picture component in Chat pane of CallWithChat composite in mobile view."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "6ca4a1908f1ba49e3fa27f83b44561e5d1caa6e4",
+            "comment": "Fix race condition of \"not in chat\""
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "19b769c3ce685c802c35ece123f21392c8a979a2",
+            "comment": "Reduce min-width and min-height of the composites to support a galaxy fold portrait screen"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "optimization to reduce perf regression for onRenderFileDownloads"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "340c7f5b35404a2c0408f7eeb897925aec9e2103",
+            "comment": "Bump webpack-cli dependency"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "647ab742678cce3349ed24d1048be46cdfa5be4f",
+            "comment": "Introduce Aria-label for the return to call button on mobile."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "a25b449a72d435ff2ec7a9a15831fa4c448b172c",
+            "comment": "Add aria-label for SidePaneHeader dismiss button"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "a343dde6b701b19d134061e3dec289202dda7d72",
+            "comment": "Style update for Screenshare button when checked in CallWithChat composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "43e788b8702813498426c83b5ce19b21afdf9ef6",
+            "comment": "Switch scroll behavior in chat styles so that the parent wrapper dosen't have scroll behavior when file sharing icon present."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d56479c7b2be516c5d0d6221eb4d31cfaa2b3975",
+            "comment": "Fix styles so that the PIPIP shows over the content in the people and chat panes on mobile."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "f5980eaf16586d969bb22cc97164ae8b5df3e65d",
+            "comment": "Left align participant pane elements in mobile and desktop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9ae1c9d5610799ef743c71dd00df16afccde19aa",
+            "comment": "Update mobile people and chat tabs to have 'tab' roles for narration."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "85608367a4ff6098e7521d1df487ecaedc5a1304",
+            "comment": "Add aria label and aria description to back button on TabHeader for mobile view"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "ded9427c563ab19fe29f99c2fb47c4e1ceb7e2bf",
+            "comment": "Moved starting position of PiPiP higher in chat/people pane of CallWithChat composite. Also fixed PiPiP bounds such that it that does not go off screen."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "73f1ac671a48acc7573b6b9d10edc4e7318f7687",
+            "comment": "Improve Chat composite behavior in CallWithChatComposite to allow autofocus when opening chat pane."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "edae5c218a60be1d42adcaef9da8a40bbc0665e7",
+            "comment": "Make Chat Message action button icon customizable"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "6e9610b12dd601940e6b826b5cfdf4e806d02fdb",
+            "comment": "Fix Picture-In-Picture component in mobile composites going outside the screen when the mobile device is rotated from portrait to landscape"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "76bf7e327fbfe373388cda257ff72054e59bb228",
+            "comment": "storybook: Give user feedback when call ends in stateful example"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c3a2600aaab6e778ed0f6dcb0444f9fff849b738",
+            "comment": "Update references to headless calling version"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a4de3dc6eb0764134a0162145e6646a4f14a5a2e",
+            "comment": "Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "088fde06ec7629b949f1f6176e565b2e4f18d890",
+            "comment": "updating snippet code to include how to add a react key"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "e3932dfb5f1619309d3f7f40ef3c59f4413e5456",
+            "comment": "Update Error bar selector to handle call agent join failures"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "do not caculate read receipt details, pass read receipt array down to component level"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "afbd965062089e677bd01bb5ff3708ff22dab49b",
+            "comment": "Disable Read Receipt details in meeting interop"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d5e29cd192c4aded94cdfae48305a33a2fbedda8",
+            "comment": "Filter read receipt to not include myself"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "b6bf2d91ccf189584f22058cd6bf38a1c000e860",
+            "comment": "Do not show \"Not In Thread\" Error Banner shown to user when a BotContact is a participant in Teams Interop Chats"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "added new type readreceiptbysenderid"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a4de3dc6eb0764134a0162145e6646a4f14a5a2e",
+            "comment": "Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "cbf5cab80441a1e50408cec7d129fc4fa6da84aa",
+            "comment": "Add aria-label for ChatMessageActionMenu button"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "843c8a63e5c651ef133e42003a882092d2ee9c2f",
+            "comment": "Add aria description to indicate selected camera in LocalVideoCameraButton"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "56e693761ad1513490df0e2441164f4275ef79f1",
+            "comment": "Fixes styles to remove undesired scroll bar in context menus on messages."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6ae837e4375a00ebc055181d303478e16901938e",
+            "comment": "add data-ui-id to message tooltips and contextual menu for ui tests, also sort read receipt list for contextual menu"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "6e865ddc92ef0249907714a8d513a17e0ee71c12",
+            "comment": "Use fela style selector"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "54becb4250f4409f2a8f0d2e11ecf1db8e031a32",
+            "comment": "Memoize chat bubble to avoid unnecessary re-render"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "f5980eaf16586d969bb22cc97164ae8b5df3e65d",
+            "comment": "Left align participant pane elements in mobile and desktop"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "cf4b19a9e21b6faefb290e34cf9ad15d70004d59",
+            "comment": "Prevent prevent picture in picture from going out of screen when window is resized"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a205598f498e32ab700cc73c73504c3b3c540970",
+            "comment": "Set menu role for Split Buttons in controlBar"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "82bc7f657bde1c3f2ecf33e0b33635949d4955fc",
+            "comment": "Add tab index to local video tile through a wrapper to allow keyboard navigation of the modal controls."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d9c62f09a0d5478d4d3dd6d9bdcba80e4c865c38",
+            "comment": "Fixes styles for local camera switcher for better visibility on white backdrops."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c81904594430ae0091e4f634daeabd0cd23706a9",
+            "comment": "Fix A11y bug where user cannot keyboard outside of local video preview"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "4bb6f26c72e890688809593ced32307d34cee9f5",
+            "comment": "bugfix: Update readBy count for messages when `mobileView` is set"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "692b7f1baaf07fbd117e3f96946f56fde3388f8a",
+            "comment": "Fix chevron alignment issues on message read receipt flyout."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "ddd6b1e740c36fdd072b672df647d44f22fd3f0c",
+            "comment": "Fix floating local video tile going offscreen in the VideoGallery Component"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "0c054e566fd8b0f7edcf03045ea1374dad3f9980",
+            "comment": "New Aria-labels added for screen reader accessibility on ErrorBar and MessageThread"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "5020e414dd967b9ea70b459813e5c1bc695d627d",
+            "comment": "Changed the participant item container styles to check if participant is the user and prevent cursor change."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "40d6e61c3d907b4ede8a88bdf94e21a424f219d7",
+            "comment": "Set overflow to hidden in PiPiP (only currently impacting end to end tests)"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6b78e15e3de358d099dca42fd1e0202355a94a13",
+            "comment": "fixed bug when deleting failed to send messages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e3932dfb5f1619309d3f7f40ef3c59f4413e5456",
+            "comment": "Add joincall failure strings to ErrorBar component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "29ad67fa57996778dd8a2f04105d99b8c23a5b33",
+            "comment": "Update styles on new modal to use rem not px for border thickness."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "edae5c218a60be1d42adcaef9da8a40bbc0665e7",
+            "comment": "Update chat message action button icon styles: increase contrast in dark mode for MessageThread and Chat Composites. Make icon customizable."
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9d54cded4514615aafaf8839faf2a83204679cbe",
+            "comment": "Remove beta API from stable build"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "dd6fd2f775a9fcbc6565bfe788fcaa6f40a9705b",
+            "comment": "Updating docs"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7e78a0a3534e5d6e0fba45a1cd056890d81699be",
+            "comment": "make sure badge text color is white in both light and dark mode"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b1a9409b1dc0c9cab51e915264e0626e46c18ed6",
+            "comment": "Add tests for filesharing upload button and file cards in sendbox"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "6e5d0f2409d345f92c948c14eb9f1a60506f832b",
+            "comment": "Update webpack-dev-server in the sample apps and composites package."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b62d2174339f59deb3c322b6f20308a8bc9ca2eb",
+            "comment": "Converting filesharing functions to arrow functions in CallWithChatBackendChatAdapter"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "2df08c6f303ca8cdb638cf0dcdbd8df7ecef90e6",
+            "comment": "Attached data ui id for chat unread message badge "
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "a6b840a923d78c7dc4bf32e0a67c6aedfb4cdf1e",
+            "comment": "Cleaning up duplicate file sharing code from react-composites"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a92c49984340bce7274a7c5cd58591a39dd6a12b",
+            "comment": "Use useAzureCommunicationChatAdapter hook in ChatComposite samples"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "19b769c3ce685c802c35ece123f21392c8a979a2",
+            "comment": "Update docs to note change on new min height and min width"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Updating story for filecard"
+          },
+          {
+            "author": "dademath@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "68876367f8e78f9cc01bea06e11735f57e06d28f",
+            "comment": "[CallWithChat][A11y] Add aria-label for ChatMessageActionMenu button (#1760)"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b5de40d14719d6f96bb4e15d510b952e719aa156",
+            "comment": "Update output in the calling stateful client snippet to have correct output."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "340c7f5b35404a2c0408f7eeb897925aec9e2103",
+            "comment": "Add required tslib to update packages"
+          },
+          {
+            "author": "dademath@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "fdb76d99f9bf4b961039799dd71e3e0986cb2cf7",
+            "comment": "UI Library Desing Kit"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "a6b840a923d78c7dc4bf32e0a67c6aedfb4cdf1e",
+            "comment": "Add FileCard story as internal story to storybook"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1ed7e6f723e83027c7ae97c0f6ea1d1efd09b1ef",
+            "comment": "Fix platform support documentation"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "73706d8ed333f8263480c70c8aa80d04d5d7ec8d",
+            "comment": "Set dummy telemetry version on `main`"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "b1a9409b1dc0c9cab51e915264e0626e46c18ed6",
+            "comment": "Add util function for converting px to rem"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "fa9f3484b9a76ee3438d9371088efcc41f085829",
+            "comment": "Add version to azure log(telemetry)"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "fa9f3484b9a76ee3438d9371088efcc41f085829",
+            "comment": "Add version to azure log(telemetry)"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "38e02f1d0e9f1a75e2c16422e38165c8a6c64a2e",
+            "comment": "change tooltip color in dark mode"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ded9427c563ab19fe29f99c2fb47c4e1ceb7e2bf"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "6e9610b12dd601940e6b826b5cfdf4e806d02fdb",
+            "comment": "Make useContainerHeight/Width an internal fn for use in react-composites"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9d54cded4514615aafaf8839faf2a83204679cbe",
+            "comment": "Remove beta API from stable build"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "b8389062d4d46c5a2766a462f2214feb009deb73",
+            "comment": "Bugfix for file upload button's inconsistent behavior"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Move file download renderer to MessageThread component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "fde859e57fba12604773a278f2dfed86352f5608",
+            "comment": "Flatten pick and omit APIs in CallWithChatComposite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ae665dc277b80ecbf26bc6bfd514ec3026b12ac3",
+            "comment": "Add error bar to show file download error message in the message thread."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "ebdaeadf3bba0ffa7a473fe2fef7986cafe83eb5",
+            "comment": "Reducing un-needed interfaces from File Sharing Public API"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "4c0a64adec1576372ecc417ab2c82d55d40b55f6",
+            "comment": "Adding gap between downloadable files and message content"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d888514c586daf87be33c6875d8ad61b6f4c9946",
+            "comment": "Changing attach file icon position basis on form factor"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f13219e2610936c3ecf7cc1f637f28eaa85dd863",
+            "comment": "Introduces number of message tracking for the chat button tooltip"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a4d2c97cb1ca80630a538244daa97f9720972222",
+            "comment": "Added chat test setup with per user query arguments & UI tests for file download card"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "58fe34d53c7e37d6c4d14dab52acc4320d761846",
+            "comment": "Modifying the updateMessage chat adapter method to allow passing metadata as a parameter"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "d82dfc2da392d64f37cb5896fc4f7bab44ed5540",
+            "comment": "Bugfix for delay in removing file card after a message is sent"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c214edcf472f26abc559b0c28c9dfabd81de0fac",
+            "comment": "Added resend button to contextual menu"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "1f7d42376b0ddedb7823acf6298881a30609c835",
+            "comment": "Add filesharing to callwithchat composite"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "4c5abf8919f86780cb6969187620402bc5911e8b",
+            "comment": "Add telemetry for rendering problems"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "763bfb6933e29401dbc5a5229ed12eff7d7ac055",
+            "comment": "Log the function called from stateful client"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Adding file metadata parsing to selectors"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "b942e0172f5653433dfddf448334f4d2c7e4cd88",
+            "comment": "fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participants"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "58fe34d53c7e37d6c4d14dab52acc4320d761846",
+            "comment": "Modifying the updateMessage handler method to allow passing metadata as a parameter"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "763bfb6933e29401dbc5a5229ed12eff7d7ac055",
+            "comment": "Log the function called from stateful client"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "c214edcf472f26abc559b0c28c9dfabd81de0fac",
+            "comment": "Added resend button to contextual menu"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ffc4f476e0341cfd20cbdc39449163c6f0bd4202",
+            "comment": "change color for chat bubbles : blue when successfully sent and red when failed, added failed tag"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b942e0172f5653433dfddf448334f4d2c7e4cd88",
+            "comment": "fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participant"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "b8389062d4d46c5a2766a462f2214feb009deb73",
+            "comment": "Bugfix for inconsistent fileupload sendbox errors"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Add default file download renderers to MessageThread"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "a6b840a923d78c7dc4bf32e0a67c6aedfb4cdf1e",
+            "comment": "Preventing text wrapping in file card due to long file names"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "2434ce64597e829dc1c5c1c963d2814185ebe97f",
+            "comment": "Bugfix for text wrapping onto next line in file card"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "adc20a25f3437b256d9afcc1b2c36f144416f4d3",
+            "comment": "API fix: Hide FileSharing API from stable build"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "4c0a64adec1576372ecc417ab2c82d55d40b55f6",
+            "comment": "Making File Card consistent with Figma Designs"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "9af6a7a6a6b0f0b5fa3847161b199c6bf8622396",
+            "comment": "calculate read number and who has read the message on hover tooltip or on click action menu"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "b1a9409b1dc0c9cab51e915264e0626e46c18ed6",
+            "comment": "FileCard: Do not show progress bar when progress is 0"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0e8d8a0e043804f2621f9c18e7c22f3056ee6802",
+            "comment": "Introduces A11y strings for aria-roles for control bar buttons."
+          }
+        ],
+        "minor": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a92c49984340bce7274a7c5cd58591a39dd6a12b",
+            "comment": "Add useAzureCommunicationChatAdapter hook"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e96ce012ac5536fe9f04a3d79b04cd2a19b68422",
+            "comment": "Introduce strings for the new modal controls."
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:01 GMT",
       "tag": "@azure/communication-react_v1.2.0",
       "version": "1.2.0",

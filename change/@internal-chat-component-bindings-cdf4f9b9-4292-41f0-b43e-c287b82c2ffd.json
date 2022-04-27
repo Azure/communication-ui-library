@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Do not show \"Not In Thread\" Error Banner shown to user when a BotContact is a participant in Teams Interop Chats",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

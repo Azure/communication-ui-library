@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix floating local video tile going offscreen in the VideoGallery Component",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

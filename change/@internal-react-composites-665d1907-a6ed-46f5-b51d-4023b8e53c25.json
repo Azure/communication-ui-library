@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Changing attach file icon position basis on form factor",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
