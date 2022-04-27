@@ -14,16 +14,9 @@ export const useCustomAvatarPersonaData = (
   userIds: (string | undefined)[],
   callback?: AvatarPersonaDataCallback
 ): (AvatarPersonaData | undefined)[] => {
-  const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>([]);
+  const [data, setData] = React.useState<(AvatarPersonaData | undefined)[]>(Array(userIds.length).fill(undefined));
   useEffect(() => {
     (async () => {
-      if (!callback) {
-        const undefinedPersonas = Array(userIds.length).fill(undefined);
-        if (shouldUpdate(data, undefinedPersonas)) {
-          setData(undefinedPersonas);
-        }
-        return;
-      }
       const newData = await Promise.all(
         userIds.map(async (userId: string | undefined) => {
           if (!userId || !callback) {
@@ -61,10 +54,10 @@ const shouldUpdate = (
  * @private
  */
 const avatarDeepEqual = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
-  return currentData?.text !== newData?.text &&
-    currentData?.imageUrl !== newData?.imageUrl &&
-    currentData?.initialsColor !== newData?.initialsColor &&
-    currentData?.imageInitials !== newData?.imageInitials &&
+  return currentData?.text !== newData?.text ||
+    currentData?.imageUrl !== newData?.imageUrl ||
+    currentData?.initialsColor !== newData?.initialsColor ||
+    currentData?.imageInitials !== newData?.imageInitials ||
     currentData?.initialsTextColor !== newData?.initialsTextColor
     ? true
     : false;
