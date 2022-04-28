@@ -40,6 +40,7 @@ export const useCustomAvatarPersonaData = (
  * @returns Boolean whether there is new avatar persona data present.
  * @private
  */
+
 export const shouldUpdate = (
   currentData: (AvatarPersonaData | undefined)[],
   newData: (AvatarPersonaData | undefined)[]
