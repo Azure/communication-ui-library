@@ -1891,7 +1891,11 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     microphoneActionTurnedOffAnnouncement: string;
     microphoneActionTurnedOnAnnouncement: string;
+<<<<<<< HEAD
     microphoneButtonSplitRoleDescription: string;
+=======
+    microphoneButtonSplitRoleDescription?: string;
+>>>>>>> f840e9e70b58d4df3ad7d86472de5e0d8605cbdb
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
