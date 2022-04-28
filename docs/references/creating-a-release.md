@@ -77,7 +77,7 @@ graph LR
   prerelease -->|Create Branch| release
   prerelease -.-o|Create Pull Request| main
 ```
-Something that should be done is disable the beta checks on the CI if a `stable` release. This is to ensure that any cherry pick PR's going into release dont run against the beta CI causing failures this is done by editing the [CI](https://github.com/Azure/communication-ui-library/actions/workflows/ci.yml) workflow Matrix definition. This can be done in this [file](../../.github/workflows/ci.yml) by editing the output `JSON` string to remove the `beta` flavor.
+Something that should be done is disable the `beta` checks on the CI if a `stable` release, or the `stable` checks if this is a `beta` relase. This is to ensure that any cherry pick PR's going into release dont run against the beta CI causing failures this is done by editing the [CI](https://github.com/Azure/communication-ui-library/actions/workflows/ci.yml) workflow Matrix definition. This can be done in this [file](../../.github/workflows/ci.yml) by editing the output `JSON` string to remove the `beta` flavor.
 
 ### Cherry-picking changes
 
