@@ -74,7 +74,7 @@ jobs:
 
       # we will want to run rush changelog with type none make sure that all packlets have change files
       - name: Add beachball changelog
-        run: rush changelog --message Created release branch and updated SDK's --type none
+        run: node common/config/node_modules/beachball/bin/beachball.js change -m Create release branch and update SDK versions --type none
 
       # Commit new dependencies
       - name: Commit changes
