@@ -11,7 +11,7 @@ import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import { createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   ChatAdapter,
@@ -70,13 +70,23 @@ function App(): JSX.Element {
     }),
     []
   );
-  const adapter: ChatAdapter = fakeChat
-    ? createFakeChatAdapter()
-    : useAzureCommunicationChatAdapter(args, async (adapter) => {
-        // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-        await adapter.fetchInitialData();
-        return adapter;
-      });
+
+  const [adapter, setAdapter] = useState(null);
+  useEffect(() => {
+    const initialize = async (): Promise<void> => {
+      if (fakeChat) {
+        setAdapter(await createFakeChatAdapter());
+      } else {
+        useAzureCommunicationChatAdapter(args, async (adapter) => {
+          // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+          await adapter.fetchInitialData();
+          return adapter;
+        });
+      }
+    };
+
+    initialize();
+  }, []);
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
@@ -200,7 +210,7 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
   }
 }
 
-function createFakeChatAdapter(): ChatAdapter {
+async function createFakeChatAdapter(): Promise<ChatAdapter> {
   // return new TestChatAdapter(
   //   { id: '1', displayName: 'user1' },
   //   new InMemoryChatClient({
@@ -219,51 +229,22 @@ function createFakeChatAdapter(): ChatAdapter {
   // );
   const chatService = new FakeChatService();
   const [firstUserId, firstChatClient] = chatService.newUserAndClient();
-  const g = {
-    userId: firstUserId,
-    displayName: '1',
-    chatClient: firstChatClient,
-    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-  };
-}
-
-export const setupFakeThreadWithTwoParticipants = async (
-  firstDisplayName: string,
-  secondDisplayName: string
-): Promise<[ParticipantHandle, ParticipantHandle]> => {
-  const fakeChatService = new FakeChatService({
-    asyncDelivery: true,
-    maxDelayMilliseconds: 3000
-  });
-  const [firstUserId, firstChatClient] = fakeChatService.newUserAndClient();
-  const [secondUserId, secondChatClient] = fakeChatService.newUserAndClient();
   const thread = await firstChatClient.createChatThread(
     {
       topic: 'Say Hello'
     },
     {
-      participants: [
-        { id: firstUserId, displayName: firstDisplayName },
-        { id: secondUserId, displayName: secondDisplayName }
-      ]
+      participants: [{ id: firstUserId, displayName: '1' }]
     }
   );
-
-  return [
-    {
-      userId: firstUserId,
-      displayName: firstDisplayName,
-      chatClient: firstChatClient,
-      chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-    },
-    {
-      userId: secondUserId,
-      displayName: secondDisplayName,
-      chatClient: secondChatClient,
-      chatThreadClient: secondChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-    }
-  ];
-};
+  const participantHandle = {
+    userId: firstUserId,
+    displayName: '1',
+    chatClient: firstChatClient,
+    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+  };
+  return await initializeAdapter(participantHandle);
+}
 
 export const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
   const statefulChatClient = createStatefulChatClientWithDeps(participant.chatClient, {
