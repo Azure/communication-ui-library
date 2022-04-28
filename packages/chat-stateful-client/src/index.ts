@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { createStatefulChatClient } from './StatefulChatClient';
+export { createStatefulChatClient, createStatefulChatClientWithDeps } from './StatefulChatClient';
 
 export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';

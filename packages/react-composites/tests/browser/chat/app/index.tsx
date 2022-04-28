@@ -1,11 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
+import { createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -14,13 +19,17 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   FileDownloadError,
   FileDownloadHandler,
-  useAzureCommunicationChatAdapter
+  useAzureCommunicationChatAdapter,
+  createAzureCommunicationChatAdapterFromClient
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
-import { InMemoryChatClient } from './mock/InMemoryTestChatClient';
-import { TestChatAdapter } from './mock/TestChatAdapter';
+// import { InMemoryChatClient } from './mock/InMemoryTestChatClient';
+// import { TestChatAdapter } from './mock/TestChatAdapter';
+import { FakeChatService } from './fake/ChatService';
+import { CommunicationIdentifier } from '@azure/communication-signaling';
+import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -192,20 +201,92 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 }
 
 function createFakeChatAdapter(): ChatAdapter {
-  return new TestChatAdapter(
-    { id: '1', displayName: 'user1' },
-    new InMemoryChatClient({
-      chatMessages: {
-        '1': {
-          id: '1',
-          type: 'text',
-          version: '1',
-          sequenceId: '1',
-          createdOn: new Date(),
-          status: 'delivered',
-          content: { message: 'test' }
-        }
-      }
-    })
-  );
+  // return new TestChatAdapter(
+  //   { id: '1', displayName: 'user1' },
+  //   new InMemoryChatClient({
+  //     chatMessages: {
+  //       '1': {
+  //         id: '1',
+  //         type: 'text',
+  //         version: '1',
+  //         sequenceId: '1',
+  //         createdOn: new Date(),
+  //         status: 'delivered',
+  //         content: { message: 'test' }
+  //       }
+  //     }
+  //   })
+  // );
+  const chatService = new FakeChatService();
+  const [firstUserId, firstChatClient] = chatService.newUserAndClient();
+  const g = {
+    userId: firstUserId,
+    displayName: '1',
+    chatClient: firstChatClient,
+    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+  };
 }
+
+export const setupFakeThreadWithTwoParticipants = async (
+  firstDisplayName: string,
+  secondDisplayName: string
+): Promise<[ParticipantHandle, ParticipantHandle]> => {
+  const fakeChatService = new FakeChatService({
+    asyncDelivery: true,
+    maxDelayMilliseconds: 3000
+  });
+  const [firstUserId, firstChatClient] = fakeChatService.newUserAndClient();
+  const [secondUserId, secondChatClient] = fakeChatService.newUserAndClient();
+  const thread = await firstChatClient.createChatThread(
+    {
+      topic: 'Say Hello'
+    },
+    {
+      participants: [
+        { id: firstUserId, displayName: firstDisplayName },
+        { id: secondUserId, displayName: secondDisplayName }
+      ]
+    }
+  );
+
+  return [
+    {
+      userId: firstUserId,
+      displayName: firstDisplayName,
+      chatClient: firstChatClient,
+      chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    },
+    {
+      userId: secondUserId,
+      displayName: secondDisplayName,
+      chatClient: secondChatClient,
+      chatThreadClient: secondChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    }
+  ];
+};
+
+export const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
+  const statefulChatClient = createStatefulChatClientWithDeps(participant.chatClient, {
+    userId: participant.userId as CommunicationUserIdentifier,
+    displayName: participant.displayName,
+    endpoint: 'FAKE_ENDPIONT',
+    credential: fakeToken
+  });
+  statefulChatClient.startRealtimeNotifications();
+  return await createAzureCommunicationChatAdapterFromClient(
+    statefulChatClient,
+    await statefulChatClient.getChatThreadClient(participant.chatThreadClient.threadId)
+  );
+};
+
+export interface ParticipantHandle {
+  userId: CommunicationIdentifier;
+  displayName: string;
+  chatClient: ChatClient;
+  chatThreadClient: ChatThreadClient;
+}
+
+const fakeToken: CommunicationTokenCredential = {
+  getToken(): any {},
+  dispose(): any {}
+};
