@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
+import { useCustomAvatarPersonaData } from './CustomDataModelUtils';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -65,16 +66,11 @@ export interface AvatarPersonaProps extends IPersonaProps {
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
-  const [data, setData] = React.useState<AvatarPersonaData | undefined>();
+  const userIds = useMemo(() => {
+    return [userId];
+  }, [userId]);
 
-  useEffect(() => {
-    (async () => {
-      if (dataProvider && userId) {
-        const data = await dataProvider(userId);
-        setData(data);
-      }
-    })();
-  }, [dataProvider, userId]);
+  const [data] = useCustomAvatarPersonaData(userIds, dataProvider);
 
   return (
     <Persona
