@@ -11,7 +11,8 @@ import {
   Persona,
   PersonaPresence,
   PersonaSize,
-  Stack
+  Stack,
+  Text
 } from '@fluentui/react';
 import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -194,7 +195,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
       >
         {avatar}
-        {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
+        {me && (
+          <Stack>
+            <Text className={meTextStyle}>{isMeText}</Text>
+          </Stack>
+        )}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
