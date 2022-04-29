@@ -3,11 +3,11 @@ import { Persona, PersonaPresence, PersonaSize } from '@fluentui/react';
 import React from 'react';
 
 export const CustomAvatarExample: () => JSX.Element = () => {
-  const onRenderAvatar = (): JSX.Element => {
+  const onRenderAvatar = (userId, options): JSX.Element => {
     return (
       <Persona
         size={PersonaSize.size32}
-        text="Annie Lindqvist"
+        text={options.text}
         imageUrl="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
       />
     );
