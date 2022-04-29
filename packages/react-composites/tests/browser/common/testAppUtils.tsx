@@ -14,7 +14,7 @@ import {
   People16Regular,
   PeopleAdd16Regular,
   Warning16Regular,
-  DocumentBriefcase20Regular
+  DocumentError20Regular
 } from '@fluentui/react-icons';
 
 ///
@@ -40,7 +40,7 @@ export function initializeIconsForUITests(): void {
       People: <People16Regular />,
       PeopleAdd: <PeopleAdd16Regular />,
       Warning: <Warning16Regular />,
-      ProtectedDocument: <DocumentBriefcase20Regular />
+      ProtectedDocument: <DocumentError20Regular />
     }
   });
 
