@@ -1,4 +1,4 @@
-import { ParticipantItem, ParticipantItemProps, ParticipantItemStyles } from '@azure/communication-react';
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
 import { PersonaPresence, Icon, Stack, mergeStyles } from '@fluentui/react';
 import React from 'react';
 
