@@ -72,6 +72,7 @@ export const createDefaultChatHandlers = memoizeOne(
         if (messageIterator === undefined) {
           // Lazy definition so that errors in the method call are reported correctly.
           // Also allows recovery via retries in case of transient errors.
+
           messageIterator = chatThreadClient.listMessages({ maxPageSize: 50 });
         }
         if (readReceiptIterator === undefined) {
@@ -81,28 +82,36 @@ export const createDefaultChatHandlers = memoizeOne(
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
         let earliestTime = Number.MAX_SAFE_INTEGER;
-        while (remainingMessagesToGet >= 1) {
-          const message = await messageIterator.next();
-          if (message?.value?.id) {
-            if (parseInt(message.value.id) < earliestTime) {
-              earliestTime = parseInt(message.value.id);
+        try {
+          while (remainingMessagesToGet >= 1) {
+            const message = await messageIterator.next();
+            if (message?.value?.id) {
+              if (parseInt(message.value.id) < earliestTime) {
+                earliestTime = parseInt(message.value.id);
+              }
+            }
+
+            if (message.value?.type && message.value.type === 'text') {
+              remainingMessagesToGet--;
+            }
+
+            // We have traversed all messages in this thread
+            if (message.done) {
+              isAllChatMessagesLoaded = true;
+              break;
             }
           }
-
-          if (message.value?.type && message.value.type === 'text') {
-            remainingMessagesToGet--;
-          }
-
-          // We have traversed all messages in this thread
-          if (message.done) {
-            isAllChatMessagesLoaded = true;
-            break;
-          }
+        } catch (e) {
+          console.log(e);
         }
         // keep fetching read receipts until read receipt time < earlist message time
-        let readReceipt = await readReceiptIterator.next();
-        while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
-          readReceipt = await readReceiptIterator.next();
+        try {
+          let readReceipt = await readReceiptIterator.next();
+          while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
+            readReceipt = await readReceiptIterator.next();
+          }
+        } catch (e) {
+          console.log(e);
         }
         return isAllChatMessagesLoaded;
       }
