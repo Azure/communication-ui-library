@@ -180,7 +180,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       ref={containerRef}
       role={'menuitem'}
       data-is-focusable={true}
-      className={mergeStyles(participantItemContainerStyle(me), styles?.root)}
+      className={mergeStyles(participantItemContainerStyle(me, menuItems ? true : false), styles?.root)}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {

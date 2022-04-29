@@ -1,4 +1,4 @@
-import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
+import { ParticipantItem, ParticipantItemProps, ParticipantItemStyles } from '@azure/communication-react';
 import { PersonaPresence, Icon, Stack, mergeStyles } from '@fluentui/react';
 import React from 'react';
 
@@ -14,6 +14,8 @@ export const CustomIconExample: () => JSX.Element = () => {
 
   const containerStyle = mergeStyles({ width: '15rem' });
 
+  const participantItemStyle: ParticipantItemStyles = { me: { fontFamily: 'Segoe UI' } };
+
   return (
     <Stack className={containerStyle}>
       <ParticipantItem
@@ -21,6 +23,7 @@ export const CustomIconExample: () => JSX.Element = () => {
         presence={PersonaPresence.online}
         me={true}
         onRenderIcon={onRenderIcon}
+        styles={participantItemStyle}
       />
       <ParticipantItem displayName="Patrick" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />
       <ParticipantItem displayName="Sandy" presence={PersonaPresence.online} onRenderIcon={onRenderIcon} />

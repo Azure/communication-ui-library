@@ -6,14 +6,14 @@ import { IStyle, mergeStyles } from '@fluentui/react';
 /**
  * @private
  */
-export const participantItemContainerStyle = (isMe: boolean | undefined): IStyle => {
+export const participantItemContainerStyle = (isMe: boolean | undefined, isClickable: boolean | undefined): IStyle => {
   return {
     paddingTop: '0.25rem',
     paddingBottom: '0.25rem',
     display: 'flex',
     maxWidth: '100%',
     minWidth: '8rem',
-    cursor: isMe ? 'default' : 'pointer',
+    cursor: isMe || !isClickable ? 'default' : 'pointer',
     alignItems: 'center'
   };
 };
