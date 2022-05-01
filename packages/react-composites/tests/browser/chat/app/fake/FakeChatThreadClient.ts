@@ -330,7 +330,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   private baseChatMessage(
-    now: Date
+    now?: Date
   ): Pick<ChatMessage, 'id' | 'sequenceId' | 'version' | 'senderDisplayName' | 'createdOn' | 'sender'> {
     const thread = this.checkedGetThread();
     const me = this.checkedGetMe();
@@ -339,7 +339,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
       sequenceId: `${thread.messages.length}`,
       version: '0',
       senderDisplayName: me.displayName,
-      createdOn: new Date(Date.now()),
+      createdOn: now ?? new Date(Date.now()),
       sender: getIdentifierKind(me.id)
     };
   }

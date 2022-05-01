@@ -19,8 +19,8 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   FileDownloadError,
   FileDownloadHandler,
-  useAzureCommunicationChatAdapter,
-  createAzureCommunicationChatAdapterFromClient
+  createAzureCommunicationChatAdapterFromClient,
+  createAzureCommunicationChatAdapter
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
@@ -30,6 +30,7 @@ import { initializeIconsForUITests, verifyParamExists } from '../../common/testA
 import { FakeChatService } from './fake/ChatService';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { nanoid } from 'nanoid';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -52,12 +53,7 @@ const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : 
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
-let fakeChat = undefined;
-try {
-  fakeChat = JSON.parse(params.fakeChat);
-} catch (e) {
-  console.log('Query parameter fakeChat could not be parsed: ', params.fakeChat);
-}
+let fakeChat = Boolean(params.fakeChat);
 
 function App(): JSX.Element {
   const args = useMemo(
@@ -71,21 +67,19 @@ function App(): JSX.Element {
     []
   );
 
-  const [adapter, setAdapter] = useState(null);
+  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       if (fakeChat) {
         setAdapter(await createFakeChatAdapter());
       } else {
-        useAzureCommunicationChatAdapter(args, async (adapter) => {
-          // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-          await adapter.fetchInitialData();
-          return adapter;
-        });
+        setAdapter(await createChatAdapterWithCredentials());
       }
     };
 
     initialize();
+    return () => adapter && adapter.dispose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -211,35 +205,23 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 }
 
 async function createFakeChatAdapter(): Promise<ChatAdapter> {
-  // return new TestChatAdapter(
-  //   { id: '1', displayName: 'user1' },
-  //   new InMemoryChatClient({
-  //     chatMessages: {
-  //       '1': {
-  //         id: '1',
-  //         type: 'text',
-  //         version: '1',
-  //         sequenceId: '1',
-  //         createdOn: new Date(),
-  //         status: 'delivered',
-  //         content: { message: 'test' }
-  //       }
-  //     }
-  //   })
-  // );
   const chatService = new FakeChatService();
   const [firstUserId, firstChatClient] = chatService.newUserAndClient();
   const thread = await firstChatClient.createChatThread(
     {
-      topic: 'Say Hello'
+      topic: 'Cowabunga'
     },
     {
-      participants: [{ id: firstUserId, displayName: '1' }]
+      participants: [
+        { id: firstUserId, displayName: 'Dorian Gutmann' },
+        { id: { communicationUserId: nanoid() }, displayName: 'Poppy Bjørgen' },
+        { id: { communicationUserId: nanoid() }, displayName: 'Dave Pokahl' }
+      ]
     }
   );
   const participantHandle = {
     userId: firstUserId,
-    displayName: '1',
+    displayName: 'Dorian Gutmann',
     chatClient: firstChatClient,
     chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
   };
@@ -270,4 +252,16 @@ export interface ParticipantHandle {
 const fakeToken: CommunicationTokenCredential = {
   getToken(): any {},
   dispose(): any {}
+};
+
+// Function to create call adapter using createAzureCommunicationCallAdapter
+const createChatAdapterWithCredentials = async (): Promise<ChatAdapter> => {
+  const callAdapter = await createAzureCommunicationChatAdapter({
+    endpoint,
+    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    displayName,
+    credential: new AzureCommunicationTokenCredential(token),
+    threadId
+  });
+  return callAdapter;
 };

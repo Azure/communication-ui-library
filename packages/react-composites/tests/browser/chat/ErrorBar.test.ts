@@ -13,13 +13,17 @@ import {
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
+const fakeAdapter = true;
+
 test.describe('ErrorBar is shown correctly', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl });
+    if (!fakeAdapter) {
+      await chatTestSetup({ pages, users, serverUrl });
+    }
   });
 
-  test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    await page.goto(buildUrl(serverUrl, users[0]));
+  test.only('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
+    await page.goto(buildUrl(serverUrl, users[0], { fakeChat: `${fakeAdapter}` }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
