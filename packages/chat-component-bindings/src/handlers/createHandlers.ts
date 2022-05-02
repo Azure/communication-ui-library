@@ -72,7 +72,6 @@ export const createDefaultChatHandlers = memoizeOne(
         if (messageIterator === undefined) {
           // Lazy definition so that errors in the method call are reported correctly.
           // Also allows recovery via retries in case of transient errors.
-
           messageIterator = chatThreadClient.listMessages({ maxPageSize: 50 });
         }
         if (readReceiptIterator === undefined) {
