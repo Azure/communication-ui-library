@@ -26,6 +26,7 @@ import {
   CallError
 } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
+import { CallIdHistory } from './CallIdHistory';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -45,6 +46,7 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
+  private _callIdHistory: CallIdHistory = new CallIdHistory();
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -114,7 +116,8 @@ export class CallContext {
 
   public setCall(call: CallState): void {
     this.modifyState((draft: CallClientState) => {
-      const existingCall = draft.calls[call.id];
+      const latestCallId = this._callIdHistory.latestCallId(call.id);
+      const existingCall = draft.calls[latestCallId];
       if (existingCall) {
         existingCall.callerInfo = call.callerInfo;
         existingCall.state = call.state;
@@ -128,37 +131,38 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
-        draft.calls[call.id] = call;
+        draft.calls[latestCallId] = call;
       }
     });
   }
 
   public removeCall(callId: string): void {
     this.modifyState((draft: CallClientState) => {
-      delete draft.calls[callId];
+      delete draft.calls[this._callIdHistory.latestCallId(callId)];
     });
   }
 
   public setCallEnded(callId: string, callEndReason: CallEndReason | undefined): void {
+    const latestCallId = this._callIdHistory.latestCallId(callId);
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[latestCallId];
       if (call) {
         call.endTime = new Date();
         call.callEndReason = callEndReason;
-        delete draft.calls[callId];
+        delete draft.calls[latestCallId];
         // Performance note: This loop should run only once because the number of entries
         // is never allowed to exceed MAX_CALL_HISTORY_LENGTH. A loop is used for correctness.
         while (Object.keys(draft.callsEnded).length >= MAX_CALL_HISTORY_LENGTH) {
           delete draft.callsEnded[findOldestCallEnded(draft.callsEnded)];
         }
-        draft.callsEnded[callId] = call;
+        draft.callsEnded[latestCallId] = call;
       }
     });
   }
 
   public setCallState(callId: string, state: CallStatus): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.state = state;
       }
@@ -166,9 +170,11 @@ export class CallContext {
   }
 
   public setCallId(newCallId: string, oldCallId: string): void {
+    this._callIdHistory.updateCallIdHistory(newCallId, oldCallId);
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[oldCallId];
       if (call) {
+        call.id = newCallId;
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
@@ -177,7 +183,7 @@ export class CallContext {
 
   public setCallIsScreenSharingOn(callId: string, isScreenSharingOn: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.isScreenSharingOn = isScreenSharingOn;
       }
@@ -190,7 +196,7 @@ export class CallContext {
     removeRemoteParticipant: string[]
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         removeRemoteParticipant.forEach((id: string) => {
           delete call.remoteParticipants[id];
@@ -208,7 +214,7 @@ export class CallContext {
     removeRemoteParticipant: string[]
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         removeRemoteParticipant.forEach((id: string) => {
           delete call.remoteParticipantsEnded[id];
@@ -222,7 +228,7 @@ export class CallContext {
 
   public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.localVideoStreams = streams;
       }
@@ -231,7 +237,7 @@ export class CallContext {
 
   public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.isMuted = isMicrophoneMuted;
       }
@@ -240,7 +246,7 @@ export class CallContext {
 
   public setCallDominantSpeakers(callId: string, dominantSpeakers: DominantSpeakersInfo): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.dominantSpeakers = dominantSpeakers;
       }
@@ -249,7 +255,7 @@ export class CallContext {
 
   public setCallRecordingActive(callId: string, isRecordingActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.isRecordingActive = isRecordingActive;
       }
@@ -258,7 +264,7 @@ export class CallContext {
 
   public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.transcription.isTranscriptionActive = isTranscriptionActive;
       }
@@ -267,7 +273,7 @@ export class CallContext {
 
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.screenShareRemoteParticipant = participantKey;
       }
@@ -276,7 +282,7 @@ export class CallContext {
 
   public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         if (call.localVideoStreams.length > 0) {
           call.localVideoStreams[0].view = view;
@@ -287,7 +293,7 @@ export class CallContext {
 
   public setParticipantState(callId: string, participantKey: string, state: RemoteParticipantStatus): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -299,7 +305,7 @@ export class CallContext {
 
   public setParticipantIsMuted(callId: string, participantKey: string, muted: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -311,7 +317,7 @@ export class CallContext {
 
   public setParticipantDisplayName(callId: string, participantKey: string, displayName: string): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -323,7 +329,7 @@ export class CallContext {
 
   public setParticipantIsSpeaking(callId: string, participantKey: string, isSpeaking: boolean): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -335,7 +341,7 @@ export class CallContext {
 
   public setParticipantVideoStream(callId: string, participantKey: string, stream: RemoteVideoStreamState): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -360,7 +366,7 @@ export class CallContext {
     isAvailable: boolean
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -380,7 +386,7 @@ export class CallContext {
     removeRemoteVideoStream: number[]
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
@@ -411,7 +417,7 @@ export class CallContext {
     view: VideoStreamRendererViewState | undefined
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[callId];
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {

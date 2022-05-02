@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Reduce min-width and min-height of the composites to support a galaxy fold portrait screen",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

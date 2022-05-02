@@ -28,6 +28,7 @@ jobs:
         run: echo "::set-output name=matrix::{\"include\":[{\"flavor\":\"stable\"},{\"flavor\":\"beta\"}]}"
 
   update_examples_snapshot:
+    needs: get_matrix
     name: Update component examples snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
@@ -78,9 +79,9 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -v -t @azure/communication-react
+        run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -v -t component-examples
+        run: rush build -t component-examples
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -114,6 +115,7 @@ jobs:
           git push
 
   update_bundle_snapshot:
+    needs: get_matrix
     name: Update embed html bundle snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
@@ -164,9 +166,9 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
-        run: rush build -v -t @azure/communication-react
+        run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -v -t sample-static-html-composites
+        run: rush build -t sample-static-html-composites
       - name: Update snapshot
         id: updatesnapshots
         run: |
@@ -200,6 +202,7 @@ jobs:
           git push
 
   update_composite_snapshot:
+    needs: get_matrix
     name: Update composite snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}

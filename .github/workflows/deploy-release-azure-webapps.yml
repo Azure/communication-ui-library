@@ -39,7 +39,7 @@ jobs:
         run: rush switch-flavor:stable
 
       - name: Build Projects
-        run: rush build -v
+        run: rush build
 
       - name: Package Calling Sample Artifact
         run: rushx package
