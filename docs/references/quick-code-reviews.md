@@ -21,11 +21,12 @@ We use the assignee role to track which reviewers are responsible for (speedy) c
 As an author, you should
 
 - Add two [assignees](https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users) for your PRs.
-- Assign new folks if the number of assignees falls below 2 and you still need two approvals.
+  - To clearly signal the responsible reviewers, it is best to assign exactly two reviewers (for the two required approvals).
+- Assign new folks if the number of assignees falls below two and you still need two approvals.
 - Feel empowered to ping assignees if you do not have reviews in a reasonable amount of time.
   It is their responsibility to give you timely reviews (see point below about assignee load-shedding).
 
-As an asignee, you should:
+As an assignee, you should:
 
 - Review assigned PRs timely. It is safe to say that reviewing assigned PRs should be prioritized over writing new PRs.
 - Load-shed if you have too many reviews assigned to you. Tell the PR author you don't have bandwidth / context / confidence for reviewing the PR and unassign yourself.
