@@ -13,7 +13,8 @@ import {
   Link16Regular,
   People16Regular,
   PeopleAdd16Regular,
-  Warning16Regular
+  Warning16Regular,
+  DocumentError20Regular
 } from '@fluentui/react-icons';
 
 ///
@@ -38,7 +39,8 @@ export function initializeIconsForUITests(): void {
       Link: <Link16Regular />,
       People: <People16Regular />,
       PeopleAdd: <PeopleAdd16Regular />,
-      Warning: <Warning16Regular />
+      Warning: <Warning16Regular />,
+      ProtectedDocument: <DocumentError20Regular />
     }
   });
 
