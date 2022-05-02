@@ -181,7 +181,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       ref={containerRef}
       role={'menuitem'}
       data-is-focusable={true}
-      className={mergeStyles(participantItemContainerStyle(me, menuItems ? true : false), styles?.root)}
+      className={mergeStyles(
+        participantItemContainerStyle({ localparticipant: me, clickable: !!menuItems }),
+        styles?.root
+      )}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
@@ -195,11 +198,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
       >
         {avatar}
-        {me && (
-          <Stack>
-            <Text className={meTextStyle}>{isMeText}</Text>
-          </Stack>
-        )}
+        {me && <Text className={meTextStyle}>{isMeText}</Text>}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
