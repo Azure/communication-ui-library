@@ -795,11 +795,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   />
                 </div>
               </div>
-              <div
-                className="ms-Stack css-57"
+              <span
+                className="css-57"
               >
                 (you)
-              </div>
+              </span>
               <div
                 className="ms-Stack css-26"
               />
