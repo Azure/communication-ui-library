@@ -50,9 +50,12 @@ export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
 export type { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 
 export { CameraButton } from './CameraButton';
-export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-export type { CameraButtonContextualMenuStyles, CameraButtonStyles } from './CameraButton';
+export type {
+  CameraButtonContextualMenuStyles,
+  CameraButtonProps,
+  CameraButtonStrings,
+  CameraButtonStyles
+} from './CameraButton';
 
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayout } from './ControlBar';
@@ -64,9 +67,12 @@ export { EndCallButton } from './EndCallButton';
 export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
 export { MicrophoneButton } from './MicrophoneButton';
-export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-export type { MicrophoneButtonContextualMenuStyles, MicrophoneButtonStyles } from './MicrophoneButton';
+export type {
+  MicrophoneButtonStyles,
+  MicrophoneButtonContextualMenuStyles,
+  MicrophoneButtonProps,
+  MicrophoneButtonStrings
+} from './MicrophoneButton';
 
 export { DevicesButton } from './DevicesButton';
 export type {
