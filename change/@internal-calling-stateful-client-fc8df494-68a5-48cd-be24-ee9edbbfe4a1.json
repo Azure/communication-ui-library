@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update the right call.id into state",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}

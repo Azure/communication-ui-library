@@ -33,7 +33,8 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
       case 'sendMessage': {
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
           // Retry logic?
-          const { content } = args[0];
+          const [request, options] = args;
+          const { content } = request;
           const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage: ChatMessageWithStatus = {
             content: { message: content },
@@ -45,7 +46,8 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             createdOn: new Date(),
             status: 'sending',
             senderDisplayName: this._context.getState().displayName,
-            sender: this._context.getState().userId
+            sender: this._context.getState().userId,
+            metadata: options?.metadata
           };
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 

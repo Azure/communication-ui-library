@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adding gap between downloadable files and message content",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
