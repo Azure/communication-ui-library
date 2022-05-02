@@ -23,7 +23,6 @@ export const Camera = (props: {
       {...cameraButtonProps}
       showLabel={props.displayType !== 'compact'}
       styles={styles}
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
