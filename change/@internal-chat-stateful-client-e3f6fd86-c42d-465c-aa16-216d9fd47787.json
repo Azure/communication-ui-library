@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add metadata to local message state when a message is sent",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
