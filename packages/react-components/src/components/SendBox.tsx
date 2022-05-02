@@ -233,12 +233,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     // we dont want to send empty messages including spaces, newlines, tabs
-    if (!EMPTY_MESSAGE_REGEX.test(textValue)) {
-      onSendMessage && onSendMessage(textValue);
+    // Message can be empty if there is a valid file upload
+    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props)) {
+      onSendMessage && onSendMessage(sanitizeText(textValue));
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
   };
+
   const setText = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
@@ -266,16 +268,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
+  const hasTextOrFile = hasText || hasFile(props);
+
   const mergedSendIconStyle = useMemo(
     () =>
       mergeStyles(
         sendIconStyle,
         {
-          color: !!errorMessage || !hasText ? theme.palette.neutralTertiary : theme.palette.themePrimary
+          color: !!errorMessage || !hasTextOrFile ? theme.palette.neutralTertiary : theme.palette.themePrimary
         },
         styles?.sendMessageIcon
       ),
-    [errorMessage, hasText, theme, styles?.sendMessageIcon]
+    [errorMessage, hasTextOrFile, theme, styles?.sendMessageIcon]
   );
 
   const onRenderSendIcon = useCallback(
@@ -388,4 +392,18 @@ const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
     props.activeFileUploads?.length &&
     !props.activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
   );
+};
+
+const hasFile = (props: SendBoxProps): boolean => {
+  /* @conditional-compile-remove(file-sharing) */
+  return !!props.activeFileUploads?.find((file) => !file.error);
+  return false;
+};
+
+const sanitizeText = (message: string): string => {
+  if (EMPTY_MESSAGE_REGEX.test(message)) {
+    return '';
+  } else {
+    return message;
+  }
 };
