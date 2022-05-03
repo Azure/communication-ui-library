@@ -10,7 +10,9 @@ import {
   isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector
+  waitForSelector,
+  disableTooltips,
+  enableTooltips
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -51,7 +53,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     const page = pages[0];
     await stubLocalCameraName(page);
+    await disableTooltips(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page.png`);
+    await enableTooltips(page);
   });
 
   test('local device settings can toggle camera & audio', async ({ pages }) => {
@@ -63,7 +67,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       return !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
     });
     await stubLocalCameraName(page);
+    await disableTooltips(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
+    await enableTooltips(page);
   });
 
   test('local device buttons should show tooltips on hover', async ({ pages }) => {

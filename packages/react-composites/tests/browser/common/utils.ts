@@ -302,3 +302,20 @@ export const isTestProfileStableFlavor = (): boolean => {
     throw 'Faled to find Communication React Flavor env variable';
   }
 };
+
+/**
+ * Helper function for disabling all the tooltips on the page.
+ * Tooltips are idnetified via the `ms-Callout-container` class name.
+ * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
+ */
+export const disableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Callout-container{display: none}' });
+};
+
+/**
+ * Helper function for enabling all the tooltips on the page.
+ * Tooltips are idnetified via the `ms-Callout-container` class name.
+ */
+export const enableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Callout-container{display: block}' });
+};
