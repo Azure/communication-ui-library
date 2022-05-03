@@ -4,7 +4,6 @@ import { Icon, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
-import { extension } from './utils';
 
 /**
  * Meta Data containing information about the uploaded file.
