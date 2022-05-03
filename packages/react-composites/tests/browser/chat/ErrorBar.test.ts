@@ -23,7 +23,17 @@ test.describe('ErrorBar is shown correctly', async () => {
   });
 
   test.only('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    await page.goto(buildUrl(serverUrl, users[0], { fakeChat: `${fakeAdapter}` }));
+    await page.goto(
+      buildUrl(serverUrl, users[0], {
+        fakeModel: JSON.stringify({
+          users: JSON.stringify(
+            users.map((user) => {
+              return { displayName: user.displayName };
+            })
+          )
+        })
+      })
+    );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');

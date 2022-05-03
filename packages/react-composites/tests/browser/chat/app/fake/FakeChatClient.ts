@@ -8,8 +8,7 @@ import {
   ChatThreadItem,
   CreateChatThreadRequest,
   CreateChatThreadOptions,
-  CreateChatThreadResult,
-  ChatMessage
+  CreateChatThreadResult
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';

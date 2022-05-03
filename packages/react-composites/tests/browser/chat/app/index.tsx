@@ -29,7 +29,7 @@ import { initializeIconsForUITests, verifyParamExists } from '../../common/testA
 // import { TestChatAdapter } from './mock/TestChatAdapter';
 import { FakeChatService } from './fake/ChatService';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { nanoid } from 'nanoid';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -53,8 +53,12 @@ const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : 
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
-let fakeChat = Boolean(params.fakeChat);
-
+let fakeModel = undefined;
+try {
+  fakeModel = JSON.parse(params.fakeModel);
+} catch (e) {
+  console.log('Query parameter mockCallState could not be parsed: ', params.fakeModel);
+}
 function App(): JSX.Element {
   const args = useMemo(
     () => ({
@@ -70,7 +74,7 @@ function App(): JSX.Element {
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      if (fakeChat) {
+      if (fakeModel) {
         setAdapter(await createFakeChatAdapter());
       } else {
         setAdapter(await createChatAdapterWithCredentials());
@@ -207,21 +211,25 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 async function createFakeChatAdapter(): Promise<ChatAdapter> {
   const chatService = new FakeChatService();
   const [firstUserId, firstChatClient] = chatService.newUserAndClient();
+  const participants: ChatParticipant[] = fakeModel?.users
+    ? Array.from(JSON.parse(fakeModel.users) as { displayName: string }[]).map((user: { displayName: string }, i) => {
+        return {
+          id: i === 0 ? firstUserId : { communicationUserId: nanoid() },
+          displayName: `${user.displayName}`
+        };
+      })
+    : [];
   const thread = await firstChatClient.createChatThread(
     {
       topic: 'Cowabunga'
     },
     {
-      participants: [
-        { id: firstUserId, displayName: 'Dorian Gutmann' },
-        { id: { communicationUserId: nanoid() }, displayName: 'Poppy Bjørgen' },
-        { id: { communicationUserId: nanoid() }, displayName: 'Dave Pokahl' }
-      ]
+      participants: participants
     }
   );
   const participantHandle = {
-    userId: firstUserId,
-    displayName: 'Dorian Gutmann',
+    userId: participants[0].id,
+    displayName: participants[0].displayName,
     chatClient: firstChatClient,
     chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
   };
