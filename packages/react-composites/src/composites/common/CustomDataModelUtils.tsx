@@ -40,7 +40,7 @@ export const useCustomAvatarPersonaData = (
  * @returns Boolean whether there is new avatar persona data present.
  * @private
  */
-const shouldUpdate = (
+export const shouldUpdate = (
   currentData: (AvatarPersonaData | undefined)[],
   newData: (AvatarPersonaData | undefined)[]
 ): boolean => {
@@ -53,7 +53,7 @@ const shouldUpdate = (
 /**
  * @private
  */
-const avatarDeepDifferenceCheck = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
+export const avatarDeepDifferenceCheck = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
   return (
     currentData?.text !== newData?.text ||
     currentData?.imageUrl !== newData?.imageUrl ||
