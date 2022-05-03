@@ -10,6 +10,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+import { perfLogger } from '../../common/Logger';
 /**
  * @private
  */
@@ -56,6 +57,13 @@ export const useSelectorWithAdaptation = <
   const propRef = useRef(props);
   propRef.current = props;
 
+  perfLogger.verbose(
+    `${JSON.stringify({
+      selectorName: selector.name !== '' ? selector.name : selector['resultFunc']?.name,
+      action: 'parent rerender'
+    })}`
+  );
+
   useEffect(() => {
     const onStateChange = (state: CallAdapterState): void => {
       if (!mounted.current) {
@@ -63,6 +71,12 @@ export const useSelectorWithAdaptation = <
       }
       const newProps = selector(adaptState(state), selectorProps ?? callConfigProps);
       if (propRef.current !== newProps) {
+        perfLogger.verbose(
+          `${JSON.stringify({
+            selectorName: selector.name !== '' ? selector.name : selector['resultFunc']?.name,
+            action: 'return state changed'
+          })}`
+        );
         setProps(newProps);
       }
     };

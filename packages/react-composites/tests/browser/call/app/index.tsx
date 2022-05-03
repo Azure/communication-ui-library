@@ -24,9 +24,12 @@ import memoizeOne from 'memoize-one';
 import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
+import { setLogLevel } from '@azure/logger';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
+
+setLogLevel('verbose');
 
 let mockCallState = undefined;
 try {

@@ -16,6 +16,7 @@ import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 import { IDS } from '../common/constants';
+import { registerPerfCounter, testPerfSnapshot } from './perf/PerfUtil';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -33,7 +34,8 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl, users }) => {
+  test.beforeEach(async ({ pages, serverUrl, users }, testInfo) => {
+    registerPerfCounter(pages[0]);
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.
     // An issue has been filed with the calling team.
@@ -92,6 +94,10 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     );
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
+  });
+
+  test.afterEach(({ pages }, testInfo) => {
+    testPerfSnapshot(testInfo);
   });
 });
 
