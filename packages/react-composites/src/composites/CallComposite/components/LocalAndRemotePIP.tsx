@@ -10,7 +10,7 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-import { CompositeLocale, useLocale } from '../../localization';
+import { useLocale } from '../../localization';
 
 /**
  * @private
