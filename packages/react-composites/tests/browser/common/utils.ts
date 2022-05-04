@@ -315,21 +315,17 @@ export interface StubOptions {
  * A helper to take stable screenshots.
  *
  * USE THIS INSTEAD OF page.screenshot()
- *
- * By default, some common sources of flakiness are removed.
- * You can disable some stubbing operations via `stubOptions`.
- * e.g., you might want to not disable tooltips if you're testing tooltips.
  */
 export async function stableScreenshot(
   page: Page,
-  stubOptions?: StubOptions,
+  stubOptions: StubOptions,
   screenshotOptions?: PageScreenshotOptions
 ) {
   await waitForPageFontsLoaded(page);
-  if (stubOptions?.messageTimestamps !== false) {
+  if (stubOptions?.messageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.tooltips != false) {
+  if (stubOptions?.tooltips) {
     await disableTooltips(page);
   }
   try {
