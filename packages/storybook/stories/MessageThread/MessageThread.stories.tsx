@@ -153,6 +153,10 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
         <MessageThreadWithCustomAvatarExample />
       </Canvas>
+      <Description>
+        Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
+        component
+      </Description>
 
       <Heading>Message With File Attachment</Heading>
       <DetailedBetaBanner />
@@ -166,10 +170,6 @@ const getDocs: () => JSX.Element = () => {
         <MessageWithFile />
       </Canvas>
 
-      <Description>
-        Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
-        component
-      </Description>
       <Heading>Props</Heading>
       <Props of={MessageThreadComponent} />
     </>
