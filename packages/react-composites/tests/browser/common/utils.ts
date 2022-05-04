@@ -306,9 +306,9 @@ export const isTestProfileStableFlavor = (): boolean => {
 
 export interface StubOptions {
   // Stub out all timestamps in the chat message thread.
-  messageTimestamps?: boolean;
+  stubMessageTimestamps?: boolean;
   // Disable tooltips on all buttons in the call control bar.
-  tooltips?: boolean;
+  dismissTooltips?: boolean;
 }
 
 /**
@@ -322,16 +322,16 @@ export async function stableScreenshot(
   screenshotOptions?: PageScreenshotOptions
 ) {
   await waitForPageFontsLoaded(page);
-  if (stubOptions?.messageTimestamps) {
+  if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.tooltips) {
+  if (stubOptions?.dismissTooltips) {
     await disableTooltips(page);
   }
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
-    if (stubOptions?.tooltips != false) {
+    if (stubOptions?.dismissTooltips != false) {
       await enableTooltips(page);
     }
   }

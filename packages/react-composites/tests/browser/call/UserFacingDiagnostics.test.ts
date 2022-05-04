@@ -16,7 +16,9 @@ test.describe('User Facing Diagnostics tests', async () => {
       })
     );
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page, { tooltips: true })).toMatchSnapshot('banner-when-speaking-while-muted.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'banner-when-speaking-while-muted.png'
+    );
   });
 
   test('Tile should be showing when network reconnect is bad ', async ({ pages, serverUrl }) => {
@@ -27,7 +29,7 @@ test.describe('User Facing Diagnostics tests', async () => {
       })
     );
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page, { tooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'tile-when-ufd-network-reconnect-is-bad.png'
     );
   });
@@ -40,6 +42,8 @@ test.describe('User Facing Diagnostics tests', async () => {
       })
     );
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page, { tooltips: true })).toMatchSnapshot('error-bar-when-camera-freezes.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'error-bar-when-camera-freezes.png'
+    );
   });
 });
