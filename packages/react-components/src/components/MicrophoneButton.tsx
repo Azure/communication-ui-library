@@ -1,17 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
 import React, { useState, useCallback } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { ControlBarButtonStyles } from './ControlBarButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
 
@@ -31,37 +27,30 @@ export interface MicrophoneButtonStrings {
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
   tooltipOffContent?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of microphone menu
    */
   microphoneMenuTitle?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of speaker menu
    */
   speakerMenuTitle?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of microphone menu
    */
   microphoneMenuTooltip?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Description of microphone button split button role
    */
   microphoneButtonSplitRoleDescription: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Microphone split button aria label when mic is enabled.
    */
   onSplitButtonAriaLabel?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Microphone split button aria label when mic is disabled.
    */
@@ -76,7 +65,6 @@ export interface MicrophoneButtonStrings {
   microphoneActionTurnedOffAnnouncement: string;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for {@link MicrophoneButton}
  *
@@ -89,7 +77,6 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for the {@link MicrophoneButton} menu.
  *
@@ -113,37 +100,30 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available microphones for selection
    */
   microphones?: OptionsDevice[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available speakers for selection
    */
   speakers?: OptionsDevice[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Microphone that is shown as currently selected
    */
   selectedMicrophone?: OptionsDevice;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker that is shown as currently selected
    */
   selectedSpeaker?: OptionsDevice;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Callback when a microphone is selected
    */
   onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker when a speaker is selected
    */
   onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -154,7 +134,6 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<MicrophoneButtonStrings>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
@@ -215,35 +194,19 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
         strings={strings}
         labelKey={props.labelKey ?? 'microphoneButtonLabel'}
-        menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-        menuIconProps={
-          props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined
+        menuProps={
+          props.menuProps ??
+          (props.enableDeviceSelectionMenu
+            ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
+            : undefined)
         }
-        split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
+        menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
+        split={props.split ?? props.enableDeviceSelectionMenu}
         aria-roledescription={
-          enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
+          props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
         }
-        splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? splitButtonAriaString : undefined}
+        splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
       />
     </>
   );
-};
-
-const generateDefaultDeviceMenuPropsTrampoline = (
-  props: MicrophoneButtonProps,
-  strings: MicrophoneButtonStrings
-): IContextualMenuProps | undefined => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
-  }
-  return undefined;
-};
-
-const enableDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return true;
-  }
-  return false;
 };

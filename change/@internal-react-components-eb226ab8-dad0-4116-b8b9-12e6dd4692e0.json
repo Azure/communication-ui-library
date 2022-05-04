@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "File download cards to use fileMetadata extension instead of parsing it from filename",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
