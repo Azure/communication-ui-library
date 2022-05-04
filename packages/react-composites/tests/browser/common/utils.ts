@@ -333,7 +333,7 @@ export async function stableScreenshot(
     await disableTooltips(page);
   }
   try {
-    return page.screenshot(screenshotOptions);
+    return await page.screenshot(screenshotOptions);
   } finally {
     if (stubOptions?.tooltips != false) {
       await enableTooltips(page);
