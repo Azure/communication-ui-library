@@ -10,7 +10,8 @@ import {
   isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector
+  waitForSelector,
+  clickOutsideOfPage
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -51,6 +52,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     const page = pages[0];
     await stubLocalCameraName(page);
+    await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page.png`);
   });
 
@@ -63,6 +65,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       return !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
     });
     await stubLocalCameraName(page);
+    await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
   });
 
@@ -91,6 +94,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       })
     );
     await waitForCallCompositeToLoad(page);
+    await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 });
@@ -120,7 +124,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       await page.bringToFront();
-
+      await clickOutsideOfPage(page);
       expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
   });
@@ -132,7 +136,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
-
+      await clickOutsideOfPage(page);
       expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
@@ -143,6 +147,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 1;
     });
+    await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
   });
 });
