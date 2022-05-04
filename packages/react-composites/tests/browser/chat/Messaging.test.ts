@@ -8,11 +8,11 @@ import { chatTestSetup, sendMessage, waitForMessageDelivered } from '../common/c
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
-const fakeAdapter = true;
+const isUsingFakeAdapter = true;
 
 test.describe('Tests related to messaging', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    if (!fakeAdapter) {
+    if (!isUsingFakeAdapter) {
       await chatTestSetup({ pages, users, serverUrl });
     }
   });
@@ -22,9 +22,9 @@ test.describe('Tests related to messaging', async () => {
       buildUrl(
         serverUrl,
         users[0],
-        fakeAdapter
+        isUsingFakeAdapter
           ? {
-              fakeModel: stringifyChatModel(users)
+              fakeChatAdapterModel: stringifyChatModel(users)
             }
           : undefined
       )

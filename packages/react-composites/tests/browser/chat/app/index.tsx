@@ -53,9 +53,9 @@ const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : 
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
-let fakeModel = undefined;
+let fakeChatAdapterModel = undefined;
 try {
-  fakeModel = JSON.parse(params.fakeModel);
+  fakeChatAdapterModel = JSON.parse(params.fakeChatAdapterModel);
 } catch (e) {
   console.log('Query parameter mockCallState could not be parsed: ', params.fakeModel);
 }
@@ -74,7 +74,7 @@ function App(): JSX.Element {
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      if (fakeModel) {
+      if (fakeChatAdapterModel) {
         setAdapter(await createFakeChatAdapter());
       } else {
         setAdapter(await createChatAdapterWithCredentials());
@@ -211,13 +211,15 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 async function createFakeChatAdapter(): Promise<ChatAdapter> {
   const chatService = new FakeChatService();
   const [firstUserId, firstChatClient] = chatService.newUserAndClient();
-  const participants: ChatParticipant[] = fakeModel?.users
-    ? Array.from(JSON.parse(fakeModel.users) as { displayName: string }[]).map((user: { displayName: string }, i) => {
-        return {
-          id: i === 0 ? firstUserId : { communicationUserId: nanoid() },
-          displayName: `${user.displayName}`
-        };
-      })
+  const participants: ChatParticipant[] = fakeChatAdapterModel?.users
+    ? Array.from(JSON.parse(fakeChatAdapterModel.users) as { displayName: string }[]).map(
+        (user: { displayName: string }, i) => {
+          return {
+            id: i === 0 ? firstUserId : { communicationUserId: nanoid() },
+            displayName: `${user.displayName}`
+          };
+        }
+      )
     : [];
   const thread = await firstChatClient.createChatThread(
     {
