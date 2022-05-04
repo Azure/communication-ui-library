@@ -136,7 +136,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
-      await clickOutsideOfPage(page);
       expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
