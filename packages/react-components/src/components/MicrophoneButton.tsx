@@ -195,9 +195,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         strings={strings}
         labelKey={props.labelKey ?? 'microphoneButtonLabel'}
         menuProps={
-          !!props.menuProps && !!props.enableDeviceSelectionMenu
+          props.menuProps ??
+          (props.enableDeviceSelectionMenu
             ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
-            : undefined
+            : undefined)
         }
         menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
         split={props.split ?? props.enableDeviceSelectionMenu}
