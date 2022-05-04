@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
@@ -149,6 +149,9 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 
 /**
  * Click outside of the Composite page
+ *
+ * @deprecated This method of dismissing tooltips has been shown to be flaky.
+ *     Use {@link stableScreenshot} instead.
  */
 export const clickOutsideOfPage = async (page: Page): Promise<void> => {
   await page.mouse.click(-1, -1);
@@ -299,4 +302,58 @@ export const isTestProfileStableFlavor = (): boolean => {
   } else {
     throw 'Faled to find Communication React Flavor env variable';
   }
+};
+
+export interface StubOptions {
+  // Stub out all timestamps in the chat message thread.
+  messageTimestamps?: boolean;
+  // Disable tooltips on all buttons in the call control bar.
+  tooltips?: boolean;
+}
+
+/**
+ * A helper to take stable screenshots.
+ *
+ * USE THIS INSTEAD OF page.screenshot()
+ *
+ * By default, some common sources of flakiness are removed.
+ * You can disable some stubbing operations via `stubOptions`.
+ * e.g., you might want to not disable tooltips if you're testing tooltips.
+ */
+export async function stableScreenshot(
+  page: Page,
+  stubOptions?: StubOptions,
+  screenshotOptions?: PageScreenshotOptions
+) {
+  await waitForPageFontsLoaded(page);
+  if (stubOptions?.messageTimestamps !== false) {
+    await stubMessageTimestamps(page);
+  }
+  if (stubOptions?.tooltips != false) {
+    await disableTooltips(page);
+  }
+  try {
+    return page.screenshot(screenshotOptions);
+  } finally {
+    if (stubOptions?.tooltips != false) {
+      await enableTooltips(page);
+    }
+  }
+}
+
+/**
+ * Helper function for disabling all the tooltips on the page.
+ * Tooltips are idnetified via the `ms-Callout-container` class name.
+ * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
+ */
+const disableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Callout-container{display: none}' });
+};
+
+/**
+ * Helper function for enabling all the tooltips on the page.
+ * Tooltips are idnetified via the `ms-Callout-container` class name.
+ */
+const enableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Callout-container{display: block}' });
 };
