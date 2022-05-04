@@ -240,10 +240,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
-    const ariaDescription = _formatString(strings.localVideoSelectedDescription, {
-      cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
-    });
+  const LocalCameraCycleButton = useCallback((): JSX.Element => {
+    const ariaDescription =
+      localVideoCameraCycleButtonProps?.selectedCamera &&
+      _formatString(strings.localVideoSelectedDescription, {
+        cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
+      });
     return (
       <Stack horizontalAlign="end">
         {showCameraSwitcherInLocalPreview &&
@@ -260,7 +262,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           )}
       </Stack>
     );
-  };
+  }, [
+    localVideoCameraCycleButtonProps?.cameras,
+    localVideoCameraCycleButtonProps?.onSelectCamera,
+    localVideoCameraCycleButtonProps?.selectedCamera,
+    showCameraSwitcherInLocalPreview,
+    strings.localVideoCameraSwitcherLabel,
+    strings.localVideoSelectedDescription
+  ]);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -293,7 +302,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           renderElement={
             localVideoStream?.renderElement ? (
               <>
-                {localCameraCycleButton(localVideoCameraCycleButtonProps)}
+                <LocalCameraCycleButton />
                 <StreamMedia videoStreamElement={localVideoStream.renderElement} />
               </>
             ) : undefined
@@ -308,15 +317,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         />
       </Stack>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
-    localParticipant.isScreenSharingOn,
-    localParticipant.videoStream,
-    localParticipant.videoStream?.renderElement,
     isNarrow,
     onCreateLocalStreamView,
     onRenderLocalVideoTile,
+    theme.effects.roundedCorner4,
+    styles?.localVideo,
+    strings.localVideoMovementLabel,
+    strings.localVideoLabel,
+    LocalCameraCycleButton,
+    showMuteIndicator,
+    localVideoViewOptions,
     onRenderAvatar,
     shouldFloatLocalVideo
   ]);
