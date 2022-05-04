@@ -158,7 +158,7 @@ const getDocs: () => JSX.Element = () => {
         component
       </Description>
 
-      <Heading>Message With File Attachment</Heading>
+      <Heading>Display File Attachments with Messages</Heading>
       <DetailedBetaBanner />
       <Description>
         MessageThread component provides UI for displaying file attachments in a message. This allows developers to
