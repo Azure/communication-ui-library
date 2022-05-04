@@ -57,7 +57,7 @@ let fakeChatAdapterModel = undefined;
 try {
   fakeChatAdapterModel = JSON.parse(params.fakeChatAdapterModel);
 } catch (e) {
-  console.log('Query parameter mockCallState could not be parsed: ', params.fakeModel);
+  console.log('Query parameter fakeChatAdapterModel could not be parsed: ', params.fakeChatAdapterModel);
 }
 function App(): JSX.Element {
   const args = useMemo(
