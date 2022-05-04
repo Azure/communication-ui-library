@@ -17,7 +17,7 @@ test.describe('Tests related to messaging', async () => {
     }
   });
 
-  test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
+  test('Local participant should see their message in thread', async ({ serverUrl, users, page }) => {
     await page.goto(
       buildUrl(
         serverUrl,
