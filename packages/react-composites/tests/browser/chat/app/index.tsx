@@ -10,7 +10,7 @@ import { Stack } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import { createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
+import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -230,7 +230,7 @@ async function createFakeChatAdapter(): Promise<ChatAdapter> {
 }
 
 const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
-  const statefulChatClient = createStatefulChatClientWithDeps(participant.chatClient, {
+  const statefulChatClient = _createStatefulChatClientWithDeps(participant.chatClient, {
     userId: participant.userId as CommunicationUserIdentifier,
     displayName: participant.displayName,
     endpoint: 'FAKE_ENDPIONT',

@@ -70,8 +70,8 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// @public
-export const createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+// @internal
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
 export interface StatefulChatClient extends ChatClient {

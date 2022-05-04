@@ -1322,6 +1322,9 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
+// @internal
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+
 // @public
 export type CustomAvatarOptions = {
     coinSize?: number;
