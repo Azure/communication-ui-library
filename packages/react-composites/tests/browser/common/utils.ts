@@ -320,7 +320,7 @@ export async function stableScreenshot(
   page: Page,
   stubOptions: StubOptions,
   screenshotOptions?: PageScreenshotOptions
-) {
+): Promise<Buffer> {
   await waitForPageFontsLoaded(page);
   if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
@@ -331,7 +331,7 @@ export async function stableScreenshot(
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
-    if (stubOptions?.dismissTooltips != false) {
+    if (stubOptions?.dismissTooltips) {
       await enableTooltips(page);
     }
   }
