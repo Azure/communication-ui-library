@@ -131,7 +131,7 @@ export class FakeChatClient implements IChatClient {
     throw new Error('Not Implemented');
   }
 
-  // TODO tighten the type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, listener: any): void {
     if (!this.realtimeNotificationsEnabled) {
       throw new Error('Must enable real time notifications first');

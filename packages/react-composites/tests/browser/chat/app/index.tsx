@@ -204,7 +204,7 @@ async function createFakeChatAdapter(): Promise<ChatAdapter> {
   }
   const participants: ChatParticipant[] = Array.from(
     JSON.parse(fakeChatAdapterModel.users) as { displayName: string }[]
-  ).map((user: { displayName: string }, i) => {
+  ).map((user: { displayName: string }) => {
     return {
       id: { communicationUserId: nanoid() },
       displayName: `${user.displayName}`
@@ -251,7 +251,9 @@ interface ParticipantHandle {
 }
 
 const fakeToken: CommunicationTokenCredential = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   getToken(): any {},
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   dispose(): any {}
 };
 

@@ -24,10 +24,12 @@ export class ThreadEventEmitter {
 
   constructor(private networkModel: NetworkEventModel) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
     this.getOrCreateEmitter(userId).on(event, listener);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
     this.getOrCreateEmitter(userId).off(event, listener);
   }
@@ -63,6 +65,7 @@ export class ThreadEventEmitter {
     this.emit(targets, 'participantsRemoved', e);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private emit(targets: CommunicationIdentifier[], event: string, payload: any) {
     targets.forEach((target) => {
       const emitter = this.emitters[toFlatCommunicationIdentifier(target)];
@@ -102,6 +105,7 @@ export class ThreadEventEmitter {
 interface EventPayload {
   emitter: EventEmitter;
   event: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any;
 }
 

@@ -210,7 +210,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
 
     // Required for system message and event payload below.
     const toRemove = this.checkedGetThread().participants.find(
-      (p) => toFlatCommunicationIdentifier(p.id) == flatParticipantId
+      (p) => toFlatCommunicationIdentifier(p.id) === flatParticipantId
     );
     if (!toRemove) {
       throw new Error(`Participant ${participant} not found in thread ${this.threadId}`);
