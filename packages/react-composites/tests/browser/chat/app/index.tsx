@@ -27,7 +27,7 @@ import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
 // import { InMemoryChatClient } from './mock/InMemoryTestChatClient';
 // import { TestChatAdapter } from './mock/TestChatAdapter';
-import { FakeChatService } from './fake/ChatService';
+import { FakeChatService } from './fake-back-end/ChatService';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { nanoid } from 'nanoid';

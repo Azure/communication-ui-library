@@ -8,7 +8,7 @@ import { chatTestSetup, sendMessage, waitForMessageDelivered } from '../common/c
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
-const isUsingFakeAdapter = true;
+const isUsingFakeAdapter = false;
 
 test.describe('Tests related to messaging', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
