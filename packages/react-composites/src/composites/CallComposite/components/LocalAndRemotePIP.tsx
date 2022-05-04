@@ -10,7 +10,7 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-import { CompositeLocale, useLocale } from '../../localization';
+import { useLocale } from '../../localization';
 
 /**
  * @private
@@ -81,7 +81,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   );
 
   const locale = useLocale();
-  const ariaLabel = safeGetArialLabel(locale);
+  const ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
   const strings = useMemo(
     () => ({
       rootAriaLabel: ariaLabel
@@ -99,14 +99,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       secondaryTile={remoteVideoTile ? localVideoTile : undefined}
     />
   );
-};
-
-const safeGetArialLabel = (locale: CompositeLocale): string => {
-  // eslint-disable-next-line prefer-const
-  let ariaLabel = '';
-  /* @conditional-compile-remove(call-with-chat-composite) */
-  ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
-  return ariaLabel;
 };
 
 const localVideoViewOptions: VideoStreamOptions = {
