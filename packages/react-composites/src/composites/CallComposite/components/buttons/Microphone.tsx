@@ -53,7 +53,6 @@ export const Microphone = (props: {
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       {...microphoneButtonStrings}
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
     />
   );
