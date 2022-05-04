@@ -1,49 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad,
-  buildUrl,
-  dataUiId,
-  stringifyChatModel
-} from '../common/utils';
+import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, dataUiId } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import {
-  chatTestSetup,
-  sendMessage,
-  waitForSendMessageFailure,
-  waitForMessageDelivered
-} from '../common/chatTestHelpers';
+import { chatTestSetup, sendMessage, waitForSendMessageFailure } from '../common/chatTestHelpers';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
-const fakeAdapter = true;
-
 test.describe('ErrorBar is shown correctly', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    if (!fakeAdapter) {
-      await chatTestSetup({ pages, users, serverUrl });
-    }
-  });
-
-  test.only('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    if (fakeAdapter) {
-      await page.goto(
-        buildUrl(serverUrl, users[0], {
-          fakeModel: stringifyChatModel(users)
-        })
-      );
-    }
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
-
-    await sendMessage(page, TEST_MESSAGE);
-    await waitForMessageDelivered(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
+    await chatTestSetup({ pages, users, serverUrl });
   });
 
   test('with wrong thread ID', async ({ page, serverUrl, users }) => {
