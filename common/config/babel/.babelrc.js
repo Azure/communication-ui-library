@@ -32,12 +32,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
-        // Split buttons in control bar. These are used by `call-with-chat-composite` feature.
-        // Perhaps we should merge this into the `call-with-chat-composite` feature?
-        'control-bar-split-buttons',
-        // Camera switcher in the local video preview tile. These are used by `call-with-chat-composite` feature.
-        // Perhaps we should merge this into the `call-with-chat-composite` feature?
-        'local-camera-switcher',
       ]
      }
   ]);
