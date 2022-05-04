@@ -60,17 +60,6 @@ try {
   console.log('Query parameter fakeChatAdapterModel could not be parsed: ', params.fakeChatAdapterModel);
 }
 function App(): JSX.Element {
-  const args = useMemo(
-    () => ({
-      endpoint,
-      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-      displayName,
-      credential: new AzureCommunicationTokenCredential(token),
-      threadId
-    }),
-    []
-  );
-
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
@@ -210,17 +199,19 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
 
 async function createFakeChatAdapter(): Promise<ChatAdapter> {
   const chatService = new FakeChatService();
-  const [firstUserId, firstChatClient] = chatService.newUserAndClient();
-  const participants: ChatParticipant[] = fakeChatAdapterModel?.users
-    ? Array.from(JSON.parse(fakeChatAdapterModel.users) as { displayName: string }[]).map(
-        (user: { displayName: string }, i) => {
-          return {
-            id: i === 0 ? firstUserId : { communicationUserId: nanoid() },
-            displayName: `${user.displayName}`
-          };
-        }
-      )
-    : [];
+  if (!fakeChatAdapterModel.users) {
+    throw new Error('Users for fake Chat adapter model could not be obtained.');
+  }
+  const participants: ChatParticipant[] = Array.from(
+    JSON.parse(fakeChatAdapterModel.users) as { displayName: string }[]
+  ).map((user: { displayName: string }, i) => {
+    return {
+      id: { communicationUserId: nanoid() },
+      displayName: `${user.displayName}`
+    };
+  });
+  const firstUserId = participants[0].id;
+  const firstChatClient = chatService.newClient(firstUserId);
   const thread = await firstChatClient.createChatThread(
     {
       topic: 'Cowabunga'
