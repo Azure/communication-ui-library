@@ -349,7 +349,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         with:
-          name: Calling-with-chat-head-stats
+          name: Calling-head-stats
           path: samples/Calling/dist/build/stats.json
 
   build_chat_sample:
