@@ -56,7 +56,7 @@ type ChatMessageComponentProps = {
    * Optional function to provide customized date format.
    *
    */
-  customizedFormatTimestampForChatMessage?: (messageDate: Date) => string;
+  dateTimeFormat?: (messageDate: Date) => string;
 };
 
 /**
@@ -109,7 +109,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onEditClick={onEditClick}
         onResendClick={onResendClick}
         onRenderAvatar={props.onRenderAvatar}
-        customizedFormatTimestampForChatMessage={props.customizedFormatTimestampForChatMessage}
+        dateTimeFormat={props.dateTimeFormat}
       />
     );
   }

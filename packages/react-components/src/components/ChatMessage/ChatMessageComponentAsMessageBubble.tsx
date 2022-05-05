@@ -60,7 +60,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to provide customized date format.
    *
    */
-  customizedFormatTimestampForChatMessage?: (messageDate: Date) => string;
+  dateTimeFormat?: (messageDate: Date) => string;
 };
 
 /** @private */
@@ -83,7 +83,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
-    customizedFormatTimestampForChatMessage
+    dateTimeFormat
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -153,8 +153,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           timestamp={
             <Text data-ui-id={ids.messageTimestamp}>
               {message.createdOn
-                ? customizedFormatTimestampForChatMessage
-                  ? customizedFormatTimestampForChatMessage(message.createdOn)
+                ? dateTimeFormat
+                  ? dateTimeFormat(message.createdOn)
                   : showDate
                   ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
                   : formatTimeForChatMessage(message.createdOn)

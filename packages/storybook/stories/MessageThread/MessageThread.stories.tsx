@@ -154,15 +154,15 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithCustomAvatarExample />
       </Canvas>
 
-      <Heading>Custom Timestamp</Heading>
-      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
-        <MessageThreadWithCustomTimestampExample />
-      </Canvas>
-
       <Description>
         Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
         component
       </Description>
+
+      <Heading>Custom Timestamp</Heading>
+      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+        <MessageThreadWithCustomTimestampExample />
+      </Canvas>
       <Heading>Props</Heading>
       <Props of={MessageThreadComponent} />
     </>

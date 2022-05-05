@@ -1805,6 +1805,7 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    dateTimeFormat?: (messageDate: Date) => string;
 };
 
 // @public

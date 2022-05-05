@@ -606,7 +606,7 @@ export type MessageThreadProps = {
    * Optional function to provide customized date format.
    *
    */
-  customizedFormatTimestampForChatMessage?: (messageDate: Date) => string;
+  dateTimeFormat?: (messageDate: Date) => string;
 };
 
 /**
@@ -700,7 +700,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage,
     onSendMessage,
-    customizedFormatTimestampForChatMessage
+    dateTimeFormat
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -973,7 +973,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
-            customizedFormatTimestampForChatMessage={customizedFormatTimestampForChatMessage}
+            dateTimeFormat={dateTimeFormat}
           />
         );
       }
@@ -989,7 +989,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderFileDownloads,
       props.userId,
       showMessageStatus,
-      customizedFormatTimestampForChatMessage
+      dateTimeFormat
     ]
   );
 

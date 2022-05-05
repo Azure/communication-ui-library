@@ -1942,6 +1942,7 @@ export type MessageThreadProps = {
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
+    dateTimeFormat?: (messageDate: Date) => string;
 };
 
 // @public
