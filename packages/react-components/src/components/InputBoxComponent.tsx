@@ -87,7 +87,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     children
   } = props;
 
-  const theme = useTheme();
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
     inputBoxStyle,
@@ -96,7 +95,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
-  const mergedTextFieldStyle = concatStyleSets(textFieldStyle(theme.semanticColors.errorText), {
+  const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
     fieldGroup: styles?.textField,
     errorMessage: styles?.systemMessage
   });
