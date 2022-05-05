@@ -601,6 +601,12 @@ export type MessageThreadProps = {
    * this function will be called with the data inside `fileSharingMetadata` key.
    */
   fileDownloadHandler?: FileDownloadHandler;
+
+  /**
+   * Optional function to provide customized date format.
+   *
+   */
+  customizedFormatTimestampForChatMessage?: (messageDate: Date) => string;
 };
 
 /**
@@ -693,7 +699,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderMessage,
     onUpdateMessage,
     onDeleteMessage,
-    onSendMessage
+    onSendMessage,
+    customizedFormatTimestampForChatMessage
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -966,6 +973,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
+            customizedFormatTimestampForChatMessage={customizedFormatTimestampForChatMessage}
           />
         );
       }
@@ -980,7 +988,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onActionButtonClickMemo,
       onRenderFileDownloads,
       props.userId,
-      showMessageStatus
+      showMessageStatus,
+      customizedFormatTimestampForChatMessage
     ]
   );
 

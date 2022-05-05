@@ -33,12 +33,15 @@ import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomCh
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const MessageThreadWithCustomTimestampExampleText =
+  require('!!raw-loader!./snippets/CustomTimestamp.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText =
   require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx').default;
 const MessageThreadWithCustomMessageContainerExampleText =
@@ -149,6 +152,11 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Custom Avatar</Heading>
       <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
         <MessageThreadWithCustomAvatarExample />
+      </Canvas>
+
+      <Heading>Custom Timestamp</Heading>
+      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+        <MessageThreadWithCustomTimestampExample />
       </Canvas>
 
       <Description>
