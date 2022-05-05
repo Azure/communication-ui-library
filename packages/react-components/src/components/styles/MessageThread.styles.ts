@@ -102,10 +102,10 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
 /**
  * @private
  */
-export const FailedMyChatMessageContainer = (backgroundColor: string): ComponentSlotStyle => ({
+export const FailedMyChatMessageContainer: ComponentSlotStyle = {
   ...defaultChatItemMessageContainer,
-  backgroundColor
-});
+  backgroundColor: 'rgba(168, 0, 0, 0.2)'
+};
 
 /**
  * @private

@@ -331,7 +331,6 @@ const memoizeAllMessages = memoizeFnAll(
     ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
-    errorBackground: string,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     participantCount?: number,
@@ -354,7 +353,7 @@ const memoizeAllMessages = memoizeFnAll(
       case 'chat': {
         const myChatMessageStyle =
           styles?.myChatMessageContainer || message.status === 'failed'
-            ? FailedMyChatMessageContainer(errorBackground)
+            ? FailedMyChatMessageContainer
             : defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
@@ -1012,8 +1011,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     []
   );
 
-  const theme = useTheme();
-
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -1058,7 +1055,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             defaultStatusRenderer,
             defaultChatMessageRenderer,
             strings,
-            theme.semanticColors.errorBackground,
             // Temporary solution to make sure we re-render if attach attribute is changed.
             // The proper fix should be in selector.
             message.messageType === 'chat' ? message.attached : undefined,
@@ -1083,7 +1079,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       defaultStatusRenderer,
       defaultChatMessageRenderer,
       strings,
-      theme.semanticColors.errorBackground,
       participantCount,
       readCountForHoveredIndicator,
       onRenderMessage,
@@ -1095,6 +1090,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastDeliveredChatMessage
     ]
   );
+
+  const theme = useTheme();
 
   const chatBody = useMemo(() => {
     return (
