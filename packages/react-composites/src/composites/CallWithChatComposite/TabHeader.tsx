@@ -60,7 +60,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         ariaDescription={strings.returnToCallButtonAriaDescription}
         onClick={props.onClose}
         styles={mobilePaneBackButtonStyles}
-        onRenderIcon={() => <ChevronLeftIconTrampoline />}
+        onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
       ></DefaultButton>
       <Stack.Item grow>
         {props.onChatButtonClicked && (
@@ -89,18 +89,10 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
       {/* Hidden icon to take the same space as the actual back button on the left. */}
       <DefaultButton
         styles={mobilePaneHiddenIconStyles}
-        onRenderIcon={() => <ChevronLeftIconTrampoline />}
+        onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
       ></DefaultButton>
     </Stack>
   );
-};
-
-const ChevronLeftIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(call-with-chat-composite)
-  return <CallWithChatCompositeIcon iconName="ChevronLeft" />;
-
-  // Return _something_ in stable builds to satisfy build system
-  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" />;
 };
 
 /**
