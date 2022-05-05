@@ -7,9 +7,8 @@ import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider 
 
 import { COMPOSITE_LOCALE_EN_US } from './locales';
 import { CallCompositeStrings } from '../CallComposite';
+import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { ChatCompositeStrings } from '../ChatComposite';
-/* @conditional-compile-remove(call-with-chat-composite) */
-import { CallWithChatCompositeStrings } from '../CallWithChatComposite/Strings';
 
 /**
  * Locale information for all composites exported from this library.
@@ -44,7 +43,6 @@ export interface CompositeStrings {
    */
   chat: ChatCompositeStrings;
 
-  /* @conditional-compile-remove(call-with-chat-composite) */
   /**
    * Strings used by {@link CallWithChatComposite}.
    */

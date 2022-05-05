@@ -120,7 +120,7 @@ export const PeoplePaneContent = (props: {
             <PrimaryButton
               onClick={() => copy(inviteLink)}
               styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <LinkIconTrampoline />}
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
               text={strings.copyInviteLinkButtonLabel}
             />
           </Stack.Item>
@@ -134,7 +134,7 @@ export const PeoplePaneContent = (props: {
         <Stack styles={copyLinkButtonStackStyles}>
           <DefaultButton
             text={strings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <LinkIconTrampoline />}
+            onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
             onClick={() => copy(inviteLink)}
             styles={copyLinkButtonStylesThemed}
           />
@@ -143,14 +143,6 @@ export const PeoplePaneContent = (props: {
       {participantList}
     </Stack>
   );
-};
-
-const LinkIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(call-with-chat-composite)
-  return <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />;
-
-  // Return _something_ in stable builds to satisfy build system
-  return <CallWithChatCompositeIcon iconName="ControlButtonEndCall" style={linkIconStyles} />;
 };
 
 /**
