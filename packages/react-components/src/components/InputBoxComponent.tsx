@@ -96,7 +96,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
-  const mergedTextFieldStyle = concatStyleSets(textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000'), {
+  const mergedTextFieldStyle = concatStyleSets(textFieldStyle(theme.semanticColors.errorText), {
     fieldGroup: styles?.textField,
     errorMessage: styles?.systemMessage
   });

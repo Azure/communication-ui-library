@@ -65,7 +65,7 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
  * @private
  */
 export const chatMessageFailedTagStyle = (theme: Theme): string =>
-  mergeStyles({ fontWeight: FontWeights.light, color: isDarkThemed(theme) ? '#f1707b' : '#a80000' });
+  mergeStyles({ fontWeight: FontWeights.light, color: theme.semanticColors.errorText });
 
 /**
  * @private
