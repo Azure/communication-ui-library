@@ -349,7 +349,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         with:
-          name: calling-with-chat-head-stats
+          name: Calling-with-chat-head-stats
           path: samples/Calling/dist/build/stats.json
 
   build_chat_sample:
@@ -387,7 +387,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         with:
-          name: chat-head-stats
+          name: Chat-head-stats
           path: samples/Chat/dist/build/stats.json
 
   build_call_with_chat_sample:
@@ -425,7 +425,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         with:
-          name: call-with-chat-head-stats
+          name: CallWithChat-head-stats
           path: samples/CallWithChat/dist/build/stats.json
 
   build_static_html_composites_sample:
