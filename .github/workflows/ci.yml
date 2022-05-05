@@ -598,6 +598,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           current-stats-json-path: ./${{matrix.app}}-head-stats/stats.json
           base-stats-json-path: ./${{matrix.app}}-base-stats/stats.json
+          title: ${{matrix.app}} Sample App Size Change
 
   check_failure:
     runs-on: ubuntu-latest
