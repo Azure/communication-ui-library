@@ -40,8 +40,6 @@ import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessage
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
-const MessageThreadWithCustomTimestampExampleText =
-  require('!!raw-loader!./snippets/CustomTimestamp.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText =
   require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx').default;
 const MessageThreadWithCustomMessageContainerExampleText =
@@ -50,6 +48,8 @@ const MessageThreadWithCustomMessagesExampleText =
   require('!!raw-loader!./snippets/CustomMessages.snippet.tsx').default;
 const MessageThreadWithCustomMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx').default;
+const MessageThreadWithCustomTimestampExampleText =
+  require('!!raw-loader!./snippets/CustomTimestamp.snippet.tsx').default;
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
