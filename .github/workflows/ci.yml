@@ -536,6 +536,10 @@ jobs:
       matrix:
         app: [Chat, Calling, CallWithChat]
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -546,9 +550,6 @@ jobs:
         run: rush install
       - name: Build
         run: rush build -o ${{matrix.app}}
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.base_ref }}
       - name: Upload chat stats.json
         uses: actions/upload-artifact@v1
         with:
