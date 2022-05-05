@@ -4,7 +4,6 @@ import { Icon, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
-import { extension } from './utils';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -139,7 +138,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
             <_FileCard
               fileName={file.name}
               key={file.name}
-              fileExtension={extension(file.name)}
+              fileExtension={file.extension}
               actionIcon={
                 showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
               }

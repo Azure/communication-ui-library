@@ -2,25 +2,22 @@
 // Licensed under the MIT license.
 
 import {
-  MicOff20Filled,
+  CallEnd20Filled,
   CallMissed20Filled,
-  MicOn20Filled,
-  Speaker220Filled,
-  Video20Filled,
-  VideoOff20Filled,
-  WifiWarning20Filled,
-  Info20Filled,
-  PersonDelete20Filled,
-  CallEnd20Filled
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(call-with-chat-composite) */
-import {
   CameraSwitch24Regular,
+  Chat20Filled,
+  Chat20Regular,
+  Info20Filled,
+  MicOff20Filled,
+  MicOn20Filled,
   MicOn20Regular,
   People20Regular,
+  PersonDelete20Filled,
+  Speaker220Filled,
   Speaker220Regular,
-  Chat20Regular,
-  Chat20Filled
+  Video20Filled,
+  VideoOff20Filled,
+  WifiWarning20Filled
 } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -48,9 +45,7 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
-  /* @conditional-compile-remove(call-with-chat-composite) */
   ChevronLeft: <FontIcon iconName="ChevronLeft" />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   Link: <FontIcon iconName="Link" />,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
@@ -58,23 +53,14 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch: <CameraSwitch24Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonActive: <Chat20Filled />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarChatButtonInactive: <Chat20Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   ControlBarPeopleButton: <People20Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerMicrophones: <MicOn20Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerPeople: <People20Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSpeakers: <Speaker220Regular />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedMicrophone: <MicOn20Filled />,
-  /* @conditional-compile-remove(call-with-chat-composite) */
   MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
@@ -179,7 +165,6 @@ export type CallCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   LocalCameraSwitch?: JSX.Element;
 };
 
@@ -289,6 +274,4 @@ export const CallWithChatCompositeIcon = (props: CompositeIconProps<CallWithChat
  *
  * @public
  */
-export type CompositeIcons = ChatCompositeIcons &
-  CallCompositeIcons &
-  /* @conditional-compile-remove(call-with-chat-composite) */ CallWithChatCompositeIcons;
+export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
