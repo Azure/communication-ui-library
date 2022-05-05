@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, stringifyChatModel } from '../common/utils';
-import { test } from './fixture';
+import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, stringifyChatModel } from '../../common/utils';
+import { test } from '../fixture';
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered } from '../common/chatTestHelpers';
+import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
