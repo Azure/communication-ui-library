@@ -345,6 +345,12 @@ jobs:
         run: rush build -o calling
       - name: Tests
         run: rush test -o calling
+      - name: Upload current calling stats.json
+        uses: actions/upload-artifact@v1
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        with:
+          name: calling-with-chat-head-stats
+          path: samples/Calling/dist/build/stats.json
 
   build_chat_sample:
     needs: get_matrix
@@ -377,6 +383,12 @@ jobs:
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
+      - name: Upload current chat stats.json
+        uses: actions/upload-artifact@v1
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        with:
+          name: chat-head-stats
+          path: samples/Chat/dist/build/stats.json
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -409,6 +421,12 @@ jobs:
         run: rush build -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
+      - name: Upload current callWithChat stats.json
+        uses: actions/upload-artifact@v1
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        with:
+          name: call-with-chat-head-stats
+          path: samples/CallWithChat/dist/build/stats.json
 
   build_static_html_composites_sample:
     needs: get_matrix
@@ -509,6 +527,80 @@ jobs:
               repo: context.repo.repo,
               body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
+
+  build_upload_base_bundle_stats:
+    runs-on: ubuntu-latest
+    name: Upload bundle stats from base ref
+    if: ${{ github.event_name == 'pull_request' }}
+    strategy:
+      matrix:
+        app: [Chat, Calling, CallWithChat]
+    steps:
+      - id: lowercase
+        run: |
+          INPUT=${{ matrix.app }}
+          echo "::set-output name=app::${INPUT,,}"
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Build
+        run: rush build -o ${{steps.lowercase.outputs.app}}
+      - name: Upload ${{matrix.app}} stats.json
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{matrix.app}}-base-stats
+          path: samples/${{matrix.app}}/dist/build/stats.json
+
+  compare_bundle-sizes:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Compare bundle size from pr head ref to base ref
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample, build_upload_base_bundle_stats]
+    strategy:
+      matrix:
+        app: [Chat, Calling, CallWithChat]
+    steps:
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Download base artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: ${{matrix.app}}-base-stats
+      - name: Download head artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: ${{matrix.app}}-head-stats
+
+      # Compare the bundle size between 2 bundles
+      # https://github.com/github/webpack-bundlesize-compare-action
+      - uses: actions/checkout@v2
+        with:
+          repository: github/webpack-bundlesize-compare-action
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .github/actions/webpack-bundlesize-compare-action
+          ref: v1
+
+      - name: Bundlesize compare
+        uses: ./.github/actions/webpack-bundlesize-compare-action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          current-stats-json-path: ./${{matrix.app}}-head-stats/stats.json
+          base-stats-json-path: ./${{matrix.app}}-base-stats/stats.json
+          title: ${{matrix.app}} Sample App Size Change
 
   check_failure:
     runs-on: ubuntu-latest
