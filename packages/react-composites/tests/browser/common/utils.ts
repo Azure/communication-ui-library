@@ -339,17 +339,15 @@ export async function stableScreenshot(
 
 /**
  * Helper function for disabling all the tooltips on the page.
- * Tooltips are idnetified via the `ms-Callout-container` class name.
  * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
  */
 const disableTooltips = async (page: Page): Promise<void> => {
-  await page.addStyleTag({ content: '.ms-Callout-container{display: none}' });
+  await page.addStyleTag({ content: '.ms-Tooltip {display: none}' });
 };
 
 /**
  * Helper function for enabling all the tooltips on the page.
- * Tooltips are idnetified via the `ms-Callout-container` class name.
  */
 const enableTooltips = async (page: Page): Promise<void> => {
-  await page.addStyleTag({ content: '.ms-Callout-container{display: block}' });
+  await page.addStyleTag({ content: '.ms-Tooltip {display: block}' });
 };
