@@ -54,7 +54,8 @@ export const lightTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff'
   },
   semanticColors: {
-    errorText: '#a80000'
+    errorText: '#a80000',
+    errorBackground: 'rgba(168, 0, 0, 0.2)'
   }
 };
 
@@ -95,6 +96,7 @@ export const darkTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff'
   },
   semanticColors: {
-    errorText: '#f1707b'
+    errorText: '#f1707b',
+    errorBackground: 'rgba(168, 0, 0, 0.2)'
   }
 };
