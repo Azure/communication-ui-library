@@ -13,11 +13,12 @@ const main = () => {
 
 const bumpBetaVersion = (currentVersion) => {
   const versionStrs = currentVersion.split('-beta.');
+  const wasStable = versionStrs[1] === undefined ? true : false;
   const currentBeta = versionStrs[1] ? Number.parseInt(versionStrs[1]) : 0;
   const [major, minor, patch] = versionStrs[0].split('.');
 
   // We will bump the patch version when create a beta on top of a stable one
-  return [[major, minor, currentBeta === 0? Number.parseInt(patch) + 1 : patch].join('.'), `${currentBeta + 1}`].join('-beta.');
+  return [[major, minor, currentBeta === 0 && wasStable? Number.parseInt(patch) + 1 : patch].join('.'), `${wasStable ? 0 : currentBeta + 1}`].join('-beta.');
 }
 
 main();
