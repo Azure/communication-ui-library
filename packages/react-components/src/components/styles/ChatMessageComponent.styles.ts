@@ -11,7 +11,6 @@ import {
   IIconStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { isDarkThemed } from '../../theming/themeUtils';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
