@@ -537,7 +537,7 @@ jobs:
         app: [Chat, Calling, CallWithChat]
     steps:
       - id: lowercase
-        run: INPUT=${{ matrix.app }} echo "::set-output name=app::${INPUT,,}"
+        run: echo "::set-output name=app::${${{ matrix.app }},,}"
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.base_ref }}
