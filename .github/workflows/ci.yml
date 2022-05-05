@@ -557,7 +557,7 @@ jobs:
       - name: Upload ${{matrix.app}} stats.json
         uses: actions/upload-artifact@v1
         with:
-          name: ${matrix.app}}-base-stats
+          name: ${{matrix.app}}-base-stats
           path: samples/${{matrix.app}}/dist/build/stats.json
 
   compare_bundle-sizes:
