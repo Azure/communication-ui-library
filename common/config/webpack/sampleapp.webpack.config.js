@@ -62,9 +62,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       new BundleAnalyzerPlugin({
         analyzerMode: 'disabled',
         generateStatsFile: true,
-        chunks: false,
-        // statsOptions: 'errors-only',
-        // statsFilename: '../../bundle-stats/stats.json'
+        chunks: false
       })
     ],
     devServer: {
