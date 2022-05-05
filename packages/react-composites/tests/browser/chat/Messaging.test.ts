@@ -4,30 +4,16 @@
 import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, stringifyChatModel } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { chatTestSetup, sendMessage, waitForMessageDelivered } from '../common/chatTestHelpers';
+import { sendMessage, waitForMessageDelivered } from '../common/chatTestHelpers';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
-const isUsingFakeAdapter = true;
-
 test.describe('Tests related to messaging', async () => {
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
-    if (!isUsingFakeAdapter) {
-      await chatTestSetup({ pages, users, serverUrl });
-    }
-  });
-
   test('Local participant should see their message in thread', async ({ serverUrl, users, page }) => {
     await page.goto(
-      buildUrl(
-        serverUrl,
-        users[0],
-        isUsingFakeAdapter
-          ? {
-              fakeChatAdapterModel: stringifyChatModel(users)
-            }
-          : undefined
-      )
+      buildUrl(serverUrl, users[0], {
+        fakeChatAdapterModel: stringifyChatModel(users)
+      })
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
