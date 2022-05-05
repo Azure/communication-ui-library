@@ -537,7 +537,7 @@ jobs:
         app: [Chat, Calling, CallWithChat]
     steps:
       - id: matrix-lowercase
-        run: INPUT=${{ matrix.app }} echo "::set-output name=value::${INPUT,,}"
+        run: INPUT=${{ matrix.app }} echo "::set-output name=app::${INPUT,,}"
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.base_ref }}
@@ -551,7 +551,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        run: rush build -o ${{steps.matrix-lowercase.outputs.value}}
+        run: rush build -o ${{steps.matrix-lowercase.outputs.app}}
       - name: Upload ${{matrix.app}} stats.json
         uses: actions/upload-artifact@v1
         with:
