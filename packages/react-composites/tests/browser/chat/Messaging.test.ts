@@ -17,11 +17,11 @@ test.describe('Tests related to messaging', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
+    expect(await page.screenshot()).toMatchSnapshot('no-messages-in-chat-thread.png');
 
     await sendMessage(page, TEST_MESSAGE);
     await waitForMessageDelivered(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
+    expect(await page.screenshot()).toMatchSnapshot('one-message-in-chat-thread.png');
   });
 });
