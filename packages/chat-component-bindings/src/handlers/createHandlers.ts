@@ -81,37 +81,30 @@ export const createDefaultChatHandlers = memoizeOne(
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
         let earliestTime = Number.MAX_SAFE_INTEGER;
-        try {
-          while (remainingMessagesToGet >= 1) {
-            const message = await messageIterator.next();
-            if (message?.value?.id) {
-              if (parseInt(message.value.id) < earliestTime) {
-                earliestTime = parseInt(message.value.id);
-              }
-            }
-
-            if (message.value?.type && message.value.type === 'text') {
-              remainingMessagesToGet--;
-            }
-
-            // We have traversed all messages in this thread
-            if (message.done) {
-              isAllChatMessagesLoaded = true;
-              break;
+        while (remainingMessagesToGet >= 1) {
+          const message = await messageIterator.next();
+          if (message?.value?.id) {
+            if (parseInt(message.value.id) < earliestTime) {
+              earliestTime = parseInt(message.value.id);
             }
           }
-        } catch (e) {
-          console.log(e);
+
+          if (message.value?.type && message.value.type === 'text') {
+            remainingMessagesToGet--;
+          }
+
+          // We have traversed all messages in this thread
+          if (message.done) {
+            isAllChatMessagesLoaded = true;
+            break;
+          }
         }
         // keep fetching read receipts until read receipt time < earlist message time
-        try {
-          let readReceipt = await readReceiptIterator.next();
-          while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
-            readReceipt = await readReceiptIterator.next();
-          }
-        } catch (e) {
-          console.log(e);
+        let readReceipt = await readReceiptIterator.next();
+        while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
+          readReceipt = await readReceiptIterator.next();
         }
+
         return isAllChatMessagesLoaded;
       }
     };
