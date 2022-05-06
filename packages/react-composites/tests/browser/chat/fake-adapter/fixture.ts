@@ -29,11 +29,11 @@ export const buildUrlForChatAppUsingFakeAdapter = (
   fakeChatAdapterModel: ChatAdapterModel,
   qArgs?: { [key: string]: string }
 ): string => {
-  const model = JSON.stringify({ ...fakeChatAdapterModel, users: JSON.stringify(fakeChatAdapterModel.users) });
-  return `${serverUrl}?${encodeQueryData({
-    fakeChatAdapterModel: model,
-    ...qArgs
-  })}`;
+  let url = `${serverUrl}?fakeChatAdapterModel=${JSON.stringify(fakeChatAdapterModel)}`;
+  if (qArgs) {
+    url += `&${encodeQueryData({ ...qArgs })}`;
+  }
+  return url;
 };
 
 const usePage = async ({ serverUrl, browser }) => {

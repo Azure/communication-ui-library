@@ -23,9 +23,9 @@ const params = Object.fromEntries(urlSearchParams.entries());
  */
 export const App = (): JSX.Element => {
   // Required params
-  let fakeChatAdapterModel = JSON.parse(verifyParamExists(params.fakeChatAdapterModel, 'fakeChatAdapterModel'));
-  fakeChatAdapterModel.users = parseStringAsArray(fakeChatAdapterModel.users);
-  fakeChatAdapterModel = fakeChatAdapterModel as ChatAdapterModel;
+  const fakeChatAdapterModel = JSON.parse(
+    verifyParamExists(params.fakeChatAdapterModel, 'fakeChatAdapterModel')
+  ) as ChatAdapterModel;
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
@@ -109,7 +109,3 @@ const fakeToken: CommunicationTokenCredential = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   dispose(): any {}
 };
-
-function parseStringAsArray<Type>(property: string): Type[] {
-  return JSON.parse(property) as Type[];
-}
