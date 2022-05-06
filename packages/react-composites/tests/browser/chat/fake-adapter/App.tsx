@@ -18,7 +18,10 @@ import { ChatAdapterModel } from './fixture';
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-export function App(): JSX.Element {
+/**
+ * App with chat composite using a fake Chat adapter
+ */
+export const App = (): JSX.Element => {
   // Required params
   let fakeChatAdapterModel = JSON.parse(verifyParamExists(params.fakeChatAdapterModel, 'fakeChatAdapterModel'));
   fakeChatAdapterModel.users = parseStringAsArray(fakeChatAdapterModel.users);
@@ -50,7 +53,7 @@ export function App(): JSX.Element {
       )}
     </>
   );
-}
+};
 
 async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapter> {
   const chatService = new FakeChatService();
