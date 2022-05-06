@@ -1,79 +1,69 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import {
-  ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   FileDownloadError,
   FileDownloadHandler,
-  createAzureCommunicationChatAdapterFromClient,
-  createAzureCommunicationChatAdapter
+  useAzureCommunicationChatAdapter
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
-// import { InMemoryChatClient } from './mock/InMemoryTestChatClient';
-// import { TestChatAdapter } from './mock/TestChatAdapter';
-import { FakeChatService } from './fake-back-end/ChatService';
-import { CommunicationIdentifier } from '@azure/communication-signaling';
-import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { nanoid } from 'nanoid';
+import { App as FakeAdapterApp } from '../fake-adapter/App';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
-
-// Required params
-const displayName = verifyParamExists(params.displayName, 'displayName');
-const token = verifyParamExists(params.token, 'token');
-const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
-const threadId = verifyParamExists(params.threadId, 'threadId');
-const userId = verifyParamExists(params.userId, 'userId');
-
-// Optional params
-const useFrLocale = Boolean(params.useFrLocale);
-const customDataModel = params.customDataModel;
-const useFileSharing = Boolean(params.useFileSharing);
-const failFileDownload = Boolean(params.failDownload);
-const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
-
-// Needed to initialize default icons used by Fluent components.
-initializeFileTypeIcons();
-initializeIconsForUITests();
 
 let fakeChatAdapterModel = undefined;
 try {
   fakeChatAdapterModel = JSON.parse(params.fakeChatAdapterModel);
 } catch (e) {
-  console.log('Query parameter fakeChatAdapterModel could not be parsed: ', params.fakeChatAdapterModel);
+  console.log('Query parameter fakeChatAdapterModel could not be parsed.');
 }
-function App(): JSX.Element {
-  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
-  useEffect(() => {
-    const initialize = async (): Promise<void> => {
-      if (fakeChatAdapterModel) {
-        setAdapter(await createFakeChatAdapter());
-      } else {
-        setAdapter(await createChatAdapterWithCredentials());
-      }
-    };
 
-    initialize();
-    return () => adapter && adapter.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+// Needed to initialize default icons used by Fluent components.
+initializeFileTypeIcons();
+initializeIconsForUITests();
+
+function App(): JSX.Element {
+  // Required params
+  const displayName = verifyParamExists(params.displayName, 'displayName');
+  const token = verifyParamExists(params.token, 'token');
+  const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
+  const threadId = verifyParamExists(params.threadId, 'threadId');
+  const userId = verifyParamExists(params.userId, 'userId');
+
+  // Optional params
+  const useFrLocale = Boolean(params.useFrLocale);
+  const customDataModel = params.customDataModel;
+  const useFileSharing = Boolean(params.useFileSharing);
+  const failFileDownload = Boolean(params.failDownload);
+  const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
+
+  const args = useMemo(
+    () => ({
+      endpoint,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential: new AzureCommunicationTokenCredential(token),
+      threadId
+    }),
+    []
+  );
+  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
+    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
+    await adapter.fetchInitialData();
+    return adapter;
+  });
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
@@ -171,7 +161,7 @@ function App(): JSX.Element {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(fakeChatAdapterModel ? <FakeAdapterApp /> : <App />, document.getElementById('root'));
 
 function getMessageContentInUppercase(messageProps: MessageProps): string {
   const message = messageProps.message;
@@ -196,75 +186,3 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
       'CUSTOM MESSAGE';
   }
 }
-
-async function createFakeChatAdapter(): Promise<ChatAdapter> {
-  const chatService = new FakeChatService();
-  if (!fakeChatAdapterModel.users) {
-    throw new Error('Users for fake Chat adapter model could not be obtained.');
-  }
-  const participants: ChatParticipant[] = Array.from(
-    JSON.parse(fakeChatAdapterModel.users) as { displayName: string }[]
-  ).map((user: { displayName: string }) => {
-    return {
-      id: { communicationUserId: nanoid() },
-      displayName: `${user.displayName}`
-    };
-  });
-  const firstUserId = participants[0].id;
-  const firstChatClient = chatService.newClient(firstUserId);
-  const thread = await firstChatClient.createChatThread(
-    {
-      topic: 'Cowabunga'
-    },
-    {
-      participants: participants
-    }
-  );
-  const participantHandle = {
-    userId: participants[0].id,
-    displayName: participants[0].displayName,
-    chatClient: firstChatClient,
-    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-  };
-  return await initializeAdapter(participantHandle);
-}
-
-const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
-  const statefulChatClient = _createStatefulChatClientWithDeps(participant.chatClient, {
-    userId: participant.userId as CommunicationUserIdentifier,
-    displayName: participant.displayName,
-    endpoint: 'FAKE_ENDPIONT',
-    credential: fakeToken
-  });
-  statefulChatClient.startRealtimeNotifications();
-  return await createAzureCommunicationChatAdapterFromClient(
-    statefulChatClient,
-    await statefulChatClient.getChatThreadClient(participant.chatThreadClient.threadId)
-  );
-};
-
-interface ParticipantHandle {
-  userId: CommunicationIdentifier;
-  displayName: string;
-  chatClient: ChatClient;
-  chatThreadClient: ChatThreadClient;
-}
-
-const fakeToken: CommunicationTokenCredential = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-  getToken(): any {},
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-  dispose(): any {}
-};
-
-// Function to create call adapter using createAzureCommunicationCallAdapter
-const createChatAdapterWithCredentials = async (): Promise<ChatAdapter> => {
-  const callAdapter = await createAzureCommunicationChatAdapter({
-    endpoint,
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-    displayName,
-    credential: new AzureCommunicationTokenCredential(token),
-    threadId
-  });
-  return callAdapter;
-};

@@ -302,16 +302,3 @@ export const isTestProfileStableFlavor = (): boolean => {
     throw 'Faled to find Communication React Flavor env variable';
   }
 };
-
-/**
- * Helper function to create query arg to store model data for Fake Chat Adapter
- */
-export const stringifyChatModel = (users: { displayName: string }[]): string => {
-  return JSON.stringify({
-    users: JSON.stringify(
-      users.map((user) => {
-        return { displayName: user.displayName };
-      })
-    )
-  });
-};
