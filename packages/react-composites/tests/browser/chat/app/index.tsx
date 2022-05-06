@@ -23,13 +23,6 @@ import { App as FakeAdapterApp } from '../fake-adapter/App';
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-let fakeChatAdapterModel = undefined;
-try {
-  fakeChatAdapterModel = JSON.parse(params.fakeChatAdapterModel);
-} catch (e) {
-  console.log('Query parameter fakeChatAdapterModel could not be parsed.');
-}
-
 // Needed to initialize default icons used by Fluent components.
 initializeFileTypeIcons();
 initializeIconsForUITests();
@@ -161,7 +154,7 @@ function App(): JSX.Element {
   );
 }
 
-ReactDOM.render(fakeChatAdapterModel ? <FakeAdapterApp /> : <App />, document.getElementById('root'));
+ReactDOM.render(params.fakeChatAdapterModel ? <FakeAdapterApp /> : <App />, document.getElementById('root'));
 
 function getMessageContentInUppercase(messageProps: MessageProps): string {
   const message = messageProps.message;
