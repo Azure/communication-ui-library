@@ -36,7 +36,7 @@ export const buildUrlForChatAppUsingFakeAdapter = (
   })}`;
 };
 
-export const usePage = async ({ serverUrl, browser }) => {
+const usePage = async ({ serverUrl, browser }) => {
   const page = await loadNewPage(
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, {
