@@ -28,7 +28,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
       // These features can be listed in the conditional compilation directives without
       // causing a build failure, but they are ignored by the preprocessing step.
       stabilizedFeatures: [
-        'call-with-chat-composite',
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
