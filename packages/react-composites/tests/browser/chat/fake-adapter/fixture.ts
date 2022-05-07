@@ -36,7 +36,7 @@ export const buildUrlForChatAppUsingFakeAdapter = (
   return url;
 };
 
-const usePage = async ({ serverUrl, browser }) => {
+const usePage = async ({ serverUrl, browser }, use) => {
   const page = await loadNewPage(
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -44,7 +44,7 @@ const usePage = async ({ serverUrl, browser }) => {
     })
   );
   bindConsoleErrorForwarding(page);
-  return page;
+  await use(page);
 };
 
 /**
