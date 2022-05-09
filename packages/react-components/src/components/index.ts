@@ -110,3 +110,6 @@ export * from './ModalClone/ModalClone';
 export * from './FileDownloadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
+
+export { Dialpad } from './Dialpad/Dialpad';
+export type { DialpadProps, DialpadStrings } from './Dialpad/Dialpad';

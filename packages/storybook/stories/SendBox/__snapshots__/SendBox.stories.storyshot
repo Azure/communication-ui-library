@@ -40,18 +40,18 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 className="css-5"
               >
                 <div
-                  className="ms-TextField ms-TextField--multiline root-8"
+                  className="ms-TextField ms-TextField--multiline root-7"
                 >
                   <div
-                    className="ms-TextField-wrapper wrapper-9"
+                    className="ms-TextField-wrapper wrapper-8"
                   >
                     <div
-                      className="ms-TextField-fieldGroup fieldGroup-10"
+                      className="ms-TextField-fieldGroup fieldGroup-9"
                     >
                       <textarea
                         aria-invalid={false}
                         autoFocus={false}
-                        className="ms-TextField-field ms-TextField--unresizable css-119 css-113 field-11"
+                        className="ms-TextField-field ms-TextField--unresizable css-119 css-113 field-10"
                         data-ui-id="sendbox-textfield"
                         disabled={false}
                         id="sendbox"
@@ -67,10 +67,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-20"
+                  className="ms-Stack css-19"
                 >
                   <div
-                    className="ms-TooltipHost css-121 root-21"
+                    className="ms-TooltipHost css-121 root-20"
                     onBlurCapture={[Function]}
                     onFocusCapture={[Function]}
                     onKeyDown={[Function]}
@@ -79,7 +79,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   >
                     <button
                       aria-label="Send message"
-                      className="ms-Button ms-Button--icon css-120 css-114 root-22"
+                      className="ms-Button ms-Button--icon css-120 css-114 root-21"
                       data-is-focusable={true}
                       id="sendIconWrapper"
                       onClick={[Function]}
@@ -93,12 +93,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                       type="button"
                     >
                       <span
-                        className="ms-Button-flexContainer flexContainer-23"
+                        className="ms-Button-flexContainer flexContainer-22"
                         data-automationid="splitbuttonprimary"
                       >
                         <i
                           aria-hidden={true}
-                          className="root-94 css-115 root-30"
+                          className="root-94 css-115 root-29"
                           data-icon-name="SendBoxSend"
                         >
                           <span

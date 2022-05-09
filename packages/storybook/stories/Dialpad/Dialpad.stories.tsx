@@ -1,0 +1,64 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
+import { mergeStyles } from '@fluentui/react';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { hiddenControl } from '../controlsUtils';
+import { DialpadExample } from './snippets/Dialpad.snippet';
+
+const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
+
+const getDocs: () => JSX.Element = () => {
+  /* eslint-disable react/no-unescaped-entities */
+  return (
+    <>
+      <Title>Dialpad</Title>
+      <Description>
+        Component to render a Dialpad. This component allows numbers and +, *, #,(,),- input by clicking on dialpad or
+        using keyboard
+      </Description>
+      <Heading>Example Dialpad</Heading>
+      <Canvas mdxSource={ExampleDialpadText}>
+        <DialpadExample />
+      </Canvas>
+      <Heading>Dialpad Props</Heading>
+      <Props of={DialpadComponent} />
+    </>
+  );
+};
+
+const DialpadStory = (): JSX.Element => {
+  const theme = useTheme();
+
+  return (
+    <div
+      className={mergeStyles({
+        background: theme.palette.neutralLighterAlt,
+        padding: '2em',
+        width: '75%',
+        height: '75%'
+      })}
+    >
+      <DialpadComponent />
+    </div>
+  );
+};
+
+export const Dialpad = DialpadStory.bind({});
+
+export default {
+  title: `${COMPONENT_FOLDER_PREFIX}/Dialpad`,
+  component: DialpadComponent,
+  argTypes: {
+    strings: hiddenControl
+  },
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;

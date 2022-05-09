@@ -75,6 +75,10 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose Speaker"
   },
+  "dialpad": {
+    "errorText": "Only allow input to be numbers or * and # and + keys",
+    "defaultText": "Enter a number"
+  },
   "participantsButton": {
     "label": "People",
     "tooltipContent": "Show Participants",
