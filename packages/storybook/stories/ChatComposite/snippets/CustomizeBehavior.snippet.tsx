@@ -3,12 +3,14 @@ import {
   ChatAdapter,
   ChatComposite,
   CompositeLocale,
+  fromFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
-  userId: CommunicationUserIdentifier;
+  /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
+  userIdentifier: string;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -19,10 +21,16 @@ export type ContainerProps = {
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   // Arguments to `useAzureCommunicationChatAdapter` must be memoized to avoid recreating adapter on each render.
   const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
+
+  const userId = useMemo(
+    () => fromFlatCommunicationIdentifier(props.userIdentifier) as CommunicationUserIdentifier,
+    [props.userIdentifier]
+  );
+
   const adapter = useAzureCommunicationChatAdapter(
     {
       endpoint: props.endpointUrl,
-      userId: props.userId,
+      userId,
       // Data model injection: The display name for the local user comes from Contoso's data model.
       displayName: props.displayName,
       credential,
