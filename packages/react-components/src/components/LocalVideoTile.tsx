@@ -56,12 +56,12 @@ export const LocalVideoTile = React.memo(
 
     useEffect(() => {
       if (isAvailable && !renderElement) {
-        onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
+        onCreateLocalStreamView?.(localVideoViewOptions);
       }
       // Always clean up element to make tile up to date and be able to dispose correctly
       return () => {
         if (renderElement) {
-          onDisposeLocalStreamView && onDisposeLocalStreamView();
+          onDisposeLocalStreamView?.();
         }
       };
     }, [isAvailable, onCreateLocalStreamView, onDisposeLocalStreamView, localVideoViewOptions, renderElement]);
@@ -71,7 +71,7 @@ export const LocalVideoTile = React.memo(
     // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
     useEffect(() => {
       return () => {
-        onDisposeLocalStreamView && onDisposeLocalStreamView();
+        onDisposeLocalStreamView?.();
       };
     }, [onDisposeLocalStreamView]);
 
