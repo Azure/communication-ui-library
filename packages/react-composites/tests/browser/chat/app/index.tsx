@@ -40,7 +40,7 @@ function App(): JSX.Element {
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
   const failFileDownload = Boolean(params.failDownload);
-  const uploadedFiles = params.uploadedFiles ? JSON.parse(params.uploadedFiles) : [];
+  const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
 
   const args = useMemo(
     () => ({
@@ -50,7 +50,7 @@ function App(): JSX.Element {
       credential: new AzureCommunicationTokenCredential(token),
       threadId
     }),
-    []
+    [displayName, endpoint, token, threadId, userId]
   );
   const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
     // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
@@ -79,7 +79,7 @@ function App(): JSX.Element {
         }
       });
     }
-  }, [adapter]);
+  }, [adapter, uploadedFiles]);
 
   const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
     return new Promise((resolve) => {

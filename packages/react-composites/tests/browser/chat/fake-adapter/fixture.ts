@@ -36,6 +36,7 @@ export const buildUrlForChatAppUsingFakeAdapter = (
   return url;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ serverUrl, browser }, use) => {
   const page = await loadNewPage(
     browser,
