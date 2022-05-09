@@ -11,7 +11,8 @@ import {
   Persona,
   PersonaPresence,
   PersonaSize,
-  Stack
+  Stack,
+  Text
 } from '@fluentui/react';
 import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -180,7 +181,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       ref={containerRef}
       role={'menuitem'}
       data-is-focusable={true}
-      className={mergeStyles(participantItemContainerStyle(me), styles?.root)}
+      className={mergeStyles(
+        participantItemContainerStyle({ localparticipant: me, clickable: !!menuItems }),
+        styles?.root
+      )}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
@@ -194,7 +198,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
       >
         {avatar}
-        {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
+        {me && <Text className={meTextStyle}>{isMeText}</Text>}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
