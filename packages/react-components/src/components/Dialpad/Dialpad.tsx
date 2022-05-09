@@ -42,40 +42,52 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
   return <DialpadContainer errorText={strings.errorText} defaultText={strings.defaultText} {...props} />;
 };
 
-const formatPhoneNumber = (value: string, defaultText: string): string => {
-  // if input value is default text then just return
-  if (value === defaultText) {
-    return value;
-  }
-
+const formatPhoneNumber = (value: String): string => {
   // if input value is falsy eg if the user deletes the input, then just return
   if (!value) {
     return value;
   }
 
   // clean the input for any non-digit values.
-  const phoneNumber = value.replace(/[^\d*#+]/g, '');
+  let phoneNumber = value.replace(/[^\d*#+]/g, '');
+
+  // if phone number starts with 1, format like 1 (xxx)xxx-xxxx.
+  // if phone number starts with +, we format like +x (xxx)xxx-xxxx.
+  // For now we are only supporting NA phone number formatting with country code +x
+  // first we chop off the countrycode then we add it on when returning
+  let countryCodeNA = '';
+  if (phoneNumber[0] === '1') {
+    countryCodeNA = '1';
+
+    phoneNumber = phoneNumber.slice(1, phoneNumber.length);
+  } else if (phoneNumber[0] === '+') {
+    countryCodeNA = phoneNumber.slice(0, 2);
+    phoneNumber = phoneNumber.slice(2, phoneNumber.length);
+  }
 
   // phoneNumberLength is used to know when to apply our formatting for the phone number
   const phoneNumberLength = phoneNumber.length;
 
   // we need to return the value with no formatting if its less then four digits
-  // this is to avoid weird behavior that occurs if you  format the area code to early
+  // this is to avoid weird behavior that occurs if you  format the area code too early
   // if phoneNumberLength is greater than 10 we don't do any formatting
 
   if (phoneNumberLength < 4 || phoneNumberLength > 10) {
-    return phoneNumber;
+    return countryCodeNA + phoneNumber;
   }
 
   // if phoneNumberLength is greater than 4 and less the 7 we start to return
   // the formatted number
   if (phoneNumberLength < 7) {
-    return `(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3)}`;
+    return `${countryCodeNA}(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3)}`;
   }
 
   // finally, if the phoneNumberLength is greater then seven, we add the last
   // bit of formatting and return it.
-  return `(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, phoneNumber.length)}`;
+  return `${countryCodeNA}(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3, 6)}-${phoneNumber.slice(
+    6,
+    phoneNumber.length
+  )}`;
 };
 
 const DialpadContainer = (props: {
@@ -88,15 +100,12 @@ const DialpadContainer = (props: {
   subStyles?: IStyle;
 }): JSX.Element => {
   const theme = useTheme();
-  const [textValue, setTextValue] = useState(props.defaultText);
+  const [textValue, setTextValue] = useState('');
   const [error, setError] = useState('');
   const onClickDialpad = (input: string): void => {
     setError('');
-    if (textValue === props.defaultText) {
-      setTextValue(input);
-    } else {
-      setTextValue(textValue + input);
-    }
+
+    setTextValue(textValue + input);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -114,19 +123,10 @@ const DialpadContainer = (props: {
     <div className={mergeStyles(containerStyles(theme), props.containerStyles)}>
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.textFieldStyles)}
-        value={formatPhoneNumber(textValue, props.defaultText)}
+        value={formatPhoneNumber(textValue)}
         onChange={setText}
         errorMessage={error}
-        onClick={() => {
-          if (textValue === props.defaultText) {
-            setTextValue('');
-          }
-        }}
-        onFocus={() => {
-          if (textValue === props.defaultText) {
-            setTextValue('');
-          }
-        }}
+        placeholder={props.defaultText}
       />
       <div className={mergeStyles(rowStyles(theme), props.rowStyles)}>
         <button
