@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make filesharing responsive: prevent file cards from getting trimmed in case of smaller frame",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
