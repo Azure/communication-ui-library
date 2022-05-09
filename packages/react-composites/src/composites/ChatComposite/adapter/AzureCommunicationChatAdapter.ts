@@ -179,9 +179,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     // If get properties fails we dont want to try to get the participants after.
     await this.asyncTeeErrorToEventEmitter(async () => {
       await this.chatThreadClient.getProperties();
-    });
-    // Fetch all participants who joined before the local user.
-    await this.asyncTeeErrorToEventEmitter(async () => {
+      // Fetch all participants who joined before the local user.
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
         maxPageSize: 100
