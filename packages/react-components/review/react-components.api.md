@@ -20,6 +20,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -199,6 +200,7 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -369,6 +371,33 @@ export interface DevicesButtonStrings {
 // @public
 export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @public
+export const Dialpad: (props: DialpadProps) => JSX.Element;
+
+// @public
+export interface DialpadProps {
+    // (undocumented)
+    containerStyles?: IStyle;
+    // (undocumented)
+    digitStyles?: IStyle;
+    // (undocumented)
+    rowStyles?: IStyle;
+    // (undocumented)
+    strings?: DialpadStrings;
+    // (undocumented)
+    subStyles?: IStyle;
+    // (undocumented)
+    textFieldStyles?: Partial<ITextFieldStyles>;
+}
+
+// @public
+export interface DialpadStrings {
+    // (undocumented)
+    defaultText: string;
+    // (undocumented)
+    errorText: string;
 }
 
 // @internal
