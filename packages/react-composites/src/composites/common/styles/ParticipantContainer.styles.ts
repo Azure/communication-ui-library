@@ -98,7 +98,8 @@ export const participantListWrapper = mergeStyles({
   width: '20rem',
   // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
   maxWidth: '50vw',
-  height: '100%'
+  height: '100%',
+  boxShadow: '0px 1.2px 3.6px rgba(0, 0, 0, 0.1), 0px 6.4px 14.4px rgba(0, 0, 0, 0.13)'
 });
 
 /**
