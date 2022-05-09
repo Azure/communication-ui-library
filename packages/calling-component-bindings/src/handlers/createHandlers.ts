@@ -6,6 +6,7 @@ import {
   Call,
   CallAgent,
   LocalVideoStream,
+  ScalingMode,
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -303,6 +304,19 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
+    const onUpdateLocalStreamViewScalingMode = async (scalingMode: ScalingMode): Promise<void> => {
+      // If the user is currently in a call, update the local stream view attached to that call.
+      const callState = call && callClient.getState().calls[call.id];
+      const localStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      if (call && callState && localStream) {
+        callClient.updateViewScalingMode(call.id, undefined, localStream, scalingMode);
+      }
+
+      // If the user is not in a call we currently assume any unparented view is a LocalPreview and update all
+      // since those are only used for LocalPreview currently.
+      // await disposeAllLocalPreviewViews(callClient);
+    };
+
     const onRemoveParticipant = async (userId: string): Promise<void> => {
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
@@ -323,7 +337,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onRemoveParticipant,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
-      onDisposeLocalStreamView
+      onDisposeLocalStreamView,
+      onUpdateLocalStreamViewScalingMode
     };
   }
 );

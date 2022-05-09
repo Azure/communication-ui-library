@@ -113,11 +113,9 @@ export interface RemoteVideoStreamState {
 }
 
 /**
- * State only version of {@link @azure/communication-calling#VideoStreamRendererView}. Currently no API is provided to
- * modify scalingMode after the stream as been rendered by {@link StatefulCallClient}. In order to change scalingMode
- * stop rendering the stream and re-start it using the desired scalingMode. This property is added to the state exposed
- * by {@link StatefulCallClient} by {@link StatefulCallClient.createView} and removed by
- * {@link StatefulCallClient.disposeView}.
+ * State only version of {@link @azure/communication-calling#VideoStreamRendererView}. In order to update scalingMode
+ * instead use {@link StatefulCallClient.updateViewScalingMode}. Use {@link StatefulCallClient.createView} and
+ * {@link StatefulCallClient.disposeView} to create a dispose of these views.
  *
  * @public
  */

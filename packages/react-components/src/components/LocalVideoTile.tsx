@@ -3,7 +3,7 @@
 
 import { Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -19,6 +19,7 @@ export const LocalVideoTile = React.memo(
     userId: string;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
+    onUpdateLocalStreamViewScalingMode?: (scalingMode?: 'Stretch' | 'Crop' | 'Fit') => void;
     isAvailable?: boolean;
     isMuted?: boolean;
     renderElement?: HTMLElement;
@@ -39,6 +40,7 @@ export const LocalVideoTile = React.memo(
       isMuted,
       onCreateLocalStreamView,
       onDisposeLocalStreamView,
+      onUpdateLocalStreamViewScalingMode,
       localVideoViewOptions,
       renderElement,
       userId,
@@ -54,24 +56,37 @@ export const LocalVideoTile = React.memo(
       localVideoSelectedDescription
     } = props;
 
+    // Only trigger a dispose and recreate of the stream if the isMirrored property has changed.
+    // If the scalingMode has changed we instead call onUpdateLocalStreamViewScalingMode.
+    // To do so we flatten the localVideoViewOptions and use a useRef for the scalingMode so it does not
+    // trigger the onCreateLocalStreamView useEffect
+    const scalingModeRef = useRef(localVideoViewOptions?.scalingMode);
+
+    const scalingModeUpdated = scalingModeRef.current !== localVideoViewOptions?.scalingMode;
+    if (scalingModeUpdated) {
+      onUpdateLocalStreamViewScalingMode?.(localVideoViewOptions?.scalingMode);
+      scalingModeRef.current = localVideoViewOptions?.scalingMode;
+    }
+
+    const isMirrored = localVideoViewOptions?.isMirrored;
     useEffect(() => {
       if (isAvailable && !renderElement) {
-        onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
+        onCreateLocalStreamView?.({ isMirrored, scalingMode: scalingModeRef.current });
       }
       // Always clean up element to make tile up to date and be able to dispose correctly
       return () => {
         if (renderElement) {
-          onDisposeLocalStreamView && onDisposeLocalStreamView();
+          onDisposeLocalStreamView?.();
         }
       };
-    }, [isAvailable, onCreateLocalStreamView, onDisposeLocalStreamView, localVideoViewOptions, renderElement]);
+    }, [isAvailable, onCreateLocalStreamView, onDisposeLocalStreamView, renderElement, isMirrored]);
 
     // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
     // Element disposed could happen during async time gap, which still cause leaks for unused renderElement.
     // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
     useEffect(() => {
       return () => {
-        onDisposeLocalStreamView && onDisposeLocalStreamView();
+        onDisposeLocalStreamView?.();
       };
     }, [onDisposeLocalStreamView]);
 

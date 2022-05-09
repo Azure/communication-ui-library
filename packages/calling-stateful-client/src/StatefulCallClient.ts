@@ -133,6 +133,31 @@ export interface StatefulCallClient extends CallClient {
     participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
+  /**
+   * Update the scaling mode of a {@link VideoStreamRendererView}
+   * {@link @azure/communication-calling#VideoStreamRendererView.updateScalingMode}.
+   *
+   * Its important to updateViewScalingMode correctly updates the appropriate views.
+   *
+   * Scenario 1: updateViewScalingMode for a VideoStreamRendererView of a Remote Participant
+   * - CallId is required, participantId is required, and @JamesBurnside TODO: SOMETHING
+   *
+   * Scenario 2: updateViewScalingMode of a local VideoStreamRendererView in a call
+   * - CallId is required, participantId must be undefined, and @JamesBurnside TODO: SOMETHING
+   *
+   * - Scenario 2: updateViewScalingMode od a local VideoStreamRendererView not part of a call
+   * - CallId must be undefined, participantId must be undefined, and @JamesBurnside TODO: SOMETHING
+   *
+   * @param callId - CallId for the given stream. Can be undefined if the stream is not part of any call.
+   * @param participantId - {@link RemoteParticipant.identifier} associated with the given RemoteVideoStreamState. Could
+   *   be undefined if disposing LocalVideoStreamState.
+   * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to dispose.
+   */
+  updateViewScalingMode(
+    callId: string | undefined,
+    participantId: CommunicationIdentifier | undefined,
+    stream: LocalVideoStreamState | RemoteVideoStreamState
+  ): void;
 }
 
 /**
@@ -304,6 +329,17 @@ export const createStatefulCallClientWithDeps = (
     ): void => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       disposeView(context, internalContext, callId, participantIdKind, stream);
+    }
+  });
+  Object.defineProperty(callClient, 'updateViewScalingMode', {
+    configurable: false,
+    value: (
+      callId: string | undefined,
+      participantId: CommunicationIdentifier | undefined,
+      stream: LocalVideoStreamState | RemoteVideoStreamState
+    ): void => {
+      const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
+      updateViewScalingMode(context, internalContext, callId, participantIdKind, stream);
     }
   });
 

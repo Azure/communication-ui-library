@@ -26,11 +26,6 @@ const VideoGalleryStyles = {
   }
 };
 
-const localVideoViewOptions = {
-  scalingMode: 'Crop',
-  isMirrored: true
-} as VideoStreamOptions;
-
 const remoteVideoViewOptions = {
   scalingMode: 'Crop'
 } as VideoStreamOptions;
@@ -66,6 +61,24 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.onFetchAvatarPersonaData
   );
 
+  const [flipScalingMode, setFlipScalingMode] = useState(false);
+
+  useEffect(() => {
+    let i = true;
+    setInterval(() => {
+      setFlipScalingMode((window as any).SWITCH_VIEW_FLAG as boolean);
+      i = !i;
+    }, 500);
+  }, []);
+
+  const localVideoViewOptions: VideoStreamOptions = useMemo(
+    () => ({
+      scalingMode: flipScalingMode ? 'Crop' : 'Fit',
+      isMirrored: true
+    }),
+    [flipScalingMode]
+  );
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -85,7 +98,14 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         )}
       />
     );
-  }, [videoGalleryProps, props.isMobile, props.onFetchAvatarPersonaData, remoteParticipants, cameraSwitcherProps]);
+  }, [
+    videoGalleryProps,
+    remoteParticipants,
+    localVideoViewOptions,
+    props.isMobile,
+    props.onFetchAvatarPersonaData,
+    cameraSwitcherProps
+  ]);
 
   return VideoGalleryMemoized;
 };

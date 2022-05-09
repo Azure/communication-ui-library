@@ -4,6 +4,7 @@
 import {
   CreateViewOptions,
   LocalVideoStream,
+  ScalingMode,
   VideoStreamRenderer,
   VideoStreamRendererView
 } from '@azure/communication-calling';
@@ -68,7 +69,7 @@ async function createViewRemoteVideo(
 
   internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Rendering', undefined);
 
-  let view;
+  let view: VideoStreamRendererView;
   try {
     view = await renderer.createView(options);
   } catch (e) {
@@ -112,7 +113,8 @@ async function createViewRemoteVideo(
     streamId,
     refreshedRenderInfo.stream,
     'Rendered',
-    renderer
+    renderer,
+    view.updateScalingMode
   );
   context.setRemoteVideoStreamRendererView(
     callId,
@@ -161,7 +163,7 @@ async function createViewLocalVideo(
 
   internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderer);
 
-  let view;
+  let view: VideoStreamRendererView;
   try {
     view = await renderer.createView(options);
   } catch (e) {
@@ -194,7 +196,7 @@ async function createViewLocalVideo(
 
   // Else The stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
-  internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
+  internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer, view.updateScalingMode);
   context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
   callingStatefulLogger.info(`Successfully render the local view. callId: ${callId}`);
 }
@@ -262,7 +264,7 @@ async function createViewUnparentedVideo(
 
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
-  internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
+  internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer, view.updateScalingMode);
   context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
 }
 
@@ -455,4 +457,63 @@ export function disposeAllViews(context: CallContext, internalContext: InternalC
   for (const callId of callIds) {
     disposeAllViewsFromCall(context, internalContext, callId);
   }
+}
+
+/**
+ * @private
+ */
+export async function updateViewScalingMode(
+  context: CallContext,
+  internalContext: InternalCallContext,
+  callId: string | undefined,
+  participantId: CommunicationIdentifierKind | string | undefined,
+  stream: LocalVideoStreamState | RemoteVideoStreamState,
+  scalingMode: ScalingMode
+): Promise<void> {
+  if ('id' in stream && callId && participantId) {
+    // Stop rendering RemoteVideoStream that is part of a Call
+    return updateViewScalingModeRemoteVideo(context, internalContext, callId, participantId, stream, scalingMode);
+  } else if (!('id' in stream) && callId) {
+    // Stop rendering LocalVideoStream that is part of a Call
+    return updateViewScalingModeLocalVideo(context, internalContext, callId, scalingMode);
+  } else if (!('id' in stream) && !callId) {
+    // Stop rendering LocalVideoStream that is not part of a Call
+    return updateViewScalingModeUnparentedVideo(context, internalContext, stream, scalingMode);
+  } else {
+    console.warn('Invalid combination of parameters');
+    return;
+  }
+}
+
+async function updateViewScalingModeLocalVideo(
+  context: CallContext,
+  internalContext: InternalCallContext,
+  callId: string,
+  scalingMode: ScalingMode
+): Promise<void> {
+  const renderInfo = internalContext.getLocalRenderInfo(callId);
+  if (!renderInfo) {
+    return;
+  }
+
+  if (renderInfo.status !== 'Rendered') {
+    callingStatefulLogger.error(
+      `Cannot update scaling mode of a view that is not Rendered. Current render status: ${renderInfo.status}`
+    );
+    return;
+  }
+
+  const oldViewData = context.getState().calls[callId].localVideoStreams[0].view;
+  if (!oldViewData) {
+    callingStatefulLogger.error(`Cannot update scaling mode. View not found.`);
+    return;
+  }
+
+  if (!renderInfo.updateScalingMode) {
+    callingStatefulLogger.error(`Cannot update scaling mode. renderInfo updateScalingMode method not found.`);
+    return;
+  }
+
+  await renderInfo.updateScalingMode(scalingMode);
+  context.setLocalVideoStreamRendererView(callId, { ...oldViewData, scalingMode });
 }

@@ -119,6 +119,8 @@ export interface VideoGalleryProps {
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
+  /** Callback to update the scaling mode of the local video stream view */
+  onUpdateLocalStreamViewScalingMode?: (scalingMode?: 'Stretch' | 'Crop' | 'Fit') => void;
   /** Callback to render the local video tile*/
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   /** Callback to create a remote video stream view */
@@ -181,6 +183,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
     onDisposeLocalStreamView,
+    onUpdateLocalStreamViewScalingMode,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     styles,
@@ -262,6 +265,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
+          onUpdateLocalStreamViewScalingMode={onUpdateLocalStreamViewScalingMode}
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
@@ -286,6 +290,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localVideoViewOptions,
     onCreateLocalStreamView,
     onDisposeLocalStreamView,
+    onUpdateLocalStreamViewScalingMode,
     onRenderAvatar,
     onRenderLocalVideoTile,
     shouldFloatLocalVideo,

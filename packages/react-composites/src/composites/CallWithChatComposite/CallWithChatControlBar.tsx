@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
@@ -188,6 +188,13 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
             />
           )}
           {isEnabled(options?.chatButton) && chatButton}
+          <DefaultButton
+            onClick={() => {
+              (window as any).SWITCH_VIEW_FLAG = !(window as any).SWITCH_VIEW_FLAG;
+            }}
+          >
+            Flip View
+          </DefaultButton>
         </Stack>
       )}
     </Stack>

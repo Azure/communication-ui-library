@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { LocalVideoStream, RemoteVideoStream, ScalingMode, VideoStreamRenderer } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
 import { CallIdHistory } from './CallIdHistory';
 
@@ -22,6 +22,7 @@ export type RenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping'
 export interface RenderInfo {
   status: RenderStatus;
   renderer: VideoStreamRenderer | undefined;
+  updateScalingMode?: (scalingMode: ScalingMode) => Promise<void>;
 }
 
 /**
@@ -98,7 +99,8 @@ export class InternalCallContext {
     streamId: number,
     stream: RemoteVideoStream,
     status: RenderStatus,
-    renderer: VideoStreamRenderer | undefined
+    renderer: VideoStreamRenderer | undefined,
+    updateScalingMode?: (scalingMode: ScalingMode) => Promise<void>
   ): void {
     let callRenderInfos = this._remoteRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!callRenderInfos) {
@@ -112,7 +114,7 @@ export class InternalCallContext {
       callRenderInfos.set(participantKey, participantRenderInfos);
     }
 
-    participantRenderInfos.set(streamId, { stream, status, renderer });
+    participantRenderInfos.set(streamId, { stream, status, renderer, updateScalingMode });
   }
 
   public deleteRemoteRenderInfo(callId: string, participantKey: string, streamId: number): void {
@@ -133,9 +135,15 @@ export class InternalCallContext {
     callId: string,
     stream: LocalVideoStream,
     status: RenderStatus,
-    renderer: VideoStreamRenderer | undefined
+    renderer: VideoStreamRenderer | undefined,
+    updateScalingMode?: (scalingMode: ScalingMode) => Promise<void>
   ): void {
-    this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), { stream, status, renderer });
+    this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), {
+      stream,
+      status,
+      renderer,
+      updateScalingMode
+    });
   }
 
   public getLocalRenderInfo(callId: string): LocalRenderInfo | undefined {
@@ -154,9 +162,10 @@ export class InternalCallContext {
     statefulStream: LocalVideoStreamState,
     stream: LocalVideoStream,
     status: RenderStatus,
-    renderer: VideoStreamRenderer | undefined
+    renderer: VideoStreamRenderer | undefined,
+    updateScalingMode?: (scalingMode: ScalingMode) => Promise<void>
   ): void {
-    this._unparentedRenderInfos.set(statefulStream.source.id, { stream, status, renderer });
+    this._unparentedRenderInfos.set(statefulStream.source.id, { stream, status, renderer, updateScalingMode });
   }
 
   public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
