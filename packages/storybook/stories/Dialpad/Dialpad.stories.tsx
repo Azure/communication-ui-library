@@ -18,8 +18,8 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>Dialpad</Title>
       <Description>
-        Component to render a Dialpad. This component allows numbers and +, *, #,(,),- input by clicking on dialpad or
-        using keyboard
+        Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
+        keyboard
       </Description>
       <Heading>Example Dialpad</Heading>
       <Canvas mdxSource={ExampleDialpadText}>
