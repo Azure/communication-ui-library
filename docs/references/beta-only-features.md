@@ -89,6 +89,8 @@ Careful scoping of [defined features](../../common/config/babel/.babelrc.js) wil
 
 This [example PR](https://github.com/Azure/communication-ui-library/pull/1547) for stabilizing a feature includes the [generated API diff](https://github.com/Azure/communication-ui-library/pull/1547/files#diff-e76b64bd635283f256ec46065d2e58b277d9fad73ff4e4a774e4509c0290acfe) for this feature.
 
+This [example PR](https://github.com/Azure/communication-ui-library/pull/1846) cleans up previously stabilized feature flag.
+
 # Releases
 
 Conditional compilation necessitates a few extra steps when we release a package:
