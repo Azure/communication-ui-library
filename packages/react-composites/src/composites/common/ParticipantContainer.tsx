@@ -8,13 +8,15 @@ import {
   participantListStyle,
   participantListWrapper
 } from './styles/ParticipantContainer.styles';
+
 import {
   OnRenderAvatarCallback,
   ParticipantList,
   ParticipantListProps,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  useTheme
 } from '@internal/react-components';
-import { FocusZone, Stack, useTheme } from '@fluentui/react';
+import { FocusZone, Stack } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 type ParticipantContainerProps = {
@@ -30,8 +32,9 @@ type ParticipantContainerProps = {
  * @private
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
+  const theme = useTheme();
   return (
-    <Stack className={participantListWrapper}>
+    <Stack className={participantListWrapper(theme)}>
       <ParticipantListWithHeading {...props} />
     </Stack>
   );
