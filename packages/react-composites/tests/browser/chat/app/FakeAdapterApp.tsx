@@ -57,25 +57,25 @@ export const FakeAdapterApp = (): JSX.Element => {
 
 async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapter> {
   const chatService = new FakeChatService();
-  const participants: ChatParticipant[] = model.users.map((user) => {
+  const remoteParticipants: ChatParticipant[] = model.remoteParticipants.map((user) => {
     return {
       id: { communicationUserId: nanoid() },
       displayName: user
     };
   });
-  const firstUserId = participants[0].id;
-  const firstChatClient = chatService.newClient(firstUserId);
+  const localUser = { id: { communicationUserId: nanoid() }, displayName: model.localParticipant };
+  const firstChatClient = chatService.newClient(localUser.id);
   const thread = await firstChatClient.createChatThread(
     {
       topic: 'Cowabunga'
     },
     {
-      participants: participants
+      participants: [localUser, ...remoteParticipants]
     }
   );
   const participantHandle = {
-    userId: participants[0].id,
-    displayName: participants[0].displayName,
+    userId: localUser.id,
+    displayName: localUser.displayName,
     chatClient: firstChatClient,
     chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
   };

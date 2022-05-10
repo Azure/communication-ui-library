@@ -16,7 +16,7 @@ interface WorkerFixture {
   page: Page;
 }
 
-export type ChatAdapterModel = { users: string[] };
+export type ChatAdapterModel = { localParticipant: string; remoteParticipants: string[] };
 
 /**
  * Create the test URL for chat app with using fake adapter
@@ -41,7 +41,8 @@ const usePage = async ({ serverUrl, browser }, use) => {
   const page = await loadNewPage(
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-      users: TEST_PARTICIPANTS_CHAT
+      localParticipant: TEST_PARTICIPANTS_CHAT[0],
+      remoteParticipants: TEST_PARTICIPANTS_CHAT.splice(1)
     })
   );
   bindConsoleErrorForwarding(page);
