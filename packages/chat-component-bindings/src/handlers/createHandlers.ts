@@ -104,6 +104,7 @@ export const createDefaultChatHandlers = memoizeOne(
         while (!readReceipt.done && parseInt(readReceipt?.value?.chatMessageId) >= earliestTime) {
           readReceipt = await readReceiptIterator.next();
         }
+
         return isAllChatMessagesLoaded;
       }
     };
