@@ -27,24 +27,6 @@ type CachedComplianceBannerProps = {
  * @private
  */
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
-  function determineStates(previous: ComplianceState, current: boolean | undefined): ComplianceState {
-    // if current state is on, then return on
-    if (current) {
-      return 'on';
-    }
-    // if current state is off
-    else {
-      // if previous state is on and current state is off, return stopped (on -> off)
-      if (previous === 'on') {
-        return 'stopped';
-      }
-      // otherwise remain previous state unchanged
-      else {
-        return previous;
-      }
-    }
-  }
-
   //set variant when incoming state is different from current state
   //when variant change, return message bar
   //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
@@ -116,6 +98,24 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
     </MessageBar>
   );
 };
+
+function determineStates(previous: ComplianceState, current: boolean | undefined): ComplianceState {
+  // if current state is on, then return on
+  if (current) {
+    return 'on';
+  }
+  // if current state is off
+  else {
+    // if previous state is on and current state is off, return stopped (on -> off)
+    if (previous === 'on') {
+      return 'stopped';
+    }
+    // otherwise remain previous state unchanged
+    else {
+      return previous;
+    }
+  }
+}
 
 function BannerMessage(props: { variant: ComplianceBannerVariant; strings: CompositeStrings }): JSX.Element {
   const { variant, strings } = props;
