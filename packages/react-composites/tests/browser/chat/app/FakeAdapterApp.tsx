@@ -82,7 +82,7 @@ async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapt
   return await initializeAdapter(participantHandle);
 }
 
-const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
+const initializeAdapter = async (participant: AdapterInfo): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(participant.chatClient, {
     userId: participant.userId as CommunicationUserIdentifier,
     displayName: participant.displayName,
@@ -96,7 +96,7 @@ const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAd
   );
 };
 
-interface ParticipantHandle {
+interface AdapterInfo {
   userId: CommunicationIdentifier;
   displayName: string;
   chatClient: ChatClient;
