@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Dialpad, DialpadButtonsType } from '@azure/communication-react';
+import { _Dialpad, _DialpadButtonProps } from '@internal/react-components';
 import React from 'react';
 
-const dialPadButtons: DialpadButtonsType[][] = [
+const dialPadButtons: _DialpadButtonProps[][] = [
   [
     { primaryContent: '0' },
     { primaryContent: '0', secondaryContent: '123' },
@@ -16,9 +16,9 @@ const dialPadButtons: DialpadButtonsType[][] = [
     { primaryContent: '+', secondaryContent: '345' }
   ],
   [
-    { primaryContent: 'q', secondaryContent: '678' },
-    { primaryContent: 'q', secondaryContent: '098' },
-    { primaryContent: 'q', secondaryContent: '111' }
+    { primaryContent: '2', secondaryContent: '678' },
+    { primaryContent: '2', secondaryContent: '098' },
+    { primaryContent: '2', secondaryContent: '111' }
   ],
   [
     { primaryContent: '*', secondaryContent: '678' },
@@ -28,5 +28,5 @@ const dialPadButtons: DialpadButtonsType[][] = [
 ];
 
 export const CustomDialpadExample: () => JSX.Element = () => {
-  return <Dialpad dialpadButtons={dialPadButtons} />;
+  return <_Dialpad dialpadButtons={dialPadButtons} />;
 };

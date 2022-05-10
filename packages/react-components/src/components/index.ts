@@ -117,6 +117,6 @@ export * from './FileDownloadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
-export { Dialpad } from './Dialpad/Dialpad';
+export { _Dialpad } from './Dialpad/Dialpad';
 
-export type { DialpadProps, DialpadStrings, DialpadButtonsType, DialpadStyles } from './Dialpad/Dialpad';
+export type { _DialpadProps, _DialpadStrings, _DialpadButtonProps, _DialpadStyles } from './Dialpad/Dialpad';

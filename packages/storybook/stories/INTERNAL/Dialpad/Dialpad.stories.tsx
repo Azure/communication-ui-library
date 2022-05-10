@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
+import { _Dialpad as DialpadComponent, useTheme } from '@internal/react-components';
 import { mergeStyles } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { hiddenControl } from '../controlsUtils';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { hiddenControl } from '../../controlsUtils';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
 import { DialpadExample } from './snippets/Dialpad.snippet';
 
@@ -28,6 +28,7 @@ const getDocs: () => JSX.Element = () => {
         <DialpadExample />
       </Canvas>
       <Heading>Example Dialpad with custom content</Heading>
+      <Description>Note that dialpad only allows numeric inputs/special characters including +, * and #</Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />
       </Canvas>
@@ -57,7 +58,8 @@ const DialpadStory = (): JSX.Element => {
 export const Dialpad = DialpadStory.bind({});
 
 export default {
-  title: `${COMPONENT_FOLDER_PREFIX}/Dialpad`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-dialpad`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Dialpad`,
   component: DialpadComponent,
   argTypes: {
     strings: hiddenControl

@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Dialpad } from '@azure/communication-react';
+import { _Dialpad } from '@internal/react-components';
 import React from 'react';
 
 export const DialpadExample: () => JSX.Element = () => {
-  return <Dialpad />;
+  return <_Dialpad />;
 };

@@ -378,7 +378,7 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface DialpadButtonsType {
+export interface DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
     // (undocumented)
@@ -388,11 +388,11 @@ export interface DialpadButtonsType {
 // @beta
 export interface DialpadProps {
     // (undocumented)
-    dialpadButtons?: DialpadButtonsType[][];
+    dialpadButtons?: DialpadButtonProps[][];
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
-    styles?: Partial<DialpadStyles>;
+    styles?: <DialpadStyles>;
 }
 
 // @beta

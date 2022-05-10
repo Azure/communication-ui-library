@@ -76,7 +76,7 @@
     "speakerMenuTooltip": "Choose Speaker"
   },
   "dialpad": {
-    "errorText": "Only allow input to be numbers or * and # and + keys",
+    "errorText": "Invalid input {invalidCharacter}. Input must be a numeric chatacter, *, # or +",
     "defaultText": "Enter a number"
   },
   "participantsButton": {

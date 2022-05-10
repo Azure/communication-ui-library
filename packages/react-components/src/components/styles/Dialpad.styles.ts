@@ -30,8 +30,7 @@ export const buttonStyles = (theme: Theme): IButtonStyles => ({
     width: '100%',
     padding: '1.875rem',
     minWidth: 0,
-    minHeight: 0,
-    flex: '1 1 0px'
+    minHeight: 0
   }
 });
 
@@ -63,6 +62,10 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
   fieldGroup: {
     border: 'none',
     backgroundColor: `${theme.palette.neutralLighter}`
+  },
+
+  errorMessage: {
+    color: theme.semanticColors.errorText
   }
 });
 

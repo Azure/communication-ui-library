@@ -16,7 +16,7 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  DialpadStrings
+  _DialpadStrings
 } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
@@ -48,8 +48,8 @@ export interface ComponentStrings {
   endCallButton: EndCallButtonStrings;
   /** Strings for DevicesButton */
   devicesButton: DevicesButtonStrings;
-  /** Strings for Dialpad */
-  dialpad: DialpadStrings;
+  /** Strings for _Dialpad */
+  dialpad: _DialpadStrings;
   /** Strings for ParticipantsButton */
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */
