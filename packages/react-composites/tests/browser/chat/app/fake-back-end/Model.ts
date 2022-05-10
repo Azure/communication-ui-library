@@ -9,22 +9,22 @@ import { ThreadEventEmitter } from './ThreadEventEmitter';
 import { NetworkEventModel, Thread } from './types';
 
 export class Model {
-  private threads: { [key: string]: Thread } = {};
-  private threadEventEmitters: { [key: string]: ThreadEventEmitter } = {};
+  private threadMap: Record<string, { thread: Thread; eventEmitter: ThreadEventEmitter }> = {};
 
   constructor(private networkEventModel: NetworkEventModel) {}
 
   public addThread(thread: Thread) {
-    this.threads[thread.id] = thread;
-    this.threadEventEmitters[thread.id] = new ThreadEventEmitter(this.networkEventModel);
+    this.threadMap[thread.id] = { thread, eventEmitter: new ThreadEventEmitter(this.networkEventModel) };
   }
 
   public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {
-    return Object.values(this.threads).filter((t) => containsUser(userId, t.participants));
+    return Object.values(this.threadMap)
+      .map((t) => t.thread)
+      .filter((t) => containsUser(userId, t.participants));
   }
 
   public checkedGetThread(userId: CommunicationIdentifier, threadId: string): Thread {
-    const thread = this.threads[threadId];
+    const thread = this.threadMap[threadId].thread;
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
@@ -36,14 +36,14 @@ export class Model {
 
   public checkedGetThreadEventEmitter(userId: CommunicationIdentifier, threadId: string): ThreadEventEmitter {
     this.checkedGetThread(userId, threadId);
-    return this.threadEventEmitters[threadId];
+    return this.threadMap[threadId].eventEmitter;
   }
 
   public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
     const thread = this.checkedGetThread(userId, threadId);
     const newThread = produce(thread, (draft: Thread) => action(draft));
     if (thread !== newThread) {
-      this.threads[threadId] = produce(newThread, (draft) => {
+      this.threadMap[threadId].thread = produce(newThread, (draft) => {
         draft.version++;
       });
     }
