@@ -13,7 +13,7 @@ import {
   mockReadReceipts
 } from './mocks/createMockChatThreadClient';
 import { StateChangeListener, createMockChatClient, defaultClientArgs, failingPagedAsyncIterator } from './TestHelpers';
-import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
+import { _createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
 import { ChatError } from './ChatClientState';
 
 const threadId = '1';
@@ -431,5 +431,5 @@ const createMockChatClientWithChatThreadClient = (chatThreadClient: ChatThreadCl
   client.getChatThreadClient = () => {
     return chatThreadClient;
   };
-  return createStatefulChatClientWithDeps(client, defaultClientArgs);
+  return _createStatefulChatClientWithDeps(client, defaultClientArgs);
 };
