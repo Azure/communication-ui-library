@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
@@ -34,7 +34,8 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
   await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
-  clickOutsideOfPage(page);
+  // Move the mouse off the screen
+  await page.mouse.move(-1, -1);
 };
 
 /**
