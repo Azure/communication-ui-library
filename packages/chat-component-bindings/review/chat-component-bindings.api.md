@@ -48,7 +48,7 @@ export type ChatHandlers = {
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetada?: FileMetadata[];
+        attachedFilesMetadata?: FileMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };

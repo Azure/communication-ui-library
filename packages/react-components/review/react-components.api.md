@@ -1221,8 +1221,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // Warnings were encountered during analysis:
 //
-// src/components/MessageThread.tsx:575:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// src/components/MessageThread.tsx:667:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// src/components/MessageThread.tsx:577:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// src/components/MessageThread.tsx:670:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 // (No @packageDocumentation comment for this package)
 

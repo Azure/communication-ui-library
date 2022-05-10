@@ -340,6 +340,7 @@ const memoizeAllMessages = memoizeFnAll(
       messageId: string,
       content: string,
       metadata?: Record<string, string>,
+      /* @conditional-compile-remove(file-sharing) */
       options?: {
         attachedFilesMetadata?: FileMetadata[];
       }
@@ -571,6 +572,7 @@ export type MessageThreadProps = {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
+    /* @conditional-compile-remove(file-sharing) */
     options?: {
       attachedFilesMetadata?: FileMetadata[];
     }
@@ -663,6 +665,7 @@ export type MessageProps = {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
+    /* @conditional-compile-remove(file-sharing) */
     options?: {
       attachedFilesMetadata?: FileMetadata[];
     }
