@@ -7,6 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -23,7 +24,14 @@ export type ChatHandlers = {
   onRemoveParticipant: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-  onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>) => Promise<void>;
+  onUpdateMessage: (
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
@@ -49,8 +57,17 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.sendMessage(sendMessageRequest, options);
       },
-      onUpdateMessage: async (messageId: string, content: string, metadata?: Record<string, string>) => {
-        await chatThreadClient.updateMessage(messageId, { content, metadata });
+      onUpdateMessage: async (
+        messageId: string,
+        content: string,
+        metadata?: Record<string, string>,
+        options?: {
+          attachedFilesMetadata?: FileMetadata[];
+        }
+      ) => {
+        const updatedMetadata = metadata ? { ...metadata } : {};
+        updatedMetadata['fileSharingMetadata'] = JSON.stringify(options?.attachedFilesMetadata || []);
+        await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);

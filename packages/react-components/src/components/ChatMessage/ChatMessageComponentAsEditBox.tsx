@@ -14,6 +14,7 @@ import { isDarkThemed } from '../../theming/themeUtils';
 import { ChatMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from '../FileUploadCards';
+import { FileMetadata } from '../FileDownloadCards';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -30,7 +31,13 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
-  onSubmit: (text: string) => void;
+  onSubmit: (
+    text: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
   /**
@@ -52,6 +59,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const theme = useTheme();
   const messageState = getMessageState(textValue);
   const submitEnabled = messageState === 'OK';
+
+  /* @conditional-compile-remove(file-sharing) */
+  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(message.attachedFilesMetadata);
 
   useEffect(() => {
     editTextFieldRef.current?.focus();
@@ -88,15 +98,18 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <div style={{ margin: '0.25rem' }}>
         <_FileUploadCards
-          activeFileUploads={message.attachedFilesMetadata?.map((file) => ({
+          activeFileUploads={attachedFilesMetadata?.map((file) => ({
             id: file.name,
             filename: file.name,
             progress: 1
           }))}
+          onCancelFileUpload={(fileId) => {
+            setAttachedFilesMetadata(attachedFilesMetadata?.filter((file) => file.name !== fileId));
+          }}
         />
       </div>
     );
-  }, [message.attachedFilesMetadata]);
+  }, [attachedFilesMetadata]);
 
   return (
     <Stack
@@ -118,7 +131,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         textValue={textValue}
         onChange={setText}
         onEnterKeyDown={() => {
-          submitEnabled && onSubmit(textValue);
+          submitEnabled &&
+            onSubmit(textValue, message.metadata, {
+              attachedFilesMetadata
+            });
         }}
         supportNewline={false}
         maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
@@ -141,7 +157,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            submitEnabled && onSubmit(textValue);
+            submitEnabled &&
+              onSubmit(textValue, message.metadata, {
+                attachedFilesMetadata
+              });
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}

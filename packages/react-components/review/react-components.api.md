@@ -655,7 +655,9 @@ export type MessageProps = {
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+        attachedFilesMetadata?: FileMetadata[];
+    }) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -712,7 +714,9 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+        attachedFilesMetadata?: FileMetadata[];
+    }) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1214,6 +1218,11 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// Warnings were encountered during analysis:
+//
+// src/components/MessageThread.tsx:575:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// src/components/MessageThread.tsx:667:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 // (No @packageDocumentation comment for this package)
 

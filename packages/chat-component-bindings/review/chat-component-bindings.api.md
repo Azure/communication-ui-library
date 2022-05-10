@@ -13,6 +13,7 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
@@ -46,7 +47,9 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>) => Promise<void>;
+    onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+        attachedFilesMetada?: FileMetadata[];
+    }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 

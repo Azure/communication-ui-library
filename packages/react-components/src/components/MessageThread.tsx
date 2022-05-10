@@ -60,7 +60,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -336,7 +336,14 @@ const memoizeAllMessages = memoizeFnAll(
     participantCount?: number,
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
+    onUpdateMessage?: (
+      messageId: string,
+      content: string,
+      metadata?: Record<string, string>,
+      options?: {
+        attachedFilesMetadata?: FileMetadata[];
+      }
+    ) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
@@ -560,7 +567,14 @@ export type MessageThreadProps = {
    * @param content - new content of the message
    *
    */
-  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage?: (
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => Promise<void>;
 
   /**
    * Optional callback to delete a message.
@@ -642,9 +656,17 @@ export type MessageProps = {
    *
    * @param messageId - message id from chatClient
    * @param content - new content of the message
+   * @param options
    *
    */
-  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage?: (
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => Promise<void>;
 
   /**
    * Optional callback to delete a message.
