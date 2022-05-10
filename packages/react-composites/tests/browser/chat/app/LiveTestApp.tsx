@@ -50,8 +50,13 @@ export const LiveTestApp = (): JSX.Element => {
   );
   const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
     // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-    await adapter.fetchInitialData();
-    return adapter;
+    try {
+      await adapter.fetchInitialData();
+      return adapter;
+    } catch {
+      // If we fail on fetching the initial data we still want to return just the adapter.
+      return adapter;
+    }
   });
 
   React.useEffect(() => {
