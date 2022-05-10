@@ -4,7 +4,7 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatThreadItem } from '@azure/communication-chat';
 import { ChatClientState } from './ChatClientState';
-import { createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
+import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
@@ -74,7 +74,7 @@ export type StatefulChatClientWithEventTrigger = StatefulChatClient & {
  * @private
  */
 export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigger => {
-  return createStatefulChatClientWithDeps(
+  return _createStatefulChatClientWithDeps(
     createMockChatClient(),
     defaultClientArgs
   ) as StatefulChatClientWithEventTrigger;
