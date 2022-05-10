@@ -116,3 +116,6 @@ export * from './ModalClone/ModalClone';
 export * from './FileDownloadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
+
+export { _ComplianceBanner } from './ComplianceBanner';
+export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';

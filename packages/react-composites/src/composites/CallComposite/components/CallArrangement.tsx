@@ -2,11 +2,18 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import { ErrorBar, ErrorBarProps, useTheme, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
+import {
+  _ComplianceBanner,
+  _ComplianceBannerProps,
+  _useContainerHeight,
+  _useContainerWidth,
+  ErrorBar,
+  ErrorBarProps,
+  useTheme
+} from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-import { _ComplianceBanner, _ComplianceBannerProps } from './ComplianceBanner';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,

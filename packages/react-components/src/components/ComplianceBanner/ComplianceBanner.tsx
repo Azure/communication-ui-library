@@ -4,7 +4,10 @@ import React, { useRef, useState } from 'react';
 import { Link, MessageBar, MessageBarType } from '@fluentui/react';
 import { ComplianceBannerVariant, ComplianceState, computeVariant } from './Utils';
 
-// Subset of `CallCompositeStrings` needed by the ComplianceBanner component.
+/**
+ * Subset of `CallCompositeStrings` needed by the ComplianceBanner component.
+ * @internal
+ */
 export interface _ComplianceBannerStrings {
   close: string;
   complianceBannerNowOnlyRecording: string;
@@ -24,7 +27,7 @@ export interface _ComplianceBannerStrings {
 }
 
 /**
- * @private
+ * @internal
  */
 export type _ComplianceBannerProps = {
   callTranscribeState?: boolean;
@@ -46,7 +49,7 @@ type CachedComplianceBannerProps = {
 };
 
 /**
- * @private
+ * @internal
  */
 export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element => {
   //set variant when incoming state is different from current state
