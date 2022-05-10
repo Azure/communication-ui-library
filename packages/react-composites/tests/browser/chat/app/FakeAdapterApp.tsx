@@ -12,7 +12,7 @@ import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapterFromClie
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatService } from '../fake-adapter/fake-back-end/ChatService';
+import { FakeChatService } from './fake-back-end/ChatService';
 import { ChatAdapterModel } from '../fake-adapter/fixture';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
