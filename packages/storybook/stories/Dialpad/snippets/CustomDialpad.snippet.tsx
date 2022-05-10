@@ -6,21 +6,25 @@ import React from 'react';
 
 const dialPadButtons: DialpadButtonsType[][] = [
   [
-    { primaryContent: '*' },
-    { primaryContent: '*', secondaryContent: 'ABC' },
-    { primaryContent: '*', secondaryContent: 'DEF' }
+    { primaryContent: '0' },
+    { primaryContent: '0', secondaryContent: '123' },
+    { primaryContent: '0', secondaryContent: '456' }
   ],
   [
-    { primaryContent: '+', secondaryContent: 'GHI' },
-    { primaryContent: '+', secondaryContent: 'JKL' },
-    { primaryContent: '+', secondaryContent: 'MNO' }
+    { primaryContent: '+', secondaryContent: '789' },
+    { primaryContent: '+', secondaryContent: '012' },
+    { primaryContent: '+', secondaryContent: '345' }
   ],
   [
-    { primaryContent: '7', secondaryContent: 'PQRS' },
-    { primaryContent: '8', secondaryContent: 'TUV' },
-    { primaryContent: '9', secondaryContent: 'WXYZ' }
+    { primaryContent: 'q', secondaryContent: '678' },
+    { primaryContent: 'q', secondaryContent: '098' },
+    { primaryContent: 'q', secondaryContent: '111' }
   ],
-  [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
+  [
+    { primaryContent: '*', secondaryContent: '678' },
+    { primaryContent: '0', secondaryContent: '+' },
+    { primaryContent: '#', secondaryContent: '678' }
+  ]
 ];
 
 export const CustomDialpadExample: () => JSX.Element = () => {

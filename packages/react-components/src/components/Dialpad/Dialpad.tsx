@@ -15,7 +15,7 @@ import {
 } from '@fluentui/react';
 import React, { useState } from 'react';
 import { useLocale } from '../../localization';
-import { buttonStyles, containerStyles, digitStyles, subStyles, textFieldStyles } from './Dialpad.styles';
+import { buttonStyles, containerStyles, digitStyles, subStyles, textFieldStyles } from '../styles/Dialpad.styles';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -145,6 +145,25 @@ const DialpadButton = (props: {
   );
 };
 
+const dialPadButtonsDefault: DialpadButtonsType[][] = [
+  [
+    { primaryContent: '1' },
+    { primaryContent: '2', secondaryContent: 'ABC' },
+    { primaryContent: '3', secondaryContent: 'DEF' }
+  ],
+  [
+    { primaryContent: '4', secondaryContent: 'GHI' },
+    { primaryContent: '5', secondaryContent: 'JKL' },
+    { primaryContent: '6', secondaryContent: 'MNO' }
+  ],
+  [
+    { primaryContent: '7', secondaryContent: 'PQRS' },
+    { primaryContent: '8', secondaryContent: 'TUV' },
+    { primaryContent: '9', secondaryContent: 'WXYZ' }
+  ],
+  [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
+];
+
 const DialpadContainer = (props: {
   errorText: string;
   defaultText: string;
@@ -171,24 +190,7 @@ const DialpadContainer = (props: {
     }
   };
 
-  const dialPadButtonsDefault: DialpadButtonsType[][] = [
-    [
-      { primaryContent: '1' },
-      { primaryContent: '2', secondaryContent: 'ABC' },
-      { primaryContent: '3', secondaryContent: 'DEF' }
-    ],
-    [
-      { primaryContent: '4', secondaryContent: 'GHI' },
-      { primaryContent: '5', secondaryContent: 'JKL' },
-      { primaryContent: '6', secondaryContent: 'MNO' }
-    ],
-    [
-      { primaryContent: '7', secondaryContent: 'PQRS' },
-      { primaryContent: '8', secondaryContent: 'TUV' },
-      { primaryContent: '9', secondaryContent: 'WXYZ' }
-    ],
-    [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
-  ];
+  const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
 
   return (
     <div className={mergeStyles(containerStyles(theme), props.styles?.root)}>
@@ -200,22 +202,21 @@ const DialpadContainer = (props: {
         placeholder={props.defaultText}
       />
 
-      {props.dialpadButtons ??
-        dialPadButtonsDefault.map((rows, i) => {
-          return (
-            <Stack horizontal key={`row_${i}`} style={{ alignItems: 'stretch' }}>
-              {rows.map((button, i) => (
-                <DialpadButton
-                  key={`button_${i}`}
-                  primaryContent={button.primaryContent}
-                  secondaryContent={button.secondaryContent}
-                  styles={props.styles}
-                  onClick={onClickDialpad}
-                />
-              ))}
-            </Stack>
-          );
-        })}
+      {dialpadButtonsContent.map((rows, i) => {
+        return (
+          <Stack horizontal key={`row_${i}`} style={{ alignItems: 'stretch' }}>
+            {rows.map((button, i) => (
+              <DialpadButton
+                key={`button_${i}`}
+                primaryContent={button.primaryContent}
+                secondaryContent={button.secondaryContent}
+                styles={props.styles}
+                onClick={onClickDialpad}
+              />
+            ))}
+          </Stack>
+        );
+      })}
     </div>
   );
 };
