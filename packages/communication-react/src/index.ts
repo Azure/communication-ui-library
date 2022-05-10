@@ -139,6 +139,8 @@ export type {
   DevicesButtonStyles,
   DialpadProps,
   DialpadStrings,
+  DialpadButtonsType,
+  DialpadStyles,
   EndCallButtonProps,
   EndCallButtonStrings,
   ErrorBarProps,

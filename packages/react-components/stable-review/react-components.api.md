@@ -360,31 +360,47 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @public
+// @beta
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @public
+// @beta
+export interface DialpadButtonsType {
+    // (undocumented)
+    primaryContent: string;
+    // (undocumented)
+    secondaryContent?: string;
+}
+
+// @beta
 export interface DialpadProps {
     // (undocumented)
-    containerStyles?: IStyle;
-    // (undocumented)
-    digitStyles?: IStyle;
-    // (undocumented)
-    rowStyles?: IStyle;
+    dialpadButtons?: DialpadButtonsType[][];
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
-    subStyles?: IStyle;
-    // (undocumented)
-    textFieldStyles?: Partial<ITextFieldStyles>;
+    styles?: Partial<DialpadStyles>;
 }
 
-// @public
+// @beta
 export interface DialpadStrings {
     // (undocumented)
     defaultText: string;
     // (undocumented)
     errorText: string;
+}
+
+// @beta
+export interface DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    digit?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    subDigit?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
 }
 
 // @internal

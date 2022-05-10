@@ -8,9 +8,11 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl } from '../controlsUtils';
+import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
 import { DialpadExample } from './snippets/Dialpad.snippet';
 
 const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
+const CustomDialpadText = require('!!raw-loader!./snippets/CustomDialpad.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
@@ -24,6 +26,10 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Example Dialpad</Heading>
       <Canvas mdxSource={ExampleDialpadText}>
         <DialpadExample />
+      </Canvas>
+      <Heading>Example Dialpad with custom content</Heading>
+      <Canvas mdxSource={CustomDialpadText}>
+        <CustomDialpadExample />
       </Canvas>
       <Heading>Dialpad Props</Heading>
       <Props of={DialpadComponent} />
