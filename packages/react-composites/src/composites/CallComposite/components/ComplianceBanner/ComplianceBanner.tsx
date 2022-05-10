@@ -5,7 +5,7 @@ import { Link, MessageBar, MessageBarType } from '@fluentui/react';
 import { ComplianceBannerVariant, ComplianceState, computeVariant } from './Utils';
 
 // Subset of `CallCompositeStrings` needed by the ComplianceBanner component.
-export interface ComplianceBannerStrings {
+export interface _ComplianceBannerStrings {
   close: string;
   complianceBannerNowOnlyRecording: string;
   complianceBannerNowOnlyTranscription: string;
@@ -26,10 +26,10 @@ export interface ComplianceBannerStrings {
 /**
  * @private
  */
-export type ComplianceBannerProps = {
+export type _ComplianceBannerProps = {
   callTranscribeState?: boolean;
   callRecordState?: boolean;
-  strings: ComplianceBannerStrings;
+  strings: _ComplianceBannerStrings;
 };
 
 // latestBooleanState so we can compare with props.callRecordState and props.callTranscribeState easily
@@ -48,7 +48,7 @@ type CachedComplianceBannerProps = {
 /**
  * @private
  */
-export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
+export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element => {
   //set variant when incoming state is different from current state
   //when variant change, return message bar
   //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
@@ -138,7 +138,7 @@ function determineStates(previous: ComplianceState, current: boolean | undefined
   }
 }
 
-function BannerMessage(props: { variant: ComplianceBannerVariant; strings: ComplianceBannerStrings }): JSX.Element {
+function BannerMessage(props: { variant: ComplianceBannerVariant; strings: _ComplianceBannerStrings }): JSX.Element {
   const { variant, strings } = props;
   switch (variant) {
     case 'TRANSCRIPTION_STOPPED_STILL_RECORDING':
