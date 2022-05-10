@@ -6,7 +6,7 @@ import { ErrorBar, ErrorBarProps, useTheme, _useContainerHeight, _useContainerWi
 import React, { useMemo, useRef } from 'react';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
+import { ComplianceBanner, ComplianceBannerProps } from './ComplianceBanner';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,

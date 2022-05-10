@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React, { useRef, useState } from 'react';
 import { Link, MessageBar, MessageBarType } from '@fluentui/react';
-import { ComplianceBannerVariant, ComplianceState, computeVariant } from '../utils';
+import { ComplianceBannerVariant, ComplianceState, computeVariant } from './Utils';
 
 // Subset of `CallCompositeStrings` needed by the ComplianceBanner component.
 export interface ComplianceBannerStrings {
