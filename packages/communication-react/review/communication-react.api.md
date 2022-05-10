@@ -1864,9 +1864,7 @@ export type MessageProps = {
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
-    onUpdateMessage?: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
-    }) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1940,9 +1938,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onUpdateMessage?: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
-    }) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -2464,6 +2460,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
+// @public (undocumented)
+export type UpdateMessageCallback = ((messageId: string, content: string) => Promise<void>) | /* @conditional-compile-remove(file-sharing) */ ((messageId: string, content: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => Promise<void>);
+
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
@@ -2625,7 +2626,6 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 // Warnings were encountered during analysis:
 //
 // /workspaces/communication-ui-library/packages/chat-component-bindings/src/handlers/createHandlers.ts:32:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:577:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:670:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:466:9 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 ```

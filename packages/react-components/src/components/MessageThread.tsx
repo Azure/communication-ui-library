@@ -336,15 +336,7 @@ const memoizeAllMessages = memoizeFnAll(
     participantCount?: number,
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
-    onUpdateMessage?: (
-      messageId: string,
-      content: string,
-      metadata?: Record<string, string>,
-      /* @conditional-compile-remove(file-sharing) */
-      options?: {
-        attachedFilesMetadata?: FileMetadata[];
-      }
-    ) => Promise<void>,
+    onUpdateMessage?: UpdateMessageCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
@@ -462,6 +454,20 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 };
 
 /**
+ * @public
+ */
+export type UpdateMessageCallback =
+  | ((messageId: string, content: string) => Promise<void>)
+  | /* @conditional-compile-remove(file-sharing) */ ((
+      messageId: string,
+      content: string,
+      metadata?: Record<string, string>,
+      options?: {
+        attachedFilesMetadata?: FileMetadata[];
+      }
+    ) => Promise<void>);
+
+/**
  * Props for {@link MessageThread}.
  *
  * @public
@@ -568,15 +574,7 @@ export type MessageThreadProps = {
    * @param content - new content of the message
    *
    */
-  onUpdateMessage?: (
-    messageId: string,
-    content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
 
   /**
    * Optional callback to delete a message.
@@ -658,18 +656,8 @@ export type MessageProps = {
    *
    * @param messageId - message id from chatClient
    * @param content - new content of the message
-   * @param options
-   *
    */
-  onUpdateMessage?: (
-    messageId: string,
-    content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
 
   /**
    * Optional callback to delete a message.

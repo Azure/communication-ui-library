@@ -12,7 +12,6 @@ import { MessageThreadStrings } from '../MessageThread';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { ChatMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 
@@ -55,8 +54,15 @@ type MessageState = 'OK' | 'too short' | 'too long';
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, strings, message } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(file-sharing) */
-  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(message.attachedFilesMetadata);
+
+  // @TODO: Remove when file-sharing feature becomes stable.
+  const getMessageAttachedFilesMetadata = (): FileMetadata[] | [] | undefined => {
+    /* @conditional-compile-remove(file-sharing) */
+    return message.attachedFilesMetadata;
+    return [];
+  };
+
+  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata());
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(textValue, attachedFilesMetadata || []);
@@ -92,21 +98,22 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
     return (
-      <div style={{ margin: '0.25rem' }}>
-        <_FileUploadCards
-          activeFileUploads={attachedFilesMetadata?.map((file) => ({
-            id: file.name,
-            filename: file.name,
-            progress: 1
-          }))}
-          onCancelFileUpload={(fileId) => {
-            setAttachedFilesMetadata(attachedFilesMetadata?.filter((file) => file.name !== fileId));
-          }}
-        />
-      </div>
+      attachedFilesMetadata?.length && (
+        <div style={{ margin: '0.25rem' }}>
+          <_FileUploadCards
+            activeFileUploads={attachedFilesMetadata?.map((file) => ({
+              id: file.name,
+              filename: file.name,
+              progress: 1
+            }))}
+            onCancelFileUpload={(fileId) => {
+              setAttachedFilesMetadata(attachedFilesMetadata?.filter((file) => file.name !== fileId));
+            }}
+          />
+        </div>
+      )
     );
   }, [attachedFilesMetadata]);
 
@@ -165,10 +172,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        onRenderFileUploads()
-      }
+      {onRenderFileUploads()}
     </Stack>
   );
 };

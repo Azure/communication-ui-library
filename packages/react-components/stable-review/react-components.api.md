@@ -642,7 +642,7 @@ export type MessageProps = {
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -698,7 +698,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1070,6 +1070,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export type UpdateMessageCallback = ((messageId: string, content: string) => Promise<void>);
 
 // @internal
 export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
