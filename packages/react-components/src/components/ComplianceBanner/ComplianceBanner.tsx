@@ -78,10 +78,10 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
 
   // Only update cached props and variant if there is _some_ change in the latest props.
   // This ensures that state machine is only updated if there is an actual change in the props.
-  if (
+  const shouldUpdatedCached =
     props.callRecordState !== cachedProps.current.latestBooleanState.callRecordState ||
-    props.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState
-  ) {
+    props.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState;
+  if (shouldUpdatedCached) {
     cachedProps.current = {
       latestBooleanState: props,
       latestStringState: {
@@ -94,12 +94,26 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
       updated: new Date().getTime()
     };
   }
+
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
+
+  if (shouldUpdatedCached) {
+    // when both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state)
+    if (
+      cachedProps.current.latestStringState.callRecordState === 'stopped' &&
+      cachedProps.current.latestStringState.callTranscribeState === 'stopped'
+    ) {
+      cachedProps.current.latestStringState.callRecordState = 'off';
+      cachedProps.current.latestStringState.callTranscribeState = 'off';
+    }
+  }
+
   return (
     <VariantBanner
-      variant={computeVariant(
-        cachedProps.current.latestStringState.callRecordState,
-        cachedProps.current.latestStringState.callTranscribeState
-      )}
+      variant={variant}
       updated={cachedProps.current.updated}
       strings={props.strings}
       onDismiss={() => {
