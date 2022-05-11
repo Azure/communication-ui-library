@@ -37,7 +37,8 @@
     "removedFromCallTitle": "You were removed",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
-    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
+    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby.",
+    "audioDeviceLabel": "Audio Device"
   },
   "chat": {
     "chatListHeader": "In this chat"
@@ -50,6 +51,7 @@
     "chatButtonTooltipClosedWithMessageCount": "Show chat ({unreadMessagesCount} unread)",
     "chatButtonTooltipOpen": "Show chat",
     "chatButtonTooltipClose": "Hide chat",
+    "moreDrawerAudioDeviceMenuTitle": "Audio Device",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "moreDrawerButtonLabel": "More options",
