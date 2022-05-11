@@ -52,6 +52,7 @@ type CachedComplianceBannerProps = {
 };
 
 const BANNER_OVERWRITE_DELAY_MS = 3000;
+
 /**
  * A component that displays banners to notify the user when call recording and
  * transcription is enabled or disabled in a call.
@@ -62,10 +63,6 @@ const BANNER_OVERWRITE_DELAY_MS = 3000;
  * @internal
  */
 export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element => {
-  //set variant when incoming state is different from current state
-  //when variant change, return message bar
-  //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
-
   const cachedProps = useRef<CachedComplianceBannerProps>({
     latestBooleanState: {
       callTranscribeState: false,
@@ -181,6 +178,7 @@ function DelayedUpdateBanner(props: {
 }): JSX.Element {
   const { variant, lastUpdated: variantLastUpdated } = props.variant;
 
+  // Tracks the variant that is currently visible in the UI.
   const [visible, setVisible] = useState<TimestampedVariant>({
     variant,
     lastUpdated: Date.now()
