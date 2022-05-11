@@ -20,6 +20,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -369,6 +370,49 @@ export interface DevicesButtonStrings {
 // @public
 export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @internal
+export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+
+// @internal
+export interface _DialpadButtonProps {
+    // (undocumented)
+    primaryContent: string;
+    // (undocumented)
+    secondaryContent?: string;
+}
+
+// @internal
+export interface _DialpadProps {
+    // (undocumented)
+    dialpadButtons?: _DialpadButtonProps[][];
+    // (undocumented)
+    strings: _DialpadStrings;
+    // (undocumented)
+    styles?: _DialpadStyles;
+}
+
+// @internal
+export interface _DialpadStrings {
+    // (undocumented)
+    defaultText: string;
+    // (undocumented)
+    errorText: string;
+}
+
+// @internal
+export interface _DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    primaryContent?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    secondaryContent?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
 }
 
 // @internal
