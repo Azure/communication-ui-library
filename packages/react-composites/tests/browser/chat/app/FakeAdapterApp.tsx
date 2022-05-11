@@ -55,7 +55,8 @@ export const FakeAdapterApp = (): JSX.Element => {
             adapter={adapter}
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
-              participantPane: true
+              participantPane: true,
+              fileSharing: undefined
             }}
           />
         </_IdentifierProvider>
