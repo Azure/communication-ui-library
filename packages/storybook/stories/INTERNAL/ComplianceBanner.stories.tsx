@@ -14,6 +14,8 @@ const ComplianceBannerStory = (): JSX.Element => {
   const strings = _useCompositeLocale().strings.call;
   const [callRecordState, setCallRecordState] = useState(true);
   const [callTranscribeState, setCallTranscribeState] = useState(true);
+  console.log('xkcd ComplianceBannerStory:callRecordState', callRecordState);
+  console.log('xkcd ComplianceBannerStory:callTranscribeState', callTranscribeState);
   return (
     <Stack styles={containerStyles} tokens={stackTokens}>
       <Stack horizontal tokens={stackTokens}>
