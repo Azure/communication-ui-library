@@ -455,17 +455,18 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 
 /**
  * @public
+ * Callback function run when a message is updated.
  */
-export type UpdateMessageCallback =
-  | ((messageId: string, content: string) => Promise<void>)
-  | /* @conditional-compile-remove(file-sharing) */ ((
-      messageId: string,
-      content: string,
-      metadata?: Record<string, string>,
-      options?: {
-        attachedFilesMetadata?: FileMetadata[];
-      }
-    ) => Promise<void>);
+export type UpdateMessageCallback = (
+  messageId: string,
+  content: string,
+  /* @conditional-compile-remove(file-sharing) */
+  metadata?: Record<string, string>,
+  /* @conditional-compile-remove(file-sharing) */
+  options?: {
+    attachedFilesMetadata?: FileMetadata[];
+  }
+) => Promise<void>;
 
 /**
  * Props for {@link MessageThread}.

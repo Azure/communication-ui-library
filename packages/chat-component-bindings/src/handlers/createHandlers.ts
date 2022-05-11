@@ -27,7 +27,9 @@ export type ChatHandlers = {
   onUpdateMessage: (
     messageId: string,
     content: string,
+    /* @conditional-compile-remove(file-sharing) */
     metadata?: Record<string, string>,
+    /* @conditional-compile-remove(file-sharing) */
     options?: {
       attachedFilesMetadata?: FileMetadata[];
     }

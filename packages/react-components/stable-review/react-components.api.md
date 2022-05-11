@@ -1071,8 +1071,8 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
-export type UpdateMessageCallback = ((messageId: string, content: string) => Promise<void>);
+// @public
+export type UpdateMessageCallback = (messageId: string, content: string) => Promise<void>;
 
 // @internal
 export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
