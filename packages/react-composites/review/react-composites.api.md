@@ -648,7 +648,9 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
+        attachedFilesMetadata?: FileMetadata[];
+    }): Promise<void>;
 }
 
 // @public

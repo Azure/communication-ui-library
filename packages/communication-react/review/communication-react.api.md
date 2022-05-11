@@ -905,7 +905,9 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
+        attachedFilesMetadata?: FileMetadata[];
+    }): Promise<void>;
 }
 
 // @public
@@ -2460,10 +2462,10 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
-export type UpdateMessageCallback = ((messageId: string, content: string) => Promise<void>) | /* @conditional-compile-remove(file-sharing) */ ((messageId: string, content: string, metadata?: Record<string, string>, options?: {
+// @public
+export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
     attachedFilesMetadata?: FileMetadata[];
-}) => Promise<void>);
+}) => Promise<void>;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
@@ -2625,7 +2627,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // Warnings were encountered during analysis:
 //
-// /workspaces/communication-ui-library/packages/chat-component-bindings/src/handlers/createHandlers.ts:32:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:466:9 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// /workspaces/communication-ui-library/packages/chat-component-bindings/src/handlers/createHandlers.ts:34:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:467:5 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// /workspaces/communication-ui-library/packages/react-composites/src/composites/ChatComposite/adapter/ChatAdapter.ts:95:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 ```

@@ -1099,10 +1099,10 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
-export type UpdateMessageCallback = ((messageId: string, content: string) => Promise<void>) | /* @conditional-compile-remove(file-sharing) */ ((messageId: string, content: string, metadata?: Record<string, string>, options?: {
+// @public
+export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
     attachedFilesMetadata?: FileMetadata[];
-}) => Promise<void>);
+}) => Promise<void>;
 
 // @internal
 export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
@@ -1222,7 +1222,7 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // Warnings were encountered during analysis:
 //
-// src/components/MessageThread.tsx:466:9 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
+// src/components/MessageThread.tsx:467:5 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 // (No @packageDocumentation comment for this package)
 
