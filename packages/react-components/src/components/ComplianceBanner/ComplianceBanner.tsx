@@ -120,8 +120,10 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
 
   return (
     <DelayedUpdateBanner
-      variant={variant}
-      variantLastUpdated={cachedProps.current.lastUpdated}
+      variant={{
+        variant,
+        lastUpdated: cachedProps.current.lastUpdated
+      }}
       strings={props.strings}
       onDismiss={() => {
         if (cachedProps.current.latestStringState.callRecordState === 'stopped') {
@@ -173,20 +175,19 @@ interface TimestampedVariant {
  * @private
  */
 function DelayedUpdateBanner(props: {
-  variant: ComplianceBannerVariant;
-  variantLastUpdated: number;
+  variant: TimestampedVariant;
   onDismiss: () => void;
   strings: _ComplianceBannerStrings;
 }): JSX.Element {
-  const newVariant = props.variant;
+  const { variant, lastUpdated: variantLastUpdated } = props.variant;
 
   const [visible, setVisible] = useState<TimestampedVariant>({
-    variant: newVariant,
+    variant,
     lastUpdated: Date.now()
   });
   const pendingUpdateHandle = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  if (newVariant !== visible.variant && props.variantLastUpdated > visible.lastUpdated) {
+  if (variant !== visible.variant && variantLastUpdated > visible.lastUpdated) {
     // Always clear pending updates.
     // We'll either update now, or schedule an update for later.
     if (pendingUpdateHandle.current) {
@@ -195,9 +196,9 @@ function DelayedUpdateBanner(props: {
 
     const now = Date.now();
     const timeToNextUpdate = BANNER_OVERWRITE_DELAY_MS - (now - visible.lastUpdated);
-    if (newVariant === 'NO_STATE' || timeToNextUpdate <= 0) {
+    if (variant === 'NO_STATE' || timeToNextUpdate <= 0) {
       setVisible({
-        variant: newVariant,
+        variant,
         lastUpdated: now
       });
     } else {
@@ -205,7 +206,7 @@ function DelayedUpdateBanner(props: {
         // Set the actual update time, not the computed time when the update should happen.
         // The actual update might be later than we planned.
         setVisible({
-          variant: newVariant,
+          variant,
           lastUpdated: Date.now()
         });
       }, timeToNextUpdate);
