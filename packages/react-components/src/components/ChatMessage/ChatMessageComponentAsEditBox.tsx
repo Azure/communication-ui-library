@@ -10,6 +10,9 @@ import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from 
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { ChatMessage } from '../../types';
+/* @conditional-compile-remove(file-sharing) */
+import { _FileUploadCards } from '../FileUploadCards';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -27,7 +30,7 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
-  initialValue: string;
+  message: ChatMessage;
   strings: MessageThreadStrings;
   /**
    * Inline the accept and reject edit buttons when editing a message.
@@ -42,8 +45,8 @@ type MessageState = 'OK' | 'too short' | 'too long';
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, initialValue, strings } = props;
-  const [textValue, setTextValue] = useState<string>(initialValue);
+  const { onCancel, onSubmit, strings, message } = props;
+  const [textValue, setTextValue] = useState<string>(message.content || '');
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(textValue);
@@ -78,6 +81,21 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const editBoxStyles = useMemo(() => {
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileUploads = useCallback(() => {
+    return (
+      <div style={{ margin: '0.25rem' }}>
+        <_FileUploadCards
+          activeFileUploads={message.attachedFilesMetadata?.map((file) => ({
+            id: file.name,
+            filename: file.name,
+            progress: 1
+          }))}
+        />
+      </div>
+    );
+  }, [message.attachedFilesMetadata]);
 
   return (
     <Stack
@@ -127,6 +145,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
+      {
+        /* @conditional-compile-remove(file-sharing) */
+        onRenderFileUploads()
+      }
     </Stack>
   );
 };
