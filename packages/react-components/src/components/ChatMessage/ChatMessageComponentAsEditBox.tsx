@@ -55,17 +55,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { onCancel, onSubmit, strings, message } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
-  // @TODO: Remove when file-sharing feature becomes stable.
-  const getMessageAttachedFilesMetadata = (): FileMetadata[] | [] | undefined => {
-    /* @conditional-compile-remove(file-sharing) */
-    return message.attachedFilesMetadata;
-    return [];
-  };
-
-  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata());
+  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const messageState = getMessageState(textValue, attachedFilesMetadata || []);
+  const messageState = getMessageState(textValue, attachedFilesMetadata ?? []);
   const submitEnabled = messageState === 'OK';
 
   useEffect(() => {
@@ -182,3 +175,10 @@ const isMessageEmpty = (messageText: string, attachedFilesMetadata: FileMetadata
   messageText.trim().length === 0 && attachedFilesMetadata.length === 0;
 const getMessageState = (messageText: string, attachedFilesMetadata: FileMetadata[]): MessageState =>
   isMessageEmpty(messageText, attachedFilesMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
+
+// @TODO: Remove when file-sharing feature becomes stable.
+const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
+  return message.attachedFilesMetadata;
+  return [];
+};
