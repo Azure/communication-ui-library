@@ -92,6 +92,14 @@ export interface B2 {
 }
 
 /**
+ * To remove a function parameter in a type property, simply add the conditional compile remove comment
+ */
+
+export type TypeWithFunctionProperty = {
+  func: (/* @conditional-compile-remove(demo) */ toBeRemoved: string, param1: number) => void;
+};
+
+/**
  * Conditionally add variants to a type union
  *
  * Watchout: A common pitfall here is adding the conditional directive before the binary operator.
@@ -302,11 +310,3 @@ function shouldIncludeUnstableFeature(): boolean {
   return true;
   return false;
 }
-
-/**
- * To remove a function parameter in a type property, simply add the conditional compile remove comment
- */
-
-export type TypeWithFunctionProperty = {
-  func: (/* @conditional-compile-remove(demo) */ toBeRemoved: string, param1: number) => void;
-};
