@@ -90,14 +90,6 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
         )
       }
     };
-    // when both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state)
-    if (
-      cachedProps.current.latestStringState.callRecordState === 'stopped' &&
-      cachedProps.current.latestStringState.callTranscribeState === 'stopped'
-    ) {
-      cachedProps.current.latestStringState.callRecordState = 'off';
-      cachedProps.current.latestStringState.callTranscribeState = 'off';
-    }
   }
   return (
     <VariantBanner
@@ -146,8 +138,6 @@ function VariantBanner(props: {
   const [variant, setVariant] = useState<ComplianceBannerVariant>(newVariant);
   const [lastUpdate, setLastUpdate] = useState<number>(new Date().getTime());
   const pendingUpdateHandle = useRef<ReturnType<typeof setTimeout> | null>(null);
-  console.log('xkcd: variant', variant);
-  console.log('xkcd: newVariant', newVariant);
 
   if (newVariant !== variant) {
     // Always clear pending updates.
@@ -158,7 +148,6 @@ function VariantBanner(props: {
 
     const now = new Date().getTime();
     const timeToNextUpdate = BANNER_OVERWRITE_DELAY_MS - (now - lastUpdate);
-    console.log('xkcd: timeToNextUpdate', timeToNextUpdate);
     if (timeToNextUpdate <= 0) {
       setVariant(newVariant);
       setLastUpdate(now);
