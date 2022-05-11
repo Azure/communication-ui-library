@@ -1264,10 +1264,6 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     videoContainer?: IStyle;
 }
 
-// Warnings were encountered during analysis:
-//
-// src/components/MessageThread.tsx:467:5 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-
 // (No @packageDocumentation comment for this package)
 
 ```

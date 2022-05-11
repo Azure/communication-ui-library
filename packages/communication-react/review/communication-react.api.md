@@ -216,8 +216,6 @@ export interface CallAdapterDeviceManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
-// Warning: (ae-incompatible-release-tags) The symbol "CallAdapterLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
-//
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
@@ -272,7 +270,6 @@ export interface CallAgentState {
 
 // @public
 export interface CallAndChatLocator {
-    // Warning: (ae-incompatible-release-tags) The symbol "callLocator" is marked as @public, but its signature references "CallParticipantsLocator" which is marked as @beta
     callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
     chatThreadId: string;
 }
@@ -869,8 +866,6 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
-// Warning: (ae-incompatible-release-tags) The symbol "ChatAdapter" is marked as @public, but its signature references "FileUploadAdapter" which is marked as @beta
-//
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
@@ -2624,11 +2619,5 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// Warnings were encountered during analysis:
-//
-// /workspaces/communication-ui-library/packages/chat-component-bindings/src/handlers/createHandlers.ts:34:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// /workspaces/communication-ui-library/packages/react-components/src/components/MessageThread.tsx:467:5 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
-// /workspaces/communication-ui-library/packages/react-composites/src/composites/ChatComposite/adapter/ChatAdapter.ts:95:7 - (ae-incompatible-release-tags) The symbol "attachedFilesMetadata" is marked as @public, but its signature references "FileMetadata" which is marked as @beta
 
 ```
