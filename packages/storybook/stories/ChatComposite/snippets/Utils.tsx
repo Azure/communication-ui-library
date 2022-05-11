@@ -79,7 +79,7 @@ export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
 };
 
 export type ChatCompositeSetupProps = {
-  userId: CommunicationUserIdentifier;
+  userIdentifier: string;
   token: string;
   endpointUrl: string;
   displayName: string;
@@ -105,5 +105,5 @@ export const createThreadAndAddUser = async (
       )
     ).chatThread?.id ?? '';
 
-  return { userId: user, token, endpointUrl, displayName, threadId };
+  return { userIdentifier: user.communicationUserId, token, endpointUrl, displayName, threadId };
 };
