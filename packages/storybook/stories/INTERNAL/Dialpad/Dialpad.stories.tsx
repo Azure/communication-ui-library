@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _Dialpad as DialpadComponent, useTheme } from '@internal/react-components';
 import { mergeStyles } from '@fluentui/react';
+import { _Dialpad as DialpadComponent, useTheme } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -11,8 +11,8 @@ import { hiddenControl } from '../../controlsUtils';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
 import { DialpadExample } from './snippets/Dialpad.snippet';
 
-const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
 const CustomDialpadText = require('!!raw-loader!./snippets/CustomDialpad.snippet.tsx').default;
+const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
