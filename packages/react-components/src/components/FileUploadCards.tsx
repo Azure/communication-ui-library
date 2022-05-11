@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon } from '@fluentui/react';
+import { Icon, IconButton } from '@fluentui/react';
 import React from 'react';
 import { ActiveFileUpload } from './SendBox';
 import { _FileCard } from './FileCard';
@@ -45,7 +45,11 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<Icon iconName="CancelFileUpload" style={actionIconStyle} />}
+              actionIcon={
+                <IconButton>
+                  <Icon iconName="CancelFileUpload" style={actionIconStyle} />
+                </IconButton>
+              }
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}
