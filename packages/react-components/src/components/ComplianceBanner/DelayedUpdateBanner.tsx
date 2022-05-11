@@ -7,7 +7,12 @@ import { BannerMessage } from './BannerMessage';
 import { _ComplianceBannerStrings } from './types';
 import { ComplianceBannerVariant } from './Utils';
 
-const BANNER_OVERWRITE_DELAY_MS = 3000;
+/**
+ * Used by unit-tests.
+ *
+ * @private
+ **/
+export const BANNER_OVERWRITE_DELAY_MS = 3000;
 
 /** @private */
 export interface TimestampedVariant {
