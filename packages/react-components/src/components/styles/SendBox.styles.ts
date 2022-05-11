@@ -66,13 +66,12 @@ const defaultSendBoxActiveBorderThicknessREM = 0.125;
  */
 export const borderAndBoxShadowStyle = (props: {
   theme: Theme;
-  errorColor: string;
   hasErrorMessage: boolean;
   disabled: boolean;
 }): IStyle => {
-  const { theme, errorColor, hasErrorMessage, disabled } = props;
-  const borderColor = hasErrorMessage ? errorColor : theme.palette.neutralSecondary;
-  const borderColorActive = hasErrorMessage ? errorColor : theme.palette.themePrimary;
+  const { theme, hasErrorMessage, disabled } = props;
+  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
+  const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
   const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
