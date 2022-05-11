@@ -1,10 +1,16 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { ChatComposite, CompositeLocale, useAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  ChatComposite,
+  CompositeLocale,
+  fromFlatCommunicationIdentifier,
+  useAzureCommunicationChatAdapter
+} from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
-  userId: CommunicationUserIdentifier;
+  /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
+  userIdentifier: string;
   token: string;
   displayName: string;
   endpointUrl: string;
@@ -26,9 +32,14 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
+  const userId = useMemo(
+    () => fromFlatCommunicationIdentifier(props.userIdentifier) as CommunicationUserIdentifier,
+    [props.userIdentifier]
+  );
+
   const adapter = useAzureCommunicationChatAdapter({
     endpoint: props.endpointUrl,
-    userId: props.userId,
+    userId,
     displayName: props.displayName,
     credential,
     threadId: props.threadId

@@ -82,7 +82,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   } else if (isEditing) {
     return (
       <ChatMessageComponentAsEditBox
-        initialValue={props.message.content ?? ''}
+        message={message}
         inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text) => {

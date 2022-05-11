@@ -169,7 +169,7 @@ export const createStatefulChatClient = (
       userAgentOptions: { userAgentPrefix: _getApplicationId() }
     }
   };
-  return createStatefulChatClientWithDeps(
+  return _createStatefulChatClientWithDeps(
     new ChatClient(args.endpoint, args.credential, tweakedOptions.chatClientOptions),
     args,
     tweakedOptions
@@ -192,8 +192,9 @@ export type ChatStateModifier = (state: ChatClientState) => void;
  * Internal implementation of {@link createStatefulChatClient} for dependency injection.
  *
  * Used by tests. Should not be exported out of this package.
+ * @internal
  */
-export const createStatefulChatClientWithDeps = (
+export const _createStatefulChatClientWithDeps = (
   chatClient: ChatClient,
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions

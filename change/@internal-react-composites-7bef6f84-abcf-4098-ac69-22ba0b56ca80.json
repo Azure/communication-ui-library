@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "added tests/browser/chat/app/fake-back-end/ to .eslintignore ",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
