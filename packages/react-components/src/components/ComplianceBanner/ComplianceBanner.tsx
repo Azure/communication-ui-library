@@ -46,6 +46,7 @@ type CachedComplianceBannerProps = {
     callTranscribeState: ComplianceState;
     callRecordState: ComplianceState;
   };
+  updated: number;
 };
 
 const BANNER_OVERWRITE_DELAY_MS = 3000;
@@ -71,7 +72,8 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
     latestStringState: {
       callTranscribeState: 'off',
       callRecordState: 'off'
-    }
+    },
+    updated: new Date().getTime()
   });
 
   // Only update cached props and variant if there is _some_ change in the latest props.
@@ -88,7 +90,8 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
           cachedProps.current.latestStringState.callTranscribeState,
           props.callTranscribeState
         )
-      }
+      },
+      updated: new Date().getTime()
     };
   }
   return (
@@ -97,6 +100,7 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
         cachedProps.current.latestStringState.callRecordState,
         cachedProps.current.latestStringState.callTranscribeState
       )}
+      updated={cachedProps.current.updated}
       strings={props.strings}
       onDismiss={() => {
         if (cachedProps.current.latestStringState.callRecordState === 'stopped') {
@@ -130,6 +134,7 @@ function determineStates(previous: ComplianceState, current: boolean | undefined
 
 function VariantBanner(props: {
   variant: ComplianceBannerVariant;
+  updated: number;
   onDismiss: () => void;
   strings: _ComplianceBannerStrings;
 }): JSX.Element {
@@ -139,7 +144,7 @@ function VariantBanner(props: {
   const [lastUpdate, setLastUpdate] = useState<number>(new Date().getTime());
   const pendingUpdateHandle = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  if (newVariant !== variant) {
+  if (newVariant !== variant && props.updated > lastUpdate) {
     // Always clear pending updates.
     // We'll either update now, or schedule an update for later.
     if (pendingUpdateHandle.current) {
@@ -148,7 +153,7 @@ function VariantBanner(props: {
 
     const now = new Date().getTime();
     const timeToNextUpdate = BANNER_OVERWRITE_DELAY_MS - (now - lastUpdate);
-    if (timeToNextUpdate <= 0) {
+    if (newVariant === 'NO_STATE' || timeToNextUpdate <= 0) {
       setVariant(newVariant);
       setLastUpdate(now);
     } else {
@@ -172,6 +177,7 @@ function VariantBanner(props: {
         // when closing the banner, change variant to nostate and change stopped state to off state.
         // Reason: on banner close, going back to the default state
         setVariant('NO_STATE');
+        setLastUpdate(new Date().getTime());
         props.onDismiss();
       }}
       dismissButtonAriaLabel={props.strings.close}
