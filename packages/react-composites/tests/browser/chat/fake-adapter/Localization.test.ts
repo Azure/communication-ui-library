@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../../common/utils';
-import { test } from '../fixture';
+import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { BASE_CHAT_ADAPTER_MODEL, buildUrlForChatAppUsingFakeAdapter } from './fixture';
 
