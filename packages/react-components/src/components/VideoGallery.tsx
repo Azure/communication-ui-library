@@ -19,7 +19,6 @@ import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
-import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
@@ -39,12 +38,12 @@ import {
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
-import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
-import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
+import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
+import { LocalVideoTile } from './LocalVideoTile';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -181,6 +180,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
+    onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     styles,
@@ -240,97 +240,63 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  const LocalCameraCycleButton = useCallback((): JSX.Element => {
-    const ariaDescription =
-      localVideoCameraCycleButtonProps?.selectedCamera &&
-      _formatString(strings.localVideoSelectedDescription, {
-        cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
-      });
-    return (
-      <Stack horizontalAlign="end">
-        {showCameraSwitcherInLocalPreview &&
-          localVideoCameraCycleButtonProps?.cameras !== undefined &&
-          localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
-          localVideoCameraCycleButtonProps?.onSelectCamera !== undefined && (
-            <LocalVideoCameraCycleButton
-              cameras={localVideoCameraCycleButtonProps.cameras}
-              selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
-              onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
-              label={strings.localVideoCameraSwitcherLabel}
-              ariaDescription={ariaDescription}
-            />
-          )}
-      </Stack>
-    );
-  }, [
-    localVideoCameraCycleButtonProps?.cameras,
-    localVideoCameraCycleButtonProps?.onSelectCamera,
-    localVideoCameraCycleButtonProps?.selectedCamera,
-    showCameraSwitcherInLocalPreview,
-    strings.localVideoCameraSwitcherLabel,
-    strings.localVideoSelectedDescription
-  ]);
-
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element => {
-    const localVideoStream = localParticipant?.videoStream;
-
     if (onRenderLocalVideoTile) {
       return onRenderLocalVideoTile(localParticipant);
     }
 
-    const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
-
-    const localVideoTileStylesThemed = concatStyleSets(
-      localVideoTileStyles,
+    const localVideoTileStyles = concatStyleSets(
+      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
       styles?.localVideo
     );
 
-    if (localVideoStream && !localVideoStream.renderElement) {
-      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
-    }
     return (
       <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
-        <VideoTile
-          key={localParticipant.userId}
+        <LocalVideoTile
           userId={localParticipant.userId}
-          renderElement={
-            localVideoStream?.renderElement ? (
-              <>
-                <LocalCameraCycleButton />
-                <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-              </>
-            ) : undefined
-          }
-          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          onCreateLocalStreamView={onCreateLocalStreamView}
+          onDisposeLocalStreamView={onDisposeLocalStreamView}
+          isAvailable={localParticipant?.videoStream?.isAvailable}
+          isMuted={localParticipant.isMuted}
+          renderElement={localParticipant?.videoStream?.renderElement}
           displayName={isNarrow ? '' : strings.localVideoLabel}
           initialsName={localParticipant.displayName}
-          styles={localVideoTileStylesThemed}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={localParticipant.isMuted}
+          localVideoViewOptions={localVideoViewOptions}
+          onRenderAvatar={onRenderAvatar}
+          showLabel={!(shouldFloatLocalVideo && isNarrow)}
           showMuteIndicator={showMuteIndicator}
+          showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
+          localVideoCameraCycleButtonProps={localVideoCameraCycleButtonProps}
+          localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
+          localVideoSelectedDescription={strings.localVideoSelectedDescription}
+          styles={localVideoTileStyles}
         />
       </Stack>
     );
   }, [
-    localParticipant,
     isNarrow,
-    onCreateLocalStreamView,
-    onRenderLocalVideoTile,
-    theme.effects.roundedCorner4,
-    styles?.localVideo,
-    strings.localVideoMovementLabel,
-    strings.localVideoLabel,
-    LocalCameraCycleButton,
-    showMuteIndicator,
+    localParticipant,
+    localVideoCameraCycleButtonProps,
     localVideoViewOptions,
+    onCreateLocalStreamView,
+    onDisposeLocalStreamView,
     onRenderAvatar,
-    shouldFloatLocalVideo
+    onRenderLocalVideoTile,
+    shouldFloatLocalVideo,
+    showCameraSwitcherInLocalPreview,
+    showMuteIndicator,
+    strings.localVideoCameraSwitcherLabel,
+    strings.localVideoLabel,
+    strings.localVideoMovementLabel,
+    strings.localVideoSelectedDescription,
+    styles?.localVideo,
+    theme.effects.roundedCorner4
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
