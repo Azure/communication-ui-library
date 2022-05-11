@@ -179,7 +179,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [setActivePane]);
 
   /** Constant setting of id for the parent stack of the composite */
-  const compositeParentDivId = 'callWithChatCompositeParentDiv-internal';
+  const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
 
   const toggleChat = useCallback(() => {
     if (activePane === 'chat') {
