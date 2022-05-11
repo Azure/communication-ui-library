@@ -17,7 +17,13 @@ import {
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
 import { useLocale } from '../../localization';
-import { buttonStyles, containerStyles, digitStyles, subStyles, textFieldStyles } from '../styles/Dialpad.styles';
+import {
+  buttonStyles,
+  containerStyles,
+  primaryContentStyles,
+  secondaryContentStyles,
+  textFieldStyles
+} from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 
 /**
@@ -39,8 +45,8 @@ export interface _DialpadStyles {
   root?: IStyle;
   button?: IButtonStyles;
   textField?: Partial<ITextFieldStyles>;
-  digit?: IStyle;
-  subDigit?: IStyle;
+  primaryContent?: IStyle;
+  secondaryContent?: IStyle;
 }
 
 /**
@@ -91,9 +97,13 @@ const DialpadButton = (props: {
       styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
     >
       <Stack>
-        <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.primaryContent}</Text>
+        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
+          {props.primaryContent}
+        </Text>
 
-        <Text className={mergeStyles(subStyles(theme), props.styles?.subDigit)}>{props.secondaryContent ?? ' '}</Text>
+        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
+          {props.secondaryContent ?? ' '}
+        </Text>
       </Stack>
     </DefaultButton>
   );

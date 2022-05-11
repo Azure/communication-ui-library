@@ -200,8 +200,8 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    // Warning: (ae-incompatible-release-tags) The symbol "dialpad" is marked as @public, but its signature references "DialpadStrings" which is marked as @beta
-    dialpad: DialpadStrings;
+    // Warning: (ae-incompatible-release-tags) The symbol "dialpad" is marked as @public, but its signature references "_DialpadStrings" which is marked as @internal
+    dialpad: _DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -374,45 +374,45 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @beta
-export const Dialpad: (props: DialpadProps) => JSX.Element;
+// @internal
+export const _Dialpad: (props: _DialpadProps) => JSX.Element;
 
-// @beta
-export interface DialpadButtonProps {
+// @internal
+export interface _DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
     // (undocumented)
     secondaryContent?: string;
 }
 
-// @beta
-export interface DialpadProps {
+// @internal
+export interface _DialpadProps {
     // (undocumented)
-    dialpadButtons?: DialpadButtonProps[][];
+    dialpadButtons?: _DialpadButtonProps[][];
     // (undocumented)
-    strings?: DialpadStrings;
+    strings?: _DialpadStrings;
     // (undocumented)
-    styles?: <DialpadStyles>;
+    styles?: _DialpadStyles;
 }
 
-// @beta
-export interface DialpadStrings {
+// @internal
+export interface _DialpadStrings {
     // (undocumented)
     defaultText: string;
     // (undocumented)
     errorText: string;
 }
 
-// @beta
-export interface DialpadStyles {
+// @internal
+export interface _DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
     // (undocumented)
-    digit?: IStyle;
+    primaryContent?: IStyle;
     // (undocumented)
     root?: IStyle;
     // (undocumented)
-    subDigit?: IStyle;
+    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }

@@ -37,7 +37,7 @@ export const buttonStyles = (theme: Theme): IButtonStyles => ({
 /**
  * @private
  */
-export const digitStyles = (theme: Theme): IStyle => {
+export const primaryContentStyles = (theme: Theme): IStyle => {
   return {
     fontSize: '1.25rem',
     fontWeight: 600,
@@ -72,7 +72,7 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
 /**
  * @private
  */
-export const subStyles = (theme: Theme): IStyle => {
+export const secondaryContentStyles = (theme: Theme): IStyle => {
   return {
     fontSize: '0.625rem',
     color: `${theme.palette.neutralSecondary}`,
