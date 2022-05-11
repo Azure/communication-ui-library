@@ -200,8 +200,6 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    // Warning: (ae-incompatible-release-tags) The symbol "dialpad" is marked as @public, but its signature references "_DialpadStrings" which is marked as @internal
-    dialpad: _DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -390,7 +388,7 @@ export interface _DialpadProps {
     // (undocumented)
     dialpadButtons?: _DialpadButtonProps[][];
     // (undocumented)
-    strings?: _DialpadStrings;
+    strings: _DialpadStrings;
     // (undocumented)
     styles?: _DialpadStyles;
 }

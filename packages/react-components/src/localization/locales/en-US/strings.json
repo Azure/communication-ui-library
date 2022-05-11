@@ -75,10 +75,6 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose Speaker"
   },
-  "dialpad": {
-    "errorText": "Invalid input {invalidCharacter}. Input must be a numeric chatacter, *, # or +",
-    "defaultText": "Enter a number"
-  },
   "participantsButton": {
     "label": "People",
     "tooltipContent": "Show Participants",

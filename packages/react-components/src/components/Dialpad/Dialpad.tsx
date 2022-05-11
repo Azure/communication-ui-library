@@ -16,7 +16,6 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
-import { useLocale } from '../../localization';
 import {
   buttonStyles,
   containerStyles,
@@ -65,7 +64,8 @@ export interface _DialpadButtonProps {
  * @internal
  */
 export interface _DialpadProps {
-  strings?: _DialpadStrings;
+  // strings are required for now since this is an internal component and strings are not localized yet
+  strings: _DialpadStrings;
   dialpadButtons?: _DialpadButtonProps[][];
   styles?: _DialpadStyles;
 }
@@ -77,9 +77,7 @@ export interface _DialpadProps {
  * @internal
  */
 export const _Dialpad = (props: _DialpadProps): JSX.Element => {
-  const localeStrings = useLocale().strings.dialpad;
-  const strings = { ...localeStrings, ...props.strings };
-  return <DialpadContainer errorText={strings.errorText} defaultText={strings.defaultText} {...props} />;
+  return <DialpadContainer errorText={props.strings.errorText} defaultText={props.strings.defaultText} {...props} />;
 };
 
 const DialpadButton = (props: {

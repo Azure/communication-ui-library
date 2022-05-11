@@ -41,6 +41,11 @@ const getDocs: () => JSX.Element = () => {
 const DialpadStory = (): JSX.Element => {
   const theme = useTheme();
 
+  const dialpadStrings = {
+    errorText: 'Invalid input {invalidCharacter}. Input must be a numeric chatacter, *, # or +',
+    defaultText: 'Enter a number'
+  };
+
   return (
     <div
       className={mergeStyles({
@@ -50,7 +55,7 @@ const DialpadStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <DialpadComponent />
+      <DialpadComponent strings={dialpadStrings} />
     </div>
   );
 };

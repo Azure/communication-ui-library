@@ -189,7 +189,6 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    dialpad: _DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -376,7 +375,7 @@ export interface _DialpadProps {
     // (undocumented)
     dialpadButtons?: _DialpadButtonProps[][];
     // (undocumented)
-    strings?: _DialpadStrings;
+    strings: _DialpadStrings;
     // (undocumented)
     styles?: _DialpadStyles;
 }
@@ -394,11 +393,11 @@ export interface _DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
     // (undocumented)
-    digit?: IStyle;
+    primaryContent?: IStyle;
     // (undocumented)
     root?: IStyle;
     // (undocumented)
-    subDigit?: IStyle;
+    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }

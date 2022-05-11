@@ -48,8 +48,6 @@ export interface ComponentStrings {
   endCallButton: EndCallButtonStrings;
   /** Strings for DevicesButton */
   devicesButton: DevicesButtonStrings;
-  /** Strings for _Dialpad */
-  dialpad: _DialpadStrings;
   /** Strings for ParticipantsButton */
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */

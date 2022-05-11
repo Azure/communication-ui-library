@@ -27,6 +27,11 @@ const dialPadButtons: _DialpadButtonProps[][] = [
   ]
 ];
 
+const dialpadStrings = {
+  errorText: 'Invalid input {invalidCharacter}. Input must be a numeric chatacter, *, # or +',
+  defaultText: 'Enter a number'
+};
+
 export const CustomDialpadExample: () => JSX.Element = () => {
-  return <_Dialpad dialpadButtons={dialPadButtons} />;
+  return <_Dialpad dialpadButtons={dialPadButtons} strings={dialpadStrings} />;
 };

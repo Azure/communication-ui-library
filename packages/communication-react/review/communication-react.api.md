@@ -43,7 +43,6 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
-import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -1170,8 +1169,6 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    // Warning: (ae-incompatible-release-tags) The symbol "dialpad" is marked as @public, but its signature references "DialpadStrings" which is marked as @beta
-    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -1552,49 +1549,6 @@ export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent 
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
     network: NetworkDiagnosticsState;
-}
-
-// @beta
-export const Dialpad: (props: DialpadProps) => JSX.Element;
-
-// @beta
-export interface DialpadButtonProps {
-    // (undocumented)
-    primaryContent: string;
-    // (undocumented)
-    secondaryContent?: string;
-}
-
-// @beta
-export interface DialpadProps {
-    // (undocumented)
-    dialpadButtons?: DialpadButtonProps[][];
-    // (undocumented)
-    strings?: DialpadStrings;
-    // (undocumented)
-    styles?: <DialpadStyles>;
-}
-
-// @beta
-export interface DialpadStrings {
-    // (undocumented)
-    defaultText: string;
-    // (undocumented)
-    errorText: string;
-}
-
-// @beta
-export interface DialpadStyles {
-    // (undocumented)
-    button?: IButtonStyles;
-    // (undocumented)
-    digit?: IStyle;
-    // (undocumented)
-    root?: IStyle;
-    // (undocumented)
-    subDigit?: IStyle;
-    // (undocumented)
-    textField?: Partial<ITextFieldStyles>;
 }
 
 // @public
