@@ -53,31 +53,26 @@ export const textContainerStyle: IStyle = {
 /**
  * @private
  */
-export const textFieldStyle = (errorColor: string): IStyle => {
-  return {
-    root: {
-      width: '100%',
-      minHeight: '0',
-      fontSize: '8.25rem'
-    },
-    wrapper: {},
-    fieldGroup: {
-      outline: 'none',
-      border: 'none',
-      height: 'auto',
-      minHeight: '0',
-      /**
-       * Removing fieldGroup border to make sure no border is rendered around the text area in sendbox.
-       */
-      ':after': { border: 'none' }
-    },
-    field: {
-      borderRadius: '0.25rem'
-    },
-    errorMessage: {
-      color: errorColor
-    }
-  };
+export const textFieldStyle: IStyle = {
+  root: {
+    width: '100%',
+    minHeight: '0',
+    fontSize: '8.25rem'
+  },
+  wrapper: {},
+  fieldGroup: {
+    outline: 'none',
+    border: 'none',
+    height: 'auto',
+    minHeight: '0',
+    /**
+     * Removing fieldGroup border to make sure no border is rendered around the text area in sendbox.
+     */
+    ':after': { border: 'none' }
+  },
+  field: {
+    borderRadius: '0.25rem'
+  }
 };
 
 /**
