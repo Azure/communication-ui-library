@@ -19,6 +19,12 @@ import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 
+/** @public */
+export type VideoStreamRendererAndView = {
+  renderer: VideoStreamRenderer;
+  view: VideoStreamRendererView;
+};
+
 async function createViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,
@@ -26,7 +32,7 @@ async function createViewRemoteVideo(
   participantId: CommunicationIdentifierKind | string,
   stream: RemoteVideoStreamState,
   options?: CreateViewOptions
-): Promise<void> {
+): Promise<VideoStreamRendererAndView | undefined> {
   // Render RemoteVideoStream that is part of a Call
   const streamId = stream.id;
   let participantKey;
@@ -120,6 +126,11 @@ async function createViewRemoteVideo(
     streamId,
     convertFromSDKToDeclarativeVideoStreamRendererView(view)
   );
+
+  return {
+    renderer,
+    view
+  };
 }
 
 async function createViewLocalVideo(
@@ -127,7 +138,7 @@ async function createViewLocalVideo(
   internalContext: InternalCallContext,
   callId: string,
   options?: CreateViewOptions
-): Promise<void> {
+): Promise<VideoStreamRendererAndView | undefined> {
   callingStatefulLogger.info('Start creating view for local video');
   // Render LocalVideoStream that is part of a Call
   const renderInfo = internalContext.getLocalRenderInfo(callId);
@@ -197,6 +208,11 @@ async function createViewLocalVideo(
   internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream, 'Rendered', renderer);
   context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
   callingStatefulLogger.info(`Successfully render the local view. callId: ${callId}`);
+
+  return {
+    renderer,
+    view
+  };
 }
 
 async function createViewUnparentedVideo(
@@ -204,7 +220,7 @@ async function createViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: LocalVideoStreamState,
   options?: CreateViewOptions
-): Promise<void> {
+): Promise<VideoStreamRendererAndView | undefined> {
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
 
   if (renderInfo && renderInfo.status === 'Rendered') {
@@ -264,6 +280,11 @@ async function createViewUnparentedVideo(
   // updating the state.
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
   context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
+
+  return {
+    renderer,
+    view
+  };
 }
 
 function disposeViewRemoteVideo(
@@ -367,7 +388,7 @@ export function createView(
   participantId: CommunicationIdentifierKind | string | undefined,
   stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
-): Promise<void> {
+): Promise<VideoStreamRendererAndView | undefined> {
   if ('id' in stream && callId && participantId) {
     // Render RemoteVideoStream that is part of a Call
     return createViewRemoteVideo(context, internalContext, callId, participantId, stream, options);
@@ -379,7 +400,7 @@ export function createView(
     return createViewUnparentedVideo(context, internalContext, stream, options);
   } else {
     console.warn('Invalid combination of parameters');
-    return Promise.resolve();
+    return Promise.resolve(undefined);
   }
 }
 
