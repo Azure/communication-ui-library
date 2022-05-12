@@ -49,6 +49,12 @@ type CachedComplianceBannerProps = {
 };
 
 /**
+ * A component that displays banners to notify the user when call recording and
+ * transcription is enabled or disabled in a call.
+ *
+ * This component implements a state machine that tracks the changes to call
+ * recording and transcription state and shows the corresponding message.
+ *
  * @internal
  */
 export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element => {
