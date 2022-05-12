@@ -82,65 +82,6 @@ describe('ComplianceBanner shows the right message', () => {
   });
 });
 
-const MILLISECONDS_IN_AN_HOUR = 60 * 60 * 1000;
-
-// These tests are a bit slow.
-// See reasons in the comments for individual tests.
-describe('When messages arrive in succession', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
-
-  test('the second message is not shown immediately', async () => {
-    const root = mountComplianceBanner();
-    // Mounting the component is considered to be a message, so this is the second message:
-    updateBannerProps(root, { record: false, transcribe: true });
-    // We expect this await to timeout, so keep the retry interval and limit low to keep the test fast.
-    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted, 1, 5);
-    expect(messageBarPresent(root)).toBeFalsy();
-  });
-
-  test('the second message is shown if it arrives after a long time', async () => {
-    let now = [Date.now()];
-    jest.spyOn(global.Date, 'now').mockImplementation(() => now[0]);
-    const root = mountComplianceBanner();
-
-    // Advance fake time so that the next update seems to be after a long time.
-    now[0] = now[0] + MILLISECONDS_IN_AN_HOUR;
-
-    // Mounting the component is considered to be a message, so this is the second message:
-    updateBannerProps(root, { record: false, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted);
-    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
-  });
-
-  test.only('the second message is shown after a delay', async () => {
-    jest.useFakeTimers();
-    // This test is a bit slow because we wait for the second message to be shown.
-    // It is hard to fake time here, because the component internally calls setInterval().
-    // We instead compromise by setting a very small value for `bannerOverwriteDelayMilliseconds`.
-    const root = mountComplianceBanner({ bannerOverwriteDelayMilliseconds: 300 });
-
-    // Mounting the component is considered to be a message, so this is the second message:
-    updateBannerProps(root, { record: false, transcribe: true });
-    // Not enough time for the second message to be shown.
-    act(() => {
-      jest.advanceTimersByTime(100);
-    });
-    expect(messageBarPresent(root)).toBeFalsy();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
-    jest.useRealTimers();
-  });
-});
-
 const strings: _ComplianceBannerStrings = {
   close: 'testvalue:close',
   complianceBannerNowOnlyRecording: 'testvalue:complianceBannerNowOnlyRecording',
@@ -160,10 +101,6 @@ const strings: _ComplianceBannerStrings = {
 };
 
 const mountComplianceBannerWithDelayDisabled = (): ReactWrapper => {
-  return mountComplianceBanner({ bannerOverwriteDelayMilliseconds: 0 });
-};
-
-const mountComplianceBanner = (options?: { bannerOverwriteDelayMilliseconds?: number }): ReactWrapper => {
   let root;
   act(() => {
     root = mount(
@@ -171,7 +108,7 @@ const mountComplianceBanner = (options?: { bannerOverwriteDelayMilliseconds?: nu
         callRecordState={false}
         callTranscribeState={false}
         strings={strings}
-        bannerOverwriteDelayMilliseconds={options?.bannerOverwriteDelayMilliseconds}
+        bannerOverwriteDelayMilliseconds={0}
       />
     );
   });
