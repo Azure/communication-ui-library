@@ -69,6 +69,16 @@ describe('ComplianceBanner shows the right message', () => {
     await waitForMessageText(root, strings.complianceBannerRecordingAndTranscriptionStopped);
     expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStopped);
   });
+
+  test('when recording starts, user dismisses the banner, then transcribing starts', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    updateBannerProps(root, { record: false, transcribe: true });
+    simulateDismissBanner(root);
+    expect(messageBarPresent(root)).toBeFalsy();
+    updateBannerProps(root, { record: true, transcribe: true });
+    await waitForMessageText(root, strings.complianceBannerRecordingAndTranscriptionStarted);
+    expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStarted);
+  });
 });
 
 const strings: _ComplianceBannerStrings = {
@@ -167,12 +177,10 @@ const waitForMessageText = async (root: ReactWrapper, message: string): Promise<
   });
 };
 
-/*
 const simulateDismissBanner = (root: ReactWrapper): void => {
-    const messageBar = root.find(MessageBar).at(0);
-    const button = messageBar.find('button').at(0);
-    button.simulate('click');
+  const messageBar = root.find(MessageBar).at(0);
+  const button = messageBar.find('button').at(0);
+  button.simulate('click');
 };
-*/
 
 const messageBarPresent = (root: ReactWrapper): boolean => root.exists(MessageBar);
