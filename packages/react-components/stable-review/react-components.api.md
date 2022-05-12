@@ -20,6 +20,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -133,6 +134,50 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
+
+// @internal
+export const _ComplianceBanner: (props: _ComplianceBannerProps) => JSX.Element;
+
+// @internal (undocumented)
+export type _ComplianceBannerProps = {
+    callTranscribeState?: boolean;
+    callRecordState?: boolean;
+    strings: _ComplianceBannerStrings;
+};
+
+// @internal
+export interface _ComplianceBannerStrings {
+    // (undocumented)
+    close: string;
+    // (undocumented)
+    complianceBannerNowOnlyRecording: string;
+    // (undocumented)
+    complianceBannerNowOnlyTranscription: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    // (undocumented)
+    complianceBannerRecordingSaving: string;
+    // (undocumented)
+    complianceBannerRecordingStarted: string;
+    // (undocumented)
+    complianceBannerRecordingStopped: string;
+    // (undocumented)
+    complianceBannerTranscriptionConsent: string;
+    // (undocumented)
+    complianceBannerTranscriptionSaving: string;
+    // (undocumented)
+    complianceBannerTranscriptionStarted: string;
+    // (undocumented)
+    complianceBannerTranscriptionStopped: string;
+    // (undocumented)
+    learnMore: string;
+    // (undocumented)
+    privacyPolicy: string;
+}
 
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
@@ -356,6 +401,49 @@ export interface DevicesButtonStrings {
 // @public
 export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @internal
+export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+
+// @internal
+export interface _DialpadButtonProps {
+    // (undocumented)
+    primaryContent: string;
+    // (undocumented)
+    secondaryContent?: string;
+}
+
+// @internal
+export interface _DialpadProps {
+    // (undocumented)
+    dialpadButtons?: _DialpadButtonProps[][];
+    // (undocumented)
+    strings: _DialpadStrings;
+    // (undocumented)
+    styles?: _DialpadStyles;
+}
+
+// @internal
+export interface _DialpadStrings {
+    // (undocumented)
+    defaultText: string;
+    // (undocumented)
+    errorText: string;
+}
+
+// @internal
+export interface _DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    primaryContent?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    secondaryContent?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
 }
 
 // @internal
@@ -642,7 +730,7 @@ export type MessageProps = {
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -698,7 +786,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1070,6 +1158,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public
+export type UpdateMessageCallback = (messageId: string, content: string) => Promise<void>;
 
 // @internal
 export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;
