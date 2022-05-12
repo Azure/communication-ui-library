@@ -59,7 +59,7 @@ import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
-import { ScalingMode } from '@azure/communication-calling';
+import { ScalingMode as ScalingMode_2 } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -68,6 +68,8 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoStreamRenderer } from '@azure/communication-calling';
+import { VideoStreamRendererView } from '@azure/communication-calling';
 
 // @public
 export interface ActiveErrorMessage {
@@ -1323,6 +1325,14 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
+export interface CreateVideoStreamViewResult {
+    // (undocumented)
+    view: {
+        updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+    };
+}
+
+// @public
 export type CustomAvatarOptions = {
     coinSize?: number;
     hidePersonaDetails?: boolean;
@@ -2262,6 +2272,9 @@ export interface RemoteVideoStreamState {
 }
 
 // @public
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -2341,7 +2354,7 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<VideoStreamRendererAndView | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -2520,7 +2533,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -2577,13 +2590,19 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+    scalingMode?: ScalingMode;
 }
+
+// @public (undocumented)
+export type VideoStreamRendererAndView = {
+    renderer: VideoStreamRenderer;
+    view: VideoStreamRendererView;
+};
 
 // @public
 export interface VideoStreamRendererViewState {
     isMirrored: boolean;
-    scalingMode: ScalingMode;
+    scalingMode: ScalingMode_2;
     target: HTMLElement;
 }
 

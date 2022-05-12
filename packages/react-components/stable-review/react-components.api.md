@@ -251,6 +251,14 @@ export interface ControlBarProps {
 }
 
 // @public
+export interface CreateVideoStreamViewResult {
+    // (undocumented)
+    view: {
+        updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+    };
+}
+
+// @public
 export type CustomAvatarOptions = {
     coinSize?: number;
     hidePersonaDetails?: boolean;
@@ -963,6 +971,9 @@ export type ReadReceiptsBySenderId = {
 };
 
 // @public
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -1106,7 +1117,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -1155,7 +1166,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+    scalingMode?: ScalingMode;
 }
 
 // @public
