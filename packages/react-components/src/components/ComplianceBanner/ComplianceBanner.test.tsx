@@ -82,6 +82,65 @@ describe('ComplianceBanner shows the right message', () => {
   });
 });
 
+const MILLISECONDS_IN_AN_HOUR = 60 * 60 * 1000;
+
+// These tests are a bit slow.
+// See reasons in the comments for individual tests.
+describe('When messages arrive in succession', () => {
+  beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter() });
+    initializeIcons();
+  });
+
+  test('the second message is not shown immediately', async () => {
+    const root = mountComplianceBanner();
+    // Mounting the component is considered to be a message, so this is the second message:
+    updateBannerProps(root, { record: false, transcribe: true });
+    // We expect this await to timeout, so keep the retry interval and limit low to keep the test fast.
+    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted, 1, 5);
+    expect(messageBarPresent(root)).toBeFalsy();
+  });
+
+  test('the second message is shown if it arrives after a long time', async () => {
+    let now = [Date.now()];
+    jest.spyOn(global.Date, 'now').mockImplementation(() => now[0]);
+    const root = mountComplianceBanner();
+
+    // Advance fake time so that the next update seems to be after a long time.
+    now[0] = now[0] + MILLISECONDS_IN_AN_HOUR;
+
+    // Mounting the component is considered to be a message, so this is the second message:
+    updateBannerProps(root, { record: false, transcribe: true });
+    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted);
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
+  });
+
+  test.only('the second message is shown after a delay', async () => {
+    jest.useFakeTimers();
+    // This test is a bit slow because we wait for the second message to be shown.
+    // It is hard to fake time here, because the component internally calls setInterval().
+    // We instead compromise by setting a very small value for `bannerOverwriteDelayMilliseconds`.
+    const root = mountComplianceBanner({ bannerOverwriteDelayMilliseconds: 300 });
+
+    // Mounting the component is considered to be a message, so this is the second message:
+    updateBannerProps(root, { record: false, transcribe: true });
+    // Not enough time for the second message to be shown.
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+    expect(messageBarPresent(root)).toBeFalsy();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
+    jest.useRealTimers();
+  });
+});
+
 const strings: _ComplianceBannerStrings = {
   close: 'testvalue:close',
   complianceBannerNowOnlyRecording: 'testvalue:complianceBannerNowOnlyRecording',
@@ -101,6 +160,10 @@ const strings: _ComplianceBannerStrings = {
 };
 
 const mountComplianceBannerWithDelayDisabled = (): ReactWrapper => {
+  return mountComplianceBanner({ bannerOverwriteDelayMilliseconds: 0 });
+};
+
+const mountComplianceBanner = (options?: { bannerOverwriteDelayMilliseconds?: number }): ReactWrapper => {
   let root;
   act(() => {
     root = mount(
@@ -108,39 +171,23 @@ const mountComplianceBannerWithDelayDisabled = (): ReactWrapper => {
         callRecordState={false}
         callTranscribeState={false}
         strings={strings}
-        bannerOverwriteDelayMilliseconds={0}
+        bannerOverwriteDelayMilliseconds={options?.bannerOverwriteDelayMilliseconds}
       />
     );
   });
   return root;
 };
 
-const updateBannerProps = async (root, props: { record: boolean; transcribe: boolean }): Promise<void> => {
+const updateBannerProps = (root, props: { record: boolean; transcribe: boolean }): void => {
   act(() => {
     root.setProps({ callRecordState: props.record, callTranscribeState: props.transcribe, strings: strings });
   });
-  return Promise.resolve();
 };
-
-/*
-// MessageBar delays rendering messages by calling `setTimeout`.
-// `await` the Promise returned by this function to yield to the event loop so that `MessageBar`
-// actually renders updated content to the DOM.
-const waitForDelayedRender = async (): Promise<void> => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      setTimeout(() => {
-        setTimeout(resolve);
-      });
-    })
-  );
-};
-*/
 
 // We will try to look for the message roughly for 5 * 100 = 500 milliseconds.
 // The timeout could be longer because of scheduling delays on the event loop,
 // but that is not a concern in unittests.
-const WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECONDS = 5;
+const WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECOND = 5;
 const WAIT_FOR_MESSAGE_RETRY_LIMIT = 100;
 
 // MessageBar delays rendering messages by calling `setTimeout`.
@@ -150,7 +197,12 @@ const WAIT_FOR_MESSAGE_RETRY_LIMIT = 100;
 // should still expect() the message after `await`ing the result of this function.
 // Reason: Error messages from synchronous expect() failures tend to be better than
 //   any error we can return on timeout.
-const waitForMessageText = async (root: ReactWrapper, message: string): Promise<void> => {
+const waitForMessageText = async (
+  root: ReactWrapper,
+  message: string,
+  retry_interval_millisecond?: number,
+  retry_limit?: number
+): Promise<void> => {
   return new Promise((resolve) => {
     // Yield to event loop to allow delayed rendering of MessageBar.
     setTimeout(() => {
@@ -161,7 +213,7 @@ const waitForMessageText = async (root: ReactWrapper, message: string): Promise<
       let retry_count = 0;
       // Infrequently, yielding once isn't enough.
       setInterval(() => {
-        if (retry_count > WAIT_FOR_MESSAGE_RETRY_LIMIT) {
+        if (retry_count > (retry_limit ?? WAIT_FOR_MESSAGE_RETRY_LIMIT)) {
           // We resolve the promise even when we fail to find the message.
           // Caller should expect() the message after calling this function.
           resolve();
@@ -173,13 +225,14 @@ const waitForMessageText = async (root: ReactWrapper, message: string): Promise<
           resolve();
           return;
         }
-      }, WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECONDS);
+      }, retry_interval_millisecond ?? WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECOND);
     });
   });
 };
 
 const simulateDismissBanner = (root: ReactWrapper): void => {
   const messageBar = root.find(MessageBar).at(0);
+  console.log(root.html());
   const button = messageBar.find('button').at(0);
   button.simulate('click');
 };
