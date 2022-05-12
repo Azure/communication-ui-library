@@ -30,10 +30,6 @@ export interface CallCompositeStrings {
    */
   defaultPlaceHolder: string;
   /**
-   * Label for audio device dropdown.
-   */
-  audioDeviceLabel: string;
-  /**
    * Label for camera dropdown.
    */
   cameraLabel: string;

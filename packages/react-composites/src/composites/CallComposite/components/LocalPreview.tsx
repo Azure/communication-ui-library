@@ -46,8 +46,6 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
 
-  const localeStrings = useLocale().strings.call;
-
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const adapter = useAdapter();
 
@@ -122,11 +120,6 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
               styles={devicesButtonStyles}
-              strings={
-                devicesButtonProps.speakers.length === 0
-                  ? { microphoneMenuTitle: localeStrings.audioDeviceLabel }
-                  : undefined
-              }
             />
           )}
         </ControlBar>

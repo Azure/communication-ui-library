@@ -12,9 +12,30 @@ import { CallWithChatControlOptions } from '../CallWithChatComposite';
 
 /** @private */
 export interface MoreDrawerStrings {
+  /**
+   * Label for people drawerMenuItem.
+   */
   peopleButtonLabel: string;
+  /**
+   * Label for audio device drawerMenuItem.
+   *
+   * @remarks This replaces the microphoneMenuTitle speakers can not be enumerated
+   *
+   */
   audioDeviceMenuTitle: string;
+  /**
+   * Label for microphone drawerMenuItem.
+   *
+   * @remarks Only displayed when speakers can be enumerated otherwise audioDeviceMenuTitle is used
+   *
+   */
   microphoneMenuTitle: string;
+  /**
+   * Label for speaker drawerMenuItem.
+   *
+   * @remarks Only displayed when speakers can be enumerated
+   *
+   */
   speakerMenuTitle: string;
 }
 
@@ -117,43 +138,28 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   if (props.microphones && props.microphones.length > 0) {
-    if (props.speakers && props.speakers.length > 0) {
-      drawerMenuItems.push({
-        itemKey: 'microphones',
-        text: props.strings.microphoneMenuTitle,
-        iconProps: { iconName: 'MoreDrawerMicrophones' },
-        subMenuProps: props.microphones.map((mic) => ({
-          itemKey: mic.id,
-          iconProps: {
-            iconName: isDeviceSelected(mic, props.selectedMicrophone)
-              ? 'MoreDrawerSelectedMicrophone'
-              : 'MoreDrawerMicrophones'
-          },
-          text: mic.name,
-          onItemClick: onMicrophoneItemClick,
-          secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
-        })),
-        secondaryText: props.selectedMicrophone?.name
-      });
-    } else {
-      drawerMenuItems.push({
-        itemKey: 'audioDevices',
-        text: props.strings.audioDeviceMenuTitle,
-        iconProps: { iconName: 'MoreDrawerSpeakers' },
-        subMenuProps: props.microphones.map((mic) => ({
-          itemKey: mic.id,
-          iconProps: {
-            iconName: isDeviceSelected(mic, props.selectedMicrophone)
-              ? 'MoreDrawerSelectedSpeaker'
-              : 'MoreDrawerSpeakers'
-          },
-          text: mic.name,
-          onItemClick: onMicrophoneItemClick,
-          secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
-        })),
-        secondaryText: props.selectedMicrophone?.name
-      });
-    }
+    // Set props as Microphone if speakers can be enumerated else set as Audio Device
+    const speakersAvailable = props.speakers && props.speakers.length > 0;
+    const itemKey = speakersAvailable ? 'microphones' : 'audioDevices';
+    const text = speakersAvailable ? props.strings.microphoneMenuTitle : props.strings.audioDeviceMenuTitle;
+    const iconName = speakersAvailable ? 'MoreDrawerMicrophones' : 'MoreDrawerSpeakers';
+    const selectedIconName = speakersAvailable ? 'MoreDrawerSelectedMicrophone' : 'MoreDrawerSelectedSpeaker';
+
+    drawerMenuItems.push({
+      itemKey: itemKey,
+      text: text,
+      iconProps: { iconName: iconName },
+      subMenuProps: props.microphones.map((mic) => ({
+        itemKey: mic.id,
+        iconProps: {
+          iconName: isDeviceSelected(mic, props.selectedMicrophone) ? selectedIconName : iconName
+        },
+        text: mic.name,
+        onItemClick: onMicrophoneItemClick,
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
+      })),
+      secondaryText: props.selectedMicrophone?.name
+    });
   }
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {

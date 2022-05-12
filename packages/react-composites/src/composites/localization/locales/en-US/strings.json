@@ -37,8 +37,7 @@
     "removedFromCallTitle": "You were removed",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
-    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby.",
-    "audioDeviceLabel": "Audio Device"
+    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
   },
   "chat": {
     "chatListHeader": "In this chat"
