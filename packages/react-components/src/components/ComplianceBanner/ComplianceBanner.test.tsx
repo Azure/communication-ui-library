@@ -14,70 +14,79 @@ describe('ComplianceBanner shows the right message', () => {
     Enzyme.configure({ adapter: new Adapter() });
     initializeIcons();
   });
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   test('when neither recording nor transcribing', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     expect(messageBarPresent(root)).toBeFalsy();
   });
 
-  test('when recording starts', async () => {
+  test('when recording starts', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: true, transcribe: false });
-    await waitForMessageText(root, strings.complianceBannerRecordingStarted);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerRecordingStarted);
   });
 
-  test('when transcribing starts', async () => {
+  test('when transcribing starts', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
   });
 
-  test('when recording and transcribing start', async () => {
+  test('when recording and transcribing start', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerRecordingAndTranscriptionStarted);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStarted);
   });
 
-  test('when recording and transcribing start and then recording stops', async () => {
+  test('when recording and transcribing start and then recording stops', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: true });
     updateBannerProps(root, { record: false, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerRecordingStopped);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerRecordingStopped);
   });
 
-  test('when recording and transcribing start and then transcribing stops', async () => {
+  test('when recording and transcribing start and then transcribing stops', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: false });
-    await waitForMessageText(root, strings.complianceBannerTranscriptionStopped);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerTranscriptionStopped);
   });
 
-  test('when recording and transcribing start and then stop', async () => {
+  test('when recording and transcribing start and then stop', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: true });
     updateBannerProps(root, { record: true, transcribe: false });
     updateBannerProps(root, { record: false, transcribe: false });
-    await waitForMessageText(root, strings.complianceBannerRecordingAndTranscriptionStopped);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStopped);
   });
 
-  test('when recording starts, user dismisses the banner, then transcribing starts', async () => {
+  test('when recording starts, user dismisses the banner, then transcribing starts', () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerTranscriptionStarted);
+    completeMessageBarRender();
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
+
     simulateDismissBanner(root);
     expect(messageBarPresent(root)).toBeFalsy();
+
     updateBannerProps(root, { record: true, transcribe: true });
-    await waitForMessageText(root, strings.complianceBannerRecordingAndTranscriptionStarted);
+    completeMessageBarRender();
     expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStarted);
   });
 });
@@ -121,55 +130,19 @@ const updateBannerProps = (root, props: { record: boolean; transcribe: boolean }
   });
 };
 
-// We will try to look for the message roughly for 5 * 100 = 500 milliseconds.
-// The timeout could be longer because of scheduling delays on the event loop,
-// but that is not a concern in unittests.
-const WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECOND = 5;
-const WAIT_FOR_MESSAGE_RETRY_LIMIT = 100;
-
 // MessageBar delays rendering messages by calling `setTimeout`.
-// This function waits for the given message to be rendered in the `MessageBar`.
 //
-// This function resolves after a timeout whether or not the message appears. The caller
-// should still expect() the message after `await`ing the result of this function.
-// Reason: Error messages from synchronous expect() failures tend to be better than
-//   any error we can return on timeout.
-const waitForMessageText = async (
-  root: ReactWrapper,
-  message: string,
-  retry_interval_millisecond?: number,
-  retry_limit?: number
-): Promise<void> => {
-  return new Promise((resolve) => {
-    // Yield to event loop to allow delayed rendering of MessageBar.
-    setTimeout(() => {
-      if (root.text().includes(message)) {
-        resolve();
-        return;
-      }
-      let retry_count = 0;
-      // Infrequently, yielding once isn't enough.
-      setInterval(() => {
-        if (retry_count > (retry_limit ?? WAIT_FOR_MESSAGE_RETRY_LIMIT)) {
-          // We resolve the promise even when we fail to find the message.
-          // Caller should expect() the message after calling this function.
-          resolve();
-          return;
-        }
-        retry_count += 1;
-
-        if (root.text().includes(message)) {
-          resolve();
-          return;
-        }
-      }, retry_interval_millisecond ?? WAIT_FOR_MESSAGE_RETRY_INTERVAL_MILLISCECOND);
-    });
+// This function runs pending timers to finish MessageBar rendering.
+//
+// Assumption: The test already called jest.useFakeTimers()
+const completeMessageBarRender = () => {
+  act(() => {
+    jest.runAllTimers();
   });
 };
 
 const simulateDismissBanner = (root: ReactWrapper): void => {
   const messageBar = root.find(MessageBar).at(0);
-  console.log(root.html());
   const button = messageBar.find('button').at(0);
   button.simulate('click');
 };
