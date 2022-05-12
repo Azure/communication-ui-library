@@ -135,6 +135,50 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @internal (undocumented)
+export const _ComplianceBanner: (props: _ComplianceBannerProps) => JSX.Element;
+
+// @internal (undocumented)
+export type _ComplianceBannerProps = {
+    callTranscribeState?: boolean;
+    callRecordState?: boolean;
+    strings: _ComplianceBannerStrings;
+};
+
+// @internal
+export interface _ComplianceBannerStrings {
+    // (undocumented)
+    close: string;
+    // (undocumented)
+    complianceBannerNowOnlyRecording: string;
+    // (undocumented)
+    complianceBannerNowOnlyTranscription: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    // (undocumented)
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    // (undocumented)
+    complianceBannerRecordingSaving: string;
+    // (undocumented)
+    complianceBannerRecordingStarted: string;
+    // (undocumented)
+    complianceBannerRecordingStopped: string;
+    // (undocumented)
+    complianceBannerTranscriptionConsent: string;
+    // (undocumented)
+    complianceBannerTranscriptionSaving: string;
+    // (undocumented)
+    complianceBannerTranscriptionStarted: string;
+    // (undocumented)
+    complianceBannerTranscriptionStopped: string;
+    // (undocumented)
+    learnMore: string;
+    // (undocumented)
+    privacyPolicy: string;
+}
+
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 

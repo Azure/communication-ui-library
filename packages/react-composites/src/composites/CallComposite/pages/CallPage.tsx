@@ -5,6 +5,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';
@@ -54,12 +55,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
 
+  const strings = useLocale().strings.call;
+
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   return (
     <CallArrangement
-      complianceBannerProps={{ ...complianceBannerProps }}
+      complianceBannerProps={{ ...complianceBannerProps, strings }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
