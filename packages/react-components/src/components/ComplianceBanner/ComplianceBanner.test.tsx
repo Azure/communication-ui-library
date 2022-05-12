@@ -73,6 +73,7 @@ describe('ComplianceBanner shows the right message', () => {
   test('when recording starts, user dismisses the banner, then transcribing starts', async () => {
     const root = mountComplianceBannerWithDelayDisabled();
     updateBannerProps(root, { record: false, transcribe: true });
+    expect(messageBarPresent(root)).toBeTruthy();
     simulateDismissBanner(root);
     expect(messageBarPresent(root)).toBeFalsy();
     updateBannerProps(root, { record: true, transcribe: true });
