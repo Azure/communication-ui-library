@@ -146,7 +146,7 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
-// @internal (undocumented)
+// @internal
 export const _ComplianceBanner: (props: _ComplianceBannerProps) => JSX.Element;
 
 // @internal (undocumented)
