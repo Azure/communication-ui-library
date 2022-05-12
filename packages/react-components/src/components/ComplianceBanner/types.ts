@@ -30,4 +30,12 @@ export type _ComplianceBannerProps = {
   callTranscribeState?: boolean;
   callRecordState?: boolean;
   strings: _ComplianceBannerStrings;
+  /**
+   * Time (in milliseconds) to wait before overwriting a message displayed
+   * in the banner with a new incoming message.
+   *
+   * An internal default (> 0) is used if undefined.
+   * Set to 0 explicitly to disable the delay.
+   */
+  bannerOverwriteDelayMilliseconds?: number;
 };

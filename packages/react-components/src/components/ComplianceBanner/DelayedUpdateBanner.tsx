@@ -7,12 +7,7 @@ import { BannerMessage } from './BannerMessage';
 import { _ComplianceBannerStrings } from './types';
 import { ComplianceBannerVariant } from './Utils';
 
-/**
- * Used by unit-tests.
- *
- * @private
- **/
-export const BANNER_OVERWRITE_DELAY_MS = 3000;
+const DEFAULT_BANNER_OVERWRITE_DELAY_MS = 3000;
 
 /** @private */
 export interface TimestampedVariant {
@@ -25,8 +20,8 @@ export interface TimestampedVariant {
  * Shows a {@link BannerMessage} in a {@link MessageBar} tracking `variant` internally.
  *
  * This component delays and combines frequent updates to `variant` such that:
- * - Updates that happen within {@link BANNER_OVERWRITE_DELAY_MS} are delayed.
- * - Once {@link BANNER_OVERWRITE_DELAY_MS} has passed since the last update, the _latest_ pending update is shown.
+ * - Updates that happen within {@link pbannerOverwriteDelayMillisecondsrops} are delayed.
+ * - Once {@link bannerOverwriteDelayMilliseconds} has passed since the last update, the _latest_ pending update is shown.
  *
  * This ensures that there is enough time for the user to see a banner message before it is overwritten.
  * In case of multiple delayed messages, the user always sees the final message as it reflects the final state
@@ -38,9 +33,10 @@ export function DelayedUpdateBanner(props: {
   variant: TimestampedVariant;
   onDismiss: () => void;
   strings: _ComplianceBannerStrings;
+  bannerOverwriteDelayMilliseconds?: number;
 }): JSX.Element {
   const { variant, lastUpdated: variantLastUpdated } = props.variant;
-
+  const bannerOverwriteDelayMilliseconds = props.bannerOverwriteDelayMilliseconds ?? DEFAULT_BANNER_OVERWRITE_DELAY_MS;
   // Tracks the variant that is currently visible in the UI.
   const [visible, setVisible] = useState<TimestampedVariant>({
     variant,
@@ -56,7 +52,7 @@ export function DelayedUpdateBanner(props: {
     }
 
     const now = Date.now();
-    const timeToNextUpdate = BANNER_OVERWRITE_DELAY_MS - (now - visible.lastUpdated);
+    const timeToNextUpdate = bannerOverwriteDelayMilliseconds - (now - visible.lastUpdated);
     if (variant === 'NO_STATE' || timeToNextUpdate <= 0) {
       setVisible({
         variant,

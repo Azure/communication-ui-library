@@ -98,6 +98,7 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
           cachedProps.current.latestStringState.callTranscribeState = 'off';
         }
       }}
+      bannerOverwriteDelayMilliseconds={props.bannerOverwriteDelayMilliseconds}
     />
   );
 };

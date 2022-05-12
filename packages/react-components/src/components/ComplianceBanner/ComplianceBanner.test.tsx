@@ -16,15 +16,51 @@ describe('ComplianceBanner shows the right message', () => {
   });
 
   test('when neither recording nor transcribing', () => {
-    const root = mountComplianceBannerWithDefaults();
+    const root = mountComplianceBannerWithDelayDisabled();
     expect(messageBarPresent(root)).toBeFalsy();
   });
 
-  test('when recording starts', () => {
-    const root = mountComplianceBannerWithDefaults();
-    updateBannerProps(root, { record: true, transcribe: false });
-    console.log(root.render().html());
-    expect(messageBarPresent(root)).toBeTruthy();
+  test('when recording starts', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: true, transcribe: false });
+    expect(root.text()).toMatch(strings.complianceBannerRecordingStarted);
+  });
+
+  test('when transcribing starts', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: false, transcribe: true });
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStarted);
+  });
+
+  test('when recording and transcribing start', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: false, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: true });
+    expect(root.text()).toMatch(strings.complianceBannerRecordingAndTranscriptionStarted);
+  });
+
+  test('when recording and transcribing start and then recording stops', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: false, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: true });
+    await updateBannerProps(root, { record: false, transcribe: true });
+    expect(root.text()).toMatch(strings.complianceBannerRecordingStopped);
+  });
+
+  test('when recording and transcribing start and then transcribing stops', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: false, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: false });
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStopped);
+  });
+
+  test('when recording and transcribing start and then transcribing stops', async () => {
+    const root = mountComplianceBannerWithDelayDisabled();
+    await updateBannerProps(root, { record: false, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: true });
+    await updateBannerProps(root, { record: true, transcribe: false });
+    expect(root.text()).toMatch(strings.complianceBannerTranscriptionStopped);
   });
 });
 
@@ -46,21 +82,48 @@ const strings: _ComplianceBannerStrings = {
   privacyPolicy: 'testvalue:privacyPolicy'
 };
 
-const mountComplianceBannerWithDefaults = (): ReactWrapper => {
+const mountComplianceBannerWithDelayDisabled = (): ReactWrapper => {
   let root;
   act(() => {
-    root = mount(<_ComplianceBanner callRecordState={false} callTranscribeState={false} strings={strings} />);
+    root = mount(
+      <_ComplianceBanner
+        callRecordState={false}
+        callTranscribeState={false}
+        strings={strings}
+        bannerOverwriteDelayMilliseconds={0}
+      />
+    );
   });
   return root;
 };
 
-const updateBannerProps = (root, props: { record: boolean; transcribe: boolean }): void => {
+const updateBannerProps = async (root, props: { record: boolean; transcribe: boolean }): Promise<void> => {
   act(() => {
     root.setProps({ callRecordState: props.record, callTranscribeState: props.transcribe, strings: strings });
   });
+  return waitForDelayedRender();
 };
 
+// MessageBar delays rendering messages by calling `setTimeout`.
+// `await` the Promise returned by this function to yield to the event loop so that `MessageBar`
+// actually renders updated content to the DOM.
+const waitForDelayedRender = async (): Promise<void> => {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      setTimeout(() => {
+        setTimeout(resolve);
+      });
+    })
+  );
+};
 /*
+const DELAYED_RENDER_WAIT_TIMEOUT_MILLISECONDS = 1000;
+
+const waitForMessageTextToMatch = async (root: ReactWrapper, pattern: string): void => {
+
+}
+
+
 const simulateDismissBanner = (root: ReactWrapper): void => {
     const messageBar = root.find(MessageBar).at(0);
     const button = messageBar.find('button').at(0);
