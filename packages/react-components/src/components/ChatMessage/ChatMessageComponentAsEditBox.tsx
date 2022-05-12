@@ -10,7 +10,6 @@ import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from 
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
-import { isDarkThemed } from '../../theming/themeUtils';
 import { ChatMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from '../FileUploadCards';
@@ -103,7 +102,6 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       className={mergeStyles(
         borderAndBoxShadowStyle({
           theme,
-          errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
           hasErrorMessage: false,
           disabled: false
         })

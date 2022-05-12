@@ -16,7 +16,6 @@ import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
-import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
@@ -332,7 +331,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         className={mergeStyles(
           borderAndBoxShadowStyle({
             theme,
-            errorColor: isDarkThemed(theme) ? '#f1707b' : '#a80000',
             hasErrorMessage: !!errorMessage,
             disabled: !!disabled
           })
