@@ -26,11 +26,6 @@ const VideoGalleryStyles = {
   }
 };
 
-const localVideoViewOptions = {
-  scalingMode: 'Crop',
-  isMirrored: true
-} as VideoStreamOptions;
-
 const remoteVideoViewOptions = {
   scalingMode: 'Crop'
 } as VideoStreamOptions;
@@ -65,6 +60,22 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     videoGalleryProps.remoteParticipants,
     props.onFetchAvatarPersonaData
   );
+
+  const [localVideoViewOptions, setLocalVideoViewOptions] = useState({
+    scalingMode: 'Crop',
+    isMirrored: true
+  } as VideoStreamOptions);
+
+  useEffect(() => {
+    let i = 0;
+    setInterval(() => {
+      setLocalVideoViewOptions({
+        scalingMode: i % 2 === 0 ? 'Crop' : 'Fit',
+        isMirrored: true
+      } as VideoStreamOptions);
+      i++;
+    }, 1000);
+  }, []);
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {

@@ -12,7 +12,7 @@ import type {
   NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
 
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
@@ -243,7 +243,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
   /**
    * Dispose the html view for a stream.
    *

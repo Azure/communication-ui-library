@@ -14,7 +14,7 @@ import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier 
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../callUtils';
 
 /**
@@ -40,7 +40,7 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
-  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
@@ -203,7 +203,9 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
-    const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
+    const onCreateLocalStreamView = async (
+      options?: VideoStreamOptions
+    ): Promise<void | CreateVideoStreamViewResult> => {
       if (!call || call.localVideoStreams.length === 0) {
         return;
       }
@@ -218,7 +220,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      return callClient.createView(call.id, undefined, localStream, options);
+      const { view } = (await callClient.createView(call.id, undefined, localStream, options)) ?? {};
+      return view ? { view } : undefined;
     };
 
     const onCreateRemoteStreamView = async (
