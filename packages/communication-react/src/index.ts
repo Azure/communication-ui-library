@@ -191,6 +191,7 @@ export type {
   TypingIndicatorProps,
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
+  UpdateMessageCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
