@@ -2,6 +2,13 @@
 // Licensed under the MIT license.
 
 /**
+ * Scaling mode of a {@link VideoGalleryStream}.
+ *
+ * @public
+ */
+export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+/**
  * Options to control how video streams are rendered.
  *
  * @public
@@ -10,7 +17,7 @@ export declare interface VideoStreamOptions {
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
   /** Scaling mode. It can be `Stretch`, `Crop` or `Fit` */
-  scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+  scalingMode?: ScalingMode;
 }
 
 /**
@@ -45,6 +52,18 @@ export interface VideoGalleryStream {
   isMirrored?: boolean;
   /** Render element of the video stream */
   renderElement?: HTMLElement;
+}
+
+/**
+ * Object returned after creating a local or remote VideoStream.
+ * This contains helper functions to manipulate the render of the stream.
+ *
+ * @public
+ */
+export interface CreateVideoStreamViewResult {
+  view: {
+    updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+  };
 }
 
 // set the required attribs in selector. (Further simplifying our component logic) For example

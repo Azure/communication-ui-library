@@ -3,8 +3,8 @@
 
 import { Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useEffect, useMemo } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
@@ -17,7 +17,7 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 export const LocalVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
     isMuted?: boolean;
@@ -54,17 +54,79 @@ export const LocalVideoTile = React.memo(
       localVideoSelectedDescription
     } = props;
 
+    const [localStreamRendererResult, setLocalStreamRendererResult] = React.useState<CreateVideoStreamViewResult>();
+
+    // When localVideoViewOptions change two things may happen:
+    //
+    // 1. Just the scaling mode has changed and we have access to the original LocalStreamRenderView
+    //   - In this case we just need to call updateScalingMode on the view and do not need to recreate the stream view
+    // 2. isMirrored has changed, or scalingMode change and we don't have access to the original LocalStreamRenderView
+    //   - In this case we need to dispose the old view and create a new one
+    //
+    // For scenario 1, we hold onto a ref to the scalingMode that persists across renders. When localVideoViewOptions.scalingMode
+    // differs from the persistent ref, we know to call updateScalingMode. We then subsequently update the ref to the new value for
+    // future renders.
+    //
+    // For scenario 2, we extract the localVideoViewOptions.isMirrored to ensure any change to the isMirrorred prop triggers the useEffect
+    // that recreates the local stream view. We must also here add an extra check for when the scaling mode changes and we do not have
+    // access to the original LocalStreamView (and hence cannot call updateScalingMode). When this happens we must also trigger the useEffect
+    // that recreates the local stream view.
+
+    const scalingModeRef = useRef(localVideoViewOptions?.scalingMode);
+    const newIsMirrored = localVideoViewOptions?.isMirrored;
+    const newScalingMode = localVideoViewOptions?.scalingMode;
+    const hasScalingModeChanged = scalingModeRef.current !== newScalingMode;
+    const updatingScalingModeDirectly = hasScalingModeChanged && !!localStreamRendererResult;
+
+    if (isAvailable && renderElement && newScalingMode && updatingScalingModeDirectly) {
+      localStreamRendererResult && localStreamRendererResult.view.updateScalingMode(newScalingMode);
+      scalingModeRef.current = localVideoViewOptions?.scalingMode;
+    }
+
+    // scalingModeForUseEffect will trigger the useEffect to recreate the local stream view only if the scaling mode has changed and
+    // we cannot call updateScalingMode on the view object directly. Otherwise it will be null to ensure the useEffect does not trigger
+    // when scaling mode changes.
+    const scalingModeForUseEffect = updatingScalingModeDirectly ? null : newScalingMode;
+
     useEffect(() => {
+      // Avoid race condition where onDisposeLocalStreamView is called before onCreateLocalStreamView
+      // and setLocalStreamRendererResult have completed
+      let wasLocalStreamDisposed = false;
+
       if (isAvailable && !renderElement) {
-        onCreateLocalStreamView?.(localVideoViewOptions);
+        (async (): Promise<void> => {
+          console.log('calling onCreateLocalStreamView');
+          const streamRendererResult = await onCreateLocalStreamView?.({
+            isMirrored: newIsMirrored,
+            scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
+          });
+
+          console.log(
+            `completed onCreateLocalStreamView, wasLocalStreamDisposed: ${wasLocalStreamDisposed} streamRendererResult: `,
+            streamRendererResult
+          );
+          if (!wasLocalStreamDisposed) {
+            streamRendererResult && setLocalStreamRendererResult(streamRendererResult);
+          }
+        })();
       }
       // Always clean up element to make tile up to date and be able to dispose correctly
       return () => {
         if (renderElement) {
+          wasLocalStreamDisposed = true;
           onDisposeLocalStreamView?.();
         }
       };
-    }, [isAvailable, onCreateLocalStreamView, onDisposeLocalStreamView, localVideoViewOptions, renderElement]);
+    }, [
+      isAvailable,
+      onCreateLocalStreamView,
+      onDisposeLocalStreamView,
+      localVideoViewOptions,
+      renderElement,
+      localStreamRendererResult,
+      newIsMirrored,
+      scalingModeForUseEffect
+    ]);
 
     // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
     // Element disposed could happen during async time gap, which still cause leaks for unused renderElement.

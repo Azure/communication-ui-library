@@ -15,6 +15,7 @@ export type {
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
+  CreateVideoStreamViewResult,
   CustomAvatarOptions,
   CustomMessage,
   Message,
@@ -25,6 +26,8 @@ export type {
   ParticipantAddedSystemMessage,
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
+  ReadReceiptsBySenderId,
+  ScalingMode,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,
@@ -32,6 +35,5 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
-  VideoStreamOptions,
-  ReadReceiptsBySenderId
+  VideoStreamOptions
 } from './types';
