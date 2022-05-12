@@ -20,6 +20,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
+import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -121,7 +122,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -345,7 +346,7 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 // @public
 export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;

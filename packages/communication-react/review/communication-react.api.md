@@ -182,7 +182,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -489,7 +489,7 @@ export type CallingHandlers = {
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
@@ -570,7 +570,7 @@ export interface CallWithChatAdapterManagement {
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
     clearFileUploads: () => void;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
