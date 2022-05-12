@@ -4,11 +4,11 @@
 import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { BASE_CHAT_ADAPTER_MODEL, buildUrlForChatAppUsingFakeAdapter } from './fixture';
+import { FAKE_CHAT_ADAPTER_ARGS, buildUrlForChatAppUsingFakeAdapter } from './fixture';
 
 test.describe('Localization tests', async () => {
   test('Participants list header should be localized', async ({ serverUrl, page }) => {
-    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, BASE_CHAT_ADAPTER_MODEL, { useFrLocale: 'true' }));
+    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, { useFrLocale: 'true' }));
     await page.bringToFront();
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);

@@ -39,14 +39,14 @@ export const buildUrlForChatAppUsingFakeAdapter = (
 /**
  * Base chat adapter model
  */
-export const BASE_CHAT_ADAPTER_MODEL = {
+export const FAKE_CHAT_ADAPTER_ARGS = {
   localParticipant: TEST_PARTICIPANTS_CHAT[0],
   remoteParticipants: TEST_PARTICIPANTS_CHAT.splice(1)
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ serverUrl, browser }, use) => {
-  const page = await loadNewPage(browser, buildUrlForChatAppUsingFakeAdapter(serverUrl, BASE_CHAT_ADAPTER_MODEL));
+  const page = await loadNewPage(browser, buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS));
   bindConsoleErrorForwarding(page);
   await use(page);
 };
