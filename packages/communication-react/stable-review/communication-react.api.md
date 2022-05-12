@@ -68,6 +68,8 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoStreamRenderer } from '@azure/communication-calling';
+import { VideoStreamRendererView } from '@azure/communication-calling';
 
 // @public
 export interface ActiveErrorMessage {
@@ -2191,7 +2193,7 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<VideoStreamRendererAndView | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -2429,6 +2431,12 @@ export interface VideoStreamOptions {
     isMirrored?: boolean;
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
+
+// @public (undocumented)
+export type VideoStreamRendererAndView = {
+    renderer: VideoStreamRenderer;
+    view: VideoStreamRendererView;
+};
 
 // @public
 export interface VideoStreamRendererViewState {
