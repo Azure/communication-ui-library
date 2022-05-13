@@ -4,7 +4,7 @@
   "newlineKind": "lf",
   "apiReport": {
     "enabled": true,
-    "reportFolder": "<projectFolder>/stable-review/"
+    "reportFolder": "<projectFolder>/review/stable/"
   },
   "docModel": {
     "enabled": true
