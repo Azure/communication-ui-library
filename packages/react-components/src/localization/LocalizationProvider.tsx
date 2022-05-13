@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  _DialpadStrings
 } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 

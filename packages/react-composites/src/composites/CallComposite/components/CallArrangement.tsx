@@ -2,11 +2,18 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import { ErrorBar, ErrorBarProps, useTheme, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
+import {
+  _ComplianceBanner,
+  _ComplianceBannerProps,
+  _useContainerHeight,
+  _useContainerWidth,
+  ErrorBar,
+  ErrorBarProps,
+  useTheme
+} from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,
@@ -22,7 +29,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
  * @private
  */
 export interface CallArrangementProps {
-  complianceBannerProps: ComplianceBannerProps;
+  complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
@@ -54,7 +61,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
         <Stack.Item styles={notificationsContainerStyles}>
           <Stack styles={bannerNotificationStyles}>
-            <ComplianceBanner {...props.complianceBannerProps} />
+            <_ComplianceBanner {...props.complianceBannerProps} />
           </Stack>
           {props.errorBarProps !== false && (
             <Stack styles={bannerNotificationStyles}>
