@@ -36,7 +36,6 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
-/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
@@ -250,9 +249,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+  async updateMessage(
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.handlers.onUpdateMessage(messageId, content, metadata);
+      /* @conditional-compile-remove(file-sharing) */
+      return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
+      return await this.handlers.onUpdateMessage(messageId, content);
     });
   }
 

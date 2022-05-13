@@ -11,8 +11,8 @@ import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from '../FileUploadCards';
+import { FileMetadata } from '../FileDownloadCards';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -29,7 +29,13 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
-  onSubmit: (text: string) => void;
+  onSubmit: (
+    text: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
   /**
@@ -47,9 +53,11 @@ type MessageState = 'OK' | 'too short' | 'too long';
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, strings, message } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
+
+  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const messageState = getMessageState(textValue);
+  const messageState = getMessageState(textValue, attachedFilesMetadata ?? []);
   const submitEnabled = messageState === 'OK';
 
   useEffect(() => {
@@ -82,20 +90,24 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
     return (
-      <div style={{ margin: '0.25rem' }}>
-        <_FileUploadCards
-          activeFileUploads={message.attachedFilesMetadata?.map((file) => ({
-            id: file.name,
-            filename: file.name,
-            progress: 1
-          }))}
-        />
-      </div>
+      attachedFilesMetadata?.length && (
+        <div style={{ margin: '0.25rem' }}>
+          <_FileUploadCards
+            activeFileUploads={attachedFilesMetadata?.map((file) => ({
+              id: file.name,
+              filename: file.name,
+              progress: 1
+            }))}
+            onCancelFileUpload={(fileId) => {
+              setAttachedFilesMetadata(attachedFilesMetadata?.filter((file) => file.name !== fileId));
+            }}
+          />
+        </div>
+      )
     );
-  }, [message.attachedFilesMetadata]);
+  }, [attachedFilesMetadata]);
 
   return (
     <Stack
@@ -116,7 +128,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         textValue={textValue}
         onChange={setText}
         onEnterKeyDown={() => {
-          submitEnabled && onSubmit(textValue);
+          submitEnabled &&
+            onSubmit(textValue, message.metadata, {
+              attachedFilesMetadata
+            });
         }}
         supportNewline={false}
         maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
@@ -139,21 +154,29 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            submitEnabled && onSubmit(textValue);
+            submitEnabled &&
+              onSubmit(textValue, message.metadata, {
+                attachedFilesMetadata
+              });
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        onRenderFileUploads()
-      }
+      {onRenderFileUploads()}
     </Stack>
   );
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-const isMessageEmpty = (messageText: string): boolean => messageText.trim().length === 0;
-const getMessageState = (messageText: string): MessageState =>
-  isMessageEmpty(messageText) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
+const isMessageEmpty = (messageText: string, attachedFilesMetadata: FileMetadata[]): boolean =>
+  messageText.trim().length === 0 && attachedFilesMetadata.length === 0;
+const getMessageState = (messageText: string, attachedFilesMetadata: FileMetadata[]): MessageState =>
+  isMessageEmpty(messageText, attachedFilesMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
+
+// @TODO: Remove when file-sharing feature becomes stable.
+const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
+  return message.attachedFilesMetadata;
+  return [];
+};
