@@ -68,9 +68,17 @@
     {
       "commandKind": "global",
       "name": "build:all-flavors",
-      "summary": "Build all flavor in one command (mainly for api update)",
-      "description": "Build all flavor in one command (mainly for api update). This command will switch current flavor to beta.",
+      "summary": "Build all packages for all flavors in one command",
+      "description": "Build all packages for all flavors in one command. This command will switch current flavor to beta.",
       "shellCommand": "(rush switch-flavor:stable && rush rebuild) || rush switch-flavor:beta && rush rebuild",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "build:npm-all-flavors",
+      "summary": "Build all packages in all flavors, excluding samples and storybook (this is mainly for api update)",
+      "description": "Build all packages in all flavors in one command, excluding samples and storybook (this is mainly for api update). This command will switch current flavor to beta.",
+      "shellCommand": "(rush switch-flavor:stable && rush rebuild -t @azure/communication-react) || rush switch-flavor:beta && rush rebuild -t @azure/communication-react",
       "safeForSimultaneousRushProcesses": true
     },
     {
