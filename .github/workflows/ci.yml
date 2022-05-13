@@ -345,6 +345,29 @@ jobs:
         run: rush build -o calling
       - name: Tests
         run: rush test -o calling
+      - name: Copy current bundle report json
+        run: cp samples/Calling/dist/build/report.json samples/Calling/bundle-report/
+      - name: Check for bundle report changes
+        id: changescheck
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        run: |
+          if [[ -z $(git status samples/Calling/bundle-report -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
+      - name: Commit bundle report
+        uses: actions/upload-artifact@v1
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        with:
+          # use GITHUB_TOKEN so it won't trigger recursive PR validation
+          token: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          git add samples/Calling/bundle-report/*
+          git commit -m 'Update Calling js bundle report'
+          git push
 
   build_chat_sample:
     needs: get_matrix
@@ -377,6 +400,29 @@ jobs:
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
+      - name: Copy current bundle report json
+        run: cp samples/Chat/dist/build/report.json samples/Chat/bundle-report/
+      - name: Check for bundle report changes
+        id: changescheck
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        run: |
+          if [[ -z $(git status samples/Chat/bundle-report -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
+      - name: Commit bundle report
+        uses: actions/upload-artifact@v1
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        with:
+          # use GITHUB_TOKEN so it won't trigger recursive PR validation
+          token: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          git add samples/Chat/bundle-report/*
+          git commit -m 'Update Chat js bundle report'
+          git push
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -409,6 +455,29 @@ jobs:
         run: rush build -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
+      - name: Copy current bundle report json
+        run: cp samples/CallWithChat/dist/build/report.json samples/CallWithChat/bundle-report/
+      - name: Check for bundle report changes
+        id: changescheck
+        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
+        run: |
+          if [[ -z $(git status samples/CallWithChat/bundle-report -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
+      - name: Commit bundle report
+        uses: actions/upload-artifact@v1
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        with:
+          # use GITHUB_TOKEN so it won't trigger recursive PR validation
+          token: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          git add samples/CallWithChat/bundle-report/*
+          git commit -m 'Update CallWithChat js bundle report'
+          git pushn
 
   build_static_html_composites_sample:
     needs: get_matrix
@@ -508,6 +577,52 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+            })
+
+  compare_base_bundle_stats:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Compare bundle size from pr head ref to base ref
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample, build_upload_base_bundle_stats]
+    strategy:
+      matrix:
+        app: [Chat, Calling, CallWithChat]
+    steps:
+      # checkout base branch
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+          fetch-depth: 0
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - id: bundles
+        run: |
+          base_size=$(jq -r ".[0].parsedSize" base/samples/${{ matrix.app }}/bundle-report/report.json)
+          echo "::set-output name=base_size::${base_size}"
+          current_size=$(jq -r ".[0].parsedSize" samples/${{ matrix.app }}/bundle-report/report.json)
+          echo "::set-output name=current_size::${current_size}"
+          change=$([ $current_size -gt $base_size ] && echo "increased" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased"))
+          echo "::set-output name=change::${change}"
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `##${{ matrix.app }} bundle size is **${{ steps.bundles.outputs.change }}**.
+                     - Current size: ${{ steps.bundles.outputs.current_size }}
+                     - Base size: ${{ steps.bundles.outputs.base_size}}
+                    `
             })
 
   check_failure:
