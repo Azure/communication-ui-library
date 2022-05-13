@@ -2,8 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationIdentifier } from '@azure/communication-signaling';
+import {
+  CommunicationIdentifier,
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider } from '@internal/react-components';
 import { nanoid } from 'nanoid';
