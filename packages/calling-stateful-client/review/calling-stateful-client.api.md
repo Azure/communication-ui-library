@@ -101,6 +101,12 @@ export interface CallState {
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
+export type CreateViewResult = {
+    renderer: VideoStreamRenderer;
+    view: VideoStreamRendererView;
+};
+
+// @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
@@ -175,7 +181,7 @@ export interface RemoteVideoStreamState {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<VideoStreamRendererAndView | undefined>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -202,12 +208,6 @@ export interface StatefulDeviceManager extends DeviceManager {
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
-
-// @public (undocumented)
-export type VideoStreamRendererAndView = {
-    renderer: VideoStreamRenderer;
-    view: VideoStreamRendererView;
-};
 
 // @public
 export interface VideoStreamRendererViewState {
