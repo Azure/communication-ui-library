@@ -9,6 +9,10 @@ const DESKTOP_VIEWPORT = {
   height: 768
 };
 
+const TEST_ROOT = './tests/browser';
+
+const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
+
 const chromeLaunchOptions = {
   channel: 'chrome',
   permissions: ['notifications', 'camera', 'microphone'],
@@ -92,8 +96,6 @@ const config: PlaywrightTestConfig = {
   ]
 };
 
-if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
-  config.snapshotDir = './stable-snapshot';
-}
+config.snapshotDir = `${TEST_ROOT}/snapshots/${buildFlavor}`;
 
 export default config;

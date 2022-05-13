@@ -191,6 +191,7 @@ export type {
   TypingIndicatorProps,
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
+  UpdateMessageCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
@@ -228,5 +229,5 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
-export * from '../../react-composites/src';
+export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
