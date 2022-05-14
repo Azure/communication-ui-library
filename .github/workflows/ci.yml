@@ -632,7 +632,7 @@ jobs:
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅ "))
           echo "::set-output name=change::${change}"
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && steps.bundles.outputs.change != "not changed" }}
+        if: ${{ github.event_name == 'pull_request' && steps.bundles.outputs.change != 'not changed' }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
