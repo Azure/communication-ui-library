@@ -580,7 +580,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare bundle size from pr head ref to base ref
-    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample, build_upload_base_bundle_stats]
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
       matrix:
         app: [Chat, Calling, CallWithChat]
