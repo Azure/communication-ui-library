@@ -644,7 +644,6 @@ jobs:
               body: `##${{ matrix.app }} bundle size is **${{ steps.bundles.outputs.change }}**.
             - Current size: ${{ steps.bundles.outputs.current_size }}
             - Base size: ${{ steps.bundles.outputs.base_size}}
-            - Diff: ${{ steps.bundles.outputs.current_size - steps.bundles.outputs.base_size }}
             `
             })
 
