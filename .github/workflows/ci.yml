@@ -359,7 +359,6 @@ jobs:
             exit
           fi
       - name: Commit bundle report
-        uses: actions/upload-artifact@v1
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         with:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
@@ -414,7 +413,6 @@ jobs:
             exit
           fi
       - name: Commit bundle report
-        uses: actions/upload-artifact@v1
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         with:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
@@ -469,7 +467,6 @@ jobs:
             exit
           fi
       - name: Commit bundle report
-        uses: actions/upload-artifact@v1
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         with:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
