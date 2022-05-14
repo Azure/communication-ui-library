@@ -476,7 +476,7 @@ jobs:
         run: |
           base_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/bundle-report/report.json)
           current_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/dist/build/report.json)
-          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
+          change=$([ $current_size = $base_size ] && echo "false" || echo "true")
           echo "::set-output name=hasChanged::${change}"
       - name: Copy current bundle report json
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
