@@ -345,22 +345,22 @@ jobs:
         run: rush build -o calling
       - name: Tests
         run: rush test -o calling
-      - name: Copy current bundle report json
-        run: cp samples/Calling/dist/build/report.json samples/Calling/bundle-report/
-      - name: Check for bundle report changes
-        id: changescheck
+      # Not check in the bundles stats if size doesn't change
+      # Stats size in the file is a bit random, so we can't only depend on file itself
+      - id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
-          if [[ -z $(git status samples/Calling/bundle-report -s) ]]
-          then
-            echo "::set-output name=hasChanged::false"
-          else
-            echo "::set-output name=hasChanged::true"
-            exit
-          fi
+          base_size=$(jq -r ".[0].parsedSize" samples/Calling/bundle-report/report.json)
+          current_size=$(jq -r ".[0].parsedSize" samples/Calling/dist/build/report.json)
+          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
+          echo "::set-output name=hasChange::${change}"
+      - name: Copy current bundle report json
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: cp samples/Calling/dist/build/report.json samples/Calling/bundle-report/
       # Setup bot information for pushing new changes
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -407,22 +407,22 @@ jobs:
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
-      - name: Copy current bundle report json
-        run: cp samples/Chat/dist/build/report.json samples/Chat/bundle-report/
-      - name: Check for bundle report changes
-        id: changescheck
+      # Not check in the bundles stats if size doesn't change
+      # Stats size in the file is a bit random, so we can't only depend on file itself
+      - id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
-          if [[ -z $(git status samples/Chat/bundle-report -s) ]]
-          then
-            echo "::set-output name=hasChanged::false"
-          else
-            echo "::set-output name=hasChanged::true"
-            exit
-          fi
+          base_size=$(jq -r ".[0].parsedSize" samples/Chat/bundle-report/report.json)
+          current_size=$(jq -r ".[0].parsedSize" samples/Chat/dist/build/report.json)
+          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
+          echo "::set-output name=hasChange::${change}"
+      - name: Copy current bundle report json
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: cp samples/Chat/dist/build/report.json samples/Chat/bundle-report/
       # Setup bot information for pushing new changes
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -469,22 +469,22 @@ jobs:
         run: rush build -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
-      - name: Copy current bundle report json
-        run: cp samples/CallWithChat/dist/build/report.json samples/CallWithChat/bundle-report/
-      - name: Check for bundle report changes
-        id: changescheck
+      # Not check in the bundles stats if size doesn't change
+      # Stats size in the file is a bit random, so we can't only depend on file itself
+      - id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
-          if [[ -z $(git status samples/CallWithChat/bundle-report -s) ]]
-          then
-            echo "::set-output name=hasChanged::false"
-          else
-            echo "::set-output name=hasChanged::true"
-            exit
-          fi
+          base_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/bundle-report/report.json)
+          current_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/dist/build/report.json)
+          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
+          echo "::set-output name=hasChange::${change}"
+      - name: Copy current bundle report json
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: cp samples/CallWithChat/dist/build/report.json samples/CallWithChat/bundle-report/
       # Setup bot information for pushing new changes
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -609,12 +609,6 @@ jobs:
       matrix:
         app: [Chat, Calling, CallWithChat]
     steps:
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
       # checkout base branch
       - uses: actions/checkout@v2
         with:
@@ -623,6 +617,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/checkout@v2
         with:
+          path: current
           fetch-depth: 0
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -632,7 +627,7 @@ jobs:
         run: |
           base_size=$(jq -r ".[0].parsedSize" base/samples/${{ matrix.app }}/bundle-report/report.json)
           echo "::set-output name=base_size::${base_size}"
-          current_size=$(jq -r ".[0].parsedSize" samples/${{ matrix.app }}/bundle-report/report.json)
+          current_size=$(jq -r ".[0].parsedSize" current/samples/${{ matrix.app }}/bundle-report/report.json)
           echo "::set-output name=current_size::${current_size}"
           change=$([ $current_size -gt $base_size ] && echo "increased" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased"))
           echo "::set-output name=change::${change}"
