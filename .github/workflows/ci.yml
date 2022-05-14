@@ -629,10 +629,10 @@ jobs:
           echo "::set-output name=base_size::${base_size}"
           current_size=$(jq -r ".[0].parsedSize" current/samples/${{ matrix.app }}/bundle-report/report.json)
           echo "::set-output name=current_size::${current_size}"
-          change=$([ $current_size -gt $base_size ] && echo "increased" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased"))
+          change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅ "))
           echo "::set-output name=change::${change}"
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && steps.bundles.outputs.change != "not changed" }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -642,9 +642,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `##${{ matrix.app }} bundle size is **${{ steps.bundles.outputs.change }}**.
-                     - Current size: ${{ steps.bundles.outputs.current_size }}
-                     - Base size: ${{ steps.bundles.outputs.base_size}}
-                    `
+            - Current size: ${{ steps.bundles.outputs.current_size }}
+            - Base size: ${{ steps.bundles.outputs.base_size}}
+            - Diff: ${{ steps.bundles.outputs.current_size - steps.bundles.outputs.base_size }}
+            `
             })
 
   check_failure:
