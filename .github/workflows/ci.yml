@@ -360,9 +360,9 @@ jobs:
           fi
       - name: Commit bundle report
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        with:
+        env:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git add samples/Calling/bundle-report/*
           git commit -m 'Update Calling js bundle report'
@@ -414,9 +414,9 @@ jobs:
           fi
       - name: Commit bundle report
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        with:
+        env:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git add samples/Chat/bundle-report/*
           git commit -m 'Update Chat js bundle report'
@@ -468,9 +468,9 @@ jobs:
           fi
       - name: Commit bundle report
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        with:
+        env:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git add samples/CallWithChat/bundle-report/*
           git commit -m 'Update CallWithChat js bundle report'
