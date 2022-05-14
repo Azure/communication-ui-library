@@ -353,7 +353,7 @@ jobs:
           base_size=$(jq -r ".[0].parsedSize" samples/Calling/bundle-report/report.json)
           current_size=$(jq -r ".[0].parsedSize" samples/Calling/dist/build/report.json)
           change=$([ $current_size = $base_size ] && echo "true" || echo "false")
-          echo "::set-output name=hasChange::${change}"
+          echo "::set-output name=hasChanged::${change}"
       - name: Copy current bundle report json
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: cp samples/Calling/dist/build/report.json samples/Calling/bundle-report/
@@ -415,7 +415,7 @@ jobs:
           base_size=$(jq -r ".[0].parsedSize" samples/Chat/bundle-report/report.json)
           current_size=$(jq -r ".[0].parsedSize" samples/Chat/dist/build/report.json)
           change=$([ $current_size = $base_size ] && echo "true" || echo "false")
-          echo "::set-output name=hasChange::${change}"
+          echo "::set-output name=hasChanged::${change}"
       - name: Copy current bundle report json
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: cp samples/Chat/dist/build/report.json samples/Chat/bundle-report/
@@ -477,7 +477,7 @@ jobs:
           base_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/bundle-report/report.json)
           current_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/dist/build/report.json)
           change=$([ $current_size = $base_size ] && echo "true" || echo "false")
-          echo "::set-output name=hasChange::${change}"
+          echo "::set-output name=hasChanged::${change}"
       - name: Copy current bundle report json
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: cp samples/CallWithChat/dist/build/report.json samples/CallWithChat/bundle-report/
