@@ -372,7 +372,7 @@ jobs:
         run: |
           git add samples/Calling/bundle-report/*
           git commit -m 'Update Calling js bundle report'
-          git push
+          git push origin HEAD:${{ github.head_ref }}
 
   build_chat_sample:
     needs: get_matrix
@@ -432,7 +432,7 @@ jobs:
         run: |
           git add samples/Chat/bundle-report/*
           git commit -m 'Update Chat js bundle report'
-          git push
+          git push origin HEAD:${{ github.head_ref }}
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -492,7 +492,7 @@ jobs:
         run: |
           git add samples/CallWithChat/bundle-report/*
           git commit -m 'Update CallWithChat js bundle report'
-          git pushn
+          git push origin HEAD:${{ github.head_ref }}
 
   build_static_html_composites_sample:
     needs: get_matrix
