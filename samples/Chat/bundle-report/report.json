@@ -4965,7 +4965,11 @@
             "path": "./src/index.tsx + 1273 modules (concatenated)",
             "statSize": 3577625,
             "parsedSize": 1120085,
+<<<<<<< HEAD
             "gzipSize": 303346,
+=======
+            "gzipSize": 303348,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
             "concatenated": true,
             "groups": [
               {
@@ -5363,8 +5367,13 @@
                                 "inaccurateSizes": true
                               }
                             ],
+<<<<<<< HEAD
                             "parsedSize": 3704,
                             "gzipSize": 1003,
+=======
+                            "parsedSize": 3644,
+                            "gzipSize": 987,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                             "inaccurateSizes": true
                           },
                           {
@@ -8801,8 +8810,13 @@
                         "inaccurateSizes": true
                       }
                     ],
+<<<<<<< HEAD
                     "parsedSize": 302420,
                     "gzipSize": 81902,
+=======
+                    "parsedSize": 298491,
+                    "gzipSize": 80839,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                     "inaccurateSizes": true
                   },
                   {
@@ -10331,8 +10345,13 @@
                                         "label": "positioning.js",
                                         "path": "./src/index.tsx + 1273 modules (concatenated)/../common/temp/node_modules/.pnpm/@fluentui/react@8.17.4_c2a703770fc22cd5845ac34fc7d0fe24/node_modules/@fluentui/react/lib/utilities/positioning/positioning.js",
                                         "statSize": 32203,
+<<<<<<< HEAD
                                         "parsedSize": 10082,
                                         "gzipSize": 2730,
+=======
+                                        "parsedSize": 10135,
+                                        "gzipSize": 2745,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                                         "inaccurateSizes": true
                                       }
                                     ],
@@ -11459,8 +11478,13 @@
                                 "inaccurateSizes": true
                               }
                             ],
+<<<<<<< HEAD
                             "parsedSize": 48416,
                             "gzipSize": 13112,
+=======
+                            "parsedSize": 48673,
+                            "gzipSize": 13182,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                             "inaccurateSizes": true
                           },
                           {
@@ -16252,8 +16276,13 @@
                                 "inaccurateSizes": true
                               }
                             ],
+<<<<<<< HEAD
                             "parsedSize": 238735,
                             "gzipSize": 64655,
+=======
+                            "parsedSize": 240003,
+                            "gzipSize": 64999,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                             "inaccurateSizes": true
                           },
                           {
@@ -17358,8 +17387,13 @@
                             "inaccurateSizes": true
                           }
                         ],
+<<<<<<< HEAD
                         "parsedSize": 634879,
                         "gzipSize": 171940,
+=======
+                        "parsedSize": 638251,
+                        "gzipSize": 172855,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                         "inaccurateSizes": true
                       },
                       {
@@ -19725,6 +19759,7 @@
                         "inaccurateSizes": true
                       }
                     ],
+<<<<<<< HEAD
                     "parsedSize": 797903,
                     "gzipSize": 216091,
                     "inaccurateSizes": true
@@ -19732,6 +19767,15 @@
                 ],
                 "parsedSize": 1100323,
                 "gzipSize": 297994,
+=======
+                    "parsedSize": 802141,
+                    "gzipSize": 217240,
+                    "inaccurateSizes": true
+                  }
+                ],
+                "parsedSize": 1100632,
+                "gzipSize": 298079,
+>>>>>>> 6b7ccc7b63fb5fd94517b7f5e33d202fe73f3537
                 "inaccurateSizes": true
               }
             ]
