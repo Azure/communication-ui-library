@@ -4965,7 +4965,7 @@
             "path": "./src/index.tsx + 1273 modules (concatenated)",
             "statSize": 3558725,
             "parsedSize": 1120085,
-            "gzipSize": 303347,
+            "gzipSize": 303348,
             "concatenated": true,
             "groups": [
               {
@@ -5364,7 +5364,7 @@
                               }
                             ],
                             "parsedSize": 3644,
-                            "gzipSize": 986,
+                            "gzipSize": 987,
                             "inaccurateSizes": true
                           },
                           {
@@ -8802,7 +8802,7 @@
                       }
                     ],
                     "parsedSize": 298491,
-                    "gzipSize": 80838,
+                    "gzipSize": 80839,
                     "inaccurateSizes": true
                   },
                   {
@@ -10332,7 +10332,7 @@
                                         "path": "./src/index.tsx + 1273 modules (concatenated)/../common/temp/node_modules/.pnpm/@fluentui/react@8.17.4_c2a703770fc22cd5845ac34fc7d0fe24/node_modules/@fluentui/react/lib/utilities/positioning/positioning.js",
                                         "statSize": 32203,
                                         "parsedSize": 10135,
-                                        "gzipSize": 2744,
+                                        "gzipSize": 2745,
                                         "inaccurateSizes": true
                                       }
                                     ],
@@ -11460,7 +11460,7 @@
                               }
                             ],
                             "parsedSize": 48673,
-                            "gzipSize": 13181,
+                            "gzipSize": 13182,
                             "inaccurateSizes": true
                           },
                           {
@@ -16253,7 +16253,7 @@
                               }
                             ],
                             "parsedSize": 240003,
-                            "gzipSize": 64998,
+                            "gzipSize": 64999,
                             "inaccurateSizes": true
                           },
                           {
@@ -17359,7 +17359,7 @@
                           }
                         ],
                         "parsedSize": 638251,
-                        "gzipSize": 172854,
+                        "gzipSize": 172855,
                         "inaccurateSizes": true
                       },
                       {
@@ -19726,12 +19726,12 @@
                       }
                     ],
                     "parsedSize": 802141,
-                    "gzipSize": 217239,
+                    "gzipSize": 217240,
                     "inaccurateSizes": true
                   }
                 ],
                 "parsedSize": 1100632,
-                "gzipSize": 298078,
+                "gzipSize": 298079,
                 "inaccurateSizes": true
               }
             ]
