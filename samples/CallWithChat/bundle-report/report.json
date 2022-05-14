@@ -4972,7 +4972,7 @@
             "path": "./src/index.tsx + 1295 modules (concatenated)",
             "statSize": 3647772,
             "parsedSize": 1294236,
-            "gzipSize": 342247,
+            "gzipSize": 342248,
             "concatenated": true,
             "groups": [
               {
@@ -7500,7 +7500,7 @@
                                       }
                                     ],
                                     "parsedSize": 3917,
-                                    "gzipSize": 1035,
+                                    "gzipSize": 1036,
                                     "inaccurateSizes": true
                                   },
                                   {
@@ -8533,12 +8533,12 @@
                                 "path": "./src/index.tsx + 1295 modules (concatenated)/../packages/calling-component-bindings/src/handlers/createHandlers.ts",
                                 "statSize": 12289,
                                 "parsedSize": 4360,
-                                "gzipSize": 1152,
+                                "gzipSize": 1153,
                                 "inaccurateSizes": true
                               }
                             ],
                             "parsedSize": 4360,
-                            "gzipSize": 1152,
+                            "gzipSize": 1153,
                             "inaccurateSizes": true
                           },
                           {
@@ -10345,7 +10345,7 @@
                                       }
                                     ],
                                     "parsedSize": 23007,
-                                    "gzipSize": 6083,
+                                    "gzipSize": 6084,
                                     "inaccurateSizes": true
                                   },
                                   {
@@ -16168,7 +16168,7 @@
                               }
                             ],
                             "parsedSize": 270549,
-                            "gzipSize": 71543,
+                            "gzipSize": 71544,
                             "inaccurateSizes": true
                           },
                           {
@@ -20046,7 +20046,7 @@
                   }
                 ],
                 "parsedSize": 1280347,
-                "gzipSize": 338574,
+                "gzipSize": 338575,
                 "inaccurateSizes": true
               }
             ]
