@@ -371,9 +371,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
           git add samples/Calling/bundle-report/*
           git commit -m 'Update Calling js bundle report'
-          git pull --ff-only
           git push
 
   build_chat_sample:
@@ -433,9 +433,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
           git add samples/Chat/bundle-report/*
           git commit -m 'Update Chat js bundle report'
-          git pull --ff-only
           git push
 
   build_call_with_chat_sample:
@@ -495,9 +495,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
           git add samples/CallWithChat/bundle-report/*
           git commit -m 'Update CallWithChat js bundle report'
-          git pull --ff-only
           git push
 
   build_static_html_composites_sample:
