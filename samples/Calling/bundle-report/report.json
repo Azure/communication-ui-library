@@ -3,7 +3,7 @@
     "label": "build.js",
     "isAsset": true,
     "statSize": 7465664.0600000005,
-    "parsedSize": 4541630,
+    "parsedSize": 4541629,
     "gzipSize": 1120955,
     "groups": [
       {
@@ -3891,8 +3891,8 @@
             "label": "index.tsx + 1228 modules (concatenated)",
             "path": "./src/index.tsx + 1228 modules (concatenated)",
             "statSize": 3374914,
-            "parsedSize": 1111043,
-            "gzipSize": 299544,
+            "parsedSize": 1111042,
+            "gzipSize": 299543,
             "concatenated": true,
             "groups": [
               {
@@ -5304,7 +5304,7 @@
                             "inaccurateSizes": true
                           }
                         ],
-                        "parsedSize": 123427,
+                        "parsedSize": 123426,
                         "gzipSize": 33276,
                         "inaccurateSizes": true
                       },
@@ -6740,7 +6740,7 @@
                                     "label": "CallWithChatControlBar.tsx",
                                     "path": "./src/index.tsx + 1228 modules (concatenated)/../packages/react-composites/src/composites/CallWithChatComposite/CallWithChatControlBar.tsx",
                                     "statSize": 9046,
-                                    "parsedSize": 2978,
+                                    "parsedSize": 2977,
                                     "gzipSize": 802,
                                     "inaccurateSizes": true
                                   },
@@ -7677,7 +7677,7 @@
                       }
                     ],
                     "parsedSize": 317912,
-                    "gzipSize": 85711,
+                    "gzipSize": 85710,
                     "inaccurateSizes": true
                   },
                   {
@@ -8086,7 +8086,7 @@
                                         "inaccurateSizes": true
                                       }
                                     ],
-                                    "parsedSize": 5158,
+                                    "parsedSize": 5157,
                                     "gzipSize": 1390,
                                     "inaccurateSizes": true
                                   },
@@ -10300,7 +10300,7 @@
                               }
                             ],
                             "parsedSize": 51248,
-                            "gzipSize": 13817,
+                            "gzipSize": 13816,
                             "inaccurateSizes": true
                           },
                           {
@@ -13872,7 +13872,7 @@
                                                 "label": "splitButtonVariables.js",
                                                 "path": "./src/index.tsx + 1228 modules (concatenated)/../common/temp/node_modules/.pnpm/@fluentui/react-northstar@0.61.0_f09bd12f717275b09a3c137857e6b9f2/node_modules/@fluentui/react-northstar/dist/es/themes/teams/components/SplitButton/splitButtonVariables.js",
                                                 "statSize": 2746,
-                                                "parsedSize": 904,
+                                                "parsedSize": 903,
                                                 "gzipSize": 243,
                                                 "inaccurateSizes": true
                                               },
@@ -14288,7 +14288,7 @@
                                         "inaccurateSizes": true
                                       }
                                     ],
-                                    "parsedSize": 138501,
+                                    "parsedSize": 138500,
                                     "gzipSize": 37340,
                                     "inaccurateSizes": true
                                   },
@@ -14720,12 +14720,12 @@
                                         "label": "Checkbox.js",
                                         "path": "./src/index.tsx + 1228 modules (concatenated)/../common/temp/node_modules/.pnpm/@fluentui/react-northstar@0.61.0_f09bd12f717275b09a3c137857e6b9f2/node_modules/@fluentui/react-northstar/dist/es/components/Checkbox/Checkbox.js",
                                         "statSize": 5896,
-                                        "parsedSize": 1941,
+                                        "parsedSize": 1940,
                                         "gzipSize": 523,
                                         "inaccurateSizes": true
                                       }
                                     ],
-                                    "parsedSize": 1941,
+                                    "parsedSize": 1940,
                                     "gzipSize": 523,
                                     "inaccurateSizes": true
                                   },
@@ -16428,7 +16428,7 @@
                             "inaccurateSizes": true
                           }
                         ],
-                        "parsedSize": 692751,
+                        "parsedSize": 692750,
                         "gzipSize": 186769,
                         "inaccurateSizes": true
                       },
@@ -18207,20 +18207,20 @@
                         "inaccurateSizes": true
                       }
                     ],
-                    "parsedSize": 781944,
+                    "parsedSize": 781943,
                     "gzipSize": 210816,
                     "inaccurateSizes": true
                   }
                 ],
-                "parsedSize": 1099856,
-                "gzipSize": 296528,
+                "parsedSize": 1099855,
+                "gzipSize": 296527,
                 "inaccurateSizes": true
               }
             ]
           }
         ],
-        "parsedSize": 1120218,
-        "gzipSize": 304333
+        "parsedSize": 1120217,
+        "gzipSize": 304331
       }
     ]
   }
