@@ -347,7 +347,8 @@ jobs:
         run: rush test -o calling
       # Not check in the bundles stats if size doesn't change
       # Stats size in the file is a bit random, so we can't only depend on file itself
-      - id: changescheck
+      - name: Check size change
+        id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
           base_size=$(jq -r ".[0].parsedSize" samples/Calling/bundle-report/report.json)
@@ -409,7 +410,8 @@ jobs:
         run: rush test -o chat
       # Not check in the bundles stats if size doesn't change
       # Stats size in the file is a bit random, so we can't only depend on file itself
-      - id: changescheck
+      - name: Check size change
+        id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
           base_size=$(jq -r ".[0].parsedSize" samples/Chat/bundle-report/report.json)
@@ -471,7 +473,8 @@ jobs:
         run: rush test -o callwithchat
       # Not check in the bundles stats if size doesn't change
       # Stats size in the file is a bit random, so we can't only depend on file itself
-      - id: changescheck
+      - name: Check size change
+        id: changescheck
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
         run: |
           base_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/bundle-report/report.json)
@@ -623,7 +626,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - id: bundles
+      - name: Calculate size change
+        id: bundles
         run: |
           base_size=$(jq -r ".[0].parsedSize" base/samples/${{ matrix.app }}/bundle-report/report.json)
           echo "::set-output name=base_size::${base_size}"
