@@ -631,6 +631,7 @@ jobs:
           echo "::set-output name=current_size::${current_size}"
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "::set-output name=change::${change}"
+          echo "::set-output name=diff::$(($current_size - $base_size))"
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && steps.bundles.outputs.change != 'not changed' }}
         uses: actions/github-script@v3
