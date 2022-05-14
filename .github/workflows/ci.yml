@@ -370,11 +370,11 @@ jobs:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          git checkout origin HEAD:${{ github.head_ref }}
-          git pull
+          git checkout ${{ github.event.pull_request.head.ref }}
           git add samples/Calling/bundle-report/*
           git commit -m 'Update Calling js bundle report'
-          git push origin HEAD:${{ github.head_ref }}
+          git pull
+          git push
 
   build_chat_sample:
     needs: get_matrix
@@ -432,11 +432,11 @@ jobs:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          git checkout origin HEAD:${{ github.head_ref }}
-          git pull
+          git checkout ${{ github.event.pull_request.head.ref }}
           git add samples/Chat/bundle-report/*
           git commit -m 'Update Chat js bundle report'
-          git push origin HEAD:${{ github.head_ref }}
+          git pull
+          git push
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -494,11 +494,11 @@ jobs:
           # use GITHUB_TOKEN so it won't trigger recursive PR validation
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          git checkout origin HEAD:${{ github.head_ref }}
-          git pull
+          git checkout ${{ github.event.pull_request.head.ref }}
           git add samples/CallWithChat/bundle-report/*
           git commit -m 'Update CallWithChat js bundle report'
-          git push origin HEAD:${{ github.head_ref }}
+          git pull
+          git push
 
   build_static_html_composites_sample:
     needs: get_matrix
