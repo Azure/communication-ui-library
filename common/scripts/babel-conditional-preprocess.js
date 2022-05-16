@@ -92,6 +92,15 @@ exports.default = babelHelper.declare((_api, opts) => {
       ClassProperty(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
+
+      TSFunctionType(path) {
+        path.traverse({
+          Identifier(identifier_path) {
+            if(path.node.parameters.includes(identifier_path.node)) {
+            	Handle(identifier_path, featureSet, stabilizedFeatureSet);
+            }
+        }});
+      }
     }
   };
 });

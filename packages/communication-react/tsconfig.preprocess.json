@@ -19,6 +19,6 @@
     ]
   },
   "typeRoots": ["./node_modules/@types"],
-  "include": ["preprocess-dist/**/*"],
+  "include": ["preprocess-dist/communication-react/src/**/*"],
   "exclude": ["dist", "node_modules"]
 }
