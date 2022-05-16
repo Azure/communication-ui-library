@@ -11,7 +11,7 @@ describe('Record and Transcription tests', () => {
     test('start transcribing but recording state remains off, computeVariant should return TRANSCRIPTION_STARTED', () => {
       expect(computeVariant('off', 'on')).toEqual('TRANSCRIPTION_STARTED');
     });
-    test('stop recording and transcribtion state remains off, computeVariant should return RECORDING_STOPPED', () => {
+    test('stop recording and transcribing state remains off, computeVariant should return RECORDING_STOPPED', () => {
       expect(computeVariant('stopped', 'off')).toEqual('RECORDING_STOPPED');
     });
     test('stop transcribing and recording state remains off, computeVariant should return TRANSCRIPTION_STOPPED', () => {

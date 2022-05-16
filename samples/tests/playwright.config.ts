@@ -2,6 +2,10 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 import path from 'path';
 
+const TEST_ROOT = '.';
+
+const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
+
 const config: PlaywrightTestConfig = {
   // Put any shared options on the top level.
   use: {
@@ -38,8 +42,6 @@ const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./globalSetup')
 };
 
-if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
-  config.snapshotDir = './stable-snapshot';
-}
+config.snapshotDir = `${TEST_ROOT}/snapshots/${buildFlavor}`;
 
 export default config;
