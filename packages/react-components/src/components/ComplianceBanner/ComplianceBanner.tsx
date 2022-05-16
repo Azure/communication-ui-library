@@ -46,7 +46,12 @@ type CachedComplianceBannerProps = {
     callTranscribeState: ComplianceState;
     callRecordState: ComplianceState;
   };
+  // Timestamp for the last time cached state was updated.
+  // Represented as milliseconds since epoch (i.e., the value returned by Date.now()).
+  lastUpdated: number;
 };
+
+const BANNER_OVERWRITE_DELAY_MS = 3000;
 
 /**
  * A component that displays banners to notify the user when call recording and
@@ -58,11 +63,6 @@ type CachedComplianceBannerProps = {
  * @internal
  */
 export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element => {
-  //set variant when incoming state is different from current state
-  //when variant change, return message bar
-  //when message bar is dismissed,set variant to default nostate and if current state is stopped, set to off
-
-  const [variant, setVariant] = useState<ComplianceBannerVariant>('NO_STATE');
   const cachedProps = useRef<CachedComplianceBannerProps>({
     latestBooleanState: {
       callTranscribeState: false,
@@ -71,15 +71,20 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
     latestStringState: {
       callTranscribeState: 'off',
       callRecordState: 'off'
-    }
+    },
+    lastUpdated: Date.now()
   });
 
   // Only update cached props and variant if there is _some_ change in the latest props.
   // This ensures that state machine is only updated if there is an actual change in the props.
-  if (
+  const shouldUpdateCached =
     props.callRecordState !== cachedProps.current.latestBooleanState.callRecordState ||
-    props.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState
-  ) {
+    props.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState;
+
+  // The following three operations must be performed in this exact order:
+
+  // [1]: Update cached state to transition the state machine.
+  if (shouldUpdateCached) {
     cachedProps.current = {
       latestBooleanState: props,
       latestStringState: {
@@ -88,33 +93,36 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
           cachedProps.current.latestStringState.callTranscribeState,
           props.callTranscribeState
         )
-      }
+      },
+      lastUpdated: Date.now()
     };
-    setVariant(
-      computeVariant(
-        cachedProps.current.latestStringState.callRecordState,
-        cachedProps.current.latestStringState.callTranscribeState
-      )
-    );
-    // when both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state)
-    if (
-      cachedProps.current.latestStringState.callRecordState === 'stopped' &&
-      cachedProps.current.latestStringState.callTranscribeState === 'stopped'
-    ) {
-      cachedProps.current.latestStringState.callRecordState = 'off';
-      cachedProps.current.latestStringState.callTranscribeState = 'off';
-    }
   }
 
-  return variant === 'NO_STATE' ? (
-    <></>
-  ) : (
-    <MessageBar
-      messageBarType={MessageBarType.warning}
+  // [2]: Compute the variant, using the transitioned state machine.
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
+
+  // [3]: Transition the state machine again to deal with some end-states.
+  if (
+    shouldUpdateCached &&
+    cachedProps.current.latestStringState.callRecordState === 'stopped' &&
+    cachedProps.current.latestStringState.callTranscribeState === 'stopped'
+  ) {
+    // When both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state).
+    cachedProps.current.latestStringState.callRecordState = 'off';
+    cachedProps.current.latestStringState.callTranscribeState = 'off';
+  }
+
+  return (
+    <DelayedUpdateBanner
+      variant={{
+        variant,
+        lastUpdated: cachedProps.current.lastUpdated
+      }}
+      strings={props.strings}
       onDismiss={() => {
-        // when closing the banner, change variant to nostate and change stopped state to off state.
-        // Reason: on banner close, going back to the default state
-        setVariant('NO_STATE');
         if (cachedProps.current.latestStringState.callRecordState === 'stopped') {
           cachedProps.current.latestStringState.callRecordState = 'off';
         }
@@ -122,10 +130,7 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
           cachedProps.current.latestStringState.callTranscribeState = 'off';
         }
       }}
-      dismissButtonAriaLabel={props.strings.close}
-    >
-      <BannerMessage variant={variant} strings={props.strings} />
-    </MessageBar>
+    />
   );
 };
 
@@ -145,6 +150,89 @@ function determineStates(previous: ComplianceState, current: boolean | undefined
       return previous;
     }
   }
+}
+
+interface TimestampedVariant {
+  variant: ComplianceBannerVariant;
+  // Milliseconds since epoch (i.e., return value of Date.now()).
+  lastUpdated: number;
+}
+
+/**
+ * Shows a {@link BannerMessage} in a {@link MessageBar} tracking `variant` internally.
+ *
+ * This component delays and combines frequent updates to `variant` such that:
+ * - Updates that happen within {@link BANNER_OVERWRITE_DELAY_MS} are delayed.
+ * - Once {@link BANNER_OVERWRITE_DELAY_MS} has passed since the last update, the _latest_ pending update is shown.
+ *
+ * This ensures that there is enough time for the user to see a banner message before it is overwritten.
+ * In case of multiple delayed messages, the user always sees the final message as it reflects the final state
+ * of recording and transcription.
+ *
+ * @private
+ */
+function DelayedUpdateBanner(props: {
+  variant: TimestampedVariant;
+  onDismiss: () => void;
+  strings: _ComplianceBannerStrings;
+}): JSX.Element {
+  const { variant, lastUpdated: variantLastUpdated } = props.variant;
+
+  // Tracks the variant that is currently visible in the UI.
+  const [visible, setVisible] = useState<TimestampedVariant>({
+    variant,
+    lastUpdated: Date.now()
+  });
+  const pendingUpdateHandle = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  if (variant !== visible.variant && variantLastUpdated > visible.lastUpdated) {
+    // Always clear pending updates.
+    // We'll either update now, or schedule an update for later.
+    if (pendingUpdateHandle.current) {
+      clearTimeout(pendingUpdateHandle.current);
+      pendingUpdateHandle.current = null;
+    }
+
+    const now = Date.now();
+    const timeToNextUpdate = BANNER_OVERWRITE_DELAY_MS - (now - visible.lastUpdated);
+    if (variant === 'NO_STATE' || timeToNextUpdate <= 0) {
+      setVisible({
+        variant,
+        lastUpdated: now
+      });
+    } else {
+      pendingUpdateHandle.current = setTimeout(() => {
+        // Set the actual update time, not the computed time when the update should happen.
+        // The actual update might be later than we planned.
+        setVisible({
+          variant,
+          lastUpdated: Date.now()
+        });
+      }, timeToNextUpdate);
+    }
+  }
+
+  if (visible.variant === 'NO_STATE') {
+    return <></>;
+  }
+
+  return (
+    <MessageBar
+      messageBarType={MessageBarType.warning}
+      onDismiss={() => {
+        // when closing the banner, change variant to nostate and change stopped state to off state.
+        // Reason: on banner close, going back to the default state.
+        setVisible({
+          variant: 'NO_STATE',
+          lastUpdated: Date.now()
+        });
+        props.onDismiss();
+      }}
+      dismissButtonAriaLabel={props.strings.close}
+    >
+      <BannerMessage variant={visible.variant} strings={props.strings} />
+    </MessageBar>
+  );
 }
 
 function BannerMessage(props: { variant: ComplianceBannerVariant; strings: _ComplianceBannerStrings }): JSX.Element {
