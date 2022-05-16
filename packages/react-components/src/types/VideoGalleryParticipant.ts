@@ -61,7 +61,12 @@ export interface VideoGalleryStream {
  * @public
  */
 export interface CreateVideoStreamViewResult {
+  /** View handle of the rendered video stream */
   view: {
+    /**
+     * Update the scale mode for this view.
+     * @param scalingMode - The new scale mode.
+     */
     updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
   };
 }

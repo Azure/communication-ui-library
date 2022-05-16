@@ -79,8 +79,10 @@ export const LocalVideoTile = React.memo(
     const updatingScalingModeDirectly = hasScalingModeChanged && !!localStreamRendererResult;
 
     if (isAvailable && renderElement && newScalingMode && updatingScalingModeDirectly) {
-      localStreamRendererResult && localStreamRendererResult.view.updateScalingMode(newScalingMode);
-      scalingModeRef.current = localVideoViewOptions?.scalingMode;
+      (async () => {
+        localStreamRendererResult && (await localStreamRendererResult.view.updateScalingMode(newScalingMode));
+        scalingModeRef.current = localVideoViewOptions?.scalingMode;
+      })();
     }
 
     // scalingModeForUseEffect will trigger the useEffect to recreate the local stream view only if the scaling mode has changed and
@@ -95,16 +97,11 @@ export const LocalVideoTile = React.memo(
 
       if (isAvailable && !renderElement) {
         (async (): Promise<void> => {
-          console.log('calling onCreateLocalStreamView');
           const streamRendererResult = await onCreateLocalStreamView?.({
             isMirrored: newIsMirrored,
             scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
           });
 
-          console.log(
-            `completed onCreateLocalStreamView, wasLocalStreamDisposed: ${wasLocalStreamDisposed} streamRendererResult: `,
-            streamRendererResult
-          );
           if (!wasLocalStreamDisposed) {
             streamRendererResult && setLocalStreamRendererResult(streamRendererResult);
           }
