@@ -191,6 +191,7 @@ export type {
   TypingIndicatorProps,
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
+  UpdateMessageCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
@@ -215,6 +216,18 @@ export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 
 export * from '../../calling-stateful-client/src';
-export * from '../../chat-stateful-client/src';
-export * from '../../react-composites/src';
+export { createStatefulChatClient } from '../../chat-stateful-client/src';
+export type {
+  StatefulChatClient,
+  StatefulChatClientArgs,
+  StatefulChatClientOptions,
+  ChatMessageWithStatus,
+  ChatClientState,
+  ChatError,
+  ChatErrors,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  ChatErrorTarget
+} from '../../chat-stateful-client/src';
+export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';

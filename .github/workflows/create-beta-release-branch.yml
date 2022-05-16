@@ -10,6 +10,11 @@ on:
         required: true
         default: 'main'
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create_beta_release:
     name: Bump versions and create changelog PR

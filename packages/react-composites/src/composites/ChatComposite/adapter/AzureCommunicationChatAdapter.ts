@@ -36,7 +36,6 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
-/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
@@ -176,22 +175,16 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async fetchInitialData(): Promise<void> {
-    try {
+    // If get properties fails we dont want to try to get the participants after.
+    await this.asyncTeeErrorToEventEmitter(async () => {
       await this.chatThreadClient.getProperties();
-    } catch (e) {
-      console.log(e);
-    }
-
-    // Fetch all participants who joined before the local user.
-    try {
+      // Fetch all participants who joined before the local user.
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
         maxPageSize: 100
         // eslint-disable-next-line curly
       }));
-    } catch (e) {
-      console.log(e);
-    }
+    });
   }
 
   getState(): ChatAdapterState {
@@ -256,9 +249,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void> {
+  async updateMessage(
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.handlers.onUpdateMessage(messageId, content, metadata);
+      /* @conditional-compile-remove(file-sharing) */
+      return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
+      return await this.handlers.onUpdateMessage(messageId, content);
     });
   }
 

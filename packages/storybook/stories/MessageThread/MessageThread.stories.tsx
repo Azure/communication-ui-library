@@ -14,6 +14,7 @@ import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -36,6 +37,7 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
@@ -53,6 +55,7 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
@@ -153,7 +156,6 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
         <MessageThreadWithCustomAvatarExample />
       </Canvas>
-
       <Description>
         Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
         component
@@ -163,6 +165,18 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
         <MessageThreadWithCustomTimestampExample />
       </Canvas>
+      <Heading>Display File Attachments with Messages</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        MessageThread component provides UI for displaying file attachments in a message. This allows developers to
+        implement a file sharing feature using the pure UI component with minimal effort. Developers can write their own
+        file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it in a
+        new browser tab. Developers can override this behavior as well using MessageThread props.
+      </Description>
+      <Canvas mdxSource={MessageWithFileText}>
+        <MessageWithFile />
+      </Canvas>
+
       <Heading>Props</Heading>
       <Props of={MessageThreadComponent} />
     </>
