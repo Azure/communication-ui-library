@@ -4,6 +4,10 @@ on:
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_and_test:
     name: Build and Test

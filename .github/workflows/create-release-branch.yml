@@ -9,6 +9,10 @@ on:
         type: string
         required: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create_release:
     if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}

@@ -19,6 +19,10 @@ on:
           - stable
           - beta
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     environment:

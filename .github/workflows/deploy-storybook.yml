@@ -4,6 +4,10 @@ on:
   # Trigger via 'Actions' on GitHub
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy-storybook:
     name: Build and Deploy Storybook
