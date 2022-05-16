@@ -263,7 +263,6 @@ export interface ControlBarProps {
 
 // @public
 export interface CreateVideoStreamViewResult {
-    // (undocumented)
     view: {
         updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
     };
