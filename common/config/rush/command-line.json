@@ -75,9 +75,9 @@
     },
     {
       "commandKind": "global",
-      "name": "build:npm-all-flavors",
-      "summary": "Build all packages in all flavors, excluding samples and storybook (this is mainly for api update)",
-      "description": "Build all packages in all flavors in one command, excluding samples and storybook (this is mainly for api update). This command will switch current flavor to beta.",
+      "name": "build:regen-api-all-flavors",
+      "summary": "Build all packages in all flavors, excluding samples and storybook, to update api files",
+      "description": "Build all packages in all flavors in one command, excluding samples and storybook, to update api files. This command will switch current flavor to beta.",
       "shellCommand": "(rush switch-flavor:stable && rush rebuild -t @azure/communication-react) || rush switch-flavor:beta && rush rebuild -t @azure/communication-react",
       "safeForSimultaneousRushProcesses": true
     },
