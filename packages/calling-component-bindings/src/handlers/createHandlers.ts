@@ -73,7 +73,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead
       // of disposing and creating a new stream?
-      await onDisposeLocalStreamView();
+      await disposeAllLocalPreviewViews(callClient);
 
       const callId = call?.id;
       let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;
