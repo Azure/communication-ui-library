@@ -9,6 +9,11 @@ on:
         type: string
         required: true
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create_release:
     if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}
