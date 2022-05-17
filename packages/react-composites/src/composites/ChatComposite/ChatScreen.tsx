@@ -50,6 +50,7 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+import { useCustomAvatarPersonaData } from '../common/CustomDataModelUtils';
 
 /**
  * @private
@@ -279,22 +280,41 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
  * that we want to do here to the same level? or is the React useMemo hook enough?
  *
  * So other issue: we can map the ID's into a array, but how do we go about mapping them back?
- *
+ * possible alrogithm =>
+ * check if chat message, map name to message
+ * check if system message, for list of participants map names back, advance i, continue.
  */
 const useRemoteParticipantsWithCustomDisplayNames = (
   messages: (ChatMessage | SystemMessage | CustomMessage)[],
-  callBack?: AvatarPersonaDataCallback
+  callback?: AvatarPersonaDataCallback
 ): (ChatMessage | SystemMessage | CustomMessage)[] => {
+  const userIds = useMemo(() => {
+    return messages.map((m) => {
+      const chatMessage = m as ChatMessage;
+      const systemMessage = m as ParticipantAddedSystemMessage;
+      if (chatMessage && chatMessage.senderId) {
+        return chatMessage.senderId;
+      } else if (systemMessage) {
+        systemMessage.participants.forEach((p) => {
+          return p.userId;
+        });
+      }
+      return;
+    });
+  }, [messages]);
+
+  const newPersonaData = useCustomAvatarPersonaData(userIds, callback);
+
   useEffect(() => {
-    if (callBack) {
+    if (callback) {
       messages.forEach(async (m) => {
         const chatMessage = m as ChatMessage;
         const systemMessage = m as ParticipantAddedSystemMessage;
         if (chatMessage && chatMessage.senderId) {
-          chatMessage.senderDisplayName = (await callBack(chatMessage.senderId)).text;
+          chatMessage.senderDisplayName = (await callback(chatMessage.senderId)).text;
         } else if (systemMessage) {
           systemMessage.participants.map(async (p) => {
-            p.displayName = (await callBack(p.userId)).text;
+            p.displayName = (await callback(p.userId)).text;
           });
         }
       });
