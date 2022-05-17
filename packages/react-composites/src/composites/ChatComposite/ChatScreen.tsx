@@ -279,6 +279,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
  * that we want to do here to the same level? or is the React useMemo hook enough?
  *
  * So other issue: we can map the ID's into a array, but how do we go about mapping them back?
+ *
  */
 const useRemoteParticipantsWithCustomDisplayNames = (
   messages: (ChatMessage | SystemMessage | CustomMessage)[],
