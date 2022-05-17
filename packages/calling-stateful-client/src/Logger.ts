@@ -7,6 +7,9 @@ import { createClientLogger } from '@azure/logger';
  */
 export const callingStatefulLogger = createClientLogger('communication-react:calling-stateful');
 
+/**
+ * @private
+ */
 export enum EventNames {
   // Info
   LOCAL_VIEW_RENDER_SUCCEED = 'LOCAL_VIEW_RENDER_SUCCEED',
