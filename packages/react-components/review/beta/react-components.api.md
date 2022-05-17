@@ -237,6 +237,7 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
+    messageDateTimeLocale?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -805,11 +806,8 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-<<<<<<< HEAD:packages/react-components/stable-review/react-components.api.md
-    dateTimeFormat?: (messageDate: Date) => string;
-=======
     fileDownloadHandler?: FileDownloadHandler;
->>>>>>> 466ed74b2c684e488aeec72b3bdbbca55cd43b0e:packages/react-components/review/beta/react-components.api.md
+    messageDateTime?: (messageDate: Date) => string;
 };
 
 // @public
