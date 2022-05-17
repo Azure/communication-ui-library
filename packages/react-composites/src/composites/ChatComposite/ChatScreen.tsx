@@ -3,19 +3,23 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 import {
+  ChatMessage,
   CommunicationParticipant,
+  CustomMessage,
   ErrorBar,
   MessageProps,
   MessageRenderer,
   MessageThread,
   MessageThreadStyles,
+  ParticipantAddedSystemMessage,
   ParticipantMenuItemsCallback,
   SendBox,
   SendBoxStylesProps,
+  SystemMessage,
   TypingIndicator,
   TypingIndicatorStylesProps
 } from '@internal/react-components';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -46,6 +50,7 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+import { useCustomAvatarPersonaData } from '../common/CustomDataModelUtils';
 
 /**
  * @private
@@ -134,6 +139,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  const messages = messageThreadProps.messages as (ChatMessage | SystemMessage | CustomMessage)[];
+
+  useMemo(() => {
+    if (onFetchAvatarPersonaData) {
+      messages.forEach(async (m) => {
+        const chatMessage = m as ChatMessage;
+        const systemMessage = m as ParticipantAddedSystemMessage;
+        if (chatMessage && chatMessage.senderId) {
+          chatMessage.senderDisplayName = (await onFetchAvatarPersonaData(chatMessage.senderId)).text;
+        } else if (systemMessage) {
+          systemMessage.participants.map(async (p) => {
+            p.displayName = (await onFetchAvatarPersonaData(p.userId)).text;
+          });
+        }
+      });
+    }
+  }, [messages]);
+
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
       return (
@@ -212,6 +235,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           }
           <MessageThread
             {...messageThreadProps}
+            messages={messages}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
