@@ -50,7 +50,6 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-import { useCustomAvatarPersonaData } from '../common/CustomDataModelUtils';
 
 /**
  * @private
@@ -141,6 +140,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const messages = messageThreadProps.messages as (ChatMessage | SystemMessage | CustomMessage)[];
 
+  /**
+   * Update Messages and their senders based on the onFetchAvatarPersonaData prop for the chat composite
+   *
+   * Current issue: we aren't using the custom hook like in media gallery that memoizes it. is this something
+   * that we want to do here to the same level? or is the React useMemo hook enough?
+   */
   useMemo(() => {
     if (onFetchAvatarPersonaData) {
       messages.forEach(async (m) => {
@@ -155,7 +160,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       });
     }
-  }, [messages]);
+  }, [messages, onFetchAvatarPersonaData]);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
