@@ -17,6 +17,11 @@ on:
           - minor
           - patch
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create_stable_release:
     name: Bump versions and create changelog PR
