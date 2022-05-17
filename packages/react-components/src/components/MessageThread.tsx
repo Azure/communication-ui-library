@@ -621,7 +621,7 @@ export type MessageThreadProps = {
    * Optional function to provide customized date format.
    *
    */
-  dateTimeFormat?: (messageDate: Date) => string;
+  messageDateTime?: (messageDate: Date) => string;
 };
 
 /**
@@ -714,7 +714,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage,
     onSendMessage,
-    dateTimeFormat
+    messageDateTime
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -987,7 +987,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
-            dateTimeFormat={dateTimeFormat}
+            messageDateTime={messageDateTime}
           />
         );
       }
@@ -1003,7 +1003,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderFileDownloads,
       props.userId,
       showMessageStatus,
-      dateTimeFormat
+      messageDateTime
     ]
   );
 

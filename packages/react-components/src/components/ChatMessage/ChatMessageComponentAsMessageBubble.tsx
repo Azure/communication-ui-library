@@ -20,6 +20,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
+import { useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -60,13 +61,15 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to provide customized date format.
    *
    */
-  dateTimeFormat?: (messageDate: Date) => string;
+  messageDateTime?: (messageDate: Date) => string;
 };
 
 /** @private */
 const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
+
+  const { messageDateTimeLocale } = useLocale();
 
   const {
     userId,
@@ -83,7 +86,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
-    dateTimeFormat
+    messageDateTime
   } = props;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
@@ -152,13 +155,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           mine={message.mine}
           timestamp={
             <Text data-ui-id={ids.messageTimestamp}>
-              {message.createdOn
-                ? dateTimeFormat
-                  ? dateTimeFormat(message.createdOn)
-                  : showDate
-                  ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-                  : formatTimeForChatMessage(message.createdOn)
-                : undefined}
+              {
+                // messageDateTime overwrites messageDateTimeLocale overwrites default
+                message.createdOn
+                  ? messageDateTime
+                    ? messageDateTime(message.createdOn)
+                    : messageDateTimeLocale
+                    ? messageDateTimeLocale(message.createdOn)
+                    : showDate
+                    ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+                    : formatTimeForChatMessage(message.createdOn)
+                  : undefined
+              }
             </Text>
           }
           details={

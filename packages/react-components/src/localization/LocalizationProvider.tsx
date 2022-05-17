@@ -28,6 +28,11 @@ import { COMPONENT_LOCALE_EN_US } from './locales';
 export interface ComponentLocale {
   /** Strings for components */
   strings: ComponentStrings;
+  /**
+   * Optional function to provide customized date format.
+   *
+   */
+  messageDateTimeLocale?: (messageDate: Date) => string;
 }
 
 /**
