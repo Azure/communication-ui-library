@@ -138,29 +138,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
-  const messages = messageThreadProps.messages as (ChatMessage | SystemMessage | CustomMessage)[];
-
-  /**
-   * Update Messages and their senders based on the onFetchAvatarPersonaData prop for the chat composite
-   *
-   * Current issue: we aren't using the custom hook like in media gallery that memoizes it. is this something
-   * that we want to do here to the same level? or is the React useMemo hook enough?
-   */
-  useMemo(() => {
-    if (onFetchAvatarPersonaData) {
-      messages.forEach(async (m) => {
-        const chatMessage = m as ChatMessage;
-        const systemMessage = m as ParticipantAddedSystemMessage;
-        if (chatMessage && chatMessage.senderId) {
-          chatMessage.senderDisplayName = (await onFetchAvatarPersonaData(chatMessage.senderId)).text;
-        } else if (systemMessage) {
-          systemMessage.participants.map(async (p) => {
-            p.displayName = (await onFetchAvatarPersonaData(p.userId)).text;
-          });
-        }
-      });
-    }
-  }, [messages, onFetchAvatarPersonaData]);
+  const messages = useRemoteParticipantsWithCustomDisplayNames(
+    messageThreadProps.messages as (ChatMessage | SystemMessage | CustomMessage)[],
+    onFetchAvatarPersonaData
+  );
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -289,4 +270,34 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+/**
+ * Update Messages and their senders based on the onFetchAvatarPersonaData prop for the chat composite
+ *
+ * Current issue: we aren't using the custom hook like in media gallery that memoizes it. is this something
+ * that we want to do here to the same level? or is the React useMemo hook enough?
+ *
+ * So other issue: we can map the ID's into a array, but how do we go about mapping them back?
+ */
+const useRemoteParticipantsWithCustomDisplayNames = (
+  messages: (ChatMessage | SystemMessage | CustomMessage)[],
+  callBack?: AvatarPersonaDataCallback
+): (ChatMessage | SystemMessage | CustomMessage)[] => {
+  useEffect(() => {
+    if (callBack) {
+      messages.forEach(async (m) => {
+        const chatMessage = m as ChatMessage;
+        const systemMessage = m as ParticipantAddedSystemMessage;
+        if (chatMessage && chatMessage.senderId) {
+          chatMessage.senderDisplayName = (await callBack(chatMessage.senderId)).text;
+        } else if (systemMessage) {
+          systemMessage.participants.map(async (p) => {
+            p.displayName = (await callBack(p.userId)).text;
+          });
+        }
+      });
+    }
+  }, [messages, callBack]);
+  return messages;
 };
