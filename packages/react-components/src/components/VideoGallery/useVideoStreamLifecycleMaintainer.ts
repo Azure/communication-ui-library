@@ -46,6 +46,7 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
 
   const rescaleCanceller = useRef<{ isCancelled: boolean } | null>(null);
+  const createStreamViewCanceller = useRef<{ isCancelled: boolean } | null>(null);
 
   if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
     if (rescaleCanceller.current != null) {
@@ -71,20 +72,22 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const scalingModeForUseEffect = updatingScalingModeDirectly ? null : scalingMode;
 
   useEffect(() => {
-    // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
-    // and setStreamRendererResult have completed
-    let wasStreamDisposed = false;
-
     if (isStreamAvailable && !renderElementExists) {
+      // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
+      // and setStreamRendererResult have completed
+      const canceller = { isCancelled: false };
+      createStreamViewCanceller.current = canceller;
+
       (async (): Promise<void> => {
         const streamRendererResult = await onCreateStreamView?.({
           isMirrored: isMirrored,
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
         });
 
-        if (!wasStreamDisposed) {
-          streamRendererResult && setStreamRendererResult(streamRendererResult);
+        if (canceller.isCancelled) {
+          return;
         }
+        streamRendererResult && setStreamRendererResult(streamRendererResult);
       })();
     }
     // Always clean up element to make tile up to date and be able to dispose correctly
@@ -94,7 +97,10 @@ export const useVideoStreamLifecycleMaintainer = (props: {
           rescaleCanceller.current.isCancelled = true;
           rescaleCanceller.current = null;
         }
-        wasStreamDisposed = true;
+        if (createStreamViewCanceller.current != null) {
+          createStreamViewCanceller.current.isCancelled = true;
+          createStreamViewCanceller.current = null;
+        }
         onDisposeStreamView?.();
       }
     };
@@ -115,6 +121,10 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       if (rescaleCanceller.current != null) {
         rescaleCanceller.current.isCancelled = true;
         rescaleCanceller.current = null;
+      }
+      if (createStreamViewCanceller.current != null) {
+        createStreamViewCanceller.current.isCancelled = true;
+        createStreamViewCanceller.current = null;
       }
       onDisposeStreamView?.();
     };
