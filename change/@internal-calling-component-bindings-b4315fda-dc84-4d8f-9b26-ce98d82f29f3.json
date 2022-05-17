@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Remove stabilized feature flag control-bar-split-buttons",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

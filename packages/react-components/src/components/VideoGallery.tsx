@@ -19,7 +19,6 @@ import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
-import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
@@ -39,14 +38,12 @@ import {
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
-import { VideoTile } from './VideoTile';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
+import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
+import { LocalVideoTile } from './LocalVideoTile';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -65,7 +62,6 @@ export interface VideoGalleryStrings {
   screenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
   /** String for announcing the local video tile can be moved by keyboard controls */
@@ -133,7 +129,6 @@ export interface VideoGalleryProps {
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /**
    * Whether to display the local video camera switcher button
    */
@@ -150,7 +145,6 @@ export interface VideoGalleryProps {
    * @defaultValue 4
    */
   maxRemoteVideoStreams?: number;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   /**
    * Camera control information for button to switch cameras.
    */
@@ -186,6 +180,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
+    onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     styles,
@@ -193,9 +188,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
-    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     showCameraSwitcherInLocalPreview,
-    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
     localVideoCameraCycleButtonProps
   } = props;
 
@@ -205,7 +198,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -248,89 +240,63 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-  const localCameraCycleButton = (localVideoCameraCycleButtonProps): JSX.Element => {
-    const ariaDescription = _formatString(strings.localVideoSelectedDescription, {
-      cameraName: localVideoCameraCycleButtonProps.selectedCamera.name
-    });
-    return (
-      <Stack horizontalAlign="end">
-        {showCameraSwitcherInLocalPreview &&
-          localVideoCameraCycleButtonProps?.cameras !== undefined &&
-          localVideoCameraCycleButtonProps?.selectedCamera !== undefined &&
-          localVideoCameraCycleButtonProps?.onSelectCamera !== undefined && (
-            <LocalVideoCameraCycleButton
-              cameras={localVideoCameraCycleButtonProps.cameras}
-              selectedCamera={localVideoCameraCycleButtonProps.selectedCamera}
-              onSelectCamera={localVideoCameraCycleButtonProps.onSelectCamera}
-              label={strings.localVideoCameraSwitcherLabel}
-              ariaDescription={ariaDescription}
-            />
-          )}
-      </Stack>
-    );
-  };
-
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element => {
-    const localVideoStream = localParticipant?.videoStream;
-
     if (onRenderLocalVideoTile) {
       return onRenderLocalVideoTile(localParticipant);
     }
 
-    const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
-
-    const localVideoTileStylesThemed = concatStyleSets(
-      localVideoTileStyles,
+    const localVideoTileStyles = concatStyleSets(
+      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
       styles?.localVideo
     );
 
-    if (localVideoStream && !localVideoStream.renderElement) {
-      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
-    }
     return (
       <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
-        <VideoTile
-          key={localParticipant.userId}
+        <LocalVideoTile
           userId={localParticipant.userId}
-          renderElement={
-            localVideoStream?.renderElement ? (
-              <>
-                {
-                  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-                  localCameraCycleButton(localVideoCameraCycleButtonProps)
-                }
-                <StreamMedia videoStreamElement={localVideoStream.renderElement} />
-              </>
-            ) : undefined
-          }
-          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          onCreateLocalStreamView={onCreateLocalStreamView}
+          onDisposeLocalStreamView={onDisposeLocalStreamView}
+          isAvailable={localParticipant?.videoStream?.isAvailable}
+          isMuted={localParticipant.isMuted}
+          renderElement={localParticipant?.videoStream?.renderElement}
           displayName={isNarrow ? '' : strings.localVideoLabel}
           initialsName={localParticipant.displayName}
-          styles={localVideoTileStylesThemed}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={localParticipant.isMuted}
+          localVideoViewOptions={localVideoViewOptions}
+          onRenderAvatar={onRenderAvatar}
+          showLabel={!(shouldFloatLocalVideo && isNarrow)}
           showMuteIndicator={showMuteIndicator}
+          showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
+          localVideoCameraCycleButtonProps={localVideoCameraCycleButtonProps}
+          localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
+          localVideoSelectedDescription={strings.localVideoSelectedDescription}
+          styles={localVideoTileStyles}
         />
       </Stack>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    localParticipant,
-    localParticipant.isScreenSharingOn,
-    localParticipant.videoStream,
-    localParticipant.videoStream?.renderElement,
     isNarrow,
+    localParticipant,
+    localVideoCameraCycleButtonProps,
+    localVideoViewOptions,
     onCreateLocalStreamView,
-    onRenderLocalVideoTile,
+    onDisposeLocalStreamView,
     onRenderAvatar,
-    shouldFloatLocalVideo
+    onRenderLocalVideoTile,
+    shouldFloatLocalVideo,
+    showCameraSwitcherInLocalPreview,
+    showMuteIndicator,
+    strings.localVideoCameraSwitcherLabel,
+    strings.localVideoLabel,
+    strings.localVideoMovementLabel,
+    strings.localVideoSelectedDescription,
+    styles?.localVideo,
+    theme.effects.roundedCorner4
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
@@ -381,11 +347,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  if (
-    !shouldFloatLocalVideo &&
-    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */ !shouldFloatNonDraggableLocalVideo &&
-    localParticipant
-  ) {
+  if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(localVideoTile);
   }
 
@@ -410,7 +372,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {shouldFloatLocalVideo &&
-        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         !shouldFloatNonDraggableLocalVideo &&
         localParticipant &&
         (horizontalGalleryPresent ? (
@@ -429,7 +390,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </_ModalClone>
         ))}
       {
-        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
         shouldFloatNonDraggableLocalVideo && localParticipant && remoteParticipants.length > 0 && (
           <Stack

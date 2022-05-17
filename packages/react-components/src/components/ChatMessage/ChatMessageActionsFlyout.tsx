@@ -93,8 +93,11 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     const items: IContextualMenuItem[] = [
       {
         key: 'Edit',
+        'data-ui-id': 'chat-composite-message-contextual-menu-edit-action',
         text: props.strings.editMessage,
-        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+        itemProps: {
+          styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+        },
         iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
         onClick: props.onEditClick
       },

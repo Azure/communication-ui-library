@@ -34,7 +34,6 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
   await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
-
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -151,6 +150,9 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 
 /**
  * Click outside of the Composite page
+ *
+ * @deprecated This method of dismissing tooltips has been shown to be flaky.
+ *     Use {@link stableScreenshot} instead.
  */
 export const clickOutsideOfPage = async (page: Page): Promise<void> => {
   await page.mouse.click(-1, -1);
@@ -301,4 +303,52 @@ export const isTestProfileStableFlavor = (): boolean => {
   } else {
     throw 'Faled to find Communication React Flavor env variable';
   }
+};
+
+export interface StubOptions {
+  // Stub out all timestamps in the chat message thread.
+  stubMessageTimestamps?: boolean;
+  // Disable tooltips on all buttons in the call control bar.
+  dismissTooltips?: boolean;
+}
+
+/**
+ * A helper to take stable screenshots.
+ *
+ * USE THIS INSTEAD OF page.screenshot()
+ */
+export async function stableScreenshot(
+  page: Page,
+  stubOptions: StubOptions,
+  screenshotOptions?: PageScreenshotOptions
+): Promise<Buffer> {
+  await waitForPageFontsLoaded(page);
+  if (stubOptions?.stubMessageTimestamps) {
+    await stubMessageTimestamps(page);
+  }
+  if (stubOptions?.dismissTooltips) {
+    await disableTooltips(page);
+  }
+  try {
+    return await page.screenshot(screenshotOptions);
+  } finally {
+    if (stubOptions?.dismissTooltips) {
+      await enableTooltips(page);
+    }
+  }
+}
+
+/**
+ * Helper function for disabling all the tooltips on the page.
+ * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
+ */
+const disableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: none}' });
+};
+
+/**
+ * Helper function for enabling all the tooltips on the page.
+ */
+const enableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: block}' });
 };

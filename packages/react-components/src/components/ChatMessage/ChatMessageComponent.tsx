@@ -8,7 +8,7 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler } from '../FileDownloadCards';
+import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -16,7 +16,14 @@ type ChatMessageComponentProps = {
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
-  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage?: (
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   /**
    * Optional callback called when message is sent
@@ -82,13 +89,13 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   } else if (isEditing) {
     return (
       <ChatMessageComponentAsEditBox
-        initialValue={props.message.content ?? ''}
+        message={message}
         inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
-        onSubmit={async (text) => {
+        onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
             props.message.messageId &&
-            (await props.onUpdateMessage(props.message.messageId, text));
+            (await props.onUpdateMessage(props.message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
         onCancel={() => {
