@@ -45,9 +45,22 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const hasScalingModeChanged = scalingModeRef.current !== scalingMode;
   const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
 
+  const rescaleCanceller = useRef<{ isCancelled: boolean } | null>(null);
+
   if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
+    if (rescaleCanceller.current != null) {
+      rescaleCanceller.current.isCancelled = true;
+      rescaleCanceller.current = null;
+    }
+
+    const canceller = { isCancelled: false };
+    rescaleCanceller.current = canceller;
+
     (async () => {
       streamRendererResult && (await streamRendererResult.view.updateScalingMode(scalingMode));
+      if (canceller.isCancelled) {
+        return;
+      }
       scalingModeRef.current = scalingMode;
     })();
   }
@@ -77,6 +90,10 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     // Always clean up element to make tile up to date and be able to dispose correctly
     return () => {
       if (renderElementExists) {
+        if (rescaleCanceller.current != null) {
+          rescaleCanceller.current.isCancelled = true;
+          rescaleCanceller.current = null;
+        }
         wasStreamDisposed = true;
         onDisposeStreamView?.();
       }
@@ -95,6 +112,10 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
   useEffect(() => {
     return () => {
+      if (rescaleCanceller.current != null) {
+        rescaleCanceller.current.isCancelled = true;
+        rescaleCanceller.current = null;
+      }
       onDisposeStreamView?.();
     };
   }, [onDisposeStreamView]);
