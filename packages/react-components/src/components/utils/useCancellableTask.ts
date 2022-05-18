@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MutableRefObject, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 
 /**
  * Argument provided to the action triggered via {@link TriggerFunc} that signifies
@@ -79,22 +79,19 @@ export type CancelFunc = () => void;
  * ```
  */
 export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
-  const ref = useRef<Cancellable | null>(null);
-
   // Memoize all internal objects and returned values so that
   // this hook returns referentially stable values on each render.
   const cancelMarker = useMemo(() => {
-    return new CancelMarker(ref);
+    return new CancelMarker();
   }, []);
 
-  // `ref` will no longer be valid once the component is disposed.
+  // Cancel any pending task when component unmounts.
   useEffect(
     () => {
       return () => {
-        cancelMarker.dispose();
+        cancelMarker.cancel();
       };
     },
-    // We want this to run only on Component unmount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
@@ -113,21 +110,16 @@ export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
 };
 
 class CancelMarker {
-  constructor(private ref: MutableRefObject<Cancellable | null>) {}
+  private cancellable: Cancellable | null = null;
   public cancel(): void {
-    if (this.ref.current) {
-      this.ref.current.cancelled = true;
-      this.ref.current = null;
+    if (this.cancellable) {
+      this.cancellable.cancelled = true;
+      this.cancellable = null;
     }
   }
   public reset(): Cancellable {
     this.cancel();
-    const marker = { cancelled: false };
-    this.ref.current = marker;
-    return marker;
-  }
-  public dispose(): void {
-    // Once we cancel, we're guaranteed to not touch any private fields, especially the `ref`.
-    this.cancel();
+    this.cancellable = { cancelled: false };
+    return this.cancellable;
   }
 }
