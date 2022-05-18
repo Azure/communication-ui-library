@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ScalingMode } from '../../types';
 
 /**
@@ -45,21 +45,14 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const hasScalingModeChanged = scalingModeRef.current !== scalingMode;
   const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
 
-  const rescaleCanceller = useRef<{ isCancelled: boolean } | null>(null);
-  const createStreamViewCanceller = useRef<{ isCancelled: boolean } | null>(null);
+  const rescaleCanceller = useRef(new CancelMarkerStore());
+  const createStreamViewCanceller = useRef(new CancelMarkerStore());
 
   if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
-    if (rescaleCanceller.current != null) {
-      rescaleCanceller.current.isCancelled = true;
-      rescaleCanceller.current = null;
-    }
-
-    const canceller = { isCancelled: false };
-    rescaleCanceller.current = canceller;
-
+    const cancelMarker = rescaleCanceller.current.createNewMarker();
     (async () => {
       streamRendererResult && (await streamRendererResult.view.updateScalingMode(scalingMode));
-      if (canceller.isCancelled) {
+      if (cancelMarker.set) {
         return;
       }
       scalingModeRef.current = scalingMode;
@@ -75,8 +68,7 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     if (isStreamAvailable && !renderElementExists) {
       // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
       // and setStreamRendererResult have completed
-      const canceller = { isCancelled: false };
-      createStreamViewCanceller.current = canceller;
+      const cancelMarker = createStreamViewCanceller.current.createNewMarker();
 
       (async (): Promise<void> => {
         const streamRendererResult = await onCreateStreamView?.({
@@ -84,7 +76,7 @@ export const useVideoStreamLifecycleMaintainer = (props: {
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
         });
 
-        if (canceller.isCancelled) {
+        if (cancelMarker.set) {
           return;
         }
         streamRendererResult && setStreamRendererResult(streamRendererResult);
@@ -93,14 +85,8 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     // Always clean up element to make tile up to date and be able to dispose correctly
     return () => {
       if (renderElementExists) {
-        if (rescaleCanceller.current != null) {
-          rescaleCanceller.current.isCancelled = true;
-          rescaleCanceller.current = null;
-        }
-        if (createStreamViewCanceller.current != null) {
-          createStreamViewCanceller.current.isCancelled = true;
-          createStreamViewCanceller.current = null;
-        }
+        rescaleCanceller.current.cancel();
+        createStreamViewCanceller.current.cancel();
         onDisposeStreamView?.();
       }
     };
@@ -118,15 +104,29 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
   useEffect(() => {
     return () => {
-      if (rescaleCanceller.current != null) {
-        rescaleCanceller.current.isCancelled = true;
-        rescaleCanceller.current = null;
-      }
-      if (createStreamViewCanceller.current != null) {
-        createStreamViewCanceller.current.isCancelled = true;
-        createStreamViewCanceller.current = null;
-      }
+      rescaleCanceller.current.cancel();
+      createStreamViewCanceller.current.cancel();
       onDisposeStreamView?.();
     };
   }, [onDisposeStreamView]);
 };
+
+interface CancelMarker {
+  set: boolean;
+}
+
+class CancelMarkerStore {
+  private marker: CancelMarker | null = null;
+  public cancel() {
+    if (this.marker) {
+      this.marker.set = true;
+      this.marker = null;
+    }
+  }
+  public createNewMarker(): CancelMarker {
+    this.cancel();
+    const marker = { set: false };
+    this.marker = marker;
+    return marker;
+  }
+}
