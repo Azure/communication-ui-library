@@ -6,6 +6,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 
 /**
  * @param {appDir} - Directory of the app files (i.e. the folder containing the index.tsx of the test app)
@@ -60,6 +61,9 @@ module.exports = (appDir, babelConfig) => {
           { from: path.join(__dirname, 'fonts', 'segoeui-regular.woff2'), to: 'fonts' },
           { from: path.join(__dirname, 'fonts', 'segoeui-semibold.woff2'), to: 'fonts' }
         ]
+      }),
+      new DefinePlugin({
+        'window.PERF_COUNTER_ENABLED': true
       })
     ],
     devServer: {

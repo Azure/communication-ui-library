@@ -10,7 +10,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { perfLogger } from '../../common/Logger';
+import { EventNames, perfLogger } from '../../common/Logger';
+import { logEvent } from '@internal/acs-ui-common';
 /**
  * @private
  */
@@ -57,12 +58,18 @@ export const useSelectorWithAdaptation = <
   const propRef = useRef(props);
   propRef.current = props;
 
-  perfLogger.verbose(
-    `${JSON.stringify({
-      selectorName: selector.name !== '' ? selector.name : selector['resultFunc']?.name,
-      action: 'parent rerender'
-    })}`
-  );
+  // window.PERF_COUNTER_ENABLED will be set to true in UI test environment
+  if (window && (window as any).PERF_COUNTER_ENABLED) {
+    const selectorName = selector.name !== '' ? selector.name : selector['resultFunc']?.name;
+    logEvent(perfLogger, {
+      level: 'verbose',
+      name: EventNames.SELECTOR_PARENT_RENDER,
+      message: 'Hook parent gets re-rendered',
+      data: {
+        selectorName
+      }
+    });
+  }
 
   useEffect(() => {
     const onStateChange = (state: CallAdapterState): void => {
@@ -71,12 +78,17 @@ export const useSelectorWithAdaptation = <
       }
       const newProps = selector(adaptState(state), selectorProps ?? callConfigProps);
       if (propRef.current !== newProps) {
-        perfLogger.verbose(
-          `${JSON.stringify({
-            selectorName: selector.name !== '' ? selector.name : selector['resultFunc']?.name,
-            action: 'return state changed'
-          })}`
-        );
+        if (window && (window as any).PERF_COUNTER_ENABLED) {
+          const selectorName = selector.name !== '' ? selector.name : selector['resultFunc']?.name;
+          logEvent(perfLogger, {
+            level: 'verbose',
+            name: EventNames.SELECTOR_RETURN_CHANGED,
+            message: 'Selector return gets changed',
+            data: {
+              selectorName
+            }
+          });
+        }
         setProps(newProps);
       }
     };

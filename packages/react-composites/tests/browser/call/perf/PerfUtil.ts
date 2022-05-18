@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { TestInfo, Page, expect } from '@playwright/test';
 import { readFile, writeFile } from 'fs/promises';
+import { TelemetryEvent } from '@internal/acs-ui-common';
 import path from 'path';
 let perfCounts = {};
 
@@ -9,13 +10,13 @@ export const registerPerfCounter = (page: Page) => {
   perfCounts = {};
   page.on('console', (msg) => {
     if (msg.text().includes('communication-react:composite-perf-counter')) {
-      const perfInstance = JSON.parse(
+      const perfInstance: TelemetryEvent = JSON.parse(
         msg.text().replace('azure:communication-react:composite-perf-counter:verbose', '')
       );
-      if (perfCounts[perfInstance['selectorName'] + '-' + perfInstance['action']] === undefined) {
-        perfCounts[perfInstance['selectorName'] + '-' + perfInstance['action']] = 0;
+      if (perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] === undefined) {
+        perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] = 0;
       }
-      perfCounts[perfInstance['selectorName'] + '-' + perfInstance['action']] += 1;
+      perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] += 1;
     }
   });
 };
