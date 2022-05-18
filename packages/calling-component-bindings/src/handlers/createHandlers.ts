@@ -40,9 +40,15 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
+  onHold: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onAddParticipant: (
+    participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
+  onResume: () => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -203,6 +209,8 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
+    const onHold = async (): Promise<void> => await call?.hold();
+
     const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
       if (!call || call.localVideoStreams.length === 0) {
         return;
@@ -300,8 +308,24 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
+    const onAddParticipant = async (
+      participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
+      options?: StartCallOptions
+    ): Promise<void> => {
+      const newPSTNUser = participant as PhoneNumberIdentifier;
+      const newACSUser = participant as CommunicationUserIdentifier;
+      if (newPSTNUser) {
+        await call?.addParticipant({ phoneNumber: newPSTNUser.phoneNumber }, options);
+      } else if (newACSUser) {
+        await call?.addParticipant({ communicationUserId: newACSUser.communicationUserId }, options);
+      }
+    };
+
+    const onResume = async (): Promise<void> => await call?.resume();
+
     return {
       onHangUp,
+      onHold,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
@@ -314,6 +338,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
       onRemoveParticipant,
+      onAddParticipant,
+      onResume,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView
