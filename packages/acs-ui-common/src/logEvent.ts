@@ -23,5 +23,5 @@ export type TelemetryEvent = {
  * This is a log function to log structural data for easier parse in telemetry
  */
 export const logEvent = (logger: AzureLogger, event: TelemetryEvent): void => {
-  logger[event.level](logger, JSON.stringify(event));
+  logger[event.level](JSON.stringify(event));
 };
