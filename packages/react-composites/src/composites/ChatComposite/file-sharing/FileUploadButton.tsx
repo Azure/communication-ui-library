@@ -47,6 +47,14 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
     }
   });
 
+  const iconButtonClassName = mergeStyles({
+    color: 'unset',
+    ':hover': {
+      color: 'unset',
+      background: 'transparent'
+    }
+  });
+
   return (
     <>
       <Stack
@@ -57,7 +65,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton>
+        <IconButton className={iconButtonClassName}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>

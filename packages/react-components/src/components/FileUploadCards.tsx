@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IconButton } from '@fluentui/react';
+import { Icon, IconButton, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { ActiveFileUpload } from './SendBox';
 import { _FileCard } from './FileCard';
@@ -34,6 +34,14 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   if (!files || files.length === 0) {
     return <></>;
   }
+  const iconButtonClassName = mergeStyles({
+    color: 'unset',
+    background: 'transparent',
+    ':hover': {
+      color: 'unset',
+      background: 'transparent'
+    }
+  });
   return (
     <_FileCardGroup>
       {files &&
@@ -46,7 +54,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               key={file.id}
               fileExtension={extension(file.filename)}
               actionIcon={
-                <IconButton>
+                <IconButton className={iconButtonClassName}>
                   <Icon iconName="CancelFileUpload" style={actionIconStyle} />
                 </IconButton>
               }

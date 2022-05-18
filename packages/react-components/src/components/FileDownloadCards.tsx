@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
+import { Icon, IconButton, mergeStyles, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -98,6 +98,15 @@ const fileDownloadCardsStyle = {
 
 const actionIconStyle = { height: '1rem' };
 
+const iconButtonClassName = mergeStyles({
+  color: 'unset',
+  background: 'transparent',
+  ':hover': {
+    color: 'unset',
+    background: 'transparent'
+  }
+});
+
 /**
  * @internal
  */
@@ -143,7 +152,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 showSpinner ? (
                   <Spinner size={SpinnerSize.medium} aria-live={'assertive'} />
                 ) : (
-                  <IconButton>
+                  <IconButton className={iconButtonClassName}>
                     <DownloadIconTrampoline />
                   </IconButton>
                 )
