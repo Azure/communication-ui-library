@@ -4,7 +4,7 @@ import { GetHistoryChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithCustomTimestampExample: () => JSX.Element = () => {
   // Customize the Timestamp format for messages
-  const messageDateTime = (messageDate: Date): string => {
+  const onDisplayDateTimeString = (messageDate: Date): string => {
     let hours = messageDate.getHours();
     let minutes = messageDate.getMinutes().toString();
     let month = (messageDate.getMonth() + 1).toString();
@@ -44,7 +44,11 @@ export const MessageThreadWithCustomTimestampExample: () => JSX.Element = () => 
   };
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} messages={GetHistoryChatMessages()} messageDateTime={messageDateTime} />
+      <MessageThread
+        userId={'1'}
+        messages={GetHistoryChatMessages()}
+        onDisplayDateTimeString={onDisplayDateTimeString}
+      />
     </FluentThemeProvider>
   );
 };

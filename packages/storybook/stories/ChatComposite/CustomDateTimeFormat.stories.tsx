@@ -30,7 +30,7 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
   } = context;
   const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
 
-  const messageDateTimeLocale = (messageDate: Date): string => {
+  const onDisplayDateTimeString = (messageDate: Date): string => {
     let hours = messageDate.getHours();
     let minutes = messageDate.getMinutes().toString();
     let month = (messageDate.getMonth() + 1).toString();
@@ -91,7 +91,8 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
 
   const strings = compositeLocale(locale)?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
   const compositeStrings = compositeLocale(locale)?.strings ?? COMPOSITE_LOCALE_EN_US.strings;
-  const messageDateTime = compositeLocale(locale)?.component.messageDateTimeLocale ?? messageDateTimeLocale;
+  const onDisplayDateTimeStringLocale =
+    compositeLocale(locale)?.component.onDisplayDateTimeString ?? onDisplayDateTimeString;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -100,7 +101,10 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
         <ContosoChatContainer
           fluentTheme={context.theme}
           {...containerProps}
-          locale={{ component: { strings, messageDateTimeLocale: messageDateTime }, strings: compositeStrings }}
+          locale={{
+            component: { strings, onDisplayDateTimeString: onDisplayDateTimeStringLocale },
+            strings: compositeStrings
+          }}
           errorBar={args.showErrorBar}
           participants={args.showParticipants}
           topic={args.showTopic}

@@ -31,9 +31,9 @@ export interface ComponentLocale {
   /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
-   *
+   * @beta
    */
-  messageDateTimeLocale?: (messageDate: Date) => string;
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 }
 
 /**

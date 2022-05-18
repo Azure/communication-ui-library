@@ -20,6 +20,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
+/* @conditional-compile-remove(dateTimeCustomization) */
 import { useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
@@ -60,9 +61,9 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
-   *
+   * @beta
    */
-  messageDateTime?: (messageDate: Date) => string;
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 /** @private */
@@ -70,7 +71,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const ids = useIdentifiers();
   const theme = useTheme();
   /* @conditional-compile-remove(dateTimeCustomization) */
-  const { messageDateTimeLocale } = useLocale();
+  const { onDisplayDateTimeString: onDisplayDateTimeStringLocale } = useLocale();
 
   const {
     userId,
@@ -88,10 +89,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     fileDownloadHandler,
     /* @conditional-compile-remove(dateTimeCustomization) */
-    messageDateTime
+    onDisplayDateTimeString
   } = props;
 
-  // messageDateTime overwrites messageDateTimeLocale overwrites default
+  // onDisplayDateTimeString overwrites onDisplayDateTimeString overwrites default
   let formattedTimestamp: string | undefined = undefined;
   if (message.createdOn) {
     // default
@@ -100,11 +101,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       : formatTimeForChatMessage(message.createdOn);
 
     /* @conditional-compile-remove(dateTimeCustomization) */
-    if (messageDateTime) {
-      formattedTimestamp = messageDateTime(message.createdOn);
-    } else if (messageDateTimeLocale) {
+    if (onDisplayDateTimeString) {
+      formattedTimestamp = onDisplayDateTimeString(message.createdOn);
+    } else if (onDisplayDateTimeStringLocale) {
     /* @conditional-compile-remove(dateTimeCustomization) */
-      formattedTimestamp = messageDateTimeLocale(message.createdOn);
+      formattedTimestamp = onDisplayDateTimeStringLocale(message.createdOn);
     }
   }
 

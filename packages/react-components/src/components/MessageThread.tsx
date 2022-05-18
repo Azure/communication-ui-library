@@ -620,9 +620,9 @@ export type MessageThreadProps = {
   /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
-   *
+   * @beta
    */
-  messageDateTime?: (messageDate: Date) => string;
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 /**
@@ -716,7 +716,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(dateTimeCustomization) */
-    messageDateTime
+    onDisplayDateTimeString
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -990,7 +990,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(dateTimeCustomization) */
-            messageDateTime={messageDateTime}
+            onDisplayDateTimeString={onDisplayDateTimeString}
           />
         );
       }
@@ -1007,7 +1007,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       props.userId,
       showMessageStatus,
       /* @conditional-compile-remove(dateTimeCustomization) */
-      messageDateTime
+      onDisplayDateTimeString
     ]
   );
 

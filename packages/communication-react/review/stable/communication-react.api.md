@@ -1115,7 +1115,6 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
-    messageDateTimeLocale?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -1806,7 +1805,6 @@ export type MessageThreadProps = {
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    messageDateTime?: (messageDate: Date) => string;
 };
 
 // @public

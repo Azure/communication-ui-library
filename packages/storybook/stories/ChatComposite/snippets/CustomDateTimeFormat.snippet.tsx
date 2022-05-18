@@ -42,7 +42,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     capitalizeMessageBeforeSend
   );
 
-  const messageDateTimeLocale = (messageDate: Date): string => {
+  const onDisplayDateTimeString = (messageDate: Date): string => {
     let hours = messageDate.getHours();
     let minutes = messageDate.getMinutes().toString();
     let month = (messageDate.getMonth() + 1).toString();
@@ -83,7 +83,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
   const strings = props.locale?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
   const compositeStrings = props.locale?.strings ?? COMPOSITE_LOCALE_EN_US.strings;
-  const messageDateTime = props.locale?.component.messageDateTimeLocale ?? messageDateTimeLocale;
+  const onDisplayDateTimeStringLocale = props.locale?.component.onDisplayDateTimeString ?? onDisplayDateTimeString;
 
   return (
     <>
@@ -91,7 +91,10 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <div style={{ height: '100vh', width: '100vw' }}>
           <ChatComposite
             adapter={adapter}
-            locale={{ component: { strings, messageDateTimeLocale: messageDateTime }, strings: compositeStrings }}
+            locale={{
+              component: { strings, onDisplayDateTimeString: onDisplayDateTimeStringLocale },
+              strings: compositeStrings
+            }}
           />
         </div>
       ) : (
