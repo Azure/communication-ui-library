@@ -88,9 +88,7 @@ export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
   // Cancel any pending task when component unmounts.
   useEffect(
     () => {
-      return () => {
-        cancelMarker.cancel();
-      };
+      return cancelMarker.cancel;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -101,25 +99,22 @@ export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
       const cancellable = cancelMarker.reset();
       action(cancellable);
     };
-    const cancel = (): void => {
-      cancelMarker.cancel();
-    };
-    return [trigger, cancel];
+    return [trigger, cancelMarker.cancel];
   }, [cancelMarker]);
   return response;
 };
 
 class CancelMarker {
   private cancellable: Cancellable | null = null;
-  public cancel(): void {
+  public cancel = (): void => {
     if (this.cancellable) {
       this.cancellable.cancelled = true;
       this.cancellable = null;
     }
-  }
-  public reset(): Cancellable {
+  };
+  public reset = (): Cancellable => {
     this.cancel();
     this.cancellable = { cancelled: false };
     return this.cancellable;
-  }
+  };
 }
