@@ -7,6 +7,8 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -84,7 +86,15 @@ export interface ChatAdapterThreadManagement {
   /**
    * Update a message content.
    */
-  updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+  updateMessage(
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    /* @conditional-compile-remove(file-sharing) */
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ): Promise<void>;
   /**
    * Delete a message in the thread.
    */
