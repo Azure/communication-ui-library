@@ -617,6 +617,7 @@ export type MessageThreadProps = {
    */
   fileDownloadHandler?: FileDownloadHandler;
 
+  /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
    *
@@ -714,6 +715,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onUpdateMessage,
     onDeleteMessage,
     onSendMessage,
+    /* @conditional-compile-remove(dateTimeCustomization) */
     messageDateTime
   } = props;
 
@@ -987,6 +989,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
+            /* @conditional-compile-remove(dateTimeCustomization) */
             messageDateTime={messageDateTime}
           />
         );
@@ -1003,6 +1006,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderFileDownloads,
       props.userId,
       showMessageStatus,
+      /* @conditional-compile-remove(dateTimeCustomization) */
       messageDateTime
     ]
   );

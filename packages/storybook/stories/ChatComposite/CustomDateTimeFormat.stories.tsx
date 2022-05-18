@@ -5,6 +5,7 @@ import { ChatComposite, COMPONENT_LOCALE_EN_US, COMPOSITE_LOCALE_EN_US } from '@
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
@@ -94,6 +95,7 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
+      <SingleLineBetaBanner />
       {containerProps ? (
         <ContosoChatContainer
           fluentTheme={context.theme}

@@ -15,6 +15,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -162,6 +163,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Custom Timestamp</Heading>
+      <SingleLineBetaBanner />
       <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
         <MessageThreadWithCustomTimestampExample />
       </Canvas>

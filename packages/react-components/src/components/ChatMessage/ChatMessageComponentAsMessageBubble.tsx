@@ -57,6 +57,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
 
+  /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
    *
@@ -68,7 +69,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
 const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
-
+  /* @conditional-compile-remove(dateTimeCustomization) */
   const { messageDateTimeLocale } = useLocale();
 
   const {
@@ -86,8 +87,26 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
+    /* @conditional-compile-remove(dateTimeCustomization) */
     messageDateTime
   } = props;
+
+  // messageDateTime overwrites messageDateTimeLocale overwrites default
+  let formattedTimestamp: string | undefined = undefined;
+  if (message.createdOn) {
+    // default
+    formattedTimestamp = showDate
+      ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+      : formatTimeForChatMessage(message.createdOn);
+
+    /* @conditional-compile-remove(dateTimeCustomization) */
+    if (messageDateTime) {
+      formattedTimestamp = messageDateTime(message.createdOn);
+    } else if (messageDateTimeLocale) {
+    /* @conditional-compile-remove(dateTimeCustomization) */
+      formattedTimestamp = messageDateTimeLocale(message.createdOn);
+    }
+  }
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
@@ -153,22 +172,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
-          timestamp={
-            <Text data-ui-id={ids.messageTimestamp}>
-              {
-                // messageDateTime overwrites messageDateTimeLocale overwrites default
-                message.createdOn
-                  ? messageDateTime
-                    ? messageDateTime(message.createdOn)
-                    : messageDateTimeLocale
-                    ? messageDateTimeLocale(message.createdOn)
-                    : showDate
-                    ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-                    : formatTimeForChatMessage(message.createdOn)
-                  : undefined
-              }
-            </Text>
-          }
+          timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
           details={
             messageStatus === 'failed' ? (
               <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>

@@ -128,6 +128,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Custom DateTime Format using Locale</Heading>
+      <SingleLineBetaBanner />
       <Description>
         You can pass in a function that formats the datetime displayed in chat messages through Locale
       </Description>
