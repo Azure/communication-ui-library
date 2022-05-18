@@ -1282,7 +1282,6 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 
 // @public
 export interface CreateVideoStreamViewResult {
-    // (undocumented)
     view: {
         updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
     };
