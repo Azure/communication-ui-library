@@ -45,18 +45,17 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const hasScalingModeChanged = scalingModeRef.current !== scalingMode;
   const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
 
-  const rescaleCanceller = useCancelMarker();
-  const createStreamViewCanceller = useCancelMarker();
+  const [triggerRescale, cancelRescale] = useCancellableTask();
+  const [triggerCreateStreamView, cancelCreateStreamView] = useCancellableTask();
 
   if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
-    const cancelMarker = rescaleCanceller.reset();
-    (async () => {
+    triggerRescale(async (cancellable: Cancellable) => {
       streamRendererResult && (await streamRendererResult.view.updateScalingMode(scalingMode));
-      if (cancelMarker.cancelled) {
+      if (cancellable.cancelled) {
         return;
       }
       scalingModeRef.current = scalingMode;
-    })();
+    });
   }
 
   // scalingModeForUseEffect will trigger the useEffect to recreate the stream view only if the scaling mode has changed and
@@ -66,27 +65,24 @@ export const useVideoStreamLifecycleMaintainer = (props: {
 
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
-      // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
-      // and setStreamRendererResult have completed
-      const cancelMarker = createStreamViewCanceller.reset();
-
-      (async (): Promise<void> => {
+      triggerCreateStreamView(async (cancellable: Cancellable): Promise<void> => {
         const streamRendererResult = await onCreateStreamView?.({
           isMirrored: isMirrored,
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
         });
-
-        if (cancelMarker.cancelled) {
+        // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
+        // and setStreamRendererResult have completed
+        if (cancellable.cancelled) {
           return;
         }
         streamRendererResult && setStreamRendererResult(streamRendererResult);
-      })();
+      });
     }
     // Always clean up element to make tile up to date and be able to dispose correctly
     return () => {
       if (renderElementExists) {
-        rescaleCanceller.cancel();
-        createStreamViewCanceller.cancel();
+        cancelRescale();
+        cancelCreateStreamView();
         onDisposeStreamView?.();
       }
     };
@@ -104,8 +100,8 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
   useEffect(() => {
     return () => {
-      rescaleCanceller.cancel();
-      createStreamViewCanceller.cancel();
+      cancelRescale();
+      cancelCreateStreamView();
       onDisposeStreamView?.();
     };
   }, [onDisposeStreamView]);
@@ -135,7 +131,10 @@ class CancelMarker {
   }
 }
 
-const useCancelMarker = (): CancelMarker => {
+type TriggerFunc = (action: (cancellable: Cancellable) => Promise<void>) => void;
+type CancelFunc = () => void;
+
+const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
   const ref = useRef<Cancellable | null>(null);
   const cancelMarker = new CancelMarker(ref);
   // `ref` will no longer be valid once the component is disposed.
@@ -144,5 +143,14 @@ const useCancelMarker = (): CancelMarker => {
       cancelMarker.dispose();
     };
   }, []);
-  return cancelMarker;
+
+  return [
+    (action: (cancellable: Cancellable) => Promise<void>) => {
+      const cancellable = cancelMarker.reset();
+      action(cancellable);
+    },
+    () => {
+      cancelMarker.cancel();
+    }
+  ];
 };
