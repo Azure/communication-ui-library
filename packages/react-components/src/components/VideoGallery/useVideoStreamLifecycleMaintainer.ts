@@ -6,22 +6,45 @@ import { VideoStreamOptions, CreateVideoStreamViewResult, ScalingMode } from '..
 import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
 
 /**
+ * Props needed for {@link useVideoStreamLifecycleMaintainer}
+ * @private
+ */
+export interface VideoStreamLifecycleMaintainerProps {
+  isStreamAvailable?: boolean;
+  renderElementExists?: boolean;
+  isMirrored?: boolean;
+  scalingMode?: ScalingMode;
+  remoteParticipantId?: string;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeLocalStreamView?: () => void;
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  isScreenSharingOn?: boolean;
+}
+
+/**
  * Helper hook to maintain the video stream lifecycle. This calls onCreateStreamView and onDisposeStreamView
  * appropriately based on react lifecycle events and prop changes.
  * This also handles calls to view.update* appropriately such as view.updateScalingMode().
  *
  * @private
  */
-export const useVideoStreamLifecycleMaintainer = (props: {
-  isStreamAvailable?: boolean;
-  renderElementExists?: boolean;
-  isMirrored?: boolean;
-  scalingMode?: ScalingMode;
-  onCreateStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-  onDisposeStreamView?: () => void;
-}): void => {
-  const { onCreateStreamView, onDisposeStreamView, isStreamAvailable, renderElementExists, isMirrored, scalingMode } =
-    props;
+export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
+  const {
+    isMirrored,
+    isScreenSharingOn,
+    isStreamAvailable,
+    onCreateLocalStreamView,
+    onCreateRemoteStreamView,
+    onDisposeLocalStreamView,
+    onDisposeRemoteStreamView,
+    remoteParticipantId,
+    renderElementExists,
+    scalingMode
+  } = props;
 
   // HANDLING CHANGES TO VIDEO VIEW OPTIONS
   //
@@ -67,10 +90,13 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
       triggerCreateStreamView(async (cancellable: Cancellable): Promise<void> => {
-        const streamRendererResult = await onCreateStreamView?.({
+        const streamViewOptions = {
           isMirrored: isMirrored,
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
-        });
+        };
+        const streamRendererResult = remoteParticipantId
+          ? await onCreateRemoteStreamView?.(remoteParticipantId, streamViewOptions)
+          : await onCreateLocalStreamView?.(streamViewOptions);
         // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
         // and setStreamRendererResult have completed
         if (cancellable.cancelled) {
@@ -84,16 +110,23 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       if (renderElementExists) {
         cancelRescale();
         cancelCreateStreamView();
-        onDisposeStreamView?.();
+        // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
+        if (!isScreenSharingOn) {
+          remoteParticipantId ? onDisposeRemoteStreamView?.(remoteParticipantId) : onDisposeLocalStreamView?.();
+        }
       }
     };
   }, [
     cancelCreateStreamView,
     cancelRescale,
     isMirrored,
+    isScreenSharingOn,
     isStreamAvailable,
-    onCreateStreamView,
-    onDisposeStreamView,
+    onCreateLocalStreamView,
+    onCreateRemoteStreamView,
+    onDisposeLocalStreamView,
+    onDisposeRemoteStreamView,
+    remoteParticipantId,
     renderElementExists,
     scalingModeForUseEffect,
     triggerCreateStreamView
@@ -106,7 +139,17 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     return () => {
       cancelRescale();
       cancelCreateStreamView();
-      onDisposeStreamView?.();
+      // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
+      if (!isScreenSharingOn) {
+        remoteParticipantId ? onDisposeRemoteStreamView?.(remoteParticipantId) : onDisposeLocalStreamView?.();
+      }
     };
-  }, [cancelCreateStreamView, cancelRescale, onDisposeStreamView]);
+  }, [
+    cancelCreateStreamView,
+    cancelRescale,
+    isScreenSharingOn,
+    onDisposeLocalStreamView,
+    onDisposeRemoteStreamView,
+    remoteParticipantId
+  ]);
 };
