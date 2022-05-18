@@ -62,6 +62,7 @@ describe('Message date should be formatted correctly', () => {
   });
 });
 
+/* @conditional-compile-remove(dateTimeCustomization) */
 describe('Message date should be customized by function passed through locale', () => {
   test('Message date should be localized to "24 hours ago"', async () => {
     const testLocale = { strings: COMPONENT_LOCALE_EN_US.strings, messageDateTimeLocale };
@@ -85,6 +86,7 @@ describe('Message date should be customized by function passed through locale', 
   });
 });
 
+/* @conditional-compile-remove(dateTimeCustomization) */
 describe('messageDateTime passed through messagethread should overwrite messageDateTimeLocale', () => {
   test('Message date should be localized to "yesterday"', async () => {
     const testLocale = { strings: COMPONENT_LOCALE_EN_US.strings, messageDateTimeLocale };
