@@ -45,11 +45,11 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   const hasScalingModeChanged = scalingModeRef.current !== scalingMode;
   const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
 
-  const rescaleCanceller = useRef(new CancelMarkerStore());
-  const createStreamViewCanceller = useRef(new CancelMarkerStore());
+  const rescaleCanceller = useRef(new CancelMarker());
+  const createStreamViewCanceller = useRef(new CancelMarker());
 
   if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
-    const cancelMarker = rescaleCanceller.current.createNewMarker();
+    const cancelMarker = rescaleCanceller.current.reset();
     (async () => {
       streamRendererResult && (await streamRendererResult.view.updateScalingMode(scalingMode));
       if (cancelMarker.set) {
@@ -68,7 +68,7 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     if (isStreamAvailable && !renderElementExists) {
       // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
       // and setStreamRendererResult have completed
-      const cancelMarker = createStreamViewCanceller.current.createNewMarker();
+      const cancelMarker = createStreamViewCanceller.current.reset();
 
       (async (): Promise<void> => {
         const streamRendererResult = await onCreateStreamView?.({
@@ -111,19 +111,19 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   }, [onDisposeStreamView]);
 };
 
-interface CancelMarker {
+interface Cancellable {
   set: boolean;
 }
 
-class CancelMarkerStore {
-  private marker: CancelMarker | null = null;
+class CancelMarker {
+  private marker: Cancellable | null = null;
   public cancel() {
     if (this.marker) {
       this.marker.set = true;
       this.marker = null;
     }
   }
-  public createNewMarker(): CancelMarker {
+  public reset(): Cancellable {
     this.cancel();
     const marker = { set: false };
     this.marker = marker;
