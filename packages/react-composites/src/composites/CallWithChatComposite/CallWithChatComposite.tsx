@@ -178,11 +178,24 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setActivePane('none');
   }, [setActivePane]);
 
+  const chatProps: ChatCompositeProps = useMemo(() => {
+    return {
+      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
+    };
+  }, [callWithChatAdapter]);
+
+  const modalLayerHostId = useId('modalLayerhost');
+
+  const isInLobbyOrConnecting = currentPage === 'lobby';
+  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
+  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
+  const isMobileWithActivePane = mobileView && activePane !== 'none';
+
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
 
   const toggleChat = useCallback(() => {
-    if (activePane === 'chat') {
+    if (activePane === 'chat' || !hasJoinedCall) {
       setActivePane('none');
     } else {
       setActivePane('chat');
@@ -200,23 +213,27 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         clearInterval(chatFocusTimeout);
       }, 300);
     }
-  }, [activePane, setActivePane, compositeParentDivId]);
+  }, [activePane, setActivePane, compositeParentDivId, hasJoinedCall]);
 
   const togglePeople = useCallback(() => {
-    if (activePane === 'people') {
+    if (activePane === 'people' || !hasJoinedCall) {
       setActivePane('none');
     } else {
       setActivePane('people');
     }
-  }, [activePane, setActivePane]);
+  }, [activePane, setActivePane, hasJoinedCall]);
 
   const selectChat = useCallback(() => {
-    setActivePane('chat');
-  }, [setActivePane]);
+    if (hasJoinedCall) {
+      setActivePane('chat');
+    }
+  }, [setActivePane, hasJoinedCall]);
 
   const selectPeople = useCallback(() => {
-    setActivePane('people');
-  }, [setActivePane]);
+    if (hasJoinedCall) {
+      setActivePane('people');
+    }
+  }, [setActivePane, hasJoinedCall]);
 
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -230,19 +247,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     setShowDrawer(false);
     togglePeople();
   }, [togglePeople]);
-
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
-  }, [callWithChatAdapter]);
-
-  const modalLayerHostId = useId('modalLayerhost');
-
-  const isInLobbyOrConnecting = currentPage === 'lobby';
-  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
-  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
