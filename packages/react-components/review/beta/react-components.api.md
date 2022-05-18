@@ -237,6 +237,7 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
+    // @beta
     onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
