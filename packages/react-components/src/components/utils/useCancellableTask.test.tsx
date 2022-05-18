@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Cancellable, useCancellableTask } from './useCancellableTask';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -114,6 +114,38 @@ describe('cancellable task', () => {
       mount(<Wrapper />);
     });
     await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
+  });
+
+  it('returns referentially stable objects', async () => {
+    const marker = new Marker();
+
+    function Component(): JSX.Element {
+      const [secondRender, setSecondRender] = useState(false);
+      const [trigger, cancel] = useCancellableTask();
+      const cachedTrigger = useRef(trigger);
+      const cachedCancel = useRef(cancel);
+
+      trigger(async () => {
+        await blockMomentarily();
+        // Causes a second render pass.
+        setSecondRender(true);
+      });
+
+      if (secondRender && trigger === cachedTrigger.current && cancel === cachedCancel.current) {
+        marker.set();
+      }
+
+      // Non-trivial return so React runtime keeps us mounted.
+      return <h1>Hello World</h1>;
+    }
+
+    await act(async () => {
+      mount(<Component />);
+      // Wait within the `act` block so second render pass can complete.
+      await marker.waitForSet(1000);
+    });
+    // We already waited in the `act` block above, so check quickly.
+    await expect(marker.waitForSet(1)).resolves.toBeTruthy();
   });
 });
 

@@ -109,7 +109,6 @@ export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
     };
     return [trigger, cancel];
   }, [cancelMarker]);
-
   return response;
 };
 
