@@ -129,7 +129,7 @@ describe('cancellable task', () => {
  */
 class Marker {
   private _marked = false;
-  set() {
+  set(): void {
     this._marked = true;
   }
   async waitForSet(timeoutMillisecond: number): Promise<boolean> {
@@ -159,7 +159,7 @@ class Marker {
   }
 }
 
-async function blockMomentarily() {
+async function blockMomentarily(): Promise<void> {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();

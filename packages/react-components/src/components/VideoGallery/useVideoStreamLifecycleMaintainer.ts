@@ -88,12 +88,15 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       }
     };
   }, [
-    isStreamAvailable,
+    cancelCreateStreamView,
+    cancelRescale,
     isMirrored,
+    isStreamAvailable,
     onCreateStreamView,
     onDisposeStreamView,
     renderElementExists,
-    scalingModeForUseEffect
+    scalingModeForUseEffect,
+    triggerCreateStreamView
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
@@ -105,5 +108,5 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       cancelCreateStreamView();
       onDisposeStreamView?.();
     };
-  }, [onDisposeStreamView]);
+  }, [cancelCreateStreamView, cancelRescale, onDisposeStreamView]);
 };

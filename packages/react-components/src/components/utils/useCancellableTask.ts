@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { MutableRefObject, useEffect, useMemo, useRef } from 'react';
 
 /**
  * Argument provided to the action triggered via {@link TriggerFunc} that signifies
@@ -80,28 +80,42 @@ export type CancelFunc = () => void;
  */
 export const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
   const ref = useRef<Cancellable | null>(null);
-  const cancelMarker = new CancelMarker(ref);
-  // `ref` will no longer be valid once the component is disposed.
-  useEffect(() => {
-    return () => {
-      cancelMarker.dispose();
-    };
+
+  // Memoize all internal objects and returned values so that
+  // this hook returns referentially stable values on each render.
+  const cancelMarker = useMemo(() => {
+    return new CancelMarker(ref);
   }, []);
 
-  return [
-    (action: (cancellable: Cancellable) => Promise<void>) => {
+  // `ref` will no longer be valid once the component is disposed.
+  useEffect(
+    () => {
+      return () => {
+        cancelMarker.dispose();
+      };
+    },
+    // We want this to run only on Component unmount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const response: [TriggerFunc, CancelFunc] = useMemo(() => {
+    const trigger = (action: (cancellable: Cancellable) => Promise<void>): void => {
       const cancellable = cancelMarker.reset();
       action(cancellable);
-    },
-    () => {
+    };
+    const cancel = (): void => {
       cancelMarker.cancel();
-    }
-  ];
+    };
+    return [trigger, cancel];
+  }, [cancelMarker]);
+
+  return response;
 };
 
 class CancelMarker {
   constructor(private ref: MutableRefObject<Cancellable | null>) {}
-  public cancel() {
+  public cancel(): void {
     if (this.ref.current) {
       this.ref.current.cancelled = true;
       this.ref.current = null;
@@ -113,7 +127,7 @@ class CancelMarker {
     this.ref.current = marker;
     return marker;
   }
-  public dispose() {
+  public dispose(): void {
     // Once we cancel, we're guaranteed to not touch any private fields, especially the `ref`.
     this.cancel();
   }
