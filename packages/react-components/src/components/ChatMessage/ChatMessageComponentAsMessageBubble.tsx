@@ -104,7 +104,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     if (onDisplayDateTimeString) {
       formattedTimestamp = onDisplayDateTimeString(message.createdOn);
     } else if (onDisplayDateTimeStringLocale) {
-    /* @conditional-compile-remove(dateTimeCustomization) */
+      /* @conditional-compile-remove(dateTimeCustomization) */
       formattedTimestamp = onDisplayDateTimeStringLocale(message.createdOn);
     }
   }
