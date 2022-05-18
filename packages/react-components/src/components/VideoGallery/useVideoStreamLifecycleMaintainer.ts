@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { MutableRefObject, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ScalingMode } from '../../types';
+import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
 
 /**
  * Helper hook to maintain the video stream lifecycle. This calls onCreateStreamView and onDisposeStreamView
@@ -105,52 +106,4 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       onDisposeStreamView?.();
     };
   }, [onDisposeStreamView]);
-};
-
-interface Cancellable {
-  cancelled: boolean;
-}
-
-class CancelMarker {
-  constructor(private ref: MutableRefObject<Cancellable | null>) {}
-  public cancel() {
-    if (this.ref.current) {
-      this.ref.current.cancelled = true;
-      this.ref.current = null;
-    }
-  }
-  public reset(): Cancellable {
-    this.cancel();
-    const marker = { cancelled: false };
-    this.ref.current = marker;
-    return marker;
-  }
-  public dispose() {
-    // Once we cancel, we're guaranteed to not touch any private fields, especially the `ref`.
-    this.cancel();
-  }
-}
-
-type TriggerFunc = (action: (cancellable: Cancellable) => Promise<void>) => void;
-type CancelFunc = () => void;
-
-const useCancellableTask = (): [TriggerFunc, CancelFunc] => {
-  const ref = useRef<Cancellable | null>(null);
-  const cancelMarker = new CancelMarker(ref);
-  // `ref` will no longer be valid once the component is disposed.
-  useEffect(() => {
-    return () => {
-      cancelMarker.dispose();
-    };
-  }, []);
-
-  return [
-    (action: (cancellable: Cancellable) => Promise<void>) => {
-      const cancellable = cancelMarker.reset();
-      action(cancellable);
-    },
-    () => {
-      cancelMarker.cancel();
-    }
-  ];
 };
