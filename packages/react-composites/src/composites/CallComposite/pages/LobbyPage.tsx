@@ -46,7 +46,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 
   return (
     <CallArrangement
-      complianceBannerProps={{}}
+      complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={{
         options: callControlOptions,
