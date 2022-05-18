@@ -52,6 +52,9 @@ export const lightTheme: PartialTheme & CallingTheme = {
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
     iconWhite: '#ffffff'
+  },
+  semanticColors: {
+    errorText: '#a80000'
   }
 };
 
@@ -90,5 +93,8 @@ export const darkTheme: PartialTheme & CallingTheme = {
     callRedDark: '#a42e43',
     callRedDarker: '#8b2c3d',
     iconWhite: '#ffffff'
+  },
+  semanticColors: {
+    errorText: '#f1707b'
   }
 };
