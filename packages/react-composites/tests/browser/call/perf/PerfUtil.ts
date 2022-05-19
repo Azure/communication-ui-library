@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { TestInfo, Page } from '@playwright/test';
 import { writeFile } from 'fs/promises';
-import { TelemetryEvent } from '@internal/acs-ui-common';
+import type { TelemetryEvent } from '@internal/acs-ui-common';
 import path from 'path';
 let perfCounts = {};
 let handlers = {};
