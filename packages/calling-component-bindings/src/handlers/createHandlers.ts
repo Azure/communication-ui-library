@@ -40,14 +40,17 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onHold: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (
     participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
     options?: StartCallOptions
   ) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onResume: () => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
@@ -209,7 +212,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     const onHold = async (): Promise<void> => await call?.hold();
 
     const onCreateLocalStreamView = async (options?: VideoStreamOptions): Promise<void> => {
@@ -309,7 +312,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     const onAddParticipant = async (
       participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
       options?: StartCallOptions
@@ -323,12 +326,12 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     const onResume = async (): Promise<void> => await call?.resume();
 
     return {
       onHangUp,
-      /* @conditional-compile-remove(PSTN-Calls) */
+      /* @conditional-compile-remove(PSTN-calls) */
       onHold,
       onSelectCamera,
       onSelectMicrophone,
@@ -342,9 +345,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
       onRemoveParticipant,
-      /* @conditional-compile-remove(PSTN-Calls) */
+      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant,
-      /* @conditional-compile-remove(PSTN-Calls) */
+      /* @conditional-compile-remove(PSTN-calls) */
       onResume,
       onStartLocalVideo,
       onDisposeRemoteStreamView,

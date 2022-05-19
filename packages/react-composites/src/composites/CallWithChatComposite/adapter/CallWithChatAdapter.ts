@@ -283,13 +283,13 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   holdCall: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   resumeCall: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,

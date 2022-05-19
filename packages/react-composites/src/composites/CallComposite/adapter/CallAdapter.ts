@@ -9,19 +9,16 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs,
-  StartCallOptions
+  NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
 
 import { VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationIdentifierKind,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-
+/** @conditional-compile-remove(PSTN-calls) */
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/** @conditional-compile-remove(PSTN-calls) */
+import { StartCallOptions } from '@azure/communication-calling';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -238,24 +235,27 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Adds a participant to the call by dialing them in
-   * @param newUser - Phone number or Communication userId for participant being added
+   * @param participant - Phone number or Communication userId for participant being added
    * @param options - Call options containing ACS number for PSTN calls
+   * @beta
    */
   addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
     options?: StartCallOptions
   ): Promise<void>;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call for the local user
+   * @beta
    */
   holdCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * resumes the call for the local user.
+   * @beta
    */
   resumeCall(): Promise<void>;
   /**

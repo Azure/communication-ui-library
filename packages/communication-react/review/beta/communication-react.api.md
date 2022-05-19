@@ -180,12 +180,18 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
+    // @beta
+    addParticipant(participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier, options?: StartCallOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta
+    resumeCall(): Promise<void>;
     startCall(participants: string[]): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -484,9 +490,12 @@ export type CallingHandlers = {
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
+    onHold: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier, options?: StartCallOptions) => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
+    onResume: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -560,6 +569,8 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @public
 export interface CallWithChatAdapterManagement {
+    // @beta (undocumented)
+    addParticipant(participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier, options?: StartCallOptions): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -569,6 +580,8 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @beta (undocumented)
+    holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -581,6 +594,8 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
+    // @beta (undocumented)
+    resumeCall: () => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;

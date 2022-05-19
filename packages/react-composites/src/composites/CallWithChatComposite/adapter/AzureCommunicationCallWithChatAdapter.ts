@@ -191,11 +191,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant = this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall = this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall = this.resumeCall.bind(this);
   }
 
@@ -301,17 +301,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** holds the call for the local user */
   public async holdCall(): Promise<void> {
     await this.callAdapter.holdCall();
   }
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** resumes the call for the local user  */
   public async resumeCall(): Promise<void> {
     await this.callAdapter.resumeCall();
   }
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** adds a new participant to the call by calling them */
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,

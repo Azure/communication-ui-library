@@ -101,11 +101,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public holdCall = async (): Promise<void> => await this.callWithChatAdapter.holdCall();
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public resumeCall = async (): Promise<void> => await this.callWithChatAdapter.resumeCall();
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public addParticipant = async (
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
     options?: StartCallOptions

@@ -25,9 +25,10 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints,
-  StartCallOptions
+  PermissionConstraints
 } from '@azure/communication-calling';
+/** @conditional-compile-remove(PSTN-calls) */
+import { StartCallOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -50,6 +51,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+/** @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-signaling';
 
 /** Context of call, which is a centralized context for all state updates */
@@ -219,11 +221,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
-    /* @conditional-compile-remove(PSTN-Calls) */
+    /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
   }
 
@@ -423,7 +425,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onRemoveParticipant(userId);
   }
 
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
     options?: StartCallOptions
@@ -431,12 +433,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onAddParticipant(participant, options);
   }
 
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     this.handlers.onHold();
   }
 
-  /* @conditional-compile-remove(PSTN-Calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
     this.handlers.onResume();
   }
