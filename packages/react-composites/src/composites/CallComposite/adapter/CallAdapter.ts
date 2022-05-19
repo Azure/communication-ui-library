@@ -238,7 +238,7 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  // PSTN needs conditional compile.
+  /* @conditional-compile-remove(PSTN-Calls) */
   /**
    * Adds a participant to the call by dialing them in
    * @param newUser - Phone number or Communication userId for participant being added
@@ -248,10 +248,12 @@ export interface CallAdapterCallManagement {
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
     options?: StartCallOptions
   ): Promise<void>;
+  /* @conditional-compile-remove(PSTN-Calls) */
   /**
    * Holds the call for the local user
    */
   holdCall(): Promise<void>;
+  /* @conditional-compile-remove(PSTN-Calls) */
   /**
    * resumes the call for the local user.
    */

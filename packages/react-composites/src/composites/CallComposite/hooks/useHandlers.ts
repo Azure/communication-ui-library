@@ -31,12 +31,15 @@ const createCompositeHandlers = memoizeOne(
     onHangUp: async () => {
       await adapter.leaveCall();
     },
+    /* @conditional-compile-remove(PSTN-Calls) */
     onHold: async () => {
       await adapter.holdCall();
     },
+    /* @conditional-compile-remove(PSTN-Calls) */
     onResume: async () => {
       await adapter.resumeCall();
     },
+    /* @conditional-compile-remove(PSTN-Calls) */
     onAddParticipant: async (newUser, caller) => {
       await adapter.addParticipant(newUser, caller);
     },
