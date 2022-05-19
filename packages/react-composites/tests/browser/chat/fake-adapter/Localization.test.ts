@@ -1,18 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
+import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { chatTestSetup } from '../common/chatTestHelpers';
+import { FAKE_CHAT_ADAPTER_ARGS, buildUrlForChatAppUsingFakeAdapter } from './fixture';
 
 test.describe('Localization tests', async () => {
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl, qArgs: { useFrLocale: 'true' } });
-  });
-
-  test('Participants list header should be localized', async ({ pages }) => {
-    const page = pages[0];
+  test('Participants list header should be localized', async ({ serverUrl, page }) => {
+    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, { useFrLocale: 'true' }));
     await page.bringToFront();
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
