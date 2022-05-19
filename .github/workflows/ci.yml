@@ -178,7 +178,12 @@ jobs:
             echo "::set-output name=hasChanged::true"
             exit
           fi
-      - name: Commit new snapshots
+      - name: Setup bot git information
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Commit new perf snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
