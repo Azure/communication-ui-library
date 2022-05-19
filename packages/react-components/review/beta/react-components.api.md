@@ -146,11 +146,7 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
-<<<<<<< HEAD:packages/react-components/stable-review/react-components.api.md
-// @internal (undocumented)
-=======
 // @internal
->>>>>>> origin/main:packages/react-components/review/beta/react-components.api.md
 export const _ComplianceBanner: (props: _ComplianceBannerProps) => JSX.Element;
 
 // @internal (undocumented)
