@@ -18,7 +18,7 @@ const ComplianceBannerStory = (): JSX.Element => {
     <Stack styles={containerStyles} tokens={stackTokens}>
       <Stack horizontal tokens={stackTokens}>
         <Checkbox
-          label="Recoding is in progress"
+          label="Recording is in progress"
           checked={callRecordState}
           onChange={(ev?: unknown, isChecked?: boolean) => setCallRecordState(!!isChecked)}
         />
@@ -58,6 +58,8 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Compliance Banner`,
   component: ComplianceBannerComponent,
   argTypes: {
+    // By default, all props of the primary component are added as controls.
+    // We disable all of them because the story provides checkboxes to control the props.
     callRecordState: hiddenControl,
     callTranscribeState: hiddenControl,
     strings: hiddenControl

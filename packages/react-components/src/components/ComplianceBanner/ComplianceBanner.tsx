@@ -45,14 +45,14 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
 
   // Only update cached props and variant if there is _some_ change in the latest props.
   // This ensures that state machine is only updated if there is an actual change in the props.
-  const shouldUpdatedCached =
+  const shouldUpdateCached =
     props.callRecordState !== cachedProps.current.latestBooleanState.callRecordState ||
     props.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState;
 
   // The following three operations must be performed in this exact order:
 
   // [1]: Update cached state to transition the state machine.
-  if (shouldUpdatedCached) {
+  if (shouldUpdateCached) {
     cachedProps.current = {
       latestBooleanState: props,
       latestStringState: {
@@ -74,7 +74,7 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
 
   // [3]: Transition the state machine again to deal with some end-states.
   if (
-    shouldUpdatedCached &&
+    shouldUpdateCached &&
     cachedProps.current.latestStringState.callRecordState === 'stopped' &&
     cachedProps.current.latestStringState.callTranscribeState === 'stopped'
   ) {

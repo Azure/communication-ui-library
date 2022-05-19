@@ -4,6 +4,11 @@ on:
   # Trigger via 'Actions' on GitHub
   workflow_dispatch:
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy-storybook:
     name: Build and Deploy Storybook
