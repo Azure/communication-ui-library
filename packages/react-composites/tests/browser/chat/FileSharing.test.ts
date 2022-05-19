@@ -35,7 +35,7 @@ test.describe('Filesharing Attach file icon', async () => {
     expect(await page.screenshot()).toMatchSnapshot('filesharing-attach-file-icon-not-visible.png');
   });
 
-  test.only('is visible if filesharing options are defined', async ({ serverUrl, users, page }) => {
+  test('is visible if filesharing options are defined', async ({ serverUrl, users, page }) => {
     await page.goto(buildUrl(serverUrl, users[0], { useFileSharing: 'true' }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
