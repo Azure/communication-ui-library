@@ -4,14 +4,11 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
-import {
-  AudioDeviceInfo,
-  VideoDeviceInfo,
-  Call,
-  PermissionConstraints,
-  StartCallOptions
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { StartCallOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
+/* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier, CommunicationUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

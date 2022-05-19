@@ -23,19 +23,16 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import {
-  AudioDeviceInfo,
-  Call,
-  PermissionConstraints,
-  StartCallOptions,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { StartCallOptions } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 
 /**

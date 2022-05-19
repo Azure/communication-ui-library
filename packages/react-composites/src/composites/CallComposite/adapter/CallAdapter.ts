@@ -17,7 +17,7 @@ import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /** @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-/** @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { StartCallOptions } from '@azure/communication-calling';
 /**
  * Major UI screens shown in the {@link CallComposite}.

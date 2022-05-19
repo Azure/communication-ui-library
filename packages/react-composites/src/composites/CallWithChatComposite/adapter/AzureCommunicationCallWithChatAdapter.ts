@@ -10,10 +10,11 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
-  StartCallOptions,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { StartCallOptions } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -52,12 +53,9 @@ import {
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import {
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
