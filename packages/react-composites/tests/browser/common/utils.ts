@@ -265,6 +265,7 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
   const participantListSelector = dataUiId(IDS.participantList);
   await waitForFunction(
     page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const participantList = document.querySelector(args.participantListSelector) as Element;
       return participantList.children.length === args.numParticipants;
