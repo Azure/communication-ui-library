@@ -152,7 +152,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
               fileExtension={file.extension}
               actionIcon={
                 showSpinner ? (
-                  <Spinner size={SpinnerSize.medium} aria-live={'assertive'} />
+                  <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                 ) : (
                   <IconButton className={iconButtonClassName}>
                     <DownloadIconTrampoline />
