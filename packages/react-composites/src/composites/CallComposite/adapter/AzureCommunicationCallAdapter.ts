@@ -25,7 +25,8 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints
+  PermissionConstraints,
+  StartCallOptions
 } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
@@ -49,6 +50,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+import { PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-signaling';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -413,6 +415,22 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async removeParticipant(userId: string): Promise<void> {
     this.handlers.onRemoveParticipant(userId);
+  }
+
+  // needs to be conditionally compiled
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ): Promise<void> {
+    this.handlers.onAddParticipant(participant, options);
+  }
+
+  public async holdCall(): Promise<void> {
+    this.handlers.onHold();
+  }
+
+  public async resumeCall(): Promise<void> {
+    this.handlers.onResume();
   }
 
   public getState(): CallAdapterState {

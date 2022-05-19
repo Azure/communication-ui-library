@@ -4,8 +4,15 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
-import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  Call,
+  PermissionConstraints,
+  StartCallOptions
+} from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
+import { PhoneNumberIdentifier, CommunicationUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -94,6 +101,14 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
+  public holdCall = async (): Promise<void> => await this.callWithChatAdapter.holdCall();
+  public resumeCall = async (): Promise<void> => await this.callWithChatAdapter.resumeCall();
+  public addParticipant = async (
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ): Promise<void> => {
+    await this.callWithChatAdapter.addParticipant(participant, options);
+  };
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

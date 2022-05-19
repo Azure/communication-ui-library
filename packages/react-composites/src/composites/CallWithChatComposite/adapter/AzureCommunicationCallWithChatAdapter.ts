@@ -10,6 +10,7 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
+  StartCallOptions,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -51,7 +52,12 @@ import {
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -185,6 +191,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+
+    this.addParticipant = this.addParticipant.bind(this);
+    this.holdCall = this.holdCall.bind(this);
+    this.resumeCall = this.resumeCall.bind(this);
   }
 
   /** Join existing Call. */
@@ -288,6 +298,22 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
+  }
+  // PSTN NEEDS Conditional-compile
+  /** holds the call for the local user */
+  public async holdCall(): Promise<void> {
+    await this.callAdapter.holdCall();
+  }
+  /** resumes the call for the local user  */
+  public async resumeCall(): Promise<void> {
+    await this.callAdapter.resumeCall();
+  }
+  /** adds a new participant to the call by calling them */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ): Promise<void> {
+    await this.callAdapter.addParticipant(participant, options);
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {

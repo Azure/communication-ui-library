@@ -23,13 +23,20 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  PermissionConstraints,
+  StartCallOptions,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 
 /**
  * Functionality for managing the current call with chat.
@@ -276,6 +283,15 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  /** @beta */
+  holdCall: () => Promise<void>;
+  /** @beta */
+  resumeCall: () => Promise<void>;
+  /** @beta */
+  addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ): Promise<void>;
 }
 
 /**

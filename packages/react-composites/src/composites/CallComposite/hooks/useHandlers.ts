@@ -31,6 +31,15 @@ const createCompositeHandlers = memoizeOne(
     onHangUp: async () => {
       await adapter.leaveCall();
     },
+    onHold: async () => {
+      await adapter.holdCall();
+    },
+    onResume: async () => {
+      await adapter.resumeCall();
+    },
+    onAddParticipant: async (newUser, caller) => {
+      await adapter.addParticipant(newUser, caller);
+    },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
     },

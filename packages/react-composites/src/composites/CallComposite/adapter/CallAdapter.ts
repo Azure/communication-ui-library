@@ -9,11 +9,17 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  StartCallOptions
 } from '@azure/communication-calling';
 
 import { VideoStreamOptions } from '@internal/react-components';
-import type { CommunicationIdentifierKind } from '@azure/communication-common';
+import type {
+  CommunicationIdentifierKind,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -232,6 +238,24 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
+  // PSTN needs conditional compile.
+  /**
+   * Adds a participant to the call by dialing them in
+   * @param newUser - Phone number or Communication userId for participant being added
+   * @param options - Call options containing ACS number for PSTN calls
+   */
+  addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
+    options?: StartCallOptions
+  ): Promise<void>;
+  /**
+   * Holds the call for the local user
+   */
+  holdCall(): Promise<void>;
+  /**
+   * resumes the call for the local user.
+   */
+  resumeCall(): Promise<void>;
   /**
    * Create the html view for a stream.
    *
