@@ -68,6 +68,33 @@ export type ParticipantListSelector = (
   myUserId: string;
 };
 
+const selectorParticipantList = (
+  userId: string,
+  displayName?: string,
+  remoteParticipants?: {
+    [keys: string]: RemoteParticipantState;
+  },
+  isScreenSharingOn?: boolean,
+  isMuted?: boolean
+): ReturnType<ParticipantListSelector> => {
+  const participants = remoteParticipants
+    ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
+    : [];
+  participants.push({
+    userId: userId,
+    displayName: displayName,
+    isScreenSharing: isScreenSharingOn,
+    isMuted: isMuted,
+    state: 'Connected',
+    // Local participant can never remove themselves.
+    isRemovable: false
+  });
+  return {
+    participants: participants,
+    myUserId: userId
+  };
+};
+
 /**
  * Selects data that drives {@link ParticipantList} component.
  *
@@ -75,31 +102,5 @@ export type ParticipantListSelector = (
  */
 export const participantListSelector: ParticipantListSelector = createSelector(
   [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
-  (
-    userId,
-    displayName,
-    remoteParticipants,
-    isScreenSharingOn,
-    isMuted
-  ): {
-    participants: CallParticipantListParticipant[];
-    myUserId: string;
-  } => {
-    const participants = remoteParticipants
-      ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
-      : [];
-    participants.push({
-      userId: userId,
-      displayName: displayName,
-      isScreenSharing: isScreenSharingOn,
-      isMuted: isMuted,
-      state: 'Connected',
-      // Local participant can never remove themselves.
-      isRemovable: false
-    });
-    return {
-      participants: participants,
-      myUserId: userId
-    };
-  }
+  selectorParticipantList
 );

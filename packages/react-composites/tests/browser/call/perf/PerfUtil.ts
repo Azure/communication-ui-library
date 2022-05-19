@@ -1,37 +1,34 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { TestInfo, Page, expect } from '@playwright/test';
-import { readFile, writeFile } from 'fs/promises';
+import { TestInfo, Page } from '@playwright/test';
+import { writeFile } from 'fs/promises';
 import { TelemetryEvent } from '@internal/acs-ui-common';
 import path from 'path';
 let perfCounts = {};
+let handlers = {};
 
-export const registerPerfCounter = (page: Page) => {
-  perfCounts = {};
-  page.on('console', (msg) => {
+export const registerPerfCounter = (testInfo: TestInfo, page: Page) => {
+  perfCounts[testInfo.title] = {};
+  handlers[testInfo.title] = (msg) => {
     if (msg.text().includes('communication-react:composite-perf-counter')) {
       const perfInstance: TelemetryEvent = JSON.parse(
         msg.text().replace('azure:communication-react:composite-perf-counter:verbose', '')
       );
-      if (perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] === undefined) {
-        perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] = 0;
+      if (perfCounts[testInfo.title][perfInstance?.data?.selectorName + '-' + perfInstance.name] === undefined) {
+        perfCounts[testInfo.title][perfInstance?.data?.selectorName + '-' + perfInstance.name] = 0;
       }
-      perfCounts[perfInstance?.data?.selectorName + '-' + perfInstance.name] += 1;
+      perfCounts[testInfo.title][perfInstance?.data?.selectorName + '-' + perfInstance.name] += 1;
     }
-  });
+  };
+  page.on('console', handlers[testInfo.title]);
 };
 
-export const testPerfSnapshot = async (testInfo: TestInfo) => {
-  const perfSnapshotPath = path.join(testInfo.snapshotDir, testInfo.title);
-  if (testInfo.config.updateSnapshots) {
-    await writeFile(perfSnapshotPath, JSON.stringify(perfCounts));
-  } else {
-    const expectedPerfCount = JSON.parse(await readFile(perfSnapshotPath, { encoding: 'utf-8' }));
-    for (const key in perfCounts) {
-      expect(expectedPerfCount[key]).toBeDefined();
-      if (expectedPerfCount[key]) {
-        expect(perfCounts[key] <= expectedPerfCount[key]);
-      }
-    }
+export const generatePerfSnapshot = async (testInfo: TestInfo, page: Page) => {
+  page.off('console', handlers[testInfo.title]);
+  if (testInfo.status === 'failed') {
+    return;
   }
+
+  const perfSnapshotPath = path.join(testInfo.snapshotDir, testInfo.title);
+  await writeFile(`${perfSnapshotPath}.json`, JSON.stringify(perfCounts[testInfo.title], undefined, 2));
 };

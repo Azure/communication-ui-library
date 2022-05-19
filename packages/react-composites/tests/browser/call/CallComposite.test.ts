@@ -17,7 +17,7 @@ import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 import { IDS } from '../common/constants';
-import { registerPerfCounter, testPerfSnapshot } from './perf/PerfUtil';
+import { registerPerfCounter, generatePerfSnapshot } from './perf/PerfUtil';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -36,7 +36,7 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }, testInfo) => {
-    registerPerfCounter(pages[0]);
+    registerPerfCounter(testInfo, pages[0]);
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.
     // An issue has been filed with the calling team.
@@ -51,7 +51,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     }
   });
 
-  test('composite pages load completely', async ({ pages }) => {
+  test('composite pages load completely', async ({ pages }, testInfo) => {
     const page = pages[0];
     await stubLocalCameraName(page);
     await clickOutsideOfPage(page);
@@ -101,16 +101,17 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   });
 
   test.afterEach(({ pages }, testInfo) => {
-    testPerfSnapshot(testInfo);
+    generatePerfSnapshot(testInfo, pages[0]);
   });
 });
 
 test.describe('Call Composite E2E CallPage Tests', () => {
   // Make sure tests can still run well after retries
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
+  test.beforeEach(async ({ pages, users, serverUrl }, testInfo) => {
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.
     // An issue has been filed with the calling team.
+    registerPerfCounter(testInfo, pages[0]);
     const newTestGuid = generateGUID();
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
@@ -154,6 +155,10 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     });
     await clickOutsideOfPage(page);
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
+  });
+
+  test.afterEach(({ pages }, testInfo) => {
+    generatePerfSnapshot(testInfo, pages[0]);
   });
 });
 

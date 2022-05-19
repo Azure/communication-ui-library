@@ -4,15 +4,17 @@
 import * as reselect from 'reselect';
 import { getIsRecordingActive, getIsTranscriptionActive } from './baseSelectors';
 
+const selectComplianceBanner = (isTranscriptionActive: boolean, isRecordingActive: boolean) => {
+  return {
+    callTranscribeState: isTranscriptionActive,
+    callRecordState: isRecordingActive
+  };
+};
+
 /**
  * @private
  */
 export const complianceBannerSelector = reselect.createSelector(
   [getIsTranscriptionActive, getIsRecordingActive],
-  (isTranscriptionActive, isRecordingActive) => {
-    return {
-      callTranscribeState: isTranscriptionActive,
-      callRecordState: isRecordingActive
-    };
-  }
+  selectComplianceBanner
 );

@@ -6,6 +6,21 @@ import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
+import { VideoGalleryRemoteParticipant } from '@internal/react-components';
+
+const selectLocalAndRemotePIP = (
+  displayName: string | undefined,
+  dominantRemoteParticipant: VideoGalleryRemoteParticipant | undefined,
+  localVideoStreamInfo: ReturnType<typeof localVideoSelector>
+) => {
+  return {
+    localParticipant: {
+      displayName,
+      videoStream: localVideoStreamInfo
+    },
+    dominantRemoteParticipant
+  };
+};
 
 /**
  * Picture in picture in picture needs to display the most-dominant remote speaker, as well as the local participant video.
@@ -13,13 +28,5 @@ import { getDisplayName } from './baseSelectors';
  */
 export const localAndRemotePIPSelector = reselect.createSelector(
   [getDisplayName, dominantRemoteParticipantSelector, localVideoSelector],
-  (displayName, dominantRemoteParticipant, localVideoStreamInfo) => {
-    return {
-      localParticipant: {
-        displayName,
-        videoStream: localVideoStreamInfo
-      },
-      dominantRemoteParticipant
-    };
-  }
+  selectLocalAndRemotePIP
 );

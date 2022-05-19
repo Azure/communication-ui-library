@@ -59,7 +59,7 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
 export const usePagePerParticipantWithCallPermissions = async ({ browser, serverUrl, users }, use) => {
   const pages = await Promise.all(
     users.map(async (user) => {
-      const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
+      const page = await loadNewPageWithPermissionsForCalls(browser, 'about:blank');
       bindConsoleErrorForwarding(page);
       return page;
     })

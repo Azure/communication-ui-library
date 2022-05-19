@@ -51,7 +51,7 @@ const config: PlaywrightTestConfig = {
 
   // Applies to all projects
   use: {
-    headless: true,
+    headless: false,
     video: 'retain-on-failure'
   },
 

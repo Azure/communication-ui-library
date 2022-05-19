@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { participantListSelector } from './participantListSelector';
+import { ParticipantListSelector, participantListSelector } from './participantListSelector';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallingBaseSelectorProps } from '.';
 import { createSelector } from 'reselect';
@@ -20,6 +20,12 @@ export type ParticipantsButtonSelector = (
   myUserId: string;
 };
 
+const selectParticipantsButton = (
+  participantListProps: ReturnType<ParticipantListSelector>
+): ReturnType<ParticipantsButtonSelector> => {
+  return participantListProps;
+};
+
 /**
  * Selects data that drives {@link ParticipantsButton} component.
  *
@@ -27,12 +33,5 @@ export type ParticipantsButtonSelector = (
  */
 export const participantsButtonSelector: ParticipantsButtonSelector = createSelector(
   [participantListSelector],
-  (
-    participantListProps
-  ): {
-    participants: CallParticipantListParticipant[];
-    myUserId: string;
-  } => {
-    return participantListProps;
-  }
+  selectParticipantsButton
 );

@@ -4,7 +4,13 @@
 import { CallingBaseSelectorProps, getDeviceManager, getDiagnostics, getLatestErrors } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+import {
+  CallClientState,
+  CallErrors,
+  CallErrorTarget,
+  DeviceManagerState,
+  DiagnosticsCallFeatureState
+} from '@internal/calling-stateful-client';
 import { DiagnosticQuality } from '@azure/communication-calling';
 
 /**
@@ -17,6 +23,82 @@ export type ErrorBarSelector = (
   props: CallingBaseSelectorProps
 ) => {
   activeErrorMessages: ActiveErrorMessage[];
+};
+
+const selectErrorBar = (
+  latestErrors: CallErrors,
+  diagnostics: DiagnosticsCallFeatureState | undefined,
+  deviceManager: DeviceManagerState
+): ReturnType<ErrorBarSelector> => {
+  // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
+  // There are several options for the ordering:
+  //   - Sorted by when the errors happened (latest first / oldest first).
+  //   - Stable sort by error type.
+  //
+  // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
+  // have timestamps for errors.
+  const activeErrorMessages: ActiveErrorMessage[] = [];
+
+  // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+  if (
+    diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
+    diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
+  ) {
+    activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+  }
+  if (diagnostics?.media.latest.noSpeakerDevicesEnumerated) {
+    activeErrorMessages.push({ type: 'callNoSpeakerFound' });
+  }
+  if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
+    activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
+  }
+  if (deviceManager.deviceAccess?.audio === false || diagnostics?.media.latest.microphoneNotFunctioning) {
+    activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
+  }
+  if (diagnostics?.media.latest.microphoneMuteUnexpectedly) {
+    activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
+  }
+  if (diagnostics?.media.latest.microphonePermissionDenied) {
+    activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
+  }
+
+  if (deviceManager.deviceAccess?.video === false) {
+    activeErrorMessages.push({ type: 'callCameraAccessDenied' });
+  } else {
+    if (diagnostics?.media.latest.cameraFreeze) {
+      activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+    }
+  }
+
+  if (diagnostics?.media.latest.cameraPermissionDenied) {
+    activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
+  }
+  if (diagnostics?.media.latest.screenshareRecordingDisabled) {
+    activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
+  }
+
+  // Prefer to show errors with privacy implications.
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.stopVideo', 'stopVideoGeneric');
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mute', 'muteGeneric');
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.stopScreenSharing', 'stopScreenShareGeneric');
+
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.startVideo', 'startVideoGeneric');
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
+
+  if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
+    appendActiveErrorIfDefined(
+      activeErrorMessages,
+      latestErrors,
+      'CallAgent.join',
+      'failedToJoinCallInvalidMeetingLink'
+    );
+  } else {
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
+  }
+
+  // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
+  activeErrorMessages.splice(maxErrorCount);
+  return { activeErrorMessages: activeErrorMessages };
 };
 
 /**
@@ -33,77 +115,7 @@ export type ErrorBarSelector = (
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
   [getLatestErrors, getDiagnostics, getDeviceManager],
-  (latestErrors: CallErrors, diagnostics, deviceManager): { activeErrorMessages: ActiveErrorMessage[] } => {
-    // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
-    // There are several options for the ordering:
-    //   - Sorted by when the errors happened (latest first / oldest first).
-    //   - Stable sort by error type.
-    //
-    // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
-    // have timestamps for errors.
-    const activeErrorMessages: ActiveErrorMessage[] = [];
-
-    // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
-    if (
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
-    ) {
-      activeErrorMessages.push({ type: 'callNetworkQualityLow' });
-    }
-    if (diagnostics?.media.latest.noSpeakerDevicesEnumerated) {
-      activeErrorMessages.push({ type: 'callNoSpeakerFound' });
-    }
-    if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
-      activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
-    }
-    if (deviceManager.deviceAccess?.audio === false || diagnostics?.media.latest.microphoneNotFunctioning) {
-      activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
-    }
-    if (diagnostics?.media.latest.microphoneMuteUnexpectedly) {
-      activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
-    }
-    if (diagnostics?.media.latest.microphonePermissionDenied) {
-      activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
-    }
-
-    if (deviceManager.deviceAccess?.video === false) {
-      activeErrorMessages.push({ type: 'callCameraAccessDenied' });
-    } else {
-      if (diagnostics?.media.latest.cameraFreeze) {
-        activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
-      }
-    }
-
-    if (diagnostics?.media.latest.cameraPermissionDenied) {
-      activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
-    }
-    if (diagnostics?.media.latest.screenshareRecordingDisabled) {
-      activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
-    }
-
-    // Prefer to show errors with privacy implications.
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.stopVideo', 'stopVideoGeneric');
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mute', 'muteGeneric');
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.stopScreenSharing', 'stopScreenShareGeneric');
-
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.startVideo', 'startVideoGeneric');
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-
-    if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
-      appendActiveErrorIfDefined(
-        activeErrorMessages,
-        latestErrors,
-        'CallAgent.join',
-        'failedToJoinCallInvalidMeetingLink'
-      );
-    } else {
-      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
-    }
-
-    // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
-    activeErrorMessages.splice(maxErrorCount);
-    return { activeErrorMessages: activeErrorMessages };
-  }
+  selectErrorBar
 );
 
 const appendActiveErrorIfDefined = (

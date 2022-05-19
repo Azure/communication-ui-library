@@ -230,6 +230,24 @@ jobs:
               repo: context.repo.repo,
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
+      - name: Check for perf snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages\react-composites\tests\ -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
+      - name: Commit new snapshots
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
+          git add packages\react-composites\tests\*.json
+          git commit --no-verify -m 'Update Calling perf snapshot'
+          git push
 
   call_with_chat_composite_automation_test:
     needs: get_matrix
