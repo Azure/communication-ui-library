@@ -188,7 +188,7 @@ jobs:
         run: |
           git checkout ${{ github.event.pull_request.head.ref }}
           git pull
-          git add packages/react-composites/tests/*.json
+          git add packages/react-composites/tests/**/*.json
           git commit --no-verify -m 'Update Calling perf snapshot'
           git push
 
