@@ -1,9 +1,6 @@
 {
   "type": "none",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "Support adding method conditionally to interfaces",
   "packageName": "@internal/acs-ui-common",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
   "dependentChangeType": "none"
