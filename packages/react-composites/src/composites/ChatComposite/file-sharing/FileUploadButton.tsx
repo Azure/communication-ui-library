@@ -49,6 +49,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
 
   const iconButtonClassName = mergeStyles({
     color: 'unset',
+    width: '1.5rem',
+    height: '1.5rem',
     ':hover': {
       color: 'unset',
       background: 'transparent'

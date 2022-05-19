@@ -100,6 +100,8 @@ const actionIconStyle = { height: '1rem' };
 
 const iconButtonClassName = mergeStyles({
   color: 'unset',
+  width: '1rem',
+  height: '1rem',
   background: 'transparent',
   ':hover': {
     color: 'unset',

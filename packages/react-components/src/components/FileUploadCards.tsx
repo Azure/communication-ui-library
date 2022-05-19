@@ -37,6 +37,8 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const iconButtonClassName = mergeStyles({
     color: 'unset',
     background: 'transparent',
+    width: '1rem',
+    height: '1rem',
     ':hover': {
       color: 'unset',
       background: 'transparent'
