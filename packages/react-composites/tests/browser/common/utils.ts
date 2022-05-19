@@ -256,6 +256,26 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   );
 };
 
+/**
+ * Helper to wait for a number of participants in partipants in page
+ * @param page - the page where the participant list element will be queried
+ * @param numParticipants - number of participants to wait for
+ */
+export const waitForParticipants = async (page: Page, numParticipants: number): Promise<void> => {
+  const participantListSelector = dataUiId(IDS.participantList);
+  await waitForFunction(
+    page,
+    (args: any) => {
+      const participantList = document.querySelector(args.participantListSelector) as Element;
+      return participantList.children.length === args.numParticipants;
+    },
+    {
+      participantListSelector: participantListSelector,
+      numParticipants: numParticipants
+    }
+  );
+};
+
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
@@ -295,6 +315,7 @@ export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
  * Helper function to determine whether to skip a test for a beta feature in stable test run.
  */
 export const isTestProfileStableFlavor = (): boolean => {
+  return false;
   const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
   if (flavor === 'stable') {
     return true;
