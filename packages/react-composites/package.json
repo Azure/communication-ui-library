@@ -68,8 +68,7 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0",
-    "terser-webpack-plugin": "~5.3.1"
+    "uuid": "^8.1.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.4.3-beta.1 || 1.4.4",
@@ -152,6 +151,7 @@
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
+    "terser-webpack-plugin": "~5.3.1",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.12",
     "ts-node": "^9.1.1",
