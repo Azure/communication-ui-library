@@ -10,7 +10,7 @@ import {
   chatMessageDateStyle,
   chatMessageFailedTagStyle
 } from '../styles/ChatMessageComponent.styles';
-import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
+import { generateDefaultTimestamp } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
@@ -20,8 +20,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
-/* @conditional-compile-remove(dateTimeCustomization) */
-import { useLocale } from '../../localization';
+import { ComponentLocale, useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -66,12 +65,25 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
+const generateCustomizedTimestamp = (
+  props: ChatMessageComponentAsMessageBubbleProps,
+  createdOn: Date,
+  locale: ComponentLocale
+): string => {
+  /* @conditional-compile-remove(dateTimeCustomization) */
+  return props.onDisplayDateTimeString
+    ? props.onDisplayDateTimeString(createdOn)
+    : locale.onDisplayDateTimeString
+    ? locale.onDisplayDateTimeString(createdOn)
+    : '';
+
+  return '';
+};
 /** @private */
 const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
-  /* @conditional-compile-remove(dateTimeCustomization) */
-  const { onDisplayDateTimeString: onDisplayDateTimeStringLocale } = useLocale();
+  const locale = useLocale();
 
   const {
     userId,
@@ -87,27 +99,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    fileDownloadHandler,
-    /* @conditional-compile-remove(dateTimeCustomization) */
-    onDisplayDateTimeString
+    fileDownloadHandler
   } = props;
 
-  // onDisplayDateTimeString from messagethread overwrites onDisplayDateTimeString from locale overwrites default
-  let formattedTimestamp: string | undefined = undefined;
-  if (message.createdOn) {
-    // default
-    formattedTimestamp = showDate
-      ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-      : formatTimeForChatMessage(message.createdOn);
+  const defaultTimeStamp = message.createdOn
+    ? generateDefaultTimestamp(message.createdOn, showDate, strings)
+    : undefined;
 
-    /* @conditional-compile-remove(dateTimeCustomization) */
-    if (onDisplayDateTimeString) {
-      formattedTimestamp = onDisplayDateTimeString(message.createdOn);
-    } else if (onDisplayDateTimeStringLocale) {
-      /* @conditional-compile-remove(dateTimeCustomization) */
-      formattedTimestamp = onDisplayDateTimeStringLocale(message.createdOn);
-    }
-  }
+  // onDisplayDateTimeString from props overwrite onDisplayDateTimeString from locale
+
+  const customTimestamp = message.createdOn ? generateCustomizedTimestamp(props, message.createdOn, locale) : '';
+
+  const formattedTimestamp = customTimestamp || defaultTimeStamp;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);

@@ -114,3 +114,18 @@ const dayToDayName = (day: number, dateStrings: MessageThreadStrings): string =>
       throw new Error(`Invalid day [${day}] passed`);
   }
 };
+
+/**
+ * @private
+ */
+export const generateDefaultTimestamp = (
+  createdOn: Date,
+  showDate: boolean | undefined,
+  strings: MessageThreadStrings
+): string => {
+  const formattedTimestamp = showDate
+    ? formatTimestampForChatMessage(createdOn, new Date(), strings)
+    : formatTimeForChatMessage(createdOn);
+
+  return formattedTimestamp;
+};
