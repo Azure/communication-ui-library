@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, IconButton, mergeStyles, Spinner, SpinnerSize } from '@fluentui/react';
+import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
+import { iconButtonClassName } from './styles/IconButton.styles';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -97,17 +98,6 @@ const fileDownloadCardsStyle = {
 };
 
 const actionIconStyle = { height: '1rem' };
-
-const iconButtonClassName = mergeStyles({
-  color: 'unset',
-  width: '1rem',
-  height: '1rem',
-  background: 'transparent',
-  ':hover': {
-    color: 'unset',
-    background: 'transparent'
-  }
-});
 
 /**
  * @internal
