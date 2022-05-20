@@ -1,0 +1,15 @@
+{
+  "getPage-SELECTOR_PARENT_RENDER": 1,
+  "selectDevicesButton-SELECTOR_PARENT_RENDER": 53,
+  "selectDevicePermission-SELECTOR_PARENT_RENDER": 53,
+  "selectErrorBar-SELECTOR_PARENT_RENDER": 16,
+  "selectCameraButton-SELECTOR_PARENT_RENDER": 37,
+  "selectLocalPreview-SELECTOR_PARENT_RENDER": 37,
+  "getLocalMicrophoneEnabled-SELECTOR_PARENT_RENDER": 37,
+  "selectCameraButton-SELECTOR_RETURN_CHANGED": 5,
+  "selectLocalPreview-SELECTOR_RETURN_CHANGED": 5,
+  "selectDevicesButton-SELECTOR_RETURN_CHANGED": 10,
+  "selectDevicePermission-SELECTOR_RETURN_CHANGED": 10,
+  "selectErrorBar-SELECTOR_RETURN_CHANGED": 5,
+  "getLocalMicrophoneEnabled-SELECTOR_RETURN_CHANGED": 29
+}
