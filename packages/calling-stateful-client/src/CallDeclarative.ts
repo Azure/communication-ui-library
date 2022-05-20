@@ -62,19 +62,16 @@ class ProxyCall implements ProxyHandler<Call> {
           return await target.stopScreenSharing(...args);
         }, 'Call.stopScreenSharing');
       }
-      /* @conditional-compile-remove(PSTN-calls) */
       case 'hold': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['hold']>) {
           return await target.hold(...args);
         }, 'Call.hold');
       }
-      /* @conditional-compile-remove(PSTN-calls) */
       case 'resume': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['resume']>) {
           return await target.resume(...args);
         }, 'Call.resume');
       }
-      /* @conditional-compile-remove(PSTN-calls) */
       case 'addParticipant': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['addParticipant']>) {
           return await target.addParticipant(...args);
