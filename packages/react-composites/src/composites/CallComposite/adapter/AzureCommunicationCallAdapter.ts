@@ -27,8 +27,6 @@ import {
   RemoteParticipant,
   PermissionConstraints
 } from '@azure/communication-calling';
-/** @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -51,8 +49,6 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
-/** @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-signaling';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -221,10 +217,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.toggleHoldCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.addParticipant.bind(this);
   }
 
   public dispose(): void {
@@ -421,19 +413,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async removeParticipant(userId: string): Promise<void> {
     this.handlers.onRemoveParticipant(userId);
-  }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
-  }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  public async toggleHoldCall(): Promise<void> {
-    this.handlers.onToggleHold();
   }
 
   public getState(): CallAdapterState {

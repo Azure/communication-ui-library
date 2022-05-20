@@ -5,16 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
-/* @conditional-compile-remove(PSTN-calls) */
-import {
-  PhoneNumberIdentifier,
-  CommunicationUserIdentifier,
-  UnknownIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -103,15 +94,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
-  /* @conditional-compile-remove(PSTN-calls) */
-  public toggleHoldCall = async (): Promise<void> => await this.callWithChatAdapter.toggleHoldCall();
-  /* @conditional-compile-remove(PSTN-calls) */
-  public addParticipant = async (
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await this.callWithChatAdapter.addParticipant(participant, options);
-  };
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

@@ -15,15 +15,7 @@ import type {
 import { VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/** @conditional-compile-remove(PSTN-calls) */
-import {
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -240,23 +232,6 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * Adds a participant to the call by dialing them in
-   * @param participant - Phone number or Communication userId for participant being added
-   * @param options - Call options containing ACS number for PSTN calls
-   * @beta
-   */
-  addParticipant(
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * Holds the call for the local user
-   * @beta
-   */
-  toggleHoldCall(): Promise<void>;
   /**
    * Create the html view for a stream.
    *

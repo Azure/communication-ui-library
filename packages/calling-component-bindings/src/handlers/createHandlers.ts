@@ -13,7 +13,12 @@ import {
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -49,10 +54,7 @@ export type CallingHandlers = {
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (
-    participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: AddPhoneNumberOptions
-  ) => Promise<void>;
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
@@ -319,19 +321,13 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onAddParticipant = async (
-      participant:
-        | CommunicationUserIdentifier
-        | PhoneNumberIdentifier
-        | UnknownIdentifier
-        | MicrosoftTeamsUserIdentifier,
+      participant: CommunicationIdentifier,
       options?: AddPhoneNumberOptions
     ): Promise<void> => {
-      const newACSorTeamsUser = participant as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
-      const newPSTNUser = participant as PhoneNumberIdentifier;
-      if (newPSTNUser) {
-        await call?.addParticipant(newPSTNUser, options);
-      } else if (newACSorTeamsUser) {
-        await call?.addParticipant(newACSorTeamsUser);
+      if (isPhoneNumberIdentifier(participant)) {
+        await call?.addParticipant(participant, options);
+      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+        await call?.addParticipant(participant);
       }
     };
 
