@@ -7,6 +7,7 @@ import * as reselect from 'reselect';
 import {
   CallingBaseSelectorProps,
   getCallExists,
+  getCallState,
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
@@ -148,3 +149,27 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
     };
   }
 );
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Selector type for the hold button
+ * @beta
+ */
+export type HoldButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  state: string;
+  checked: boolean;
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Selector for the hold button
+ */
+export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
+  return {
+    state: callState,
+    checked: callState === 'localHold' ? true : false
+  };
+});
