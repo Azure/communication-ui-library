@@ -54,7 +54,7 @@ export type CallingHandlers = {
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (
     participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: StartCallOptions
+    options?: AddPhoneNumberOptions
   ) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
