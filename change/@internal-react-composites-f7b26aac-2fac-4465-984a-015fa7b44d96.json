@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Change Microphone Contextual Menu header text to Audio Device when no speakers are detected",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
