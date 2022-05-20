@@ -92,7 +92,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onDisplayDateTimeString
   } = props;
 
-  // onDisplayDateTimeString overwrites onDisplayDateTimeString overwrites default
+  // onDisplayDateTimeString from messagethread overwrites onDisplayDateTimeString from locale overwrites default
   let formattedTimestamp: string | undefined = undefined;
   if (message.createdOn) {
     // default
