@@ -9,8 +9,12 @@ import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier, CommunicationUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-signaling';
+import {
+  PhoneNumberIdentifier,
+  CommunicationUserIdentifier,
+  UnknownIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */

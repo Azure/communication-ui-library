@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { ActiveErrorMessage } from '@internal/react-components';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
@@ -84,7 +85,7 @@ export type CallingHandlers = {
     onHold: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: StartCallOptions) => Promise<void>;
+    onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     onResume: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;

@@ -11,12 +11,9 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import {
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
