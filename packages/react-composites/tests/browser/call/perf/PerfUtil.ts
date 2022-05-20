@@ -32,6 +32,12 @@ export const generatePerfSnapshot = async (testInfo: TestInfo, page: Page) => {
     return;
   }
 
-  const perfSnapshotPath = path.join(testInfo.snapshotDir, testInfo.title, '-', testInfo.snapshotSuffix);
-  await writeFile(`${perfSnapshotPath}.json`, JSON.stringify(perfCounts[testInfo.title], undefined, 2));
+  const perfSnapshotPath = path.join(
+    testInfo.snapshotDir,
+    testInfo.title + '-' + testInfo.project.name + '-' + testInfo.snapshotSuffix
+  );
+  await writeFile(
+    `${perfSnapshotPath.split(' ').join('-')}.json`,
+    JSON.stringify(perfCounts[testInfo.title], undefined, 2)
+  );
 };
