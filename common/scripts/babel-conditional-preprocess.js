@@ -81,6 +81,10 @@ exports.default = babelHelper.declare((_api, opts) => {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
 
+      TSMethodSignature(path) {
+        Handle(path, featureSet, stabilizedFeatureSet);
+      },
+
       Expression(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
