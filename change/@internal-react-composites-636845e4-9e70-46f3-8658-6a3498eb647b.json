@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add PSTN Calling handlers to the Adapters.",
+  "comment": "add placeholders for PSTN functions in the adapters for when time to add to composites",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
