@@ -89,6 +89,10 @@ export interface B2 {
   sameOld: number;
   /* @conditional-compile-remove(demo) */
   somethingNew: number;
+  /* @conditional-compile-remove(demo) */
+  aNewMethod(a: number): number;
+  /* @conditional-compile-remove(demo) */
+  get property(): number;
 }
 
 /**

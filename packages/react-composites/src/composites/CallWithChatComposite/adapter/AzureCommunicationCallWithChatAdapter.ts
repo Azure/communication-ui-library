@@ -13,8 +13,6 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -54,8 +52,6 @@ import {
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier, UnknownIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -189,12 +185,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.addParticipant = this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.holdCall = this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.resumeCall = this.resumeCall.bind(this);
   }
 
   /** Join existing Call. */
@@ -298,24 +288,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
-  }
-  /* @conditional-compile-remove(PSTN-calls) */
-  /** holds the call for the local user */
-  public async holdCall(): Promise<void> {
-    await this.callAdapter.holdCall();
-  }
-  /* @conditional-compile-remove(PSTN-calls) */
-  /** resumes the call for the local user  */
-  public async resumeCall(): Promise<void> {
-    await this.callAdapter.resumeCall();
-  }
-  /* @conditional-compile-remove(PSTN-calls) */
-  /** adds a new participant to the call by calling them */
-  public async addParticipant(
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void> {
-    await this.callAdapter.addParticipant(participant, options);
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {

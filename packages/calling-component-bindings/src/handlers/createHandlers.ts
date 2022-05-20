@@ -13,7 +13,12 @@ import {
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -45,17 +50,12 @@ export type CallingHandlers = {
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onHold: () => Promise<void>;
+  onToggleHold: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (
-    participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
-    options?: AddPhoneNumberOptions
-  ) => Promise<void>;
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  onResume: () => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -217,7 +217,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onHold = async (): Promise<void> => await call?.hold();
+    const onToggleHold = async (): Promise<void> =>
+      call?.state === 'LocalHold' ? await call?.resume() : await call?.hold();
 
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
@@ -320,29 +321,20 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onAddParticipant = async (
-      participant:
-        | CommunicationUserIdentifier
-        | PhoneNumberIdentifier
-        | UnknownIdentifier
-        | MicrosoftTeamsUserIdentifier,
+      participant: CommunicationIdentifier,
       options?: AddPhoneNumberOptions
     ): Promise<void> => {
-      const newACSorTeamsUser = participant as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
-      const newPSTNUser = participant as PhoneNumberIdentifier;
-      if (newPSTNUser) {
-        await call?.addParticipant(newPSTNUser, options);
-      } else if (newACSorTeamsUser) {
-        await call?.addParticipant(newACSorTeamsUser);
+      if (isPhoneNumberIdentifier(participant)) {
+        await call?.addParticipant(participant, options);
+      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+        await call?.addParticipant(participant);
       }
     };
-
-    /* @conditional-compile-remove(PSTN-calls) */
-    const onResume = async (): Promise<void> => await call?.resume();
 
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
-      onHold,
+      onToggleHold,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
@@ -357,8 +349,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       onRemoveParticipant,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant,
-      /* @conditional-compile-remove(PSTN-calls) */
-      onResume,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView

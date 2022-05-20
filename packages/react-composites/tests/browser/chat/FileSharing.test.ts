@@ -7,7 +7,8 @@ import {
   stubMessageTimestamps,
   dataUiId,
   waitForSelector,
-  clickOutsideOfPage
+  clickOutsideOfPage,
+  waitForParticipants
 } from '../common/utils';
 import {
   chatTestSetup,
@@ -30,6 +31,7 @@ test.describe('Filesharing Attach file icon', async () => {
     await page.goto(buildUrl(serverUrl, users[0]));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-attach-file-icon-not-visible.png');
   });
 
@@ -37,6 +39,7 @@ test.describe('Filesharing Attach file icon', async () => {
     await page.goto(buildUrl(serverUrl, users[0], { useFileSharing: 'true' }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-attach-file-icon-visible.png');
   });
 });
@@ -68,6 +71,7 @@ test.describe('Filesharing SendBox', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-filecards.png');
   });
 });
@@ -101,6 +105,7 @@ test.describe('Filesharing ProgressBar', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-progress-bar-visible.png');
   });
 
@@ -126,6 +131,7 @@ test.describe('Filesharing ProgressBar', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
   });
 
@@ -151,6 +157,7 @@ test.describe('Filesharing ProgressBar', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot(
       'filesharing-progress-bar-not-visible-progress-greater-than-one.png'
     );
@@ -180,6 +187,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
   });
 
@@ -200,6 +208,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     await waitForChatCompositeToLoad(page);
     await sendMessage(page, 'Hi');
     await stubMessageTimestamps(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
   });
 });
@@ -234,6 +243,7 @@ test.describe('Filesharing Global Errorbar', async () => {
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
     await clickOutsideOfPage(page);
+    await waitForParticipants(page, users.length);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-download-error.png');
   });
 });
@@ -269,7 +279,7 @@ test.describe('Filesharing Message Thread', async () => {
       serverUrl
     });
   });
-  test('contains File Download Card', async ({ pages }) => {
+  test('contains File Download Card', async ({ pages, users }) => {
     const testMessageText = 'Hello!';
     const page0 = pages[0];
 
@@ -279,12 +289,14 @@ test.describe('Filesharing Message Thread', async () => {
     await page0.waitForSelector(dataUiId('file-download-card-group'));
 
     await stubMessageTimestamps(page0);
+    await waitForParticipants(page0, users.length);
     expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
 
     const page1 = pages[1];
     await waitForTypingIndicatorHidden(page1);
 
     await stubMessageTimestamps(page1);
+    await waitForParticipants(page1, users.length);
     expect(await page1.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
@@ -321,7 +333,7 @@ test.describe('Filesharing Edit Message', async () => {
     });
   });
 
-  test('displays file upload cards', async ({ pages }) => {
+  test('displays file upload cards', async ({ pages, users }) => {
     const testMessageText = 'Hello!';
     const page0 = pages[0];
 
@@ -336,6 +348,7 @@ test.describe('Filesharing Edit Message', async () => {
     await page0.waitForSelector('[id="editbox"]');
 
     await stubMessageTimestamps(page0);
+    await waitForParticipants(page0, users.length);
     expect(await page0.screenshot()).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });

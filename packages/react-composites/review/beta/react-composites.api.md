@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -29,20 +28,17 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
-import { PhoneNumberIdentifier } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -128,18 +124,12 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    // @beta
-    addParticipant(participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
-    holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
-    resumeCall(): Promise<void>;
     startCall(participants: string[]): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -363,8 +353,6 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @public
 export interface CallWithChatAdapterManagement {
-    // @beta (undocumented)
-    addParticipant(participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -374,8 +362,6 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    // @beta (undocumented)
-    holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -388,8 +374,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
-    resumeCall: () => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -594,6 +578,7 @@ export interface CallWithChatCompositeStrings {
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButton: string;
+    moreDrawerAudioDeviceMenuTitle: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
