@@ -28,7 +28,7 @@ import {
   PermissionConstraints
 } from '@azure/communication-calling';
 /** @conditional-compile-remove(PSTN-calls) */
-import { StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -428,7 +428,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
-    options?: StartCallOptions
+    options?: AddPhoneNumberOptions
   ): Promise<void> {
     this.handlers.onAddParticipant(participant, options);
   }

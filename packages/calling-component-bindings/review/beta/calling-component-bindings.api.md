@@ -23,6 +23,7 @@ import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -83,7 +84,7 @@ export type CallingHandlers = {
     onHold: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier, options?: StartCallOptions) => Promise<void>;
+    onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: StartCallOptions) => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     onResume: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;

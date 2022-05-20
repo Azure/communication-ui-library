@@ -9,7 +9,14 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import {
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -46,7 +53,7 @@ export type CallingHandlers = {
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (
-    participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
+    participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
     options?: StartCallOptions
   ) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -314,15 +321,19 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onAddParticipant = async (
-      participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier,
-      options?: StartCallOptions
+      participant:
+        | CommunicationUserIdentifier
+        | PhoneNumberIdentifier
+        | UnknownIdentifier
+        | MicrosoftTeamsUserIdentifier,
+      options?: AddPhoneNumberOptions
     ): Promise<void> => {
+      const newACSorTeamsUser = participant as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
       const newPSTNUser = participant as PhoneNumberIdentifier;
-      const newACSUser = participant as CommunicationUserIdentifier;
       if (newPSTNUser) {
-        await call?.addParticipant({ phoneNumber: newPSTNUser.phoneNumber }, options);
-      } else if (newACSUser) {
-        await call?.addParticipant({ communicationUserId: newACSUser.communicationUserId }, options);
+        await call?.addParticipant(newPSTNUser, options);
+      } else if (newACSorTeamsUser) {
+        await call?.addParticipant(newACSorTeamsUser);
       }
     };
 

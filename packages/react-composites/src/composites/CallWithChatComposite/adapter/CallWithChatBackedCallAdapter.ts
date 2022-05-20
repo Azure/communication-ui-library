@@ -6,10 +6,11 @@ import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier, CommunicationUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-signaling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -104,8 +105,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public resumeCall = async (): Promise<void> => await this.callWithChatAdapter.resumeCall();
   /* @conditional-compile-remove(PSTN-calls) */
   public addParticipant = async (
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
-    options?: StartCallOptions
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
+    options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await this.callWithChatAdapter.addParticipant(participant, options);
   };

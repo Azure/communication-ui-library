@@ -14,7 +14,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -55,7 +55,7 @@ import {
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier, UnknownIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -312,8 +312,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(PSTN-calls) */
   /** adds a new participant to the call by calling them */
   public async addParticipant(
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
-    options?: StartCallOptions
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
+    options?: AddPhoneNumberOptions
   ): Promise<void> {
     await this.callAdapter.addParticipant(participant, options);
   }

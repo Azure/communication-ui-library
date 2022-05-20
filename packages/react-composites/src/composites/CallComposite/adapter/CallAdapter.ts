@@ -16,9 +16,14 @@ import { VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /** @conditional-compile-remove(PSTN-calls) */
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -243,8 +248,8 @@ export interface CallAdapterCallManagement {
    * @beta
    */
   addParticipant(
-    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier,
-    options?: StartCallOptions
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier,
+    options?: AddPhoneNumberOptions
   ): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
