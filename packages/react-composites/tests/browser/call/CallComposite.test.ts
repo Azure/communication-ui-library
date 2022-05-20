@@ -51,7 +51,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     }
   });
 
-  test('composite pages load completely', async ({ pages }, testInfo) => {
+  test('composite pages load completely', async ({ pages }) => {
     const page = pages[0];
     await stubLocalCameraName(page);
     await clickOutsideOfPage(page);

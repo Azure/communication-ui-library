@@ -5,6 +5,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';
 import { getDeviceManager } from './baseSelectors';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function selectLocalVideoCameraCycleButton(deviceManager: DeviceManagerState) {
   return {
     cameras: deviceManager.cameras,

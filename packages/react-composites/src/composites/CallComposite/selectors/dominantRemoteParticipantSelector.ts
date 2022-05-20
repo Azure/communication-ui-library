@@ -6,6 +6,7 @@ import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getDominantSpeakers, getRemoteParticipants } from './baseSelectors';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function selectDominantRemoteParticipant(
   remoteParticipants?: {
     [keys: string]: RemoteParticipantState;

@@ -56,9 +56,9 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipantWithCallPermissions = async ({ browser, serverUrl, users }, use) => {
+export const usePagePerParticipantWithCallPermissions = async ({ browser, users }, use) => {
   const pages = await Promise.all(
-    users.map(async (user) => {
+    users.map(async () => {
       const page = await loadNewPageWithPermissionsForCalls(browser, 'about:blank');
       bindConsoleErrorForwarding(page);
       return page;

@@ -8,6 +8,7 @@ import { getDeviceManager, getLocalVideoStreams } from './baseSelectors';
 import { callStatusSelector } from './callStatusSelector';
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function selectLocalVideo(
   callStatus: {
     callStatus: SDKCallStatus;

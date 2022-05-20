@@ -4,10 +4,11 @@ import { TestInfo, Page } from '@playwright/test';
 import { writeFile } from 'fs/promises';
 import type { TelemetryEvent } from '@internal/acs-ui-common';
 import path from 'path';
-let perfCounts = {};
-let handlers = {};
 
-export const registerPerfCounter = (testInfo: TestInfo, page: Page) => {
+const perfCounts = {};
+const handlers = {};
+
+export const registerPerfCounter = (testInfo: TestInfo, page: Page): void => {
   perfCounts[testInfo.title] = {};
   handlers[testInfo.title] = (msg) => {
     if (msg.text().includes('communication-react:composite-perf-counter')) {
@@ -23,7 +24,7 @@ export const registerPerfCounter = (testInfo: TestInfo, page: Page) => {
   page.on('console', handlers[testInfo.title]);
 };
 
-export const generatePerfSnapshot = async (testInfo: TestInfo, page: Page) => {
+export const generatePerfSnapshot = async (testInfo: TestInfo, page: Page): Promise<void> => {
   if (handlers[testInfo.title] !== undefined) {
     page.off('console', handlers[testInfo.title]);
   }

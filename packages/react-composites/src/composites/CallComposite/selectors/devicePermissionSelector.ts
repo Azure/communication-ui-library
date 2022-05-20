@@ -5,6 +5,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getDeviceManager } from './baseSelectors';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function selectDevicePermission(deviceManager: DeviceManagerState) {
   return {
     video: deviceManager.deviceAccess ? deviceManager.deviceAccess.video : undefined,

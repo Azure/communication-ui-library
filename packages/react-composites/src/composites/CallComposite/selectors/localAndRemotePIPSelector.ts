@@ -8,6 +8,7 @@ import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSe
 import { getDisplayName } from './baseSelectors';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const selectLocalAndRemotePIP = (
   displayName: string | undefined,
   dominantRemoteParticipant: VideoGalleryRemoteParticipant | undefined,

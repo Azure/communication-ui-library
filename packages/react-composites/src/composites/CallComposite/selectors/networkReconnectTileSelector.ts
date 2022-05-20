@@ -6,6 +6,7 @@ import * as reselect from 'reselect';
 import { getUserFacingDiagnostics } from './baseSelectors';
 import { lobbySelector } from './lobbySelector';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function selectNetworkReconnectTile(
   diagnostics: DiagnosticsCallFeatureState | undefined,
   lobbyProps: ReturnType<typeof lobbySelector>
