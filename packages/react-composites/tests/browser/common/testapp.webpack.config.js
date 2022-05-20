@@ -35,6 +35,7 @@ module.exports = (appDir, babelConfig) => {
         new TerserPlugin({
           parallel: true,
           terserOptions: {
+            // Keep the function name so perf counter can figure out selector names
             keep_fnames: true
           }
         })

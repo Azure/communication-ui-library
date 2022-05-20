@@ -24,7 +24,10 @@ export const registerPerfCounter = (testInfo: TestInfo, page: Page) => {
 };
 
 export const generatePerfSnapshot = async (testInfo: TestInfo, page: Page) => {
-  page.off('console', handlers[testInfo.title]);
+  if (handlers[testInfo.title] !== undefined) {
+    page.off('console', handlers[testInfo.title]);
+  }
+
   if (testInfo.status === 'failed') {
     return;
   }
