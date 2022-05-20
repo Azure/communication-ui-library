@@ -310,6 +310,8 @@ export interface StubOptions {
   stubMessageTimestamps?: boolean;
   // Disable tooltips on all buttons in the call control bar.
   dismissTooltips?: boolean;
+  // Hide chat message actions icon button.
+  dismissChatMessageActions?: boolean;
 }
 
 /**
@@ -329,6 +331,9 @@ export async function stableScreenshot(
   if (stubOptions?.dismissTooltips) {
     await disableTooltips(page);
   }
+  if (stubOptions?.dismissChatMessageActions) {
+    await hideChatMessageActionsButton(page);
+  }
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
@@ -337,6 +342,13 @@ export async function stableScreenshot(
     }
   }
 }
+
+/**
+ * Helper function for hiding chat message actions icon button.
+ */
+const hideChatMessageActionsButton = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ui-chat__message__actions {display: none}' });
+};
 
 /**
  * Helper function for disabling all the tooltips on the page.
