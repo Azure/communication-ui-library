@@ -8,7 +8,8 @@ import {
   sendButtonStyle,
   sendIconStyle,
   sendBoxWrapperStyles,
-  borderAndBoxShadowStyle
+  borderAndBoxShadowStyle,
+  fileUploadCardsStyles
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -264,12 +265,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [styles?.sendMessageIconContainer]
   );
 
-  const fileUploadCardsStyles = mergeStyles({
-    margin: '0.25rem',
-    maxHeight: '12.5rem',
-    overflow: 'auto'
-  });
-
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
@@ -325,7 +320,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
       </Stack>
     );
-  }, [props, fileUploadCardsStyles]);
+  }, [props]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
