@@ -192,9 +192,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant = this.addParticipant.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.holdCall = this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.resumeCall = this.resumeCall.bind(this);
+    this.toggleHoldCall = this.toggleHoldCall.bind(this);
   }
 
   /** Join existing Call. */
@@ -301,13 +299,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /* @conditional-compile-remove(PSTN-calls) */
   /** holds the call for the local user */
-  public async holdCall(): Promise<void> {
-    await this.callAdapter.holdCall();
-  }
-  /* @conditional-compile-remove(PSTN-calls) */
-  /** resumes the call for the local user  */
-  public async resumeCall(): Promise<void> {
-    await this.callAdapter.resumeCall();
+  public async toggleHoldCall(): Promise<void> {
+    await this.callAdapter.toggleHoldCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
   /** adds a new participant to the call by calling them */

@@ -45,7 +45,7 @@ export type CallingHandlers = {
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onHold: () => Promise<void>;
+  onToggleHold: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -54,8 +54,6 @@ export type CallingHandlers = {
     options?: AddPhoneNumberOptions
   ) => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  onResume: () => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -217,7 +215,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onHold = async (): Promise<void> => await call?.hold();
+    const onToggleHold = async (): Promise<void> =>
+      call?.state === 'LocalHold' ? await call?.resume() : await call?.hold();
 
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
@@ -336,13 +335,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(PSTN-calls) */
-    const onResume = async (): Promise<void> => await call?.resume();
-
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
-      onHold,
+      onToggleHold,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
@@ -357,8 +353,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       onRemoveParticipant,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant,
-      /* @conditional-compile-remove(PSTN-calls) */
-      onResume,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView

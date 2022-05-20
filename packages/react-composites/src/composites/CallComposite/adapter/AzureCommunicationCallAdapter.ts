@@ -222,9 +222,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.off.bind(this);
     this.processNewCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
-    this.resumeCall.bind(this);
+    this.toggleHoldCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
   }
@@ -434,13 +432,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async holdCall(): Promise<void> {
-    this.handlers.onHold();
-  }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  public async resumeCall(): Promise<void> {
-    this.handlers.onResume();
+  public async toggleHoldCall(): Promise<void> {
+    this.handlers.onToggleHold();
   }
 
   public getState(): CallAdapterState {

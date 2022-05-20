@@ -287,10 +287,7 @@ export interface CallWithChatAdapterManagement {
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
-  holdCall: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /** @beta */
-  resumeCall: () => Promise<void>;
+  toggleHoldCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   addParticipant(

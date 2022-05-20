@@ -186,19 +186,17 @@ export interface CallAdapterCallManagement {
     addParticipant(participant: PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
-    holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
-    resumeCall(): Promise<void>;
     startCall(participants: string[]): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    toggleHoldCall(): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -492,12 +490,11 @@ export type CallingHandlers = {
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
-    onHold: () => Promise<void>;
+    onToggleHold: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onAddParticipant: (participant: CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsUserIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
-    onResume: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -582,8 +579,6 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    // @beta (undocumented)
-    holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -596,8 +591,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
-    resumeCall: () => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -609,6 +602,8 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta (undocumented)
+    toggleHoldCall: () => Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;

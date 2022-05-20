@@ -256,13 +256,7 @@ export interface CallAdapterCallManagement {
    * Holds the call for the local user
    * @beta
    */
-  holdCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * resumes the call for the local user.
-   * @beta
-   */
-  resumeCall(): Promise<void>;
+  toggleHoldCall(): Promise<void>;
   /**
    * Create the html view for a stream.
    *
