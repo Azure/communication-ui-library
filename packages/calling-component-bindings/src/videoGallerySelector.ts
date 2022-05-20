@@ -39,7 +39,7 @@ export type VideoGallerySelector = (
   dominantSpeakers?: string[];
 };
 
-const selectVideoGallery = (
+function selectVideoGallery(
   screenShareRemoteParticipantId: string | undefined,
   remoteParticipants:
     | {
@@ -52,7 +52,7 @@ const selectVideoGallery = (
   displayName: string | undefined,
   identifier: string,
   dominantSpeakers: DominantSpeakersInfo | undefined
-): ReturnType<VideoGallerySelector> => {
+): ReturnType<VideoGallerySelector> {
   const screenShareRemoteParticipant =
     screenShareRemoteParticipantId && remoteParticipants
       ? remoteParticipants[screenShareRemoteParticipantId]
@@ -87,7 +87,7 @@ const selectVideoGallery = (
     remoteParticipants: _videoGalleryRemoteParticipantsMemo(remoteParticipants),
     dominantSpeakers: dominantSpeakerIds
   };
-};
+}
 
 /**
  * Provides data attributes to {@link VideoGallery} component.

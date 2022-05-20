@@ -31,14 +31,11 @@ export type MicrophoneButtonSelector = (
   selectedSpeaker?: AudioDeviceInfo;
 };
 
-/**
- * @private
- */
-const selectMicrophoneButton = (
+function selectMicrophoneButton(
   callExists: boolean,
   isMuted: boolean | undefined,
   deviceManager: DeviceManagerState
-): ReturnType<MicrophoneButtonSelector> => {
+): ReturnType<MicrophoneButtonSelector> {
   const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
   return {
     disabled: !callExists || !permission,
@@ -48,7 +45,7 @@ const selectMicrophoneButton = (
     selectedMicrophone: deviceManager.selectedMicrophone,
     selectedSpeaker: deviceManager.selectedSpeaker
   };
-};
+}
 
 /**
  * Selector for {@link MicrophoneButton} component.
@@ -78,10 +75,10 @@ export type CameraButtonSelector = (
 /**
  * @private
  */
-const selectCameraButton = (
+function selectCameraButton(
   localVideoStreams: LocalVideoStreamState[] | undefined,
   deviceManager: DeviceManagerState
-): ReturnType<CameraButtonSelector> => {
+): ReturnType<CameraButtonSelector> {
   const previewOn = _isPreviewOn(deviceManager);
   const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
   const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
@@ -92,7 +89,7 @@ const selectCameraButton = (
     cameras: deviceManager.cameras,
     selectedCamera: deviceManager.selectedCamera
   };
-};
+}
 
 /**
  * Selector for {@link CameraButton} component.
@@ -119,11 +116,11 @@ export type ScreenShareButtonSelector = (
 /**
  * @private
  */
-const selectScreenShareButton = (isScreenSharingOn?: boolean): ReturnType<ScreenShareButtonSelector> => {
+function selectScreenShareButton(isScreenSharingOn?: boolean): ReturnType<ScreenShareButtonSelector> {
   return {
     checked: isScreenSharingOn
   };
-};
+}
 
 /**
  * Selector for {@link ScreenShareButton} component.
@@ -155,7 +152,7 @@ export type DevicesButtonSelector = (
 /**
  * @private
  */
-const selectDevicesButton = (deviceManager: DeviceManagerState): ReturnType<DevicesButtonSelector> => {
+function selectDevicesButton(deviceManager: DeviceManagerState): ReturnType<DevicesButtonSelector> {
   return {
     microphones: deviceManager.microphones,
     speakers: deviceManager.speakers,
@@ -164,7 +161,7 @@ const selectDevicesButton = (deviceManager: DeviceManagerState): ReturnType<Devi
     selectedSpeaker: deviceManager.selectedSpeaker,
     selectedCamera: deviceManager.selectedCamera
   };
-};
+}
 
 /**
  * Selector for {@link DevicesButton} component.

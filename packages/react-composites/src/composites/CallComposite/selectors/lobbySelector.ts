@@ -5,11 +5,11 @@ import { _isInCall, _isPreviewOn } from '@internal/calling-component-bindings';
 import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 
-const selectLobby = (localVideoStreamInfo: ReturnType<typeof localVideoSelector>) => {
+function selectLobby(localVideoStreamInfo: ReturnType<typeof localVideoSelector>) {
   return {
     localParticipantVideoStream: localVideoStreamInfo
   };
-};
+}
 
 /**
  * @private

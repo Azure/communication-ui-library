@@ -20,11 +20,11 @@ export type ParticipantsButtonSelector = (
   myUserId: string;
 };
 
-const selectParticipantsButton = (
+function selectParticipantsButton(
   participantListProps: ReturnType<ParticipantListSelector>
-): ReturnType<ParticipantsButtonSelector> => {
+): ReturnType<ParticipantsButtonSelector> {
   return participantListProps;
-};
+}
 
 /**
  * Selects data that drives {@link ParticipantsButton} component.

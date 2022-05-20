@@ -5,11 +5,11 @@ import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getLocalVideoStreams } from './baseSelectors';
 
-const selectMediaGallery = (localVideoStreams?: LocalVideoStreamState[]) => {
+function selectMediaGallery(localVideoStreams?: LocalVideoStreamState[]) {
   return {
     isVideoStreamOn: !!localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video')?.view?.target
   };
-};
+}
 
 /**
  * @private

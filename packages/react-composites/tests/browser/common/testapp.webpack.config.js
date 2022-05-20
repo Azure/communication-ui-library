@@ -7,6 +7,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 /**
  * @param {appDir} - Directory of the app files (i.e. the folder containing the index.tsx of the test app)
@@ -28,6 +29,16 @@ module.exports = (appDir, babelConfig) => {
         '@internal/calling-component-bindings': path.resolve(appDir, '../../../../../calling-component-bindings/src'),
         '@internal/acs-ui-common': path.resolve(appDir, '../../../../../acs-ui-common/src')
       }
+    },
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          parallel: true,
+          terserOptions: {
+            keep_fnames: true
+          }
+        })
+      ]
     },
     output: {
       path: path.join(appDir, 'dist'),

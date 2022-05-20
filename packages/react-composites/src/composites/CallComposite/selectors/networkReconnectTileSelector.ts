@@ -6,15 +6,15 @@ import * as reselect from 'reselect';
 import { getUserFacingDiagnostics } from './baseSelectors';
 import { lobbySelector } from './lobbySelector';
 
-const selectNetworkReconnectTile = (
+function selectNetworkReconnectTile(
   diagnostics: DiagnosticsCallFeatureState | undefined,
   lobbyProps: ReturnType<typeof lobbySelector>
-) => {
+) {
   return {
     networkReconnectValue: diagnostics?.network.latest.networkReconnect?.value,
     localParticipantVideoStream: lobbyProps.localParticipantVideoStream
   };
-};
+}
 
 /**
  * @private

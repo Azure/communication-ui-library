@@ -68,7 +68,8 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "terser-webpack-plugin": "~5.3.1"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.4.3-beta.1 || 1.4.4",

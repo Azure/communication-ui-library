@@ -6,18 +6,18 @@ import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getDominantSpeakers, getRemoteParticipants } from './baseSelectors';
 
-const selectDominantRemoteParticipant = (
+function selectDominantRemoteParticipant(
   remoteParticipants?: {
     [keys: string]: RemoteParticipantState;
   },
   dominantSpeakers?: string[]
-) => {
+) {
   const dominantRemoteParticipant =
     remoteParticipants && Object.keys(remoteParticipants).length > 0
       ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
       : undefined;
   return dominantRemoteParticipant ? _videoGalleryRemoteParticipantsMemo(dominantRemoteParticipant)[0] : undefined;
-};
+}
 
 /**
  * Get the most dominant remote participant, if no dominant speaker IDs exist, this uses

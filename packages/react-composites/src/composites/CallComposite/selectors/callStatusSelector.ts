@@ -4,12 +4,12 @@ import { getCallStatus, getIsScreenShareOn } from './baseSelectors';
 import { createSelector } from 'reselect';
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 
-const selectCallStatus = (callStatus: SDKCallStatus, isScreenShareOn: boolean) => {
+function selectCallStatus(callStatus: SDKCallStatus, isScreenShareOn: boolean) {
   return {
     callStatus,
     isScreenShareOn
   };
-};
+}
 
 /**
  * @private

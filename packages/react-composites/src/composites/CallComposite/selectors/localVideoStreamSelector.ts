@@ -8,14 +8,14 @@ import { getDeviceManager, getLocalVideoStreams } from './baseSelectors';
 import { callStatusSelector } from './callStatusSelector';
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 
-const selectLocalVideo = (
+function selectLocalVideo(
   callStatus: {
     callStatus: SDKCallStatus;
     isScreenShareOn: boolean;
   },
   deviceManager: DeviceManagerState,
   localVideoStreams?: LocalVideoStreamState[]
-) => {
+) {
   let localVideoStream: LocalVideoStreamState | undefined;
   if (_isInCall(callStatus.callStatus)) {
     localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
@@ -30,7 +30,7 @@ const selectLocalVideo = (
     isMirrored: localVideoStream?.view?.isMirrored,
     renderElement: localVideoStream?.view?.target
   };
-};
+}
 
 /**
  * @private

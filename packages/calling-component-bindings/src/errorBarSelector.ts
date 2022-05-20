@@ -25,11 +25,11 @@ export type ErrorBarSelector = (
   activeErrorMessages: ActiveErrorMessage[];
 };
 
-const selectErrorBar = (
+function selectErrorBar(
   latestErrors: CallErrors,
   diagnostics: DiagnosticsCallFeatureState | undefined,
   deviceManager: DeviceManagerState
-): ReturnType<ErrorBarSelector> => {
+): ReturnType<ErrorBarSelector> {
   // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
   // There are several options for the ordering:
   //   - Sorted by when the errors happened (latest first / oldest first).
@@ -99,7 +99,7 @@ const selectErrorBar = (
   // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
   activeErrorMessages.splice(maxErrorCount);
   return { activeErrorMessages: activeErrorMessages };
-};
+}
 
 /**
  * Select the first 3 active errors from the state for the `ErrorBar` component.

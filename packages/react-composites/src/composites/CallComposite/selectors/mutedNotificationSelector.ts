@@ -5,11 +5,11 @@ import { DiagnosticsCallFeatureState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getUserFacingDiagnostics } from './baseSelectors';
 
-const selectNetworkReconnectTile = (diagnostics?: DiagnosticsCallFeatureState) => {
+function selectNetworkReconnectTile(diagnostics?: DiagnosticsCallFeatureState) {
   return {
     speakingWhileMuted: !!diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value
   };
-};
+}
 
 /**
  * @private

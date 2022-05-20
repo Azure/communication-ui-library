@@ -68,7 +68,7 @@ export type ParticipantListSelector = (
   myUserId: string;
 };
 
-const selectorParticipantList = (
+function selectorParticipantList(
   userId: string,
   displayName?: string,
   remoteParticipants?: {
@@ -76,7 +76,7 @@ const selectorParticipantList = (
   },
   isScreenSharingOn?: boolean,
   isMuted?: boolean
-): ReturnType<ParticipantListSelector> => {
+): ReturnType<ParticipantListSelector> {
   const participants = remoteParticipants
     ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
     : [];
@@ -93,7 +93,7 @@ const selectorParticipantList = (
     participants: participants,
     myUserId: userId
   };
-};
+}
 
 /**
  * Selects data that drives {@link ParticipantList} component.

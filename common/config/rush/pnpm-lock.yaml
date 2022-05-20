@@ -1671,7 +1671,7 @@ packages:
       find-cache-dir: 2.1.0
       make-dir: 2.1.0
       pirates: 4.0.1
-      source-map-support: 0.5.19
+      source-map-support: 0.5.21
     dev: false
     engines:
       node: '>=6.9.0'
@@ -5464,6 +5464,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-asabaBSkEKosYKMITunzX177CXxQ4Q8BSSzMTKD+FefUhipQC70gfW5SiUDhYQ3vk8G+81HqQk7Fv9OXwwn9KA==
+  /acorn/8.7.1:
+    dev: false
+    engines:
+      node: '>=0.4.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
   /address/1.1.2:
     dev: false
     engines:
@@ -11902,7 +11909,7 @@ packages:
       jest-runtime: 26.6.3
       jest-util: 26.6.2
       jest-worker: 26.6.2
-      source-map-support: 0.5.19
+      source-map-support: 0.5.21
       throat: 5.0.0
     dev: false
     engines:
@@ -11929,7 +11936,7 @@ packages:
       jest-runtime: 26.6.3_ts-node@9.1.1
       jest-util: 26.6.2
       jest-worker: 26.6.2
-      source-map-support: 0.5.19
+      source-map-support: 0.5.21
       throat: 5.0.0
     dev: false
     engines:
@@ -12101,7 +12108,7 @@ packages:
       node: '>= 10.13.0'
     resolution:
       integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==
-  /jest-worker/27.0.6:
+  /jest-worker/27.5.1:
     dependencies:
       '@types/node': 14.17.9
       merge-stream: 2.0.0
@@ -12110,7 +12117,7 @@ packages:
     engines:
       node: '>= 10.13.0'
     resolution:
-      integrity: sha512-qupxcj/dRuA3xHPMUd40gr2EaAurFbkwzOh7wfPaeE9id7hyjURRQoqNfHifHK3XjJU6YJJUQKILGUnwGPEOCA==
+      integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==
   /jest/26.6.0:
     dependencies:
       '@jest/core': 26.6.3
@@ -12189,7 +12196,7 @@ packages:
   /jsdom/16.7.0:
     dependencies:
       abab: 2.0.5
-      acorn: 8.4.1
+      acorn: 8.7.1
       acorn-globals: 6.0.0
       cssom: 0.4.4
       cssstyle: 2.3.0
@@ -12541,6 +12548,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+  /lodash.sortby/4.7.0:
+    dev: false
+    resolution:
+      integrity: sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
   /lodash.truncate/4.4.2:
     dev: false
     resolution:
@@ -16245,6 +16256,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+  /source-map-support/0.5.21:
+    dependencies:
+      buffer-from: 1.1.2
+      source-map: 0.6.1
+    dev: false
+    resolution:
+      integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
   /source-map-url/0.4.1:
     deprecated: See https://github.com/lydell/source-map-url#deprecated
     dev: false
@@ -16268,6 +16286,14 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
+  /source-map/0.8.0-beta.0:
+    dependencies:
+      whatwg-url: 7.1.0
+    dev: false
+    engines:
+      node: '>= 8'
+    resolution:
+      integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==
   /sourcemap-codec/1.4.8:
     dev: false
     resolution:
@@ -16983,7 +17009,7 @@ packages:
       schema-utils: 3.1.1
       serialize-javascript: 5.0.1
       source-map: 0.6.1
-      terser: 5.7.1
+      terser: 5.13.1
       webpack: 4.46.0
       webpack-sources: 1.4.3
     dev: false
@@ -16993,44 +17019,54 @@ packages:
       webpack: ^4.0.0 || ^5.0.0
     resolution:
       integrity: sha512-jTgXh40RnvOrLQNgIkwEKnQ8rmHjHK4u+6UBEi+W+FPmvb+uo+chJXntKe7/3lW5mNysgSWD60KyesnhW8D6MQ==
-  /terser-webpack-plugin/5.1.4_webpack@5.38.1:
+  /terser-webpack-plugin/5.3.1_webpack@5.38.1:
     dependencies:
-      jest-worker: 27.0.6
-      p-limit: 3.1.0
+      jest-worker: 27.5.1
       schema-utils: 3.1.1
       serialize-javascript: 6.0.0
       source-map: 0.6.1
-      terser: 5.7.1
+      terser: 5.13.1
       webpack: 5.38.1_webpack-cli@4.9.2
     dev: false
     engines:
       node: '>= 10.13.0'
     peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
       webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
     resolution:
-      integrity: sha512-C2WkFwstHDhVEmsmlCxrXUtVklS+Ir1A7twrYzrDrQQOIMOaVAYykaoo/Aq1K0QRkMoY2hhvDQY1cm4jnIMFwA==
+      integrity: sha512-GvlZdT6wPQKbDNW/GDQzZFg/j4vKU96yl2q6mcUkzKOgW4gwf1Z8cZToUCrz31XHlPWH8MVb1r2tFtdDtTGJ7g==
   /terser/4.8.0:
     dependencies:
       commander: 2.20.3
       source-map: 0.6.1
-      source-map-support: 0.5.19
+      source-map-support: 0.5.21
     dev: false
     engines:
       node: '>=6.0.0'
     hasBin: true
     resolution:
       integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==
-  /terser/5.7.1:
+  /terser/5.13.1:
     dependencies:
+      acorn: 8.7.1
       commander: 2.20.3
-      source-map: 0.7.3
-      source-map-support: 0.5.19
+      source-map: 0.8.0-beta.0
+      source-map-support: 0.5.21
     dev: false
     engines:
       node: '>=10'
     hasBin: true
     resolution:
-      integrity: sha512-b3e+d5JbHAe/JSjwsC3Zn55wsBIM7AsHLjKxT31kGCldgbpFePaFo+PiddtO6uwRZWRw7sPXmAN8dTW61xmnSg==
+      integrity: sha512-hn4WKOfwnwbYfe48NgrQjqNOH9jzLqRcIfbYytOXCOv46LBfWr9bDS17MQqOi+BWGD0sJK3Sj5NC/gJjiojaoA==
   /test-exclude/6.0.0:
     dependencies:
       '@istanbuljs/schema': 0.1.3
@@ -17183,6 +17219,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+  /tr46/1.0.1:
+    dependencies:
+      punycode: 2.1.1
+    dev: false
+    resolution:
+      integrity: sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=
   /tr46/2.1.0:
     dependencies:
       punycode: 2.1.1
@@ -17978,6 +18020,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=
+  /webidl-conversions/4.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
   /webidl-conversions/5.0.0:
     dev: false
     engines:
@@ -18393,7 +18439,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.0
-      terser-webpack-plugin: 5.1.4_webpack@5.38.1
+      terser-webpack-plugin: 5.3.1_webpack@5.38.1
       watchpack: 2.2.0
       webpack-sources: 2.3.1
     dev: false
@@ -18429,7 +18475,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.0
-      terser-webpack-plugin: 5.1.4_webpack@5.38.1
+      terser-webpack-plugin: 5.3.1_webpack@5.38.1
       watchpack: 2.2.0
       webpack-cli: 4.9.2_67e60b7ff37de853f3f9b3d129e0cb92
       webpack-sources: 2.3.1
@@ -18477,6 +18523,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-lmRU6HZUYuN2RNNib2dCzotwll0=
+  /whatwg-url/7.1.0:
+    dependencies:
+      lodash.sortby: 4.7.0
+      tr46: 1.0.1
+      webidl-conversions: 4.0.2
+    dev: false
+    resolution:
+      integrity: sha512-WUu7Rg1DroM7oQvGWfOiAK21n74Gg+T4elXEQYkOhtyLeWiJFoOGLXPKI/9gzIie9CtwVLm8wtw6YJdKyxSjeg==
   /whatwg-url/8.7.0:
     dependencies:
       lodash: 4.17.21
@@ -19633,6 +19687,7 @@ packages:
       rollup: 2.42.4
       source-map-explorer: 2.5.2
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
+      terser-webpack-plugin: 5.3.1_webpack@5.38.1
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
       ts-node: 9.1.1_typescript@4.3.5
@@ -19645,7 +19700,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-ai4e8mxpQAWbEVCPFUI+JSf0kyOLDivGzFtoJ/RS5MUcu0bIGR1BjAySKdvSEPyPYLwXb1O9DJ/2qPAH5ea0zA==
+      integrity: sha512-y7xXKvzaoOsjY1sigsTkua7kMUys+g58Z4Xgo+J3tDDbgyb7vc64PAIDblSkJpQMW4Ksbx/IY5ioIHPB4RixnA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
