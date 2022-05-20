@@ -159,8 +159,9 @@ export type HoldButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  state: string;
+  callState: string;
   checked: boolean;
+  disabled: boolean;
 };
 
 /* @conditional-compile-remove(PSTN-calls) */
@@ -169,7 +170,8 @@ export type HoldButtonSelector = (
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {
-    state: callState,
-    checked: callState === 'localHold' ? true : false
+    callState: callState,
+    checked: callState === 'localHold' ? true : false,
+    disabled: callState === 'remoteHold' ? true : false
   };
 });
