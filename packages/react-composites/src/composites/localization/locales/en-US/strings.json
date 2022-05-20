@@ -50,6 +50,7 @@
     "chatButtonTooltipClosedWithMessageCount": "Show chat ({unreadMessagesCount} unread)",
     "chatButtonTooltipOpen": "Show chat",
     "chatButtonTooltipClose": "Hide chat",
+    "moreDrawerAudioDeviceMenuTitle": "Audio Device",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
     "moreDrawerButtonLabel": "More options",
