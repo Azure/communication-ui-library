@@ -38,13 +38,19 @@ export interface CallWithChatCompositeStrings {
    */
   chatButtonTooltipClosedWithMessageCount: string;
   /**
-   * Title for the microphone selection sub-menu in more buttton drawer.
+   * Title for the audio device selection sub-menu in more button drawer.
    *
-   * Only used with `mobileView` set to `true`.
+   * Only used with `mobileView` set to `true` and when no speakers are available.
+   */
+  moreDrawerAudioDeviceMenuTitle: string;
+  /**
+   * Title for the microphone selection sub-menu in more button drawer.
+   *
+   * Only used with `mobileView` set to `true` and when speakers are available.
    */
   moreDrawerMicrophoneMenuTitle: string;
   /**
-   * Title for the speaker selection sub-menu in more buttton drawer.
+   * Title for the speaker selection sub-menu in more button drawer.
    *
    * Only used with `mobileView` set to `true`.
    */
