@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @azure/communication-calling beta version to 1.5.4-beta.1",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
