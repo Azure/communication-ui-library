@@ -371,6 +371,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
@@ -644,6 +646,29 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "HoldButton" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const HoldButton: (props: HoldButtonProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "HoldButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface HoldButtonProps extends ControlBarButtonProps {
+    onToggleHold: () => Promise<void>;
+    strings: HoldButtonStrings;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "HoldButtonStrings" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface HoldButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    toolTipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public

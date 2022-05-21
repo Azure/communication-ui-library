@@ -159,7 +159,6 @@ export type HoldButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  callState: string;
   checked: boolean;
   disabled: boolean;
 };
@@ -170,7 +169,6 @@ export type HoldButtonSelector = (
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {
-    callState: callState,
     checked: callState === 'localHold' ? true : false,
     disabled: callState === 'remoteHold' ? true : false
   };

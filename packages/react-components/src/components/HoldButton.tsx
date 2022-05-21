@@ -1,29 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStrings } from '@azure/communication-react';
-import { useTheme } from '@fluentui/react';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import React from 'react';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
- *
+ *@internal
  */
 export interface HoldButtonProps extends ControlBarButtonProps {
   /**
    * Utility property for using this component with communication react handlers
-   * Holds the call
+   * Holds the call or resumes it based on call state.
    */
-  onHold: () => Promise<void>;
-  /**
-   * Utility property for using this component with communication react handlers
-   * resumes the call if the local user placed it on hold
-   */
-  onResume: () => Promise<void>;
-  /**
-   * current state of the call
-   */
-  callState: string;
+  onToggleHold: () => Promise<void>;
   /**
    * Optional strings to override in component
    */
@@ -33,12 +24,17 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * Strings for the hold button labels
+ * @internal
  */
 export interface HoldButtonStrings {
   /**
-   * Label of button
+   * Label for when action is to resume call.
    */
-  label: string;
+  onLabel: string;
+  /**
+   * Label for when action is to hold call.
+   */
+  offLabel: string;
   /**
    * Content for when button is checked
    */
@@ -51,20 +47,31 @@ export interface HoldButtonStrings {
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
+ * a button to hold or resume a ongoing call.
  *
- * @param props
+ * Can be used with {@link ControlBar}
+ *
+ * @param props - properties for the hold button.
  * @returns
+ * @internal
  */
 export const HoldButton = (props: HoldButtonProps): JSX.Element => {
-  const { onHold, onResume, callState, strings } = props;
+  const { onToggleHold, strings } = props;
 
-  const onToggleHold = async (state: string): Promise<void> => {
-    if (state === 'localHold') {
-      await onResume();
-    } else {
-      await onHold();
-    }
+  const onRenderHoldIcon = (): JSX.Element => {
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="HoldCall" />;
+  };
+  const onRenderResumeIcon = (): JSX.Element => {
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="ResumeCall" />;
   };
 
-  return <ControlBarButton {...props} strings={strings} onClick={onToggleHold(callState)} />;
+  return (
+    <ControlBarButton
+      {...props}
+      strings={strings}
+      onClick={onToggleHold ?? props.onClick}
+      onRenderOnIcon={onRenderResumeIcon}
+      onRenderOffIcon={onRenderHoldIcon}
+    />
+  );
 };

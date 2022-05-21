@@ -127,4 +127,4 @@ export type { _DialpadProps, _DialpadStrings, _DialpadButtonProps, _DialpadStyle
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
 /* @conditional-compile-remove(PSTN-calls) */
-export type { HoldButtonProps } from './HoldButton';
+export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';

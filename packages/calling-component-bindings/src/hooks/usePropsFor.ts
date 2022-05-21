@@ -11,6 +11,7 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+import { HoldButton } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -19,7 +20,8 @@ import {
   DevicesButtonSelector,
   devicesButtonSelector,
   ScreenShareButtonSelector,
-  screenShareButtonSelector
+  screenShareButtonSelector,
+  holdButtonSelector
 } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
@@ -136,6 +138,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return participantsButtonSelector;
     case EndCallButton:
       return emptySelector;
+    case HoldButton:
+      return holdButtonSelector;
     case ErrorBar:
       return errorBarSelector;
   }
