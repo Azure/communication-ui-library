@@ -24,7 +24,7 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.4.3-beta.1"
+    "@azure/communication-calling": "1.5.4-beta.1 || 1.4.4"
   },
 
   /**
