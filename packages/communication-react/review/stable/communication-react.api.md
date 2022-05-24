@@ -68,6 +68,8 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoStreamRenderer } from '@azure/communication-calling';
+import { VideoStreamRendererView } from '@azure/communication-calling';
 
 // @public
 export interface ActiveErrorMessage {
@@ -1280,6 +1282,19 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
+export interface CreateVideoStreamViewResult {
+    view: {
+        updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
+    };
+}
+
+// @public
+export type CreateViewResult = {
+    renderer: VideoStreamRenderer;
+    view: VideoStreamRendererView;
+};
+
+// @public
 export type CustomAvatarOptions = {
     coinSize?: number;
     hidePersonaDetails?: boolean;
@@ -2192,7 +2207,7 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -2374,7 +2389,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -2431,7 +2446,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
@@ -2469,5 +2484,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 ```
