@@ -5,7 +5,6 @@ import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import React from 'react';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  *@beta
  */
@@ -18,10 +17,9 @@ export interface HoldButtonProps extends ControlBarButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings: HoldButtonStrings;
+  strings?: HoldButtonStrings;
 }
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Strings for the hold button labels
  * @beta
@@ -45,7 +43,6 @@ export interface HoldButtonStrings {
   toolTipOffContent: string;
 }
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * a button to hold or resume a ongoing call.
  *

@@ -66,7 +66,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  HoldButtonSelector
 } from '../../calling-component-bindings/src';
 
 export {

@@ -21,7 +21,8 @@ import {
   devicesButtonSelector,
   ScreenShareButtonSelector,
   screenShareButtonSelector,
-  holdButtonSelector
+  holdButtonSelector,
+  HoldButtonSelector
 } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
@@ -100,6 +101,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : AreEqual<Component, typeof ParticipantsButton> extends true
   ? ParticipantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
+  ? HoldButtonSelector
+  : AreEqual<Component, typeof HoldButton> extends true
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector

@@ -654,7 +654,7 @@ export const HoldButton: (props: HoldButtonProps) => JSX.Element;
 // @beta (undocumented)
 export interface HoldButtonProps extends ControlBarButtonProps {
     onToggleHold: () => Promise<void>;
-    strings: HoldButtonStrings;
+    strings?: HoldButtonStrings;
 }
 
 // @beta

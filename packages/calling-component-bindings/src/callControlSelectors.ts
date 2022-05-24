@@ -7,11 +7,11 @@ import * as reselect from 'reselect';
 import {
   CallingBaseSelectorProps,
   getCallExists,
-  getCallState,
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
-  getLocalVideoStreams
+  getLocalVideoStreams,
+  getCallState
 } from './baseSelectors';
 import { _isPreviewOn } from './callUtils';
 
@@ -150,10 +150,9 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
   }
 );
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
- * Selector type for the hold button
- * @beta
+ * Selector type for the {@link HoldButton} component.
+ * @public
  */
 export type HoldButtonSelector = (
   state: CallClientState,
@@ -163,14 +162,13 @@ export type HoldButtonSelector = (
   disabled: boolean;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
- * Selector for the hold button
- * @beta
+ * Selector for the {@link HoldButton} component.
+ * @public
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {
-    checked: callState === 'localHold' ? true : false,
-    disabled: callState === 'remoteHold' ? true : false
+    checked: callState === 'LocalHold' ? true : false,
+    disabled: callState === 'RemoteHold' ? true : false
   };
 });
