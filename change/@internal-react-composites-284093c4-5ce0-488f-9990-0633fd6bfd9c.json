@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "filecard should be clickable, also in mobile view when waiting in lobby, make more button disabled",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

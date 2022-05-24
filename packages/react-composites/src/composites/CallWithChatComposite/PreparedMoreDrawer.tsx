@@ -22,6 +22,7 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
   const moreDrawerStrings: MoreDrawerStrings = useMemo(
     () => ({
       peopleButtonLabel: strings.peopleButtonLabel,
+      audioDeviceMenuTitle: strings.moreDrawerAudioDeviceMenuTitle,
       microphoneMenuTitle: strings.moreDrawerMicrophoneMenuTitle,
       speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle
     }),
