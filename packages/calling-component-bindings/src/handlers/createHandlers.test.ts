@@ -5,7 +5,7 @@ import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import { CallingHandlers, createDefaultCallingHandlersForComponent } from './createHandlers';
-import { StatefulCallClient, VideoStreamRendererAndView } from '@internal/calling-stateful-client';
+import { StatefulCallClient, CreateViewResult } from '@internal/calling-stateful-client';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function TestCallClientComponent(props: CallingHandlers): ReactElement | null {
@@ -29,7 +29,7 @@ class MockCallClient {
     stream: any,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     options?: any
-  ): Promise<VideoStreamRendererAndView | undefined> {
+  ): Promise<CreateViewResult | undefined> {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

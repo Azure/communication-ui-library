@@ -209,12 +209,6 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @public (undocumented)
-export type VideoStreamRendererAndView = {
-    renderer: VideoStreamRenderer;
-    view: VideoStreamRendererView;
-};
-
 // @public
 export interface VideoStreamRendererViewState {
     isMirrored: boolean;

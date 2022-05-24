@@ -2452,12 +2452,6 @@ export interface VideoStreamOptions {
     scalingMode?: ViewScalingMode;
 }
 
-// @public (undocumented)
-export type VideoStreamRendererAndView = {
-    renderer: VideoStreamRenderer;
-    view: VideoStreamRendererView;
-};
-
 // @public
 export interface VideoStreamRendererViewState {
     isMirrored: boolean;
