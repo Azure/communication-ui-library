@@ -755,6 +755,7 @@ export interface CallWithChatCompositeStrings {
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButton: string;
+    moreDrawerAudioDeviceMenuTitle: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;

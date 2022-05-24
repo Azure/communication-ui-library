@@ -70,6 +70,8 @@
     "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
+    "audioDeviceMenuTitle": "Audio Device",
+    "audioDeviceMenuTooltip": "Choose Audio Device",
     "microphoneMenuTitle": "Microphone",
     "microphoneMenuTooltip": "Choose Microphone",
     "speakerMenuTitle": "Speaker",
