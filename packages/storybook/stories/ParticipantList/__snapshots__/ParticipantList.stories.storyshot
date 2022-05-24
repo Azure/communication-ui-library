@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant List Participant List 1`] = `
 <div
-  className="css-117 body-0"
+  className="css-118 body-0"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="css-118"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -24,7 +24,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
         className="ms-Stack css-1"
       >
         <div
-          className="ms-Stack css-138 css-1"
+          className="ms-Stack css-139 css-1"
           data-ui-id="participant-list"
         >
           <div
@@ -102,7 +102,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-94 css-137"
+                className="root-94 css-138"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -334,7 +334,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-94 css-137"
+                className="root-94 css-138"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -570,7 +570,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-94 css-137"
+                className="root-94 css-138"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span

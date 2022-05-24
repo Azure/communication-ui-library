@@ -237,7 +237,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      return callClient.createView(call.id, undefined, localStream, options);
+      await callClient.createView(call.id, undefined, localStream, options);
     };
 
     const onCreateRemoteStreamView = async (
