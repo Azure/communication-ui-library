@@ -9,6 +9,7 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import React, { useMemo } from 'react';
+import { onDisplayDateTimeString } from './Utils';
 
 export type ContainerProps = {
   /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
@@ -29,57 +30,14 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     [props.userIdentifier]
   );
 
-  const adapter = useAzureCommunicationChatAdapter(
-    {
-      endpoint: props.endpointUrl,
-      userId,
-      // Data model injection: The display name for the local user comes from Contoso's data model.
-      displayName: props.displayName,
-      credential,
-      threadId: props.threadId
-    },
-    // Custom behavior: Capitalize all messages before sending them.
-    capitalizeMessageBeforeSend
-  );
-
-  const onDisplayDateTimeString = (messageDate: Date): string => {
-    let hours = messageDate.getHours();
-    let minutes = messageDate.getMinutes().toString();
-    let month = (messageDate.getMonth() + 1).toString();
-    let day = messageDate.getDate().toString();
-    const year = messageDate.getFullYear().toString();
-
-    if (month.length === 1) {
-      month = '0' + month;
-    }
-    if (day.length === 1) {
-      day = '0' + day;
-    }
-    const isAm = hours < 12;
-    if (hours > 12) {
-      hours = hours - 12;
-    }
-    if (hours === 0) {
-      hours = 12;
-    }
-    if (minutes.length < 2) {
-      minutes = '0' + minutes;
-    }
-    return (
-      'TimeStamp: ' +
-      year +
-      '-' +
-      month +
-      '-' +
-      day +
-      ', ' +
-      hours.toString() +
-      ':' +
-      minutes +
-      ' ' +
-      (isAm ? 'a.m.' : 'p.m.')
-    );
-  };
+  const adapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId,
+    // Data model injection: The display name for the local user comes from Contoso's data model.
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
 
   const strings = props.locale?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
   const compositeStrings = props.locale?.strings ?? COMPOSITE_LOCALE_EN_US.strings;
