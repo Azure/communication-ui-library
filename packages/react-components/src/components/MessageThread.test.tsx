@@ -7,7 +7,7 @@ import { ChatMessage } from '../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-/* @conditional-compile-remove(dateTimeCustomization) */
+/* @conditional-compile-remove(date-time-customization) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -18,7 +18,7 @@ const twentyFourHoursAgo = (): Date => {
   return date;
 };
 
-/* @conditional-compile-remove(dateTimeCustomization) */
+/* @conditional-compile-remove(date-time-customization) */
 const onDisplayDateTimeStringLocale = (messageDate: Date): string => {
   const todayDate = new Date();
 
@@ -30,7 +30,7 @@ const onDisplayDateTimeStringLocale = (messageDate: Date): string => {
   }
 };
 
-/* @conditional-compile-remove(dateTimeCustomization) */
+/* @conditional-compile-remove(date-time-customization) */
 const onDisplayDateTimeString = (messageDate: Date): string => {
   const todayDate = new Date();
 
@@ -65,7 +65,7 @@ describe('Message date should be formatted correctly', () => {
   });
 });
 
-/* @conditional-compile-remove(dateTimeCustomization) */
+/* @conditional-compile-remove(date-time-customization) */
 describe('Message date should be customized by onDisplayDateTimeString passed through locale', () => {
   test('Message date should be localized to "24 hours ago"', async () => {
     const testLocale = {
@@ -92,7 +92,7 @@ describe('Message date should be customized by onDisplayDateTimeString passed th
   });
 });
 
-/* @conditional-compile-remove(dateTimeCustomization) */
+/* @conditional-compile-remove(date-time-customization) */
 describe('onDisplayDateTimeString passed through messagethread should overwrite onDisplayDateTimeString from locale', () => {
   test('Message date should be localized to "yesterday"', async () => {
     const testLocale = {

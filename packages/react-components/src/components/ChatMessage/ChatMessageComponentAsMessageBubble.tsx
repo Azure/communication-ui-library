@@ -10,7 +10,7 @@ import {
   chatMessageDateStyle,
   chatMessageFailedTagStyle
 } from '../styles/ChatMessageComponent.styles';
-import { generateDefaultTimestamp } from '../utils/Datetime';
+import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
@@ -57,7 +57,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
 
-  /* @conditional-compile-remove(dateTimeCustomization) */
+  /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -65,12 +65,25 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
+const generateDefaultTimestamp = (
+  createdOn: Date,
+  showDate: boolean | undefined,
+  strings: MessageThreadStrings
+): string => {
+  const formattedTimestamp = showDate
+    ? formatTimestampForChatMessage(createdOn, new Date(), strings)
+    : formatTimeForChatMessage(createdOn);
+
+  return formattedTimestamp;
+};
+
+// onDisplayDateTimeString from props overwrite onDisplayDateTimeString from locale
 const generateCustomizedTimestamp = (
   props: ChatMessageComponentAsMessageBubbleProps,
   createdOn: Date,
   locale: ComponentLocale
 ): string => {
-  /* @conditional-compile-remove(dateTimeCustomization) */
+  /* @conditional-compile-remove(date-time-customization) */
   return props.onDisplayDateTimeString
     ? props.onDisplayDateTimeString(createdOn)
     : locale.onDisplayDateTimeString
@@ -105,8 +118,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const defaultTimeStamp = message.createdOn
     ? generateDefaultTimestamp(message.createdOn, showDate, strings)
     : undefined;
-
-  // onDisplayDateTimeString from props overwrite onDisplayDateTimeString from locale
 
   const customTimestamp = message.createdOn ? generateCustomizedTimestamp(props, message.createdOn, locale) : '';
 
