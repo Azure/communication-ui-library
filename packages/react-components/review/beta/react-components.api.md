@@ -309,7 +309,7 @@ export interface ControlBarProps {
 // @public
 export interface CreateVideoStreamViewResult {
     view: {
-        updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+        updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
     };
 }
 
@@ -1073,9 +1073,6 @@ export type ReadReceiptsBySenderId = {
 };
 
 // @public
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -1286,7 +1283,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: ScalingMode;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
@@ -1317,6 +1314,9 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 // (No @packageDocumentation comment for this package)
 

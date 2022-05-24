@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, Spinner, SpinnerSize } from '@fluentui/react';
+import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
+import { iconButtonClassName } from './styles/IconButton.styles';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -140,7 +141,13 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
               key={file.name}
               fileExtension={file.extension}
               actionIcon={
-                showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
+                showSpinner ? (
+                  <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                ) : (
+                  <IconButton className={iconButtonClassName}>
+                    <DownloadIconTrampoline />
+                  </IconButton>
+                )
               }
               actionHandler={() => fileDownloadHandler(userId, file)}
             />

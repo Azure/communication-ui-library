@@ -180,7 +180,6 @@ export type {
   ParticipantsButtonStrings,
   ParticipantsButtonStyles,
   ReadReceiptsBySenderId,
-  ScalingMode,
   ScreenShareButtonProps,
   ScreenShareButtonStrings,
   SendBoxProps,
@@ -204,7 +203,8 @@ export type {
   VideoGalleryStyles,
   VideoStreamOptions,
   VideoTileProps,
-  VideoTileStylesProps
+  VideoTileStylesProps,
+  ViewScalingMode
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {

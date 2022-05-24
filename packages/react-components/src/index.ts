@@ -27,7 +27,6 @@ export type {
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
   ReadReceiptsBySenderId,
-  ScalingMode,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,
@@ -35,5 +34,6 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
-  VideoStreamOptions
+  VideoStreamOptions,
+  ViewScalingMode
 } from './types';
