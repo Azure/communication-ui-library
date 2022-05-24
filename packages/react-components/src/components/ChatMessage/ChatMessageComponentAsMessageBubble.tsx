@@ -57,7 +57,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
 
-  /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
    * @beta
