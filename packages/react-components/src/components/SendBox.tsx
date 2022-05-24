@@ -8,8 +8,7 @@ import {
   sendButtonStyle,
   sendIconStyle,
   sendBoxWrapperStyles,
-  borderAndBoxShadowStyle,
-  fileUploadCardsStyles
+  borderAndBoxShadowStyle
 } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
@@ -21,6 +20,8 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
