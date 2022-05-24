@@ -1058,9 +1058,6 @@ export type ReadReceiptsBySenderId = {
 };
 
 // @public
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
