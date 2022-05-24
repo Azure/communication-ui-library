@@ -59,7 +59,7 @@ import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
-import { ScalingMode as ScalingMode_2 } from '@azure/communication-calling';
+import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -1284,7 +1284,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 // @public
 export interface CreateVideoStreamViewResult {
     view: {
-        updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+        updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
     };
 }
 
@@ -2141,9 +2141,6 @@ export interface RemoteVideoStreamState {
 }
 
 // @public
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -2449,13 +2446,13 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: ScalingMode;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
 export interface VideoStreamRendererViewState {
     isMirrored: boolean;
-    scalingMode: ScalingMode_2;
+    scalingMode: ScalingMode;
     target: HTMLElement;
 }
 
@@ -2487,5 +2484,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 ```
