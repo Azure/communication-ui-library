@@ -23,3 +23,4 @@ export type {
   TranscriptionCallFeatureState as TranscriptionCallFeature,
   VideoStreamRendererViewState
 } from './CallClientState';
+export type { CreateViewResult } from './StreamUtils';
