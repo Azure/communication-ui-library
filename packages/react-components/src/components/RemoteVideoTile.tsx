@@ -5,8 +5,8 @@ import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
-  useVideoStreamLifecycleMaintainer,
-  VideoStreamLifecycleMaintainerProps
+  useRemoteVideoStreamLifecycleMaintainer,
+  RemoteVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile } from './VideoTile';
 
@@ -47,7 +47,7 @@ export const RemoteVideoTile = React.memo(
       showMuteIndicator
     } = props;
 
-    const remoteVideoStreamProps: VideoStreamLifecycleMaintainerProps = useMemo(
+    const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
         isMirrored: remoteVideoViewOptions?.isMirrored,
         isScreenSharingOn,
@@ -71,7 +71,7 @@ export const RemoteVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which

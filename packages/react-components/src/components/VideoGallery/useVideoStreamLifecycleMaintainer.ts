@@ -1,47 +1,35 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
 
-/**
- * Props needed for {@link useVideoStreamLifecycleMaintainer}
- * @private
- */
-export interface VideoStreamLifecycleMaintainerProps {
+interface VideoStreamLifecycleMaintainerExtendableProps {
   isStreamAvailable?: boolean;
   renderElementExists?: boolean;
   isMirrored?: boolean;
   scalingMode?: ViewScalingMode;
-  remoteParticipantId?: string;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-  onDisposeLocalStreamView?: () => void;
-  onCreateRemoteStreamView?: (
-    userId: string,
-    options?: VideoStreamOptions
-  ) => Promise<void | CreateVideoStreamViewResult>;
-  onDisposeRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   isScreenSharingOn?: boolean;
+}
+
+interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult> | undefined;
+  onDisposeStreamView: () => void | undefined;
 }
 
 /**
  * Helper hook to maintain the video stream lifecycle. This calls onCreateStreamView and onDisposeStreamView
  * appropriately based on react lifecycle events and prop changes.
  * This also handles calls to view.update* appropriately such as view.updateScalingMode().
- *
- * @private
  */
-export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
+const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
   const {
     isMirrored,
     isScreenSharingOn,
     isStreamAvailable,
-    onCreateLocalStreamView,
-    onCreateRemoteStreamView,
-    onDisposeLocalStreamView,
-    onDisposeRemoteStreamView,
-    remoteParticipantId,
+    onCreateStreamView,
+    onDisposeStreamView,
     renderElementExists,
     scalingMode
   } = props;
@@ -95,9 +83,7 @@ export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMai
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
         };
 
-        const streamRendererResult = remoteParticipantId
-          ? await onCreateRemoteStreamView?.(remoteParticipantId, streamViewOptions)
-          : await onCreateLocalStreamView?.(streamViewOptions);
+        const streamRendererResult = await onCreateStreamView?.(streamViewOptions);
         // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
         // and setStreamRendererResult have completed
         if (cancellable.cancelled) {
@@ -113,7 +99,7 @@ export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMai
         cancelCreateStreamView();
         // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
         if (!isScreenSharingOn) {
-          remoteParticipantId ? onDisposeRemoteStreamView?.(remoteParticipantId) : onDisposeLocalStreamView?.();
+          onDisposeStreamView?.();
         }
       }
     };
@@ -123,11 +109,8 @@ export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMai
     isMirrored,
     isScreenSharingOn,
     isStreamAvailable,
-    onCreateLocalStreamView,
-    onCreateRemoteStreamView,
-    onDisposeLocalStreamView,
-    onDisposeRemoteStreamView,
-    remoteParticipantId,
+    onCreateStreamView,
+    onDisposeStreamView,
     renderElementExists,
     scalingModeForUseEffect,
     triggerCreateStreamView
@@ -142,15 +125,77 @@ export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMai
       cancelCreateStreamView();
       // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
       if (!isScreenSharingOn) {
-        remoteParticipantId ? onDisposeRemoteStreamView?.(remoteParticipantId) : onDisposeLocalStreamView?.();
+        onDisposeStreamView?.();
       }
     };
-  }, [
-    cancelCreateStreamView,
-    cancelRescale,
-    isScreenSharingOn,
-    onDisposeLocalStreamView,
-    onDisposeRemoteStreamView,
-    remoteParticipantId
-  ]);
+  }, [cancelCreateStreamView, cancelRescale, isScreenSharingOn, onDisposeStreamView]);
+};
+
+/** @private */
+export interface LocalVideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeLocalStreamView?: () => void;
+}
+
+/**
+ * Extension of {@link useVideoStreamLifecycleMaintainer} specifically for local video streams
+ *
+ * @private
+ */
+export const useLocalVideoStreamLifecycleMaintainer = (props: LocalVideoStreamLifecycleMaintainerProps): void => {
+  const { onCreateLocalStreamView, onDisposeLocalStreamView } = props;
+  const onCreateStreamView = useMemo(
+    () => (options?: VideoStreamOptions) => {
+      return onCreateLocalStreamView?.(options);
+    },
+    [onCreateLocalStreamView]
+  );
+  const onDisposeStreamView = useMemo(
+    () => () => {
+      onDisposeLocalStreamView?.();
+    },
+    [onDisposeLocalStreamView]
+  );
+  return useVideoStreamLifecycleMaintainer({
+    ...props,
+    onCreateStreamView,
+    onDisposeStreamView
+  });
+};
+
+/** @private */
+export interface RemoteVideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  remoteParticipantId: string;
+}
+
+/**
+ * Extension of {@link useVideoStreamLifecycleMaintainer} specifically for remote video streams
+ *
+ * @private
+ */
+export const useRemoteVideoStreamLifecycleMaintainer = (props: RemoteVideoStreamLifecycleMaintainerProps): void => {
+  const { remoteParticipantId, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
+  const onCreateStreamView = useMemo(
+    () => (options?: VideoStreamOptions) => {
+      return onCreateRemoteStreamView?.(remoteParticipantId, options);
+    },
+    [onCreateRemoteStreamView, remoteParticipantId]
+  );
+  const onDisposeStreamView = useMemo(
+    () => () => {
+      onDisposeRemoteStreamView?.(remoteParticipantId);
+    },
+    [onDisposeRemoteStreamView, remoteParticipantId]
+  );
+
+  return useVideoStreamLifecycleMaintainer({
+    ...props,
+    onCreateStreamView,
+    onDisposeStreamView
+  });
 };

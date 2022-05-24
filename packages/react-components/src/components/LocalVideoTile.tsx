@@ -8,8 +8,8 @@ import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
 import {
-  useVideoStreamLifecycleMaintainer,
-  VideoStreamLifecycleMaintainerProps
+  useLocalVideoStreamLifecycleMaintainer,
+  LocalVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
@@ -58,7 +58,7 @@ export const LocalVideoTile = React.memo(
       localVideoSelectedDescription
     } = props;
 
-    const localVideoStreamProps: VideoStreamLifecycleMaintainerProps = useMemo(
+    const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
         isMirrored: localVideoViewOptions?.isMirrored,
         isStreamAvailable: isAvailable,
@@ -78,7 +78,7 @@ export const LocalVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useVideoStreamLifecycleMaintainer(localVideoStreamProps);
+    useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
