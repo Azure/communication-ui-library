@@ -53,6 +53,15 @@ export const sendIconStyle = mergeStyles({
 /**
  * @private
  */
+export const fileUploadCardsStyles = mergeStyles({
+  margin: '0.25rem',
+  maxHeight: '12.5rem',
+  overflow: 'auto'
+});
+
+/**
+ * @private
+ */
 export const fileCardBoxStyle = mergeStyles({
   width: '100%',
   padding: '0.50rem'
