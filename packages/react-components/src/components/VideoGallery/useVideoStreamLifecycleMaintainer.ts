@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useRef } from 'react';
-import { VideoStreamOptions, CreateVideoStreamViewResult, ScalingMode } from '../../types';
+import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
 
 /**
@@ -13,7 +13,7 @@ export interface VideoStreamLifecycleMaintainerProps {
   isStreamAvailable?: boolean;
   renderElementExists?: boolean;
   isMirrored?: boolean;
-  scalingMode?: ScalingMode;
+  scalingMode?: ViewScalingMode;
   remoteParticipantId?: string;
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onDisposeLocalStreamView?: () => void;

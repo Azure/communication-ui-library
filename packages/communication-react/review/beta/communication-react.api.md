@@ -59,7 +59,7 @@ import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
-import { ScalingMode as ScalingMode_2 } from '@azure/communication-calling';
+import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -2277,9 +2277,6 @@ export interface RemoteVideoStreamState {
 }
 
 // @public
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -2606,7 +2603,7 @@ export interface VideoStreamOptions {
 // @public
 export interface VideoStreamRendererViewState {
     isMirrored: boolean;
-    scalingMode: ScalingMode_2;
+    scalingMode: ScalingMode;
     target: HTMLElement;
 }
 
