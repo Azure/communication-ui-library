@@ -1325,6 +1325,13 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public
+export interface CreateVideoStreamViewResult {
+    view: {
+        updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
+    };
+}
+
+// @public
 export type CreateViewResult = {
     renderer: VideoStreamRenderer;
     view: VideoStreamRendererView;
@@ -2533,7 +2540,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -2590,7 +2597,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
@@ -2628,5 +2635,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 ```
