@@ -81,7 +81,7 @@ The device manager allows developers to access the local video stream to render 
 const cameras = await deviceManager.getCameras();
 const camera = cameras[0];
 const localCameraStream = { source: camera, mediaStreamType: 'Video' } as LocalVideoStreamState;
-const view = statefulClient.createView(localCameraStream);
+const { view } = await statefulClient.createView(localCameraStream);
 ```
 
 For more information on the `DeviceManager`, see [Device Management](https://docs.microsoft.com/javascript/api/azure-communication-services/@azure/communication-calling/devicemanager?view=azure-communication-services-js)
