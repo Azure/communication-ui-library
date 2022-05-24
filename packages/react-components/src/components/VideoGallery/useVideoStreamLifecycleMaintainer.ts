@@ -94,6 +94,7 @@ export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMai
           isMirrored: isMirrored,
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
         };
+
         const streamRendererResult = remoteParticipantId
           ? await onCreateRemoteStreamView?.(remoteParticipantId, streamViewOptions)
           : await onCreateLocalStreamView?.(streamViewOptions);

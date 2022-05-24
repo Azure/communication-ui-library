@@ -787,6 +787,7 @@ export interface CallWithChatCompositeStrings {
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButton: string;
+    moreDrawerAudioDeviceMenuTitle: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -1326,7 +1327,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 // @public
 export interface CreateVideoStreamViewResult {
     view: {
-        updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+        updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
     };
 }
 
@@ -2599,7 +2600,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 // @public
 export interface VideoStreamOptions {
     isMirrored?: boolean;
-    scalingMode?: ScalingMode;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
@@ -2637,5 +2638,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 ```
