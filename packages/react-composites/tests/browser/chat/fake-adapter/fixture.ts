@@ -24,7 +24,7 @@ export type ChatAdapterModel = { localParticipant: string; remoteParticipants: s
  * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
-const buildUrlForChatAppUsingFakeAdapter = (
+export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
   fakeChatAdapterModel: ChatAdapterModel,
   qArgs?: { [key: string]: string }
@@ -36,15 +36,17 @@ const buildUrlForChatAppUsingFakeAdapter = (
   return url;
 };
 
+/**
+ * Fake chat adapter args
+ */
+export const FAKE_CHAT_ADAPTER_ARGS = {
+  localParticipant: TEST_PARTICIPANTS_CHAT[0],
+  remoteParticipants: TEST_PARTICIPANTS_CHAT.slice(1)
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ serverUrl, browser }, use) => {
-  const page = await loadNewPage(
-    browser,
-    buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-      localParticipant: TEST_PARTICIPANTS_CHAT[0],
-      remoteParticipants: TEST_PARTICIPANTS_CHAT.splice(1)
-    })
-  );
+  const page = await loadNewPage(browser, buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS));
   bindConsoleErrorForwarding(page);
   await use(page);
 };

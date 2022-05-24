@@ -166,6 +166,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     data-ui-id="call-with-chat-composite-more-button"
                     strings={moreButtonStrings}
                     onClick={props.onMoreButtonClicked}
+                    disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />

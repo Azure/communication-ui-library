@@ -204,7 +204,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
     const onCreateLocalStreamView = async (
-      options?: VideoStreamOptions
+      options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
     ): Promise<void | CreateVideoStreamViewResult> => {
       if (!call || call.localVideoStreams.length === 0) {
         return;

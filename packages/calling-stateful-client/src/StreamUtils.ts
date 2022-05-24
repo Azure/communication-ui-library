@@ -19,8 +19,12 @@ import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 
-/** @public */
-export type VideoStreamRendererAndView = {
+/**
+ * Return result from {@link StatefulCallClient.createView}.
+ *
+ * @public
+ */
+export type CreateViewResult = {
   renderer: VideoStreamRenderer;
   view: VideoStreamRendererView;
 };
@@ -32,7 +36,7 @@ async function createViewRemoteVideo(
   participantId: CommunicationIdentifierKind | string,
   stream: RemoteVideoStreamState,
   options?: CreateViewOptions
-): Promise<VideoStreamRendererAndView | undefined> {
+): Promise<CreateViewResult | undefined> {
   // Render RemoteVideoStream that is part of a Call
   const streamId = stream.id;
   let participantKey;
@@ -138,7 +142,7 @@ async function createViewLocalVideo(
   internalContext: InternalCallContext,
   callId: string,
   options?: CreateViewOptions
-): Promise<VideoStreamRendererAndView | undefined> {
+): Promise<CreateViewResult | undefined> {
   callingStatefulLogger.info('Start creating view for local video');
   // Render LocalVideoStream that is part of a Call
   const renderInfo = internalContext.getLocalRenderInfo(callId);
@@ -220,7 +224,7 @@ async function createViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: LocalVideoStreamState,
   options?: CreateViewOptions
-): Promise<VideoStreamRendererAndView | undefined> {
+): Promise<CreateViewResult | undefined> {
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
 
   if (renderInfo && renderInfo.status === 'Rendered') {
@@ -388,7 +392,7 @@ export function createView(
   participantId: CommunicationIdentifierKind | string | undefined,
   stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
-): Promise<VideoStreamRendererAndView | undefined> {
+): Promise<CreateViewResult | undefined> {
   if ('id' in stream && callId && participantId) {
     // Render RemoteVideoStream that is part of a Call
     return createViewRemoteVideo(context, internalContext, callId, participantId, stream, options);

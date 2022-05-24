@@ -17,6 +17,11 @@ on:
           - stable-patch
           - beta
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # create pre-release branch for beta releases
   create_pre-release:

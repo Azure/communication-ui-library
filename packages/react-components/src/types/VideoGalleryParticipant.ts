@@ -6,7 +6,7 @@
  *
  * @public
  */
-export type ScalingMode = 'Stretch' | 'Crop' | 'Fit';
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
 
 /**
  * Options to control how video streams are rendered.
@@ -17,7 +17,7 @@ export declare interface VideoStreamOptions {
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
   /** Scaling mode. It can be `Stretch`, `Crop` or `Fit` */
-  scalingMode?: ScalingMode;
+  scalingMode?: ViewScalingMode;
 }
 
 /**
@@ -61,8 +61,13 @@ export interface VideoGalleryStream {
  * @public
  */
 export interface CreateVideoStreamViewResult {
+  /** View handle of the rendered video stream */
   view: {
-    updateScalingMode: (scalingMode: ScalingMode) => Promise<void>;
+    /**
+     * Update the scale mode for this view.
+     * @param scalingMode - The new scale mode.
+     */
+    updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
   };
 }
 

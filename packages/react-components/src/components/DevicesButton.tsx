@@ -172,11 +172,45 @@ export interface DeviceMenuProps {
  * @private
  */
 export interface DeviceMenuStrings {
+  /**
+   * Title for Camera section in the contextual menu
+   */
   cameraMenuTitle?: string;
+  /**
+   * Title for Audio Device section in the contextual menu
+   *
+   * @remark Used in place of microphoneMenuTitle when speakers can be enumerated
+   */
+  audioDeviceMenuTitle?: string;
+  /**
+   * Title for Microphone section in the contextual menu
+   *
+   * @remark Used when speakers can be enumerated
+   */
   microphoneMenuTitle?: string;
+  /**
+   * Title for Speaker section in the contextual menu
+   */
   speakerMenuTitle?: string;
+  /**
+   * Tooltip label for Camera section in the contextual menu
+   */
   cameraMenuTooltip?: string;
+  /**
+   * Tooltip label for Audio Device section in the contextual menu
+   *
+   * @remark Used in place of microphoneMenuTooltip when speakers can be enumerated
+   */
+  audioDeviceMenuTooltip?: string;
+  /**
+   * Tooltip label for Microphone section in the contextual menu
+   *
+   * @remark Used when speakers can be enumerated
+   */
   microphoneMenuTooltip?: string;
+  /**
+   * Tooltip label for Speaker section in the contextual menu
+   */
   speakerMenuTooltip?: string;
 }
 
@@ -269,17 +303,24 @@ export const generateDefaultDeviceMenuProps = (
   }
 
   if (microphones && selectedMicrophone && onSelectMicrophone) {
+    // Set props as Microphone if speakers can be enumerated else set as Audio Device
+    const speakersAvailable = speakers && speakers.length > 0;
+    const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
+    const title = speakersAvailable ? strings.microphoneMenuTooltip : strings.audioDeviceMenuTooltip;
+    const sectionPropsTitle = speakersAvailable ? strings.microphoneMenuTitle : strings.audioDeviceMenuTitle;
+    const iconName = speakersAvailable ? 'OptionsMic' : 'OptionsSpeaker';
+
     defaultMenuProps.items.push({
-      key: 'sectionMicrophone',
-      title: strings.microphoneMenuTooltip,
+      key: key,
+      title: title,
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: strings.microphoneMenuTitle,
+        title: sectionPropsTitle,
         items: microphones.map((microphone) => ({
           key: microphone.id,
           text: microphone.name,
           title: microphone.name,
-          iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
+          iconProps: { iconName: iconName, styles: { root: { lineHeight: 0 } } },
           itemProps: {
             styles: menuItemStyles
           },
