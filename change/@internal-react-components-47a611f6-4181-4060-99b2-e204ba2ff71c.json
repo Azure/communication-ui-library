@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Code refactor: Update remote video tile to use the useVideoStreamLifecycleMaintainer",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
