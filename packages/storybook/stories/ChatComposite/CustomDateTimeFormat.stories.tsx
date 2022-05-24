@@ -15,12 +15,14 @@ import {
   ChatCompositeSetupProps,
   ConfigHintBanner,
   addParrotBotToThread,
-  createThreadAndAddUser
+  createThreadAndAddUser,
+  onDisplayDateTimeString
 } from './snippets/Utils';
 
 const messageArray = [
   'Welcome to an example on how to add powerful customizations to the ChatComposite',
   'By following this example, Contoso can customize the date time format to whatever they want!',
+  'Note that this example uses the localization API',
   'Have fun!'
 ];
 
@@ -29,45 +31,6 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
     globals: { locale }
   } = context;
   const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
-
-  const onDisplayDateTimeString = (messageDate: Date): string => {
-    let hours = messageDate.getHours();
-    let minutes = messageDate.getMinutes().toString();
-    let month = (messageDate.getMonth() + 1).toString();
-    let day = messageDate.getDate().toString();
-    const year = messageDate.getFullYear().toString();
-
-    if (month.length === 1) {
-      month = '0' + month;
-    }
-    if (day.length === 1) {
-      day = '0' + day;
-    }
-    const isAm = hours < 12;
-    if (hours > 12) {
-      hours = hours - 12;
-    }
-    if (hours === 0) {
-      hours = 12;
-    }
-    if (minutes.length < 2) {
-      minutes = '0' + minutes;
-    }
-    return (
-      'TimeStamp: ' +
-      year +
-      '-' +
-      month +
-      '-' +
-      day +
-      ', ' +
-      hours.toString() +
-      ':' +
-      minutes +
-      ' ' +
-      (isAm ? 'a.m.' : 'p.m.')
-    );
-  };
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
@@ -91,8 +54,6 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
 
   const strings = compositeLocale(locale)?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
   const compositeStrings = compositeLocale(locale)?.strings ?? COMPOSITE_LOCALE_EN_US.strings;
-  const onDisplayDateTimeStringLocale =
-    compositeLocale(locale)?.component.onDisplayDateTimeString ?? onDisplayDateTimeString;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -102,7 +63,7 @@ const CustomDateTimeFormatStory = (args, context): JSX.Element => {
           fluentTheme={context.theme}
           {...containerProps}
           locale={{
-            component: { strings, onDisplayDateTimeString: onDisplayDateTimeStringLocale },
+            component: { strings, onDisplayDateTimeString },
             strings: compositeStrings
           }}
           errorBar={args.showErrorBar}

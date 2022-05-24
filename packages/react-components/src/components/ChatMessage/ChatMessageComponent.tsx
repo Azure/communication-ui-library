@@ -60,7 +60,6 @@ type ChatMessageComponentProps = {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
 
-  /* @conditional-compile-remove(dateTimeCustomization) */
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -118,7 +117,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onEditClick={onEditClick}
         onResendClick={onResendClick}
         onRenderAvatar={props.onRenderAvatar}
-        /* @conditional-compile-remove(dateTimeCustomization) */
+        /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
       />
     );
