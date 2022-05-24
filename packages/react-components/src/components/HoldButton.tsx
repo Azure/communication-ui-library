@@ -24,7 +24,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * Strings for the hold button labels
- * @internal
+ * @beta
  */
 export interface HoldButtonStrings {
   /**

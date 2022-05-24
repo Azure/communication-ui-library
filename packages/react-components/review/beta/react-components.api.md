@@ -657,9 +657,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
     strings: HoldButtonStrings;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "HoldButtonStrings" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
