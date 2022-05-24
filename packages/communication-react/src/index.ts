@@ -110,6 +110,9 @@ export {
   VideoTile
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(PSTN-calls) */
+export { HoldButton } from '../../react-components/src';
+
 export type {
   _IdentifierProviderProps,
   _Identifiers,
@@ -212,6 +215,9 @@ export type {
   FileDownloadError,
   FileMetadata
 } from '../../react-components/src';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
+
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 

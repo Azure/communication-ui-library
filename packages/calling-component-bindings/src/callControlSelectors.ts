@@ -166,6 +166,7 @@ export type HoldButtonSelector = (
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector for the hold button
+ * @beta
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {

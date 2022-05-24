@@ -7,7 +7,7 @@ import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
- *@internal
+ *@beta
  */
 export interface HoldButtonProps extends ControlBarButtonProps {
   /**
@@ -53,7 +53,7 @@ export interface HoldButtonStrings {
  *
  * @param props - properties for the hold button.
  * @returns
- * @internal
+ * @beta
  */
 export const HoldButton = (props: HoldButtonProps): JSX.Element => {
   const { onToggleHold, strings } = props;

@@ -648,14 +648,10 @@ export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "HoldButton" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta
 export const HoldButton: (props: HoldButtonProps) => JSX.Element;
 
-// Warning: (ae-internal-missing-underscore) The name "HoldButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export interface HoldButtonProps extends ControlBarButtonProps {
     onToggleHold: () => Promise<void>;
     strings: HoldButtonStrings;
