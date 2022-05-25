@@ -74,12 +74,14 @@ rush update:stable
 
 # Conditionally adding a feature
 
-This repository contains a [live document](../../packages/acs-ui-common/src/conditional-compilation-sample/index.tsx) that describes how you can add code that is conditionally compiled, and also walks through common scenarios you might encounter when trying to add a beta-only
+You must first define your new feature by adding it to the [`features` list in this config file](../../common/config/babel/.babelrc.js).
+
+This repository contains a [live document](../../packages/acs-ui-common/src/conditional-compilation-sample/index.tsx) that describes how you can then add code that is conditionally compiled, and also walks through common scenarios you might encounter when trying to add a beta-only
 feature.
 
 ## Stabilizing a feature
 
-Careful scoping of [defined features](../../common/config/babel/.babelrc.js) will allow you to easily stabilize the feature. When you are ready to add your feature to the stable build:
+Careful scoping of defined features will allow you to easily stabilize the feature. When you are ready to add your feature to the stable build:
 
 - One-step stabilization: Include all associated conditionally compiled code in the stable flavored build by moving your feature to `stabilizedFeatures` in the [defined features config file]((../../common/config/babel/.babelrc.js)).
   - Switch to stable flavor and build, test and run samples to try out your stabilized feature.
