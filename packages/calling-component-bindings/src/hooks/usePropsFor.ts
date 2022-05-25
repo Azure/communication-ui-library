@@ -11,6 +11,7 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
 import {
   CameraButtonSelector,
@@ -20,10 +21,10 @@ import {
   DevicesButtonSelector,
   devicesButtonSelector,
   ScreenShareButtonSelector,
-  screenShareButtonSelector,
-  holdButtonSelector,
-  HoldButtonSelector
+  screenShareButtonSelector
 } from '../callControlSelectors';
+/* @conditional-compile-remove(PSTN-calls) */
+import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
 import { ParticipantsButtonSelector, participantsButtonSelector } from '../participantsButtonSelector';
@@ -120,6 +121,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (component === HoldButton) {
+    return findConditionalCompiledSelector(component);
+  }
   return findSelector(component);
 };
 
@@ -147,4 +152,12 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
   }
   return undefined;
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  switch (component) {
+    case HoldButton:
+      return holdButtonSelector;
+  }
 };
