@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StreamMedia } from '@azure/communication-react';
+import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl, orientationArg } from '../../controlsUtils';
@@ -15,23 +15,48 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
   const primaryTileVideoStreamElement = args.primaryTileVideoAvailable ? videoStreams[0] : null;
   const secondaryTileVideoStreamElement = args.secondaryTileVideoAvailable ? videoStreams[1] : null;
 
+  const PrimaryVideoTile = useCallback(
+    (): JSX.Element => (
+      <VideoTile
+        displayName={args.primaryTileParticipantName}
+        renderElement={
+          args.primaryTileVideoAvailable ? (
+            <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
+          ) : undefined
+        }
+        showLabel={false}
+      />
+    ),
+    [args.primaryTileParticipantName, args.primaryTileVideoAvailable, primaryTileVideoStreamElement]
+  );
+
+  const SecondaryVideoTile = useCallback(
+    (): JSX.Element => (
+      <VideoTile
+        displayName={args.secondaryTileParticipantName}
+        renderElement={
+          args.secondaryTileVideoAvailable ? (
+            <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
+          ) : undefined
+        }
+        isMirrored={true}
+        showLabel={false}
+        personaMinSize={20}
+      />
+    ),
+    [args.secondaryTileParticipantName, args.secondaryTileVideoAvailable, secondaryTileVideoStreamElement]
+  );
+
   return (
     <PictureInPictureInPictureComponent
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
-        displayName: args.primaryTileParticipantName,
-        renderElement: args.primaryTileVideoAvailable ? (
-          <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
-        ) : undefined
+        content: <PrimaryVideoTile />
       }}
       secondaryTile={{
         orientation: args.secondaryTileOrientation,
-        displayName: args.secondaryTileParticipantName,
-        renderElement: args.secondaryTileVideoAvailable ? (
-          <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
-        ) : undefined,
-        isMirrored: true
+        content: <SecondaryVideoTile />
       }}
       strings={{ rootAriaLabel: 'Picture in Picture in Picture surfaces' }}
     />
