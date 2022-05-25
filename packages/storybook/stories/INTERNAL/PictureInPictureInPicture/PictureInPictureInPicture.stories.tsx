@@ -4,7 +4,7 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl, orientationArg } from '../../controlsUtils';
