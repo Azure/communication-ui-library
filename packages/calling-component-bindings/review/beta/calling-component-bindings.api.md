@@ -15,21 +15,30 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
+import { CameraButtonProps } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DevicesButton } from '@internal/react-components';
+import { DevicesButtonProps } from '@internal/react-components';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
+import { EndCallButtonProps } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
+import { ErrorBarProps } from '@internal/react-components';
+import { FilterUndefined } from '@internal/acs-ui-common';
 import { MicrophoneButton } from '@internal/react-components';
+import { MicrophoneButtonProps } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
+import { ParticipantListProps } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
+import { ParticipantsButtonProps } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
+import { ScreenShareButtonProps } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -37,6 +46,7 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
+import { VideoGalleryProps } from '@internal/react-components';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -137,10 +147,10 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<(AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : undefined) | (AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined)>;
 
 // @public
-export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => FilterUndefined<(AreEqual<Component, (props: VideoGalleryProps) => JSX.Element> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, (props: DevicesButtonProps) => JSX.Element> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, (props: MicrophoneButtonProps) => JSX.Element> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, (props: CameraButtonProps) => JSX.Element> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, (props: ScreenShareButtonProps) => JSX.Element> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, (props: ParticipantsButtonProps) => JSX.Element> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, (props: EndCallButtonProps) => JSX.Element> extends true ? EmptySelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)>;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;
@@ -197,7 +207,7 @@ export const useCallClient: () => StatefulCallClient;
 export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CallingHandlers, PropsT> | undefined;
 
 // @public
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => FilterUndefined<(AreEqual<Component, (props: VideoGalleryProps) => JSX.Element> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, (props: DevicesButtonProps) => JSX.Element> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, (props: MicrophoneButtonProps) => JSX.Element> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, (props: CameraButtonProps) => JSX.Element> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, (props: ScreenShareButtonProps) => JSX.Element> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, (props: ParticipantsButtonProps) => JSX.Element> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, (props: EndCallButtonProps) => JSX.Element> extends true ? EmptySelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)> extends (props: any) => any ? ReturnType<FilterUndefined<(AreEqual<Component, (props: VideoGalleryProps) => JSX.Element> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, (props: DevicesButtonProps) => JSX.Element> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, (props: MicrophoneButtonProps) => JSX.Element> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, (props: CameraButtonProps) => JSX.Element> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, (props: ScreenShareButtonProps) => JSX.Element> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, (props: ParticipantsButtonProps) => JSX.Element> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, (props: EndCallButtonProps) => JSX.Element> extends true ? EmptySelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;

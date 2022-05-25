@@ -26,7 +26,7 @@ import { ParticipantListSelector, participantListSelector } from '../participant
 import { ParticipantsButtonSelector, participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
-import { Common } from '@internal/acs-ui-common';
+import { Common, FilterUndefined } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { CallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
@@ -80,28 +80,17 @@ const emptySelector: EmptySelector = (): Record<string, never> => ({});
  *
  * @public
  */
-export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
-  Component,
-  typeof VideoGallery
-> extends true
-  ? VideoGallerySelector
-  : AreEqual<Component, typeof DevicesButton> extends true
-  ? DevicesButtonSelector
-  : AreEqual<Component, typeof MicrophoneButton> extends true
-  ? MicrophoneButtonSelector
-  : AreEqual<Component, typeof CameraButton> extends true
-  ? CameraButtonSelector
-  : AreEqual<Component, typeof ScreenShareButton> extends true
-  ? ScreenShareButtonSelector
-  : AreEqual<Component, typeof ParticipantList> extends true
-  ? ParticipantListSelector
-  : AreEqual<Component, typeof ParticipantsButton> extends true
-  ? ParticipantsButtonSelector
-  : AreEqual<Component, typeof EndCallButton> extends true
-  ? EmptySelector
-  : AreEqual<Component, typeof ErrorBar> extends true
-  ? ErrorBarSelector
-  : undefined;
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<
+  | (AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : undefined)
+  | (AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : undefined)
+  | (AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : undefined)
+  | (AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : undefined)
+  | (AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : undefined)
+  | (AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : undefined)
+  | (AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : undefined)
+  | (AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : undefined)
+  | (AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined)
+>;
 
 /**
  * Get the selector for a specified component.
