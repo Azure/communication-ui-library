@@ -101,6 +101,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [ariaLabel]
   );
 
+  // If there are no remote participants, show the local participant as the primary tile
   const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       content: remoteVideoTileProps ? (
@@ -114,6 +115,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [localVideoTileProps, remoteVideoTileProps]
   );
 
+  // If we are showing the local participant as the primary tile, show nothing for the secondary tile
   const secondaryTileProps: _PictureInPictureInPictureTileProps | undefined = useMemo(
     () =>
       remoteVideoTileProps
@@ -130,9 +132,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     <_PictureInPictureInPicture
       onClick={props.onClick}
       strings={strings}
-      // If there are no remote participants, show the local participant as the primary tile
       primaryTile={primaryTileProps}
-      // If we are showing the local participant as the primary tile, show nothing for the secondary tile
       secondaryTile={secondaryTileProps}
     />
   );

@@ -1103,7 +1103,7 @@ export type ReadReceiptsBySenderId = {
 // @internal
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
-    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void>) | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isMuted?: boolean | undefined;
