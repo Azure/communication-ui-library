@@ -3,6 +3,7 @@
 
 import React, { useMemo } from 'react';
 import {
+  CreateVideoStreamViewResult,
   VideoGalleryStream,
   VideoStreamOptions,
   _LocalVideoTile,
@@ -25,7 +26,7 @@ export interface LocalAndRemotePIPProps {
   };
 
   /** Callback to create the local video stream view */
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
   /** Callback to create a remote video stream view */
@@ -97,7 +98,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [ariaLabel]
   );
 
-  const primaryTileProps = useMemo(
+  const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       content: remoteVideoTileProps ? (
         <_RemoteVideoTile {...remoteVideoTileProps} />
@@ -110,12 +111,15 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [localVideoTileProps, remoteVideoTileProps]
   );
 
-  const secondaryTileProps = useMemo(
-    () => ({
-      content: remoteVideoTileProps ? <_LocalVideoTile {...localVideoTileProps} personaMinSize={20} /> : undefined,
-      // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
-      orientation: 'portrait'
-    }),
+  const secondaryTileProps: _PictureInPictureInPictureTileProps | undefined = useMemo(
+    () =>
+      remoteVideoTileProps
+        ? {
+            content: <_LocalVideoTile {...localVideoTileProps} personaMinSize={20} />,
+            // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
+            orientation: 'portrait'
+          }
+        : undefined,
     [localVideoTileProps, remoteVideoTileProps]
   );
 
