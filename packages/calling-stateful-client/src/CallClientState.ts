@@ -487,6 +487,8 @@ export type CallErrorTarget =
   | 'CallClient.createCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
+  /* @conditional-compile-remove(calling-1.5.4-beta.1) */
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
