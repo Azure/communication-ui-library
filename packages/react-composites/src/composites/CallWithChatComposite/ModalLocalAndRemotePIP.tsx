@@ -51,13 +51,6 @@ const _ModalLocalAndRemotePIP = (props: {
 
   const modalStylesThemed = concatStyleSets(modalStyle, props.styles?.modal);
 
-  React.useEffect(() => {
-    console.log('Modal LocalAndRemote PIP Component mounted.');
-    return () => {
-      console.log('Modal LocalAndRemote PIP Component unmounted.');
-    };
-  }, []);
-
   return (
     <Stack styles={rootStyles}>
       <_ModalClone

@@ -8,8 +8,9 @@ import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/rea
 import { checkIsSpeaking } from './SelectorUtils';
 
 /** @internal */
-export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] =>
-  dominantSpeakers?.speakersList?.map(toFlatCommunicationIdentifier);
+export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
+  return dominantSpeakers?.speakersList?.map(toFlatCommunicationIdentifier);
+};
 
 /** @internal */
 export const _videoGalleryRemoteParticipantsMemo = (
