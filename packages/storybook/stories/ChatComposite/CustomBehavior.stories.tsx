@@ -37,7 +37,7 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
           newProps.threadId,
           messageArray
         );
-        setContainerProps(newProps);
+        setContainerProps({ userId: { communicationUserId: newProps.userIdentifier }, ...newProps });
       } else {
         setContainerProps(undefined);
       }
