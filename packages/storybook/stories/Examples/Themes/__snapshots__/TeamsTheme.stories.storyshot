@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-117 body-0"
+  className="css-118 body-0"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="css-118"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-117 body-1"
+          className="css-118 body-1"
           dir="ltr"
         >
           <div
-            className="css-117"
+            className="css-118"
             data-uses-unhanded-props={true}
           >
             <div
@@ -383,10 +383,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-139 css-52"
+                    className="ms-Stack css-140 css-52"
                   >
                     <div
-                      className="ms-Stack css-140 css-53"
+                      className="ms-Stack css-141 css-53"
                     >
                       <span
                         className="css-54"

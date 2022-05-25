@@ -7,7 +7,6 @@ import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
-  ChatParticipant,
   ChatThreadCreatedEvent,
   ChatThreadDeletedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -15,7 +14,8 @@ import {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
-} from '@azure/communication-signaling';
+} from '@azure/communication-chat';
+import { ChatParticipant as SignalingChatParticipant } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from './StatefulChatClient';
 import { ChatClientState, ChatError } from './ChatClientState';
 import { Constants } from './Constants';
@@ -31,7 +31,7 @@ import {
 
 jest.useFakeTimers();
 
-const mockParticipants: ChatParticipant[] = [
+const mockParticipants: SignalingChatParticipant[] = [
   { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: 'user1' },
   { id: { kind: 'communicationUser', communicationUserId: 'user2' }, displayName: 'user1' }
 ];
