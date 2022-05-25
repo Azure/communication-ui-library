@@ -59,6 +59,12 @@ type ChatMessageComponentProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
+
+  /**
+   * Optional function to provide customized date format.
+   * @beta
+   */
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 /**
@@ -111,6 +117,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onEditClick={onEditClick}
         onResendClick={onResendClick}
         onRenderAvatar={props.onRenderAvatar}
+        /* @conditional-compile-remove(date-time-customization) */
+        onDisplayDateTimeString={props.onDisplayDateTimeString}
       />
     );
   }
