@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
