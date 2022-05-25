@@ -55,15 +55,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal">
-          {customButtons['first']}
           {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
-          {customButtons['afterMicrophoneButton']}
           {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
-          {customButtons['afterCameraButton']}
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {customButtons['afterScreenShareButton']}
           {isEnabled(options?.participantsButton) && (
             <Participants
               option={options?.participantsButton}
@@ -73,14 +69,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               increaseFlyoutItemSize={props.increaseFlyoutItemSize}
             />
           )}
-          {customButtons['afterParticipantsButton']}
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {customButtons['afterDevicesButton']}
+          {customButtons['mainBar']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
-          {customButtons['afterEndCallButton']}
-          {customButtons['last']}
         </ControlBar>
       </Stack.Item>
     </Stack>

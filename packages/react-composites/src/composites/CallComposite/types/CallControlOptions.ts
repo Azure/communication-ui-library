@@ -81,15 +81,7 @@ export type CallControlOptions = {
  *
  * @beta
  */
-export type CustomCallControlButtonPlacement =
-  | 'first'
-  | 'last'
-  | 'afterCameraButton'
-  | 'afterEndCallButton'
-  | 'afterMicrophoneButton'
-  | 'afterDevicesButton'
-  | 'afterParticipantsButton'
-  | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'sideBar' | 'mainBar' | 'overflowBar';
 
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton}.

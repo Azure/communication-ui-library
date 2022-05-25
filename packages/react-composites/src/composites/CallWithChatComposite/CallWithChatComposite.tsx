@@ -4,6 +4,8 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallControlButtonCallback } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
@@ -127,6 +129,13 @@ export interface CallWithChatControlOptions {
    * @defaultValue true
    */
   peopleButton?: boolean;
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  /**
+   * Inject custom buttons in the call controls.
+   *
+   * @beta
+   */
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 }
 
 type CallWithChatScreenProps = {

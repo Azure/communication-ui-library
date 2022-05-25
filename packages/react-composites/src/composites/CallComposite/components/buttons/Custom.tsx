@@ -18,14 +18,9 @@ export const generateCustomButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    first: undefined,
-    afterCameraButton: undefined,
-    afterEndCallButton: undefined,
-    afterMicrophoneButton: undefined,
-    afterDevicesButton: undefined,
-    afterParticipantsButton: undefined,
-    afterScreenShareButton: undefined,
-    last: undefined
+    sideBar: undefined,
+    mainBar: undefined,
+    overflowBar: undefined
   };
   if (!onFetchCustomButtonProps) {
     return response;
@@ -40,6 +35,33 @@ export const generateCustomButtons = (
           .map((buttonProps, i) => (
             <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
           ))}
+      </>
+    );
+  }
+  return response;
+};
+
+/** @private */
+export const generateCustomDrawerButtons = (
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
+  displayType?: CallControlDisplayType
+): CustomButtons => {
+  const response = {
+    sideBar: undefined,
+    mainBar: undefined,
+    overflowBar: undefined
+  };
+  if (!onFetchCustomButtonProps) {
+    return response;
+  }
+
+  const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
+  for (const key in response) {
+    response[key] = (
+      <>
+        {allButtonProps
+          .filter((buttonProps) => buttonProps.placement === key)
+          .map((buttonProps, i) => ({ ...buttonProps, key: `${buttonProps.placement}_${i}` }))}
       </>
     );
   }

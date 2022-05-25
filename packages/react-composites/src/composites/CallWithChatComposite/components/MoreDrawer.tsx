@@ -2,13 +2,20 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { useMemo } from 'react';
 import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
-  _DrawerMenuItemProps as DrawerMenuItemProps
+  _DrawerMenuItemProps as DrawerMenuItemProps,
+  _DrawerMenuItemProps
 } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { generateCustomDrawerButtons } from '../../CallComposite/components/buttons/Custom';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallControlButtonCallback } from '../../CallComposite';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -143,6 +150,46 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: props.onPeopleButtonClicked
     });
   }
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomDrawerButtons(
+        onFetchCustomButtonPropsTrampoline(drawerSelectionOptions != false ? drawerSelectionOptions : undefined),
+        drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
+      ),
+    [drawerSelectionOptions]
+  );
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['overflowBar']?.props.children.forEach((element) => {
+    drawerMenuItems.push({
+      itemKey: element.key,
+      text: element.strings.label,
+      onItemClick: element.onClick,
+      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
+      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
+    });
+  });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['mainBar']?.props.children.slice(1).forEach((element) => {
+    drawerMenuItems.push({
+      itemKey: element.key,
+      text: element.strings.label,
+      onItemClick: element.onClick,
+      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
+      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
+    });
+  });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['sideBar']?.props.children.forEach((element) => {
+    drawerMenuItems.push({
+      itemKey: element.key,
+      text: element.strings.label,
+      onItemClick: element.onClick,
+      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
+      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
+    });
+  });
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
@@ -151,3 +198,28 @@ const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevic
   !!selectedSpeaker && speaker.id === selectedSpeaker.id;
 
 const isEnabled = (option: unknown): boolean => option !== false;
+
+/* @conditional-compile-remove(control-bar-button-injection) */
+/** @private */
+const onFetchCustomButtonPropsTrampoline = (
+  options?: CallWithChatControlOptions
+): CustomCallControlButtonCallback[] | undefined => {
+  let response: CustomCallControlButtonCallback[] | undefined = undefined;
+  response = options?.onFetchCustomButtonProps;
+  return response;
+};
+
+/* @conditional-compile-remove(control-bar-button-injection) */
+/** @private */
+const makeSubMenuItems = (element): _DrawerMenuItemProps[] => {
+  const subMenuProps: _DrawerMenuItemProps[] = [];
+  if (element.menuProps) {
+    element.menuProps?.items.forEach((subMenuElement) => {
+      subMenuProps.push({
+        itemKey: subMenuElement.key,
+        text: subMenuElement.text
+      });
+    });
+  }
+  return subMenuProps;
+};

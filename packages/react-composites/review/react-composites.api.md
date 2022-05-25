@@ -603,6 +603,8 @@ export interface CallWithChatControlOptions {
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
     microphoneButton?: boolean;
+    // @beta
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -796,7 +798,7 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'sideBar' | 'mainBar' | 'overflowBar';
 
 // @beta
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
