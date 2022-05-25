@@ -7,7 +7,7 @@ import {
   stubMessageTimestamps,
   dataUiId,
   waitForSelector,
-  clickOutsideOfPage,
+  stableScreenshot,
   waitForParticipants
 } from '../common/utils';
 import {
@@ -242,9 +242,10 @@ test.describe('Filesharing Global Errorbar', async () => {
     await stubMessageTimestamps(page);
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
-    await clickOutsideOfPage(page);
     await waitForParticipants(page, users.length);
-    expect(await page.screenshot()).toMatchSnapshot('filesharing-download-error.png');
+    expect(await stableScreenshot(page, { dismissChatMessageActions: true })).toMatchSnapshot(
+      'filesharing-download-error.png'
+    );
   });
 });
 
