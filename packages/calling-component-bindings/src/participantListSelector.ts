@@ -34,7 +34,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           displayName:
             participant.identifier.kind !== 'phoneNumber'
               ? participant.displayName
-              : participant.identifier.phoneNumber,
+              : parsePhoneNumberForDisplayName(participant.identifier.phoneNumber),
           state: participant.state,
           isMuted: participant.isMuted,
           isScreenSharing: isScreenSharing,
@@ -106,3 +106,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
+/**
+ *
+ */
+const parsePhoneNumberForDisplayName = (phoneNumber: string): string => {
+  return phoneNumber.split(':')[1];
+};
