@@ -4,7 +4,7 @@
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 
 /**
  * Centralized state for {@link @azure/communication-chat#ChatClient}.
@@ -79,9 +79,6 @@ export type ChatThreadClientState = {
 
 /**
  * Properties of a chat thread.
- *
- * \@azure/communication-chat exports two interfaces for this concept,
- * and \@azure/communication-signaling exports another.
  *
  * We define a minimal one that helps us hide the different types used by underlying API.
  *
