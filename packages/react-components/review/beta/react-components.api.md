@@ -748,6 +748,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoCameraSwitcherLabel?: string | undefined;
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
+    personaMinSize?: number | undefined;
 }) => JSX.Element>;
 
 // @public
