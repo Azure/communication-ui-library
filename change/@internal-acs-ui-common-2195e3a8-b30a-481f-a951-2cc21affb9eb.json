@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add new helper to create remove `undefined` from type unions",
+  "packageName": "@internal/acs-ui-common",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

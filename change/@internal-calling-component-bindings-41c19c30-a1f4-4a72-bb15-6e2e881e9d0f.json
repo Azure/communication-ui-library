@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Change GetSelector type inference. Final type is unchanged.",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
