@@ -64,7 +64,7 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -1161,6 +1161,8 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
+    // @beta
+    onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -1957,6 +1959,7 @@ export type MessageThreadProps = {
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
+    onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 // @public
