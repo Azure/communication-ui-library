@@ -7,9 +7,9 @@ export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
 
+export * from './typeHelpers';
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';
-export type { AreEqual, AreParamEqual, AreTypeEqual } from './areEqual';
 export type { MessageStatus } from './MessageStatus';
 export type { _IObjectMap } from './localizationUtils';
 

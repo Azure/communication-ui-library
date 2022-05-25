@@ -16,14 +16,23 @@ import React from 'react';
  *
  * @private
  */
-export function assertGetSelectorTypes(): void {
-  const sendBoxSelector: SendBoxSelector = getSelector(SendBox);
-  const messageThreadSelector: MessageThreadSelector = getSelector(MessageThread);
-  const typingIndicatorSelector: TypingIndicatorSelector = getSelector(TypingIndicator);
+export function assertGetSelectorTypes(): unknown {
   const chatParticipantListSelector: ChatParticipantListSelector = getSelector(ParticipantList);
   const errorBarSelector: ErrorBarSelector = getSelector(ErrorBar);
+  const messageThreadSelector: MessageThreadSelector = getSelector(MessageThread);
+  const sendBoxSelector: SendBoxSelector = getSelector(SendBox);
+  const typingIndicatorSelector: TypingIndicatorSelector = getSelector(TypingIndicator);
 
   const notASelector: undefined = getSelector(ComponentWithoutASelector);
+
+  return [
+    chatParticipantListSelector,
+    errorBarSelector,
+    messageThreadSelector,
+    notASelector,
+    sendBoxSelector,
+    typingIndicatorSelector
+  ];
 }
 
 function ComponentWithoutASelector(): JSX.Element {

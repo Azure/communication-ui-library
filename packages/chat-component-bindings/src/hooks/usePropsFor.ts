@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
+import { FilterUndefined } from '@internal/acs-ui-common';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -56,8 +57,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   | (AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : undefined)
   | (AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined)
 >;
-
-export type FilterUndefined<T> = Exclude<T, undefined> extends never ? undefined : Exclude<T, undefined>;
 
 /**
  * Get the selector for a specified component.

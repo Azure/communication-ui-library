@@ -1708,6 +1708,9 @@ export interface FileUploadState {
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
+export type FilterUndefined<T> = Exclude<T, undefined> extends never ? undefined : Exclude<T, undefined>;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -1727,10 +1730,10 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<(AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined)>;
 
 // @public
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => FilterUndefined<(AreEqual<Component, (props: SendBoxProps) => JSX.Element> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, (props: MessageThreadProps) => JSX.Element> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, (props: TypingIndicatorProps) => JSX.Element> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ChatErrorBarSelector : undefined)>;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;

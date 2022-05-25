@@ -21,11 +21,12 @@
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
 export type {
   AreEqual,
-  CommonProperties,
-  MessageStatus,
-  Common,
+  AreParamEqual,
   AreTypeEqual,
-  AreParamEqual
+  Common,
+  CommonProperties,
+  FilterUndefined,
+  MessageStatus
 } from '../../acs-ui-common/src';
 
 // Not to export chat/calling specific hook from binding package

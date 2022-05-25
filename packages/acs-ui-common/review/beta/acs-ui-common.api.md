@@ -28,6 +28,9 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
+// @public
+export type FilterUndefined<T> = Exclude<T, undefined> extends never ? undefined : Exclude<T, undefined>;
+
 // @internal
 export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
