@@ -160,28 +160,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  public setCallHold(callId: string): void {
-    const latestCallId = this._callIdHistory.latestCallId(callId);
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[latestCallId];
-      if (call && call.state !== 'RemoteHold') {
-        this.setCallState(latestCallId, 'LocalHold');
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  public setCallResume(callId: string): void {
-    const latestCallId = this._callIdHistory.latestCallId(callId);
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[latestCallId];
-      if (call && call.state === 'LocalHold') {
-        this.setCallState(latestCallId, 'Connected');
-      }
-    });
-  }
-
   public setCallState(callId: string, state: CallStatus): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
