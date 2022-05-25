@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -20,7 +20,10 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (
+      userId: string,
+      options?: VideoStreamOptions
+    ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isMuted?: boolean;
