@@ -28,9 +28,8 @@ type InferredCallErrorTargets =
    * stabilized in @azure/commmunication-calling.
    * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.
    */
-  /* @conditional-compile-remove(calling-1.5.4-beta.1) */
-  | 'CallClient.getEnvironmentInfo'
   | 'CallAgent.feature'
+  | /* @conditional-compile-remove(calling-1.5.4-beta.1) */ 'CallClient.getEnvironmentInfo'
   | 'CallClient.feature';
 
 type CallObjectMethodNames<TName extends string, T> = {
