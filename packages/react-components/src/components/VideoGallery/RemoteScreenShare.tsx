@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
-import { VideoStreamOptions } from '../../types';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -19,7 +19,10 @@ export const RemoteScreenShare = React.memo(
   (props: {
     userId: string;
     displayName?: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (
+      userId: string,
+      options?: VideoStreamOptions
+    ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isMuted?: boolean;

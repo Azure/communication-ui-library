@@ -26,7 +26,7 @@ const createCompositeHandlers = memoizeOne(
       return await adapter.createStreamView(undefined, options);
     },
     onCreateRemoteStreamView: async (userId, options) => {
-      await adapter.createStreamView(userId, options);
+      return await adapter.createStreamView(userId, options);
     },
     onHangUp: async () => {
       await adapter.leaveCall();
