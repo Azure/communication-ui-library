@@ -15,6 +15,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -34,6 +35,7 @@ import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomCh
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
@@ -49,6 +51,8 @@ const MessageThreadWithCustomMessagesExampleText =
   require('!!raw-loader!./snippets/CustomMessages.snippet.tsx').default;
 const MessageThreadWithCustomMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx').default;
+const MessageThreadWithCustomTimestampExampleText =
+  require('!!raw-loader!./snippets/CustomTimestamp.snippet.tsx').default;
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
@@ -158,6 +162,11 @@ const getDocs: () => JSX.Element = () => {
         component
       </Description>
 
+      <Heading>Custom Timestamp</Heading>
+      <SingleLineBetaBanner />
+      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+        <MessageThreadWithCustomTimestampExample />
+      </Canvas>
       <Heading>Display File Attachments with Messages</Heading>
       <DetailedBetaBanner />
       <Description>
