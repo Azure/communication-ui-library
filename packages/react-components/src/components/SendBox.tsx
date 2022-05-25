@@ -20,6 +20,8 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
@@ -315,9 +317,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return props.onRenderFileUploads ? (
       props.onRenderFileUploads()
     ) : (
-      <div style={{ margin: '0.25rem' }}>
+      <Stack className={fileUploadCardsStyles}>
         <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
-      </div>
+      </Stack>
     );
   }, [props]);
 

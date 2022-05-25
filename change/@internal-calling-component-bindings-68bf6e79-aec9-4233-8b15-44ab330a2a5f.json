@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Build fix for return type",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
