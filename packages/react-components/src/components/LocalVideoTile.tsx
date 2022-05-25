@@ -16,11 +16,11 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
- * @private
+ * @internal
  */
-export const LocalVideoTile = React.memo(
+export const _LocalVideoTile = React.memo(
   (props: {
-    userId: string;
+    userId?: string;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
@@ -109,7 +109,7 @@ export const LocalVideoTile = React.memo(
 
     return (
       <VideoTile
-        key={userId}
+        key={userId ?? 'local-video-tile'}
         userId={userId}
         renderElement={renderVideoStreamElement}
         showLabel={showLabel}

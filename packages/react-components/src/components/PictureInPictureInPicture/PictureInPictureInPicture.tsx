@@ -46,6 +46,12 @@ export interface _PictureInPictureInPictureProps {
  * @internal
  */
 export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProps): JSX.Element => {
+  React.useEffect(() => {
+    console.log('_PictureInPictureInPicture Component mounted.');
+    return () => {
+      console.log('_PictureInPictureInPicture Component unmounted.');
+    };
+  }, []);
   return (
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
@@ -67,6 +73,14 @@ const PictureInPictureInPictureContainer = (props: {
 }): JSX.Element => {
   const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void =>
     props.onClick && submitWithKeyboard(e, props.onClick);
+
+  React.useEffect(() => {
+    console.log('PictureInPictureInPictureContainer Component mounted.');
+    return () => {
+      console.log('PictureInPictureInPictureContainer Component unmounted.');
+    };
+  }, []);
+
   return (
     <aside
       style={tileContainerStyles}
