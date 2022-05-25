@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added examples in message thread stories to show how to customize date time format",
+  "packageName": "@internal/storybook",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

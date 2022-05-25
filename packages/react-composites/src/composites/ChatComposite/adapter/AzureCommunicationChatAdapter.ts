@@ -16,7 +16,7 @@ import type {
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent
-} from '@azure/communication-signaling';
+} from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
