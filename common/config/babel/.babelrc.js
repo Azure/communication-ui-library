@@ -25,6 +25,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-adhoc-call',
         // PSTN calls 
         'PSTN-calls'
+        // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
+        'date-time-customization',
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
