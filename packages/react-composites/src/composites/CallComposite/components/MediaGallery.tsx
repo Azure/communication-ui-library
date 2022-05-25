@@ -61,7 +61,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const remoteParticipants = useRemoteParticipantsWithCustomDisplayNames(
+  const newParticipants = useRemoteParticipantsWithCustomDisplayNames(
     videoGalleryProps.remoteParticipants,
     props.onFetchAvatarPersonaData
   );
@@ -71,7 +71,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
-        remoteParticipants={remoteParticipants}
+        remoteParticipants={newParticipants}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
@@ -85,7 +85,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         )}
       />
     );
-  }, [videoGalleryProps, props.isMobile, props.onFetchAvatarPersonaData, remoteParticipants, cameraSwitcherProps]);
+  }, [videoGalleryProps, newParticipants, props.isMobile, props.onFetchAvatarPersonaData, cameraSwitcherProps]);
 
   return VideoGalleryMemoized;
 };
@@ -130,13 +130,11 @@ const useRemoteParticipantsWithCustomDisplayNames = (
   }, [remoteParticipants]);
 
   const avatarPersonaData = useCustomAvatarPersonaData(userIds, onFetchAvatarPersonaData);
-  const newParticipants = remoteParticipants.map((p, i) => {
+  remoteParticipants.forEach((p, i) => {
     const newName = avatarPersonaData[i]?.text;
-    if (!newName) {
-      return p;
+    if (newName) {
+      p.displayName = newName;
     }
-    return { ...p, displayName: newName };
   });
-
-  return newParticipants;
+  return remoteParticipants;
 };
