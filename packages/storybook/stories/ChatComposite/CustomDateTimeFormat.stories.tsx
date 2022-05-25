@@ -1,33 +1,40 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatComposite } from '@azure/communication-react';
+import { ChatComposite, COMPONENT_LOCALE_EN_US, COMPOSITE_LOCALE_EN_US } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
-import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
-import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
+import { ContosoChatContainer } from './snippets/Container.snippet';
+import {
+  ChatCompositeSetupProps,
+  ConfigHintBanner,
+  addParrotBotToThread,
+  createThreadAndAddUser,
+  onDisplayDateTimeString
+} from './snippets/Utils';
 
 const messageArray = [
   'Welcome to an example on how to add powerful customizations to the ChatComposite',
-  'In this example, Contoso intercepts the messages being sent by the local user and CAPITALIZES THEM ALL.',
-  'The adapter pattern allows for very powerful customizations, should you need them.',
+  'By following this example, Contoso can customize the date time format to whatever they want!',
+  'Note that this example uses the localization API',
   'Have fun!'
 ];
 
-const CustomBehaviorStory = (args, context): JSX.Element => {
+const CustomDateTimeFormatStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<ContainerProps>();
+  const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.token && args.userId && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
         const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
         await addParrotBotToThread(
           args.token,
@@ -37,7 +44,7 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
           newProps.threadId,
           messageArray
         );
-        setContainerProps({ userId: { communicationUserId: newProps.userIdentifier }, ...newProps });
+        setContainerProps(newProps);
       } else {
         setContainerProps(undefined);
       }
@@ -45,10 +52,24 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
     fetchToken();
   }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
 
+  const strings = compositeLocale(locale)?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
+  const compositeStrings = compositeLocale(locale)?.strings ?? COMPOSITE_LOCALE_EN_US.strings;
+
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
+      <SingleLineBetaBanner />
       {containerProps ? (
-        <ContosoChatContainer fluentTheme={context.theme} locale={compositeLocale(locale)} {...containerProps} />
+        <ContosoChatContainer
+          fluentTheme={context.theme}
+          {...containerProps}
+          locale={{
+            component: { strings, onDisplayDateTimeString },
+            strings: compositeStrings
+          }}
+          errorBar={args.showErrorBar}
+          participants={args.showParticipants}
+          topic={args.showTopic}
+        />
       ) : (
         <ConfigHintBanner />
       )}
@@ -56,11 +77,11 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
   );
 };
 
-export const CustomBehaviorExample = CustomBehaviorStory.bind({});
+export const CustomDateTimeFormatExample = CustomDateTimeFormatStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-chat-custombehaviorexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Behavior Example`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-chat-customdatetimeformatexample`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Date Time Format Example`,
   component: ChatComposite,
   argTypes: {
     userId: controlsToAdd.userId,
@@ -69,6 +90,9 @@ export default {
     botToken: controlsToAdd.botToken,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
+    showErrorBar: controlsToAdd.showErrorBar,
+    showParticipants: controlsToAdd.showChatParticipants,
+    showTopic: controlsToAdd.showChatTopic,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },

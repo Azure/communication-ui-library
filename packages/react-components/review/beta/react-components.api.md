@@ -238,6 +238,8 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
+    // @beta
+    onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -835,6 +837,7 @@ export type MessageThreadProps = {
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
+    onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 // @public
