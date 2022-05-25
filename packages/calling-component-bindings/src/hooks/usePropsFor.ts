@@ -4,7 +4,6 @@
 import {
   CameraButton,
   EndCallButton,
-  ErrorBar,
   MicrophoneButton,
   DevicesButton,
   ParticipantList,
@@ -30,7 +29,10 @@ import { Common, FilterUndefined } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { CallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
+/* @conditional-compile-remove(demo) */
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
+/* @conditional-compile-remove(demo) */
+import { ErrorBar } from '@internal/react-components';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -89,7 +91,9 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   | (AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : undefined)
   | (AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : undefined)
   | (AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : undefined)
-  | (AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined)
+  | /* @conditional-compile-remove(demo) */ (AreEqual<Component, typeof ErrorBar> extends true
+      ? ErrorBarSelector
+      : undefined)
 >;
 
 /**
@@ -125,8 +129,10 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return participantsButtonSelector;
     case EndCallButton:
       return emptySelector;
-    case ErrorBar:
-      return errorBarSelector;
+  }
+  /* @conditional-compile-remove(demo) */
+  if (component === ErrorBar) {
+    return errorBarSelector;
   }
   return undefined;
 };

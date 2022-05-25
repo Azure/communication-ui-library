@@ -8,7 +8,6 @@ import {
   CameraButton,
   DevicesButton,
   EndCallButton,
-  ErrorBar,
   MicrophoneButton,
   ParticipantList,
   ParticipantsButton,
@@ -23,7 +22,10 @@ import {
 } from '../callControlSelectors';
 import { ParticipantListSelector } from '../participantListSelector';
 import { ParticipantsButtonSelector } from '../participantsButtonSelector';
+/* @conditional-compile-remove(demo) */
 import { ErrorBarSelector } from '../errorBarSelector';
+/* @conditional-compile-remove(demo) */
+import { ErrorBar } from '@internal/react-components';
 
 /**
  * This function is a compile type check that {@link GetSelector} returns
@@ -35,6 +37,7 @@ export function assertGetSelectorTypes(): unknown {
   const cameraButtonSelector: CameraButtonSelector = getSelector(CameraButton);
   const devicesButtonSelector: DevicesButtonSelector = getSelector(DevicesButton);
   const endCallButtonSelector: EmptySelector = getSelector(EndCallButton);
+  /* @conditional-compile-remove(demo) */
   const errorBarSelector: ErrorBarSelector = getSelector(ErrorBar);
   const microphoneButtonSelector: MicrophoneButtonSelector = getSelector(MicrophoneButton);
   const participantListSelector: ParticipantListSelector = getSelector(ParticipantList);
@@ -48,6 +51,7 @@ export function assertGetSelectorTypes(): unknown {
     cameraButtonSelector,
     devicesButtonSelector,
     endCallButtonSelector,
+    /* @conditional-compile-remove(demo) */
     errorBarSelector,
     microphoneButtonSelector,
     notASelector,
