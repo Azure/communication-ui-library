@@ -31,14 +31,17 @@ const convertRemoteParticipantsToParticipantListParticipants = (
 
         return {
           userId: toFlatCommunicationIdentifier(participant.identifier),
-          displayName: participant.displayName,
+          displayName:
+            participant.identifier.kind !== 'phoneNumber'
+              ? participant.displayName
+              : participant.identifier.phoneNumber,
           state: participant.state,
           isMuted: participant.isMuted,
           isScreenSharing: isScreenSharing,
           isSpeaking: participant.isSpeaking,
           // ACS users can not remove Teams users.
           // Removing phone numbers or unknown types of users is undefined.
-          isRemovable: getIdentifierKind(participant.identifier).kind === 'communicationUser'
+          isRemovable: getIdentifierKind(participant.identifier).kind === ('communicationUser' || 'phoneNumber')
         };
       })
       .sort((a, b) => {
