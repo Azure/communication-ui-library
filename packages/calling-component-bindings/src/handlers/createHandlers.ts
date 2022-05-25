@@ -40,7 +40,7 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
-  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
     options?: VideoStreamOptions
@@ -208,7 +208,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
-    ): Promise<void> => {
+    ): Promise<void | CreateVideoStreamViewResult> => {
       if (!call || call.localVideoStreams.length === 0) {
         return;
       }
@@ -223,7 +223,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      await callClient.createView(call.id, undefined, localStream, options);
+      const { view } = (await callClient.createView(call.id, undefined, localStream, options)) ?? {};
+      return view ? { view } : undefined;
     };
 
     const onCreateRemoteStreamView = async (

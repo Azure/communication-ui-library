@@ -5,7 +5,7 @@ import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
 import { CallingHandlers, createDefaultCallingHandlersForComponent } from './createHandlers';
-import { StatefulCallClient } from '@internal/calling-stateful-client';
+import { StatefulCallClient, CreateViewResult } from '@internal/calling-stateful-client';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function TestCallClientComponent(props: CallingHandlers): ReactElement | null {
@@ -20,8 +20,16 @@ class MockCallClient {
   onStateChange(handler: (state: any) => void): void {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  createView(callId: string, participantId: any, stream: any, options?: any): Promise<void> {
+  createView(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    callId: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    participantId: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    stream: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    options?: any
+  ): Promise<CreateViewResult | undefined> {
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
