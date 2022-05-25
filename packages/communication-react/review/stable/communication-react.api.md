@@ -1574,6 +1574,9 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @public
+export type FilterUndefined<T> = Exclude<T, undefined> extends never ? undefined : Exclude<T, undefined>;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -1587,16 +1590,16 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<(AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : undefined) | (AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined)>;
 
 // @public
-export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => FilterUndefined<(AreEqual<Component, (props: VideoGalleryProps) => JSX.Element> extends true ? VideoGallerySelector : undefined) | (AreEqual<Component, (props: DevicesButtonProps) => JSX.Element> extends true ? DevicesButtonSelector : undefined) | (AreEqual<Component, (props: MicrophoneButtonProps) => JSX.Element> extends true ? MicrophoneButtonSelector : undefined) | (AreEqual<Component, (props: CameraButtonProps) => JSX.Element> extends true ? CameraButtonSelector : undefined) | (AreEqual<Component, (props: ScreenShareButtonProps) => JSX.Element> extends true ? ScreenShareButtonSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ParticipantListSelector : undefined) | (AreEqual<Component, (props: ParticipantsButtonProps) => JSX.Element> extends true ? ParticipantsButtonSelector : undefined) | (AreEqual<Component, (props: EndCallButtonProps) => JSX.Element> extends true ? EmptySelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? CallErrorBarSelector : undefined)>;
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<(AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined)>;
 
 // @public
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => FilterUndefined<(AreEqual<Component, (props: SendBoxProps) => JSX.Element> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, (props: MessageThreadProps) => JSX.Element> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, (props: TypingIndicatorProps) => JSX.Element> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ChatErrorBarSelector : undefined)>;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;

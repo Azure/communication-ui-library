@@ -13,16 +13,22 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
+import { ErrorBarProps } from '@internal/react-components';
+import { FilterUndefined } from '@internal/acs-ui-common';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
+import { MessageThreadProps } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantListParticipant } from '@internal/react-components';
+import { ParticipantListProps } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { SendBox } from '@internal/react-components';
+import { SendBoxProps } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TypingIndicator } from '@internal/react-components';
+import { TypingIndicatorProps } from '@internal/react-components';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -77,10 +83,10 @@ export type ErrorBarSelector = (state: ChatClientState, props: ChatBaseSelectorP
 };
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = FilterUndefined<(AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined)>;
 
 // @public
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => FilterUndefined<(AreEqual<Component, (props: SendBoxProps) => JSX.Element> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, (props: MessageThreadProps) => JSX.Element> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, (props: TypingIndicatorProps) => JSX.Element> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)>;
 
 // @public
 export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {
@@ -107,7 +113,7 @@ export const useChatClient: () => StatefulChatClient;
 export const useChatHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<ChatHandlers, PropsT> | undefined;
 
 // @public
-export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetChatSelector<Component> extends (props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : undefined;
+export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => FilterUndefined<(AreEqual<Component, (props: SendBoxProps) => JSX.Element> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, (props: MessageThreadProps) => JSX.Element> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, (props: TypingIndicatorProps) => JSX.Element> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)> extends (props: any) => any ? ReturnType<FilterUndefined<(AreEqual<Component, (props: SendBoxProps) => JSX.Element> extends true ? SendBoxSelector : undefined) | (AreEqual<Component, (props: MessageThreadProps) => JSX.Element> extends true ? MessageThreadSelector : undefined) | (AreEqual<Component, (props: TypingIndicatorProps) => JSX.Element> extends true ? TypingIndicatorSelector : undefined) | (AreEqual<Component, (props: ParticipantListProps) => JSX.Element> extends true ? ChatParticipantListSelector : undefined) | (AreEqual<Component, (props: ErrorBarProps) => JSX.Element> extends true ? ErrorBarSelector : undefined)>> & Common<ChatHandlers, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
