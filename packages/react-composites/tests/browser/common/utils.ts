@@ -268,6 +268,7 @@ export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
 
   await waitForFunction(
     page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const readReceiptsTooltipNodes = Array.from(document.querySelectorAll(args.readReceiptsToolTipId));
       return readReceiptsTooltipNodes.every((node) => node.textContent === 'Read by stub/stub');
