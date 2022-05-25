@@ -24,11 +24,7 @@ export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInP
 
 /** @private */
 export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => (
-  <PictureInPictureInPictureTile
-    content={props.content}
-    // personaMinSize={20}
-    styles={secondaryTileStyles(props.orientation)}
-  />
+  <PictureInPictureInPictureTile content={props.content} styles={secondaryTileStyles(props.orientation)} />
 );
 
 const PictureInPictureInPictureTile = (props: { styles: IStackStyles; content: ReactChild }): JSX.Element => (

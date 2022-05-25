@@ -37,6 +37,7 @@ export const _LocalVideoTile = React.memo(
     localVideoCameraSwitcherLabel?: string;
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
@@ -119,6 +120,7 @@ export const _LocalVideoTile = React.memo(
         onRenderPlaceholder={onRenderAvatar}
         isMuted={isMuted}
         showMuteIndicator={showMuteIndicator}
+        personaMinSize={props.personaMinSize}
       />
     );
   }

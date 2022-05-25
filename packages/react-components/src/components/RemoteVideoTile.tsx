@@ -72,13 +72,6 @@ export const _RemoteVideoTile = React.memo(
       ]
     );
 
-    React.useEffect(() => {
-      console.log('Remote Video Tile Component mounted.');
-      return () => {
-        console.log('Remote Video Tile Component unmounted.');
-      };
-    }, []);
-
     // Handle creating, destroying and updating the video stream as necessary
     useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 

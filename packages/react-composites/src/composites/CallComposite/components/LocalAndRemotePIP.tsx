@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   VideoGalleryStream,
   VideoStreamOptions,
@@ -48,27 +48,18 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     onDisposeRemoteStreamView
   } = props;
 
-  React.useEffect(() => {
-    console.log('LocalAndRemote PIP Component mounted.');
-    return () => {
-      console.log('LocalAndRemote PIP Component unmounted.');
-    };
-  }, []);
-
-  const LocalVideoTile = useCallback(
-    () => (
-      <_LocalVideoTile
-        onCreateLocalStreamView={onCreateLocalStreamView}
-        onDisposeLocalStreamView={onDisposeLocalStreamView}
-        localVideoViewOptions={localVideoViewOptions}
-        displayName={localParticipant.displayName}
-        showLabel={false}
-        showMuteIndicator={false}
-        showCameraSwitcherInLocalPreview={false}
-        isAvailable={localParticipant.videoStream?.isAvailable}
-        renderElement={localParticipant.videoStream?.renderElement}
-      />
-    ),
+  const localVideoTileProps = useMemo(
+    () => ({
+      onCreateLocalStreamView,
+      onDisposeLocalStreamView,
+      localVideoViewOptions,
+      displayName: localParticipant.displayName,
+      showLabel: false,
+      showMuteIndicator: false,
+      showCameraSwitcherInLocalPreview: false,
+      isAvailable: localParticipant.videoStream?.isAvailable,
+      renderElement: localParticipant.videoStream?.renderElement
+    }),
     [
       localParticipant.displayName,
       localParticipant.videoStream?.isAvailable,
@@ -78,66 +69,23 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     ]
   );
 
-  const localVideoPiP: _PictureInPictureInPictureTileProps = useMemo(
-    () => ({
-      content: <LocalVideoTile />,
-      orientation: 'portrait' // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
-    }),
-    [LocalVideoTile]
-  );
-
-  console.log(
-    'remoteVideoPiP creation, dominantRemoteParticipant:',
-    JSON.stringify(dominantRemoteParticipant),
-    ' render element:',
-    dominantRemoteParticipant?.videoStream?.renderElement
-  );
-
-  const dominantRemoteParticipantExists = !!dominantRemoteParticipant;
-  const remoteDisplayName = dominantRemoteParticipant?.displayName;
-  const remoteVideoStream = dominantRemoteParticipant?.videoStream;
-  const remoteVideoStreamIsAvailable = remoteVideoStream?.isAvailable;
-  const remoteVideoStreamRenderElement = remoteVideoStream?.renderElement;
-  const remoteUserId = dominantRemoteParticipant?.userId;
-  const RemoteVideoTile = useCallback(
+  const remoteVideoTileProps = useMemo(
     () =>
-      !dominantRemoteParticipantExists ? (
-        <></>
-      ) : (
-        <_RemoteVideoTile
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          remoteVideoViewOptions={remoteVideoViewOptions}
-          displayName={remoteDisplayName}
-          // showLabel={false}
-          showMuteIndicator={false}
-          isAvailable={remoteVideoStreamIsAvailable}
-          renderElement={remoteVideoStreamRenderElement}
-          userId={remoteUserId}
-          key={remoteUserId}
-          personaMinSize={20}
-        />
-      ),
-    [
-      dominantRemoteParticipantExists,
-      remoteDisplayName,
-      remoteUserId,
-      remoteVideoStreamIsAvailable,
-      remoteVideoStreamRenderElement,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView
-    ]
-  );
-
-  const remoteVideoPiP: _PictureInPictureInPictureTileProps | undefined = useMemo(
-    () =>
-      dominantRemoteParticipantExists
-        ? {
-            content: <RemoteVideoTile />,
-            orientation: 'portrait' // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
-          }
-        : undefined,
-    [RemoteVideoTile, dominantRemoteParticipantExists]
+      !dominantRemoteParticipant
+        ? undefined
+        : {
+            onCreateRemoteStreamView,
+            onDisposeRemoteStreamView,
+            remoteVideoViewOptions,
+            displayName: dominantRemoteParticipant?.displayName,
+            showLabel: false,
+            showMuteIndicator: false,
+            isAvailable: dominantRemoteParticipant.videoStream?.isAvailable,
+            renderElement: dominantRemoteParticipant.videoStream?.renderElement,
+            userId: dominantRemoteParticipant.userId,
+            key: dominantRemoteParticipant.userId
+          },
+    [dominantRemoteParticipant, onCreateRemoteStreamView, onDisposeRemoteStreamView]
   );
 
   const locale = useLocale();
@@ -149,14 +97,36 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [ariaLabel]
   );
 
+  const primaryTileProps = useMemo(
+    () => ({
+      content: remoteVideoTileProps ? (
+        <_RemoteVideoTile {...remoteVideoTileProps} />
+      ) : (
+        <_LocalVideoTile {...localVideoTileProps} />
+      ),
+      // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
+      orientation: 'portrait'
+    }),
+    [localVideoTileProps, remoteVideoTileProps]
+  );
+
+  const secondaryTileProps = useMemo(
+    () => ({
+      content: remoteVideoTileProps ? <_LocalVideoTile {...localVideoTileProps} personaMinSize={20} /> : undefined,
+      // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
+      orientation: 'portrait'
+    }),
+    [localVideoTileProps, remoteVideoTileProps]
+  );
+
   return (
     <_PictureInPictureInPicture
       onClick={props.onClick}
       strings={strings}
       // If there are no remote participants, show the local participant as the primary tile
-      primaryTile={remoteVideoPiP ?? localVideoPiP}
+      primaryTile={primaryTileProps}
       // If we are showing the local participant as the primary tile, show nothing for the secondary tile
-      secondaryTile={remoteVideoPiP ? localVideoPiP : undefined}
+      secondaryTile={secondaryTileProps}
     />
   );
 };
