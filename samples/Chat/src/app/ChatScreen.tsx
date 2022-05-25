@@ -7,6 +7,7 @@ import {
   ChatAdapter,
   ChatComposite,
   fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -38,13 +39,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapterAfterCreate = useCallback(
     async (adapter: ChatAdapter): Promise<ChatAdapter> => {
       adapter.on('participantsRemoved', (listener) => {
-        // Note: We are receiving ChatParticipant.id from communication-signaling, so of type 'CommunicationIdentifierKind'
-        // while it's supposed to be of type 'CommunicationIdentifier' as defined in communication-chat
-        const removedParticipantIds = listener.participantsRemoved.map(
-          (p) => (p.id as CommunicationUserIdentifier).communicationUserId
-        );
+        const removedParticipantIds = listener.participantsRemoved.map((p) => toFlatCommunicationIdentifier(p.id));
         if (removedParticipantIds.includes(userId)) {
-          const removedBy = (listener.removedBy.id as CommunicationUserIdentifier).communicationUserId;
+          const removedBy = toFlatCommunicationIdentifier(listener.removedBy.id);
           endChatHandler(removedBy !== userId);
         }
       });
