@@ -20,8 +20,10 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatService } from './fake-back-end/ChatService';
 import { ChatAdapterModel } from '../fake-adapter/fixture';
+import { Model } from './fake-back-end/Model';
+import { FakeChatClient } from './fake-back-end/FakeChatClient';
+import { IChatClient } from './fake-back-end/types';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -37,11 +39,12 @@ export const FakeAdapterApp = (): JSX.Element => {
 
   // Optional params
   const useFrLocale = Boolean(params.useFrLocale);
+  const enableTypingIndicator = Boolean(params.enableTypingIndicator);
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      setAdapter(await createFakeChatAdapter(fakeChatAdapterModel));
+      setAdapter(await createFakeChatAdapter(fakeChatAdapterModel, enableTypingIndicator));
     };
 
     initialize();
@@ -67,8 +70,8 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapter> {
-  const chatService = new FakeChatService();
+async function createFakeChatAdapter(model: ChatAdapterModel, enableTypingIndicator?: boolean): Promise<ChatAdapter> {
+  const m = new Model({ asyncDelivery: false });
   const remoteParticipants: ChatParticipant[] = model.remoteParticipants.map((user) => {
     return {
       id: { communicationUserId: nanoid() },
@@ -76,8 +79,8 @@ async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapt
     };
   });
   const localUser = { id: { communicationUserId: nanoid() }, displayName: model.localParticipant };
-  const firstChatClient = chatService.newClient(localUser.id);
-  const thread = await firstChatClient.createChatThread(
+  const chatClient = new FakeChatClient(m, localUser.id);
+  const thread = await chatClient.createChatThread(
     {
       topic: 'Cowabunga'
     },
@@ -88,10 +91,19 @@ async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapt
   const participantHandle = {
     userId: localUser.id,
     displayName: localUser.displayName,
-    chatClient: firstChatClient,
-    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    chatClient: chatClient as IChatClient as ChatClient,
+    chatThreadClient: chatClient.getChatThreadClient(thread.chatThread.id ?? 'INVALID_THREAD_ID')
   };
-  return await initializeAdapter(participantHandle);
+  const adapter = await initializeAdapter(participantHandle);
+  if (enableTypingIndicator) {
+    chatClient.getChatThreadClient(thread.chatThread.id);
+    chatClient.initializeTypingNotification(
+      thread.chatThread.id,
+      remoteParticipants[0].id,
+      remoteParticipants[0].displayName
+    );
+  }
+  return adapter;
 }
 
 const initializeAdapter = async (participant: AdapterInfo): Promise<ChatAdapter> => {
