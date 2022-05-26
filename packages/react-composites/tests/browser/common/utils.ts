@@ -257,6 +257,29 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
 };
 
 /**
+ * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
+ */
+export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > p';
+
+  await page.evaluate((readReceiptsToolTipId) => {
+    Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
+  }, readReceiptsToolTipId);
+
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const readReceiptsTooltipNodes = Array.from(document.querySelectorAll(args.readReceiptsToolTipId));
+      return readReceiptsTooltipNodes.every((node) => node.textContent === 'Read by stub/stub');
+    },
+    {
+      readReceiptsToolTipId: readReceiptsToolTipId
+    }
+  );
+};
+
+/**
  * Helper to wait for a number of participants in partipants in page
  * @param page - the page where the participant list element will be queried
  * @param numParticipants - number of participants to wait for
