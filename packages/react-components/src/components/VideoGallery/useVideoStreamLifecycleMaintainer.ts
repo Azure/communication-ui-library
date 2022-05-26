@@ -1,27 +1,38 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
+
+interface VideoStreamLifecycleMaintainerExtendableProps {
+  isStreamAvailable?: boolean;
+  renderElementExists?: boolean;
+  isMirrored?: boolean;
+  scalingMode?: ViewScalingMode;
+  isScreenSharingOn?: boolean;
+}
+
+interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult> | undefined;
+  onDisposeStreamView: () => void | undefined;
+}
 
 /**
  * Helper hook to maintain the video stream lifecycle. This calls onCreateStreamView and onDisposeStreamView
  * appropriately based on react lifecycle events and prop changes.
  * This also handles calls to view.update* appropriately such as view.updateScalingMode().
- *
- * @private
  */
-export const useVideoStreamLifecycleMaintainer = (props: {
-  isStreamAvailable?: boolean;
-  renderElementExists?: boolean;
-  isMirrored?: boolean;
-  scalingMode?: ViewScalingMode;
-  onCreateStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-  onDisposeStreamView?: () => void;
-}): void => {
-  const { onCreateStreamView, onDisposeStreamView, isStreamAvailable, renderElementExists, isMirrored, scalingMode } =
-    props;
+const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
+  const {
+    isMirrored,
+    isScreenSharingOn,
+    isStreamAvailable,
+    onCreateStreamView,
+    onDisposeStreamView,
+    renderElementExists,
+    scalingMode
+  } = props;
 
   // HANDLING CHANGES TO VIDEO VIEW OPTIONS
   //
@@ -67,10 +78,12 @@ export const useVideoStreamLifecycleMaintainer = (props: {
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
       triggerCreateStreamView(async (cancellable: Cancellable): Promise<void> => {
-        const streamRendererResult = await onCreateStreamView?.({
+        const streamViewOptions = {
           isMirrored: isMirrored,
           scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
-        });
+        };
+
+        const streamRendererResult = await onCreateStreamView?.(streamViewOptions);
         // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
         // and setStreamRendererResult have completed
         if (cancellable.cancelled) {
@@ -84,13 +97,17 @@ export const useVideoStreamLifecycleMaintainer = (props: {
       if (renderElementExists) {
         cancelRescale();
         cancelCreateStreamView();
-        onDisposeStreamView?.();
+        // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
+        if (!isScreenSharingOn) {
+          onDisposeStreamView?.();
+        }
       }
     };
   }, [
     cancelCreateStreamView,
     cancelRescale,
     isMirrored,
+    isScreenSharingOn,
     isStreamAvailable,
     onCreateStreamView,
     onDisposeStreamView,
@@ -106,7 +123,79 @@ export const useVideoStreamLifecycleMaintainer = (props: {
     return () => {
       cancelRescale();
       cancelCreateStreamView();
-      onDisposeStreamView?.();
+      // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
+      if (!isScreenSharingOn) {
+        onDisposeStreamView?.();
+      }
     };
-  }, [cancelCreateStreamView, cancelRescale, onDisposeStreamView]);
+  }, [cancelCreateStreamView, cancelRescale, isScreenSharingOn, onDisposeStreamView]);
+};
+
+/** @private */
+export interface LocalVideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeLocalStreamView?: () => void;
+}
+
+/**
+ * Extension of {@link useVideoStreamLifecycleMaintainer} specifically for local video streams
+ *
+ * @private
+ */
+export const useLocalVideoStreamLifecycleMaintainer = (props: LocalVideoStreamLifecycleMaintainerProps): void => {
+  const { onCreateLocalStreamView, onDisposeLocalStreamView } = props;
+  const onCreateStreamView = useMemo(
+    () => (options?: VideoStreamOptions) => {
+      return onCreateLocalStreamView?.(options);
+    },
+    [onCreateLocalStreamView]
+  );
+  const onDisposeStreamView = useMemo(
+    () => () => {
+      onDisposeLocalStreamView?.();
+    },
+    [onDisposeLocalStreamView]
+  );
+  return useVideoStreamLifecycleMaintainer({
+    ...props,
+    onCreateStreamView,
+    onDisposeStreamView
+  });
+};
+
+/** @private */
+export interface RemoteVideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
+  onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  remoteParticipantId: string;
+}
+
+/**
+ * Extension of {@link useVideoStreamLifecycleMaintainer} specifically for remote video streams
+ *
+ * @private
+ */
+export const useRemoteVideoStreamLifecycleMaintainer = (props: RemoteVideoStreamLifecycleMaintainerProps): void => {
+  const { remoteParticipantId, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
+  const onCreateStreamView = useMemo(
+    () => (options?: VideoStreamOptions) => {
+      return onCreateRemoteStreamView?.(remoteParticipantId, options);
+    },
+    [onCreateRemoteStreamView, remoteParticipantId]
+  );
+  const onDisposeStreamView = useMemo(
+    () => () => {
+      onDisposeRemoteStreamView?.(remoteParticipantId);
+    },
+    [onDisposeRemoteStreamView, remoteParticipantId]
+  );
+
+  return useVideoStreamLifecycleMaintainer({
+    ...props,
+    onCreateStreamView,
+    onDisposeStreamView
+  });
 };
