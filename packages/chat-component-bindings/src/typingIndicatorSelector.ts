@@ -4,7 +4,7 @@
 import { getTypingIndicators, getParticipants, getUserId, ChatBaseSelectorProps } from './baseSelectors';
 import { createSelector } from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
