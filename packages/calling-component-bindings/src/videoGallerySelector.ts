@@ -82,8 +82,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.videoStreams,
             /* @conditional-compile-remove(PSTN-calls) */
             screenShareRemoteParticipant.state,
-            /* @conditional-compile-remove(PSTN-calls) */
-            screenShareRemoteParticipant.identifier.kind,
             screenShareRemoteParticipant.displayName
           )
         : undefined,

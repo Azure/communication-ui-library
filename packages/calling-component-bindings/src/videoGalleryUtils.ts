@@ -36,8 +36,6 @@ export const _videoGalleryRemoteParticipantsMemo = (
           participant.videoStreams,
           /* @conditional-compile-remove(PSTN-calls) */
           participant.state,
-          /* @conditional-compile-remove(PSTN-calls) */
-          participant.identifier.kind,
           participant.displayName
         );
       });
@@ -52,8 +50,6 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     /* @conditional-compile-remove(PSTN-calls) */
     state?: string,
-    /* @conditional-compile-remove(PSTN-calls) */
-    kind?: 'communicationUser' | 'phoneNumber' | 'microsoftTeamsUser' | 'unknown',
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -63,8 +59,6 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       /* @conditional-compile-remove(PSTN-calls) */
       state,
-      /* @conditional-compile-remove(PSTN-calls) */
-      kind,
       displayName
     );
   }
@@ -78,8 +72,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   /* @conditional-compile-remove(PSTN-calls) */
   state?: string,
-  /* @conditional-compile-remove(PSTN-calls) */
-  kind?: 'communicationUser' | 'phoneNumber' | 'microsoftTeamsUser' | 'unknown',
   displayName?: string
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -111,9 +103,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(PSTN-calls) */
-    state,
-    /* @conditional-compile-remove(PSTN-calls) */
-    kind
+    state
   };
 };
 
