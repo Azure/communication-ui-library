@@ -3,10 +3,14 @@
 
 import { Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useEffect, useMemo } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import React, { useMemo } from 'react';
+import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
+import {
+  useLocalVideoStreamLifecycleMaintainer,
+  LocalVideoStreamLifecycleMaintainerProps
+} from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 /**
@@ -17,7 +21,7 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 export const LocalVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
     isMuted?: boolean;
@@ -54,26 +58,27 @@ export const LocalVideoTile = React.memo(
       localVideoSelectedDescription
     } = props;
 
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateLocalStreamView?.(localVideoViewOptions);
-      }
-      // Always clean up element to make tile up to date and be able to dispose correctly
-      return () => {
-        if (renderElement) {
-          onDisposeLocalStreamView?.();
-        }
-      };
-    }, [isAvailable, onCreateLocalStreamView, onDisposeLocalStreamView, localVideoViewOptions, renderElement]);
+    const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
+      () => ({
+        isMirrored: localVideoViewOptions?.isMirrored,
+        isStreamAvailable: isAvailable,
+        onCreateLocalStreamView,
+        onDisposeLocalStreamView,
+        renderElementExists: !!renderElement,
+        scalingMode: localVideoViewOptions?.scalingMode
+      }),
+      [
+        isAvailable,
+        localVideoViewOptions?.isMirrored,
+        localVideoViewOptions?.scalingMode,
+        onCreateLocalStreamView,
+        onDisposeLocalStreamView,
+        renderElement
+      ]
+    );
 
-    // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
-    // Element disposed could happen during async time gap, which still cause leaks for unused renderElement.
-    // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
-    useEffect(() => {
-      return () => {
-        onDisposeLocalStreamView?.();
-      };
-    }, [onDisposeLocalStreamView]);
+    // Handle creating, destroying and updating the video stream as necessary
+    useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
