@@ -21,6 +21,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonProps } from '@internal/react-components';
+import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
@@ -124,7 +125,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -358,7 +359,7 @@ export interface CallWithChatAdapterManagement {
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
     clearFileUploads: () => void;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;

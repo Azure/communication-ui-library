@@ -3,6 +3,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import {
+  CreateVideoStreamViewResult,
   StreamMedia,
   VideoGalleryStream,
   VideoStreamOptions,
@@ -24,11 +25,14 @@ export interface LocalAndRemotePIPProps {
   };
 
   /** Callback to create the local video stream view */
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
   /** Callback to create a remote video stream view */
-  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   onClick?: () => void;

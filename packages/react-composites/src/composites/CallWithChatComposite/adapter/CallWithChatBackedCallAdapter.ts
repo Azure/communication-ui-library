@@ -3,7 +3,7 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -90,7 +90,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public removeParticipant = async (userId: string): Promise<void> =>
     await this.callWithChatAdapter.removeParticipant(userId);
-  public createStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
+  public createStreamView = async (
+    remoteUserId?: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
