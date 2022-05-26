@@ -24,7 +24,6 @@
     "@azure/communication-common": "2.0.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.2.2-beta.1",
-    "@azure/communication-signaling": "1.0.0-beta.13",
     "@azure/core-http": "1.2.4",
     "@azure/logger": "1.0.3",
     "@fluentui/react": "~8.17.2",
@@ -42,7 +41,8 @@
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "@fluentui/react-file-type-icons": "~8.5.8"
+    "@fluentui/react-file-type-icons": "~8.5.8",
+    "webpack-bundle-analyzer": "~4.5.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",

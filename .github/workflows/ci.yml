@@ -9,6 +9,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # get matrix for ci-jobs
   get_matrix:
@@ -74,7 +79,7 @@ jobs:
       - name: API Extractor Check
         run: |
           DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/**' ||  '**/stable-review/**'  }}.md
+          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md
           DIFF_STATUS=$?
           echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
           if [$DIFF_STATUS -ne 0]

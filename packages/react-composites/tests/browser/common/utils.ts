@@ -34,7 +34,6 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
   await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
-
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -151,6 +150,9 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 
 /**
  * Click outside of the Composite page
+ *
+ * @deprecated This method of dismissing tooltips has been shown to be flaky.
+ *     Use {@link stableScreenshot} instead.
  */
 export const clickOutsideOfPage = async (page: Page): Promise<void> => {
   await page.mouse.click(-1, -1);
@@ -254,6 +256,50 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   );
 };
 
+/**
+ * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
+ */
+export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > p';
+
+  await page.evaluate((readReceiptsToolTipId) => {
+    Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
+  }, readReceiptsToolTipId);
+
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const readReceiptsTooltipNodes = Array.from(document.querySelectorAll(args.readReceiptsToolTipId));
+      return readReceiptsTooltipNodes.every((node) => node.textContent === 'Read by stub/stub');
+    },
+    {
+      readReceiptsToolTipId: readReceiptsToolTipId
+    }
+  );
+};
+
+/**
+ * Helper to wait for a number of participants in partipants in page
+ * @param page - the page where the participant list element will be queried
+ * @param numParticipants - number of participants to wait for
+ */
+export const waitForParticipants = async (page: Page, numParticipants: number): Promise<void> => {
+  const participantListSelector = dataUiId(IDS.participantList);
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const participantList = document.querySelector(args.participantListSelector) as Element;
+      return participantList.children.length === args.numParticipants;
+    },
+    {
+      participantListSelector: participantListSelector,
+      numParticipants: numParticipants
+    }
+  );
+};
+
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
@@ -301,4 +347,64 @@ export const isTestProfileStableFlavor = (): boolean => {
   } else {
     throw 'Faled to find Communication React Flavor env variable';
   }
+};
+
+export interface StubOptions {
+  // Stub out all timestamps in the chat message thread.
+  stubMessageTimestamps?: boolean;
+  // Disable tooltips on all buttons in the call control bar.
+  dismissTooltips?: boolean;
+  // Hide chat message actions icon button.
+  dismissChatMessageActions?: boolean;
+}
+
+/**
+ * A helper to take stable screenshots.
+ *
+ * USE THIS INSTEAD OF page.screenshot()
+ */
+export async function stableScreenshot(
+  page: Page,
+  stubOptions: StubOptions,
+  screenshotOptions?: PageScreenshotOptions
+): Promise<Buffer> {
+  await waitForPageFontsLoaded(page);
+  if (stubOptions?.stubMessageTimestamps) {
+    await stubMessageTimestamps(page);
+  }
+  if (stubOptions?.dismissTooltips) {
+    await disableTooltips(page);
+  }
+  if (stubOptions?.dismissChatMessageActions) {
+    await hideChatMessageActionsButton(page);
+  }
+  try {
+    return await page.screenshot(screenshotOptions);
+  } finally {
+    if (stubOptions?.dismissTooltips) {
+      await enableTooltips(page);
+    }
+  }
+}
+
+/**
+ * Helper function for hiding chat message actions icon button.
+ */
+const hideChatMessageActionsButton = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ui-chat__message__actions {display: none}' });
+};
+
+/**
+ * Helper function for disabling all the tooltips on the page.
+ * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
+ */
+const disableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: none}' });
+};
+
+/**
+ * Helper function for enabling all the tooltips on the page.
+ */
+const enableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: block}' });
 };

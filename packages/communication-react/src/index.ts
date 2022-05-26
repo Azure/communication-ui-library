@@ -116,8 +116,10 @@ export type {
   ActiveErrorMessage,
   BaseCustomStyles,
   CallParticipantListParticipant,
+  CameraButtonContextualMenuStyles,
   CameraButtonProps,
   CameraButtonStrings,
+  CameraButtonStyles,
   ChatMessage,
   CommunicationParticipant,
   ComponentLocale,
@@ -128,6 +130,7 @@ export type {
   ControlBarButtonStyles,
   ControlBarLayout,
   ControlBarProps,
+  CreateVideoStreamViewResult,
   CustomAvatarOptions,
   CustomMessage,
   DevicesButtonContextualMenuStyles,
@@ -142,9 +145,9 @@ export type {
   GridLayoutProps,
   GridLayoutStyles,
   HorizontalGalleryStyles,
-  ReadReceiptsBySenderId,
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
+  LocalVideoCameraCycleButtonProps,
   Message,
   MessageAttachedStatus,
   MessageCommon,
@@ -156,8 +159,10 @@ export type {
   MessageThreadProps,
   MessageThreadStrings,
   MessageThreadStyles,
+  MicrophoneButtonContextualMenuStyles,
   MicrophoneButtonProps,
   MicrophoneButtonStrings,
+  MicrophoneButtonStyles,
   OnRenderAvatarCallback,
   OptionsDevice,
   ParticipantAddedSystemMessage,
@@ -174,6 +179,7 @@ export type {
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
   ParticipantsButtonStyles,
+  ReadReceiptsBySenderId,
   ScreenShareButtonProps,
   ScreenShareButtonStrings,
   SendBoxProps,
@@ -186,8 +192,9 @@ export type {
   TypingIndicatorProps,
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
-  VideoGalleryLocalParticipant,
+  UpdateMessageCallback,
   VideoGalleryLayout,
+  VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
   VideoGalleryProps,
   VideoGalleryRemoteParticipant,
@@ -196,7 +203,8 @@ export type {
   VideoGalleryStyles,
   VideoStreamOptions,
   VideoTileProps,
-  VideoTileStylesProps
+  VideoTileStylesProps,
+  ViewScalingMode
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
@@ -206,19 +214,22 @@ export type {
   FileDownloadError,
   FileMetadata
 } from '../../react-components/src';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-export type { LocalVideoCameraCycleButtonProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-export type {
-  CameraButtonContextualMenuStyles,
-  CameraButtonStyles,
-  MicrophoneButtonContextualMenuStyles,
-  MicrophoneButtonStyles
-} from '../../react-components/src';
 
 export * from '../../calling-stateful-client/src';
-export * from '../../chat-stateful-client/src';
-export * from '../../react-composites/src';
+export { createStatefulChatClient } from '../../chat-stateful-client/src';
+export type {
+  StatefulChatClient,
+  StatefulChatClientArgs,
+  StatefulChatClientOptions,
+  ChatMessageWithStatus,
+  ChatClientState,
+  ChatError,
+  ChatErrors,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  ChatErrorTarget
+} from '../../chat-stateful-client/src';
+export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';

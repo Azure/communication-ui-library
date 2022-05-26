@@ -3,6 +3,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import {
+  CreateVideoStreamViewResult,
   StreamMedia,
   VideoGalleryStream,
   VideoStreamOptions,
@@ -10,7 +11,7 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-import { CompositeLocale, useLocale } from '../../localization';
+import { useLocale } from '../../localization';
 
 /**
  * @private
@@ -24,11 +25,14 @@ export interface LocalAndRemotePIPProps {
   };
 
   /** Callback to create the local video stream view */
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
   /** Callback to create a remote video stream view */
-  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   onClick?: () => void;
@@ -81,7 +85,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   );
 
   const locale = useLocale();
-  const ariaLabel = safeGetArialLabel(locale);
+  const ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
   const strings = useMemo(
     () => ({
       rootAriaLabel: ariaLabel
@@ -99,14 +103,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       secondaryTile={remoteVideoTile ? localVideoTile : undefined}
     />
   );
-};
-
-const safeGetArialLabel = (locale: CompositeLocale): string => {
-  // eslint-disable-next-line prefer-const
-  let ariaLabel = '';
-  /* @conditional-compile-remove(call-with-chat-composite) */
-  ariaLabel = locale.strings.callWithChat.pictureInPictureTileAriaLabel;
-  return ariaLabel;
 };
 
 const localVideoViewOptions: VideoStreamOptions = {

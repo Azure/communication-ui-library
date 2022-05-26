@@ -89,7 +89,19 @@ export interface B2 {
   sameOld: number;
   /* @conditional-compile-remove(demo) */
   somethingNew: number;
+  /* @conditional-compile-remove(demo) */
+  aNewMethod(a: number): number;
+  /* @conditional-compile-remove(demo) */
+  get property(): number;
 }
+
+/**
+ * To remove a function parameter in a type property, simply add the conditional compile remove comment
+ */
+
+export type TypeWithFunctionProperty = {
+  func: (/* @conditional-compile-remove(demo) */ toBeRemoved: string, param1: number) => void;
+};
 
 /**
  * Conditionally add variants to a type union

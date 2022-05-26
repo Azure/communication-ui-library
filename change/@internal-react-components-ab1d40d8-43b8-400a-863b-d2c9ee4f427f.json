@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow removal of files when editing a message ",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

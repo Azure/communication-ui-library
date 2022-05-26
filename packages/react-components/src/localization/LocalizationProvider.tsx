@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  _DialpadStrings
 } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
@@ -27,6 +28,12 @@ import { COMPONENT_LOCALE_EN_US } from './locales';
 export interface ComponentLocale {
   /** Strings for components */
   strings: ComponentStrings;
+  /* @conditional-compile-remove(date-time-customization) */
+  /**
+   * Optional function to provide customized date format.
+   * @beta
+   */
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 }
 
 /**

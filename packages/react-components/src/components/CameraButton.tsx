@@ -1,18 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { ControlBarButtonStyles } from './ControlBarButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
 
@@ -47,17 +43,14 @@ export interface CameraButtonStrings {
    * Tooltip of camera menu
    */
   cameraMenuTooltip: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * description of camera button split button role
    */
   cameraButtonSplitRoleDescription?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Camera split button aria label for when button is enabled.
    */
   onSplitButtonAriaLabel?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Camera split button aria label for when button is disabled.
    */
@@ -72,7 +65,6 @@ export interface CameraButtonStrings {
   cameraActionTurnedOffAnnouncement: string;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for {@link CameraButton}
  *
@@ -85,7 +77,6 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for the {@link CameraButton} menu.
  *
@@ -113,22 +104,18 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOptions?: VideoStreamOptions;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available cameras for selection
    */
   cameras?: OptionsDevice[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Camera that is shown as currently selected
    */
   selectedCamera?: OptionsDevice;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Callback when a camera is selected
    */
   onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -139,7 +126,6 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<CameraButtonStrings>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Styles for {@link CameraButton} and the device selection flyout.
    */
@@ -206,35 +192,17 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
         strings={strings}
         labelKey={props.labelKey ?? 'cameraButtonLabel'}
-        menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-        menuIconProps={
-          props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined
+        menuProps={
+          props.menuProps ??
+          (props.enableDeviceSelectionMenu
+            ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
+            : undefined)
         }
-        split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-        aria-roledescription={
-          enableDeviceSelectionMenuTrampoline(props) ? strings.cameraButtonSplitRoleDescription : undefined
-        }
-        splitButtonAriaLabel={enableDeviceSelectionMenuTrampoline(props) ? splitButtonAriaString : undefined}
+        menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
+        split={props.split ?? props.enableDeviceSelectionMenu}
+        aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
+        splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
       />
     </>
   );
-};
-
-const generateDefaultDeviceMenuPropsTrampoline = (
-  props: CameraButtonProps,
-  strings: CameraButtonStrings
-): IContextualMenuProps | undefined => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
-  }
-  return undefined;
-};
-
-const enableDeviceSelectionMenuTrampoline = (props: CameraButtonProps): boolean => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return true;
-  }
-  return false;
 };
