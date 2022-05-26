@@ -2,13 +2,21 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationIdentifier } from '@azure/communication-signaling';
+import {
+  CommunicationIdentifier,
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider } from '@internal/react-components';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapterFromClient } from '../../../../src';
+import {
+  ChatAdapter,
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  createAzureCommunicationChatAdapterFromClient
+} from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
@@ -26,6 +34,9 @@ export const FakeAdapterApp = (): JSX.Element => {
   const fakeChatAdapterModel = JSON.parse(
     verifyParamExists(params.fakeChatAdapterModel, 'fakeChatAdapterModel')
   ) as ChatAdapterModel;
+
+  // Optional params
+  const useFrLocale = Boolean(params.useFrLocale);
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
@@ -45,6 +56,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
             adapter={adapter}
+            locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: true
             }}
