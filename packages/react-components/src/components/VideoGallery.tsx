@@ -13,7 +13,8 @@ import {
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
-  VideoStreamOptions
+  VideoStreamOptions,
+  CreateVideoStreamViewResult
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -116,13 +117,16 @@ export interface VideoGalleryProps {
   /** Remote videos view options */
   remoteVideoViewOptions?: VideoStreamOptions;
   /** Callback to create the local video stream view */
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
   /** Callback to render the local video tile*/
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   /** Callback to create a remote video stream view */
-  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
   /** Callback to dispose a remote video stream view */
@@ -257,7 +261,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
 
     return (
-      <Stack tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
+      <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
         <LocalVideoTile
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}

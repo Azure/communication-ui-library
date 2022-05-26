@@ -26,7 +26,7 @@ const JoinExistingChatThreadStory = (args, context): JSX.Element => {
           fluentTheme={context.theme}
           endpointUrl={args.endpointUrl}
           threadId={args.threadId}
-          userId={{ communicationUserId: args.userId }}
+          userIdentifier={args.userId}
           token={args.token}
           displayName={args.displayName}
           locale={compositeLocale(locale)}

@@ -42,7 +42,7 @@ import {
   DiagnosticChangedEventListner
 } from './CallAdapter';
 import { getCallCompositePage, isCameraOn } from '../utils';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -281,11 +281,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
+  public async createStreamView(
+    remoteUserId?: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> {
     if (remoteUserId === undefined) {
-      await this.handlers.onCreateLocalStreamView(options);
+      return await this.handlers.onCreateLocalStreamView(options);
     } else {
-      await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
+      return await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
     }
   }
 

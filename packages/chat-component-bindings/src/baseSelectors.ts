@@ -3,7 +3,7 @@
 
 import { ChatClientState, ChatErrors, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
