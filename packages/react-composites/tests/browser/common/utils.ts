@@ -257,6 +257,29 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
 };
 
 /**
+ * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
+ */
+export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > p';
+
+  await page.evaluate((readReceiptsToolTipId) => {
+    Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
+  }, readReceiptsToolTipId);
+
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const readReceiptsTooltipNodes = Array.from(document.querySelectorAll(args.readReceiptsToolTipId));
+      return readReceiptsTooltipNodes.every((node) => node.textContent === 'Read by stub/stub');
+    },
+    {
+      readReceiptsToolTipId: readReceiptsToolTipId
+    }
+  );
+};
+
+/**
  * Helper to wait for a number of participants in partipants in page
  * @param page - the page where the participant list element will be queried
  * @param numParticipants - number of participants to wait for
@@ -331,6 +354,8 @@ export interface StubOptions {
   stubMessageTimestamps?: boolean;
   // Disable tooltips on all buttons in the call control bar.
   dismissTooltips?: boolean;
+  // Hide chat message actions icon button.
+  dismissChatMessageActions?: boolean;
 }
 
 /**
@@ -350,6 +375,9 @@ export async function stableScreenshot(
   if (stubOptions?.dismissTooltips) {
     await disableTooltips(page);
   }
+  if (stubOptions?.dismissChatMessageActions) {
+    await hideChatMessageActionsButton(page);
+  }
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
@@ -358,6 +386,13 @@ export async function stableScreenshot(
     }
   }
 }
+
+/**
+ * Helper function for hiding chat message actions icon button.
+ */
+const hideChatMessageActionsButton = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ui-chat__message__actions {display: none}' });
+};
 
 /**
  * Helper function for disabling all the tooltips on the page.

@@ -20,6 +20,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
+import { ComponentLocale, useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
@@ -55,12 +56,46 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
+
+  /**
+   * Optional function to provide customized date format.
+   * @beta
+   */
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
+const generateDefaultTimestamp = (
+  createdOn: Date,
+  showDate: boolean | undefined,
+  strings: MessageThreadStrings
+): string => {
+  const formattedTimestamp = showDate
+    ? formatTimestampForChatMessage(createdOn, new Date(), strings)
+    : formatTimeForChatMessage(createdOn);
+
+  return formattedTimestamp;
+};
+
+// onDisplayDateTimeString from props overwrite onDisplayDateTimeString from locale
+const generateCustomizedTimestamp = (
+  props: ChatMessageComponentAsMessageBubbleProps,
+  createdOn: Date,
+  locale: ComponentLocale
+): string => {
+  /* @conditional-compile-remove(date-time-customization) */
+  return props.onDisplayDateTimeString
+    ? props.onDisplayDateTimeString(createdOn)
+    : locale.onDisplayDateTimeString
+    ? locale.onDisplayDateTimeString(createdOn)
+    : '';
+
+  return '';
+};
 /** @private */
 const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
+  const locale = useLocale();
 
   const {
     userId,
@@ -78,6 +113,14 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     fileDownloadHandler
   } = props;
+
+  const defaultTimeStamp = message.createdOn
+    ? generateDefaultTimestamp(message.createdOn, showDate, strings)
+    : undefined;
+
+  const customTimestamp = message.createdOn ? generateCustomizedTimestamp(props, message.createdOn, locale) : '';
+
+  const formattedTimestamp = customTimestamp || defaultTimeStamp;
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
@@ -143,15 +186,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
-          timestamp={
-            <Text data-ui-id={ids.messageTimestamp}>
-              {message.createdOn
-                ? showDate
-                  ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-                  : formatTimeForChatMessage(message.createdOn)
-                : undefined}
-            </Text>
-          }
+          timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
           details={
             messageStatus === 'failed' ? (
               <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>

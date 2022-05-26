@@ -13,7 +13,7 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import {
@@ -282,8 +282,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.stopScreenShare();
   }
   /** Create a stream view for a remote participants video feed. */
-  public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    await this.callAdapter.createStreamView(remoteUserId, options);
+  public async createStreamView(
+    remoteUserId?: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> {
+    return await this.callAdapter.createStreamView(remoteUserId, options);
   }
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
