@@ -69,7 +69,7 @@ jobs:
         run: rush switch-flavor:stable
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
-        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated."
+        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
       # Perform changelog check
       - name: Check the necessary change file has been submitted
         run: rush changelog:check
