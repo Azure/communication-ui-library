@@ -91,6 +91,9 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /** Video stream of shared screen */
   screenShareStream?: VideoGalleryStream;
   /* @conditional-compile-remove(PSTN-calls) */
-  /** State that the participant is in */
-  state?: string;
+  /** Call state that the participant is in.
+   *
+   * If nothing is provided here the participant will appear as if in Connected state.
+   */
+  state?: 'Connecting' | 'Connected' | 'Ringing' | 'Hold' | 'Idle' | 'InLobby';
 }
