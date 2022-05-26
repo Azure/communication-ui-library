@@ -80,7 +80,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),
             screenShareRemoteParticipant.videoStreams,
+            /* @conditional-compile-remove(PSTN-calls) */
             screenShareRemoteParticipant.state,
+            /* @conditional-compile-remove(PSTN-calls) */
             screenShareRemoteParticipant.identifier.kind,
             screenShareRemoteParticipant.displayName
           )

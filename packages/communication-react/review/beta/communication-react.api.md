@@ -2564,7 +2564,9 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    kind?: 'communicationUser' | 'phoneNumber' | 'microsoftTeamsUser' | 'unknown';
     screenShareStream?: VideoGalleryStream;
+    state?: string;
 }
 
 // @public

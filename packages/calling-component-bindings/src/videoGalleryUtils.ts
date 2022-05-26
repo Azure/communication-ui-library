@@ -34,7 +34,9 @@ export const _videoGalleryRemoteParticipantsMemo = (
           participant.isMuted,
           checkIsSpeaking(participant),
           participant.videoStreams,
+          /* @conditional-compile-remove(PSTN-calls) */
           participant.state,
+          /* @conditional-compile-remove(PSTN-calls) */
           participant.identifier.kind,
           participant.displayName
         );
@@ -108,7 +110,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
+    /* @conditional-compile-remove(PSTN-calls) */
     state,
+    /* @conditional-compile-remove(PSTN-calls) */
     kind
   };
 };
