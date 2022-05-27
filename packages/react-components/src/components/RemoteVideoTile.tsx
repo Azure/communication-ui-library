@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -15,12 +15,15 @@ import { VideoTile } from './VideoTile';
  * boost by memoizing the same rendered component to avoid rerendering a VideoTile when its position in the
  * array changes causing a rerender in the parent component. https://reactjs.org/docs/react-api.html#reactmemo
  *
- * @private
+ * @internal
  */
-export const RemoteVideoTile = React.memo(
+export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (
+      userId: string,
+      options?: VideoStreamOptions
+    ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isMuted?: boolean;
@@ -31,6 +34,8 @@ export const RemoteVideoTile = React.memo(
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
+    showLabel?: boolean;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
@@ -94,6 +99,8 @@ export const RemoteVideoTile = React.memo(
         isMuted={isMuted}
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
+        showLabel={props.showLabel}
+        personaMinSize={props.personaMinSize}
       />
     );
   }

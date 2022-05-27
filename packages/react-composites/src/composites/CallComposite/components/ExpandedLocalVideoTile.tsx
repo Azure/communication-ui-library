@@ -3,7 +3,14 @@
 
 import React, { useEffect } from 'react';
 import { mergeStyles, Stack } from '@fluentui/react';
-import { StreamMedia, VideoGalleryStream, VideoTile, useTheme, VideoStreamOptions } from '@internal/react-components';
+import {
+  StreamMedia,
+  VideoGalleryStream,
+  VideoTile,
+  useTheme,
+  VideoStreamOptions,
+  CreateVideoStreamViewResult
+} from '@internal/react-components';
 import {
   containerStyles,
   overlayBackgroundStyles,
@@ -23,7 +30,7 @@ const localVideoViewOptions = {
  */
 export interface ExpandedLocalVideoTileProps {
   localParticipantVideoStream: VideoGalleryStream;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
+  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   overlayContent?: JSX.Element;
 }
 
