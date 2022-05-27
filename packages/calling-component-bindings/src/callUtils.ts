@@ -4,7 +4,7 @@
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallState as CallStatus } from '@azure/communication-calling';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-import { memoizeFnAll } from '@internal/acs-ui-common';
+import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * Check if the call state represents being in the call
@@ -63,24 +63,21 @@ export const updateUserDisplayNames = (
   if (participants) {
     newParticipants = memoizedUpdateDisplayName((memoizedFn) => {
       return Object.values(participants).map((p) => {
-        return memoizedFn(p);
+        const pid = toFlatCommunicationIdentifier(p.identifier);
+        return memoizedFn(pid, p);
       });
     });
   }
   return newParticipants;
 };
 
-const memoizedUpdateDisplayName = memoizeFnAll((participant: RemoteParticipantState) => {
+const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participant: RemoteParticipantState) => {
   if (isPhoneNumberIdentifier(participant.identifier)) {
-    return { displayName: parsePhoneNumberForDisplayName(participant.identifier.phoneNumber), ...participant };
+    return {
+      ...participant,
+      displayName: participant.identifier.phoneNumber
+    };
   } else {
     return participant;
   }
 });
-
-/**
- * parses out the PhoneNumber of the user to use as a displayName
- */
-const parsePhoneNumberForDisplayName = (phoneNumber: string): string => {
-  return phoneNumber.split(':')[1];
-};

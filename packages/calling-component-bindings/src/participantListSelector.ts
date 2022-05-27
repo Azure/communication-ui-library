@@ -37,7 +37,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           isSpeaking: participant.isSpeaking,
           // ACS users can not remove Teams users.
           // Removing unknown types of users is undefined.
-          isRemovable: getIdentifierKind(participant.identifier).kind === ('communicationUser' || 'phoneNumber')
+          isRemovable:
+            getIdentifierKind(participant.identifier).kind === 'communicationUser' ||
+            getIdentifierKind(participant.identifier).kind === 'phoneNumber'
         };
       })
       .sort((a, b) => {
