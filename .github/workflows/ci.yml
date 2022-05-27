@@ -561,7 +561,7 @@ jobs:
       - name: Calculate size change
         id: bundles
         run: |
-          base_size=$(jq -r ".[0].parsedSize" base/report.json
+          base_size=$(jq -r ".[0].parsedSize" base/report.json)
           echo "::set-output name=base_size::${base_size}"
           current_size=$(jq -r ".[0].parsedSize" current/report.json)
           echo "::set-output name=current_size::${current_size}"
