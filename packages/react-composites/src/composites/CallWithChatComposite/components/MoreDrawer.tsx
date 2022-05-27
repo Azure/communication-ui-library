@@ -181,7 +181,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const customDrawerButtons = useMemo(
     () =>
       generateCustomDrawerButtons(
-        onFetchCustomButtonPropsTrampoline(drawerSelectionOptions != false ? drawerSelectionOptions : undefined),
+        onFetchCustomButtonPropsTrampoline(drawerSelectionOptions !== false ? drawerSelectionOptions : undefined),
         drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
       ),
     [drawerSelectionOptions]

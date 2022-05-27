@@ -113,7 +113,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   const customButtons = useMemo(
     () =>
       generateCustomButtons(
-        onFetchCustomButtonPropsTrampoline(options != false ? options : undefined),
+        onFetchCustomButtonPropsTrampoline(options !== false ? options : undefined),
         options !== false ? options?.displayType : undefined
       ),
     [options]
