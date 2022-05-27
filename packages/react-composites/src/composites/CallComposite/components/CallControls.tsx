@@ -7,6 +7,7 @@ import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-compon
 import React, { useMemo } from 'react';
 import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
+/* @conditional-compile-remove(control-bar-button-injection) */
 import { generateCustomButtons } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
@@ -84,6 +85,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
+/* @conditional-compile-remove(control-bar-button-injection) */
 const onFetchCustomButtonPropsTrampoline = (
   options?: CallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
