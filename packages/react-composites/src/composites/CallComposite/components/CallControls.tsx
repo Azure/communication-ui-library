@@ -5,7 +5,9 @@ import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
+import { CallControlOptions } from '../types/CallControlOptions';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { generateCustomButtons } from './buttons/Custom';
