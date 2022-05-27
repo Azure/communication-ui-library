@@ -1,13 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureLogger } from '@azure/logger';
+import { AzureLogger, AzureLogLevel } from '@azure/logger';
 import { _safeJSONStringify } from './safeStringify';
-
-/**
- * @internal
- */
-export type EventLevel = 'verbose' | 'info' | 'warning' | 'error';
 
 /**
  * @internal
@@ -15,7 +10,7 @@ export type EventLevel = 'verbose' | 'info' | 'warning' | 'error';
 export type TelemetryEvent = {
   name: string;
   message: string;
-  level: EventLevel;
+  level: AzureLogLevel;
   data?: Record<string, unknown>;
 };
 
