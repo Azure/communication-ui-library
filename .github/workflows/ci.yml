@@ -64,8 +64,12 @@ jobs:
         run: rush install
       # Switch flavor if necessary
       - name: Switch flavor for stable build
+        id: switch-flavor
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
+        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
       # Perform changelog check
       - name: Check the necessary change file has been submitted
         run: rush changelog:check
@@ -77,19 +81,16 @@ jobs:
         run: rush build -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
+        if: ${{ always() }}
         run: |
-          DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md
-          DIFF_STATUS=$?
-          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
-          if [$DIFF_STATUS -ne 0]
+          if [[ -z $(git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s) ]]
           then
-              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
-              echo "Changes:"
-              cat $DIFF_FILE
-              exit 1
+            echo "Success, no new api changes found."  
           else
-            echo "Success, no new api changes found."
+            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -t @azure/communication-react\""
+            echo "Changes:"
+            git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s
+            exit 1
           fi
       # Tree-shaking check
       - name: Treeshaking check
