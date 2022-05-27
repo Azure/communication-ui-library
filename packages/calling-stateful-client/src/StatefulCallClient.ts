@@ -13,7 +13,7 @@ import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from '
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { createView, disposeView } from './StreamUtils';
+import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
@@ -103,7 +103,7 @@ export interface StatefulCallClient extends CallClient {
     participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
-  ): Promise<void>;
+  ): Promise<CreateViewResult | undefined>;
   /**
    * Stops rendering a {@link RemoteVideoStreamState} or {@link LocalVideoStreamState} and removes the
    * {@link VideoStreamRendererView} from the relevant {@link RemoteVideoStreamState} in {@link CallClientState} or
@@ -290,7 +290,7 @@ export const createStatefulCallClientWithDeps = (
       participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
-    ): Promise<void> => {
+    ): Promise<CreateViewResult | undefined> => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       return createView(context, internalContext, callId, participantIdKind, stream, options);
     }

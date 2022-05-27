@@ -4,7 +4,7 @@
   "newlineKind": "lf",
   "apiReport": {
     "enabled": true,
-    "reportFolder": "<projectFolder>/review/"
+    "reportFolder": "<projectFolder>/review/beta/"
   },
   "docModel": {
     "enabled": true
@@ -25,6 +25,10 @@
       },
       "ae-forgotten-export": {
         "logLevel": "error",
+        "addToApiReportFile": false
+      },
+      "ae-incompatible-release-tags": {
+        "logLevel": "none",
         "addToApiReportFile": false
       }
     },

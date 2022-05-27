@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
 
@@ -47,6 +47,16 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
     }
   });
 
+  const iconButtonClassName = mergeStyles({
+    color: 'unset',
+    width: '1.5rem',
+    height: '1.5rem',
+    ':hover': {
+      color: 'unset',
+      background: 'transparent'
+    }
+  });
+
   return (
     <>
       <Stack
@@ -57,7 +67,9 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <SendBoxAttachFileIconTrampoline />
+        <IconButton className={iconButtonClassName}>
+          <SendBoxAttachFileIconTrampoline />
+        </IconButton>
       </Stack>
       <input
         ref={inputRef}

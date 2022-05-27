@@ -130,6 +130,7 @@ export type {
   ControlBarButtonStyles,
   ControlBarLayout,
   ControlBarProps,
+  CreateVideoStreamViewResult,
   CustomAvatarOptions,
   CustomMessage,
   DevicesButtonContextualMenuStyles,
@@ -191,6 +192,7 @@ export type {
   TypingIndicatorProps,
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
+  UpdateMessageCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
@@ -201,7 +203,8 @@ export type {
   VideoGalleryStyles,
   VideoStreamOptions,
   VideoTileProps,
-  VideoTileStylesProps
+  VideoTileStylesProps,
+  ViewScalingMode
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
@@ -228,5 +231,5 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
-export * from '../../react-composites/src';
+export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
