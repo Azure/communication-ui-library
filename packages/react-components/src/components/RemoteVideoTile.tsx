@@ -15,9 +15,9 @@ import { VideoTile } from './VideoTile';
  * boost by memoizing the same rendered component to avoid rerendering a VideoTile when its position in the
  * array changes causing a rerender in the parent component. https://reactjs.org/docs/react-api.html#reactmemo
  *
- * @private
+ * @internal
  */
-export const RemoteVideoTile = React.memo(
+export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
     onCreateRemoteStreamView?: (
@@ -34,6 +34,8 @@ export const RemoteVideoTile = React.memo(
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
+    showLabel?: boolean;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
@@ -97,6 +99,8 @@ export const RemoteVideoTile = React.memo(
         isMuted={isMuted}
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
+        showLabel={props.showLabel}
+        personaMinSize={props.personaMinSize}
       />
     );
   }
