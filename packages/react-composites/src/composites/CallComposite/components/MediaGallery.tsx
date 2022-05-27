@@ -17,6 +17,7 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { useCustomAvatarPersonaData } from '../../common/CustomDataModelUtils';
+import { TransientRemoteVideoTile } from './TransientRemoteVideoTile';
 
 const VideoGalleryStyles = {
   root: {
@@ -66,6 +67,27 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.onFetchAvatarPersonaData
   );
 
+  /** we would want to use the onRenderRemoteVideoTile prop in the videoGallery to do something like this only
+   * rendering the transient tile when the remote user is in those states, otherwise we would want to use the defaule behavior
+   */
+  const onRenderTransientVideoTile = (remoteParticipant: VideoGalleryRemoteParticipant): JSX.Element | undefined => {
+    if (remoteParticipant.state !== ('connecting' || 'Ringing')) {
+      /** if the remote participant is not in a transient state we should return the regular video tile */
+      return (
+        <>
+          <RemoteVideoTile key={remoteParticipant.userId} {...remoteParticipant} />
+        </>
+      );
+    } else {
+      /** otherwise we will return a tile that will display the state in a certain way depending on the type of user. */
+      return (
+        <>
+          <TransientRemoteVideoTile participant={remoteParticipant} />
+        </>
+      );
+    }
+  };
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -74,6 +96,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteParticipants={remoteParticipants}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
+        // then we override the remote video tile behavior with this new function.
+        onRenderRemoteVideoTile={onRenderTransientVideoTile}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         showCameraSwitcherInLocalPreview={props.isMobile}
