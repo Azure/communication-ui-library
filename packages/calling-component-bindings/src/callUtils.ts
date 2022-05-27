@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, RemoteParticipant } from '@azure/communication-calling';
+import { CallState as CallStatus } from '@azure/communication-calling';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
