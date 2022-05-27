@@ -19,7 +19,9 @@ export const dominantRemoteParticipantSelector = reselect.createSelector(
       remoteParticipants && Object.keys(remoteParticipants).length > 0
         ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
         : undefined;
-    return dominantRemoteParticipant ? _videoGalleryRemoteParticipantsMemo(dominantRemoteParticipant)[0] : undefined;
+    return dominantRemoteParticipant
+      ? _videoGalleryRemoteParticipantsMemo(Object.values(dominantRemoteParticipant))[0]
+      : undefined;
   }
 );
 
