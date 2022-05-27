@@ -9,7 +9,16 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -40,6 +49,10 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onToggleHold: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
@@ -206,6 +219,10 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onToggleHold = async (): Promise<void> =>
+      call?.state === 'LocalHold' ? await call?.resume() : await call?.hold();
+
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
     ): Promise<void | CreateVideoStreamViewResult> => {
@@ -311,8 +328,22 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onAddParticipant = async (
+      participant: CommunicationIdentifier,
+      options?: AddPhoneNumberOptions
+    ): Promise<void> => {
+      if (isPhoneNumberIdentifier(participant)) {
+        await call?.addParticipant(participant, options);
+      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+        await call?.addParticipant(participant);
+      }
+    };
+
     return {
       onHangUp,
+      /* @conditional-compile-remove(PSTN-calls) */
+      onToggleHold,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
@@ -325,6 +356,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
       onRemoveParticipant,
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView
