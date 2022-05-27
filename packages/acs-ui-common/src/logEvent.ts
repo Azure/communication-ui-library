@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { AzureLogger } from '@azure/logger';
+import { _safeJSONStringify } from './safeStringify';
 
 /**
  * @internal
@@ -22,6 +23,6 @@ export type TelemetryEvent = {
  * @internal
  * This is a log function to log structural data for easier parse in telemetry
  */
-export const logEvent = (logger: AzureLogger, event: TelemetryEvent): void => {
+export const _logEvent = (logger: AzureLogger, event: TelemetryEvent): void => {
   logger[event.level](_safeJSONStringify(event));
 };
