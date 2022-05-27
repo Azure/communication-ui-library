@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add Custom button injection for CallWithChat and Call Composite",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
