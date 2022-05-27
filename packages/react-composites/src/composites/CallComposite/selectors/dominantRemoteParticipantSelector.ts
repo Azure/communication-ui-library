@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import {
+  _dominantSpeakersWithFlatId,
+  _isInCall,
+  _isPreviewOn,
+  _videoGalleryRemoteParticipantsMemo
+} from '@internal/calling-component-bindings';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
-import { getDominantSpeakers, getRemoteParticipants } from './baseSelectors';
+import { getDominantSpeakerInfo, getRemoteParticipants } from './baseSelectors';
 
 /**
  * Get the most dominant remote participant, if no dominant speaker IDs exist, this uses
@@ -13,12 +18,14 @@ import { getDominantSpeakers, getRemoteParticipants } from './baseSelectors';
  * @private
  */
 export const dominantRemoteParticipantSelector = reselect.createSelector(
-  [getRemoteParticipants, getDominantSpeakers],
-  (remoteParticipants, dominantSpeakers) => {
+  [getRemoteParticipants, getDominantSpeakerInfo],
+  (remoteParticipants, dominantSpeakerInfo) => {
+    const dominantSpeakers = _dominantSpeakersWithFlatId(dominantSpeakerInfo);
     const dominantRemoteParticipant =
       remoteParticipants && Object.keys(remoteParticipants).length > 0
         ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
         : undefined;
+
     return dominantRemoteParticipant ? _videoGalleryRemoteParticipantsMemo(dominantRemoteParticipant)[0] : undefined;
   }
 );
