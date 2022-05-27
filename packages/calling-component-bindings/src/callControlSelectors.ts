@@ -10,9 +10,10 @@ import {
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
-  getLocalVideoStreams,
-  getCallState
+  getLocalVideoStreams
 } from './baseSelectors';
+/* @conditional-compile-remove(PSTN-calls) */
+import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './callUtils';
 
 /**
@@ -160,7 +161,6 @@ export type HoldButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked: boolean;
-  disabled: boolean;
 };
 
 /* @conditional-compile-remove(PSTN-calls) */
@@ -170,7 +170,6 @@ export type HoldButtonSelector = (
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {
-    checked: callState === 'LocalHold' ? true : false,
-    disabled: callState === 'RemoteHold' ? true : false
+    checked: callState === 'LocalHold' ? true : false
   };
 });
