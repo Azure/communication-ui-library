@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState as SDKCallStatus } from '@azure/communication-calling';
+import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
 import {
   CallState,
   DeviceManagerState,
@@ -83,8 +83,8 @@ export const getUserFacingDiagnostics = (state: CallAdapterState): DiagnosticsCa
 /**
  * @private
  */
-export const getDominantSpeakers = (state: CallAdapterState): undefined | string[] =>
-  _dominantSpeakersWithFlatId(state.call?.dominantSpeakers);
+export const getDominantSpeakerInfo = (state: CallAdapterState): undefined | DominantSpeakersInfo =>
+  state.call?.dominantSpeakers;
 
 /**
  * @private

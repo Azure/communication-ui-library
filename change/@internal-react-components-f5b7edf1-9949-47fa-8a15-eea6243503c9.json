@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Export remotevideotile and localvideotile internally. Also add showLabel and minPersonaSize props",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

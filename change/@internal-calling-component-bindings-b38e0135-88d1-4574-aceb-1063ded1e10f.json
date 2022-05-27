@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Calling handler to correctly dispose a local view when view is attached to a call",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
