@@ -8,11 +8,15 @@ import { buildUrlForChatAppUsingFakeAdapter, FAKE_CHAT_ADAPTER_ARGS, test } from
 
 test.describe('Tests related to messaging', async () => {
   test('page[0] can view typing indicator within 10s', async ({ serverUrl, page }) => {
-    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, { enableTypingIndicator: 'true' }));
+    page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
+        typingParticipants: [FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]]
+      })
+    );
     await waitForSelector(page, dataUiId(IDS.typingIndicator));
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 
-    expect(await indicator?.innerHTML()).toContain(FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]);
+    expect(await indicator?.innerHTML()).toContain(FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0].displayName);
     expect(await stableScreenshot(page, {})).toMatchSnapshot('typing-indicator.png');
 
     await page.bringToFront();
@@ -23,8 +27,8 @@ test.describe('Tests related to messaging', async () => {
       Date.now = () => currentDate.getTime();
     });
     await page.waitForTimeout(1000);
-    const indicator1 = await page.$(dataUiId(IDS.typingIndicator));
-    expect(await indicator1?.innerHTML()).toBeFalsy();
+    const indicatorAfter10Seconds = await page.$(dataUiId(IDS.typingIndicator));
+    expect(await indicatorAfter10Seconds?.innerHTML()).toBeFalsy();
     expect(await stableScreenshot(page, {})).toMatchSnapshot('typing-indicator-disappears.png');
   });
 });

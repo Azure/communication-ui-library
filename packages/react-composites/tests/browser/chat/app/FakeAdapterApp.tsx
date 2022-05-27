@@ -39,12 +39,12 @@ export const FakeAdapterApp = (): JSX.Element => {
 
   // Optional params
   const useFrLocale = Boolean(params.useFrLocale);
-  const enableTypingIndicator = Boolean(params.enableTypingIndicator);
+  const typingParticipants = JSON.parse(params.typingParticipants) as ChatParticipant[];
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      setAdapter(await createFakeChatAdapter(fakeChatAdapterModel, enableTypingIndicator));
+      setAdapter(await createFakeChatAdapter(fakeChatAdapterModel, typingParticipants));
     };
 
     initialize();
@@ -70,40 +70,34 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-async function createFakeChatAdapter(model: ChatAdapterModel, enableTypingIndicator?: boolean): Promise<ChatAdapter> {
+async function createFakeChatAdapter(
+  model: ChatAdapterModel,
+  typingParticipants?: ChatParticipant[]
+): Promise<ChatAdapter> {
   const m = new Model({ asyncDelivery: false });
-  const remoteParticipants: ChatParticipant[] = model.remoteParticipants.map((user) => {
-    return {
-      id: { communicationUserId: nanoid() },
-      displayName: user
-    };
-  });
-  const localUser = { id: { communicationUserId: nanoid() }, displayName: model.localParticipant };
-  const chatClient = new FakeChatClient(m, localUser.id);
+  const chatClient = new FakeChatClient(m, model.localParticipant.id);
   const thread = await chatClient.createChatThread(
     {
       topic: 'Cowabunga'
     },
     {
-      participants: [localUser, ...remoteParticipants]
+      participants: [model.localParticipant, ...model.remoteParticipants]
     }
   );
   const participantHandle = {
-    userId: localUser.id,
-    displayName: localUser.displayName,
+    userId: model.localParticipant.id,
+    displayName: model.localParticipant.displayName,
     chatClient: chatClient as IChatClient as ChatClient,
     chatThreadClient: chatClient.getChatThreadClient(thread.chatThread.id ?? 'INVALID_THREAD_ID')
   };
-  const adapter = await initializeAdapter(participantHandle);
-  if (enableTypingIndicator) {
+  const fakeAdapter = await initializeAdapter(participantHandle);
+  if (typingParticipants) {
     chatClient.getChatThreadClient(thread.chatThread.id);
-    chatClient.initializeTypingNotification(
-      thread.chatThread.id,
-      remoteParticipants[0].id,
-      remoteParticipants[0].displayName
-    );
+    typingParticipants.forEach((indicator) => {
+      chatClient.initializeTypingNotification(thread.chatThread.id, indicator.id, indicator.displayName);
+    });
   }
-  return adapter;
+  return fakeAdapter;
 }
 
 const initializeAdapter = async (participant: AdapterInfo): Promise<ChatAdapter> => {

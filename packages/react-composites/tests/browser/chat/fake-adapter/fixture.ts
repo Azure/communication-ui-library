@@ -6,7 +6,7 @@ import path from 'path';
 import { createTestServer } from '../../../server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
-import { encodeQueryData } from '../../common/utils';
+import { nanoid } from 'nanoid';
 
 const SERVER_URL = 'http://localhost:3000';
 const APP_DIR = path.join(__dirname, '../app');
@@ -16,7 +16,8 @@ interface WorkerFixture {
   page: Page;
 }
 
-export type ChatAdapterModel = { localParticipant: string; remoteParticipants: string[] };
+export type ChatParticipant = { id: { communicationUserId: string }; displayName: string };
+export type ChatAdapterModel = { localParticipant: ChatParticipant; remoteParticipants: ChatParticipant[] };
 
 /**
  * Create the test URL for chat app with using fake adapter
@@ -27,11 +28,11 @@ export type ChatAdapterModel = { localParticipant: string; remoteParticipants: s
 export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
   fakeChatAdapterModel: ChatAdapterModel,
-  qArgs?: { [key: string]: string }
+  qArgs?: { typingParticipants?: ChatParticipant[] }
 ): string => {
   let url = `${serverUrl}?fakeChatAdapterModel=${JSON.stringify(fakeChatAdapterModel)}`;
-  if (qArgs) {
-    url += `&${encodeQueryData({ ...qArgs })}`;
+  if (qArgs?.typingParticipants) {
+    url += `&typingParticipants=${JSON.stringify(qArgs?.typingParticipants)}`;
   }
   return url;
 };
@@ -40,8 +41,10 @@ export const buildUrlForChatAppUsingFakeAdapter = (
  * Fake chat adapter args
  */
 export const FAKE_CHAT_ADAPTER_ARGS = {
-  localParticipant: TEST_PARTICIPANTS_CHAT[0],
-  remoteParticipants: TEST_PARTICIPANTS_CHAT.slice(1)
+  localParticipant: { id: { communicationUserId: nanoid() }, displayName: TEST_PARTICIPANTS_CHAT[0] },
+  remoteParticipants: TEST_PARTICIPANTS_CHAT.slice(1).map((participant) => {
+    return { id: { communicationUserId: nanoid() }, displayName: participant };
+  })
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
