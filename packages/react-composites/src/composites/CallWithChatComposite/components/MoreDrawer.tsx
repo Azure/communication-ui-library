@@ -238,13 +238,13 @@ const onFetchCustomButtonPropsTrampoline = (
 
 /* @conditional-compile-remove(control-bar-button-injection) */
 /** @private */
-const makeSubMenuItems = (element): _DrawerMenuItemProps[] => {
+const makeSubMenuItems = (menuItem): _DrawerMenuItemProps[] => {
   const subMenuProps: _DrawerMenuItemProps[] = [];
-  if (element.menuProps) {
-    element.menuProps?.items.forEach((subMenuElement) => {
+  if (menuItem.menuProps) {
+    menuItem.menuProps?.items.forEach((subMenuItem) => {
       subMenuProps.push({
-        itemKey: subMenuElement.key,
-        text: subMenuElement.text
+        itemKey: subMenuItem.key,
+        text: subMenuItem.text
       });
     });
   }
