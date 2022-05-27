@@ -6,8 +6,8 @@ import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
-test.describe('Tests related to messaging', async () => {
-  test('page[0] can view typing indicator within 10s', async ({ serverUrl, page }) => {
+test.describe('Tests related to typing indicator', async () => {
+  test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
         typingParticipants: [FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]]
