@@ -549,7 +549,7 @@ jobs:
     steps:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
-        run: curl -o base/report.json "${{ matrix.gist }})/raw/Calling-report.json" --create-dirs
+        run: curl -o base/report.json "${{ matrix.gist }})/raw/${{ matrix.app }-report.json" --create-dirs
       - uses: actions/download-artifact@v3
         with:
           path: current
