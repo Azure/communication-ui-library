@@ -59,7 +59,8 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
+    cursor: 'pointer'
   });
 
   const fileInfoWrapperClassName = mergeStyles({
@@ -98,7 +99,12 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   };
 
   return (
-    <Stack className={containerClassName}>
+    <Stack
+      className={containerClassName}
+      onClick={() => {
+        props.actionHandler && props.actionHandler();
+      }}
+    >
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
         <Stack>
           {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
@@ -113,13 +119,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
         <Stack className={fileNameContainerClassName}>
           <Text className={fileNameTextClassName}>{fileName}</Text>
         </Stack>
-        <Stack
-          verticalAlign="center"
-          className={actionIconClassName}
-          onClick={() => {
-            props.actionHandler && props.actionHandler();
-          }}
-        >
+        <Stack verticalAlign="center" className={actionIconClassName}>
           {actionIcon && actionIcon}
         </Stack>
       </Stack>

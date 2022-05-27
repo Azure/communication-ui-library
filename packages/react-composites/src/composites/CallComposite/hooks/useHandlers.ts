@@ -23,13 +23,21 @@ export const useHandlers = <PropsT>(
 const createCompositeHandlers = memoizeOne(
   (adapter: CallAdapter): CallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
-      await adapter.createStreamView(undefined, options);
+      return await adapter.createStreamView(undefined, options);
     },
     onCreateRemoteStreamView: async (userId, options) => {
-      await adapter.createStreamView(userId, options);
+      return await adapter.createStreamView(userId, options);
     },
     onHangUp: async () => {
       await adapter.leaveCall();
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onToggleHold: async () => {
+      // not implemented for composites yet
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onAddParticipant: async () => {
+      // not implemented for composites yet
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);

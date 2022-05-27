@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Support calling `updateScalingMode` in the Video Gallery with remote video streams instead of recreating the stream when the scaling mode changes",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
