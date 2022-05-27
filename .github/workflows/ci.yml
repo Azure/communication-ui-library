@@ -597,11 +597,11 @@ jobs:
         include:
           # These are gist to track bundle sizes
           - app: Chat
-            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+            gist_id: db13fa7067b083b7a91d7a95adf28be1
           - app: Calling
-            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+            gist_id: 87d57b63bbbaee12273a9a901b67885c
           - app: CallWithChat
-            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+            gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -610,7 +610,7 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: ${{ matrix.gist }}
+          gist_id: ${{ matrix.gist_id }}
           gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
           gist_file_name: ${{ matrix.app }}-report.json
           file_path: report.json
