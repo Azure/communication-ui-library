@@ -351,37 +351,11 @@ jobs:
         run: rush build -o calling
       - name: Tests
         run: rush test -o calling
-      # Not check in the bundles stats if size doesn't change
-      # Stats size in the file is a bit random, so we can't only depend on file itself
-      - name: Check size change
-        id: changescheck
-        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
-        run: |
-          base_size=$(jq -r ".[0].parsedSize" samples/Calling/bundle-report/report.json)
-          current_size=$(jq -r ".[0].parsedSize" samples/Calling/dist/build/report.json)
-          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
-          echo "::set-output name=hasChanged::${change}"
-      - name: Copy current bundle report json
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: cp samples/Calling/dist/build/report.json samples/Calling/bundle-report/
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      - name: Commit bundle report
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        env:
-          # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
-          git add samples/Calling/bundle-report/*
-          git commit --no-verify -m 'Update Calling js bundle report'
-          git push
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Calling-report
+          path: samples/Calling/dist/build/report.json
 
   build_chat_sample:
     needs: get_matrix
@@ -414,37 +388,11 @@ jobs:
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
-      # Not check in the bundles stats if size doesn't change
-      # Stats size in the file is a bit random, so we can't only depend on file itself
-      - name: Check size change
-        id: changescheck
-        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
-        run: |
-          base_size=$(jq -r ".[0].parsedSize" samples/Chat/bundle-report/report.json)
-          current_size=$(jq -r ".[0].parsedSize" samples/Chat/dist/build/report.json)
-          change=$([ $current_size = $base_size ] && echo "true" || echo "false")
-          echo "::set-output name=hasChanged::${change}"
-      - name: Copy current bundle report json
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: cp samples/Chat/dist/build/report.json samples/Chat/bundle-report/
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      - name: Commit bundle report
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        env:
-          # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
-          git add samples/Chat/bundle-report/*
-          git commit --no-verify -m 'Update Chat js bundle report'
-          git push
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Chat-report
+          path: samples/Chat/dist/build/report.json
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -477,37 +425,11 @@ jobs:
         run: rush build -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
-      # Not check in the bundles stats if size doesn't change
-      # Stats size in the file is a bit random, so we can't only depend on file itself
-      - name: Check size change
-        id: changescheck
-        if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' }}
-        run: |
-          base_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/bundle-report/report.json)
-          current_size=$(jq -r ".[0].parsedSize" samples/CallWithChat/dist/build/report.json)
-          change=$([ $current_size = $base_size ] && echo "false" || echo "true")
-          echo "::set-output name=hasChanged::${change}"
-      - name: Copy current bundle report json
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: cp samples/CallWithChat/dist/build/report.json samples/CallWithChat/bundle-report/
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      - name: Commit bundle report
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        env:
-          # use GITHUB_TOKEN so it won't trigger recursive PR validation
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
-          git add samples/CallWithChat/bundle-report/*
-          git commit --no-verify -m 'Update CallWithChat js bundle report'
-          git push
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        with:
+          name: CallWithChat-report
+          path: samples/CallWithChat/dist/build/report.json
 
   build_static_html_composites_sample:
     needs: get_matrix
@@ -612,22 +534,29 @@ jobs:
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
-    name: Compare bundle size from pr head ref to base ref
+    name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
       matrix:
-        app: [Chat, Calling, CallWithChat]
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
     steps:
-      # checkout base branch
-      - uses: actions/checkout@v2
+      # checkout base bundle stats
+      - name: Get bundle stats of main from gist
+        id: base-bundle-size
+        uses: andymckay/get-gist-action@master
         with:
-          ref: ${{ github.base_ref }}
-          path: base
-          fetch-depth: 0
-      - uses: actions/checkout@v2
+          gistURL: ${{ matrix.gist }}
+      - uses: actions/download-artifact@v3
         with:
           path: current
-          fetch-depth: 0
+          name: ${{ matrix.app }}-report
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -635,9 +564,9 @@ jobs:
       - name: Calculate size change
         id: bundles
         run: |
-          base_size=$(jq -r ".[0].parsedSize" base/samples/${{ matrix.app }}/bundle-report/report.json)
+          base_size=$(jq -r ".[0].parsedSize" ${{ steps.base-bundle-size.outputs.file }})
           echo "::set-output name=base_size::${base_size}"
-          current_size=$(jq -r ".[0].parsedSize" current/samples/${{ matrix.app }}/bundle-report/report.json)
+          current_size=$(jq -r ".[0].parsedSize" current/report.json)
           echo "::set-output name=current_size::${current_size}"
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "::set-output name=change::${change}"
@@ -660,6 +589,34 @@ jobs:
             - Base size: ${{ steps.bundles.outputs.base_size}}
             - Diff size: ${{ steps.bundles.outputs.diff}}
           edit-mode: replace
+
+  update_base_bundle_report:
+    runs-on: ubuntu-latest
+    name: Upload bundle size report to gist - ${{ matrix.app }}
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    # if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.app }}-report
+      - name: Upload bundle report to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: matrix.gist
+          gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
+          gist_file_name: ${{ matrix.app }}-report.json
+          file_path: report.json
 
   check_failure:
     runs-on: ubuntu-latest
