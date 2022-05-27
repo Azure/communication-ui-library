@@ -97,7 +97,7 @@ export const _LocalVideoTile = React.memo(
             localVideoCameraSwitcherLabel={localVideoCameraSwitcherLabel}
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
-          <StreamMedia videoStreamElement={renderElement} />
+          <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
         </>
       );
     }, [
