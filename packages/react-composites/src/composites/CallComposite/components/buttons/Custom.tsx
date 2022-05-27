@@ -9,6 +9,17 @@ import {
   CustomCallControlButtonPlacement
 } from '../../types/CallControlOptions';
 
+/**
+ * Max number of Custom Buttons in MainBar and SideBar
+ *
+ * @private
+ */
+export const CUSTOM_BUTTON_OPTIONS = {
+  MAX_MAINBAR_DESKTOP_CUSTOM_BUTTONS: 3,
+  MAX_MAINBAR_MOBILE_CUSTOM_BUTTONS: 1,
+  MAX_SIDEBAR_DESKTOP_CUSTOM_BUTTONS: 2
+};
+
 /** @private */
 export type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
 
@@ -18,9 +29,9 @@ export const generateCustomButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    sideBar: undefined,
     mainBar: undefined,
-    overflowBar: undefined
+    sideBar: undefined,
+    overflowMenu: undefined
   };
   if (!onFetchCustomButtonProps) {
     return response;
@@ -47,9 +58,9 @@ export const generateCustomDrawerButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    sideBar: undefined,
     mainBar: undefined,
-    overflowBar: undefined
+    sideBar: undefined,
+    overflowMenu: undefined
   };
   if (!onFetchCustomButtonProps) {
     return response;

@@ -34,6 +34,8 @@ export type CallControlsProps = {
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -72,7 +74,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {customButtons['mainBar']}
+          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['mainBar']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

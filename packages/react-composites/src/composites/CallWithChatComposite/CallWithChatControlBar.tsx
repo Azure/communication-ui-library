@@ -23,7 +23,7 @@ import { MoreButton } from './MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { ContainerRectProps } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomButtons } from '../CallComposite/components/buttons/Custom';
+import { CUSTOM_BUTTON_OPTIONS, generateCustomButtons } from '../CallComposite/components/buttons/Custom';
 
 /**
  * @private
@@ -176,17 +176,23 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 )}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
-                  props.mobileView
-                    ? customButtons['mainBar']?.props.children.slice(0, 1)
-                    : customButtons['mainBar']?.props.children.slice(0, 3).map((element) => {
-                        return (
-                          <element.type
-                            {...element.props}
-                            styles={commonButtonStyles}
-                            displayType={options.displayType}
-                          />
-                        );
-                      })
+                  customButtons['mainBar']?.props.children
+                    .slice(
+                      0,
+                      props.mobileView
+                        ? CUSTOM_BUTTON_OPTIONS.MAX_MAINBAR_MOBILE_CUSTOM_BUTTONS
+                        : CUSTOM_BUTTON_OPTIONS.MAX_MAINBAR_DESKTOP_CUSTOM_BUTTONS
+                    )
+                    .map((element) => {
+                      return (
+                        <element.type
+                          {...element.props}
+                          styles={commonButtonStyles}
+                          displayType={options.displayType}
+                          showLabel={options.displayType !== 'compact'}
+                        />
+                      );
+                    })
                 }
                 {props.mobileView && (
                   <MoreButton
@@ -206,14 +212,23 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {
             /* @conditional-compile-remove(control-bar-button-injection) */
-            customButtons['sideBar']?.props.children.slice(0, 2).map((element) => {
-              return <element.type {...element.props} styles={commonButtonStyles} />;
-            })
+            customButtons['sideBar']?.props.children
+              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SIDEBAR_DESKTOP_CUSTOM_BUTTONS)
+              .map((element) => {
+                return (
+                  <element.type
+                    {...element.props}
+                    styles={commonButtonStyles}
+                    displayType={options.displayType}
+                    showLabel={options.displayType !== 'compact'}
+                  />
+                );
+              })
           }
           {isEnabled(options?.peopleButton) && (
             <PeopleButton
               checked={props.peopleButtonChecked}
-              showLabel={true}
+              showLabel={options.displayType !== 'compact'}
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
