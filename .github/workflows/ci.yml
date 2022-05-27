@@ -549,10 +549,7 @@ jobs:
     steps:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
-        id: base-bundle-size
-        uses: andymckay/get-gist-action@master
-        with:
-          gistURL: ${{ matrix.gist }}
+        run: curl -o base/report.json "${{ matrix.gist }})/raw/Calling-report.json" --create-dirs
       - uses: actions/download-artifact@v3
         with:
           path: current
@@ -613,7 +610,7 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: matrix.gist
+          gist_id: ${{ matrix.gist }}
           gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
           gist_file_name: ${{ matrix.app }}-report.json
           file_path: report.json
