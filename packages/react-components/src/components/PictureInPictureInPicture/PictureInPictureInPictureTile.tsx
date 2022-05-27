@@ -2,33 +2,36 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, memoizeFunction, Stack } from '@fluentui/react';
-import React, { ReactChild } from 'react';
+import React, { ReactElement, PropsWithChildren } from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 
 /** @internal */
 export type _TileOrientation = 'portrait' | 'landscape';
 
 /** @internal */
-export interface _PictureInPictureInPictureTileProps {
-  content: ReactChild;
+export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
   orientation: _TileOrientation;
-}
+}>;
 
 /** @private */
-export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => {
+export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInPictureTileProps): ReactElement => {
   const boxShadow = useTheme().effects.elevation8;
   return (
-    <PictureInPictureInPictureTile content={props.content} styles={primaryTileStyles(props.orientation, boxShadow)} />
+    <PictureInPictureInPictureTile styles={primaryTileStyles(props.orientation, boxShadow)}>
+      {props.children}
+    </PictureInPictureInPictureTile>
   );
 };
 
 /** @private */
-export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => (
-  <PictureInPictureInPictureTile content={props.content} styles={secondaryTileStyles(props.orientation)} />
+export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): ReactElement => (
+  <PictureInPictureInPictureTile styles={secondaryTileStyles(props.orientation)}>
+    {props.children}
+  </PictureInPictureInPictureTile>
 );
 
-const PictureInPictureInPictureTile = (props: { styles: IStackStyles; content: ReactChild }): JSX.Element => (
-  <Stack styles={props.styles}>{props.content}</Stack>
+const PictureInPictureInPictureTile = (props: PropsWithChildren<{ styles: IStackStyles }>): ReactElement => (
+  <Stack styles={props.styles}>{props.children}</Stack>
 );
 
 const primaryTileStyles = memoizeFunction(

@@ -6,8 +6,7 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import {
   PictureInPictureInPicturePrimaryTile,
   PictureInPictureInPictureSecondaryTile,
-  _PictureInPictureInPictureTileProps,
-  _TileOrientation
+  _PictureInPictureInPictureTileProps
 } from './PictureInPictureInPictureTile';
 
 /**

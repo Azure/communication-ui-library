@@ -25,9 +25,9 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
+import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
-import { ReactChild } from 'react';
 import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
@@ -1067,12 +1067,9 @@ export interface _PictureInPictureInPictureStrings {
 }
 
 // @internal (undocumented)
-export interface _PictureInPictureInPictureTileProps {
-    // (undocumented)
-    content: ReactChild;
-    // (undocumented)
+export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
-}
+}>;
 
 // @public
 export type ReadReceiptsBySenderId = {
