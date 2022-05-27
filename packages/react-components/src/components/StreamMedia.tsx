@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import React, { useEffect, useRef } from 'react';
-import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
+import React, { useEffect, useRef, useState } from 'react';
+import { invertedVideoInPipStyle, mediaContainer } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 
@@ -39,6 +39,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const theme = useTheme();
 
   const { isMirrored, videoStreamElement, styles } = props;
+  const [pipEnabled, setPipEnabled] = useState(false);
 
   useEffect(() => {
     const container = containerEl.current;
@@ -50,18 +51,29 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
     // the new videoStreamElement. If videoStreamElement is undefined nothing is appended and container should be empty
     // and we don't render anyting.
     container.innerHTML = '';
+    setPipEnabled(false);
     if (videoStreamElement) {
+      videoStreamElement.addEventListener('enterpictureinpicture', () => {
+        setPipEnabled(true);
+      });
+      videoStreamElement.addEventListener('leavepictureinpicture', () => {
+        setPipEnabled(false);
+      });
       container.appendChild(videoStreamElement);
     }
 
     return () => {
       container.innerHTML = '';
+      setPipEnabled(false);
     };
   }, [videoStreamElement]);
 
   return (
     <div
-      className={mergeStyles(isMirrored ? invertedVideoStyle(theme) : mediaContainer(theme), styles?.root)}
+      className={mergeStyles(
+        isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
+        styles?.root
+      )}
       ref={containerEl}
     />
   );
