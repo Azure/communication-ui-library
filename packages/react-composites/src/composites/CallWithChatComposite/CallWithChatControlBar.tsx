@@ -187,6 +187,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                       return (
                         <element.type
                           {...element.props}
+                          key={element.props.strings.label}
                           styles={commonButtonStyles}
                           displayType={options.displayType}
                           showLabel={options.displayType !== 'compact'}
@@ -218,6 +219,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 return (
                   <element.type
                     {...element.props}
+                    key={element.props.strings.label}
                     styles={commonButtonStyles}
                     displayType={options.displayType}
                     showLabel={options.displayType !== 'compact'}
