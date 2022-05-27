@@ -28,19 +28,15 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         const isScreenSharing = Object.values(participant.videoStreams).some(
           (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
         );
-
         return {
           userId: toFlatCommunicationIdentifier(participant.identifier),
-          displayName:
-            participant.identifier.kind !== 'phoneNumber'
-              ? participant.displayName
-              : parsePhoneNumberForDisplayName(participant.identifier.phoneNumber),
+          displayName: participant.displayName,
           state: participant.state,
           isMuted: participant.isMuted,
           isScreenSharing: isScreenSharing,
           isSpeaking: participant.isSpeaking,
           // ACS users can not remove Teams users.
-          // Removing phone numbers or unknown types of users is undefined.
+          // Removing unknown types of users is undefined.
           isRemovable: getIdentifierKind(participant.identifier).kind === ('communicationUser' || 'phoneNumber')
         };
       })
@@ -89,7 +85,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     myUserId: string;
   } => {
     const participants = remoteParticipants
-      ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
+      ? convertRemoteParticipantsToParticipantListParticipants(remoteParticipants)
       : [];
     participants.push({
       userId: userId,
@@ -106,9 +102,3 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
-/**
- *
- */
-const parsePhoneNumberForDisplayName = (phoneNumber: string): string => {
-  return phoneNumber.split(':')[1];
-};

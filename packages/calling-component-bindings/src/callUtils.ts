@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeviceManagerState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus } from '@azure/communication-calling';
+import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
+import { CallState as CallStatus, RemoteParticipant } from '@azure/communication-calling';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * Check if the call state represents being in the call
@@ -43,4 +44,29 @@ export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient
   for (const view of unparentedViews) {
     await callClient.disposeView(undefined, undefined, view);
   }
+};
+
+/**
+ * Update the users displayNames based on the type of user they are
+ *
+ * @private
+ */
+export const updateUserDisplayNames = (participants: {
+  [keys: string]: RemoteParticipantState;
+}): RemoteParticipantState[] => {
+  const newParticipants = Object.values(participants).map((p) => {
+    if (isPhoneNumberIdentifier(p.identifier)) {
+      return { displayName: parsePhoneNumberForDisplayName(p.identifier.phoneNumber), ...p };
+    } else {
+      return p;
+    }
+  });
+  return newParticipants;
+};
+
+/**
+ * parses out the PhoneNumber of the user to use as a displayName
+ */
+const parsePhoneNumberForDisplayName = (phoneNumber: string): string => {
+  return phoneNumber.split(':')[1];
 };
