@@ -62,6 +62,21 @@ class ProxyCall implements ProxyHandler<Call> {
           return await target.stopScreenSharing(...args);
         }, 'Call.stopScreenSharing');
       }
+      case 'hold': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['hold']>) {
+          return await target.hold(...args);
+        }, 'Call.hold');
+      }
+      case 'resume': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['resume']>) {
+          return await target.resume(...args);
+        }, 'Call.resume');
+      }
+      case 'addParticipant': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['addParticipant']>) {
+          return await target.addParticipant(...args);
+        }, 'Call.addParticipant');
+      }
       default:
         return Reflect.get(target, prop);
     }

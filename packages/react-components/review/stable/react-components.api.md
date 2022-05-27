@@ -25,6 +25,7 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
+import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
@@ -713,6 +714,28 @@ export interface LocalVideoCameraCycleButtonProps {
     selectedCamera?: OptionsDevice;
 }
 
+// @internal
+export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
+    userId?: string | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onDisposeLocalStreamView?: (() => void) | undefined;
+    isAvailable?: boolean | undefined;
+    isMuted?: boolean | undefined;
+    renderElement?: HTMLElement | undefined;
+    displayName?: string | undefined;
+    initialsName?: string | undefined;
+    localVideoViewOptions?: VideoStreamOptions | undefined;
+    onRenderAvatar?: OnRenderAvatarCallback | undefined;
+    showLabel: boolean;
+    showMuteIndicator?: boolean | undefined;
+    showCameraSwitcherInLocalPreview?: boolean | undefined;
+    localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps | undefined;
+    localVideoCameraSwitcherLabel?: string | undefined;
+    localVideoSelectedDescription?: string | undefined;
+    styles?: VideoTileStylesProps | undefined;
+    personaMinSize?: number | undefined;
+}) => JSX.Element>;
+
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
@@ -1044,10 +1067,9 @@ export interface _PictureInPictureInPictureStrings {
 }
 
 // @internal (undocumented)
-export interface _PictureInPictureInPictureTileProps extends Pick<VideoTileProps, 'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'> {
-    // (undocumented)
+export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
-}
+}>;
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1056,6 +1078,24 @@ export type ReadReceiptsBySenderId = {
         displayName: string;
     };
 };
+
+// @internal
+export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
+    userId: string;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
+    isAvailable?: boolean | undefined;
+    isMuted?: boolean | undefined;
+    isSpeaking?: boolean | undefined;
+    isScreenSharingOn?: boolean | undefined;
+    renderElement?: HTMLElement | undefined;
+    displayName?: string | undefined;
+    remoteVideoViewOptions?: VideoStreamOptions | undefined;
+    onRenderAvatar?: OnRenderAvatarCallback | undefined;
+    showMuteIndicator?: boolean | undefined;
+    showLabel?: boolean | undefined;
+    personaMinSize?: number | undefined;
+}) => JSX.Element>;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
