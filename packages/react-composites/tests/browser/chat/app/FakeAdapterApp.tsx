@@ -2,11 +2,8 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import {
-  CommunicationIdentifier,
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider } from '@internal/react-components';
 import { nanoid } from 'nanoid';
@@ -15,13 +12,17 @@ import {
   ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
-  createAzureCommunicationChatAdapterFromClient
+  createAzureCommunicationChatAdapterFromClient,
+  FileDownloadError,
+  FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatService } from './fake-back-end/ChatService';
-import { ChatAdapterModel } from '../fake-adapter/fixture';
+import { FakeChatAdapterArgs } from '../fake-adapter/fixture';
+import { IChatClient } from './fake-back-end/types';
+import { Model } from './fake-back-end/Model';
+import { FakeChatClient } from './fake-back-end/FakeChatClient';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -31,23 +32,102 @@ const params = Object.fromEntries(urlSearchParams.entries());
  */
 export const FakeAdapterApp = (): JSX.Element => {
   // Required params
-  const fakeChatAdapterModel = JSON.parse(
-    verifyParamExists(params.fakeChatAdapterModel, 'fakeChatAdapterModel')
-  ) as ChatAdapterModel;
+  const fakeChatAdapterArgs = JSON.parse(
+    verifyParamExists(params.fakeChatAdapterArgs, 'fakeChatAdapterArgs')
+  ) as FakeChatAdapterArgs;
 
   // Optional params
   const useFrLocale = Boolean(params.useFrLocale);
+  const fileSharingEnabled = Boolean(params.fileSharingEnabled);
+  const failFileDownload = Boolean(params.failDownload);
+  const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
+  const hasRemoteFileSharingMessage = Boolean(params.hasRemoteFileSharingMessage);
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      setAdapter(await createFakeChatAdapter(fakeChatAdapterModel));
+      const chatClientModel = new Model({ asyncDelivery: false });
+      const remoteParticipants: ChatParticipant[] = fakeChatAdapterArgs.remoteParticipants.map((user) => {
+        return {
+          id: { communicationUserId: nanoid() },
+          displayName: user
+        };
+      });
+      const localUser = { id: { communicationUserId: nanoid() }, displayName: fakeChatAdapterArgs.localParticipant };
+      const chatClient = new FakeChatClient(chatClientModel, localUser.id);
+      const participants = orderParticipants(
+        localUser,
+        remoteParticipants,
+        fakeChatAdapterArgs.localParticipantPosition
+      );
+      const thread = await chatClient.createChatThread(
+        {
+          topic: 'Cowabunga'
+        },
+        {
+          participants
+        }
+      );
+      const adapterInfo = {
+        userId: localUser.id,
+        displayName: localUser.displayName,
+        chatClient: chatClient as IChatClient as ChatClient,
+        chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+      };
+      const adapter = await initializeAdapter(adapterInfo);
+      setAdapter(adapter);
+      if (hasRemoteFileSharingMessage && remoteParticipants.length > 0) {
+        const chatClient = new FakeChatClient(chatClientModel, remoteParticipants[0].id);
+        chatClient.getChatThreadClient(thread.chatThread.id).sendMessage(
+          { content: 'Hello!' },
+          {
+            senderDisplayName: remoteParticipants[0].displayName,
+            type: 'text',
+            metadata: {
+              fileSharingMetadata: JSON.stringify([{ name: 'SampleFile1.pdf', extension: 'pdf' }])
+            }
+          }
+        );
+      }
     };
 
     initialize();
     return () => adapter && adapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (adapter && uploadedFiles.length) {
+      uploadedFiles.forEach((file) => {
+        if (file.uploadComplete) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadCompleted({
+            name: file.name,
+            extension: file.extension,
+            url: file.url
+          });
+        } else if (file.error) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadFailed(file.error);
+        } else if (file.progress) {
+          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+          fileUploads[0].notifyUploadProgressChanged(file.progress);
+        } else {
+          adapter.registerCompletedFileUploads([file]);
+        }
+      });
+    }
+  }, [adapter, uploadedFiles]);
+
+  const fileDownloadHandler: FileDownloadHandler = (fileData): Promise<URL | FileDownloadError> => {
+    return new Promise((resolve) => {
+      if (failFileDownload) {
+        resolve({ errorMessage: 'You don’t have permission to download this file.' });
+      } else {
+        resolve(new URL(fileData.url));
+      }
+    });
+  };
 
   return (
     <>
@@ -58,7 +138,16 @@ export const FakeAdapterApp = (): JSX.Element => {
             adapter={adapter}
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
-              participantPane: true
+              participantPane: true,
+              fileSharing: fileSharingEnabled
+                ? {
+                    downloadHandler: fileDownloadHandler,
+                    uploadHandler: () => {
+                      //noop
+                    },
+                    multiple: true
+                  }
+                : undefined
             }}
           />
         </_IdentifierProvider>
@@ -67,44 +156,17 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-async function createFakeChatAdapter(model: ChatAdapterModel): Promise<ChatAdapter> {
-  const chatService = new FakeChatService();
-  const remoteParticipants: ChatParticipant[] = model.remoteParticipants.map((user) => {
-    return {
-      id: { communicationUserId: nanoid() },
-      displayName: user
-    };
-  });
-  const localUser = { id: { communicationUserId: nanoid() }, displayName: model.localParticipant };
-  const firstChatClient = chatService.newClient(localUser.id);
-  const thread = await firstChatClient.createChatThread(
-    {
-      topic: 'Cowabunga'
-    },
-    {
-      participants: [localUser, ...remoteParticipants]
-    }
-  );
-  const participantHandle = {
-    userId: localUser.id,
-    displayName: localUser.displayName,
-    chatClient: firstChatClient,
-    chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-  };
-  return await initializeAdapter(participantHandle);
-}
-
-const initializeAdapter = async (participant: AdapterInfo): Promise<ChatAdapter> => {
-  const statefulChatClient = _createStatefulChatClientWithDeps(participant.chatClient, {
-    userId: participant.userId as CommunicationUserIdentifier,
-    displayName: participant.displayName,
+const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter> => {
+  const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
+    userId: adapterInfo.userId as CommunicationUserIdentifier,
+    displayName: adapterInfo.displayName,
     endpoint: 'FAKE_ENDPIONT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
   return await createAzureCommunicationChatAdapterFromClient(
     statefulChatClient,
-    await statefulChatClient.getChatThreadClient(participant.chatThreadClient.threadId)
+    await statefulChatClient.getChatThreadClient(adapterInfo.chatThreadClient.threadId)
   );
 };
 
@@ -120,4 +182,15 @@ const fakeToken: CommunicationTokenCredential = {
   getToken(): any {},
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   dispose(): any {}
+};
+
+const orderParticipants = (
+  localUser: ChatParticipant,
+  remoteParticipants: ChatParticipant[],
+  localPosition?: number
+): ChatParticipant[] => {
+  const participants = remoteParticipants;
+  const splicePosition = localPosition && localPosition < participants.length ? localPosition : 0;
+  participants.splice(splicePosition, 0, localUser);
+  return participants;
 };

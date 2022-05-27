@@ -14,7 +14,7 @@ import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Model } from './Model';
-import { IChatClient, IChatThreadClient, Thread } from './types';
+import { IChatClient, IChatThreadClient, BasicChatMessage, Thread } from './types';
 import { FakeChatThreadClient } from './FakeChatThreadClient';
 import { chatToSignalingParticipant, pagedAsyncIterator, latestMessageTimestamp } from './utils';
 import { BaseChatThreadEvent } from '@azure/communication-signaling';

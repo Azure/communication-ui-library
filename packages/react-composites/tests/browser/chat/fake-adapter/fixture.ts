@@ -16,20 +16,25 @@ interface WorkerFixture {
   page: Page;
 }
 
-export type ChatAdapterModel = { localParticipant: string; remoteParticipants: string[] };
+export type FakeChatAdapterArgs = {
+  localParticipant: string;
+  remoteParticipants: string[];
+  localParticipantPosition?: number;
+};
 
 /**
  * Create the test URL for chat app with using fake adapter
  * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
+ * @param fakeChatAdapterArgs - Args for fake adapter setup to add to the query search parameters of the URL.
  * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
 export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
-  fakeChatAdapterModel: ChatAdapterModel,
+  fakeChatAdapterArgs: FakeChatAdapterArgs,
   qArgs?: { [key: string]: string }
 ): string => {
-  let url = `${serverUrl}?fakeChatAdapterModel=${JSON.stringify(fakeChatAdapterModel)}`;
+  let url = `${serverUrl}?fakeChatAdapterArgs=${JSON.stringify(fakeChatAdapterArgs)}`;
   if (qArgs) {
     url += `&${encodeQueryData({ ...qArgs })}`;
   }
