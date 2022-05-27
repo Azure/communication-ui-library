@@ -1,40 +1,41 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFunction } from '@fluentui/react';
-import React from 'react';
+import { IStackStyles, memoizeFunction, Stack } from '@fluentui/react';
+import React, { ReactElement, PropsWithChildren } from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
-import { VideoTile, VideoTileProps, VideoTileStylesProps } from '../VideoTile';
 
 /** @internal */
 export type _TileOrientation = 'portrait' | 'landscape';
 
 /** @internal */
-export interface _PictureInPictureInPictureTileProps
-  extends Pick<
-    VideoTileProps,
-    'styles' | 'displayName' | 'renderElement' | 'isMirrored' | 'noVideoAvailableAriaLabel'
-  > {
+export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
   orientation: _TileOrientation;
-}
+}>;
 
 /** @private */
-export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => {
+export const PictureInPictureInPicturePrimaryTile = (props: _PictureInPictureInPictureTileProps): ReactElement => {
   const boxShadow = useTheme().effects.elevation8;
-  return <PictureInPictureInPictureTile {...props} styles={primaryTileStyles(props.orientation, boxShadow)} />;
+  return (
+    <PictureInPictureInPictureTile styles={primaryTileStyles(props.orientation, boxShadow)}>
+      {props.children}
+    </PictureInPictureInPictureTile>
+  );
 };
 
 /** @private */
-export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): JSX.Element => (
-  <PictureInPictureInPictureTile {...props} personaMinSize={20} styles={secondaryTileStyles(props.orientation)} />
+export const PictureInPictureInPictureSecondaryTile = (props: _PictureInPictureInPictureTileProps): ReactElement => (
+  <PictureInPictureInPictureTile styles={secondaryTileStyles(props.orientation)}>
+    {props.children}
+  </PictureInPictureInPictureTile>
 );
 
-const PictureInPictureInPictureTile = (props: VideoTileProps): JSX.Element => (
-  <VideoTile {...props} showLabel={false} />
+const PictureInPictureInPictureTile = (props: PropsWithChildren<{ styles: IStackStyles }>): ReactElement => (
+  <Stack styles={props.styles}>{props.children}</Stack>
 );
 
 const primaryTileStyles = memoizeFunction(
-  (orientation: _TileOrientation, themeElevation: string): VideoTileStylesProps => ({
+  (orientation: _TileOrientation, themeElevation: string): IStackStyles => ({
     root: {
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '5.5rem' : '8rem',
@@ -47,7 +48,7 @@ const primaryTileStyles = memoizeFunction(
 );
 
 const secondaryTileStyles = memoizeFunction(
-  (orientation: _TileOrientation): VideoTileStylesProps => ({
+  (orientation: _TileOrientation): IStackStyles => ({
     root: {
       borderRadius: '0.25rem',
       height: orientation === 'landscape' ? '1.625rem' : '2rem',

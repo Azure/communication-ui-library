@@ -123,3 +123,6 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 
 export { _Dialpad } from './Dialpad/Dialpad';
 export type { _DialpadProps, _DialpadStrings, _DialpadButtonProps, _DialpadStyles } from './Dialpad/Dialpad';
+
+export { _LocalVideoTile } from './LocalVideoTile';
+export { _RemoteVideoTile } from './RemoteVideoTile';

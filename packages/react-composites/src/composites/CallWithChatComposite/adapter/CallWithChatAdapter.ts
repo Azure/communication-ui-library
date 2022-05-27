@@ -24,7 +24,7 @@ import {
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -124,7 +124,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
   /**
    * Dispose the html view for a stream.
    *

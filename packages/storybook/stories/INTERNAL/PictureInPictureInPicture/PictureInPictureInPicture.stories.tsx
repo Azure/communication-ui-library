@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StreamMedia } from '@azure/communication-react';
+import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -20,18 +20,33 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
-        displayName: args.primaryTileParticipantName,
-        renderElement: args.primaryTileVideoAvailable ? (
-          <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
-        ) : undefined
+        content: (
+          <VideoTile
+            displayName={args.primaryTileParticipantName}
+            renderElement={
+              args.primaryTileVideoAvailable ? (
+                <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
+              ) : undefined
+            }
+            showLabel={false}
+          />
+        )
       }}
       secondaryTile={{
         orientation: args.secondaryTileOrientation,
-        displayName: args.secondaryTileParticipantName,
-        renderElement: args.secondaryTileVideoAvailable ? (
-          <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
-        ) : undefined,
-        isMirrored: true
+        content: (
+          <VideoTile
+            displayName={args.secondaryTileParticipantName}
+            renderElement={
+              args.secondaryTileVideoAvailable ? (
+                <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
+              ) : undefined
+            }
+            isMirrored={true}
+            showLabel={false}
+            personaMinSize={20}
+          />
+        )
       }}
       strings={{ rootAriaLabel: 'Picture in Picture in Picture surfaces' }}
     />

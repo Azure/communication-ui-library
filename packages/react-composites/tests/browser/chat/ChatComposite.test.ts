@@ -5,6 +5,7 @@ import { IDS } from '../common/constants';
 import {
   dataUiId,
   stubMessageTimestamps,
+  stubReadReceiptsToolTip,
   waitForChatCompositeToLoad,
   waitForFunction,
   waitForSelector
@@ -48,6 +49,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await stubMessageTimestamps(page0);
     await page0.locator(dataUiId('chat-composite-message-status-icon')).click();
     await page0.waitForSelector(dataUiId('chat-composite-message-tooltip'));
+    await stubReadReceiptsToolTip(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
