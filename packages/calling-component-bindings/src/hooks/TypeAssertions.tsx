@@ -32,10 +32,16 @@ import { ErrorBarSelector } from '../errorBarSelector';
  * @private
  */
 export function assertGetSelectorTypes(): unknown {
+  // In case one the component's selector is a strict sub-type of another,
+  // `getSelector` might return a type union with two selector types.
+  // The following reverse type assertions ensure that we catch that case at build time.
+  //
+  // If the following assertions fail, we need to find a way to disambiguate between the
+  // selectors of those two components.
   const cameraButtonSelector: CameraButtonSelector = getSelector(CameraButton);
   const devicesButtonSelector: DevicesButtonSelector = getSelector(DevicesButton);
-  const endCallButtonSelector: EmptySelector = getSelector(EndCallButton);
-  const errorBarSelector: ErrorBarSelector = getSelector(ErrorBar);
+  let endCallButtonSelector: EmptySelector = getSelector(EndCallButton);
+  let errorBarSelector: ErrorBarSelector = getSelector(ErrorBar);
   const microphoneButtonSelector: MicrophoneButtonSelector = getSelector(MicrophoneButton);
   const participantListSelector: ParticipantListSelector = getSelector(ParticipantList);
   const participantsButtonSelector: ParticipantsButtonSelector = getSelector(ParticipantsButton);

@@ -17,6 +17,12 @@ import React from 'react';
  * @private
  */
 export function assertGetSelectorTypes(): unknown {
+  // In case one the component's selector is a strict sub-type of another,
+  // `getSelector` might return a type union with two selector types.
+  // The following reverse type assertions ensure that we catch that case at build time.
+  //
+  // If the following assertions fail, we need to find a way to disambiguate between the
+  // selectors of those two components.
   const chatParticipantListSelector: ChatParticipantListSelector = getSelector(ParticipantList);
   const errorBarSelector: ErrorBarSelector = getSelector(ErrorBar);
   const messageThreadSelector: MessageThreadSelector = getSelector(MessageThread);
