@@ -18,7 +18,7 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
-import { RemoteVideoTile } from './RemoteVideoTile';
+import { _RemoteVideoTile } from './RemoteVideoTile';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
@@ -44,7 +44,7 @@ import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
-import { LocalVideoTile } from './LocalVideoTile';
+import { _LocalVideoTile } from './LocalVideoTile';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -123,7 +123,10 @@ export interface VideoGalleryProps {
   /** Callback to render the local video tile*/
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   /** Callback to create a remote video stream view */
-  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  onCreateRemoteStreamView?: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
   /** Callback to dispose a remote video stream view */
@@ -259,7 +262,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     return (
       <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
-        <LocalVideoTile
+        <_LocalVideoTile
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
@@ -304,7 +307,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
       return (
-        <RemoteVideoTile
+        <_RemoteVideoTile
           key={participant.userId}
           {...participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}

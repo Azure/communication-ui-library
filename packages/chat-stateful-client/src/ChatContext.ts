@@ -17,7 +17,7 @@ import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/commu
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
 
 enableMapSet();

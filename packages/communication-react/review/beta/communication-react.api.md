@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -64,7 +65,7 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -182,7 +183,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -486,8 +487,10 @@ export type CallingHandlers = {
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onToggleHold: () => Promise<void>;
+    onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
@@ -567,7 +570,7 @@ export interface CallWithChatAdapterManagement {
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
     clearFileUploads: () => void;
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -1161,6 +1164,8 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
+    // @beta
+    onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -1960,6 +1965,7 @@ export type MessageThreadProps = {
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
+    onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 // @public
@@ -2544,7 +2550,7 @@ export interface VideoGalleryProps {
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: OnRenderAvatarCallback;

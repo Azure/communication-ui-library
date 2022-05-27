@@ -13,7 +13,7 @@ import {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
-} from '@azure/communication-signaling';
+} from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
