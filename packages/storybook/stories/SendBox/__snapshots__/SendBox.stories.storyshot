@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-117 body-0"
+  className="css-118 body-0"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="css-118"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -34,7 +34,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             className="ms-Stack css-4"
           >
             <div
-              className="ms-Stack css-118 css-3"
+              className="ms-Stack css-119 css-3"
             >
               <div
                 className="css-5"
@@ -51,7 +51,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                       <textarea
                         aria-invalid={false}
                         autoFocus={false}
-                        className="ms-TextField-field ms-TextField--unresizable css-119 css-113 field-11"
+                        className="ms-TextField-field ms-TextField--unresizable css-120 css-113 field-11"
                         data-ui-id="sendbox-textfield"
                         disabled={false}
                         id="sendbox"
@@ -70,7 +70,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   className="ms-Stack css-20"
                 >
                   <div
-                    className="ms-TooltipHost css-121 root-21"
+                    className="ms-TooltipHost css-122 root-21"
                     onBlurCapture={[Function]}
                     onFocusCapture={[Function]}
                     onKeyDown={[Function]}
@@ -79,7 +79,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   >
                     <button
                       aria-label="Send message"
-                      className="ms-Button ms-Button--icon css-120 css-114 root-22"
+                      className="ms-Button ms-Button--icon css-121 css-114 root-22"
                       data-is-focusable={true}
                       id="sendIconWrapper"
                       onClick={[Function]}

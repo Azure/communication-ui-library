@@ -9,12 +9,21 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../callUtils';
 
 /**
@@ -40,8 +49,15 @@ export type CallingHandlers = {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: () => Promise<void>;
-  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
-  onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onToggleHold: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+  onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  onCreateRemoteStreamView: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult>;
   onRemoveParticipant: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
@@ -203,9 +219,13 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onHangUp = async (): Promise<void> => await call?.hangUp();
 
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onToggleHold = async (): Promise<void> =>
+      call?.state === 'LocalHold' ? await call?.resume() : await call?.hold();
+
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
-    ): Promise<void> => {
+    ): Promise<void | CreateVideoStreamViewResult> => {
       if (!call || call.localVideoStreams.length === 0) {
         return;
       }
@@ -220,13 +240,14 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      return callClient.createView(call.id, undefined, localStream, options);
+      const { view } = (await callClient.createView(call.id, undefined, localStream, options)) ?? {};
+      return view ? { view } : undefined;
     };
 
     const onCreateRemoteStreamView = async (
       userId: string,
       options = { scalingMode: 'Crop' } as VideoStreamOptions
-    ): Promise<void> => {
+    ): Promise<void | CreateVideoStreamViewResult> => {
       if (!call) {
         return;
       }
@@ -248,16 +269,21 @@ export const createDefaultCallingHandlers = memoizeOne(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
+      let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
-        callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
+        createViewResult = await callClient.createView(call.id, participant.identifier, remoteVideoStream, options);
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
         // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
         // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
         // `Fit` is the only mode that maintains the integrity of the screen being shared.
-        callClient.createView(call.id, participant.identifier, screenShareStream, { scalingMode: 'Fit' });
+        createViewResult = await callClient.createView(call.id, participant.identifier, screenShareStream, {
+          scalingMode: 'Fit'
+        });
       }
+
+      return createViewResult?.view ? { view: createViewResult?.view } : undefined;
     };
 
     const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
@@ -302,8 +328,22 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onAddParticipant = async (
+      participant: CommunicationIdentifier,
+      options?: AddPhoneNumberOptions
+    ): Promise<void> => {
+      if (isPhoneNumberIdentifier(participant)) {
+        await call?.addParticipant(participant, options);
+      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+        await call?.addParticipant(participant);
+      }
+    };
+
     return {
       onHangUp,
+      /* @conditional-compile-remove(PSTN-calls) */
+      onToggleHold,
       onSelectCamera,
       onSelectMicrophone,
       onSelectSpeaker,
@@ -316,6 +356,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
       onRemoveParticipant,
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView
