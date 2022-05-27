@@ -47,7 +47,6 @@ export const getRemoteParticipants = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): undefined | RemoteParticipantState[] => {
-  // I think this needs to be memoized.
   return updateUserDisplayNames(state.calls[props.callId]?.remoteParticipants);
 };
 
