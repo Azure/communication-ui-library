@@ -353,6 +353,7 @@ jobs:
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
       - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Calling-report
           path: samples/Calling/dist/build/report.json
@@ -390,6 +391,7 @@ jobs:
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
       - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Chat-report
           path: samples/Chat/dist/build/report.json
@@ -427,6 +429,7 @@ jobs:
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
       - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
         with:
           name: CallWithChat-report
           path: samples/CallWithChat/dist/build/report.json
