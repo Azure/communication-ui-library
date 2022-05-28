@@ -8,4 +8,4 @@
  *
  * @public
  */
-export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
+export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed' | 'atest type';
