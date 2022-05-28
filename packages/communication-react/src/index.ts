@@ -107,7 +107,8 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile
+  VideoTile,
+  _Dialpad
 } from '../../react-components/src';
 
 export type {
@@ -204,7 +205,12 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  _DialpadProps,
+  _DialpadStrings,
+  _DialpadStyles,
+  _DialpadButtonProps,
+  DtmfTone
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {

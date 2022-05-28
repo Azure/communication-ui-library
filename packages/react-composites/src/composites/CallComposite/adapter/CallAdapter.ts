@@ -9,7 +9,8 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  DtmfTone
 } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -256,6 +257,12 @@ export interface CallAdapterCallManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /**
+   * send dtmf tones
+   *  @param dtmfTone - the dtmfTone to be sent
+   * @internal
+   */
+  sendDtmf(dtmfTones: DtmfTone): Promise<void>;
 }
 
 /**

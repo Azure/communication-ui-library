@@ -23,7 +23,7 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
@@ -246,6 +246,12 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   deleteMessage(messageId: string): Promise<void>;
+  /**
+   * send dtmf tones
+   *  @param dtmfTone - the dtmfTone to be sent
+   * @internal
+   */
+  sendDtmf(dtmfTones: DtmfTone): Promise<void>;
   /**
    * Load more previous messages in the chat thread history.
    *

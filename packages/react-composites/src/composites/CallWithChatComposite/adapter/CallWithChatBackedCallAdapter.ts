@@ -3,7 +3,7 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import { DtmfTone, CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -97,6 +97,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
+  public sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => await this.callWithChatAdapter.sendDtmf(dtmfTone);
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

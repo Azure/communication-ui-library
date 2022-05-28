@@ -6,7 +6,7 @@ import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { DtmfTone, FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -39,6 +39,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> =>
     await this.callWithChatAdapter.loadPreviousChatMessages(messagesToLoad);
   public dispose = (): void => this.callWithChatAdapter.dispose();
+
+  public sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => await this.callWithChatAdapter.sendDtmf(dtmfTone);
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = (state: CallWithChatAdapterState): void => {

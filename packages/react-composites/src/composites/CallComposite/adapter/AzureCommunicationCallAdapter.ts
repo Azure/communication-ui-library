@@ -42,7 +42,7 @@ import {
   DiagnosticChangedEventListner
 } from './CallAdapter';
 import { getCallCompositePage, isCameraOn } from '../utils';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import { DtmfTone, CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -217,6 +217,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
+    this.sendDtmf.bind(this);
   }
 
   public dispose(): void {
@@ -416,6 +417,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async removeParticipant(userId: string): Promise<void> {
     this.handlers.onRemoveParticipant(userId);
+  }
+
+  public async sendDtmf(dtmfTone: DtmfTone): Promise<void> {
+    this.handlers.onSendDtmfTones(dtmfTone);
   }
 
   public getState(): CallAdapterState {

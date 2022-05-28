@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DiagnosticQuality } from '@azure/communication-calling';
-import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback, _Dialpad } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -60,6 +60,13 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
+  const dialpadStrings = {
+    defaultText: 'Enter a number'
+  };
+
+  const dialpadProps = useHandlers(_Dialpad);
+  // console.log(dialpadProps)
+
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps, strings }}
@@ -75,13 +82,16 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
-            <MediaGallery
-              isMobile={mobileView}
-              {...mediaGalleryProps}
-              {...mediaGalleryHandlers}
-              onRenderAvatar={onRenderAvatar}
-              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-            />
+            <>
+              <MediaGallery
+                isMobile={mobileView}
+                {...mediaGalleryProps}
+                {...mediaGalleryHandlers}
+                onRenderAvatar={onRenderAvatar}
+                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              />
+              <_Dialpad strings={dialpadStrings} {...dialpadProps} />
+            </>
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
           )

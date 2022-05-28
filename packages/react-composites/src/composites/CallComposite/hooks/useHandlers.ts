@@ -82,6 +82,9 @@ const createCompositeHandlers = memoizeOne(
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    onSendDtmfTones: async (dtmfTone) => {
+      return adapter.sendDtmf(dtmfTone);
     }
   })
 );

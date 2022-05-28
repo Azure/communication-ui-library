@@ -13,7 +13,7 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import { DtmfTone, CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import {
@@ -171,6 +171,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+    this.sendDtmf.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
@@ -230,6 +231,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async removeParticipant(userId: string): Promise<void> {
     // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.removeParticipant(userId);
+  }
+  /** send dtmf tone. */
+  public async sendDtmf(dtmfTone: DtmfTone): Promise<void> {
+    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
+    await this.callAdapter.sendDtmf(dtmfTone);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.setCamera(device, options);
