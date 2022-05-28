@@ -1729,13 +1729,55 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
 
 // @public
-export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+export function getCallingSelector<T>(component: typeof VideoGallery): VideoGallerySelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof DevicesButton): DevicesButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof MicrophoneButton): MicrophoneButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof CameraButton): CameraButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ScreenShareButton): ScreenShareButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ParticipantList): ParticipantListSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ParticipantsButton): ParticipantsButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof EndCallButton): EmptySelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ErrorBar): CallErrorBarSelector;
+
+// @public @deprecated
+export function getCallingSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
 
 // @public
 export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
 
 // @public
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+export function getChatSelector<T>(component: typeof SendBox): SendBoxSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof MessageThread): MessageThreadSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof TypingIndicator): TypingIndicatorSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof ParticipantList): ChatParticipantListSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof ErrorBar): ChatErrorBarSelector;
+
+// @public @deprecated
+export function getChatSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -2512,7 +2554,49 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;
+export function usePropsFor<T>(component: typeof SendBox, type?: 'chat'): SendBoxSelector & Common<ChatHandlers, SendBoxProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof MessageThread, type?: 'chat'): MessageThreadSelector & Common<ChatHandlers, MessageThreadProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof TypingIndicator, type?: 'chat'): TypingIndicatorSelector & Common<ChatHandlers, TypingIndicatorProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ParticipantList, type?: 'chat'): ParticipantListSelector & Common<ChatHandlers, ParticipantListProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ErrorBar, type?: 'chat'): ChatErrorBarSelector & Common<ChatHandlers, ErrorBarProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof VideoGallery, type?: 'calling'): VideoGallerySelector & Common<ChatHandlers, VideoGalleryProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof DevicesButton, type?: 'calling'): DevicesButtonSelector & Common<ChatHandlers, DevicesButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof MicrophoneButton, type?: 'calling'): MicrophoneButtonSelector & Common<ChatHandlers, MicrophoneButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof CameraButton, type?: 'calling'): CameraButtonSelector & Common<ChatHandlers, CameraButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ScreenShareButton, type?: 'calling'): ScreenShareButtonSelector & Common<ChatHandlers, ScreenShareButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ParticipantList, type?: 'calling'): ParticipantListSelector & Common<ChatHandlers, ParticipantListProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ParticipantsButton, type?: 'calling'): ParticipantsButtonSelector & Common<ChatHandlers, ParticipantsButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof EndCallButton, type?: 'calling'): EmptySelector & Common<ChatHandlers, EndCallButtonProps>;
+
+// @public
+export function usePropsFor<T>(component: typeof ErrorBar, type?: 'calling'): ChatErrorBarSelector & Common<ChatHandlers, ErrorBarProps>;
+
+// @public @deprecated
+export function usePropsFor<T>(component: (props: any) => JSX.Element, type?: 'calling' | 'chat'): undefined;
 
 // @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
