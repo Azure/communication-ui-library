@@ -104,21 +104,78 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : undefined;
 
 /**
- * Get the selector for a specified component.
- *
- * Useful when implementing a custom component that utilizes the providers
- * exported from this library.
+ * Get the selector for {@link VideoGallery}.
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
-  component: Component
-): GetSelector<Component> => {
-  return findSelector(component);
-};
+export function getSelector<T>(component: typeof VideoGallery): VideoGallerySelector;
+/**
+ * Get the selector for {@link DevicesButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof DevicesButton): DevicesButtonSelector;
+/**
+ * Get the selector for {@link MicrophoneButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof MicrophoneButton): MicrophoneButtonSelector;
 
-const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+/**
+ * Get the selector for {@link CameraButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof CameraButton): CameraButtonSelector;
+
+/**
+ * Get the selector for {@link ScreenShareButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ScreenShareButton): ScreenShareButtonSelector;
+
+/**
+ * Get the selector for {@link ParticipantList}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ParticipantList): ParticipantListSelector;
+
+/**
+ * Get the selector for {@link ParticipantsButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ParticipantsButton): ParticipantsButtonSelector;
+
+/**
+ * Get the selector for {@link EndCallButton}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof EndCallButton): EmptySelector;
+
+/**
+ * Get the selector for {@link ErrorBar}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ErrorBar): ErrorBarSelector;
+/**
+ * Default implementation for {@link getSelector}.
+ *
+ * @deprecated This type signature only exists for backwards compatibility.
+ *     {@link getSelector} is intended to be used with one of the components
+ *     exported from this library.
+ *
+ * @public
+ */
+export function getSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
+
+// Implementation signature. Not part of the function type.
+export function getSelector<T>(component: (props: any) => JSX.Element | undefined): any {
   switch (component) {
     case VideoGallery:
       return videoGallerySelector;
@@ -140,4 +197,4 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
   }
   return undefined;
-};
+}

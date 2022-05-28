@@ -145,7 +145,34 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
 
 // @public
-export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+export function getCallingSelector<T>(component: typeof VideoGallery): VideoGallerySelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof DevicesButton): DevicesButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof MicrophoneButton): MicrophoneButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof CameraButton): CameraButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ScreenShareButton): ScreenShareButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ParticipantList): ParticipantListSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ParticipantsButton): ParticipantsButtonSelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof EndCallButton): EmptySelector;
+
+// @public
+export function getCallingSelector<T>(component: typeof ErrorBar): ErrorBarSelector;
+
+// @public @deprecated
+export function getCallingSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;

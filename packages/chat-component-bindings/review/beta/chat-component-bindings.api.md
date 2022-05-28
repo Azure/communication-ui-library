@@ -83,7 +83,22 @@ export type ErrorBarSelector = (state: ChatClientState, props: ChatBaseSelectorP
 export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
 
 // @public
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+export function getChatSelector<T>(component: typeof SendBox): SendBoxSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof MessageThread): MessageThreadSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof TypingIndicator): TypingIndicatorSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof ParticipantList): ChatParticipantListSelector;
+
+// @public
+export function getChatSelector<T>(component: typeof ErrorBar): ErrorBarSelector;
+
+// @public @deprecated
+export function getChatSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
 
 // @public
 export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {

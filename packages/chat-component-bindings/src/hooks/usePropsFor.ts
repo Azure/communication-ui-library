@@ -65,20 +65,48 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : undefined;
 
 /**
- * Get the selector for a specified component.
- *
- * Useful when implementing a custom component that utilizes the providers
- * exported from this library.
+ * Get the selector for {@link SendBox}.
  *
  * @public
  */
-export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
-  component: Component
-): GetSelector<Component> => {
-  return findSelector(component);
-};
+export function getSelector<T>(component: typeof SendBox): SendBoxSelector;
+/**
+ * Get the selector for {@link MessageThread}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof MessageThread): MessageThreadSelector;
+/**
+ * Get the selector for {@link TypingIndicator}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof TypingIndicator): TypingIndicatorSelector;
+/**
+ * Get the selector for {@link ParticipantList}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ParticipantList): ChatParticipantListSelector;
+/**
+ * Get the selector for {@link ErrorBar}.
+ *
+ * @public
+ */
+export function getSelector<T>(component: typeof ErrorBar): ErrorBarSelector;
+/**
+ * Default implementation for {@link getSelector}.
+ *
+ * @deprecated This type signature only exists for backwards compatibility.
+ *     {@link getSelector} is intended to be used with one of the components
+ *     exported from this library.
+ *
+ * @public
+ */
+export function getSelector<T>(component: (props: any) => JSX.Element | undefined): undefined;
 
-const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+// Implementation signature. Not part of the function type.
+export function getSelector<T>(component: (props: any) => JSX.Element | undefined): any {
   switch (component) {
     case SendBox:
       return sendBoxSelector;
@@ -92,4 +120,4 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
   }
   return undefined;
-};
+}
