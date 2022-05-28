@@ -16,11 +16,11 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
- * @private
+ * @internal
  */
-export const LocalVideoTile = React.memo(
+export const _LocalVideoTile = React.memo(
   (props: {
-    userId: string;
+    userId?: string;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
@@ -37,6 +37,7 @@ export const LocalVideoTile = React.memo(
     localVideoCameraSwitcherLabel?: string;
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
@@ -96,7 +97,7 @@ export const LocalVideoTile = React.memo(
             localVideoCameraSwitcherLabel={localVideoCameraSwitcherLabel}
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
-          <StreamMedia videoStreamElement={renderElement} />
+          <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
         </>
       );
     }, [
@@ -109,7 +110,7 @@ export const LocalVideoTile = React.memo(
 
     return (
       <VideoTile
-        key={userId}
+        key={userId ?? 'local-video-tile'}
         userId={userId}
         renderElement={renderVideoStreamElement}
         showLabel={showLabel}
@@ -119,6 +120,7 @@ export const LocalVideoTile = React.memo(
         onRenderPlaceholder={onRenderAvatar}
         isMuted={isMuted}
         showMuteIndicator={showMuteIndicator}
+        personaMinSize={props.personaMinSize}
       />
     );
   }
