@@ -9,7 +9,8 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery
+  VideoGallery,
+  _Dialpad
 } from '@internal/react-components';
 import {
   CameraButtonSelector,
@@ -101,6 +102,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
+  : AreEqual<Component, typeof _Dialpad> extends true
+  ? EmptySelector
   : undefined;
 
 /**
@@ -138,6 +141,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    case _Dialpad:
+      return emptySelector;
   }
   return undefined;
 };

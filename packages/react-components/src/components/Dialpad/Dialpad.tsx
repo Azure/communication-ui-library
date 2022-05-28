@@ -31,7 +31,6 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
  * @internal
  */
 export interface _DialpadStrings {
-  errorText: string;
   defaultText: string;
 }
 
@@ -59,6 +58,30 @@ export interface _DialpadButtonProps {
 }
 
 /**
+ * DTMF tone for PSTN calls.
+ *
+ * @internal
+ */
+export type DtmfTone =
+  | 'A'
+  | 'B'
+  | 'C'
+  | 'D'
+  | 'Flash'
+  | 'Num0'
+  | 'Num1'
+  | 'Num2'
+  | 'Num3'
+  | 'Num4'
+  | 'Num5'
+  | 'Num6'
+  | 'Num7'
+  | 'Num8'
+  | 'Num9'
+  | 'Pound'
+  | 'Star';
+
+/**
  * Props for {@link _Dialpad} component.
  *
  * @internal
@@ -66,7 +89,19 @@ export interface _DialpadButtonProps {
 export interface _DialpadProps {
   // strings are required for now since this is an internal component and strings are not localized yet
   strings: _DialpadStrings;
+  // This prop is here so that contoso can define their own dialpad button content
+  // when defining their own content, they will also need to pass in primaryContentToDtmfMapping, which maps the dialpad primary content to its corresponding dtmf tone
+  // The issue is our sendDTMF only allows specific input 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
+  // contoso will need to pass in their own onSendDtmfTones as well
   dialpadButtons?: _DialpadButtonProps[][];
+  // key value pairs that map each button content to its dtmf tone input
+  primaryContentToDtmfMapping?: {};
+  // function to send dtmf tones on button click
+  onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+  // add extra functionalities to dialpad buttons
+  onClickDialpadButton?: () => void;
+  // customize dialpad input formatting
+  onDisplayDialpadInput?: (input: string) => string;
   styles?: _DialpadStyles;
 }
 
@@ -77,7 +112,7 @@ export interface _DialpadProps {
  * @internal
  */
 export const _Dialpad = (props: _DialpadProps): JSX.Element => {
-  return <DialpadContainer errorText={props.strings.errorText} defaultText={props.strings.defaultText} {...props} />;
+  return <DialpadContainer defaultText={props.strings.defaultText} {...props} />;
 };
 
 const DialpadButton = (props: {
@@ -126,32 +161,54 @@ const dialPadButtonsDefault: _DialpadButtonProps[][] = [
   [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
 ];
 
+const primaryContentToDtmf = {
+  '0': 'Num0',
+  '1': 'Num1',
+  '2': 'Num2',
+  '3': 'Num3',
+  '4': 'Num4',
+  '5': 'Num5',
+  '6': 'Num6',
+  '7': 'Num7',
+  '8': 'Num8',
+  '9': 'Num9',
+  '*': 'Star',
+  '#': 'Pound'
+};
+
 const DialpadContainer = (props: {
-  errorText: string;
   defaultText: string;
   dialpadButtons?: _DialpadButtonProps[][];
+  // key value pairs that map each button content to its dtmf tone input
+  primaryContentToDtmfMapping?: {};
+  onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+  // add extra functionalities to dialpad buttons
+  onClickDialpadButton?: () => void;
+  // customize dialpad input formatting
+  onDisplayDialpadInput?: (input: string) => string;
   styles?: _DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
   const [error, setError] = useState('');
+
+  const { onSendDtmfTones, primaryContentToDtmfMapping, onClickDialpadButton, onDisplayDialpadInput } = props;
+
   const onClickDialpad = (input: string): void => {
     setError('');
-
     setTextValue(textValue + input);
+    if (onSendDtmfTones) {
+      onSendDtmfTones(primaryContentToDtmfMapping ? primaryContentToDtmfMapping[input] : primaryContentToDtmf[input]);
+    }
+    if (onClickDialpadButton) {
+      onClickDialpadButton();
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setText = (e: any): void => {
-    // if text content includes non-valid dialpad input return an error
-    if (!`${e.target.value}`.match(/^[0-9\s*#+()-]*$/)) {
-      setError(
-        _formatString(props.errorText, { invalidCharacter: `${e.target.value.slice(e.target.value.length - 1)}` })
-      );
-    } else {
-      setError('');
-      setTextValue(e.target.value);
-    }
+    setError('');
+    setTextValue(e.target.value);
   };
 
   const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
@@ -160,7 +217,7 @@ const DialpadContainer = (props: {
     <div className={mergeStyles(containerStyles(theme), props.styles?.root)}>
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={formatPhoneNumber(textValue)}
+        value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
         onChange={setText}
         errorMessage={error}
         placeholder={props.defaultText}

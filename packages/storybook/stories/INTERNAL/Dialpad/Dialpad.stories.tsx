@@ -28,7 +28,12 @@ const getDocs: () => JSX.Element = () => {
         <DialpadExample />
       </Canvas>
       <Heading>Example Dialpad with custom content</Heading>
-      <Description>Note that dialpad only allows numeric inputs/special characters including +, * and #</Description>
+      <Description>
+        On Dialpad button click, the corresponding primaryContentToDtmfMapping will be logged on the console Note that
+        primaryContentToDtmfMapping and onSendDtmfTones need to be defined with custom dialpad content This example also
+        showcase how to customize the format for dialpad input Note that dialpad only allows numeric inputs/special
+        characters including +, * and #
+      </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />
       </Canvas>
@@ -42,7 +47,6 @@ const DialpadStory = (): JSX.Element => {
   const theme = useTheme();
 
   const dialpadStrings = {
-    errorText: 'Invalid input {invalidCharacter}. Input must be a numeric chatacter, *, # or +',
     defaultText: 'Enter a number'
   };
 
@@ -67,7 +71,8 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Dialpad`,
   component: DialpadComponent,
   argTypes: {
-    strings: hiddenControl
+    strings: hiddenControl,
+    onSendDtmfTones: hiddenControl
   },
   parameters: {
     docs: {
