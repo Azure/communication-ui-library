@@ -12,6 +12,6 @@ export type FakeChatAdapterArgs = {
   fileUploads?: FileUpload[];
   fileSharingEnabled?: boolean;
   failFileDownload?: boolean;
-  hasRemoteFileSharingMessage?: boolean;
+  sendRemoteFileSharingMessage?: boolean;
   frenchLocalEnabled?: boolean;
 };

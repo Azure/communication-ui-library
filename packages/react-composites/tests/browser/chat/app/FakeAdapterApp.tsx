@@ -72,18 +72,8 @@ export const FakeAdapterApp = (): JSX.Element => {
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
       }
-      if (fakeChatAdapterArgs.hasRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
-        const chatClient = new FakeChatClient(chatClientModel, remoteParticipants[0].id);
-        chatClient.getChatThreadClient(thread.chatThread.id).sendMessage(
-          { content: 'Hello!' },
-          {
-            senderDisplayName: remoteParticipants[0].displayName,
-            type: 'text',
-            metadata: {
-              fileSharingMetadata: JSON.stringify([{ name: 'SampleFile1.pdf', extension: 'pdf' }])
-            }
-          }
-        );
+      if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
+        sendRemoteFileSharingMessage(chatClientModel, remoteParticipants[0], thread);
       }
     };
 
@@ -168,7 +158,7 @@ const orderParticipants = (
   return participants;
 };
 
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: FileUpload[]) => {
+const handleFileUploads = (adapter: ChatAdapter, fileUploads: FileUpload[]): void => {
   fileUploads.forEach((file) => {
     if (file.uploadComplete) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
@@ -187,4 +177,18 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: FileUpload[]) => {
       adapter.registerCompletedFileUploads([file]);
     }
   });
+};
+
+const sendRemoteFileSharingMessage = (chatClientModel: Model, remoteParticipant: ChatParticipant, thread): void => {
+  const chatClient = new FakeChatClient(chatClientModel, remoteParticipant.id);
+  chatClient.getChatThreadClient(thread.chatThread.id).sendMessage(
+    { content: 'Hello!' },
+    {
+      senderDisplayName: remoteParticipant.displayName,
+      type: 'text',
+      metadata: {
+        fileSharingMetadata: JSON.stringify([{ name: 'SampleFile1.pdf', extension: 'pdf' }])
+      }
+    }
+  );
 };
