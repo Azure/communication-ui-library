@@ -10,20 +10,22 @@ import {
   waitForChatCompositeToLoad,
   waitForSelector
 } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Filesharing Attach file icon', async () => {
   test.skip(isTestProfileStableFlavor());
 
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
-    await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS));
+    await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-attach-file-icon-not-visible.png');
   });
 
   test('is visible if filesharing options are defined', async ({ serverUrl, page }) => {
-    await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, { useFileSharing: 'true' }));
+    await page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, { useFileSharing: 'true' })
+    );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('filesharing-attach-file-icon-visible.png');
@@ -34,9 +36,10 @@ test.describe('Filesharing SendBox', async () => {
   test.skip(isTestProfileStableFlavor());
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
@@ -47,7 +50,7 @@ test.describe('Filesharing SendBox', async () => {
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx'
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -61,9 +64,10 @@ test.describe('Filesharing ProgressBar', async () => {
 
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
@@ -76,7 +80,7 @@ test.describe('Filesharing ProgressBar', async () => {
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 0.8
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -86,9 +90,10 @@ test.describe('Filesharing ProgressBar', async () => {
 
   test('is not visible if progress is 0 or less than 0', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
@@ -101,7 +106,7 @@ test.describe('Filesharing ProgressBar', async () => {
             url: 'https://sample.com/SampleXls.xlsx',
             progress: -1
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -111,9 +116,10 @@ test.describe('Filesharing ProgressBar', async () => {
 
   test('is not visible if progress is 1 or greater than 1', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
@@ -126,7 +132,7 @@ test.describe('Filesharing ProgressBar', async () => {
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 10
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -142,16 +148,17 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             error: 'File too big. Select a file under 99 MB.'
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -161,16 +168,17 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 
   test('shows file upload in progress error', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5
           }
-        ])
+        ]
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -185,16 +193,17 @@ test.describe('Filesharing Global Errorbar', async () => {
 
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'Sample.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf'
           }
-        ]),
-        failDownload: 'true'
+        ],
+        failFileDownload: true
       })
     );
     await waitForChatCompositeToLoad(page);
@@ -216,16 +225,17 @@ test.describe('Filesharing Message Thread', async () => {
 
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true
           }
-        ])
+        ]
       })
     );
     const testMessageText = 'Hello!';
@@ -266,16 +276,17 @@ test.describe('Filesharing Edit Message', async () => {
 
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        fileSharingEnabled: 'true',
-        uploadedFiles: JSON.stringify([
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        fileSharingEnabled: true,
+        fileUploads: [
           {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true
           }
-        ])
+        ]
       })
     );
   });

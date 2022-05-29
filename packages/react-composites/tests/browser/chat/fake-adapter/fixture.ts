@@ -7,7 +7,7 @@ import { createTestServer } from '../../../server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
-import { FileMetadata } from '@internal/react-components';
+import { FakeChatAdapterArgs } from './FakeChatAdapterArgs';
 
 const SERVER_URL = 'http://localhost:3000';
 const APP_DIR = path.join(__dirname, '../app');
@@ -16,15 +16,6 @@ interface WorkerFixture {
   serverUrl: string;
   page: Page;
 }
-
-export type FileUpload = FileMetadata & { uploadComplete?: boolean; error?: string; progress?: number };
-
-export type FakeChatAdapterArgs = {
-  localParticipant: string;
-  remoteParticipants: string[];
-  localParticipantPosition?: number;
-  fileUploads?: FileUpload[];
-};
 
 /**
  * Create the test URL for chat app with using fake adapter
@@ -46,16 +37,19 @@ export const buildUrlForChatAppUsingFakeAdapter = (
 };
 
 /**
- * Fake chat adapter args
+ * Default fake chat adapter args
  */
-export const FAKE_CHAT_ADAPTER_ARGS = {
+export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
   localParticipant: TEST_PARTICIPANTS_CHAT[0],
   remoteParticipants: TEST_PARTICIPANTS_CHAT.slice(1)
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ serverUrl, browser }, use) => {
-  const page = await loadNewPage(browser, buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS));
+  const page = await loadNewPage(
+    browser,
+    buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS)
+  );
   bindConsoleErrorForwarding(page);
   await use(page);
 };

@@ -19,7 +19,7 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatAdapterArgs, FileUpload } from '../fake-adapter/fixture';
+import { FakeChatAdapterArgs, FileUpload } from '../fake-adapter/FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
@@ -35,13 +35,6 @@ export const FakeAdapterApp = (): JSX.Element => {
   const fakeChatAdapterArgs = JSON.parse(
     verifyParamExists(params.fakeChatAdapterArgs, 'fakeChatAdapterArgs')
   ) as FakeChatAdapterArgs;
-
-  // Optional params
-  const useFrLocale = Boolean(params.useFrLocale);
-  const fileSharingEnabled = Boolean(params.fileSharingEnabled);
-  const failFileDownload = Boolean(params.failDownload);
-  const uploadedFiles = params.uploadedFiles ? (JSON.parse(params.uploadedFiles) as FileUpload[]) : [];
-  const hasRemoteFileSharingMessage = Boolean(params.hasRemoteFileSharingMessage);
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
@@ -75,9 +68,11 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       };
       const adapter = await initializeAdapter(adapterInfo);
-      handleFileUploads(adapter, uploadedFiles);
       setAdapter(adapter);
-      if (hasRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
+      if (fakeChatAdapterArgs.fileUploads) {
+        handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
+      }
+      if (fakeChatAdapterArgs.hasRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
         const chatClient = new FakeChatClient(chatClientModel, remoteParticipants[0].id);
         chatClient.getChatThreadClient(thread.chatThread.id).sendMessage(
           { content: 'Hello!' },
@@ -99,7 +94,7 @@ export const FakeAdapterApp = (): JSX.Element => {
 
   const fileDownloadHandler: FileDownloadHandler = (fileData): Promise<URL | FileDownloadError> => {
     return new Promise((resolve) => {
-      if (failFileDownload) {
+      if (fakeChatAdapterArgs.failFileDownload) {
         resolve({ errorMessage: 'You don’t have permission to download this file.' });
       } else {
         resolve(new URL(fileData.url));
@@ -114,10 +109,10 @@ export const FakeAdapterApp = (): JSX.Element => {
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
             adapter={adapter}
-            locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+            locale={fakeChatAdapterArgs.frenchLocalEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: true,
-              fileSharing: fileSharingEnabled
+              fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     downloadHandler: fileDownloadHandler,
                     uploadHandler: () => {
@@ -173,8 +168,8 @@ const orderParticipants = (
   return participants;
 };
 
-const handleFileUploads = (adapter: ChatAdapter, uploadedFiles: FileUpload[]) => {
-  uploadedFiles.forEach((file) => {
+const handleFileUploads = (adapter: ChatAdapter, fileUploads: FileUpload[]) => {
+  fileUploads.forEach((file) => {
     if (file.uploadComplete) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
       fileUploads[0].notifyUploadCompleted({
