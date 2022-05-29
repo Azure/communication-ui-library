@@ -6,7 +6,6 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider } from '@internal/react-components';
-import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
@@ -40,19 +39,12 @@ export const FakeAdapterApp = (): JSX.Element => {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const chatClientModel = new Model({ asyncDelivery: false });
-      const localUser = { id: { communicationUserId: nanoid() }, displayName: fakeChatAdapterArgs.localParticipant };
-      const remoteParticipants: ChatParticipant[] = fakeChatAdapterArgs.remoteParticipants.map((user) => {
-        return {
-          id: { communicationUserId: nanoid() },
-          displayName: user
-        };
-      });
       const participants = orderParticipants(
-        localUser,
-        remoteParticipants,
+        fakeChatAdapterArgs.localParticipant,
+        fakeChatAdapterArgs.remoteParticipants,
         fakeChatAdapterArgs.localParticipantPosition
       );
-      const chatClient = new FakeChatClient(chatClientModel, localUser.id);
+      const chatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.localParticipant.id);
       const thread = await chatClient.createChatThread(
         {
           topic: 'Cowabunga'
@@ -62,8 +54,8 @@ export const FakeAdapterApp = (): JSX.Element => {
         }
       );
       const adapterInfo = {
-        userId: localUser.id,
-        displayName: localUser.displayName,
+        userId: fakeChatAdapterArgs.localParticipant.id,
+        displayName: fakeChatAdapterArgs.localParticipant.displayName,
         chatClient: chatClient as IChatClient as ChatClient,
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       };
@@ -72,8 +64,12 @@ export const FakeAdapterApp = (): JSX.Element => {
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
       }
-      if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
-        sendRemoteFileSharingMessage(chatClientModel, remoteParticipants[0], thread);
+      if (
+        fakeChatAdapterArgs.sendRemoteFileSharingMessage &&
+        thread.chatThread &&
+        fakeChatAdapterArgs.remoteParticipants.length > 0
+      ) {
+        sendRemoteFileSharingMessage(chatClientModel, fakeChatAdapterArgs.remoteParticipants[0], thread);
       }
     };
 

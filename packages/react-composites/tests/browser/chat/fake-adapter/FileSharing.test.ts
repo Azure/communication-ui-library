@@ -10,7 +10,7 @@ import {
   waitForChatCompositeToLoad,
   waitForSelector
 } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
 test.describe('Filesharing Attach file icon', async () => {
   test.skip(isTestProfileStableFlavor());
@@ -24,7 +24,7 @@ test.describe('Filesharing Attach file icon', async () => {
 
   test('is visible if filesharing options are defined', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, { useFileSharing: 'true' })
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, fileSharingEnabled: true })
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
@@ -249,20 +249,15 @@ test.describe('Filesharing Message Thread', async () => {
     expect(await page.screenshot()).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
   });
 
-  test('contains File Download Card in remote message', async ({ serverUrl, page }) => {
+  test.only('contains File Download Card in remote message', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(
-        serverUrl,
-        {
-          localParticipant: 'Poppy Bjørgen',
-          remoteParticipants: ['Dorian Gutmann', 'Dave Pokahl'],
-          localParticipantPosition: 1
-        },
-        {
-          fileSharingEnabled: 'true',
-          hasRemoteFileSharingMessage: 'true'
-        }
-      )
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        localParticipant: TEST_PARTICIPANTS[1],
+        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
+        localParticipantPosition: 1,
+        fileSharingEnabled: true,
+        sendRemoteFileSharingMessage: true
+      })
     );
     await waitForTypingIndicatorHidden(page);
 

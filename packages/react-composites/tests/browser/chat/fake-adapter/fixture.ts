@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { ChatParticipant } from '@azure/communication-chat';
 import { Page, test as base } from '@playwright/test';
+import { nanoid } from 'nanoid';
 import path from 'path';
 import { createTestServer } from '../../../server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
-import { encodeQueryData } from '../../common/utils';
 import { FakeChatAdapterArgs } from './FakeChatAdapterArgs';
 
 const SERVER_URL = 'http://localhost:3000';
@@ -21,27 +22,29 @@ interface WorkerFixture {
  * Create the test URL for chat app with using fake adapter
  * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
  * @param fakeChatAdapterArgs - Args for fake adapter setup to add to the query search parameters of the URL.
- * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
 export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
-  fakeChatAdapterArgs: FakeChatAdapterArgs,
-  qArgs?: { [key: string]: string }
+  fakeChatAdapterArgs: FakeChatAdapterArgs
 ): string => {
   let url = `${serverUrl}?fakeChatAdapterArgs=${JSON.stringify(fakeChatAdapterArgs)}`;
-  if (qArgs) {
-    url += `&${encodeQueryData({ ...qArgs })}`;
-  }
   return url;
 };
+
+/**
+ * Chat participants for fake adapter tests
+ */
+export const TEST_PARTICIPANTS: ChatParticipant[] = TEST_PARTICIPANTS_CHAT.map((p) => {
+  return { id: { communicationUserId: nanoid() }, displayName: p };
+});
 
 /**
  * Default fake chat adapter args
  */
 export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
-  localParticipant: TEST_PARTICIPANTS_CHAT[0],
-  remoteParticipants: TEST_PARTICIPANTS_CHAT.slice(1)
+  localParticipant: TEST_PARTICIPANTS[0],
+  remoteParticipants: TEST_PARTICIPANTS.slice(1)
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
