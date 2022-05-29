@@ -19,10 +19,10 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatAdapterArgs } from '../fake-adapter/fixture';
-import { IChatClient } from './fake-back-end/types';
-import { Model } from './fake-back-end/Model';
+import { FakeChatAdapterArgs, FileUpload } from '../fake-adapter/fixture';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
+import { Model } from './fake-back-end/Model';
+import { IChatClient } from './fake-back-end/types';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -40,26 +40,26 @@ export const FakeAdapterApp = (): JSX.Element => {
   const useFrLocale = Boolean(params.useFrLocale);
   const fileSharingEnabled = Boolean(params.fileSharingEnabled);
   const failFileDownload = Boolean(params.failDownload);
-  const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
+  const uploadedFiles = params.uploadedFiles ? (JSON.parse(params.uploadedFiles) as FileUpload[]) : [];
   const hasRemoteFileSharingMessage = Boolean(params.hasRemoteFileSharingMessage);
 
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const chatClientModel = new Model({ asyncDelivery: false });
+      const localUser = { id: { communicationUserId: nanoid() }, displayName: fakeChatAdapterArgs.localParticipant };
       const remoteParticipants: ChatParticipant[] = fakeChatAdapterArgs.remoteParticipants.map((user) => {
         return {
           id: { communicationUserId: nanoid() },
           displayName: user
         };
       });
-      const localUser = { id: { communicationUserId: nanoid() }, displayName: fakeChatAdapterArgs.localParticipant };
-      const chatClient = new FakeChatClient(chatClientModel, localUser.id);
       const participants = orderParticipants(
         localUser,
         remoteParticipants,
         fakeChatAdapterArgs.localParticipantPosition
       );
+      const chatClient = new FakeChatClient(chatClientModel, localUser.id);
       const thread = await chatClient.createChatThread(
         {
           topic: 'Cowabunga'
@@ -75,8 +75,9 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       };
       const adapter = await initializeAdapter(adapterInfo);
+      handleFileUploads(adapter, uploadedFiles);
       setAdapter(adapter);
-      if (hasRemoteFileSharingMessage && remoteParticipants.length > 0) {
+      if (hasRemoteFileSharingMessage && thread.chatThread && remoteParticipants.length > 0) {
         const chatClient = new FakeChatClient(chatClientModel, remoteParticipants[0].id);
         chatClient.getChatThreadClient(thread.chatThread.id).sendMessage(
           { content: 'Hello!' },
@@ -95,29 +96,6 @@ export const FakeAdapterApp = (): JSX.Element => {
     return () => adapter && adapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  React.useEffect(() => {
-    if (adapter && uploadedFiles.length) {
-      uploadedFiles.forEach((file) => {
-        if (file.uploadComplete) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadCompleted({
-            name: file.name,
-            extension: file.extension,
-            url: file.url
-          });
-        } else if (file.error) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadFailed(file.error);
-        } else if (file.progress) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadProgressChanged(file.progress);
-        } else {
-          adapter.registerCompletedFileUploads([file]);
-        }
-      });
-    }
-  }, [adapter, uploadedFiles]);
 
   const fileDownloadHandler: FileDownloadHandler = (fileData): Promise<URL | FileDownloadError> => {
     return new Promise((resolve) => {
@@ -193,4 +171,25 @@ const orderParticipants = (
   const splicePosition = localPosition && localPosition < participants.length ? localPosition : 0;
   participants.splice(splicePosition, 0, localUser);
   return participants;
+};
+
+const handleFileUploads = (adapter: ChatAdapter, uploadedFiles: FileUpload[]) => {
+  uploadedFiles.forEach((file) => {
+    if (file.uploadComplete) {
+      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+      fileUploads[0].notifyUploadCompleted({
+        name: file.name,
+        extension: file.extension,
+        url: file.url
+      });
+    } else if (file.error) {
+      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+      fileUploads[0].notifyUploadFailed(file.error);
+    } else if (file.progress) {
+      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
+      fileUploads[0].notifyUploadProgressChanged(file.progress);
+    } else {
+      adapter.registerCompletedFileUploads([file]);
+    }
+  });
 };

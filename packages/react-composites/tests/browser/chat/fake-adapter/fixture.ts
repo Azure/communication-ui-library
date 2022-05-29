@@ -7,6 +7,7 @@ import { createTestServer } from '../../../server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
+import { FileMetadata } from '@internal/react-components';
 
 const SERVER_URL = 'http://localhost:3000';
 const APP_DIR = path.join(__dirname, '../app');
@@ -16,10 +17,13 @@ interface WorkerFixture {
   page: Page;
 }
 
+export type FileUpload = FileMetadata & { uploadComplete?: boolean; error?: string; progress?: number };
+
 export type FakeChatAdapterArgs = {
   localParticipant: string;
   remoteParticipants: string[];
   localParticipantPosition?: number;
+  fileUploads?: FileUpload[];
 };
 
 /**
