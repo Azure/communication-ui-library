@@ -124,7 +124,6 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 export { _Dialpad } from './Dialpad/Dialpad';
 export type { _DialpadProps, _DialpadStrings, _DialpadButtonProps, _DialpadStyles } from './Dialpad/Dialpad';
 
-
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -132,4 +131,3 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
-
