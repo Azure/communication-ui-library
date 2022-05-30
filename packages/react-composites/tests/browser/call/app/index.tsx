@@ -204,7 +204,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
       strings: {
         label: 'custom #1'
       },
-      placement: 'mainBar'
+      placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
@@ -216,7 +216,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
       strings: {
         label: 'custom #2'
       },
-      placement: 'mainBar'
+      placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
@@ -228,7 +228,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
       strings: {
         label: 'custom #3'
       },
-      placement: 'mainBar'
+      placement: 'primary'
     };
   }
 ];

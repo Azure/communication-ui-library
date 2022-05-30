@@ -77,7 +77,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['mainBar']}
+          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

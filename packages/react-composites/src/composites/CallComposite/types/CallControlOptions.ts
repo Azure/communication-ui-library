@@ -68,17 +68,17 @@ export type CallControlOptions = {
 /**
  * Placement for a custom button injected in the {@link CallControls} and {@link CallWithChatControlBar}.
  *
- * 'mainBar': Place the button(s) on the right end of the center control bar but before the EndCallButton (left end in rtl mode).
- * 'sideBar': Place the button(s) on the left end of the side control bar (right in rtl mode).
- * 'overflowMenu': Place the buttons(s) on the end of the overflow Menu {@link MoreDrawer}
+ * 'primary': Place the button(s) on the right end of the center control bar but before the EndCallButton (left end in rtl mode).
+ * 'overflow': Place the buttons(s) on the end of the overflow Menu.
+ * 'secondary': Place the button(s) on the left end of the side control bar (right in rtl mode).
  *
  * Multiple buttons assigned the same placement are appended in order.
- * E.g., if two buttons are placed in 'sideBar', they'll both appear on the left end (right end in rtl mode)
+ * E.g., if two buttons are placed in 'secondary', they'll both appear on the left end (right end in rtl mode)
  * in the order provided.
  *
  * @beta
  */
-export type CustomCallControlButtonPlacement = 'mainBar' | 'sideBar' | 'overflowMenu';
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton}.

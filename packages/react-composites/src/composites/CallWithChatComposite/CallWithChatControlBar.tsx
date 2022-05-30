@@ -176,12 +176,12 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 )}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['mainBar']?.props.children
+                  customButtons['primary']?.props.children
                     .slice(
                       0,
                       props.mobileView
-                        ? CUSTOM_BUTTON_OPTIONS.MAX_MAINBAR_MOBILE_CUSTOM_BUTTONS
-                        : CUSTOM_BUTTON_OPTIONS.MAX_MAINBAR_DESKTOP_CUSTOM_BUTTONS
+                        ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                        : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
                     )
                     .map((element) => {
                       return (
@@ -213,8 +213,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {
             /* @conditional-compile-remove(control-bar-button-injection) */
-            customButtons['sideBar']?.props.children
-              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SIDEBAR_DESKTOP_CUSTOM_BUTTONS)
+            customButtons['secondary']?.props.children
+              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
               .map((element) => {
                 return (
                   <element.type

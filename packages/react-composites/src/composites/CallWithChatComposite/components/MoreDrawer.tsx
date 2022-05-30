@@ -13,7 +13,7 @@ import {
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomDrawerButtons } from '../../CallComposite/components/buttons/Custom';
+import { CUSTOM_BUTTON_OPTIONS, generateCustomDrawerButtons } from '../../CallComposite/components/buttons/Custom';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CustomCallControlButtonCallback } from '../../CallComposite';
 
@@ -188,7 +188,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['overflowBar']?.props.children.forEach((element) => {
+  customDrawerButtons['overflow']?.props.children.forEach((element) => {
     drawerMenuItems.push({
       itemKey: element.key,
       text: element.strings.label,
@@ -198,17 +198,19 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   });
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['mainBar']?.props.children.slice(1).forEach((element) => {
-    drawerMenuItems.push({
-      itemKey: element.key,
-      text: element.strings.label,
-      onItemClick: element.onClick,
-      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
-      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
+  customDrawerButtons['primary']?.props.children
+    .slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS)
+    .forEach((element) => {
+      drawerMenuItems.push({
+        itemKey: element.key,
+        text: element.strings.label,
+        onItemClick: element.onClick,
+        iconProps: { iconName: element.onRenderOnIcon().props.iconName },
+        subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
+      });
     });
-  });
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['sideBar']?.props.children.forEach((element) => {
+  customDrawerButtons['secondary']?.props.children.forEach((element) => {
     drawerMenuItems.push({
       itemKey: element.key,
       text: element.strings.label,
