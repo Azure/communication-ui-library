@@ -28,7 +28,7 @@ import {
   VideoGallery,
   VideoGalleryProps
 } from '@internal/react-components';
-import { usePropsFor } from 'mergedHooks';
+import { usePropsFor } from './mergedHooks';
 
 export function assertUsePropsForTypes(): unknown {
   // we want to make sure that this will never return any

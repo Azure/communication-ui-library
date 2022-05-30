@@ -4,10 +4,11 @@ import {
   CallingHandlers,
   getCallingSelector,
   GetCallingSelector,
-  HoldButtonSelector,
   useCallingHandlers,
   useCallingSelector
 } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(PSTN-calls) */
+import { HoldButtonSelector } from '@internal/calling-component-bindings';
 import {
   ChatHandlers,
   getChatSelector,
@@ -18,6 +19,7 @@ import {
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton, HoldButtonProps } from '@internal/react-components';
 
 /**
@@ -93,7 +95,7 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
     : CallingReturnProps<Component>
   : ChatReturnProps<Component>;
 
-/* conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Hook to get default props for {@link HoldButton}
  *
