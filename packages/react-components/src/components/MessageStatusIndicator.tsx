@@ -4,6 +4,7 @@
 import { ICalloutContentStyles, Icon, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
+import { LiveMessage } from 'react-aria-live';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { isDarkThemed } from '../theming/themeUtils';
@@ -96,6 +97,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
         >
+          <LiveMessage message={strings.failedToSendAriaLabel ?? ''} aria-live="polite" />
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -116,6 +118,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
         >
+          <LiveMessage message={strings.sendingAriaLabel ?? ''} aria-live="polite" />
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -156,6 +159,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             }
           }}
         >
+          <LiveMessage message={strings.seenAriaLabel ?? ''} aria-live="polite" />
           <Icon
             data-ui-id="chat-composite-message-status-icon"
             role="status"
@@ -172,6 +176,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           content={strings.deliveredTooltipText}
           data-ui-id="chat-composite-message-tooltip"
         >
+          <LiveMessage message={strings.deliveredAriaLabel ?? ''} aria-live="polite" />
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
