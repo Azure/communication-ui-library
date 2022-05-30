@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added new prop onDisplayDateTimeString to both messagethread and locale to allow custom date/time format on component and composite level",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

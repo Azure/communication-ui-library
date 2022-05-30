@@ -60,9 +60,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',
-        generateStatsFile: true,
-        chunks: false
+        analyzerMode: 'json',
       })
     ],
     devServer: {
