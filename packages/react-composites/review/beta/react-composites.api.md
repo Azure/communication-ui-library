@@ -797,7 +797,7 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'mainBar' | 'sideBar' | 'overflowMenu';
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 // @beta
 export interface CustomCallControlButtonProps extends ControlBarButtonProps {
