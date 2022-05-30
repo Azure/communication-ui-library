@@ -41,6 +41,7 @@ export function assertUsePropsForTypes(): unknown {
   const microphoneButtonProps: MicrophoneButtonProps = usePropsFor(MicrophoneButton);
   const devicesButtonProps: DevicesButtonProps = usePropsFor(DevicesButton);
   const endcallButtonProps: EndCallButtonProps = usePropsFor(EndCallButton);
+  /* @conditional-compile-remove(PSTN-calls) */
   const holdButtonProps: HoldButtonProps = usePropsFor(HoldButton);
   const errorBarProps: ErrorBarProps = usePropsFor(ErrorBar);
   const participantListProps: ParticipantListProps = usePropsFor(ParticipantList);
