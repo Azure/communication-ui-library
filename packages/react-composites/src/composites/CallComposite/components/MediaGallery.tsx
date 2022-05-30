@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   VideoGallery,
   VideoStreamOptions,
@@ -66,6 +66,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.onFetchAvatarPersonaData
   );
 
+  const onRenderAvatar = useCallback(
+    (userId, options) => (
+      <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+      </Stack>
+    ),
+    [props.onFetchAvatarPersonaData]
+  );
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -78,14 +87,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout="floatingLocalVideo"
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={(userId, options) => (
-          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          </Stack>
-        )}
+        onRenderAvatar={onRenderAvatar}
       />
     );
-  }, [videoGalleryProps, props.isMobile, props.onFetchAvatarPersonaData, remoteParticipants, cameraSwitcherProps]);
+  }, [videoGalleryProps, props.isMobile, onRenderAvatar, remoteParticipants, cameraSwitcherProps]);
 
   return VideoGalleryMemoized;
 };
