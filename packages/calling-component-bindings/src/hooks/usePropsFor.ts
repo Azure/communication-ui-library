@@ -102,12 +102,21 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : AreEqual<Component, typeof ParticipantsButton> extends true
   ? ParticipantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
-  ? HoldButtonSelector
-  : AreEqual<Component, typeof HoldButton> extends true
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
   : undefined;
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Conditional compile overload for hold button get selector
+ * TODO: update this when we go stable to support in regular implementation.
+ * @param component - Component to retrieve the selector for
+ * @returns - Selector for the HoldButton
+ * @beta
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getSelector<T>(component: typeof HoldButton): HoldButtonSelector;
 
 /**
  * Get the selector for a specified component.
@@ -118,15 +127,19 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getSelector<Component extends (props: any) => JSX.Element | undefined>(
   component: Component
-): GetSelector<Component> => {
+): GetSelector<Component>;
+/** This is the implementation signiture not part of API  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getSelector<Component extends (props: any) => JSX.Element | undefined>(component: Component): any {
   /* @conditional-compile-remove(PSTN-calls) */
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
   return findSelector(component);
-};
+}
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
@@ -146,8 +159,6 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return participantsButtonSelector;
     case EndCallButton:
       return emptySelector;
-    case HoldButton:
-      return holdButtonSelector;
     case ErrorBar:
       return errorBarSelector;
   }
