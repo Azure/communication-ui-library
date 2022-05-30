@@ -339,7 +339,6 @@ export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
  * Helper function to determine whether to skip a test for a beta feature in stable test run.
  */
 export const isTestProfileStableFlavor = (): boolean => {
-  return false;
   const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
   if (flavor === 'stable') {
     return true;
