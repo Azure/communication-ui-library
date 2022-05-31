@@ -59,16 +59,16 @@ export const updateUserDisplayNames = (
       }
     | undefined
 ): RemoteParticipantState[] => {
-  let newParticipants: RemoteParticipantState[] = [];
   if (participants) {
-    newParticipants = memoizedUpdateDisplayName((memoizedFn) => {
+    return memoizedUpdateDisplayName((memoizedFn) => {
       return Object.values(participants).map((p) => {
         const pid = toFlatCommunicationIdentifier(p.identifier);
         return memoizedFn(pid, p);
       });
     });
+  } else {
+    return [];
   }
-  return newParticipants;
 };
 
 const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participant: RemoteParticipantState) => {
