@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IStackStyles, IStackTokens, ITheme, Stack, Theme } from '@fluentui/react';
+import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
 import {
   _DrawerMenu,
   _DrawerMenuItemProps,
@@ -31,13 +31,6 @@ import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
- * @private
- * `zIndex` to ensure that the `absolute` positioned chat pane is rendered
- * above the video gallery; and below the PiPiP modal.
- */
-export const CHAT_PANE_Z_INDEX = 1;
-
-/**
  * Pane that is used to store chat and people for CallWithChat composite
  * @private
  */
@@ -60,12 +53,11 @@ export const CallWithChatPane = (props: {
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
-  const theme = useTheme();
   const hidden = props.activePane === 'none';
-  const availableSpaceStylesMemo = useMemo(() => availableSpaceStyles(theme), [theme]);
-  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStylesMemo : sidePaneStyles;
+  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
+  const theme = useTheme();
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
@@ -146,10 +138,8 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Stack styles={props.activePane === 'chat' ? availableSpaceStylesMemo : hiddenStyles}>{chatContent}</Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStylesMemo : hiddenStyles}>
-              {peopleContent}
-            </Stack>
+            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
+            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -192,15 +182,7 @@ const sidePaneStyles: IStackStyles = {
   }
 };
 
-const availableSpaceStyles = (theme: Theme): IStackStyles => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    zIndex: CHAT_PANE_Z_INDEX,
-    background: theme.palette.white
-  }
-});
+const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
 
 const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
