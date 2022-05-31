@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, Theme } from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';
 
 /**
@@ -94,12 +94,18 @@ export const peoplePaneContainerTokens: IStackTokens = {
 /**
  * @private
  */
-export const participantListWrapper = mergeStyles({
-  width: '20rem',
-  // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
-  maxWidth: '50vw',
-  height: '100%'
-});
+export const participantListWrapper = (theme: Theme): string =>
+  mergeStyles({
+    width: '20rem',
+    // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
+    maxWidth: '50vw',
+    height: '100%',
+    position: 'absolute',
+    right: '0',
+    boxShadow: theme.effects.elevation16,
+    background: theme.semanticColors.bodyBackground,
+    zIndex: '10'
+  });
 
 /**
  * @private
