@@ -8,7 +8,7 @@ import path from 'path';
 import { createTestServer } from '../../../server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
-import { FakeChatAdapterArgs } from './FakeChatAdapterArgs';
+import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
 
 const SERVER_URL = 'http://localhost:3000';
 const APP_DIR = path.join(__dirname, '../app');

@@ -18,7 +18,7 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatAdapterArgs, FileUpload } from '../fake-adapter/FakeChatAdapterArgs';
+import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
