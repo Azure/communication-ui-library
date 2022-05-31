@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Performance improvement by preventing CallWithChat composite reloads when toggling side panes on mobile devices",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

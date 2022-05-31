@@ -64,8 +64,12 @@ jobs:
         run: rush install
       # Switch flavor if necessary
       - name: Switch flavor for stable build
+        id: switch-flavor
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
+        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
       # Perform changelog check
       - name: Check the necessary change file has been submitted
         run: rush changelog:check
@@ -77,19 +81,16 @@ jobs:
         run: rush build -t @azure/communication-react
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
+        if: ${{ always() }}
         run: |
-          DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md
-          DIFF_STATUS=$?
-          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
-          if [$DIFF_STATUS -ne 0]
+          if [[ -z $(git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s) ]]
           then
-              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
-              echo "Changes:"
-              cat $DIFF_FILE
-              exit 1
+            echo "Success, no new api changes found."  
           else
-            echo "Success, no new api changes found."
+            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -t @azure/communication-react\""
+            echo "Changes:"
+            git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s
+            exit 1
           fi
       # Tree-shaking check
       - name: Treeshaking check
@@ -350,6 +351,12 @@ jobs:
         run: rush build -o calling
       - name: Tests
         run: rush test -o calling
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: Calling-report
+          path: samples/Calling/dist/build/report.json
 
   build_chat_sample:
     needs: get_matrix
@@ -382,6 +389,12 @@ jobs:
         run: rush build -o chat
       - name: Tests
         run: rush test -o chat
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: Chat-report
+          path: samples/Chat/dist/build/report.json
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -414,6 +427,12 @@ jobs:
         run: rush build -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: CallWithChat-report
+          path: samples/CallWithChat/dist/build/report.json
 
   build_static_html_composites_sample:
     needs: get_matrix
@@ -514,6 +533,90 @@ jobs:
               repo: context.repo.repo,
               body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
+
+  compare_base_bundle_stats:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    strategy:
+      matrix:
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+    steps:
+      # checkout base bundle stats
+      - name: Get bundle stats of main from gist
+        run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
+      - uses: actions/download-artifact@v3
+        with:
+          path: current
+          name: ${{ matrix.app }}-report
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Calculate size change
+        id: bundles
+        run: |
+          base_size=$(jq -r ".[0].parsedSize" base/report.json)
+          echo "::set-output name=base_size::${base_size}"
+          current_size=$(jq -r ".[0].parsedSize" current/report.json)
+          echo "::set-output name=current_size::${current_size}"
+          change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
+          echo "::set-output name=change::${change}"
+          echo "::set-output name=diff::$(($current_size - $base_size))"
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## ${{ matrix.app }} bundle size is'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+            - Current size: ${{ steps.bundles.outputs.current_size }}
+            - Base size: ${{ steps.bundles.outputs.base_size}}
+            - Diff size: ${{ steps.bundles.outputs.diff}}
+          edit-mode: replace
+
+  update_base_bundle_report:
+    runs-on: ubuntu-latest
+    name: Upload bundle size report to gist - ${{ matrix.app }}
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist_id: db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist_id: 87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.app }}-report
+      - name: Upload bundle report to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: ${{ matrix.gist_id }}
+          gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
+          gist_file_name: ${{ matrix.app }}-report.json
+          file_path: report.json
 
   check_failure:
     runs-on: ubuntu-latest

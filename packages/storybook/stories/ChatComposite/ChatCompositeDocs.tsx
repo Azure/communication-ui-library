@@ -9,8 +9,8 @@ import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
+const customDateTimeFormatExampleText = require('!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
-
 const hideTopicStatement = `
 <ChatComposite options={{ topic: false}}>
 `;
@@ -126,6 +126,13 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
         the composite with multiple users.
       </Description>
+
+      <Heading>Custom DateTime Format using Locale</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        You can pass in a function that formats the datetime displayed in chat messages through Locale
+      </Description>
+      <Source code={customDateTimeFormatExampleText} />
 
       <Heading>Chat Composite Props</Heading>
       <Props of={ChatComposite} />
