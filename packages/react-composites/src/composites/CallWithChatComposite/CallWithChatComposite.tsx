@@ -248,6 +248,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     togglePeople();
   }, [togglePeople]);
 
+  const callCompositeContainerCSS = useMemo(() => {
+    return { display: isMobileWithActivePane ? 'none' : 'flex' };
+  }, [isMobileWithActivePane]);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -256,7 +260,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             grow
             styles={callCompositeContainerStyles}
             // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
-            style={{ display: isMobileWithActivePane ? 'none' : 'flex' }}
+            style={callCompositeContainerCSS}
           >
             <CallComposite
               {...props}
