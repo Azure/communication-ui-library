@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Make file sharing responsive by adding style changes",
+  "comment": "Participant pane overlays on top of message thread to make sure the message thread is responsive",
   "packageName": "@internal/react-composites",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
