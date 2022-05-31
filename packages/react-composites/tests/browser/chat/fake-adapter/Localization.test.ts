@@ -9,7 +9,7 @@ import { DEFAULT_FAKE_CHAT_ADAPTER_ARGS, buildUrlForChatAppUsingFakeAdapter } fr
 test.describe('Localization tests', async () => {
   test('Participants list header should be localized', async ({ serverUrl, page }) => {
     page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, frenchLocalEnabled: true })
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, frenchLocaleEnabled: true })
     );
     await page.bringToFront();
     await waitForChatCompositeToLoad(page);

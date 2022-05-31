@@ -45,21 +45,13 @@ export const FakeAdapterApp = (): JSX.Element => {
         fakeChatAdapterArgs.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.localParticipant.id);
-      const thread = await chatClient.createChatThread(
-        {
-          topic: 'Cowabunga'
-        },
-        {
-          participants
-        }
-      );
-      const adapterInfo = {
+      const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
+      const adapter = await initializeAdapter({
         userId: fakeChatAdapterArgs.localParticipant.id,
         displayName: fakeChatAdapterArgs.localParticipant.displayName,
         chatClient: chatClient as IChatClient as ChatClient,
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-      };
-      const adapter = await initializeAdapter(adapterInfo);
+      });
       setAdapter(adapter);
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
@@ -95,7 +87,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
             adapter={adapter}
-            locale={fakeChatAdapterArgs.frenchLocalEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
+            locale={fakeChatAdapterArgs.frenchLocaleEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: true,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
@@ -119,7 +111,7 @@ const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter>
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
-    endpoint: 'FAKE_ENDPIONT',
+    endpoint: 'FAKE_ENDPOINT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
