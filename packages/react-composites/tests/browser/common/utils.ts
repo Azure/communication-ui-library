@@ -60,12 +60,11 @@ export const waitForSelector = async (
 export async function waitForFunction<R>(
   page: Page,
   pageFunction: PageFunction<R>,
-  arg?: unknown,
-  timeout?: number
+  arg?: unknown
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: timeout ?? PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
   );
 }
 
@@ -189,8 +188,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       },
       {
         expectedVideoCount: pages.length
-      },
-      10000
+      }
     );
   }
 
