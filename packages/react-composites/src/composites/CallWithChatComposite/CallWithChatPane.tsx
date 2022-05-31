@@ -31,6 +31,13 @@ import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
+ * @private
+ * `zIndex` to ensure that the `absolute` positioned chat pane is rendered
+ * above the video gallery; and below the PiPiP modal.
+ */
+export const CHAT_PANE_Z_INDEX = 1;
+
+/**
  * Pane that is used to store chat and people for CallWithChat composite
  * @private
  */
@@ -55,7 +62,8 @@ export const CallWithChatPane = (props: {
 
   const theme = useTheme();
   const hidden = props.activePane === 'none';
-  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles(theme) : sidePaneStyles;
+  const availableSpaceStylesMemo = useMemo(() => availableSpaceStyles(theme), [theme]);
+  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStylesMemo : sidePaneStyles;
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
 
@@ -138,10 +146,8 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles(theme) : hiddenStyles}>
-              {chatContent}
-            </Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStyles(theme) : hiddenStyles}>
+            <Stack styles={props.activePane === 'chat' ? availableSpaceStylesMemo : hiddenStyles}>{chatContent}</Stack>
+            <Stack styles={props.activePane === 'people' ? availableSpaceStylesMemo : hiddenStyles}>
               {peopleContent}
             </Stack>
           </Stack.Item>
@@ -187,7 +193,13 @@ const sidePaneStyles: IStackStyles = {
 };
 
 const availableSpaceStyles = (theme: Theme): IStackStyles => ({
-  root: { width: '100%', height: '100%', position: 'absolute', zIndex: 1, background: theme.palette.white }
+  root: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: CHAT_PANE_Z_INDEX,
+    background: theme.palette.white
+  }
 });
 
 const sidePaneTokens: IStackTokens = {
