@@ -4,19 +4,20 @@
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Tests related to typing indicator', async () => {
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
     page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, FAKE_CHAT_ADAPTER_ARGS, {
-        typingParticipants: [FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]]
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        typingParticipants: [DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]]
       })
     );
     await waitForSelector(page, dataUiId(IDS.typingIndicator));
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 
-    expect(await indicator?.innerHTML()).toContain(FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0].displayName);
+    expect(await indicator?.innerHTML()).toContain(DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0].displayName);
     expect(await stableScreenshot(page, {})).toMatchSnapshot('typing-indicator.png');
 
     await page.bringToFront();

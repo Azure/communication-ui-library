@@ -131,12 +131,11 @@ export class FakeChatClient implements IChatClient {
     throw new Error('Not Implemented');
   }
 
-  initializeTypingNotification(threadId: string, user: CommunicationIdentifier, senderDisplayName: string): void {
+  receiveTypingNotification(threadId: string, sender: ChatParticipant): void {
     const threadClients = this.threadClients.filter((c) => c.threadId === threadId);
 
-    console.log('FakeChatClient this.userId: ', this.userId);
     if (threadClients.length > 0) {
-      threadClients[0].initializeTypingNotification(user, senderDisplayName);
+      threadClients[0].receiveTypingNotification(sender);
     }
   }
 

@@ -12,6 +12,7 @@ import {
   ListParticipantsOptions,
   ListReadReceiptsOptions,
   SendChatMessageResult,
+  SendMessageOptions,
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
@@ -73,7 +74,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  sendMessage(request: SendMessageRequest): Promise<SendChatMessageResult> {
+  sendMessage(request: SendMessageRequest, options: SendMessageOptions = {}): Promise<SendChatMessageResult> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.messages = [
@@ -83,7 +84,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
           type: 'text',
           content: {
             message: request.content
-          }
+          },
+          metadata: options.metadata
         }
       ];
     });
@@ -271,19 +273,20 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve(true);
   }
 
-  initializeTypingNotification(user: CommunicationIdentifier, senderDisplayName: string): void {
+  receiveTypingNotification(sender: ChatParticipant): void {
     const now = new Date(Date.now());
 
-    console.log('FakeChatThreadClient this.userId: ', this.userId);
-    this.checkedGetThreadEventEmitter().typingIndicatorReceived(getThreadEventTargets(this.checkedGetThread(), user), {
-      threadId: this.threadId,
-      sender: getIdentifierKind(user),
-      // Verify/FIXME: Do we need to multicast event with each individual recepient's ID?
-      recipient: getIdentifierKind(this.userId),
-      senderDisplayName,
-      version: '0',
-      receivedOn: now
-    });
+    this.checkedGetThreadEventEmitter().typingIndicatorReceived(
+      getThreadEventTargets(this.checkedGetThread(), sender.id),
+      {
+        threadId: this.threadId,
+        sender: getIdentifierKind(sender.id),
+        senderDisplayName: sender.displayName,
+        recipient: getIdentifierKind(this.userId),
+        version: '0',
+        receivedOn: now
+      }
+    );
   }
 
   sendReadReceipt(request: SendReadReceiptRequest): Promise<void> {
