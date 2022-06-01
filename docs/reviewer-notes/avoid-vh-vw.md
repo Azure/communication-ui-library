@@ -1,6 +1,6 @@
 # Avoid `vh` and `vw`
 
-tl;dr - these are only useful when a developer controls the entire app layout. As we are embedded in app instead use `%` or `rem`.
+tl;dr - these are only useful when a developer controls the entire app layout. As our composites and components are embedded inside external developer's apps instead use `%` or `rem`.
 
 ## Background
 
