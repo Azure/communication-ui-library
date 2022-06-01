@@ -8,6 +8,12 @@ const MESSAGE_THREAD_WIDTH = '41.25rem';
 
 /**
  * @private
+ * z-index to ensure that chat container has lower z-index than participant pane
+ */
+export const CHAT_CONTAINER_ZINDEX = 1;
+
+/**
+ * @private
  */
 export const chatScreenContainerStyle = mergeStyles({
   height: '100%',
@@ -54,7 +60,7 @@ export const chatWrapper = mergeStyles({
   height: '100%',
   width: '100%',
   overflow: 'hidden',
-  zIndex: '5'
+  zIndex: CHAT_CONTAINER_ZINDEX
 });
 
 /**

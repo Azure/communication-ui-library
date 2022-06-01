@@ -3,6 +3,7 @@
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, Theme } from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';
+import { CHAT_CONTAINER_ZINDEX } from '../../ChatComposite/styles/Chat.styles';
 
 /**
  * @private
@@ -104,7 +105,8 @@ export const participantListWrapper = (theme: Theme): string =>
     right: '0',
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
-    zIndex: '10'
+    // zIndex to set the participant pane above the chat container
+    zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
 
 /**
