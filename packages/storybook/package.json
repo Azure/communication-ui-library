@@ -35,9 +35,9 @@
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "copy-to-clipboard": "~3.3.1",
-    "nanoid": "3.1.32",
     "resize-observer-polyfill": "~1.5.1",
-    "tslib": "~2.3.1"
+    "tslib": "~2.3.1",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
