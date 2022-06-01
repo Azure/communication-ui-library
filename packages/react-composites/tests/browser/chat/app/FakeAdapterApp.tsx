@@ -9,6 +9,7 @@ import { _IdentifierProvider, _Identifiers } from '@internal/react-components';
 import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
+  ChatAdapterState,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   createAzureCommunicationChatAdapterFromClient,
@@ -48,12 +49,15 @@ export const FakeAdapterApp = (): JSX.Element => {
       );
       const chatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.localParticipant.id);
       const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
-      const adapter = await initializeAdapter({
+      let adapter = await initializeAdapter({
         userId: fakeChatAdapterArgs.localParticipant.id,
         displayName: fakeChatAdapterArgs.localParticipant.displayName,
         chatClient: chatClient as IChatClient as ChatClient,
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       });
+      if (fakeChatAdapterArgs.addErrorToState) {
+        adapter = wrapAdapterForTests(adapter);
+      }
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
         const remoteAdapters = await initializeAdapters(
@@ -223,4 +227,38 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
       </div>
     );
   });
+};
+
+const wrapAdapterForTests = (adapter: ChatAdapter): ChatAdapter => {
+  return new Proxy(adapter, new ProxyChatAdapter());
+};
+
+class ProxyChatAdapter implements ProxyHandler<ChatAdapter> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public get<P extends keyof ChatAdapter>(target: ChatAdapter, prop: P): any {
+    switch (prop) {
+      case 'getState': {
+        return (...args: Parameters<ChatAdapter['getState']>) => {
+          const state = target.getState(...args);
+          return addErrorToState(state);
+        };
+      }
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+const addErrorToState = (state: ChatAdapterState): ChatAdapterState => {
+  state.latestErrors = {
+    ...state.latestErrors,
+    'ChatThreadClient.listMessages': {
+      timestamp: new Date(),
+      name: 'Failure to list messages',
+      message: 'Could not list messages',
+      target: 'ChatThreadClient.listMessages',
+      innerError: { name: 'Inner error of failure to send message', message: '', statusCode: 400 } as Error
+    }
+  };
+  return state;
 };
