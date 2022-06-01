@@ -4,8 +4,8 @@ import {
   useAzureCommunicationCallAdapter,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
-import { nanoid } from 'nanoid';
+import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { ChatClient } from '@azure/communication-chat';
 
 /**
@@ -71,7 +71,7 @@ function App(): JSX.Element {
       credential,
       threadId
     }),
-    [userId, displayName, credential, threadId]
+    [endpointUrl, userId, displayName, credential, threadId]
   );
   const chatAdapter = useAzureCommunicationChatAdapter(chatAdapterArgs);
 
@@ -98,7 +98,6 @@ function useAzureCommunicationServiceArgs(): {
   threadId: string;
 } {
   const [threadId, setThreadId] = useState('');
-
   // For the quickstart, create a new thread with just the local participant in it.
   useEffect(() => {
     (async () => {
@@ -120,12 +119,16 @@ function useAzureCommunicationServiceArgs(): {
     })();
   }, []);
 
+  // For the quickstart, generate a random group ID.
+  // The group Id must be a UUID.
+  const groupId = useRef(uuidv4());
+
   return {
     endpointUrl: ENDPOINT_URL,
     userId: USER_ID,
     token: TOKEN,
     displayName: DISPLAY_NAME,
-    groupId: nanoid(),
+    groupId: groupId.current,
     threadId
   };
 }
