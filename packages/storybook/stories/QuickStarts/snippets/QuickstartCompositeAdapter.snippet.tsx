@@ -4,22 +4,41 @@ import {
   useAzureCommunicationCallAdapter,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { nanoid } from 'nanoid';
+import { ChatClient } from '@azure/communication-chat';
 
+/**
+ * Authentication information needed for your client application to use
+ * Azure Communication Services.
+ *
+ * For this quickstart, you can obtain these from the Azure portal as described here:
+ * https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity
+ *
+ * In a real application, your backend service would provide these to the client
+ * application after the user goes through your authentication flow.
+ */
+const ENDPOINT_URL = '<Azure Communication Services Resource Endpoint>';
+const USER_ID = '<Azure Communication Services Identifier>';
+const TOKEN = '<Azure Communication Services Access Token>';
+
+/**
+ * Display name for the local participant.
+ * In a real application, this would be part of the user data that your
+ * backend services provides to the client application after the user
+ * goes through your authentication flow.
+ */
+const DISPLAY_NAME = '<Display Name>';
+
+/**
+ * Entry point of your application.
+ */
 function App(): JSX.Element {
-  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
-  const userId = '<Azure Communication Services Identifier>';
-  const displayName = '<Display Name>';
-  const token = '<Azure Communication Services Access Token>';
+  // Arguments that would usually be provided by your backend service or
+  // (indirectly) by the user.
+  const { endpointUrl, userId, token, displayName, groupId, threadId } = useAzureCommunicationServiceArgs();
 
-  //Calling Variables
-  //For Group Id, developers can pass any GUID they can generate
-  const groupId = '<Developer generated GUID>';
-
-  //Chat Variables
-  const threadId = '<Get thread id from chat service>';
-
-  // We can't even initialize the Chat and Call adapters without a well-formed token.
+  // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(token);
@@ -63,6 +82,52 @@ function App(): JSX.Element {
     return <h3>Failed to construct credential. Provided token is malformed.</h3>;
   }
   return <h3>Initializing...</h3>;
+}
+
+/**
+ * This hook returns all the arguments required to use the Azure Communication services
+ * that would be provided by your backend service after user authentication
+ * depending on the user-flow (e.g. which chat thread to use).
+ */
+function useAzureCommunicationServiceArgs(): {
+  endpointUrl: string;
+  userId: string;
+  token: string;
+  displayName: string;
+  groupId: string;
+  threadId: string;
+} {
+  const [threadId, setThreadId] = useState('');
+
+  // For the quickstart, create a new thread with just the local participant in it.
+  useEffect(() => {
+    (async () => {
+      const client = new ChatClient(ENDPOINT_URL, new AzureCommunicationTokenCredential(TOKEN));
+      const { chatThread } = await client.createChatThread(
+        {
+          topic: 'Composites Quickstarts'
+        },
+        {
+          participants: [
+            {
+              id: fromFlatCommunicationIdentifier(USER_ID),
+              displayName: DISPLAY_NAME
+            }
+          ]
+        }
+      );
+      setThreadId(chatThread?.id ?? '');
+    })();
+  }, []);
+
+  return {
+    endpointUrl: ENDPOINT_URL,
+    userId: USER_ID,
+    token: TOKEN,
+    displayName: DISPLAY_NAME,
+    groupId: nanoid(),
+    threadId
+  };
 }
 
 export default App;
