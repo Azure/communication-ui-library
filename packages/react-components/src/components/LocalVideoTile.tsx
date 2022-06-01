@@ -7,17 +7,20 @@ import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
-import { useVideoStreamLifecycleMaintainer } from './VideoGallery/useVideoStreamLifecycleMaintainer';
+import {
+  useLocalVideoStreamLifecycleMaintainer,
+  LocalVideoStreamLifecycleMaintainerProps
+} from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
- * @private
+ * @internal
  */
-export const LocalVideoTile = React.memo(
+export const _LocalVideoTile = React.memo(
   (props: {
-    userId: string;
+    userId?: string;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
@@ -34,6 +37,7 @@ export const LocalVideoTile = React.memo(
     localVideoCameraSwitcherLabel?: string;
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
@@ -55,12 +59,12 @@ export const LocalVideoTile = React.memo(
       localVideoSelectedDescription
     } = props;
 
-    const localVideoStreamProps = useMemo(
+    const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
         isMirrored: localVideoViewOptions?.isMirrored,
         isStreamAvailable: isAvailable,
-        onCreateStreamView: onCreateLocalStreamView,
-        onDisposeStreamView: onDisposeLocalStreamView,
+        onCreateLocalStreamView,
+        onDisposeLocalStreamView,
         renderElementExists: !!renderElement,
         scalingMode: localVideoViewOptions?.scalingMode
       }),
@@ -75,7 +79,7 @@ export const LocalVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useVideoStreamLifecycleMaintainer(localVideoStreamProps);
+    useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -93,7 +97,7 @@ export const LocalVideoTile = React.memo(
             localVideoCameraSwitcherLabel={localVideoCameraSwitcherLabel}
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
-          <StreamMedia videoStreamElement={renderElement} />
+          <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
         </>
       );
     }, [
@@ -106,7 +110,7 @@ export const LocalVideoTile = React.memo(
 
     return (
       <VideoTile
-        key={userId}
+        key={userId ?? 'local-video-tile'}
         userId={userId}
         renderElement={renderVideoStreamElement}
         showLabel={showLabel}
@@ -116,6 +120,7 @@ export const LocalVideoTile = React.memo(
         onRenderPlaceholder={onRenderAvatar}
         isMuted={isMuted}
         showMuteIndicator={showMuteIndicator}
+        personaMinSize={props.personaMinSize}
       />
     );
   }

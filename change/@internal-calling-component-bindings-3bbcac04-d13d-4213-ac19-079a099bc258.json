@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update VideoGallery bindings to return the created view when starting a local video stream",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
