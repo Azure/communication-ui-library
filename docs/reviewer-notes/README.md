@@ -7,3 +7,7 @@ The notes here are often in addition to some external guideline. In such cases, 
 ## CSS tips
 
 1. [Avoid `vh` and `vw`](./avoid-vh-vw.md)
+
+## Writing selectors
+
+1. [Do not manipulate data in base selectors](./simple-base-selectors.md)
