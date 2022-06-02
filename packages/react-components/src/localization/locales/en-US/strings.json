@@ -154,5 +154,14 @@
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected"
+  },
+  "fileUploadCards": {
+    "removeFile": "Remove file from uploads"
+  },
+  "fileCard": {
+    "uploadProgress": "upload progress"
+  },
+  "fileDownloadCards": {
+    "downloadFile": "download file"
   }
 }

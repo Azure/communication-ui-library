@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
@@ -25,6 +26,16 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+}
+
+/**
+ * Strings of {@link _FileDownloadCards} that can be overridden.
+ *
+ * @public
+ */
+export interface FileDownloadCardsStrings {
+  /** Aria label to notify user when focus is on file download button. */
+  downloadFile?: string;
 }
 
 /**
@@ -105,6 +116,7 @@ const actionIconStyle = { height: '1rem' };
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
+  const localeStrings = useLocale().strings.fileDownloadCards;
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
       if (!props.downloadHandler) {
@@ -144,7 +156,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 showSpinner ? (
                   <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                 ) : (
-                  <IconButton className={iconButtonClassName}>
+                  <IconButton className={iconButtonClassName} ariaLabel={`${file.name} ${localeStrings.downloadFile}`}>
                     <DownloadIconTrampoline />
                   </IconButton>
                 )

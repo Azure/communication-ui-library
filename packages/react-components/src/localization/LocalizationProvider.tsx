@@ -16,8 +16,11 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  _DialpadStrings
+  _DialpadStrings,
+  FileCardStrings,
+  FileDownloadCardsStrings
 } from '../components';
+import { FileUploadCardsStrings } from '../components/FileUploadCards';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -68,6 +71,12 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
+  /** Strings for FileUploadCards */
+  fileUploadCards: FileUploadCardsStrings;
+  /** Strings for FileCard */
+  fileCard: FileCardStrings;
+  /** Strings for FileDownloadCard */
+  fileDownloadCards: FileDownloadCardsStrings;
 }
 
 /**

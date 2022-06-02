@@ -13,8 +13,10 @@ import {
   useTheme
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { useLocale } from '../localization';
+import { Announcer } from './Announcer';
 
 /**
  * @internal
@@ -45,14 +47,35 @@ export interface _FileCardProps {
 }
 
 /**
+ * Strings of {@link _FileCard} that can be overridden.
+ *
+ * @public
+ */
+export interface FileCardStrings {
+  /** Aria label to notify user about the progress of file upload. */
+  uploadProgress?: string;
+}
+
+/**
  * @internal
  * A component for displaying a file card with file icon and progress bar.
  */
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
-
+  const localeStrings = useLocale().strings.fileCard;
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
+  const toggleAnnouncerString = useCallback((showProgressIndicator: boolean, progress: number | undefined) => {
+    if (showProgressIndicator) {
+      setAnnouncerString('file uploading');
+    } else if (progress && progress >= 1) {
+      setAnnouncerString('file uploading completed');
+    } else {
+      setAnnouncerString(undefined);
+    }
+  }, []);
+  toggleAnnouncerString();
   const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({
@@ -99,31 +122,40 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   };
 
   return (
-    <Stack
-      className={containerClassName}
-      onClick={() => {
-        props.actionHandler && props.actionHandler();
-      }}
-    >
-      <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <Stack>
-          {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-          <Icon
-            {...getFileTypeIconProps({
-              extension: fileExtension,
-              size: 24,
-              imageFileType: 'svg'
-            })}
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <Stack
+        className={containerClassName}
+        onClick={() => {
+          props.actionHandler && props.actionHandler();
+        }}
+      >
+        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
+          <Stack>
+            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+            <Icon
+              {...getFileTypeIconProps({
+                extension: fileExtension,
+                size: 24,
+                imageFileType: 'svg'
+              })}
+            />
+          </Stack>
+          <Stack className={fileNameContainerClassName}>
+            <Text className={fileNameTextClassName}>{fileName}</Text>
+          </Stack>
+          <Stack verticalAlign="center" className={actionIconClassName}>
+            {actionIcon && actionIcon}
+          </Stack>
+        </Stack>
+        {showProgressIndicator && (
+          <ProgressIndicator
+            percentComplete={progress}
+            styles={progressIndicatorStyles}
+            ariaValueText={`${fileName} ${localeStrings.uploadProgress}`}
           />
-        </Stack>
-        <Stack className={fileNameContainerClassName}>
-          <Text className={fileNameTextClassName}>{fileName}</Text>
-        </Stack>
-        <Stack verticalAlign="center" className={actionIconClassName}>
-          {actionIcon && actionIcon}
-        </Stack>
+        )}
       </Stack>
-      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
-    </Stack>
+    </>
   );
 };
