@@ -85,7 +85,7 @@ const LocalVideoElement = (): JSX.Element => {
   return <StreamMedia videoStreamElement={videoStreamElement} />;
 };
 
-const localPreviewContainerMergedStyles = (theme: ITheme) =>
+const localPreviewContainerMergedStyles = (theme: ITheme): string =>
   mergeStyles({
     minWidth: '25rem',
     width: '100\u0025',
@@ -97,7 +97,7 @@ const localPreviewContainerMergedStyles = (theme: ITheme) =>
     color: theme.palette.neutralTertiary
   });
 
-const cameraOffLabelMergedStyles = (theme: ITheme) =>
+const cameraOffLabelMergedStyles = (theme: ITheme): string =>
   mergeStyles({
     fontFamily: 'Segoe UI Regular',
     fontSize: '0.625rem', // 10px
