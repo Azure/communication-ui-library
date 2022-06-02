@@ -7,8 +7,6 @@ import {
   useCallingHandlers,
   useCallingSelector
 } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(PSTN-calls) */
-import { HoldButtonSelector } from '@internal/calling-component-bindings';
 import {
   ChatHandlers,
   getChatSelector,
@@ -95,27 +93,20 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
     : CallingReturnProps<Component>
   : ChatReturnProps<Component>;
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
- * Hook to get default props for {@link HoldButton}
+ * Type assertions for usePropsFor overrides
  *
- * @example
- * ```
- *  import {HoldButton, usePropsFor} from '@azure/communication-react';
- *
- *  const app = (): JSX.Element => {
- *     // ... code to setup Providers ...
- *
- *     return <HoldButton {...usePropsFor(HoldButton)}/>
- *  }
- * ```
- * @beta
+ * add to this if you need to conditionally compile a selector for a new component.
+ * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function usePropsFor<T>(
-  component: typeof HoldButton,
-  type?: 'calling'
-): HoldButtonSelector & Common<CallingHandlers, HoldButtonProps>;
+export type UsePropsFor = {
+  <Component extends (props: any) => JSX.Element>(
+    component: Component,
+    type?: 'calling' | 'chat'
+  ): ComponentProps<Component>;
+  /* @conditional-compile-remove(PSTN-calling) */
+  (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
+};
 
 /**
  * Primary hook to get all hooks necessary for a React Component from this library..
@@ -135,16 +126,10 @@ export function usePropsFor<T>(
  *
  * @public
  */
-export function usePropsFor<Component extends (props: any) => JSX.Element>(
+export const usePropsFor: UsePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component,
   type?: 'calling' | 'chat'
-): ComponentProps<Component>;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-/** implementation signiture not part of public API */
-export function usePropsFor<Component extends (props: any) => JSX.Element>(
-  component: Component,
-  type?: 'calling' | 'chat'
-): any {
+) => {
   const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
   const callProps = useCallingSelector(callingSelector);
@@ -167,9 +152,4 @@ export function usePropsFor<Component extends (props: any) => JSX.Element>(
   }
 
   throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
-}
-
-/**
- * run usePropsFor
- * and do type assertions for each - should be props type for each component
- */
+};

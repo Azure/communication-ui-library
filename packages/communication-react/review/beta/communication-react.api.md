@@ -2540,11 +2540,16 @@ export const useChatThreadClient: () => ChatThreadClient;
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
-// @beta
-export function usePropsFor<T>(component: typeof HoldButton, type?: 'calling'): HoldButtonSelector & Common<CallingHandlers, HoldButtonProps>;
+// Warning: (ae-internal-missing-underscore) The name "UsePropsFor" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type UsePropsFor = {
+    <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat'): ComponentProps<Component>;
+    (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
+};
 
 // @public
-export function usePropsFor<Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat'): ComponentProps<Component>;
+export const usePropsFor: UsePropsFor;
 
 // @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
