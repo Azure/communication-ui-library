@@ -22,6 +22,11 @@ import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
+import {
+  customOnRenderTypingIndicator,
+  customOnRenderMessage,
+  customOnFetchAvatarPersonaData
+} from './CustomDataModel';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -88,6 +93,10 @@ export const FakeAdapterApp = (): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             locale={fakeChatAdapterArgs.frenchLocaleEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
+            onRenderTypingIndicator={
+              fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderTypingIndicator : undefined
+            }
+            onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
               participantPane: true,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
@@ -100,6 +109,9 @@ export const FakeAdapterApp = (): JSX.Element => {
                   }
                 : undefined
             }}
+            onFetchAvatarPersonaData={
+              fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
+            }
           />
         </_IdentifierProvider>
       )}

@@ -50,4 +50,8 @@ export type FakeChatAdapterArgs = {
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;
+  /**
+   * Determines if chat composite will be using a custom data model
+   */
+  customDataModelEnabled?: boolean;
 };
