@@ -97,7 +97,10 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
         >
-          <LiveMessage message={strings.failedToSendAriaLabel ?? ''} aria-live="polite" />
+          {strings.failedToSendAriaLabel && (
+            // live message is used here and in the following tooltips so that aria labels are announced on mobile
+            <LiveMessage message={strings.failedToSendAriaLabel} aria-live="polite" />
+          )}
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -118,7 +121,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
         >
-          <LiveMessage message={strings.sendingAriaLabel ?? ''} aria-live="polite" />
+          {strings.sendingAriaLabel && <LiveMessage message={strings.sendingAriaLabel} aria-live="polite" />}
+
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -159,7 +163,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             }
           }}
         >
-          <LiveMessage message={strings.seenAriaLabel ?? ''} aria-live="polite" />
+          {strings.seenAriaLabel && <LiveMessage message={strings.seenAriaLabel} aria-live="polite" />}
+
           <Icon
             data-ui-id="chat-composite-message-status-icon"
             role="status"
@@ -176,7 +181,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           content={strings.deliveredTooltipText}
           data-ui-id="chat-composite-message-tooltip"
         >
-          <LiveMessage message={strings.deliveredAriaLabel ?? ''} aria-live="polite" />
+          {strings.deliveredAriaLabel && <LiveMessage message={strings.deliveredAriaLabel} aria-live="polite" />}
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
