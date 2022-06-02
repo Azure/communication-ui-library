@@ -47,7 +47,7 @@
   "devDependencies": {
     "@babel/core": "~7.16.0",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-hooks": "~7.0.2",
     "@types/jest": "~26.0.22",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/react-dom": "^16.9.8",

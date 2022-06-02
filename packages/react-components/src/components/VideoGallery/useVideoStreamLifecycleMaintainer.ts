@@ -5,7 +5,8 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { Cancellable, useCancellableTask } from '../utils/useCancellableTask';
 
-interface VideoStreamLifecycleMaintainerExtendableProps {
+/** @private */
+export interface VideoStreamLifecycleMaintainerExtendableProps {
   isStreamAvailable?: boolean;
   renderElementExists?: boolean;
   isMirrored?: boolean;
@@ -22,8 +23,11 @@ interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMainta
  * Helper hook to maintain the video stream lifecycle. This calls onCreateStreamView and onDisposeStreamView
  * appropriately based on react lifecycle events and prop changes.
  * This also handles calls to view.update* appropriately such as view.updateScalingMode().
+ *
+ * @remarks This is just exported for tests. Use useRemoteVideoStreamLifecycleMaintainer or useLocalVideoStreamLifecycleMaintainer instead
+ * @private
  */
-const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
+export const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
   const {
     isMirrored,
     isScreenSharingOn,
@@ -53,35 +57,46 @@ const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainer
   // that recreates the stream view.
 
   const [streamRendererResult, setStreamRendererResult] = React.useState<CreateVideoStreamViewResult>();
-  const scalingModeRef = useRef(scalingMode);
-  const hasScalingModeChanged = scalingModeRef.current !== scalingMode;
-  const updatingScalingModeDirectly = hasScalingModeChanged && !!streamRendererResult;
+  const scalingModeForDirectUpdateRef = useRef(scalingMode);
+  const hasScalingModeChanged = scalingModeForDirectUpdateRef.current !== scalingMode;
+  const canUpdateScalingModeDirectly = !!streamRendererResult?.view.updateScalingMode;
 
   const [triggerRescale, cancelRescale] = useCancellableTask();
   const [triggerCreateStreamView, cancelCreateStreamView] = useCancellableTask();
 
-  if (isStreamAvailable && renderElementExists && scalingMode && updatingScalingModeDirectly) {
+  if (
+    isStreamAvailable &&
+    renderElementExists &&
+    scalingMode &&
+    hasScalingModeChanged &&
+    canUpdateScalingModeDirectly
+  ) {
     triggerRescale(async (cancellable: Cancellable) => {
       streamRendererResult && (await streamRendererResult.view.updateScalingMode(scalingMode));
       if (cancellable.cancelled) {
         return;
       }
-      scalingModeRef.current = scalingMode;
+      scalingModeForDirectUpdateRef.current = scalingMode;
     });
   }
 
   // scalingModeForUseEffect will trigger the useEffect to recreate the stream view only if the scaling mode has changed and
   // we cannot call updateScalingMode on the view object directly. Otherwise it will be null to ensure the useEffect does not trigger
   // when scaling mode changes.
-  const scalingModeForUseEffect = updatingScalingModeDirectly ? null : scalingMode;
+  const scalingModeForCreateStreamViewRef = useRef(scalingMode);
+  const scalingModeForUseEffect = canUpdateScalingModeDirectly
+    ? scalingModeForCreateStreamViewRef.current
+    : scalingMode;
 
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
       triggerCreateStreamView(async (cancellable: Cancellable): Promise<void> => {
         const streamViewOptions = {
           isMirrored: isMirrored,
-          scalingMode: scalingModeForUseEffect === null ? scalingModeRef.current : scalingModeForUseEffect
+          scalingMode: scalingModeForUseEffect
         };
+
+        scalingModeForCreateStreamViewRef.current = scalingModeForUseEffect;
 
         const streamRendererResult = await onCreateStreamView?.(streamViewOptions);
         // Avoid race condition where onDisposeStreamView is called before onCreateStreamView
