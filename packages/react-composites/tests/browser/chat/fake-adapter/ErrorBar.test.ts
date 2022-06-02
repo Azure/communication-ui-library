@@ -11,7 +11,18 @@ const TEST_MESSAGE = 'No, sir, this will not do.';
 test.describe('ErrorBar is shown correctly', async () => {
   test('with wrong thread ID', async ({ page, serverUrl }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, addErrorToState: true })
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        latestErrors: {
+          'ChatThreadClient.listMessages': {
+            timestamp: new Date(),
+            name: 'Failure to list messages',
+            message: 'Could not list messages',
+            target: 'ChatThreadClient.listMessages',
+            innerError: { name: 'Inner error of failure to send message', message: '', statusCode: 400 } as Error
+          }
+        }
+      })
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);

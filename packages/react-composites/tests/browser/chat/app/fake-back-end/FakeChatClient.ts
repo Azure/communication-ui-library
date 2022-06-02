@@ -30,7 +30,7 @@ export class FakeChatClient implements IChatClient {
   constructor(private model: Model, private userId: CommunicationIdentifier) {}
 
   getChatThreadClient(threadId: string): ChatThreadClient {
-    this.model.checkedGetThread(this.userId, threadId);
+    //this.model.checkedGetThread(this.userId, threadId);
     const threadClient = new FakeChatThreadClient(this.model, this.userId, threadId);
     this.threadClients.push(threadClient);
     return threadClient as IChatThreadClient as ChatThreadClient;
