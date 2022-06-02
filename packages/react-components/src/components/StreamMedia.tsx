@@ -3,9 +3,12 @@
 
 import { mergeStyles } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { invertedVideoInPipStyle, mediaContainer } from './styles/StreamMedia.styles';
+import { invertedVideoInPipStyle, mediaContainer, container } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
+import { LoadingSpinner } from './LoadingSpinner';
+// eslint-disable-next-line no-restricted-imports
+import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
 /**
  * Props for {@link StreamMedia}.
@@ -13,10 +16,15 @@ import { BaseCustomStyles } from '../types';
  * @public
  */
 export interface StreamMediaProps {
+  videoRenderingControls: VideoRenderingControlOptions;
   /** Video stream element to render. */
   videoStreamElement: HTMLElement | null;
   /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
+  /** Weather the remote stream is receiving data */
+  isReceiving?: boolean;
+  /** Weather it is a remote video stream */
+  isRemoteVideoStream?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -38,7 +46,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
 
-  const { isMirrored, videoStreamElement, styles } = props;
+  const { isMirrored, videoStreamElement, styles, isReceiving, isRemoteVideoStream, videoRenderingControls } = props;
   const [pipEnabled, setPipEnabled] = useState(false);
 
   useEffect(() => {
@@ -69,12 +77,17 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   }, [videoStreamElement]);
 
   return (
-    <div
-      className={mergeStyles(
-        isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
-        styles?.root
+    <div className={container()}>
+      <div
+        className={mergeStyles(
+          isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
+          styles?.root
+        )}
+        ref={containerEl}
+      />
+      {isRemoteVideoStream && videoRenderingControls?.remoteVideoStreamLoadingSpinner && !isReceiving && (
+        <LoadingSpinner />
       )}
-      ref={containerEl}
-    />
+    </div>
   );
 };

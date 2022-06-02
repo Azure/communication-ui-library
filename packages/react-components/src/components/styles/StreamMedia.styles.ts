@@ -6,6 +6,15 @@ import { mergeStyles, Theme } from '@fluentui/react';
 /**
  * @private
  */
+export const container = (): string =>
+  mergeStyles({
+    position: 'relative',
+    display: 'contents'
+  });
+
+/**
+ * @private
+ */
 export const mediaContainer = (theme: Theme): string =>
   mergeStyles({
     position: 'relative',

@@ -25,6 +25,7 @@ export const RemoteScreenShare = React.memo(
     ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     renderElement?: HTMLElement;

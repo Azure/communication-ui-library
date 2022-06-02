@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
+// eslint-disable-next-line no-restricted-imports
+import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
@@ -20,12 +22,14 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
+    videoRenderingControls: VideoRenderingControlOptions;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
     ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
@@ -38,7 +42,9 @@ export const _RemoteVideoTile = React.memo(
     personaMinSize?: number;
   }) => {
     const {
+      videoRenderingControls,
       isAvailable,
+      isReceiving,
       isMuted,
       isSpeaking,
       isScreenSharingOn,
@@ -54,9 +60,11 @@ export const _RemoteVideoTile = React.memo(
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
+        videoRenderingControls: videoRenderingControls,
         isMirrored: remoteVideoViewOptions?.isMirrored,
         isScreenSharingOn,
         isStreamAvailable: isAvailable,
+        isStreamReceiving: isReceiving,
         onCreateRemoteStreamView,
         onDisposeRemoteStreamView,
         remoteParticipantId: userId,
@@ -64,7 +72,9 @@ export const _RemoteVideoTile = React.memo(
         scalingMode: remoteVideoViewOptions?.scalingMode
       }),
       [
+        videoRenderingControls,
         isAvailable,
+        isReceiving,
         isScreenSharingOn,
         onCreateRemoteStreamView,
         onDisposeRemoteStreamView,
@@ -86,8 +96,15 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} />;
-    }, [renderElement]);
+      return (
+        <StreamMedia
+          videoStreamElement={renderElement}
+          isReceiving={isReceiving}
+          isRemoteVideoStream={true}
+          videoRenderingControls={videoRenderingControls}
+        />
+      );
+    }, [renderElement, isReceiving, videoRenderingControls]);
 
     return (
       <VideoTile

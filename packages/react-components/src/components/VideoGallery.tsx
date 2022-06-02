@@ -45,6 +45,8 @@ import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } fro
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
+// eslint-disable-next-line no-restricted-imports
+import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -153,6 +155,10 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+  /**
+   * Customize video rendering options
+   */
+  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -310,9 +316,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <_RemoteVideoTile
           key={participant.userId}
           {...participant}
+          videoRenderingControls={props.videoRenderingControls}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
+          isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}

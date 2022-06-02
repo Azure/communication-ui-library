@@ -17,6 +17,8 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { useCustomAvatarPersonaData } from '../../common/CustomDataModelUtils';
+import { VideoRenderingControlOptions } from '../types/CallControlOptions';
+import { produceWithPatches } from 'immer';
 
 const VideoGalleryStyles = {
   root: {
@@ -45,6 +47,7 @@ export interface MediaGalleryProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
+  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 /**
@@ -88,9 +91,17 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
+        videoRenderingControls={props.videoRenderingControls}
       />
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, remoteParticipants, cameraSwitcherProps]);
+  }, [
+    videoGalleryProps,
+    props.isMobile,
+    onRenderAvatar,
+    remoteParticipants,
+    cameraSwitcherProps,
+    props.videoRenderingControls
+  ]);
 
   return VideoGalleryMemoized;
 };

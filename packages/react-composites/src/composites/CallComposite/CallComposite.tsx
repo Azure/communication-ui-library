@@ -18,6 +18,7 @@ import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
+import { VideoRenderingControlOptions } from './types/VideoRenderingControlOptions';
 
 /**
  * Props for {@link CallComposite}.
@@ -65,6 +66,12 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
+  /**
+   * Customize video rendering options
+   * Can be customized by providing an object of type {@link @azure/communication-react#VideoRenderingControlOptions}.
+   * @beta
+   */
+  videoRenderingControls?: VideoRenderingControlOptions;
 };
 
 type MainScreenProps = {
@@ -165,6 +172,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     options,
     formFactor = 'desktop'
   } = props;
+
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });

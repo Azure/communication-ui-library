@@ -101,6 +101,7 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   return {
     id: stream.id,
     isAvailable: stream.isAvailable,
+    isReceiving: stream.isReceiving,
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target
   };

@@ -114,6 +114,7 @@ function addMockRemoteStreamAndParticipant(
     id: streamId,
     mediaStreamType: 'Video',
     isAvailable: true,
+    isReceiving: true,
     view: undefined
   };
   participant.videoStreams[streamId] = remoteVideoStream;

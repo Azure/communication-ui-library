@@ -18,6 +18,7 @@ import { complianceBannerSelector } from '../selectors/complianceBannerSelector'
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
+import { VideoRenderingControlOptions } from '../types/VideoRenderingControlOptions';
 import { reduceCallControlsForMobile } from '../utils';
 
 /**
@@ -59,6 +60,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
+  const videoRenderingControls: VideoRenderingControlOptions = options?.videoRenderingControls
+    ? options?.videoRenderingControls
+    : {
+        remoteVideoStreamLoadingSpinner: true
+      };
 
   return (
     <CallArrangement
@@ -81,6 +87,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              videoRenderingControls={videoRenderingControls}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

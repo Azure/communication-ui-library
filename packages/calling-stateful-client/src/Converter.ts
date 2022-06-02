@@ -42,6 +42,7 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
+    isReceiving: stream.isReceiving,
     view: undefined
   };
 }

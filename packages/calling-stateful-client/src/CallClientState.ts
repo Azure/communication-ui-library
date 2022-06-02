@@ -106,6 +106,10 @@ export interface RemoteVideoStreamState {
    */
   isAvailable: boolean;
   /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
+   */
+  isReceiving: boolean;
+  /**
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
@@ -484,6 +488,7 @@ export type CallErrorTarget =
   | 'CallClient.createCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
