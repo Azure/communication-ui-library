@@ -5,10 +5,6 @@ import { DtmfTone } from '@azure/communication-calling';
 import { _Dialpad, _DialpadButtonProps } from '@internal/react-components';
 import React from 'react';
 
-const dialpadStrings = {
-  defaultText: 'Enter a number'
-};
-
 const onSendDtmfTones = (dtmfTones: DtmfTone): Promise<void> => {
   console.log(dtmfTones);
   return Promise.resolve();
@@ -29,11 +25,5 @@ const onDisplayDialpadInput = (value: string): string => {
   }
 };
 export const CustomDialpadExample: () => JSX.Element = () => {
-  return (
-    <_Dialpad
-      strings={dialpadStrings}
-      onSendDtmfTones={onSendDtmfTones}
-      onDisplayDialpadInput={onDisplayDialpadInput}
-    />
-  );
+  return <_Dialpad onSendDtmfTones={onSendDtmfTones} onDisplayDialpadInput={onDisplayDialpadInput} />;
 };

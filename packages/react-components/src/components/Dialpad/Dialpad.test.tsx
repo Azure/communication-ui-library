@@ -5,16 +5,28 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { _Dialpad } from './Dialpad';
+import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const dialpadStrings = {
+const customDialpadStrings = {
   defaultText: Math.random().toString()
 };
 
 describe('Dialpad tests', () => {
+  test('Should localize default text ', async () => {
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
+    expect(component.find('#dialpad-input').first().props().placeholder).toBe(testLocale.strings.dialpad.defaultText);
+  });
+
   test('Clicking on dialpad button 1 should show 1 in input box', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     const button = component.find('#dialpad-button-0').first();
     if (button) {
       button.simulate('click');
@@ -23,13 +35,16 @@ describe('Dialpad tests', () => {
     expect(component.find('#dialpad-input').first().props().value).toBe('1');
   });
 
-  test('Dialpad should have default input text', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
-    expect(component.find('#dialpad-input').first().props().placeholder).toBe(dialpadStrings.defaultText);
+  test('Dialpad should have customizable default input text', async () => {
+    const component = mount(<_Dialpad strings={customDialpadStrings} />);
+    expect(component.find('#dialpad-input').first().props().placeholder).toBe(customDialpadStrings.defaultText);
   });
 
   test('Dialpad input box should be editable by keyboard', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     component
       .find('input')
       .first()
@@ -38,7 +53,10 @@ describe('Dialpad tests', () => {
   });
 
   test('Dialpad input box should filter out non-valid input', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     component
       .find('input')
       .first()
@@ -47,7 +65,10 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 12345678900 should show 1 (234) 567-8900 in input box', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     component
       .find('input')
       .first()
@@ -56,7 +77,10 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 2345678900 should show (234) 567-8900 in input box', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     component
       .find('input')
       .first()
@@ -65,7 +89,10 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 23456789000 should show  23456789000 in input box', async () => {
-    const component = mount(<_Dialpad strings={dialpadStrings} />);
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad />, testLocale);
     component
       .find('input')
       .first()

@@ -5,11 +5,12 @@ import {
   AudioDeviceInfo,
   Call,
   CallAgent,
-  DtmfTone,
   LocalVideoStream,
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(dialpad) */
+import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
@@ -62,6 +63,7 @@ export type CallingHandlers = {
   onRemoveParticipant: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
+  /* @conditional-compile-remove(dialpad) */
   onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
 };
 
@@ -349,6 +351,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(dialpad) */
     const onSendDtmfTones = async (dtmfTones: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTones);
 
     return {
@@ -372,6 +375,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
+      /* @conditional-compile-remove(dialpad) */
       onSendDtmfTones
     };
   }

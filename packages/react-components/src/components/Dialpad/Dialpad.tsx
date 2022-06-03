@@ -16,6 +16,7 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
+import { useLocale } from '../../localization';
 import {
   buttonStyles,
   containerStyles,
@@ -28,7 +29,7 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 /**
  * Strings of {@link _Dialpad} that can be overridden.
  *
- * @internal
+ * @beta
  */
 export interface _DialpadStrings {
   defaultText: string;
@@ -37,7 +38,7 @@ export interface _DialpadStrings {
 /**
  * Styles for {@link _Dialpad} component.
  *
- * @internal
+ * @beta
  */
 export interface _DialpadStyles {
   root?: IStyle;
@@ -50,7 +51,7 @@ export interface _DialpadStyles {
 /**
  * Type for  {@link _DialpadButton} input
  *
- * @internal
+ * @beta
  */
 export interface _DialpadButtonProps {
   primaryContent: string;
@@ -60,7 +61,7 @@ export interface _DialpadButtonProps {
 /**
  * DTMF tone for PSTN calls.
  *
- * @internal
+ * @beta
  */
 export type DtmfTone =
   | 'A'
@@ -84,11 +85,10 @@ export type DtmfTone =
 /**
  * Props for {@link _Dialpad} component.
  *
- * @internal
+ * @beta
  */
 export interface _DialpadProps {
-  // strings are required for now since this is an internal component and strings are not localized yet
-  strings: _DialpadStrings;
+  strings?: _DialpadStrings;
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: _DialpadButtonProps[][];
   // function to send dtmf tones on button click
@@ -251,8 +251,10 @@ const DialpadContainer = (props: {
  * A component to allow users to enter phone number through clicking on dialpad/using keyboard
  *
  *
- * @internal
+ * @beta
  */
 export const _Dialpad = (props: _DialpadProps): JSX.Element => {
-  return <DialpadContainer defaultText={props.strings.defaultText} {...props} />;
+  const localeStrings = useLocale().strings.dialpad;
+  const strings = { ...localeStrings, ...props.strings };
+  return <DialpadContainer defaultText={strings.defaultText} {...props} />;
 };

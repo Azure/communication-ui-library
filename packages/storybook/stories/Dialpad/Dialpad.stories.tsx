@@ -6,8 +6,9 @@ import { _Dialpad as DialpadComponent, useTheme } from '@internal/react-componen
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { hiddenControl } from '../../controlsUtils';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { hiddenControl } from '../controlsUtils';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
 import { DialpadExample } from './snippets/Dialpad.snippet';
 
@@ -18,6 +19,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
+      <SingleLineBetaBanner />
       <Title>Dialpad</Title>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
@@ -65,8 +67,8 @@ const DialpadStory = (): JSX.Element => {
 export const Dialpad = DialpadStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-dialpad`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Dialpad`,
+  id: `${COMPONENT_FOLDER_PREFIX}-dialpad`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Dialpad`,
   component: DialpadComponent,
   argTypes: {
     strings: hiddenControl,

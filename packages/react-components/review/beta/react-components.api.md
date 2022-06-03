@@ -247,6 +247,7 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: _DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -426,10 +427,10 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @internal
+// @beta
 export const _Dialpad: (props: _DialpadProps) => JSX.Element;
 
-// @internal
+// @beta
 export interface _DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
@@ -437,7 +438,7 @@ export interface _DialpadButtonProps {
     secondaryContent?: string;
 }
 
-// @internal
+// @beta
 export interface _DialpadProps {
     // (undocumented)
     onClickDialpadButton?: () => void;
@@ -446,18 +447,18 @@ export interface _DialpadProps {
     // (undocumented)
     onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
     // (undocumented)
-    strings: _DialpadStrings;
+    strings?: _DialpadStrings;
     // (undocumented)
     styles?: _DialpadStyles;
 }
 
-// @internal
+// @beta
 export interface _DialpadStrings {
     // (undocumented)
     defaultText: string;
 }
 
-// @internal
+// @beta
 export interface _DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -522,9 +523,7 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     lightDismissRoot?: BaseCustomStyles;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "DtmfTone" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public

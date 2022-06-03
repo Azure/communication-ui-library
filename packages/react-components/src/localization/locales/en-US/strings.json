@@ -154,5 +154,8 @@
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected"
+  },
+  "dialpad": {
+    "defaultText": "Enter a number"
   }
 }

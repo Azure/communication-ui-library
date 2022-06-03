@@ -9,9 +9,10 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery,
-  _Dialpad
+  VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(dialpad) */
+import { _Dialpad } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -102,8 +103,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
-  : AreEqual<Component, typeof _Dialpad> extends true
-  ? EmptySelector
+  : /* @conditional-compile-remove(dialpad) */
+  AreEqual<Component, typeof _Dialpad> extends true
+  ? /* @conditional-compile-remove(dialpad) */
+    EmptySelector
   : undefined;
 
 /**
@@ -141,6 +144,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    /* @conditional-compile-remove(dialpad) */
     case _Dialpad:
       return emptySelector;
   }

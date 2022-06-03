@@ -204,7 +204,10 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode,
+  ViewScalingMode
+} from '../../react-components/src';
+/* @conditional-compile-remove(dialpad) */
+export type {
   _Dialpad,
   _DialpadProps,
   _DialpadStrings,
