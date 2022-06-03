@@ -94,7 +94,7 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
   : ChatReturnProps<Component>;
 
 /**
- * Type assertions for usePropsFor overrides
+ * Type assertions for usePropsFor function overrides
  *
  * add to this if you need to conditionally compile a selector for a new component.
  * @internal
@@ -104,7 +104,7 @@ export type UsePropsFor = {
     component: Component,
     type?: 'calling' | 'chat'
   ): ComponentProps<Component>;
-  /* @conditional-compile-remove(PSTN-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
   (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
 };
 
