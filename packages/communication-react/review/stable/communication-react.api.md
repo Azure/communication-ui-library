@@ -2355,7 +2355,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public
-export function usePropsFor<Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat'): ComponentProps<Component>;
+export const usePropsFor: (<Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>);
 
 // @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;

@@ -93,18 +93,12 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
     : CallingReturnProps<Component>
   : ChatReturnProps<Component>;
 
+/* @conditional-compile-remove(PSTN-calls) */
 /**
- * Type assertions for usePropsFor function overrides
- *
- * add to this if you need to conditionally compile a selector for a new component.
- * @internal
+ * When stabilizing we need to remove the union type to support the new components.
+ *@public
  */
-export type UsePropsFor = {
-  <Component extends (props: any) => JSX.Element>(
-    component: Component,
-    type?: 'calling' | 'chat'
-  ): ComponentProps<Component>;
-  /* @conditional-compile-remove(PSTN-calls) */
+export type ConditionalCompComponent = {
   (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
 };
 
@@ -126,7 +120,14 @@ export type UsePropsFor = {
  *
  * @public
  */
-export const usePropsFor: UsePropsFor = <Component extends (props: any) => JSX.Element>(
+export const usePropsFor:
+  | (<Component extends (props: any) => JSX.Element>(
+      component: Component,
+      type?: 'calling' | 'chat'
+    ) => ComponentProps<Component>)
+  | /* @conditional-compile-remove(PSTN-calls) */ ConditionalCompComponent = <
+  Component extends (props: any) => JSX.Element
+>(
   component: Component,
   type?: 'calling' | 'chat'
 ) => {
