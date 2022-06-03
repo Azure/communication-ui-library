@@ -48,6 +48,7 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
@@ -129,7 +130,7 @@ export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPerson
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
@@ -2371,7 +2372,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
 };
 
 // @public

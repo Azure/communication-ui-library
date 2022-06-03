@@ -22,6 +22,7 @@ import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -190,7 +191,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
 };
 
 // @public

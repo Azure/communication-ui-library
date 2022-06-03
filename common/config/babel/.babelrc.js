@@ -23,10 +23,13 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'file-sharing',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
-        // PSTN calls 
+        // PSTN calls
         'PSTN-calls',
         // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
-        'date-time-customization'
+        'date-time-customization',
+        // Support for using Teams identity for local participant.
+        // This uses beta funcationality in @azure/communication-calling.
+        'teams-identity',
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

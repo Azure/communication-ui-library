@@ -44,7 +44,11 @@ import {
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -591,7 +595,7 @@ export type CallAdapterLocator =
  * @public
  */
 export type AzureCommunicationCallAdapterArgs = {
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;

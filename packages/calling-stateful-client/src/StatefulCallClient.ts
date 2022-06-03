@@ -14,7 +14,12 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
-import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  getIdentifierKind,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 
@@ -215,7 +220,7 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
 };
 
 /**

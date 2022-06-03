@@ -29,6 +29,7 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
@@ -76,7 +77,7 @@ export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPerson
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity) */ MicrosoftTeamsUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
