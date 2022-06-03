@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added onsenddtmf handler for dialpad",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
