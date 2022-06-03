@@ -249,6 +249,9 @@ export interface ComponentStrings {
     devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    fileCard: FileCardStrings;
+    fileDownloadCards: FileDownloadCardsStrings;
+    fileUploadCards: FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -605,6 +608,13 @@ export interface _FileCardProps {
     progress?: number;
 }
 
+// @public
+export interface FileCardStrings {
+    uploadCompleted?: string;
+    uploading?: string;
+    uploadProgress?: string;
+}
+
 // @internal (undocumented)
 export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
@@ -615,6 +625,11 @@ export interface _FileDownloadCards {
 
 // @internal (undocumented)
 export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @public
+export interface FileDownloadCardsStrings {
+    downloadFile?: string;
+}
 
 // @beta
 export interface FileDownloadError {
@@ -629,6 +644,22 @@ export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
+}
+
+// @internal (undocumented)
+export const _FileUploadCards: (props: FileUploadCardsProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "FileUploadCardsProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface FileUploadCardsProps {
+    activeFileUploads?: ActiveFileUpload[];
+    onCancelFileUpload?: (fileId: string) => void;
+}
+
+// @public
+export interface FileUploadCardsStrings {
+    removeFile?: string;
 }
 
 // @public

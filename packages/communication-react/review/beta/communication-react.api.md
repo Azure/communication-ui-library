@@ -990,6 +990,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadFileButton: string;
 }
 
 // @public
@@ -1178,6 +1179,9 @@ export interface ComponentStrings {
     devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    fileCard: FileCardStrings;
+    fileDownloadCards: FileDownloadCardsStrings;
+    fileUploadCards: FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1641,6 +1645,18 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @public
+export interface FileCardStrings {
+    uploadCompleted?: string;
+    uploading?: string;
+    uploadProgress?: string;
+}
+
+// @public
+export interface FileDownloadCardsStrings {
+    downloadFile?: string;
+}
+
 // @beta
 export interface FileDownloadError {
     errorMessage: string;
@@ -1680,6 +1696,11 @@ export interface FileUploadAdapter {
     updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
+}
+
+// @public
+export interface FileUploadCardsStrings {
+    removeFile?: string;
 }
 
 // @beta

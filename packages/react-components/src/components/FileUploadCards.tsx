@@ -11,6 +11,16 @@ import { iconButtonClassName } from './styles/IconButton.styles';
 import { useLocale } from '../localization';
 
 /**
+ * Strings of {@link _FileUploadCards} that can be overridden.
+ *
+ * @public
+ */
+export interface FileUploadCardsStrings {
+  /** Aria label to notify user when focus is on cancel file upload button. */
+  removeFile?: string;
+}
+
+/**
  * @internal
  */
 export interface FileUploadCardsProps {
@@ -24,16 +34,6 @@ export interface FileUploadCardsProps {
    * cancel icon.
    */
   onCancelFileUpload?: (fileId: string) => void;
-}
-
-/**
- * Strings of {@link _FileUploadCards} that can be overridden.
- *
- * @public
- */
-export interface FileUploadCardsStrings {
-  /** Aria label to notify user when focus is on cancel file upload button. */
-  removeFile?: string;
 }
 
 const actionIconStyle = { height: '1rem' };

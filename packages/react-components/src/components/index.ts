@@ -115,6 +115,7 @@ export * from './FileCard';
 export * from './FileCardGroup';
 export * from './ModalClone/ModalClone';
 export * from './FileDownloadCards';
+export * from './FileUploadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

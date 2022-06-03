@@ -18,9 +18,9 @@ import {
   VideoGalleryStrings,
   _DialpadStrings,
   FileCardStrings,
-  FileDownloadCardsStrings
+  FileDownloadCardsStrings,
+  FileUploadCardsStrings
 } from '../components';
-import { FileUploadCardsStrings } from '../components/FileUploadCards';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
