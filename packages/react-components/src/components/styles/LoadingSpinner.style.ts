@@ -8,8 +8,8 @@ import { mergeStyles } from '@fluentui/react';
  */
 export const loadingSpinnerContainerStyle = (): string =>
   mergeStyles({
-    width: '100px',
-    height: '100px',
+    width: '5rem',
+    height: '5rem',
     position: 'absolute',
     top: '50%',
     bottom: '0',
