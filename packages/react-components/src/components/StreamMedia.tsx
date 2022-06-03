@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { invertedVideoInPipStyle, mediaContainer, container } from './styles/StreamMedia.styles';
+import {
+  invertedVideoInPipStyle,
+  mediaContainer,
+  container,
+  loadingSpinnerContainer
+} from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
-import { LoadingSpinner } from './LoadingSpinner';
 // eslint-disable-next-line no-restricted-imports
 import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
@@ -86,7 +90,9 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
         ref={containerEl}
       />
       {isRemoteVideoStream && videoRenderingControls?.remoteVideoStreamLoadingSpinner && !isReceiving && (
-        <LoadingSpinner />
+        <div className={loadingSpinnerContainer()}>
+          <Spinner styles={{ circle: { height: '5rem', width: '5rem', borderWidth: '0.25em' } }} />
+        </div>
       )}
     </div>
   );
