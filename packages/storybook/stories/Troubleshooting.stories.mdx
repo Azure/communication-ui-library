@@ -55,9 +55,17 @@ specifies an older version of React as a peer dependency than the one installed 
 Since v7, npm automatically install peer dependencies for packages. This fails because of the existence of the
 more recent version of React installed by create-react-app.
 
-**Solution**: We recommend using the `--legacy-peer-deps` flag when adding the @azure/communication-react dependency, as suggested
-by `npm add`.
+**Solution**:
+
+React v18 has breaking changes over React v17 that affect the Fluent UI library we build on.
+Please use React v17 for best experience at this time.
+
+When creating a new app from scratch, you can do this by pinning the `react-scripts` version as follows:
+
+```bash
+
+npx create-react-app your-app --template typescript --scripts-version 4.0.3
 
 ```
-PS C:\tmp\acs\my-react-app> npm add --legacy-peer-deps @azure/communication-react
-```
+
+Support for React v18 is tracked [on this issue](https://github.com/Azure/communication-ui-library/issues/1900).
