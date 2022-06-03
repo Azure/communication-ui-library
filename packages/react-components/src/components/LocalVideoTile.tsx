@@ -4,6 +4,8 @@
 import { Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
+// eslint-disable-next-line no-restricted-imports
+import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -21,6 +23,7 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 export const _LocalVideoTile = React.memo(
   (props: {
     userId?: string;
+    videoRenderingControls: VideoRenderingControlOptions;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     isAvailable?: boolean;
@@ -40,6 +43,7 @@ export const _LocalVideoTile = React.memo(
     personaMinSize?: number;
   }) => {
     const {
+      videoRenderingControls,
       isAvailable,
       isMuted,
       onCreateLocalStreamView,
@@ -61,6 +65,7 @@ export const _LocalVideoTile = React.memo(
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
+        videoRenderingControls: videoRenderingControls,
         isMirrored: localVideoViewOptions?.isMirrored,
         isStreamAvailable: isAvailable,
         onCreateLocalStreamView,
@@ -69,6 +74,7 @@ export const _LocalVideoTile = React.memo(
         scalingMode: localVideoViewOptions?.scalingMode
       }),
       [
+        videoRenderingControls,
         isAvailable,
         localVideoViewOptions?.isMirrored,
         localVideoViewOptions?.scalingMode,
@@ -97,7 +103,11 @@ export const _LocalVideoTile = React.memo(
             localVideoCameraSwitcherLabel={localVideoCameraSwitcherLabel}
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
-          <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
+          <StreamMedia
+            videoStreamElement={renderElement}
+            isMirrored={true}
+            videoRenderingControls={videoRenderingControls}
+          />
         </>
       );
     }, [
@@ -105,7 +115,8 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview
+      showCameraSwitcherInLocalPreview,
+      videoRenderingControls
     ]);
 
     return (

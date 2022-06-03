@@ -17,8 +17,7 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { useCustomAvatarPersonaData } from '../../common/CustomDataModelUtils';
-import { VideoRenderingControlOptions } from '../types/CallControlOptions';
-import { produceWithPatches } from 'immer';
+import { VideoRenderingControlOptions } from '../types/VideoRenderingControlOptions';
 
 const VideoGalleryStyles = {
   root: {

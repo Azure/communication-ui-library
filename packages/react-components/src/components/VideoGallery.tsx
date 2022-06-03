@@ -199,7 +199,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
-    localVideoCameraCycleButtonProps
+    localVideoCameraCycleButtonProps,
+    videoRenderingControls
   } = props;
 
   const ids = useIdentifiers();
@@ -272,6 +273,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
+          videoRenderingControls={videoRenderingControls}
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
@@ -306,7 +308,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoMovementLabel,
     strings.localVideoSelectedDescription,
     styles?.localVideo,
-    theme.effects.roundedCorner4
+    theme.effects.roundedCorner4,
+    videoRenderingControls
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
@@ -316,7 +319,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <_RemoteVideoTile
           key={participant.userId}
           {...participant}
-          videoRenderingControls={props.videoRenderingControls}
+          videoRenderingControls={videoRenderingControls}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
@@ -328,7 +331,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator,
+      videoRenderingControls
+    ]
   );
 
   const videoTiles = onRenderRemoteVideoTile
@@ -371,6 +381,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+      videoRenderingControls={props.videoRenderingControls}
     />
   );
 

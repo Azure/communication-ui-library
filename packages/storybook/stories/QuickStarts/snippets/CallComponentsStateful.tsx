@@ -28,10 +28,14 @@ function CallingComponents(): JSX.Element {
     return <CallEnded />;
   }
 
+  const videoRenderingControls = {
+    remoteVideoStreamLoadingSpinner: true
+  };
+
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       <div style={{ width: '100vw', height: '100vh' }}>
-        {videoGalleryProps && <VideoGallery {...videoGalleryProps} />}
+        {videoGalleryProps && <VideoGallery {...videoGalleryProps} videoRenderingControls={videoRenderingControls} />}
       </div>
 
       <ControlBar layout="floatingBottom">

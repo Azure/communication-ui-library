@@ -17,6 +17,7 @@ import {
   overlayContentStyles,
   videoTileStyles
 } from '../styles/ExpandedLocalVideoTile.styles';
+import { VideoRenderingControlOptions } from '../types/VideoRenderingControlOptions';
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
@@ -32,6 +33,7 @@ export interface ExpandedLocalVideoTileProps {
   localParticipantVideoStream: VideoGalleryStream;
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   overlayContent?: JSX.Element;
+  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 /**
@@ -42,6 +44,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
   const isVideoReady = videoStream?.isAvailable ?? false;
   const renderElement = videoStream?.renderElement;
   const palette = useTheme().palette;
+  const videoRenderingControls = props.videoRenderingControls;
 
   useEffect(() => {
     if (videoStream && isVideoReady) {
@@ -53,7 +56,11 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       <VideoTile
         styles={videoTileStyles}
-        renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
+        renderElement={
+          renderElement ? (
+            <StreamMedia videoStreamElement={renderElement} videoRenderingControls={videoRenderingControls} />
+          ) : undefined
+        }
         onRenderPlaceholder={onRenderEmptyPlaceholder}
       >
         {props.overlayContent && (
