@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, IconButton } from '@fluentui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { ActiveFileUpload } from './SendBox';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -44,7 +44,6 @@ const actionIconStyle = { height: '1rem' };
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
   const localeStrings = useLocale().strings.fileUploadCards;
-  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   if (!files || files.length === 0) {
     return <></>;
   }

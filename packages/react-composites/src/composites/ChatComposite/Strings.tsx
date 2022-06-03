@@ -13,4 +13,8 @@ export interface ChatCompositeStrings {
    * Chat list header text
    */
   chatListHeader: string;
+  /**
+   * Upload file button aria label
+   */
+  uploadFileButton: string;
 }

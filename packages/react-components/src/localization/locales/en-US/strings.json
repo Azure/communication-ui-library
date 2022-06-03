@@ -159,7 +159,9 @@
     "removeFile": "Remove file from uploads"
   },
   "fileCard": {
-    "uploadProgress": "upload progress"
+    "uploadProgress": "upload progress",
+    "uploading": "uploading",
+    "uploadCompleted": "uploaded, enter a message in edit field."
   },
   "fileDownloadCards": {
     "downloadFile": "download file"

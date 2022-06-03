@@ -13,7 +13,7 @@ import {
   useTheme
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { useLocale } from '../localization';
 import { Announcer } from './Announcer';
@@ -54,6 +54,10 @@ export interface _FileCardProps {
 export interface FileCardStrings {
   /** Aria label to notify user about the progress of file upload. */
   uploadProgress?: string;
+  /** Aria label to notify user that the file upload started. */
+  uploading?: string;
+  /** Aria label to notify user that the file upload completed. */
+  uploadCompleted?: string;
 }
 
 /**
@@ -65,17 +69,19 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.fileCard;
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
-  const toggleAnnouncerString = useCallback((showProgressIndicator: boolean, progress: number | undefined) => {
+
+  useEffect(() => {
     if (showProgressIndicator) {
-      setAnnouncerString('file uploading');
+      setAnnouncerString(`${localeStrings.uploading} ${fileName}`);
     } else if (progress && progress >= 1) {
-      setAnnouncerString('file uploading completed');
+      setAnnouncerString(`${fileName} ${localeStrings.uploadCompleted}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, []);
-  toggleAnnouncerString();
+  }, [progress, showProgressIndicator, localeStrings.uploading, localeStrings.uploadCompleted, fileName]);
+
   const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({

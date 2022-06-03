@@ -3,6 +3,7 @@
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
+import { useLocale } from '../../localization';
 
 /**
  * Props for {@link FileUploadButton} component.
@@ -56,7 +57,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       background: 'transparent'
     }
   });
-
+  const uploadFileString = useLocale().strings.chat.uploadFileButton;
   return (
     <>
       <Stack
@@ -67,7 +68,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName}>
+        <IconButton className={iconButtonClassName} ariaLabel={uploadFileString}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>
