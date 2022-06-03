@@ -1,3 +1,4 @@
+import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
@@ -8,7 +9,6 @@ import {
 } from '@azure/communication-react';
 import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ChatClient } from '@azure/communication-chat';
 
 /**
  * Authentication information needed for your client application to use

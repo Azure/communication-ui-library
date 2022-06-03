@@ -90,7 +90,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="root-105 root-20"
                               data-icon-name="ControlButtonCameraOff"
                             >
                               <span
@@ -119,7 +119,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-21 ms-Button-menuIcon menuIcon-16"
+                              className="ms-Icon root-105 css-21 ms-Button-menuIcon menuIcon-16"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -163,7 +163,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="root-105 root-20"
                               data-icon-name="ControlButtonMicOff"
                             >
                               <span
@@ -192,7 +192,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-21 ms-Button-menuIcon menuIcon-16"
+                              className="ms-Icon root-105 css-21 ms-Button-menuIcon menuIcon-16"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -232,7 +232,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="root-105 root-20"
                               data-icon-name="ControlButtonScreenShareStart"
                             >
                               <span
@@ -282,7 +282,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94"
+                              className="root-105"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span
