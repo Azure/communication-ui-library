@@ -32,6 +32,7 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -44,6 +45,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -1572,6 +1574,51 @@ export interface DiagnosticsCallFeatureState {
     network: NetworkDiagnosticsState;
 }
 
+// @internal
+export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+
+// @internal
+export interface _DialpadButtonProps {
+    // (undocumented)
+    primaryContent: string;
+    // (undocumented)
+    secondaryContent?: string;
+}
+
+// @internal
+export interface _DialpadProps {
+    // (undocumented)
+    onClickDialpadButton?: () => void;
+    // (undocumented)
+    onDisplayDialpadInput?: (input: string) => string;
+    // (undocumented)
+    onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+    // (undocumented)
+    strings: _DialpadStrings;
+    // (undocumented)
+    styles?: _DialpadStyles;
+}
+
+// @internal
+export interface _DialpadStrings {
+    // (undocumented)
+    defaultText: string;
+}
+
+// @internal
+export interface _DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    primaryContent?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    secondaryContent?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
+}
+
 // @public
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
@@ -1732,7 +1779,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof _Dialpad> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
