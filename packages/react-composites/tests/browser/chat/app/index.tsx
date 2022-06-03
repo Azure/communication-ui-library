@@ -15,4 +15,4 @@ const params = Object.fromEntries(urlSearchParams.entries());
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
-ReactDOM.render(params.fakeChatAdapterModel ? <FakeAdapterApp /> : <LiveTestApp />, document.getElementById('root'));
+ReactDOM.render(params.fakeChatAdapterArgs ? <FakeAdapterApp /> : <LiveTestApp />, document.getElementById('root'));
