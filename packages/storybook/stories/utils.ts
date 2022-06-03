@@ -51,7 +51,13 @@ const stopRenderVideoStream = (video: HTMLElement | null): void => {
  * @returns
  */
 export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[] => {
-  const mounted = useMountTracker();
+  const mounted = useRef(true);
+  useEffect(() => {
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
   const [videoStreamElements, setVideoStreamElements] = useState<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
@@ -63,7 +69,7 @@ export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[]
       }
       // Since the render is async, it may finish after the component is unmounted already, in this case we have to make
       // sure to clean up the stream
-      if (!mounted) {
+      if (!mounted.current) {
         for (const videoStreamElement of newVideoStreamElements) {
           stopRenderVideoStream(videoStreamElement);
         }
@@ -85,13 +91,3 @@ export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[]
 
   return videoStreamElements;
 };
-
-function useMountTracker() {
-  const mounted = useRef(true);
-  useEffect(() => {
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-  return mounted.current;
-}
