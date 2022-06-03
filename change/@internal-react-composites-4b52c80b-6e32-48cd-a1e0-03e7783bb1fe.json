@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix a memoization in Call-based composites to prevent onRenderAvatar triggering unecessary re-renders",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -365,7 +365,7 @@ export interface StubOptions {
  */
 export async function stableScreenshot(
   page: Page,
-  stubOptions: StubOptions,
+  stubOptions?: StubOptions,
   screenshotOptions?: PageScreenshotOptions
 ): Promise<Buffer> {
   await waitForPageFontsLoaded(page);

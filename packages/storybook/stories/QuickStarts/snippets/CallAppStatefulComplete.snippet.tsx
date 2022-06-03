@@ -11,7 +11,7 @@ import {
 } from '@azure/communication-react';
 import { registerIcons } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
-import CallingComponents from './CallComponentsStateful.snippet';
+import CallingComponents from './CallComponentsStateful';
 
 function App(): JSX.Element {
   registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
