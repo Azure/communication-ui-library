@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-// eslint-disable-next-line no-restricted-imports
-import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
@@ -22,7 +20,6 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    videoRenderingControls: VideoRenderingControlOptions;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
@@ -42,7 +39,6 @@ export const _RemoteVideoTile = React.memo(
     personaMinSize?: number;
   }) => {
     const {
-      videoRenderingControls,
       isAvailable,
       isReceiving,
       isMuted,
@@ -60,7 +56,6 @@ export const _RemoteVideoTile = React.memo(
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
-        videoRenderingControls: videoRenderingControls,
         isMirrored: remoteVideoViewOptions?.isMirrored,
         isScreenSharingOn,
         isStreamAvailable: isAvailable,
@@ -72,7 +67,6 @@ export const _RemoteVideoTile = React.memo(
         scalingMode: remoteVideoViewOptions?.scalingMode
       }),
       [
-        videoRenderingControls,
         isAvailable,
         isReceiving,
         isScreenSharingOn,
@@ -96,15 +90,8 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return (
-        <StreamMedia
-          videoStreamElement={renderElement}
-          isReceiving={isReceiving}
-          isRemoteVideoStream={true}
-          videoRenderingControls={videoRenderingControls}
-        />
-      );
-    }, [renderElement, isReceiving, videoRenderingControls]);
+      return <StreamMedia videoStreamElement={renderElement} isReceiving={isReceiving} isRemoteVideoStream={true} />;
+    }, [renderElement, isReceiving]);
 
     return (
       <VideoTile

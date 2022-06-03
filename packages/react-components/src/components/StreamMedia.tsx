@@ -11,8 +11,6 @@ import {
 } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
-// eslint-disable-next-line no-restricted-imports
-import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
 /**
  * Props for {@link StreamMedia}.
@@ -20,7 +18,6 @@ import { VideoRenderingControlOptions } from '../../../react-composites/src/comp
  * @public
  */
 export interface StreamMediaProps {
-  videoRenderingControls: VideoRenderingControlOptions;
   /** Video stream element to render. */
   videoStreamElement: HTMLElement | null;
   /** Decides whether to mirror the video or not. */
@@ -50,7 +47,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
 
-  const { isMirrored, videoStreamElement, styles, isReceiving, isRemoteVideoStream, videoRenderingControls } = props;
+  const { isMirrored, videoStreamElement, styles, isReceiving, isRemoteVideoStream } = props;
   const [pipEnabled, setPipEnabled] = useState(false);
 
   useEffect(() => {
@@ -89,7 +86,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
         )}
         ref={containerEl}
       />
-      {isRemoteVideoStream && videoRenderingControls?.remoteVideoStreamLoadingSpinner && !isReceiving && (
+      {isRemoteVideoStream && !isReceiving && (
         <div className={loadingSpinnerContainer()}>
           <Spinner styles={{ circle: { height: '5rem', width: '5rem', borderWidth: '0.25em' } }} />
         </div>

@@ -9,8 +9,6 @@ import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
-// eslint-disable-next-line no-restricted-imports
-import { VideoRenderingControlOptions } from '../../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -20,7 +18,6 @@ import { VideoRenderingControlOptions } from '../../../../react-composites/src/c
 export const RemoteScreenShare = React.memo(
   (props: {
     userId: string;
-    videoRenderingControls: VideoRenderingControlOptions;
     displayName?: string;
     onCreateRemoteStreamView?: (
       userId: string,
@@ -33,15 +30,7 @@ export const RemoteScreenShare = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
   }) => {
-    const {
-      userId,
-      displayName,
-      isMuted,
-      renderElement,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      videoRenderingControls
-    } = props;
+    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
     const locale = useLocale();
 
     if (!renderElement) {
@@ -65,11 +54,7 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={displayName}
         isMuted={isMuted}
-        renderElement={
-          renderElement ? (
-            <StreamMedia videoStreamElement={renderElement} videoRenderingControls={videoRenderingControls} />
-          ) : undefined
-        }
+        renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
       />
     );

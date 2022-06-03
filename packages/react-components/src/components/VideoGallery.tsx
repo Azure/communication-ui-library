@@ -45,8 +45,6 @@ import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } fro
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
-// eslint-disable-next-line no-restricted-imports
-import { VideoRenderingControlOptions } from '../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -155,10 +153,6 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
-  /**
-   * Customize video rendering options
-   */
-  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -199,8 +193,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
-    localVideoCameraCycleButtonProps,
-    videoRenderingControls
+    localVideoCameraCycleButtonProps
   } = props;
 
   const ids = useIdentifiers();
@@ -273,7 +266,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
-          videoRenderingControls={videoRenderingControls}
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
@@ -308,8 +300,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoMovementLabel,
     strings.localVideoSelectedDescription,
     styles?.localVideo,
-    theme.effects.roundedCorner4,
-    videoRenderingControls
+    theme.effects.roundedCorner4
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
@@ -319,7 +310,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <_RemoteVideoTile
           key={participant.userId}
           {...participant}
-          videoRenderingControls={videoRenderingControls}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
@@ -331,14 +321,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         />
       );
     },
-    [
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOptions,
-      onRenderAvatar,
-      showMuteIndicator,
-      videoRenderingControls
-    ]
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
   );
 
   const videoTiles = onRenderRemoteVideoTile
@@ -381,7 +364,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-      videoRenderingControls={props.videoRenderingControls}
     />
   );
 

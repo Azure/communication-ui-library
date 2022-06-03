@@ -10,21 +10,18 @@ import {
 import { Stack, mergeStyles, Text } from '@fluentui/react';
 import { VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
-import { VideoRenderingControlOptions } from '../../../../../react-composites/src/composites/CallComposite/types/VideoRenderingControlOptions';
 import { useVideoStreams } from '../../../utils';
 
 export interface LocalPreviewProps {
   isVideoAvailable: boolean;
   isCameraEnabled: boolean;
   isMicrophoneEnabled: boolean;
-  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 export const LocalPreviewExample = ({
   isVideoAvailable,
   isCameraEnabled,
-  isMicrophoneEnabled,
-  videoRenderingControls
+  isMicrophoneEnabled
 }: LocalPreviewProps): JSX.Element => {
   const [microphone, setMicrophone] = useState(true);
   const [camera, setCamera] = useState(true);
@@ -82,10 +79,7 @@ export const LocalPreviewExample = ({
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
               renderElement={
                 isVideoAvailable && isCameraEnabled && camera ? (
-                  <StreamMedia
-                    videoStreamElement={videoStreamElement}
-                    videoRenderingControls={videoRenderingControls}
-                  />
+                  <StreamMedia videoStreamElement={videoStreamElement} />
                 ) : undefined
               }
               onRenderPlaceholder={renderCameraOffPlaceholder}

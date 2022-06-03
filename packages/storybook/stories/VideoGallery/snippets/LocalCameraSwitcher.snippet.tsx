@@ -86,10 +86,6 @@ export const LocalCameraSwitcherExample: () => JSX.Element = () => {
 
   const containerStyle = { height: '50vh' };
 
-  const videoRenderingControls = {
-    remoteVideoStreamLoadingSpinner: true
-  };
-
   return (
     <Stack style={containerStyle}>
       <VideoGallery
@@ -98,7 +94,6 @@ export const LocalCameraSwitcherExample: () => JSX.Element = () => {
         remoteParticipants={MockRemoteParticipants}
         showCameraSwitcherInLocalPreview={true}
         localVideoCameraCycleButtonProps={cameraButtonProps}
-        videoRenderingControls={videoRenderingControls}
       />
     </Stack>
   );

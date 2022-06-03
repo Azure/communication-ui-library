@@ -27,7 +27,6 @@ import {
   localPreviewContainerStyleMobile,
   localPreviewTileStyle
 } from '../styles/LocalPreview.styles';
-import { VideoRenderingControlOptions } from '../types/VideoRenderingControlOptions';
 
 /**
  * @private
@@ -35,7 +34,6 @@ import { VideoRenderingControlOptions } from '../types/VideoRenderingControlOpti
 export interface LocalPreviewProps {
   mobileView: boolean;
   showDevicesButton: boolean;
-  videoRenderingControls: VideoRenderingControlOptions;
 }
 
 /**
@@ -86,8 +84,6 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
       }
     : undefined;
 
-  const videoRenderingControls = props.videoRenderingControls;
-
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
@@ -97,10 +93,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         styles={localPreviewTileStyle}
         renderElement={
           localPreviewProps?.videoStreamElement ? (
-            <StreamMedia
-              videoStreamElement={localPreviewProps.videoStreamElement}
-              videoRenderingControls={videoRenderingControls}
-            />
+            <StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />
           ) : undefined
         }
         onRenderPlaceholder={onRenderPlaceholder}
