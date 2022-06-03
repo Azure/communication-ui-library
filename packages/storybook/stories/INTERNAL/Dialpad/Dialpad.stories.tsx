@@ -29,10 +29,8 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Example Dialpad with custom content</Heading>
       <Description>
-        On Dialpad button click, the corresponding primaryContentToDtmfMapping will be logged on the console Note that
-        primaryContentToDtmfMapping and onSendDtmfTones need to be defined with custom dialpad content This example also
-        showcase how to customize the format for dialpad input Note that dialpad only allows numeric inputs/special
-        characters including +, * and #
+        On Dialpad button click, the corresponding dtmf tone will be logged on the console. This example showcases how
+        to customize the format for dialpad input.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />

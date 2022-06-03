@@ -204,7 +204,13 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  _Dialpad,
+  _DialpadProps,
+  _DialpadStrings,
+  _DialpadStyles,
+  _DialpadButtonProps,
+  DtmfTone
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
