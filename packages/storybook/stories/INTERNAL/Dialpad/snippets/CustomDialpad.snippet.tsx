@@ -9,18 +9,18 @@ const dialpadStrings = {
   defaultText: 'Enter a number'
 };
 
-const onSendDtmfTones = (dtmfTones: DtmfTone) => {
+const onSendDtmfTones = (dtmfTones: DtmfTone): Promise<void> => {
   console.log(dtmfTones);
   return Promise.resolve();
 };
-const onDisplayDialpadInput = (value: string) => {
+const onDisplayDialpadInput = (value: string): string => {
   // if input value is falsy eg if the user deletes the input, then just return
   if (!value) {
     return value;
   }
 
   // clean the input for any non-digit values.
-  let phoneNumber = value.replace(/[^\d*#+]/g, '');
+  const phoneNumber = value.replace(/[^\d*#+]/g, '');
 
   if (phoneNumber.length <= 4) {
     return phoneNumber;
