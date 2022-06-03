@@ -10,7 +10,7 @@ import {
 } from '@azure/communication-react';
 import { Stack, mergeStyles, Text, ITheme } from '@fluentui/react';
 import { VideoOff20Filled } from '@fluentui/react-icons';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useVideoStreams } from '../../../utils';
 
 export interface LocalPreviewProps {
