@@ -442,14 +442,6 @@ export interface _DialpadProps {
     // (undocumented)
     dialpadButtons?: _DialpadButtonProps[][];
     // (undocumented)
-    onClickDialpadButton?: () => void;
-    // (undocumented)
-    onDisplayDialpadInput?: (input: string) => string;
-    // (undocumented)
-    onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
-    // (undocumented)
-    primaryContentToDtmfMapping?: {};
-    // (undocumented)
     strings: _DialpadStrings;
     // (undocumented)
     styles?: _DialpadStyles;
@@ -459,6 +451,8 @@ export interface _DialpadProps {
 export interface _DialpadStrings {
     // (undocumented)
     defaultText: string;
+    // (undocumented)
+    errorText: string;
 }
 
 // @internal
@@ -525,11 +519,6 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     drawerContentRoot?: BaseCustomStyles;
     lightDismissRoot?: BaseCustomStyles;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "DtmfTone" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
