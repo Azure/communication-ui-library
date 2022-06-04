@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  updateUserDisplayNames,
   _dominantSpeakersWithFlatId,
   _isInCall,
   _isPreviewOn,
@@ -26,7 +27,7 @@ export const dominantRemoteParticipantSelector = reselect.createSelector(
         ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
         : undefined;
     return dominantRemoteParticipant
-      ? _videoGalleryRemoteParticipantsMemo(Object.values(dominantRemoteParticipant))[0]
+      ? _videoGalleryRemoteParticipantsMemo(updateUserDisplayNames(dominantRemoteParticipant))[0]
       : undefined;
   }
 );

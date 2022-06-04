@@ -10,7 +10,6 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
-import { updateUserDisplayNames } from './callUtils';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -46,8 +45,12 @@ export const getDominantSpeakers = (
 export const getRemoteParticipants = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): undefined | RemoteParticipantState[] => {
-  return updateUserDisplayNames(state.calls[props.callId]?.remoteParticipants);
+):
+  | {
+      [keys: string]: RemoteParticipantState;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.remoteParticipants;
 };
 
 /**

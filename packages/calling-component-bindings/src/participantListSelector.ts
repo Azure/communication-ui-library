@@ -14,6 +14,7 @@ import {
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { getIdentifierKind } from '@azure/communication-common';
+import { updateUserDisplayNames } from './callUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -87,7 +88,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     myUserId: string;
   } => {
     const participants = remoteParticipants
-      ? convertRemoteParticipantsToParticipantListParticipants(remoteParticipants)
+      ? convertRemoteParticipantsToParticipantListParticipants(updateUserDisplayNames(remoteParticipants))
       : [];
     participants.push({
       userId: userId,

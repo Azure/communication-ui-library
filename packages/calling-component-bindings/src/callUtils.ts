@@ -50,7 +50,7 @@ export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient
 /**
  * Update the users displayNames based on the type of user they are
  *
- * @private
+ * @internal
  */
 export const updateUserDisplayNames = (
   participants:

@@ -16,6 +16,7 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+import { updateUserDisplayNames } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
@@ -94,7 +95,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: _videoGalleryRemoteParticipantsMemo(remoteParticipants),
+      remoteParticipants: _videoGalleryRemoteParticipantsMemo(updateUserDisplayNames(remoteParticipants)),
       dominantSpeakers: dominantSpeakerIds
     };
   }
