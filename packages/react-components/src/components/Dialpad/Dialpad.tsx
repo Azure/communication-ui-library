@@ -1,22 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
+import React from 'react';
+/* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
   DefaultButton,
   FocusZone,
-  IButtonStyles,
-  IStyle,
-  ITextFieldStyles,
   mergeStyles,
   Stack,
   Text,
   TextField,
   useTheme
 } from '@fluentui/react';
+/* @conditional-compile-remove(dialpad) */
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useState } from 'react';
+/* @conditional-compile-remove(dialpad) */
+import { useState } from 'react';
+/* @conditional-compile-remove(dialpad) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(dialpad) */
 import {
   buttonStyles,
   containerStyles,
@@ -24,6 +28,7 @@ import {
   secondaryContentStyles,
   textFieldStyles
 } from '../styles/Dialpad.styles';
+/* @conditional-compile-remove(dialpad) */
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 
 /**
@@ -100,6 +105,7 @@ export interface _DialpadProps {
   styles?: _DialpadStyles;
 }
 
+/* @conditional-compile-remove(dialpad) */
 const DialpadButton = (props: {
   primaryContent: string;
   secondaryContent?: string;
@@ -129,6 +135,7 @@ const DialpadButton = (props: {
   );
 };
 
+/* @conditional-compile-remove(dialpad) */
 const dialPadButtonsDefault: _DialpadButtonProps[][] = [
   [
     { primaryContent: '1' },
@@ -148,6 +155,7 @@ const dialPadButtonsDefault: _DialpadButtonProps[][] = [
   [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
 ];
 
+/* @conditional-compile-remove(dialpad) */
 const DtmfTones: DtmfTone[] = [
   'Num1',
   'Num2',
@@ -163,6 +171,7 @@ const DtmfTones: DtmfTone[] = [
   'Pound'
 ];
 
+/* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
   defaultText: string;
   // dialpadButtons?: _DialpadButtonProps[][];
@@ -249,12 +258,22 @@ const DialpadContainer = (props: {
 
 /**
  * A component to allow users to enter phone number through clicking on dialpad/using keyboard
- *
+ * It will return empty component for stable builds
  *
  * @beta
  */
 export const _Dialpad = (props: _DialpadProps): JSX.Element => {
+  /* @conditional-compile-remove(dialpad) */
   const localeStrings = useLocale().strings.dialpad;
+  /* @conditional-compile-remove(dialpad) */
   const strings = { ...localeStrings, ...props.strings };
-  return <DialpadContainer defaultText={strings.defaultText} {...props} />;
+
+  return (
+    <>
+      {
+        /* @conditional-compile-remove(dialpad) */
+        <DialpadContainer defaultText={strings.defaultText} {...props} />
+      }
+    </>
+  );
 };

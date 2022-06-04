@@ -20,7 +20,6 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
-import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -412,51 +411,6 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 }
 
 // @internal
-export const _Dialpad: (props: _DialpadProps) => JSX.Element;
-
-// @internal
-export interface _DialpadButtonProps {
-    // (undocumented)
-    primaryContent: string;
-    // (undocumented)
-    secondaryContent?: string;
-}
-
-// @internal
-export interface _DialpadProps {
-    // (undocumented)
-    onClickDialpadButton?: () => void;
-    // (undocumented)
-    onDisplayDialpadInput?: (input: string) => string;
-    // (undocumented)
-    onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
-    // (undocumented)
-    strings: _DialpadStrings;
-    // (undocumented)
-    styles?: _DialpadStyles;
-}
-
-// @internal
-export interface _DialpadStrings {
-    // (undocumented)
-    defaultText: string;
-}
-
-// @internal
-export interface _DialpadStyles {
-    // (undocumented)
-    button?: IButtonStyles;
-    // (undocumented)
-    primaryContent?: IStyle;
-    // (undocumented)
-    root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
-    // (undocumented)
-    textField?: Partial<ITextFieldStyles>;
-}
-
-// @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
@@ -506,11 +460,6 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     drawerContentRoot?: BaseCustomStyles;
     lightDismissRoot?: BaseCustomStyles;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "DtmfTone" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;

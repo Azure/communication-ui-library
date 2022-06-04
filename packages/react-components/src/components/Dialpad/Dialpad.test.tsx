@@ -1,18 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(dialpad) */
 import React from 'react';
+/* @conditional-compile-remove(dialpad) */
 import Enzyme, { mount } from 'enzyme';
+/* @conditional-compile-remove(dialpad) */
 import Adapter from 'enzyme-adapter-react-16';
+/* @conditional-compile-remove(dialpad) */
 import { _Dialpad } from './Dialpad';
+/* @conditional-compile-remove(dialpad) */
 import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
-
+/* @conditional-compile-remove(dialpad) */
 Enzyme.configure({ adapter: new Adapter() });
 
+/* @conditional-compile-remove(dialpad) */
 const customDialpadStrings = {
   defaultText: Math.random().toString()
 };
 
+test('workaround for conditional compilation. Test suite must contain atleast one test', () => {
+  expect(true).toBeTruthy();
+});
+
+/* @conditional-compile-remove(dialpad) */
 describe('Dialpad tests', () => {
   test('Should localize default text ', async () => {
     const testLocale = createTestLocale({
@@ -100,3 +111,5 @@ describe('Dialpad tests', () => {
     expect(component.find('input').first().props().value).toBe('23456789000');
   });
 });
+
+export default {};
