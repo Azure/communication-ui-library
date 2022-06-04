@@ -96,7 +96,7 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * When stabilizing we need to remove the union type to support the new components.
- *@public
+ *@beta
  */
 export type ConditionalCompComponent = {
   (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
