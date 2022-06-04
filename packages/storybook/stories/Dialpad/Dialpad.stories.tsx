@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { _Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
-import { _Dialpad as DialpadComponent, useTheme } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';

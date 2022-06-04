@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DtmfTone } from '@azure/communication-calling';
-import { _Dialpad, _DialpadButtonProps } from '@internal/react-components';
+import { _Dialpad } from '@azure/communication-react';
 import React from 'react';
 
 const onSendDtmfTones = (dtmfTones: DtmfTone): Promise<void> => {
