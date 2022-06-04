@@ -1187,6 +1187,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 export interface StreamMediaProps {
     isMirrored?: boolean;
     isReceiving?: boolean;
+    isRemoteVideoStream?: boolean;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
