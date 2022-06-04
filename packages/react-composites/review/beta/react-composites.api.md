@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
@@ -20,7 +21,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { FileDownloadHandler } from '@internal/react-components';
@@ -800,8 +801,15 @@ export interface CustomCallControlButtonCallbackArgs {
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps {
+    disabled?: boolean;
+    icon?: string;
+    // (undocumented)
+    onItemClick?: () => void;
     placement: CustomCallControlButtonPlacement;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public

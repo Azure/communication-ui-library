@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ControlBarButtonProps } from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 
 /**
  * Control bar display type for {@link CallComposite}.
@@ -110,13 +110,37 @@ export interface CustomCallControlButtonCallbackArgs {
 /**
  * Response from {@link CustomCallControlButtonCallback}.
  *
- * Includes the props necessary to render a {@link  ControlBarButton} and indication of where to place the button.
+ * Includes the props necessary to render a {@link ControlBarButton} and a {@link DrawerMenuItem}
+ * with indication on where to place the button.
  *
  * @beta
  */
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps {
+  onItemClick?: () => void;
   /**
    * Where to place the custom button relative to other buttons.
    */
   placement: CustomCallControlButtonPlacement;
+  /**
+   * Whether the button is disabled
+   */
+  disabled?: boolean;
+  /**
+   * Icon to render
+   */
+  icon?: string;
+  /**
+   * Whether the label is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showLabel?: boolean;
+  /**
+   * Fluent styles, common to all {@link ControlBarButton}s or {@link DrawerMenuItem}s.
+   */
+  styles?: ControlBarButtonStyles | BaseCustomStyles;
+  /**
+   * Optional label for the button
+   */
+  text?: string;
 }

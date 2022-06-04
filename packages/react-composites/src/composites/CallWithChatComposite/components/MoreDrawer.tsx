@@ -189,35 +189,17 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow']?.props.children.forEach((element) => {
-    drawerMenuItems.push({
-      itemKey: element.key,
-      text: element.strings.label,
-      onItemClick: element.onClick,
-      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
-      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
-    });
+    drawerMenuItems.push(element);
   });
   /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['primary']?.props.children
     .slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS)
     .forEach((element) => {
-      drawerMenuItems.push({
-        itemKey: element.key,
-        text: element.strings.label,
-        onItemClick: element.onClick,
-        iconProps: { iconName: element.onRenderOnIcon().props.iconName },
-        subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
-      });
+      drawerMenuItems.push(element);
     });
   /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['secondary']?.props.children.forEach((element) => {
-    drawerMenuItems.push({
-      itemKey: element.key,
-      text: element.strings.label,
-      onItemClick: element.onClick,
-      iconProps: { iconName: element.onRenderOnIcon().props.iconName },
-      subMenuProps: element.menuProps ? makeSubMenuItems(element) : undefined
-    });
+    drawerMenuItems.push(element);
   });
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
@@ -236,19 +218,4 @@ const onFetchCustomButtonPropsTrampoline = (
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
   response = options?.onFetchCustomButtonProps;
   return response;
-};
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-/** @private */
-const makeSubMenuItems = (menuItem): _DrawerMenuItemProps[] => {
-  const subMenuProps: _DrawerMenuItemProps[] = [];
-  if (menuItem.menuProps) {
-    menuItem.menuProps?.items.forEach((subMenuItem) => {
-      subMenuProps.push({
-        itemKey: subMenuItem.key,
-        text: subMenuItem.text
-      });
-    });
-  }
-  return subMenuProps;
 };

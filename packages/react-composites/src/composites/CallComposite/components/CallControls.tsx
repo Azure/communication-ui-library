@@ -10,7 +10,7 @@ import { CallControlOptions } from '../types/CallControlOptions';
 import { CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomButtons } from './buttons/Custom';
+import { generateCustomControlBarButtons } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -40,7 +40,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
-    () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
 

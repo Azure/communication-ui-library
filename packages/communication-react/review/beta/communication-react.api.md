@@ -1368,8 +1368,15 @@ export interface CustomCallControlButtonCallbackArgs {
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps {
+    disabled?: boolean;
+    icon?: string;
+    // (undocumented)
+    onItemClick?: () => void;
     placement: CustomCallControlButtonPlacement;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public

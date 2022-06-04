@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ControlBarButton } from '@internal/react-components';
+import { Icon } from '@fluentui/react';
+import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import React from 'react';
 import {
   CallControlDisplayType,
@@ -11,6 +12,7 @@ import {
 
 /**
  * Max number of Custom Buttons in primary and secondary ControlBar
+ * Does not include existing buttons in the controlBar.
  *
  * @private
  */
@@ -24,7 +26,7 @@ export const CUSTOM_BUTTON_OPTIONS = {
 export type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
 
 /** @private */
-export const generateCustomButtons = (
+export const generateCustomControlBarButtons = (
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomButtons => {
@@ -37,6 +39,10 @@ export const generateCustomButtons = (
     return response;
   }
 
+  const generateCustomControlBarButtonStrings = (text: string | undefined): ControlBarButtonStrings => {
+    return { label: text };
+  };
+
   const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
   for (const key in response) {
     response[key] = (
@@ -44,7 +50,15 @@ export const generateCustomButtons = (
         {allButtonProps
           .filter((buttonProps) => buttonProps.placement === key)
           .map((buttonProps, i) => (
-            <ControlBarButton {...buttonProps} key={`${buttonProps.placement}_${i}`} />
+            <ControlBarButton
+              onClick={buttonProps.onItemClick}
+              showLabel={buttonProps.showLabel}
+              strings={generateCustomControlBarButtonStrings(buttonProps.text)}
+              styles={buttonProps.styles}
+              key={`${buttonProps.placement}_${i}`}
+              onRenderIcon={() => <Icon iconName={buttonProps.icon} />}
+              disabled={buttonProps.disabled}
+            />
           ))}
       </>
     );
@@ -72,7 +86,13 @@ export const generateCustomDrawerButtons = (
       <>
         {allButtonProps
           .filter((buttonProps) => buttonProps.placement === key)
-          .map((buttonProps, i) => ({ ...buttonProps, key: `${buttonProps.placement}_${i}` }))}
+          .map((buttonProps, i) => ({
+            itemKey: `${buttonProps.placement}_${i}`,
+            text: buttonProps.text,
+            onItemClick: buttonProps.onItemClick,
+            iconProps: { iconName: buttonProps.icon },
+            disabled: buttonProps.disabled
+          }))}
       </>
     );
   }

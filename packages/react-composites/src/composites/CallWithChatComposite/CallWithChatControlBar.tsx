@@ -23,7 +23,7 @@ import { MoreButton } from './MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { ContainerRectProps } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { CUSTOM_BUTTON_OPTIONS, generateCustomButtons } from '../CallComposite/components/buttons/Custom';
+import { CUSTOM_BUTTON_OPTIONS, generateCustomControlBarButtons } from '../CallComposite/components/buttons/Custom';
 
 /**
  * @private
@@ -112,7 +112,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
-      generateCustomButtons(
+      generateCustomControlBarButtons(
         onFetchCustomButtonPropsTrampoline(options !== false ? options : undefined),
         options !== false ? options?.displayType : undefined
       ),
@@ -219,7 +219,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 return (
                   <element.type
                     {...element.props}
-                    key={element.props.strings.label}
+                    key={element.props.key}
                     styles={commonButtonStyles}
                     displayType={options.displayType}
                     showLabel={options.displayType !== 'compact'}
