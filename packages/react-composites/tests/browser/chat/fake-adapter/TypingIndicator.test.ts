@@ -8,12 +8,10 @@ import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, tes
 
 test.describe('Tests related to typing indicator', async () => {
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
-    page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        typingParticipants: [DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0]]
-      })
-    );
+    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
+    await page.bringToFront();
+    await page.type('[data-ui-id="remote-sendbox-textfield"]', 'test');
+
     await waitForSelector(page, dataUiId(IDS.typingIndicator));
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 

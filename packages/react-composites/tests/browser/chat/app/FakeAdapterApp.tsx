@@ -16,7 +16,7 @@ import {
   FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS } from '../../common/constants';
+import { IDS, REMOTE_IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
@@ -35,7 +35,8 @@ export const FakeAdapterApp = (): JSX.Element => {
     verifyParamExists(params.fakeChatAdapterArgs, 'fakeChatAdapterArgs')
   ) as FakeChatAdapterArgs;
 
-  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
+  const [adapter, setAdapter] = useState<ChatAdapter>();
+  const [remoteAdapter, setRemoteAdapter] = useState<ChatAdapter>();
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -52,7 +53,15 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatClient: chatClient as IChatClient as ChatClient,
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       });
+      const remoteChatClient = new FakeChatClient(chatClientModel, participants[1].id);
+      const remoteAdapter = await initializeAdapter({
+        userId: participants[1].id,
+        displayName: participants[1].displayName,
+        chatClient: remoteChatClient as IChatClient as ChatClient,
+        chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+      });
       setAdapter(adapter);
+      setRemoteAdapter(remoteAdapter);
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
       }
@@ -63,15 +72,9 @@ export const FakeAdapterApp = (): JSX.Element => {
       ) {
         sendRemoteFileSharingMessage(chatClientModel, fakeChatAdapterArgs.remoteParticipants[0], thread);
       }
-      if (fakeChatAdapterArgs.typingParticipants) {
-        fakeChatAdapterArgs.typingParticipants.forEach((typingParticipant) => {
-          chatClient.receiveTypingNotification(thread.chatThread.id, typingParticipant);
-        });
-      }
     };
 
     initialize();
-    return () => adapter && adapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,9 +88,12 @@ export const FakeAdapterApp = (): JSX.Element => {
     });
   };
 
+  if (!adapter || !remoteAdapter) {
+    return <>{'Initializing chat adapter...'}</>;
+  }
+
   return (
     <>
-      {!adapter && 'Initializing chat adapter...'}
       {adapter && (
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
@@ -107,6 +113,18 @@ export const FakeAdapterApp = (): JSX.Element => {
             }}
           />
         </_IdentifierProvider>
+      )}
+      {remoteAdapter && (
+        <div style={{ height: 0, overflow: 'hidden' }}>
+          <_IdentifierProvider identifiers={REMOTE_IDS}>
+            <ChatComposite
+              adapter={remoteAdapter}
+              options={{
+                participantPane: true
+              }}
+            />
+          </_IdentifierProvider>
+        </div>
       )}
     </>
   );

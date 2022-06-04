@@ -273,22 +273,6 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve(true);
   }
 
-  receiveTypingNotification(sender: ChatParticipant): void {
-    const now = new Date(Date.now());
-
-    this.checkedGetThreadEventEmitter().typingIndicatorReceived(
-      getThreadEventTargets(this.checkedGetThread(), sender.id),
-      {
-        threadId: this.threadId,
-        sender: getIdentifierKind(sender.id),
-        senderDisplayName: sender.displayName,
-        recipient: getIdentifierKind(this.userId),
-        version: '0',
-        receivedOn: now
-      }
-    );
-  }
-
   sendReadReceipt(request: SendReadReceiptRequest): Promise<void> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {

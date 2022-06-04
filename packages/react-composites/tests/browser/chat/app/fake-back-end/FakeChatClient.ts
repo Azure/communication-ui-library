@@ -131,14 +131,6 @@ export class FakeChatClient implements IChatClient {
     throw new Error('Not Implemented');
   }
 
-  receiveTypingNotification(threadId: string, sender: ChatParticipant): void {
-    const threadClients = this.threadClients.filter((c) => c.threadId === threadId);
-
-    if (threadClients.length > 0) {
-      threadClients[0].receiveTypingNotification(sender);
-    }
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, listener: any): void {
     if (!this.realtimeNotificationsEnabled) {
