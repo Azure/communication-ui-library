@@ -1,16 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
 test.describe('Tests related to typing indicator', async () => {
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
-    page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
+    page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        remoteComposites: [TEST_PARTICIPANTS[1]]
+      })
+    );
     await page.bringToFront();
-    await page.type('[data-ui-id="remote-sendbox-textfield"]', 'test');
+    await page.type(
+      dataUiId(`${IDS.sendboxTextField}-${toFlatCommunicationIdentifier(TEST_PARTICIPANTS[1].id)}`),
+      'test'
+    );
 
     await waitForSelector(page, dataUiId(IDS.typingIndicator));
     const indicator = await page.$(dataUiId(IDS.typingIndicator));

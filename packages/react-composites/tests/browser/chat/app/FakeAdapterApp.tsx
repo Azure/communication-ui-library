@@ -6,7 +6,7 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider } from '@internal/react-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ChatAdapter,
   ChatComposite,
@@ -16,12 +16,13 @@ import {
   FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS, REMOTE_IDS } from '../../common/constants';
+import { generateIDS, IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -53,15 +54,17 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatClient: chatClient as IChatClient as ChatClient,
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       });
-      const remoteChatClient = new FakeChatClient(chatClientModel, participants[1].id);
-      const remoteAdapter = await initializeAdapter({
-        userId: participants[1].id,
-        displayName: participants[1].displayName,
-        chatClient: remoteChatClient as IChatClient as ChatClient,
-        chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-      });
       setAdapter(adapter);
-      setRemoteAdapter(remoteAdapter);
+      if (fakeChatAdapterArgs.remoteComposites) {
+        const remoteChatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.remoteComposites[0].id);
+        const remoteAdapter = await initializeAdapter({
+          userId: fakeChatAdapterArgs.remoteComposites[0].id,
+          displayName: fakeChatAdapterArgs.remoteComposites[0].displayName,
+          chatClient: remoteChatClient as IChatClient as ChatClient,
+          chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+        });
+        setRemoteAdapter(remoteAdapter);
+      }
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
       }
@@ -88,7 +91,7 @@ export const FakeAdapterApp = (): JSX.Element => {
     });
   };
 
-  if (!adapter || !remoteAdapter) {
+  if (!adapter) {
     return <>{'Initializing chat adapter...'}</>;
   }
 
@@ -116,7 +119,9 @@ export const FakeAdapterApp = (): JSX.Element => {
       )}
       {remoteAdapter && (
         <div style={{ height: 0, overflow: 'hidden' }}>
-          <_IdentifierProvider identifiers={REMOTE_IDS}>
+          <_IdentifierProvider
+            identifiers={generateIDS(toFlatCommunicationIdentifier(fakeChatAdapterArgs.remoteComposites[0].id))}
+          >
             <ChatComposite
               adapter={remoteAdapter}
               options={{
@@ -138,10 +143,12 @@ const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter>
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  return await createAzureCommunicationChatAdapterFromClient(
+  const f = await createAzureCommunicationChatAdapterFromClient(
     statefulChatClient,
     await statefulChatClient.getChatThreadClient(adapterInfo.chatThreadClient.threadId)
   );
+  console.log('DONE initializeAdapter');
+  return f;
 };
 
 interface AdapterInfo {

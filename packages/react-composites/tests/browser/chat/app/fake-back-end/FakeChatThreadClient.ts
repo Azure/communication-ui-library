@@ -257,17 +257,17 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const now = new Date(Date.now());
     const senderDisplayName = options?.senderDisplayName ?? this.checkedGetMe().displayName ?? '';
 
-    this.checkedGetThreadEventEmitter().typingIndicatorReceived(
-      getThreadEventTargets(this.checkedGetThread(), this.userId),
-      {
-        ...this.baseChatEvent(),
-        senderDisplayName,
-        // Verify/FIXME: There is no message associated with a typing notification.
-        // What should this version refer to?
-        version: '0',
-        receivedOn: now
-      }
-    );
+    const targets = getThreadEventTargets(this.checkedGetThread(), this.userId);
+    console.log('targets: ', JSON.stringify(targets));
+
+    this.checkedGetThreadEventEmitter().typingIndicatorReceived(targets, {
+      ...this.baseChatEvent(),
+      senderDisplayName,
+      // Verify/FIXME: There is no message associated with a typing notification.
+      // What should this version refer to?
+      version: '0',
+      receivedOn: now
+    });
     // Verify: The documentation for `sendTypingNotification` refers to backoff between attempts to send
     // typing notification. Need to check if the implementation includes such a backoff.
     return Promise.resolve(true);

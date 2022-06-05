@@ -51,7 +51,7 @@ export type FakeChatAdapterArgs = {
    */
   frenchLocaleEnabled?: boolean;
   /**
-   * Array of chat participants from which the local participant will receive a typing indicator event
+   * Array of chat participants for which create invisible chat composites for triggerring typing indicators and read receipts
    */
-  typingParticipants?: ChatParticipant[];
+  remoteComposites?: ChatParticipant[];
 };
