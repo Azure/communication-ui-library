@@ -37,7 +37,7 @@ export const FakeAdapterApp = (): JSX.Element => {
   ) as FakeChatAdapterArgs;
 
   const [adapter, setAdapter] = useState<ChatAdapter>();
-  const [remoteAdapter, setRemoteAdapter] = useState<ChatAdapter>();
+  const [remoteAdapters, setRemoteAdapters] = useState<ChatAdapter[]>([]);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -55,15 +55,19 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       });
       setAdapter(adapter);
-      if (fakeChatAdapterArgs.remoteComposites) {
-        const remoteChatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.remoteComposites[0].id);
-        const remoteAdapter = await initializeAdapter({
-          userId: fakeChatAdapterArgs.remoteComposites[0].id,
-          displayName: fakeChatAdapterArgs.remoteComposites[0].displayName,
-          chatClient: remoteChatClient as IChatClient as ChatClient,
-          chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-        });
-        setRemoteAdapter(remoteAdapter);
+      if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
+        const remoteAdapters = [];
+        for (const participant of fakeChatAdapterArgs.participantsWithHiddenComposites) {
+          const remoteChatClient = new FakeChatClient(chatClientModel, participant.id);
+          const remoteAdapter = await initializeAdapter({
+            userId: participant.id,
+            displayName: participant.displayName,
+            chatClient: remoteChatClient as IChatClient as ChatClient,
+            chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+          });
+          remoteAdapters.push(remoteAdapter);
+        }
+        setRemoteAdapters(remoteAdapters);
       }
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
@@ -117,18 +121,22 @@ export const FakeAdapterApp = (): JSX.Element => {
           />
         </_IdentifierProvider>
       )}
-      {remoteAdapter && (
+      {remoteAdapters && (
         <div style={{ height: 0, overflow: 'hidden' }}>
-          <_IdentifierProvider
-            identifiers={generateIDS(toFlatCommunicationIdentifier(fakeChatAdapterArgs.remoteComposites[0].id))}
-          >
-            <ChatComposite
-              adapter={remoteAdapter}
-              options={{
-                participantPane: true
-              }}
-            />
-          </_IdentifierProvider>
+          {remoteAdapters.map((remoteAdapter) => {
+            return (
+              <_IdentifierProvider
+                identifiers={generateIDS(toFlatCommunicationIdentifier(remoteAdapter.getState().userId))}
+              >
+                <ChatComposite
+                  adapter={remoteAdapter}
+                  options={{
+                    participantPane: true
+                  }}
+                />
+              </_IdentifierProvider>
+            );
+          })}
         </div>
       )}
     </>
@@ -143,12 +151,10 @@ const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter>
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  const f = await createAzureCommunicationChatAdapterFromClient(
+  return await createAzureCommunicationChatAdapterFromClient(
     statefulChatClient,
     await statefulChatClient.getChatThreadClient(adapterInfo.chatThreadClient.threadId)
   );
-  console.log('DONE initializeAdapter');
-  return f;
 };
 
 interface AdapterInfo {

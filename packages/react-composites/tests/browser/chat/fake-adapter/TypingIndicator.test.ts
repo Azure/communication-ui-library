@@ -12,7 +12,7 @@ test.describe('Tests related to typing indicator', async () => {
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        remoteComposites: [TEST_PARTICIPANTS[1]]
+        participantsWithHiddenComposites: [TEST_PARTICIPANTS[1]]
       })
     );
     await page.bringToFront();
