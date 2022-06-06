@@ -5,8 +5,8 @@ import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communicat
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider } from '@internal/react-components';
-import React, { useEffect, useRef, useState } from 'react';
+import { _IdentifierProvider, _Identifiers } from '@internal/react-components';
+import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
   ChatComposite,
@@ -16,7 +16,7 @@ import {
   FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { generateIDS, IDS } from '../../common/constants';
+import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
@@ -217,7 +217,7 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
   return remoteAdapters.map((remoteAdapter) => {
     const userId = toFlatCommunicationIdentifier(remoteAdapter.getState().userId);
     return (
-      <div id={`composite-${userId}`} style={{ height: 0, overflow: 'hidden' }}>
+      <div key={`composite-${userId}`} style={{ height: 0, overflow: 'hidden' }}>
         <_IdentifierProvider identifiers={generateIDS(userId)}>
           <ChatComposite
             adapter={remoteAdapter}
@@ -229,4 +229,15 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
       </div>
     );
   });
+};
+
+/**
+ * Helper function to create IDs for {@link _IdentifierProvider} using a user id
+ */
+const generateIDS = (userId: string): _Identifiers => {
+  const data_ui_ids = { ...IDS };
+  Object.entries(data_ui_ids).forEach(([key, value]) => {
+    data_ui_ids[key] = value + '-' + userId;
+  });
+  return data_ui_ids;
 };

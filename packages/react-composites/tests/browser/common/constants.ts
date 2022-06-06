@@ -23,11 +23,3 @@ export const IDS = {
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip'
 };
-
-export const generateIDS = (userId: string) => {
-  const data_ui_ids = { ...IDS };
-  Object.entries(data_ui_ids).forEach(([key, value]) => {
-    data_ui_ids[key] = value + '-' + userId;
-  });
-  return data_ui_ids;
-};
