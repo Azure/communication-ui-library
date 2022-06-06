@@ -17,8 +17,6 @@ import {
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { HoldButton, HoldButtonProps } from '@internal/react-components';
 
 /**
  * Centralized state for {@link @azure/communication-calling#CallClient} or {@link @azure/communication-chat#ChatClient}.
@@ -93,15 +91,6 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
     : CallingReturnProps<Component>
   : ChatReturnProps<Component>;
 
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * When stabilizing we need to remove the union type to support the new components.
- *@beta
- */
-export type ConditionalCompComponent = {
-  (component: typeof HoldButton, type?: 'calling'): Common<CallingHandlers, HoldButtonProps>;
-};
-
 /**
  * Primary hook to get all hooks necessary for a React Component from this library..
  *
@@ -120,17 +109,10 @@ export type ConditionalCompComponent = {
  *
  * @public
  */
-export const usePropsFor:
-  | (<Component extends (props: any) => JSX.Element>(
-      component: Component,
-      type?: 'calling' | 'chat'
-    ) => ComponentProps<Component>)
-  | /* @conditional-compile-remove(PSTN-calls) */ ConditionalCompComponent = <
-  Component extends (props: any) => JSX.Element
->(
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component,
   type?: 'calling' | 'chat'
-) => {
+): ComponentProps<Component> => {
   const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
   const callProps = useCallingSelector(callingSelector);
