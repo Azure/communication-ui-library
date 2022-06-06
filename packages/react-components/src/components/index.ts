@@ -31,6 +31,7 @@ export type {
 
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
+export type { LoadingState } from './StreamMedia';
 
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';

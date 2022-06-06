@@ -13,7 +13,11 @@ import {
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 
-type LoadingState = 'loading' | 'none';
+/**
+ * Whether the stream is loading or not.
+ * @public
+ */
+export type LoadingState = 'loading' | 'none';
 
 /**
  * Props for {@link StreamMedia}.
@@ -25,10 +29,8 @@ export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
   /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
-  /** Weather the stream is loading data */
+  /** Whether the stream is loading data */
   loadingState?: LoadingState;
-  /** Weather it is a remote video stream */
-  isRemoteVideoStream?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example

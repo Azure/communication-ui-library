@@ -148,6 +148,7 @@ export type {
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
   LocalVideoCameraCycleButtonProps,
+  LoadingState,
   Message,
   MessageAttachedStatus,
   MessageCommon,
