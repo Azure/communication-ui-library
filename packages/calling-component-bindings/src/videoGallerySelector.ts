@@ -73,7 +73,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
-
+    const noRemoteParticipants = [];
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -96,7 +96,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         }
       },
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
-        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : [])
+        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
       dominantSpeakers: dominantSpeakerIds
     };
