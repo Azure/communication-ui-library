@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance Banner Compliance Banner 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
       }
     >
       <div
-        className="ms-Stack css-1"
+        className="ms-Stack css-stub-classname"
         style={
           Object {
             "minHeight": "50%",
@@ -30,10 +30,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
         }
       >
         <div
-          className="ms-Stack css-2"
+          className="ms-Stack css-stub-classname"
         >
           <button
-            className="ms-Button ms-Button--primary root-3"
+            className="ms-Button ms-Button--primary css-stub-classname"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -44,15 +44,15 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
             type="button"
           >
             <span
-              className="ms-Button-flexContainer flexContainer-4"
+              className="ms-Button-flexContainer css-stub-classname"
               data-automationid="splitbuttonprimary"
             >
               <span
-                className="ms-Button-textContainer textContainer-5"
+                className="ms-Button-textContainer css-stub-classname"
               >
                 <span
-                  className="ms-Button-label label-7"
-                  id="id__1"
+                  className="ms-Button-label css-stub-classname"
+                  id="id__109"
                 >
                   Toggle Recording
                 </span>
@@ -60,7 +60,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
             </span>
           </button>
           <button
-            className="ms-Button ms-Button--primary root-3"
+            className="ms-Button ms-Button--primary css-stub-classname"
             data-is-focusable={true}
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -71,15 +71,15 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
             type="button"
           >
             <span
-              className="ms-Button-flexContainer flexContainer-4"
+              className="ms-Button-flexContainer css-stub-classname"
               data-automationid="splitbuttonprimary"
             >
               <span
-                className="ms-Button-textContainer textContainer-5"
+                className="ms-Button-textContainer css-stub-classname"
               >
                 <span
-                  className="ms-Button-label label-7"
-                  id="id__4"
+                  className="ms-Button-label css-stub-classname"
+                  id="id__112"
                 >
                   Toggle Transcription
                 </span>
