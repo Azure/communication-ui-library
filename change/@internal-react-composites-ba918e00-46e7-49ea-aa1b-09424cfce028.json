@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Call call.hangup in adapter dispose method to ensure resources are cleaned up",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
