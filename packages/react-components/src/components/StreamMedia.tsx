@@ -93,7 +93,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
       />
       {loadingState === 'loading' && (
         <div className={loadingSpinnerContainer()}>
-          <Spinner styles={loadSpinnerStyles} />
+          <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
         </div>
       )}
     </div>
