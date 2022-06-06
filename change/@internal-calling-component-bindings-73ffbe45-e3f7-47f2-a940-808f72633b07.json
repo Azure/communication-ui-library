@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Show a loading spinner when remote video stream is loading",
+  "comment": "Support `isReceiving` flag for video streams",
   "packageName": "@internal/calling-component-bindings",
   "email": "chwhilar@microsoft.com",
   "dependentChangeType": "patch"
