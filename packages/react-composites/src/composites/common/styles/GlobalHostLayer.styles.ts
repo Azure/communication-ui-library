@@ -14,5 +14,6 @@ export const globalLayerHostStyle: IStyle = {
   height: '100%',
   overflow: 'hidden',
   // pointer events for layerHost set to none to make descendants interactive
-  pointerEvents: 'none'
+  pointerEvents: 'none',
+  zIndex: 1000000
 };
