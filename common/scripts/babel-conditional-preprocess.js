@@ -140,18 +140,13 @@ function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
     comment.value = '';
   })
 
-  switch(path?.container?.type) {
-    case 'JSXExpressionContainer':
-      // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
-      // Replacing it with jSXEmptyExpression will get us the same result
-      // There will always be only one expression under JSXExpressionContainer
-      path.replaceWith(t.jSXEmptyExpression());
-      break;
-    case 'TSConditionalType':
-      // TODO add comment
-      // path.replaceWith(path.container.falseType);
-    default:
-      path.remove();
+  // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
+  // Replacing it with jSXEmptyExpression will get us the same result
+  // There will always be only one expression under JSXExpressionContainer
+  if (path?.container?.type === 'JSXExpressionContainer') {
+    path.replaceWith(t.jSXEmptyExpression());
+  } else {
+    path.remove();
   }
 }
 
