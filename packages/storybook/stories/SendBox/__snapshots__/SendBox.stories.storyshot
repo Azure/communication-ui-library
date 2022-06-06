@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -28,16 +28,16 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-112 css-3"
+          className="ms-Stack css-stub-classname"
         >
           <div
-            className="ms-Stack css-4"
+            className="ms-Stack css-stub-classname"
           >
             <div
-              className="ms-Stack css-119 css-3"
+              className="ms-Stack css-stub-classname"
             >
               <div
-                className="css-5"
+                className="css-stub-classname"
               >
                 <div
                   className="ms-TextField ms-TextField--multiline root-7"
