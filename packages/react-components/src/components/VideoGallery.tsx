@@ -364,6 +364,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+      isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
     />
   );
 

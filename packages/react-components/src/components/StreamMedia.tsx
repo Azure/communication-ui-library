@@ -12,6 +12,8 @@ import {
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 
+type LoadingState = 'loading' | 'none';
+
 /**
  * Props for {@link StreamMedia}.
  *
@@ -22,8 +24,8 @@ export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
   /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
-  /** Weather the remote stream is receiving data */
-  isReceiving?: boolean;
+  /** Weather the stream is loading data */
+  loadingState?: LoadingState;
   /** Weather it is a remote video stream */
   isRemoteVideoStream?: boolean;
   /**
@@ -47,7 +49,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
 
-  const { isMirrored, videoStreamElement, styles, isReceiving, isRemoteVideoStream } = props;
+  const { isMirrored, videoStreamElement, styles, loadingState = 'none' } = props;
   const [pipEnabled, setPipEnabled] = useState(false);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
         )}
         ref={containerEl}
       />
-      {isRemoteVideoStream && !isReceiving && (
+      {loadingState === 'loading' && (
         <div className={loadingSpinnerContainer()}>
           <Spinner styles={{ circle: { height: '5rem', width: '5rem', borderWidth: '0.25em' } }} />
         </div>

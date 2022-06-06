@@ -90,7 +90,7 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} isReceiving={isReceiving} isRemoteVideoStream={true} />;
+      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
     }, [renderElement, isReceiving]);
 
     return (
