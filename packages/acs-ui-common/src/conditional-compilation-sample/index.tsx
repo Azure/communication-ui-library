@@ -69,7 +69,6 @@ interface B {
  */
 /* @conditional-compile-remove(demo) */
 import { Dir } from 'fs';
-import { AreEqual } from '../areEqual';
 
 /**
  * Conditionally export from a module.
@@ -294,14 +293,15 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
  *
  * WARNING: The conditional compilation directive is in the branch to be removed, NOT the condition. (So not before {@link AreEqual}).
  */
+import { AreEqual } from '../areEqual';
 
-export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
+export type GetSelector<Component extends (props: unknown) => JSX.Element | undefined> = AreEqual<
   Component,
-  typeof StableComponentWithSelector
+  typeof utils.StableComponentWithSelector
 > extends true
-  ? StableSelector
-  : AreEqual<Component, typeof BetaComponentWithSelector> extends true
-  ? /* @conditional-compile-remove(demo) */ BetaSelector
+  ? utils.StableSelector
+  : AreEqual<Component, typeof utils.BetaComponentWithSelector> extends true
+  ? /* @conditional-compile-remove(demo) */ utils.BetaSelector
   : undefined;
 
 /**
