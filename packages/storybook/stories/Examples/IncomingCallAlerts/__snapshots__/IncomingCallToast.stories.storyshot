@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incoming Call Toast Incoming Call Toast 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,29 +21,29 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
       }
     >
       <div
-        className="ms-Stack css-1"
+        className="ms-Stack css-stub-classname"
       >
         <div
-          className="ms-Stack css-177 css-2"
+          className="ms-Stack css-stub-classname"
         >
           <div
-            className="ms-Stack css-178 css-3"
+            className="ms-Stack css-stub-classname"
           >
             <div
               aria-label="Maximus Aurelius"
-              className="ms-Persona ms-Persona--size40 root-4"
+              className="ms-Persona ms-Persona--size40 css-stub-classname"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size40 coin-11"
+                className="ms-Persona-coin ms-Persona--size40 css-stub-classname"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-13"
+                  className="ms-Persona-imageArea css-stub-classname"
                   role="presentation"
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-16"
+                    className="ms-Persona-initials css-stub-classname"
                   >
                     <span>
                       MA
@@ -54,7 +54,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             </div>
           </div>
           <div
-            className="ms-Stack css-19"
+            className="ms-Stack css-stub-classname"
             style={
               Object {
                 "alignItems": "flex-start",
@@ -63,7 +63,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             }
           >
             <div
-              className="ms-Stack css-1"
+              className="ms-Stack css-stub-classname"
               style={
                 Object {
                   "fontSize": "0.875rem",
@@ -75,7 +75,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               </b>
             </div>
             <div
-              className="ms-Stack css-1"
+              className="ms-Stack css-stub-classname"
               style={
                 Object {
                   "fontSize": "0.75rem",
@@ -88,10 +88,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             </div>
           </div>
           <div
-            className="ms-Stack css-20"
+            className="ms-Stack css-stub-classname"
           >
             <button
-              className="ms-Button ms-Button--default css-180 root-21"
+              className="ms-Button ms-Button--default css-stub-classname"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -102,7 +102,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-22"
+                className="ms-Button-flexContainer css-stub-classname"
                 data-automationid="splitbuttonprimary"
               >
                 <span
@@ -125,7 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-179 root-21"
+              className="ms-Button ms-Button--default css-stub-classname"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -136,7 +136,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               type="button"
             >
               <span
-                className="ms-Button-flexContainer flexContainer-22"
+                className="ms-Button-flexContainer css-stub-classname"
                 data-automationid="splitbuttonprimary"
               >
                 <span

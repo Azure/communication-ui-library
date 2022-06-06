@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-118 body-0"
+        className="css-118 css-stub-classname"
         dir="ltr"
       >
         <div
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
           data-uses-unhanded-props={true}
         >
           <div
-            className="ms-Stack css-3"
+            className="ms-Stack css-stub-classname"
             style={
               Object {
                 "height": "100%",
@@ -38,40 +38,40 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
             }
           >
             <div
-              className="ms-StackItem css-4"
+              className="ms-StackItem css-stub-classname"
             >
               <div
-                className="ms-Stack css-5"
+                className="ms-Stack css-stub-classname"
               >
                 <div
-                  className="ms-Stack css-12"
+                  className="ms-Stack css-stub-classname"
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="css-9"
+                    className="css-stub-classname"
                   />
                   <div
-                    className="ms-Stack css-13"
+                    className="ms-Stack css-stub-classname"
                   >
                     <div
-                      className="css-14"
+                      className="css-stub-classname"
                     />
                   </div>
                   <div
-                    className="ms-Stack css-15"
+                    className="ms-Stack css-stub-classname"
                   >
                     <div
-                      className="css-17"
+                      className="css-stub-classname"
                     >
                       <div
-                        className="ms-Stack css-18"
+                        className="ms-Stack css-stub-classname"
                       >
                         <div
                           aria-live="polite"
-                          className="ms-Stack css-19"
+                          className="ms-Stack css-stub-classname"
                         />
                         <div
-                          className="ms-TooltipHost root-20"
+                          className="ms-TooltipHost root-94"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
@@ -80,7 +80,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         >
                           <button
                             aria-label="Turn off camera"
-                            className="ms-Button ms-Button--default is-checked root-21"
+                            className="ms-Button ms-Button--default is-checked css-stub-classname"
                             data-is-focusable={true}
                             onClick={[Function]}
                             onKeyDown={[Function]}
@@ -91,12 +91,12 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             type="button"
                           >
                             <span
-                              className="ms-Button-flexContainer flexContainer-22"
+                              className="ms-Button-flexContainer css-stub-classname"
                               data-automationid="splitbuttonprimary"
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-94 root-30"
+                                className="css-stub-classname"
                                 data-icon-name="ControlButtonCameraOn"
                               >
                                 <span
@@ -122,7 +122,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
+                                className="ms-Icon root-94 css-stub-classname ms-Button-menuIcon css-stub-classname"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
@@ -138,10 +138,10 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         </div>
                         <div
                           aria-live="polite"
-                          className="ms-Stack css-19"
+                          className="ms-Stack css-stub-classname"
                         />
                         <div
-                          className="ms-TooltipHost root-20"
+                          className="ms-TooltipHost root-94"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
@@ -150,7 +150,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                         >
                           <button
                             aria-label="Mute microphone"
-                            className="ms-Button ms-Button--default is-checked root-21"
+                            className="ms-Button ms-Button--default is-checked css-stub-classname"
                             data-is-focusable={true}
                             onClick={[Function]}
                             onKeyDown={[Function]}
@@ -161,12 +161,12 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             type="button"
                           >
                             <span
-                              className="ms-Button-flexContainer flexContainer-22"
+                              className="ms-Button-flexContainer css-stub-classname"
                               data-automationid="splitbuttonprimary"
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-94 root-30"
+                                className="css-stub-classname"
                                 data-icon-name="ControlButtonMicOn"
                               >
                                 <span
@@ -192,7 +192,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-94 css-31 ms-Button-menuIcon menuIcon-26"
+                                className="ms-Icon root-94 css-stub-classname ms-Button-menuIcon css-stub-classname"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
