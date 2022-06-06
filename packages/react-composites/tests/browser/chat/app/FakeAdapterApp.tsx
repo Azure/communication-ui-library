@@ -56,17 +56,11 @@ export const FakeAdapterApp = (): JSX.Element => {
       });
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
-        const remoteAdapters = [];
-        for (const participant of fakeChatAdapterArgs.participantsWithHiddenComposites) {
-          const remoteChatClient = new FakeChatClient(chatClientModel, participant.id);
-          const remoteAdapter = await initializeAdapter({
-            userId: participant.id,
-            displayName: participant.displayName,
-            chatClient: remoteChatClient as IChatClient as ChatClient,
-            chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-          });
-          remoteAdapters.push(remoteAdapter);
-        }
+        const remoteAdapters = await initializeAdapters(
+          fakeChatAdapterArgs.participantsWithHiddenComposites,
+          chatClientModel,
+          thread
+        );
         setRemoteAdapters(remoteAdapters);
       }
       if (fakeChatAdapterArgs.fileUploads) {
@@ -121,24 +115,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           />
         </_IdentifierProvider>
       )}
-      {remoteAdapters && (
-        <div style={{ height: 0, overflow: 'hidden' }}>
-          {remoteAdapters.map((remoteAdapter) => {
-            return (
-              <_IdentifierProvider
-                identifiers={generateIDS(toFlatCommunicationIdentifier(remoteAdapter.getState().userId))}
-              >
-                <ChatComposite
-                  adapter={remoteAdapter}
-                  options={{
-                    participantPane: true
-                  }}
-                />
-              </_IdentifierProvider>
-            );
-          })}
-        </div>
-      )}
+      {remoteAdapters && createHiddenComposites(remoteAdapters)}
     </>
   );
 };
@@ -215,4 +192,41 @@ const sendRemoteFileSharingMessage = (chatClientModel: Model, remoteParticipant:
       }
     }
   );
+};
+
+const initializeAdapters = async (
+  participants: ChatParticipant[],
+  chatClientModel: Model,
+  thread
+): Promise<ChatAdapter[]> => {
+  const remoteAdapters = [];
+  for (const participant of participants) {
+    const remoteChatClient = new FakeChatClient(chatClientModel, participant.id);
+    const remoteAdapter = await initializeAdapter({
+      userId: participant.id,
+      displayName: participant.displayName,
+      chatClient: remoteChatClient as IChatClient as ChatClient,
+      chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    });
+    remoteAdapters.push(remoteAdapter);
+  }
+  return remoteAdapters;
+};
+
+const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] => {
+  return remoteAdapters.map((remoteAdapter) => {
+    const userId = toFlatCommunicationIdentifier(remoteAdapter.getState().userId);
+    return (
+      <div id={`composite-${userId}`} style={{ height: 0, overflow: 'hidden' }}>
+        <_IdentifierProvider identifiers={generateIDS(userId)}>
+          <ChatComposite
+            adapter={remoteAdapter}
+            options={{
+              participantPane: true
+            }}
+          />
+        </_IdentifierProvider>
+      </div>
+    );
+  });
 };

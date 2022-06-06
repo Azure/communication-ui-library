@@ -5,29 +5,30 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Tests related to typing indicator', async () => {
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
+    const typingParticipant = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        participantsWithHiddenComposites: [TEST_PARTICIPANTS[1]]
+        participantsWithHiddenComposites: [typingParticipant]
       })
     );
-    await page.bringToFront();
+
+    // Type on typing participant's send box to trigger typing indicator
     await page.type(
-      dataUiId(`${IDS.sendboxTextField}-${toFlatCommunicationIdentifier(TEST_PARTICIPANTS[1].id)}`),
-      'test'
+      dataUiId(`${IDS.sendboxTextField}-${toFlatCommunicationIdentifier(typingParticipant.id)}`),
+      'How the turn tables'
     );
 
     await waitForSelector(page, dataUiId(IDS.typingIndicator));
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 
-    expect(await indicator?.innerHTML()).toContain(DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0].displayName);
+    expect(await indicator?.innerHTML()).toContain(typingParticipant.displayName);
     expect(await stableScreenshot(page, {})).toMatchSnapshot('typing-indicator.png');
 
-    await page.bringToFront();
     // Advance time by 10 seconds to make typingindicator go away
     await page.evaluate(() => {
       const currentDate = new Date();
