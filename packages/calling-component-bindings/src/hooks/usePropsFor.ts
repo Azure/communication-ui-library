@@ -103,10 +103,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
-  : /* @conditional-compile-remove(dialpad) */
-  AreEqual<Component, typeof _Dialpad> extends true
-  ? /* @conditional-compile-remove(dialpad) */
-    EmptySelector
+  : AreEqual<Component, typeof _Dialpad> extends true
+  ? /* @conditional-compile-remove(dialpad) */ EmptySelector
   : undefined;
 
 /**
@@ -125,6 +123,11 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 };
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  /* @conditional-compile-remove(dialpad) */
+  if (component === _Dialpad) {
+    return emptySelector;
+  }
+
   switch (component) {
     case VideoGallery:
       return videoGallerySelector;
@@ -144,9 +147,6 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
-    /* @conditional-compile-remove(dialpad) */
-    case _Dialpad:
-      return emptySelector;
   }
   return undefined;
 };
