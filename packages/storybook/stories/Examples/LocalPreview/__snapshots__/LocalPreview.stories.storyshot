@@ -55,7 +55,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                   >
                     <div
                       className="css-stub-classname"
-                    />
+                    >
+                      <div
+                        className="css-stub-classname"
+                      />
+                    </div>
                   </div>
                   <div
                     className="ms-Stack css-stub-classname"
