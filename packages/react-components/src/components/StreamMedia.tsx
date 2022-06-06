@@ -7,7 +7,8 @@ import {
   invertedVideoInPipStyle,
   mediaContainer,
   container,
-  loadingSpinnerContainer
+  loadingSpinnerContainer,
+  loadSpinnerStyles
 } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
@@ -90,7 +91,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
       />
       {loadingState === 'loading' && (
         <div className={loadingSpinnerContainer()}>
-          <Spinner styles={{ circle: { height: '5rem', width: '5rem', borderWidth: '0.25em' } }} />
+          <Spinner styles={loadSpinnerStyles} />
         </div>
       )}
     </div>
