@@ -4507,13 +4507,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Op5W7jYgZI7AWKY5wQ0/QNMzQM7dGQPyW1rXKNiymVCy5iTfdPuGu4HhYNOM2sIv8gUfIuIdcYlXmAepwaowow==
-  /@types/hoist-non-react-statics/3.3.1:
-    dependencies:
-      '@types/react': 16.14.13
-      hoist-non-react-statics: 3.3.2
-    dev: false
-    resolution:
-      integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
   /@types/html-minifier-terser/5.1.2:
     dev: false
     resolution:
@@ -4756,14 +4749,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
-  /@types/styled-components/5.1.25:
-    dependencies:
-      '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 16.14.13
-      csstype: 3.0.8
-    dev: false
-    resolution:
-      integrity: sha512-fgwl+0Pa8pdkwXRoVPP9JbqF0Ivo9llnmsm+7TCI330kbPIFd9qv1Lrhr37shf4tnxCOSu+/IgqM7uJXLWZZNQ==
   /@types/superagent/4.1.12:
     dependencies:
       '@types/cookiejar': 2.1.2
@@ -19228,7 +19213,6 @@ packages:
       '@types/react-aria-live': 2.0.1
       '@types/react-dom': 16.9.14
       '@types/react-linkify': 1.0.1
-      '@types/styled-components': 5.1.25
       '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
@@ -19290,7 +19274,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-n2Gu/j5Pgu1in1lqEIHy1M+9xJPc6cJbaOUptE4tCkoQTRq8ztIPWnBMf1H/dDBfdH5ryPbH0jciS0pJkaClfQ==
+      integrity: sha512-6MFeMcu2J05zk14VWBTxmvqCDacLh0MfU3tr98yn4l3obkOlZl0w9x/GjUqfyUWK0BQOHElUV4XhQLajLVyZZw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

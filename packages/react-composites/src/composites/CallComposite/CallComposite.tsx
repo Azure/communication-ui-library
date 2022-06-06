@@ -165,7 +165,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     options,
     formFactor = 'desktop'
   } = props;
-
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
