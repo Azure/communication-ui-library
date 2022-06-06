@@ -2,12 +2,13 @@
 // Licensed under the MIT license.
 
 import {
-  _updateUserDisplayNames,
   _dominantSpeakersWithFlatId,
   _isInCall,
   _isPreviewOn,
   _videoGalleryRemoteParticipantsMemo
 } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(PSTN-calls) */
+import { _updateUserDisplayNames } from '@internal/calling-component-bindings';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { getDominantSpeakerInfo, getRemoteParticipants } from './baseSelectors';
