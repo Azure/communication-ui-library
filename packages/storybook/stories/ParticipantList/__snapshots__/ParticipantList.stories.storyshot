@@ -102,11 +102,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-<<<<<<< HEAD
-                className="root-105 css-138"
-=======
                 className="css-stub-classname"
->>>>>>> origin/main
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -338,11 +334,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-<<<<<<< HEAD
-                className="root-105 css-138"
-=======
                 className="css-stub-classname"
->>>>>>> origin/main
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -578,11 +570,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-<<<<<<< HEAD
-                className="root-105 css-138"
-=======
                 className="css-stub-classname"
->>>>>>> origin/main
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
