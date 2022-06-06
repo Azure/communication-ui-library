@@ -15,13 +15,13 @@ jest.mock('@azure/communication-calling', () => {
 
 ReactDom.createPortal = (node: any) => node;
 
-// Classnames in fluent are of the format <display name>-#, where # is an integer that is incremented by a global singleton
-// when each new classname is generated.
+// Classnames in fluent are of the format <classname-prefix>-# (e.g. css-42), where # is an integer that is incremented by a
+// global singleton when each new classname is generated.
 // Here we mock the classname generation for two reasons:
 //   1. Unblocks parallel tests - if the order in which the tests run changes the generated css classnames
 //      will differ across different runs
 //   2. Prevents unnecessary PR friction - often PRs with small changes to styles would require snapshots to be updated
-//      simply to change the number of a couple of <display name>-# numbered classes. This caused a lot of developer friction.
+//      simply to change the number of a couple of <classname-prefix>-# numbered classes. This caused a lot of developer friction.
 Stylesheet.getInstance().getClassName = () => 'stub-classname';
 beforeEach(() => {
   // Ideally we could stub out the getId in the same way we can stub out getClassName, but currently this is not
