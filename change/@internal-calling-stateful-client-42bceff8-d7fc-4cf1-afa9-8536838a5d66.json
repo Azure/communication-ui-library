@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow Teams identity when creating StatefulCallClient",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
