@@ -38,7 +38,7 @@ export class RemoteVideoStreamSubscriber {
   public unsubscribe = (): void => {
     this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
-    this._remoteVideoStream.on('isReceivingChanged', this.isReceivingChanged);
+    this._remoteVideoStream.off('isReceivingChanged', this.isReceivingChanged);
   };
 
   private includesActiveScreenShareStream = (streams: { [key: number]: RemoteVideoStreamState }): boolean => {
