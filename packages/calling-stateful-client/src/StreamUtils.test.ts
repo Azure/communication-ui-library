@@ -114,6 +114,7 @@ function addMockRemoteStreamAndParticipant(
     id: streamId,
     mediaStreamType: 'Video',
     isAvailable: true,
+    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: true,
     view: undefined
   };

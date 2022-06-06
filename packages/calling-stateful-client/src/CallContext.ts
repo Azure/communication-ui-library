@@ -350,6 +350,7 @@ export class CallContext {
           const existingStream = participant.videoStreams[stream.id];
           if (existingStream) {
             existingStream.isAvailable = stream.isAvailable;
+            /* @conditional-compile-remove(video-stream-is-receiving-flag) */
             existingStream.isReceiving = stream.isReceiving;
             existingStream.mediaStreamType = stream.mediaStreamType;
           } else {
@@ -380,6 +381,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   public setRemoteVideoStreamIsReceiving(
     callId: string,
     participantKey: string,
@@ -422,6 +424,7 @@ export class CallContext {
             if (stream) {
               stream.mediaStreamType = newStream.mediaStreamType;
               stream.isAvailable = newStream.isAvailable;
+              /* @conditional-compile-remove(video-stream-is-receiving-flag) */
               stream.isReceiving = newStream.isReceiving;
             } else {
               participant.videoStreams[newStream.id] = newStream;
