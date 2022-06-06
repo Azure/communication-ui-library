@@ -221,6 +221,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public dispose(): void {
     this.resetDiagnosticsForwarder();
+    this.leaveCall();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
   }
