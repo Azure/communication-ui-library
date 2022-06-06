@@ -40,7 +40,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 className="ms-Dropdown css-stub-classname"
                 data-is-focusable={true}
                 data-ktp-target={true}
-                id="Dropdown75"
+                id="Dropdown116"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onClick={[Function]}
@@ -62,7 +62,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                   aria-invalid={false}
                   aria-live="polite"
                   className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder css-stub-classname"
-                  id="Dropdown75-option"
+                  id="Dropdown116-option"
                 >
                   Select an option
                 </span>

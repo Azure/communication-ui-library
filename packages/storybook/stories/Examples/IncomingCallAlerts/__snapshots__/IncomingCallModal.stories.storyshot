@@ -57,7 +57,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
           onTouchStart={[Function]}
         >
           <div
-            aria-labelledby="Dialog77-title"
+            aria-labelledby="Dialog118-title"
             aria-modal={true}
             onKeyDown={[Function]}
             role="alertdialog"
@@ -78,7 +78,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               />
               <div
                 className="ms-Dialog-main css-stub-classname"
-                id="ModalFocusTrapZone78"
+                id="ModalFocusTrapZone119"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
               >
@@ -106,7 +106,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                       <div
                         aria-level={1}
                         className="ms-Dialog-title css-stub-classname"
-                        id="Dialog77-title"
+                        id="Dialog118-title"
                         role="heading"
                       >
                         Incoming Video Call
@@ -322,7 +322,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                                 >
                                   <span
                                     className="ms-Button-label css-stub-classname"
-                                    id="id__85"
+                                    id="id__126"
                                   >
                                     Accept
                                   </span>
@@ -359,7 +359,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                                 >
                                   <span
                                     className="ms-Button-label css-stub-classname"
-                                    id="id__88"
+                                    id="id__129"
                                   >
                                     Decline
                                   </span>

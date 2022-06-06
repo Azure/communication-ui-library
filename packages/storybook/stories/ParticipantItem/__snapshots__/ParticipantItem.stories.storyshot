@@ -255,8 +255,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-FocusZone css-15 ms-ContextualMenu is-open root-29"
-                        data-focuszone-id="FocusZone4"
+                        className="ms-FocusZone css-stub-classname ms-ContextualMenu is-open css-stub-classname"
+                        data-focuszone-id="FocusZone198"
                         onFocus={[Function]}
                         onKeyDown={[Function]}
                         onMouseDownCapture={[Function]}

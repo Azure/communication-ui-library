@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,24 +21,24 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
       }
     >
       <div
-        className="css-1"
+        className="css-stub-classname"
       >
         <div
-          className="css-2"
+          className="css-stub-classname"
           id="dialpadContainer"
         >
           <div
-            className="ms-TextField root-4"
+            className="ms-TextField css-stub-classname"
           >
             <div
               className="ms-TextField-wrapper"
             >
               <div
-                className="ms-TextField-fieldGroup fieldGroup-5"
+                className="ms-TextField-fieldGroup css-stub-classname"
               >
                 <input
                   aria-invalid={false}
-                  className="ms-TextField-field field-6"
+                  className="ms-TextField-field css-stub-classname"
                   id="dialpad-input"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -52,17 +52,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
             </div>
           </div>
           <div
-            className="ms-FocusZone css-15"
-            data-focuszone-id="FocusZone4"
+            className="ms-FocusZone css-stub-classname"
+            data-focuszone-id="FocusZone72"
             onFocus={[Function]}
             onKeyDown={[Function]}
             onMouseDownCapture={[Function]}
           >
             <div
-              className="ms-Stack css-16"
+              className="ms-Stack css-stub-classname"
             >
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-0"
                 onClick={[Function]}
@@ -74,19 +74,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       1
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                        
                     </span>
@@ -94,7 +94,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-1"
                 onClick={[Function]}
@@ -106,19 +106,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       2
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       ABC
                     </span>
@@ -126,7 +126,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-2"
                 onClick={[Function]}
@@ -138,19 +138,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       3
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       DEF
                     </span>
@@ -159,10 +159,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               </button>
             </div>
             <div
-              className="ms-Stack css-16"
+              className="ms-Stack css-stub-classname"
             >
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-3"
                 onClick={[Function]}
@@ -174,19 +174,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       4
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       GHI
                     </span>
@@ -194,7 +194,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-4"
                 onClick={[Function]}
@@ -206,19 +206,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       5
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       JKL
                     </span>
@@ -226,7 +226,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-5"
                 onClick={[Function]}
@@ -238,19 +238,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       6
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       MNO
                     </span>
@@ -259,10 +259,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               </button>
             </div>
             <div
-              className="ms-Stack css-16"
+              className="ms-Stack css-stub-classname"
             >
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-6"
                 onClick={[Function]}
@@ -274,19 +274,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       7
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       PQRS
                     </span>
@@ -294,7 +294,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-7"
                 onClick={[Function]}
@@ -306,19 +306,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       8
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       TUV
                     </span>
@@ -326,7 +326,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-8"
                 onClick={[Function]}
@@ -338,19 +338,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       9
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       WXYZ
                     </span>
@@ -359,10 +359,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               </button>
             </div>
             <div
-              className="ms-Stack css-16"
+              className="ms-Stack css-stub-classname"
             >
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-9"
                 onClick={[Function]}
@@ -374,19 +374,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       *
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                        
                     </span>
@@ -394,7 +394,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-10"
                 onClick={[Function]}
@@ -406,19 +406,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       0
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                       +
                     </span>
@@ -426,7 +426,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-19"
+                className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
                 id="dialpad-button-11"
                 onClick={[Function]}
@@ -438,19 +438,19 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer css-stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <div
-                    className="ms-Stack css-27"
+                    className="ms-Stack css-stub-classname"
                   >
                     <span
-                      className="css-28"
+                      className="css-stub-classname"
                     >
                       #
                     </span>
                     <span
-                      className="css-29"
+                      className="css-stub-classname"
                     >
                        
                     </span>

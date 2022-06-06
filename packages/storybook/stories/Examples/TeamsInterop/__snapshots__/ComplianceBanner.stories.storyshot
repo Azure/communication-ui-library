@@ -52,7 +52,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
               >
                 <span
                   className="ms-Button-label css-stub-classname"
-                  id="id__109"
+                  id="id__150"
                 >
                   Toggle Recording
                 </span>
@@ -79,7 +79,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
               >
                 <span
                   className="ms-Button-label css-stub-classname"
-                  id="id__112"
+                  id="id__153"
                 >
                   Toggle Transcription
                 </span>

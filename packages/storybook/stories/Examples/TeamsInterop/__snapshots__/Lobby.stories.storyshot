@@ -150,7 +150,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <span
                         className="ms-Button-label css-stub-classname"
-                        id="id__117"
+                        id="id__158"
                       >
                         Turn off
                       </span>
@@ -230,7 +230,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <span
                         className="ms-Button-label css-stub-classname"
-                        id="id__121"
+                        id="id__162"
                       >
                         Mute
                       </span>
@@ -303,7 +303,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <span
                         className="ms-Button-label css-stub-classname"
-                        id="id__125"
+                        id="id__166"
                       >
                         Devices
                       </span>
@@ -382,7 +382,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     >
                       <span
                         className="ms-Button-label css-stub-classname"
-                        id="id__129"
+                        id="id__170"
                       >
                         Leave
                       </span>
