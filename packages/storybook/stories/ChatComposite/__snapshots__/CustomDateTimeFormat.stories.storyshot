@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Date Time Format Example Custom Date Time Format Example 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,16 +21,16 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
       }
     >
       <div
-        className="ms-Stack css-1"
+        className="ms-Stack css-stub-classname"
       >
         <div
-          className="ms-Stack css-4"
+          className="ms-Stack css-stub-classname"
         >
           <div
-            className="ms-StackItem css-5"
+            className="ms-StackItem css-stub-classname"
           >
             <div
-              className="ms-Stack css-6"
+              className="ms-Stack css-stub-classname"
               style={
                 Object {
                   "display": "inline-block",
@@ -69,13 +69,13 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
               </span>
                
               <span
-                className="css-7"
+                className="css-stub-classname"
               >
                 Important
               </span>
                - 
               <div
-                className="ms-Stack css-6"
+                className="ms-Stack css-stub-classname"
                 style={
                   Object {
                     "display": "inline-block",
@@ -83,12 +83,12 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
                 }
               >
                 <span
-                  className="css-8"
+                  className="css-stub-classname"
                 >
                   This feature is currently in public preview and not recommended for production use. 
                 </span>
                 <a
-                  className="ms-Link root-9"
+                  className="ms-Link css-stub-classname"
                   href="https://azure.microsoft.com/support/legal/preview-supplemental-terms/"
                   onClick={[Function]}
                   target="_blank"
