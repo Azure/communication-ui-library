@@ -46,10 +46,12 @@ export const getRemoteParticipants = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ):
-  | undefined
   | {
       [keys: string]: RemoteParticipantState;
-    } => state.calls[props.callId]?.remoteParticipants;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.remoteParticipants;
+};
 
 /**
  * @private

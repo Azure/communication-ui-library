@@ -14,6 +14,7 @@ import {
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { getIdentifierKind } from '@azure/communication-common';
+import { _updateUserDisplayNames } from './callUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -28,7 +29,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         const isScreenSharing = Object.values(participant.videoStreams).some(
           (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
         );
-
         return {
           userId: toFlatCommunicationIdentifier(participant.identifier),
           displayName: participant.displayName,
@@ -37,8 +37,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           isScreenSharing: isScreenSharing,
           isSpeaking: participant.isSpeaking,
           // ACS users can not remove Teams users.
-          // Removing phone numbers or unknown types of users is undefined.
-          isRemovable: getIdentifierKind(participant.identifier).kind === 'communicationUser'
+          // Removing unknown types of users is undefined.
+          isRemovable:
+            getIdentifierKind(participant.identifier).kind === 'communicationUser' ||
+            getIdentifierKind(participant.identifier).kind === 'phoneNumber'
         };
       })
       .sort((a, b) => {
@@ -86,7 +88,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     myUserId: string;
   } => {
     const participants = remoteParticipants
-      ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
+      ? convertRemoteParticipantsToParticipantListParticipants(
+          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants))
+        )
       : [];
     participants.push({
       userId: userId,
@@ -103,3 +107,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};
