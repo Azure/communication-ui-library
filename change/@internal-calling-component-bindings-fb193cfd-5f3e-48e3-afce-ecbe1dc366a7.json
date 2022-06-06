@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "minor",
   "comment": "Update the return from the `ParticipantList` selector to handle PSTN users.",
   "packageName": "@internal/calling-component-bindings",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
