@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "comment": "Introduces conditional compilation to the selectors and usePropsFor with function overloads",
   "packageName": "@internal/calling-component-bindings",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
