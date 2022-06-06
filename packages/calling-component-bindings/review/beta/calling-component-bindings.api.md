@@ -192,6 +192,9 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
 
+// @internal
+export const _updateUserDisplayNames: (participants: RemoteParticipantState[]) => RemoteParticipantState[];
+
 // @public
 export const useCall: () => Call | undefined;
 
@@ -214,9 +217,7 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: {
-    [keys: string]: RemoteParticipantState;
-} | undefined) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
