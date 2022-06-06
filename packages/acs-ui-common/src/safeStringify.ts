@@ -10,7 +10,7 @@
  */
 export const _safeJSONStringify = (
   value: unknown,
-  replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined,
+  replacer: ((this: unknown, key: string, value: unknown) => unknown) | undefined = createSafeReplacer(),
   space?: string | number | undefined
 ): string | undefined => {
   try {
@@ -19,4 +19,21 @@ export const _safeJSONStringify = (
     console.error(e);
     return undefined;
   }
+};
+
+// Log all visited refs to avoid circular ref
+const createSafeReplacer = (): (<T>(key: string, value: T) => T | string) => {
+  const visited = new Set();
+  return function replacer<T>(key: string, value: T): T | string {
+    if (typeof value !== 'object') {
+      return value;
+    }
+
+    if (visited.has(value)) {
+      return 'Visited-Ref';
+    } else {
+      visited.add(value);
+      return value;
+    }
+  };
 };
