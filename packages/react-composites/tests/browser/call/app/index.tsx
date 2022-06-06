@@ -199,11 +199,8 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
-      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
-      strings: {
-        label: 'custom #1'
-      },
+      icon: 'messageSeen',
+      text: 'custom #1',
       placement: 'primary'
     };
   },
@@ -211,11 +208,8 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
-      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
-      strings: {
-        label: 'custom #2'
-      },
+      icon: 'SendBoxSend',
+      text: 'custom #2',
       placement: 'primary'
     };
   },
@@ -223,11 +217,8 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
-      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
-      strings: {
-        label: 'custom #3'
-      },
+      icon: 'EditBoxCancel',
+      text: 'custom #3',
       placement: 'primary'
     };
   }
