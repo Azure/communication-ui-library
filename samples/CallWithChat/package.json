@@ -44,8 +44,7 @@
     "reactstrap": "^8.4.1",
     "reselect": "~4.0.0",
     "uuid": "^8.1.0",
-    "webpack-bundle-analyzer": "~4.5.0",
-    "react-full-screen": "~1.1.1"
+    "webpack-bundle-analyzer": "~4.5.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
