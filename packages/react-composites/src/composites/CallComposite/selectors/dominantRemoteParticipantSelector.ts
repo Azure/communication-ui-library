@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import {
-  updateUserDisplayNames,
+  _updateUserDisplayNames,
   _dominantSpeakersWithFlatId,
   _isInCall,
   _isPreviewOn,
@@ -27,7 +27,9 @@ export const dominantRemoteParticipantSelector = reselect.createSelector(
         ? findDominantRemoteParticipant(remoteParticipants, dominantSpeakers ?? [])
         : undefined;
     return dominantRemoteParticipant
-      ? _videoGalleryRemoteParticipantsMemo(updateUserDisplayNames(dominantRemoteParticipant))[0]
+      ? _videoGalleryRemoteParticipantsMemo(
+          updateUserDisplayNamesTrampoline(Object.values(dominantRemoteParticipant))
+        )[0]
       : undefined;
   }
 );
@@ -46,4 +48,10 @@ const findDominantRemoteParticipant = (
   }
 
   return { dominantRemoteParticipantId: remoteParticipants[dominantRemoteParticipantId] };
+};
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
 };

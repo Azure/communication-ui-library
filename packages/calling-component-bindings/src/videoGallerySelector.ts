@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallClientState } from '@internal/calling-stateful-client';
+import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
@@ -16,7 +16,7 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-import { updateUserDisplayNames } from './callUtils';
+import { _updateUserDisplayNames } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
@@ -95,8 +95,16 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: _videoGalleryRemoteParticipantsMemo(updateUserDisplayNames(remoteParticipants)),
+      remoteParticipants: _videoGalleryRemoteParticipantsMemo(
+        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : [])
+      ),
       dominantSpeakers: dominantSpeakerIds
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};

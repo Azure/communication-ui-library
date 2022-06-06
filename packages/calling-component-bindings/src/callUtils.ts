@@ -52,13 +52,7 @@ export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient
  *
  * @internal
  */
-export const updateUserDisplayNames = (
-  participants:
-    | {
-        [keys: string]: RemoteParticipantState;
-      }
-    | undefined
-): RemoteParticipantState[] => {
+export const _updateUserDisplayNames = (participants: RemoteParticipantState[]): RemoteParticipantState[] => {
   if (participants) {
     return memoizedUpdateDisplayName((memoizedFn) => {
       return Object.values(participants).map((p) => {

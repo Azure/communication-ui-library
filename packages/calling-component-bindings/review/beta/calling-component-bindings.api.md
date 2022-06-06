@@ -189,12 +189,8 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
 
-// Warning: (ae-internal-missing-underscore) The name "updateUserDisplayNames" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export const updateUserDisplayNames: (participants: {
-    [keys: string]: RemoteParticipantState;
-} | undefined) => RemoteParticipantState[];
+export const _updateUserDisplayNames: (participants: RemoteParticipantState[]) => RemoteParticipantState[];
 
 // @public
 export const useCall: () => Call | undefined;

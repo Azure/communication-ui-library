@@ -14,7 +14,7 @@ import {
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { getIdentifierKind } from '@azure/communication-common';
-import { updateUserDisplayNames } from './callUtils';
+import { _updateUserDisplayNames } from './callUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -88,7 +88,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     myUserId: string;
   } => {
     const participants = remoteParticipants
-      ? convertRemoteParticipantsToParticipantListParticipants(updateUserDisplayNames(remoteParticipants))
+      ? convertRemoteParticipantsToParticipantListParticipants(
+          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants))
+        )
       : [];
     participants.push({
       userId: userId,
@@ -105,3 +107,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};
