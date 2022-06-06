@@ -40,7 +40,7 @@ export const _RemoteVideoTile = React.memo(
   }) => {
     const {
       isAvailable,
-      isReceiving,
+      isReceiving = true, // default to true to prevent any breaking change
       isMuted,
       isSpeaking,
       isScreenSharingOn,
