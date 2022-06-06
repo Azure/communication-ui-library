@@ -2,7 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDir": "../"
+    "paths": {
+      "@internal/react-components": ["../../react-components/src/components/index.ts"]
+    }
   },
   "include": [
     "./browser/**/*.test.ts",
