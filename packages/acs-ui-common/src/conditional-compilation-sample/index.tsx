@@ -69,6 +69,7 @@ interface B {
  */
 /* @conditional-compile-remove(demo) */
 import { Dir } from 'fs';
+import { AreEqual } from '../areEqual';
 
 /**
  * Conditionally export from a module.
@@ -111,6 +112,23 @@ export type TypeWithFunctionProperty = {
 export type Unionize = number | /* @conditional-compile-remove(demo) */ boolean;
 export type Impossible = number & /* @conditional-compile-remove(demo) */ boolean;
 
+/**
+ * Conditionally compile a ternary type if.
+ *
+ * Used in selector {@link GetSelector} definitions etc.
+ *
+ * See expanded example below.
+ *
+ * WARNING: Conditional compilation directives must be added in the conditional branch to be removed (not in the condition itself).
+ * When a branch is conditionally compiled out, both the condition and the other branch are removed.
+ */
+export type MyFalseySelector<T> = T extends number ? /* @conditional-compile-remove(demo) */ true : false;
+export type MyTrutySelector<J> = J extends number ? true : /* @conditional-compile-remove(demo) */ false;
+export type MyNestedSelector<Q, R> = Q extends number
+  ? /* @conditional-compile-remove(demo) */ true
+  : R extends number
+  ? /* @conditional-compile-remove(demo) */ true
+  : false;
 /**
  * Add a parameter to an existing function
  *
@@ -269,6 +287,22 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
     };
   }
 );
+
+/**
+ * When adding a new selector to beta-only API, you need to extend the relevant {@link GetSelector} type.
+ * This example shows how to conditionally add your selector type.
+ *
+ * WARNING: The conditional compilation directive is in the branch to be removed, NOT the condition. (So not before {@link AreEqual}).
+ */
+
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
+  Component,
+  typeof StableComponentWithSelector
+> extends true
+  ? StableSelector
+  : AreEqual<Component, typeof BetaComponentWithSelector> extends true
+  ? /* @conditional-compile-remove(demo) */ BetaSelector
+  : undefined;
 
 /**
  * Adding a new feature conditionally often involves a few operations together:
