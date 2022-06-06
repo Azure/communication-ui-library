@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Devices Devices 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        className="ms-TooltipHost root-94"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
@@ -33,7 +33,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
           aria-expanded={false}
           aria-haspopup={true}
           aria-label="Manage devices"
-          className="ms-Button ms-Button--default ms-Button--hasMenu root-2"
+          className="ms-Button ms-Button--default ms-Button--hasMenu css-stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -44,12 +44,16 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
           type="button"
         >
           <span
-            className="ms-Button-flexContainer flexContainer-3"
+            className="ms-Button-flexContainer css-stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
+<<<<<<< HEAD
               className="root-105 root-11"
+=======
+              className="css-stub-classname"
+>>>>>>> origin/main
               data-icon-name="ControlButtonOptions"
             >
               <span
@@ -72,7 +76,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
             </i>
             <i
               aria-hidden={true}
+<<<<<<< HEAD
               className="ms-Icon root-105 css-13 ms-Button-menuIcon menuIcon-7"
+=======
+              className="ms-Icon root-94 css-stub-classname ms-Button-menuIcon css-stub-classname"
+>>>>>>> origin/main
               data-icon-name="ChevronDown"
               hidden={true}
               style={
