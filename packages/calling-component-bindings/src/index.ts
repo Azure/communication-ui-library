@@ -29,4 +29,6 @@ export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
 export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './callUtils';
+/* @conditional-compile-remove(PSTN-calls) */
+export { _updateUserDisplayNames } from './callUtils';
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './videoGalleryUtils';
