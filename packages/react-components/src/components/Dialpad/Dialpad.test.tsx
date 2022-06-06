@@ -24,7 +24,7 @@ test('workaround for conditional compilation. Test suite must contain atleast on
 });
 
 /* @conditional-compile-remove(dialpad) */
-const onSendDtmfTones = (dtmfTones: DtmfTone) => {
+const onSendDtmfTones = (dtmfTones: DtmfTone): Promise<void> => {
   console.log(dtmfTones);
   return Promise.resolve();
 };

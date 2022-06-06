@@ -1,0 +1,467 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] = `
+<div
+  className="css-118 body-0"
+  dir="ltr"
+>
+  <div
+    className="css-118"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        className="css-1"
+      >
+        <div
+          className="css-2"
+          id="dialpadContainer"
+        >
+          <div
+            className="ms-TextField root-4"
+          >
+            <div
+              className="ms-TextField-wrapper"
+            >
+              <div
+                className="ms-TextField-fieldGroup fieldGroup-5"
+              >
+                <input
+                  aria-invalid={false}
+                  className="ms-TextField-field field-6"
+                  id="dialpad-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onInput={[Function]}
+                  placeholder="Enter a number"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="ms-FocusZone css-15"
+            data-focuszone-id="FocusZone4"
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDownCapture={[Function]}
+          >
+            <div
+              className="ms-Stack css-16"
+            >
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-0"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      1
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                       
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-1"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      2
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      ABC
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-2"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      3
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      DEF
+                    </span>
+                  </div>
+                </span>
+              </button>
+            </div>
+            <div
+              className="ms-Stack css-16"
+            >
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-3"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      4
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      GHI
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-4"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      5
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      JKL
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-5"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      6
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      MNO
+                    </span>
+                  </div>
+                </span>
+              </button>
+            </div>
+            <div
+              className="ms-Stack css-16"
+            >
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-6"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      7
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      PQRS
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-7"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      8
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      TUV
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-8"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      9
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      WXYZ
+                    </span>
+                  </div>
+                </span>
+              </button>
+            </div>
+            <div
+              className="ms-Stack css-16"
+            >
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-9"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      *
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                       
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-10"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      0
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                      +
+                    </span>
+                  </div>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-19"
+                data-is-focusable={true}
+                id="dialpad-button-11"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <div
+                    className="ms-Stack css-27"
+                  >
+                    <span
+                      className="css-28"
+                    >
+                      #
+                    </span>
+                    <span
+                      className="css-29"
+                    >
+                       
+                    </span>
+                  </div>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
