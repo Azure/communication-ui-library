@@ -8,7 +8,7 @@ import Enzyme, { mount } from 'enzyme';
 /* @conditional-compile-remove(dialpad) */
 import Adapter from 'enzyme-adapter-react-16';
 /* @conditional-compile-remove(dialpad) */
-import { _Dialpad } from './Dialpad';
+import { DtmfTone, _Dialpad } from './Dialpad';
 /* @conditional-compile-remove(dialpad) */
 import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
 /* @conditional-compile-remove(dialpad) */
@@ -22,6 +22,12 @@ const customDialpadStrings = {
 test('workaround for conditional compilation. Test suite must contain atleast one test', () => {
   expect(true).toBeTruthy();
 });
+
+/* @conditional-compile-remove(dialpad) */
+const onSendDtmfTones = (dtmfTones: DtmfTone) => {
+  console.log(dtmfTones);
+  return Promise.resolve();
+};
 
 /* @conditional-compile-remove(dialpad) */
 describe('Dialpad tests', () => {
@@ -44,6 +50,38 @@ describe('Dialpad tests', () => {
     }
 
     expect(component.find('#dialpad-input').first().props().value).toBe('1');
+  });
+
+  test('Clicking on dialpad button 6 should send the corresponding dtmf tone Num6', async () => {
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad onSendDtmfTones={onSendDtmfTones} />, testLocale);
+
+    const logSpy = jest.spyOn(console, 'log');
+
+    const button = component.find('#dialpad-button-5').first();
+    if (button) {
+      button.simulate('click');
+    }
+    expect(logSpy).toHaveBeenCalledWith('Num6');
+  });
+
+  test('Clicking on dialpad button 9 should not send other dtmf tones', async () => {
+    const testLocale = createTestLocale({
+      dialpad: { defaultText: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<_Dialpad onSendDtmfTones={onSendDtmfTones} />, testLocale);
+
+    const logSpy = jest.spyOn(console, 'log');
+
+    const button = component.find('#dialpad-button-8').first();
+    if (button) {
+      button.simulate('click');
+    }
+    expect(logSpy).not.toHaveBeenCalledWith('Num6');
+    expect(logSpy).not.toHaveBeenCalledWith('Num1');
+    expect(logSpy).not.toHaveBeenCalledWith('Num5');
   });
 
   test('Dialpad should have customizable default input text', async () => {
