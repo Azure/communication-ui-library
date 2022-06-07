@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import path from 'path';
 import { resetIds, Stylesheet } from '@fluentui/react';
 import initStoryshots, { multiSnapshotWithOptions } from '@storybook/addon-storyshots';
 import ReactDom from 'react-dom';
@@ -46,6 +47,13 @@ afterAll(() => {
 
 describe('storybook snapshot tests', () => {
   initStoryshots({
-    test: multiSnapshotWithOptions()
+    test: (story) => {
+      const fileName = path.resolve(__dirname, '..', story.context.fileName);
+      return multiSnapshotWithOptions()({
+        ...story,
+        // FIXME Workaround for https://github.com/storybookjs/storybook/issues/16692
+        context: { ...story.context, fileName }
+      });
+    }
   });
 });
