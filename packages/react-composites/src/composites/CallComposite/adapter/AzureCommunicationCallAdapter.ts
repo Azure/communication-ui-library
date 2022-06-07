@@ -431,7 +431,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onAddParticipant(participant, options);
   }
 
-  /* @condtional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   public async toggleHold(): Promise<void> {
     this.handlers.onToggleHold();
   }

@@ -24,6 +24,7 @@ import {
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -31,7 +32,7 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
-/* @conditional-compile-remove-PSTN */
+/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
@@ -279,10 +280,10 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-  /* @conditional-compile-removve(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   toggleHold: () => Promise<void>;
-  /* @conditional-compile-removve(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */
   /** @beta */
   addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
 }

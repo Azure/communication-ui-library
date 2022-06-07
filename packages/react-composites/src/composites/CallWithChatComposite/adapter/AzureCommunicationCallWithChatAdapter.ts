@@ -189,6 +189,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.toggleHold.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.addParticipant.bind(this);
   }
 
   /** Join existing Call. */
