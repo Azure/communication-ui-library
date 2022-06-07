@@ -2,7 +2,7 @@
 
 exports[`storybook snapshot tests Storyshots Composites/CallComposite/Basic Example Basic Example 1`] = `
 <div
-  className="css-118 body-0"
+  className="css-118 css-stub-classname"
   dir="ltr"
 >
   <div
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Basic Exam
       }
     >
       <div
-        className="ms-Stack css-1"
+        className="ms-Stack css-stub-classname"
       >
         <span>
           <p>

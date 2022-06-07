@@ -39,3 +39,4 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 - [Pruning a changelog before release](./references/pruning-a-changelog.md)
 - [Updating npm publishing credentials](./references/updating-npm-publishing-credentials.md)
 - [UI Tests and how to run them locally](./references/ui-tests.md)
+- [Reviewer notes](./reviewer-notes/README.md) - Common guidelines gleaned through code reviews.

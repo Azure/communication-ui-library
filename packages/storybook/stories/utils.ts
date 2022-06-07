@@ -51,15 +51,15 @@ const stopRenderVideoStream = (video: HTMLElement | null): void => {
  * @returns
  */
 export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[] => {
-  const mounted = useRef(false);
+  const mounted = useRef(true);
   useEffect(() => {
-    mounted.current = true;
     return () => {
       mounted.current = false;
     };
-  });
+  }, []);
 
   const [videoStreamElements, setVideoStreamElements] = useState<(HTMLElement | null)[]>([]);
+
   useEffect(() => {
     const newVideoStreamElements: (HTMLElement | null)[] = [];
     const loadVideos = async (): Promise<void> => {
