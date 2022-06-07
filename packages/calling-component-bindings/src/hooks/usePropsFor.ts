@@ -102,11 +102,11 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : AreEqual<Component, typeof ParticipantsButton> extends true
   ? ParticipantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
-  ? HoldButtonSelector
-  : AreEqual<Component, typeof HoldButton> extends true
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
+  : AreEqual<Component, typeof HoldButton> extends true
+  ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
   : undefined;
 
 /**
