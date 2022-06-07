@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Message Status Indicator Message Status Indicator 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       }
     >
       <div
-        className="ms-TooltipHost css-stub-classname"
+        className="ms-TooltipHost stub-classname"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       >
         <i
           aria-label="Message sent"
-          className="css-stub-classname"
+          className="stub-classname"
           data-icon-name="MessageDelivered"
           data-ui-id="chat-composite-message-status-icon"
           role="status"

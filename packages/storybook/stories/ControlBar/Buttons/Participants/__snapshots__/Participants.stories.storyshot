@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Participants Participants 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -33,7 +33,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
           aria-expanded={false}
           aria-haspopup={true}
           aria-label="Show Participants"
-          className="ms-Button ms-Button--default ms-Button--hasMenu css-stub-classname"
+          className="ms-Button ms-Button--default ms-Button--hasMenu stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -44,12 +44,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
           type="button"
         >
           <span
-            className="ms-Button-flexContainer css-stub-classname"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="css-stub-classname"
+              className="stub-classname"
               data-icon-name="ControlButtonParticipants"
             >
               <span
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-94 css-stub-classname ms-Button-menuIcon css-stub-classname"
+              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
               data-icon-name="ChevronDown"
               hidden={true}
               style={
