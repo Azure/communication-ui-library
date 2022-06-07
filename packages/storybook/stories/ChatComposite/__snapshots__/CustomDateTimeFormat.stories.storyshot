@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Date Time Format Example Custom Date Time Format Example 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,16 +21,16 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
       }
     >
       <div
-        className="ms-Stack css-stub-classname"
+        className="ms-Stack stub-classname"
       >
         <div
-          className="ms-Stack css-stub-classname"
+          className="ms-Stack stub-classname"
         >
           <div
-            className="ms-StackItem css-stub-classname"
+            className="ms-StackItem stub-classname"
           >
             <div
-              className="ms-Stack css-stub-classname"
+              className="ms-Stack stub-classname"
               style={
                 Object {
                   "display": "inline-block",
@@ -69,13 +69,13 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
               </span>
                
               <span
-                className="css-stub-classname"
+                className="stub-classname"
               >
                 Important
               </span>
                - 
               <div
-                className="ms-Stack css-stub-classname"
+                className="ms-Stack stub-classname"
                 style={
                   Object {
                     "display": "inline-block",
@@ -83,12 +83,12 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Custom Dat
                 }
               >
                 <span
-                  className="css-stub-classname"
+                  className="stub-classname"
                 >
                   This feature is currently in public preview and not recommended for production use. 
                 </span>
                 <a
-                  className="ms-Link css-stub-classname"
+                  className="ms-Link stub-classname"
                   href="https://azure.microsoft.com/support/legal/preview-supplemental-terms/"
                   onClick={[Function]}
                   target="_blank"

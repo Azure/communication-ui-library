@@ -141,21 +141,6 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
   }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
-  }
-};
-
-/**
- * Click outside of the Composite page
- *
- * @deprecated This method of dismissing tooltips has been shown to be flaky.
- *     Use {@link stableScreenshot} instead.
- */
-export const clickOutsideOfPage = async (page: Page): Promise<void> => {
-  await page.mouse.click(-1, -1);
 };
 
 /**
@@ -190,11 +175,6 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         expectedVideoCount: pages.length
       }
     );
-  }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
   }
 };
 
