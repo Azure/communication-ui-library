@@ -51,9 +51,9 @@ const createCompositeHandlers = memoizeOne(
     onSelectSpeaker: async (deviceInfo) => {
       await adapter.setSpeaker(deviceInfo);
     },
-    onStartCall: (participants) => {
+    onStartCall: (participants, /* @conditional-compile-remove(PSTN-calls) */ options?) => {
       const rawIds = participants.map((participant) => toFlatCommunicationIdentifier(participant));
-      return adapter.startCall(rawIds);
+      return adapter.startCall(rawIds, /* @conditional-compile-remove(PSTN-calls) */ options);
     },
     onStartScreenShare: async () => {
       await adapter.startScreenShare();

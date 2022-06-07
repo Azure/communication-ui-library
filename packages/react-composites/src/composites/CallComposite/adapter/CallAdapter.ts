@@ -215,7 +215,10 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[]): Call | undefined;
+  startCall(
+    participants: string[],
+    /* @conditional-compile-remove(PSTN-calls) */ options?: AddPhoneNumberOptions
+  ): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *

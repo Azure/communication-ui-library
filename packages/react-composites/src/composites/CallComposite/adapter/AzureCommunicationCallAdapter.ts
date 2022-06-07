@@ -46,13 +46,23 @@ import {
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+import {
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier
+} from '../../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -391,7 +401,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   //TODO: a better way to expose option parameter
-  public startCall(participants: string[]): Call | undefined {
+  public startCall(
+    participants: string[],
+    /* @conditional-compile-remove(PSTN-calls) */ options?: AddPhoneNumberOptions
+  ): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -399,11 +412,21 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
+      const backendId = fromFlatCommunicationIdentifier(participant);
+      if (isPhoneNumberIdentifier(backendId)) {
+        if (options?.alternateCallerId === undefined) {
+          throw new Error('unable to start call, PSTN user present with no alternativeCallerID.');
+        }
+        return backendId as PhoneNumberIdentifier;
+      } else if (isCommunicationUserIdentifier(backendId)) {
+        return backendId as CommunicationIdentifier;
+      } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
+        return backendId as MicrosoftTeamsUserIdentifier;
+      }
       return backendId;
     });
 
-    const call = this.handlers.onStartCall(idsToAdd);
+    const call = startCallTrampoline(idsToAdd, this.handlers.onStartCall, options);
     if (!call) {
       throw new Error('Unable to start call.');
     }
@@ -765,4 +788,14 @@ const isCallError = (e: Error): e is CallError => {
 /* @conditional-compile-remove(teams-adhoc-call) */
 const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
+};
+
+const startCallTrampoline = (
+  participants: CommunicationIdentifier[],
+  startCallHandler: (participants: CommunicationIdentifier[], options?: AddPhoneNumberOptions) => Call | undefined,
+  options?: AddPhoneNumberOptions
+) => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return startCallHandler(participants, options);
+  return startCallHandler(participants);
 };
