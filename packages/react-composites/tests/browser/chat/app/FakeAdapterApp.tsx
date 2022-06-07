@@ -216,28 +216,11 @@ const initializeAdapters = async (
 const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] => {
   return remoteAdapters.map((remoteAdapter) => {
     const userId = toFlatCommunicationIdentifier(remoteAdapter.getState().userId);
+    const compositeID = `hidden-composite-${userId}`;
     return (
-      <div key={`composite-${userId}`} style={{ height: 0, overflow: 'hidden' }}>
-        <_IdentifierProvider identifiers={generateIDS(userId)}>
-          <ChatComposite
-            adapter={remoteAdapter}
-            options={{
-              participantPane: true
-            }}
-          />
-        </_IdentifierProvider>
+      <div id={compositeID} key={compositeID} style={{ height: 0, overflow: 'hidden' }}>
+        <ChatComposite adapter={remoteAdapter} options={{ participantPane: true }} />
       </div>
     );
   });
-};
-
-/**
- * Helper function to create IDs for {@link _IdentifierProvider} using a user id
- */
-const generateIDS = (userId: string): _Identifiers => {
-  const data_ui_ids = { ...IDS };
-  Object.entries(data_ui_ids).forEach(([key, value]) => {
-    data_ui_ids[key] = value + '-' + userId;
-  });
-  return data_ui_ids;
 };

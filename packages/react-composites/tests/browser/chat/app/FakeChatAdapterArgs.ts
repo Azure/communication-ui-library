@@ -51,7 +51,7 @@ export type FakeChatAdapterArgs = {
    */
   frenchLocaleEnabled?: boolean;
   /**
-   * Array of chat participants for which create hidden chat composites for triggerring typing indicators and read receipts
+   * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
 };
