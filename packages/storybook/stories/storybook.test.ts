@@ -51,7 +51,8 @@ describe('storybook snapshot tests', () => {
       const fileName = path.resolve(__dirname, '..', story.context.fileName);
       return multiSnapshotWithOptions()({
         ...story,
-        // FIXME Workaround for https://github.com/storybookjs/storybook/issues/16692
+        // Workaround for multiSnapshotWithOptions placing snapshots in a directory
+        // one level too high. See more info and workaround snippet: https://github.com/storybookjs/storybook/issues/16692
         context: { ...story.context, fileName }
       });
     }
