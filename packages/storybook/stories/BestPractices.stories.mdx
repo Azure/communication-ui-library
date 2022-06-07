@@ -12,7 +12,7 @@ Below are some best practices to follow to ensure your end users get the best ex
 
 ## Disposing of Composite Adapters
 
-To ensure resources are cleaned up, and Azure services know that a user intentionally left a call or chat, you should dispose of your Composite Adapters appropriately. This involves disposing of them when the relevant component unmounts, as well as in the `beforeUnload` window event:
+To ensure resources are cleaned up, and Azure services know that a user intentionally left a call or chat, you should dispose of your Composite Adapters appropriately. This involves disposing of them when the relevant component unmounts, as well as in the `beforeunload` window event:
 
 ```ts
 // Dispose of the adapter in the window's before unload event.
