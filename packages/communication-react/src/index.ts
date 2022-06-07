@@ -68,7 +68,6 @@ export type {
   MicrophoneButtonSelector,
   ParticipantsButtonSelector
 } from '../../calling-component-bindings/src';
-
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
@@ -112,7 +111,6 @@ export {
   VideoGallery,
   VideoTile
 } from '../../react-components/src';
-
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
