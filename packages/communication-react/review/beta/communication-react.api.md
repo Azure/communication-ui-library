@@ -1423,6 +1423,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
@@ -1497,6 +1499,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     MessageResend: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
 };
 
 // @public
@@ -1726,7 +1730,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -1750,6 +1754,28 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// @beta
+export const HoldButton: (props: HoldButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface HoldButtonProps extends ControlBarButtonProps {
+    onToggleHold: () => Promise<void>;
+    strings?: HoldButtonStrings;
+}
+
+// @public
+export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked: boolean;
+};
+
+// @beta
+export interface HoldButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    toolTipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
