@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Participants Participants 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        className="ms-TooltipHost root-94"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
@@ -33,7 +33,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
           aria-expanded={false}
           aria-haspopup={true}
           aria-label="Show Participants"
-          className="ms-Button ms-Button--default ms-Button--hasMenu root-2"
+          className="ms-Button ms-Button--default ms-Button--hasMenu stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -44,12 +44,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
           type="button"
         >
           <span
-            className="ms-Button-flexContainer flexContainer-3"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="root-94 root-11"
+              className="stub-classname"
               data-icon-name="ControlButtonParticipants"
             >
               <span
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-94 css-12 ms-Button-menuIcon menuIcon-7"
+              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
               data-icon-name="ChevronDown"
               hidden={true}
               style={
