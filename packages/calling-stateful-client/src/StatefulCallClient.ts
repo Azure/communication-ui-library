@@ -14,14 +14,11 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  getIdentifierKind,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-identity) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.

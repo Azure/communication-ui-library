@@ -44,15 +44,13 @@ import {
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+/* @conditional-compile-remove(teams-identity) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
