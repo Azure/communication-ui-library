@@ -11,9 +11,13 @@ import type {
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -256,6 +260,20 @@ export interface CallAdapterCallManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Toggle the hold state of the call.
+   *
+   * @beta
+   */
+  toggleHold(): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Add a participant to the call.
+   *
+   * @beta
+   */
+  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
 }
 
 /**

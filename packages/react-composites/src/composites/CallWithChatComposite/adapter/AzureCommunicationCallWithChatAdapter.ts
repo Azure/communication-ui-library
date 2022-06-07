@@ -349,6 +349,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   }
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async toggleHold(): Promise<void> {
+    return await this.callAdapter.toggleHold();
+  }
+
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneOptions);
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
