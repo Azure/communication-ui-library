@@ -111,7 +111,6 @@ export {
   VideoGallery,
   VideoTile
 } from '../../react-components/src';
-
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 

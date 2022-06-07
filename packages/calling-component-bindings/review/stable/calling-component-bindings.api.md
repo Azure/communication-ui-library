@@ -141,7 +141,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
 
 // @public
-export function getCallingSelector<Component extends (props: any) => JSX.Element | undefined>(component: Component): GetCallingSelector<Component>;
+export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;
@@ -207,9 +207,7 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: {
-    [keys: string]: RemoteParticipantState;
-} | undefined) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
