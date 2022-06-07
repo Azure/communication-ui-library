@@ -170,6 +170,6 @@ export type HoldButtonSelector = (
  */
 export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
   return {
-    checked: callState === 'LocalHold' ? true : false
+    checked: callState === 'LocalHold'
   };
 });
