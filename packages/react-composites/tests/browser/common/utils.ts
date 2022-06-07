@@ -33,10 +33,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
-  await screenshotOnFailure(
-    page,
-    async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS, force: true })
-  );
+  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
