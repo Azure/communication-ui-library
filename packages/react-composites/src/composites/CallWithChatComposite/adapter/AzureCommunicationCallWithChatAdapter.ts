@@ -13,6 +13,8 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -52,6 +54,8 @@ import {
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -348,13 +352,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   }
-
   /* @conditional-compile-remove(PSTN-calls) */
   public async toggleHold(): Promise<void> {
     return await this.callAdapter.toggleHold();
   }
-
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneOptions);
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
+    return await this.callAdapter.addParticipant(participant, options);
+  }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
