@@ -3,10 +3,10 @@
   "version": "1.2.2-beta.1",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
-    "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
+    "build": "build-storybook  --quiet --loglevel warn",
     "build:stable": "echo skip",
     "clean": "",
-    "start": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
+    "start": "start-storybook -p 6006 --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
     "test": "rushx test:snippets && jest",
     "test:stable": "echo skip",
