@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeviceManagerState, StatefulCallClient } from '@internal/calling-stateful-client';
+import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallState as CallStatus } from '@azure/communication-calling';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * Check if the call state represents being in the call
@@ -44,3 +46,32 @@ export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient
     await callClient.disposeView(undefined, undefined, view);
   }
 };
+
+/**
+ * Update the users displayNames based on the type of user they are
+ *
+ * @internal
+ */
+export const _updateUserDisplayNames = (participants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  if (participants) {
+    return memoizedUpdateDisplayName((memoizedFn) => {
+      return Object.values(participants).map((p) => {
+        const pid = toFlatCommunicationIdentifier(p.identifier);
+        return memoizedFn(pid, p);
+      });
+    });
+  } else {
+    return [];
+  }
+};
+
+const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participant: RemoteParticipantState) => {
+  if (isPhoneNumberIdentifier(participant.identifier)) {
+    return {
+      ...participant,
+      displayName: participant.identifier.phoneNumber
+    };
+  } else {
+    return participant;
+  }
+});

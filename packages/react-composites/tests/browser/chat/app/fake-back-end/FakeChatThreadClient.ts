@@ -12,6 +12,7 @@ import {
   ListParticipantsOptions,
   ListReadReceiptsOptions,
   SendChatMessageResult,
+  SendMessageOptions,
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
@@ -73,7 +74,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  sendMessage(request: SendMessageRequest): Promise<SendChatMessageResult> {
+  sendMessage(request: SendMessageRequest, options: SendMessageOptions = {}): Promise<SendChatMessageResult> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.messages = [
@@ -83,7 +84,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
           type: 'text',
           content: {
             message: request.content
-          }
+          },
+          metadata: options.metadata
         }
       ];
     });
