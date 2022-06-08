@@ -10,7 +10,7 @@ import { CallContext } from './CallContext';
 export type DeclarativeIncomingCall = IncomingCall;
 
 /**
- * Proxy Incoming Call
+ * Proxies the {@link @azure/communication-calling#IncomingCall} object.
  */
 export class ProxyIncomingCall implements ProxyHandler<IncomingCall> {
   private _context: CallContext;
