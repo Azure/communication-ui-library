@@ -9,11 +9,10 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs,
-  StartCallOptions
+  NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, StartCallOptions } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';

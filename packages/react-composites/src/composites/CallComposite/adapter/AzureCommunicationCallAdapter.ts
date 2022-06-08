@@ -793,7 +793,7 @@ const startCallTrampoline = (
     options?: AddPhoneNumberOptions
   ) => Call | undefined,
   options?: StartCallOptions
-) => {
+): Call | undefined => {
   /* @conditional-compile-remove(PSTN-calls) */
   return startCallHandler(participants, options);
   return startCallHandler(participants);
