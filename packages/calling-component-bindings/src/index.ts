@@ -8,6 +8,8 @@ export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
 export type { ErrorBarSelector } from './errorBarSelector';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { HoldButtonSelector } from './callControlSelectors';
 
 export type { CallingHandlers } from './handlers/createHandlers';
 
