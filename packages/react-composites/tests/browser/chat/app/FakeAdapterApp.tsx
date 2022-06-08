@@ -5,7 +5,7 @@ import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communicat
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider, _Identifiers } from '@internal/react-components';
 import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
@@ -22,6 +22,7 @@ import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -35,7 +36,8 @@ export const FakeAdapterApp = (): JSX.Element => {
     verifyParamExists(params.fakeChatAdapterArgs, 'fakeChatAdapterArgs')
   ) as FakeChatAdapterArgs;
 
-  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
+  const [adapter, setAdapter] = useState<ChatAdapter>();
+  const [remoteAdapters, setRemoteAdapters] = useState<ChatAdapter[]>([]);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -53,6 +55,14 @@ export const FakeAdapterApp = (): JSX.Element => {
         chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
       });
       setAdapter(adapter);
+      if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
+        const remoteAdapters = await initializeAdapters(
+          fakeChatAdapterArgs.participantsWithHiddenComposites,
+          chatClientModel,
+          thread
+        );
+        setRemoteAdapters(remoteAdapters);
+      }
       if (fakeChatAdapterArgs.fileUploads) {
         handleFileUploads(adapter, fakeChatAdapterArgs.fileUploads);
       }
@@ -66,7 +76,6 @@ export const FakeAdapterApp = (): JSX.Element => {
     };
 
     initialize();
-    return () => adapter && adapter.dispose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,9 +88,13 @@ export const FakeAdapterApp = (): JSX.Element => {
       }
     });
   };
+
+  if (!adapter) {
+    return <>{'Initializing chat adapter...'}</>;
+  }
+
   return (
     <>
-      {!adapter && 'Initializing chat adapter...'}
       {adapter && (
         <_IdentifierProvider identifiers={IDS}>
           <ChatComposite
@@ -102,6 +115,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           />
         </_IdentifierProvider>
       )}
+      {remoteAdapters && createHiddenComposites(remoteAdapters)}
     </>
   );
 };
@@ -178,4 +192,35 @@ const sendRemoteFileSharingMessage = (chatClientModel: Model, remoteParticipant:
       }
     }
   );
+};
+
+const initializeAdapters = async (
+  participants: ChatParticipant[],
+  chatClientModel: Model,
+  thread
+): Promise<ChatAdapter[]> => {
+  const remoteAdapters = [];
+  for (const participant of participants) {
+    const remoteChatClient = new FakeChatClient(chatClientModel, participant.id);
+    const remoteAdapter = await initializeAdapter({
+      userId: participant.id,
+      displayName: participant.displayName,
+      chatClient: remoteChatClient as IChatClient as ChatClient,
+      chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    });
+    remoteAdapters.push(remoteAdapter);
+  }
+  return remoteAdapters;
+};
+
+const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] => {
+  return remoteAdapters.map((remoteAdapter) => {
+    const userId = toFlatCommunicationIdentifier(remoteAdapter.getState().userId);
+    const compositeID = `hidden-composite-${userId}`;
+    return (
+      <div id={compositeID} key={compositeID} style={{ height: 0, overflow: 'hidden' }}>
+        <ChatComposite adapter={remoteAdapter} options={{ participantPane: true }} />
+      </div>
+    );
+  });
 };

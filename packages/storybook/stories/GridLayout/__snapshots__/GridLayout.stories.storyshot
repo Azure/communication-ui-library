@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,24 +29,24 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
         }
       >
         <div
-          className="css-111 css-1"
+          className="stub-classname"
         >
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
             <div
-              className="css-5"
+              className="stub-classname"
             />
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack stub-classname"
               >
                 <div
                   aria-label=""
-                  className="ms-Persona ms-Persona--size48 root-12"
+                  className="ms-Persona ms-Persona--size48 stub-classname"
                   style={
                     Object {
                       "height": 100,
@@ -55,11 +55,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   }
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 coin-19"
+                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-21"
+                      className="ms-Persona-imageArea stub-classname"
                       role="presentation"
                       style={
                         Object {
@@ -70,7 +70,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-24"
+                        className="ms-Persona-initials stub-classname"
                         style={
                           Object {
                             "height": 100,
@@ -88,13 +88,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-140 css-27"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-141 css-28"
+                className="ms-Stack stub-classname"
               >
                 <span
-                  className="css-29"
+                  className="stub-classname"
                   title="Michael"
                 >
                   Michael
@@ -103,21 +103,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             </div>
           </div>
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
             <div
-              className="css-5"
+              className="stub-classname"
             />
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack stub-classname"
               >
                 <div
                   aria-label=""
-                  className="ms-Persona ms-Persona--size48 root-12"
+                  className="ms-Persona ms-Persona--size48 stub-classname"
                   style={
                     Object {
                       "height": 100,
@@ -126,11 +126,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   }
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 coin-19"
+                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-21"
+                      className="ms-Persona-imageArea stub-classname"
                       role="presentation"
                       style={
                         Object {
@@ -141,7 +141,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-30"
+                        className="ms-Persona-initials stub-classname"
                         style={
                           Object {
                             "height": 100,
@@ -159,13 +159,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-140 css-27"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-141 css-28"
+                className="ms-Stack stub-classname"
               >
                 <span
-                  className="css-29"
+                  className="stub-classname"
                   title="Jim"
                 >
                   Jim
@@ -174,21 +174,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             </div>
           </div>
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
             <div
-              className="css-5"
+              className="stub-classname"
             />
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack stub-classname"
               >
                 <div
                   aria-label=""
-                  className="ms-Persona ms-Persona--size48 root-12"
+                  className="ms-Persona ms-Persona--size48 stub-classname"
                   style={
                     Object {
                       "height": 100,
@@ -197,11 +197,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   }
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 coin-19"
+                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-21"
+                      className="ms-Persona-imageArea stub-classname"
                       role="presentation"
                       style={
                         Object {
@@ -212,7 +212,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-31"
+                        className="ms-Persona-initials stub-classname"
                         style={
                           Object {
                             "height": 100,
@@ -230,13 +230,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-140 css-27"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-141 css-28"
+                className="ms-Stack stub-classname"
               >
                 <span
-                  className="css-29"
+                  className="stub-classname"
                   title="Pam"
                 >
                   Pam
@@ -245,21 +245,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             </div>
           </div>
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
             <div
-              className="css-5"
+              className="stub-classname"
             />
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack stub-classname"
               >
                 <div
                   aria-label=""
-                  className="ms-Persona ms-Persona--size48 root-12"
+                  className="ms-Persona ms-Persona--size48 stub-classname"
                   style={
                     Object {
                       "height": 100,
@@ -268,11 +268,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   }
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 coin-19"
+                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-21"
+                      className="ms-Persona-imageArea stub-classname"
                       role="presentation"
                       style={
                         Object {
@@ -283,7 +283,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-32"
+                        className="ms-Persona-initials stub-classname"
                         style={
                           Object {
                             "height": 100,
@@ -301,13 +301,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-140 css-27"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Stack css-141 css-28"
+                className="ms-Stack stub-classname"
               >
                 <span
-                  className="css-29"
+                  className="stub-classname"
                   title="Dwight"
                 >
                   Dwight
