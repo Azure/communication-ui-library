@@ -154,5 +154,11 @@
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected"
+  },
+  "HoldButton": {
+    "onLabel": "Resume",
+    "offLabel": "Hold",
+    "toolTipOnContent": "Resume call",
+    "toolTipOffContent": "Hold call"
   }
 }

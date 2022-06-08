@@ -882,6 +882,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     MessageResend: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
 };
 
 // @public

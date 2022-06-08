@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Screen Share Screen Share 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
       >
         <button
           aria-label="Present your screen"
-          className="ms-Button ms-Button--default css-stub-classname"
+          className="ms-Button ms-Button--default stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -41,12 +41,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
           type="button"
         >
           <span
-            className="ms-Button-flexContainer css-stub-classname"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="css-stub-classname"
+              className="stub-classname"
               data-icon-name="ControlButtonScreenShareStart"
             >
               <span
