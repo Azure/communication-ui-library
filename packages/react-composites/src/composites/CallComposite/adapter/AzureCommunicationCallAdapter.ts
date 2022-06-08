@@ -435,12 +435,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
-    this.handlers.onToggleHold();
+    if (this.call?.state !== 'LocalHold') {
+      this.handlers.onToggleHold();
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
-    this.handlers.onToggleHold();
+    if (this.call?.state === 'LocalHold') {
+      this.handlers.onToggleHold();
+    }
   }
 
   public getState(): CallAdapterState {
