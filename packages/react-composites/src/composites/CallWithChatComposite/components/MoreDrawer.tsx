@@ -13,9 +13,11 @@ import {
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { CUSTOM_BUTTON_OPTIONS, generateCustomDrawerButtons } from '../../CallComposite/components/buttons/Custom';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CustomCallControlButtonCallback } from '../../CallComposite';
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatDrawerButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../CustomButton';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -180,7 +182,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
-      generateCustomDrawerButtons(
+      generateCustomCallWithChatDrawerButtons(
         onFetchCustomButtonPropsTrampoline(drawerSelectionOptions !== false ? drawerSelectionOptions : undefined),
         drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
       ),
@@ -209,13 +211,3 @@ const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevic
   !!selectedSpeaker && speaker.id === selectedSpeaker.id;
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-/** @private */
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallWithChatControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};

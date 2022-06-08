@@ -604,7 +604,7 @@ export interface CallWithChatControlOptions {
     endCallButton?: boolean;
     microphoneButton?: boolean;
     // @beta
-    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -798,15 +798,31 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
-export interface CustomCallControlButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallCompositeIcons;
+    placement: CustomCallControlButtonPlacement;
+}
+
+// @beta
+export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+
+// @beta
+export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @beta
+export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallWithChatCompositeIcons;
+    placement: CustomCallWithChatControlButtonPlacement;
+}
+
+// @beta
+export interface CustomControlButtonProps {
     disabled?: boolean;
-    icon?: string;
     // (undocumented)
     onItemClick?: () => void;
-    placement: CustomCallControlButtonPlacement;
     showLabel?: boolean;
     styles?: ControlBarButtonStyles | BaseCustomStyles;
     text?: string;

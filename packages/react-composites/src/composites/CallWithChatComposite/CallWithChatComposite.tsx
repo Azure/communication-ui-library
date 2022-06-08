@@ -4,8 +4,6 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CustomCallControlButtonCallback } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
@@ -33,6 +31,8 @@ import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -135,7 +135,7 @@ export interface CallWithChatControlOptions {
    *
    * @beta
    */
-  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
 }
 
 type CallWithChatScreenProps = {

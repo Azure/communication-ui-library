@@ -4,8 +4,6 @@
 import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CustomCallControlButtonCallback } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
@@ -23,7 +21,11 @@ import { MoreButton } from './MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { ContainerRectProps } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { CUSTOM_BUTTON_OPTIONS, generateCustomControlBarButtons } from '../CallComposite/components/buttons/Custom';
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatControlBarButton,
+  onFetchCustomButtonPropsTrampoline
+} from './CustomButton';
 
 /**
  * @private
@@ -112,7 +114,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
-      generateCustomControlBarButtons(
+      generateCustomCallWithChatControlBarButton(
         onFetchCustomButtonPropsTrampoline(options !== false ? options : undefined),
         options !== false ? options?.displayType : undefined
       ),
@@ -326,13 +328,3 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallWithChatControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove(control-bar-button-injection) */
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};

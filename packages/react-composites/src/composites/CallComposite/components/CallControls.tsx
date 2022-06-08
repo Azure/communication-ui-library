@@ -6,11 +6,9 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomControlBarButtons } from './buttons/Custom';
+import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -86,13 +84,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove(control-bar-button-injection) */
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};

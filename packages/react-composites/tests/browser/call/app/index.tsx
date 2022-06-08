@@ -21,7 +21,7 @@ import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 // eslint-disable-next-line no-restricted-imports
-import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 
@@ -199,7 +199,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      icon: 'messageSeen',
+      iconName: 'ParticipantItemOptions',
       text: 'custom #1',
       placement: 'primary'
     };
@@ -208,7 +208,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      icon: 'SendBoxSend',
+      iconName: 'NetworkReconnectIcon',
       text: 'custom #2',
       placement: 'primary'
     };
@@ -217,7 +217,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      icon: 'EditBoxCancel',
+      iconName: 'HorizontalGalleryRightButton',
       text: 'custom #3',
       placement: 'primary'
     };

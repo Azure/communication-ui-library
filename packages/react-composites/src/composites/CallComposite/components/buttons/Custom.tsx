@@ -1,29 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon } from '@fluentui/react';
 import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import React from 'react';
+import { CallCompositeIcon } from '../../../common/icons';
 import {
   CallControlDisplayType,
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
 } from '../../types/CallControlOptions';
-
-/**
- * Max number of Custom Buttons in primary and secondary ControlBar
- * Does not include existing buttons in the controlBar.
- *
- * @private
- */
-export const CUSTOM_BUTTON_OPTIONS = {
-  MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS: 3,
-  MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS: 1,
-  MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS: 2
-};
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CallControlOptions } from '../../types/CallControlOptions';
 
 /** @private */
 export type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
+
+/** @private */
+export const generateCustomControlBarButtonStrings = (text: string | undefined): ControlBarButtonStrings => {
+  return { label: text };
+};
 
 /** @private */
 export const generateCustomControlBarButtons = (
@@ -31,19 +26,15 @@ export const generateCustomControlBarButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    primary: undefined,
-    secondary: undefined,
-    overflow: undefined
+    primary: undefined
   };
+
   if (!onFetchCustomButtonProps) {
     return response;
   }
 
-  const generateCustomControlBarButtonStrings = (text: string | undefined): ControlBarButtonStrings => {
-    return { label: text };
-  };
-
   const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
+
   for (const key in response) {
     response[key] = (
       <>
@@ -56,7 +47,8 @@ export const generateCustomControlBarButtons = (
               strings={generateCustomControlBarButtonStrings(buttonProps.text)}
               styles={buttonProps.styles}
               key={`${buttonProps.placement}_${i}`}
-              onRenderIcon={() => <Icon iconName={buttonProps.icon} />}
+              // set default icon if not provided
+              onRenderIcon={() => <CallCompositeIcon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               disabled={buttonProps.disabled}
             />
           ))}
@@ -72,10 +64,9 @@ export const generateCustomDrawerButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    primary: undefined,
-    secondary: undefined,
-    overflow: undefined
+    primary: undefined
   };
+
   if (!onFetchCustomButtonProps) {
     return response;
   }
@@ -90,11 +81,21 @@ export const generateCustomDrawerButtons = (
             itemKey: `${buttonProps.placement}_${i}`,
             text: buttonProps.text,
             onItemClick: buttonProps.onItemClick,
-            iconProps: { iconName: buttonProps.icon },
+            iconProps: { iconName: buttonProps.iconName },
             disabled: buttonProps.disabled
           }))}
       </>
     );
   }
+  return response;
+};
+
+/* @conditional-compile-remove(control-bar-button-injection) */
+/** @private */
+export const onFetchCustomButtonPropsTrampoline = (
+  options?: CallControlOptions
+): CustomCallControlButtonCallback[] | undefined => {
+  let response: CustomCallControlButtonCallback[] | undefined = undefined;
+  response = options?.onFetchCustomButtonProps;
   return response;
 };

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+import { CallCompositeIcons } from '../../common/icons';
 
 /**
  * Control bar display type for {@link CallComposite}.
@@ -66,19 +67,17 @@ export type CallControlOptions = {
 };
 
 /**
- * Placement for a custom button injected in the {@link CallControls} and {@link CallWithChatControlBar}.
+ * Placement for a custom button injected in the {@link CallControls}.
  *
  * 'primary': Place the button(s) on the right end of the center control bar but before the EndCallButton (left end in rtl mode).
- * 'overflow': Place the buttons(s) on the end of the overflow Menu.
- * 'secondary': Place the button(s) on the left end of the side control bar (right in rtl mode).
  *
  * Multiple buttons assigned the same placement are appended in order.
- * E.g., if two buttons are placed in 'secondary', they'll both appear on the left end (right end in rtl mode)
- * in the order provided.
+ * E.g., if two buttons are placed in 'primary', they'll both appear on the right end (left end in rtl mode)
+ * before the EndCallButton in the order provided.
  *
  * @beta
  */
-export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export type CustomCallControlButtonPlacement = 'primary';
 
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton}.
@@ -108,27 +107,16 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 /**
- * Response from {@link CustomCallControlButtonCallback}.
- *
- * Includes the props necessary to render a {@link ControlBarButton} and a {@link DrawerMenuItem}
- * with indication on where to place the button.
+ * Includes the base props necessary to render a {@link ControlBarButton} or {@link DrawerMenuItem}.
  *
  * @beta
  */
-export interface CustomCallControlButtonProps {
+export interface CustomControlButtonProps {
   onItemClick?: () => void;
   /**
-   * Where to place the custom button relative to other buttons.
-   */
-  placement: CustomCallControlButtonPlacement;
-  /**
-   * Whether the button is disabled
+   * Whether the buttons is disabled
    */
   disabled?: boolean;
-  /**
-   * Icon to render
-   */
-  icon?: string;
   /**
    * Whether the label is displayed or not.
    *
@@ -143,4 +131,24 @@ export interface CustomCallControlButtonProps {
    * Optional label for the button
    */
   text?: string;
+}
+
+/**
+ * Response from {@link CustomCallControlButtonCallback}.
+ *
+ * Includes the placement prop necessary to indicate where to place the
+ * {@link ControlBarButton} and a {@link DrawerMenuItem}
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+  /**
+   * Where to place the custom button relative to other buttons.
+   */
+  placement: CustomCallControlButtonPlacement;
+  /**
+   * Icon to render. Icon is a non-default icon that is already registered by the composites.
+   * Examples include icons from {@link CallCompositeIcons}
+   */
+  iconName?: keyof CallCompositeIcons;
 }
