@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  dataUiId,
-  stubMessageTimestamps,
-  stubReadReceiptsToolTip,
-  waitForChatCompositeToLoad,
-  waitForFunction,
-  waitForSelector
-} from '../common/utils';
+import { stubMessageTimestamps, waitForChatCompositeToLoad, waitForFunction, waitForSelector } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import {
@@ -16,8 +9,7 @@ import {
   sendMessage,
   waitForMessageDelivered,
   waitForMessageSeen,
-  waitForMessageWithContent,
-  waitForTypingIndicatorHidden
+  waitForMessageWithContent
 } from '../common/chatTestHelpers';
 
 test.describe('Chat Composite E2E Tests', () => {

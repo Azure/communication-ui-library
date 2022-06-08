@@ -71,7 +71,11 @@ async function getHiddenCompositeHandleOfParticipant(
   });
 }
 
-async function setParticipantAbleToSeeMessages(page: Page, participant: ChatParticipant, isAble: boolean) {
+async function setParticipantAbleToSeeMessages(
+  page: Page,
+  participant: ChatParticipant,
+  isAble: boolean
+): Promise<void> {
   const messageReaderCompositeHandle = await getHiddenCompositeHandleOfParticipant(page, participant.id);
   if (isAble) {
     // Display the hidden composite so that sent messages will be seen
