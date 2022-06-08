@@ -224,7 +224,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.toggleHold.bind(this);
+    this.holdCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.resumeCall.bind(this);
   }
 
   public dispose(): void {
@@ -432,7 +434,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async toggleHold(): Promise<void> {
+  public async holdCall(): Promise<void> {
+    this.handlers.onToggleHold();
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async resumeCall(): Promise<void> {
     this.handlers.onToggleHold();
   }
 

@@ -281,10 +281,25 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(PSTN-calls) */
-  /** @beta */
-  toggleHold: () => Promise<void>;
+  /**
+   * Puts the Call in a Localhold.
+   *
+   * @beta
+   */
+  holdCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  /** @beta */
+  /**
+   * Resumes the call from a LocalHold state.
+   *
+   * @beta
+   */
+  resumeCall: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Adds a new Participant to the call.
+   *
+   * @beta
+   */
   addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
 }
 
