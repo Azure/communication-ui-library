@@ -50,4 +50,8 @@ export type FakeChatAdapterArgs = {
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;
+  /**
+   * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
+   */
+  participantsWithHiddenComposites?: ChatParticipant[];
 };
