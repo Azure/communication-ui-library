@@ -34,23 +34,29 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
-  test('participant can send read receipt and show in contextual menu', async ({ serverUrl, page }) => {
-    const messageReader = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
+  test.only('participant can receive read receipts and readers should show in contextual menu', async ({
+    serverUrl,
+    page
+  }) => {
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        participantsWithHiddenComposites: [messageReader]
+        participantsWithHiddenComposites: DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants
       })
     );
 
-    await setParticipantAbleToSeeMessages(page, messageReader, false);
+    DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
+      await setParticipantAbleToSeeMessages(page, participant, false);
+    });
 
     const testMessageText = 'How the turn tables';
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
 
-    await setParticipantAbleToSeeMessages(page, messageReader, true);
+    DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
+      await setParticipantAbleToSeeMessages(page, participant, true);
+    });
     await waitForMessageSeen(page);
 
     await page.locator(dataUiId('chat-composite-message')).first().click();
