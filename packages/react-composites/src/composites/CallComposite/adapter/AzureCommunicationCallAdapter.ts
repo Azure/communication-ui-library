@@ -25,8 +25,8 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  PermissionConstraints
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -398,11 +398,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  //TODO: a better way to expose option parameter
-  public startCall(
-    participants: string[],
-    /* @conditional-compile-remove(PSTN-calls) */ options?: StartCallOptions
-  ): Call | undefined {
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -422,7 +418,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return backendId as UnknownIdentifier;
     });
 
-    const call = startCallTrampoline(idsToAdd, this.handlers.onStartCall, options);
+    const call = this.handlers.onStartCall(idsToAdd, options);
     if (!call) {
       throw new Error('Unable to start call.');
     }
@@ -784,17 +780,4 @@ const isCallError = (e: Error): e is CallError => {
 /* @conditional-compile-remove(teams-adhoc-call) */
 const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
-};
-
-const startCallTrampoline = (
-  participants: (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[],
-  startCallHandler: (
-    participants: (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[],
-    options?: AddPhoneNumberOptions
-  ) => Call | undefined,
-  options?: StartCallOptions
-): Call | undefined => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return startCallHandler(participants, options);
-  return startCallHandler(participants);
 };

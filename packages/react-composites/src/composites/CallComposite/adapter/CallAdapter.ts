@@ -8,11 +8,12 @@ import type {
   Call,
   PermissionConstraints,
   RemoteParticipant,
+  StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -215,10 +216,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(
-    participants: string[],
-    /* @conditional-compile-remove(PSTN-calls) */ options?: StartCallOptions
-  ): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
