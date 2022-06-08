@@ -79,7 +79,6 @@ export const FakeAdapterApp = (): JSX.Element => {
       }
     });
   };
-
   return (
     <>
       {!adapter && 'Initializing chat adapter...'}
@@ -89,7 +88,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             adapter={adapter}
             locale={fakeChatAdapterArgs.frenchLocaleEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
-              participantPane: true,
+              participantPane: fakeChatAdapterArgs.showParticipantPane ?? true,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     downloadHandler: fileDownloadHandler,

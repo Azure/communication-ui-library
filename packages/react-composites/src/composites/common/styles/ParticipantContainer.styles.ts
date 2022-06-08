@@ -98,7 +98,6 @@ export const peoplePaneContainerTokens: IStackTokens = {
 export const participantListWrapper = (theme: Theme): string =>
   mergeStyles({
     width: '20rem',
-    // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
     maxWidth: '50%',
     height: '100%',
     position: 'absolute',

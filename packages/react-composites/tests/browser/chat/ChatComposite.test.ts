@@ -23,7 +23,7 @@ import {
 
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl });
+    await chatTestSetup({ pages, users, serverUrl, qArgs: { showParticipantPane: 'false' } });
   });
 
   test('composite pages load completely', async ({ pages }) => {

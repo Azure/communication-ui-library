@@ -10,7 +10,7 @@ const TEST_MESSAGE = 'No, sir, this will not do.';
 
 test.describe('ErrorBar is shown correctly', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl });
+    await chatTestSetup({ pages, users, serverUrl, qArgs: { showParticipantPane: 'false' } });
   });
 
   test('with wrong thread ID', async ({ page, serverUrl, users }) => {
