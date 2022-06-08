@@ -9,7 +9,8 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -217,7 +218,7 @@ export interface CallAdapterCallManagement {
    */
   startCall(
     participants: string[],
-    /* @conditional-compile-remove(PSTN-calls) */ options?: AddPhoneNumberOptions
+    /* @conditional-compile-remove(PSTN-calls) */ options?: StartCallOptions
   ): Call | undefined;
   /**
    * Start sharing the screen during a call.

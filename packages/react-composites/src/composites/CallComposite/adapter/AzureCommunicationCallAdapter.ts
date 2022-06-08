@@ -25,7 +25,8 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints
+  PermissionConstraints,
+  StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -50,8 +51,8 @@ import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier
+  isPhoneNumberIdentifier,
+  UnknownIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -59,10 +60,7 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
-import {
-  MicrosoftTeamsUserIdentifier,
-  PhoneNumberIdentifier
-} from '../../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
+import { PhoneNumberIdentifier } from '../../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -403,7 +401,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   //TODO: a better way to expose option parameter
   public startCall(
     participants: string[],
-    /* @conditional-compile-remove(PSTN-calls) */ options?: AddPhoneNumberOptions
+    /* @conditional-compile-remove(PSTN-calls) */ options?: StartCallOptions
   ): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
@@ -419,11 +417,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
-        return backendId as CommunicationIdentifier;
-      } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
-        return backendId as MicrosoftTeamsUserIdentifier;
+        return backendId as CommunicationUserIdentifier;
       }
-      return backendId;
+      return backendId as UnknownIdentifier;
     });
 
     const call = startCallTrampoline(idsToAdd, this.handlers.onStartCall, options);
@@ -791,9 +787,12 @@ const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallPartic
 };
 
 const startCallTrampoline = (
-  participants: CommunicationIdentifier[],
-  startCallHandler: (participants: CommunicationIdentifier[], options?: AddPhoneNumberOptions) => Call | undefined,
-  options?: AddPhoneNumberOptions
+  participants: (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[],
+  startCallHandler: (
+    participants: (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[],
+    options?: AddPhoneNumberOptions
+  ) => Call | undefined,
+  options?: StartCallOptions
 ) => {
   /* @conditional-compile-remove(PSTN-calls) */
   return startCallHandler(participants, options);
