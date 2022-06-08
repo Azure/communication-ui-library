@@ -12,7 +12,7 @@ test.describe('Tests related to messaging', async () => {
   test('Local participant should see their message in thread', async ({ page }) => {
     await waitForChatCompositeToLoad(page);
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
-      'one-message-in-chat-thread.png'
+      'no-messages-in-chat-thread.png'
     );
 
     await sendMessage(page, TEST_MESSAGE);
