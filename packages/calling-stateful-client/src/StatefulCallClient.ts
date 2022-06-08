@@ -2,16 +2,10 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallAgent,
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager
-} from '@azure/communication-calling';
+import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
-import { callAgentDeclaratify } from './CallAgentDeclarative';
+import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
@@ -133,6 +127,8 @@ export interface StatefulCallClient extends CallClient {
     participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
+
+  createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
 }
 
 /**
@@ -155,7 +151,7 @@ export type CallStateModifier = (state: CallClientState) => void;
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _callAgent: CallAgent | undefined;
+  private _callAgent: DeclarativeCallAgent | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
@@ -167,15 +163,18 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
-        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<CallClient['createCallAgent']>) => {
-          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
-          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
-          // callAgent if the createCallAgent succeeds.
-          const callAgent = await target.createCallAgent(...args);
-          this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
-          this._context.setCallAgent({ displayName: this._callAgent.displayName });
-          return this._callAgent;
-        }, 'CallClient.createCallAgent');
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent> => {
+            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+            // callAgent if the createCallAgent succeeds.
+            const callAgent = await target.createCallAgent(...args);
+            this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
+            this._context.setCallAgent({ displayName: this._callAgent.displayName });
+            return this._callAgent;
+          },
+          'CallClient.createCallAgent'
+        );
       }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {

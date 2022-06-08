@@ -492,7 +492,9 @@ export type CallErrorTarget =
   | 'DeviceManager.off'
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
-  | 'DeviceManager.selectSpeaker';
+  | 'DeviceManager.selectSpeaker'
+  | /* @conditional-compile-remove(1-n-calling) */ 'IncomingCall.accept'
+  | /* @conditional-compile-remove(1-n-calling) */ 'IncomingCall.reject';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

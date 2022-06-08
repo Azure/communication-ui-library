@@ -1,26 +1,49 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
+import {
+  Call,
+  CallAgent,
+  CallEndReason,
+  CollectionUpdatedEvent,
+  IncomingCallEvent
+} from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
+import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
-import { disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
+import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
+
+/**
+ * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
+ */
+export type DeclarativeCallAgent = CallAgent & {
+  /**
+   * Used to return a declarative incoming call object for an incoming call id.
+   *
+   * @Remark This function doesn't exist on the {@link @azure/communication-calling#CallAgent} interface.
+   * @param incomingCallId - Incoming Call ID
+   * @returns proxied IncomingCall
+   */
+  /* @conditional-compile-remove(1-n-calling) */
+  getIncomingCall: (incomingCallId: string) => DeclarativeIncomingCall;
+};
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
  * updates in the CallAgent and in the contained Calls and RemoteParticipants. When dispose is called it will
  * unsubscribe from all state updates.
  */
-class ProxyCallAgent implements ProxyHandler<CallAgent> {
+class ProxyCallAgent implements ProxyHandler<DeclarativeCallAgent> {
   private _callAgent: CallAgent;
   private _context: CallContext;
   private _internalContext: InternalCallContext;
   private _callSubscribers: Map<Call, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
+  private _declarativeIncomingCalls: Map<string, DeclarativeIncomingCall>;
   private _declarativeCalls: Map<Call, DeclarativeCall>;
   private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<Call>>;
 
@@ -30,6 +53,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
     this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
+    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>();
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<Call>>();
     this.subscribe();
@@ -61,6 +85,7 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       incomingCallSubscriber.unsubscribe();
     }
     this._incomingCallSubscribers.clear();
+    this._declarativeIncomingCalls.clear();
 
     for (const [_, declarativeCall] of this._declarativeCalls.entries()) {
       declarativeCall.unsubscribe();
@@ -104,18 +129,20 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
       incomingCallSubscriber.unsubscribe();
       this._incomingCallSubscribers.delete(incomingCallId);
     }
+    this._declarativeIncomingCalls.delete(incomingCallId);
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
-  private incomingCall = (event: { incomingCall: IncomingCall }): void => {
+  private incomingCall: IncomingCallEvent = ({ incomingCall }): void => {
     // Make sure to not subscribe to the incoming call if we are already subscribed to it.
-    if (!this._incomingCallSubscribers.has(event.incomingCall.id)) {
+    if (!this._incomingCallSubscribers.has(incomingCall.id)) {
       this._incomingCallSubscribers.set(
-        event.incomingCall.id,
-        new IncomingCallSubscriber(event.incomingCall, this.setIncomingCallEnded)
+        incomingCall.id,
+        new IncomingCallSubscriber(incomingCall, this.setIncomingCallEnded)
       );
     }
-    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(event.incomingCall));
+    this._declarativeIncomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
+    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
   };
 
   private addCall = (call: Call): DeclarativeCall => {
@@ -187,6 +214,20 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
           });
         };
       }
+      /**
+       * This function is a special case and doesn't exist on the CallAgent interface.
+       * We need this to be able to return a declarative incoming call object using the call agent.
+       * In a standard headless SDK usage, the right way to get an incoming call is to use the `incomingCall` event.
+       * However, using the declarative layer, the ideal usage would be to:
+       * 1. subscribe to the `onStateChange` event
+       * 2. Get the incoming call from the new state and it's ID
+       * 3. Use `callAgent.getIncomingCall` and the incoming call ID to get a declarative incoming call object
+       */
+      case 'getIncomingCall': {
+        return (incomingCallId: string) => {
+          return this._declarativeIncomingCalls.get(incomingCallId);
+        };
+      }
       default:
         return Reflect.get(target, prop);
     }
@@ -205,7 +246,7 @@ export const callAgentDeclaratify = (
   callAgent: CallAgent,
   context: CallContext,
   internalContext: InternalCallContext
-): CallAgent => {
+): DeclarativeCallAgent => {
   // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
   // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
   // rendering when the previous callAgent is disposed?
@@ -213,5 +254,5 @@ export const callAgentDeclaratify = (
 
   context.clearCallRelatedState();
   internalContext.clearCallRelatedState();
-  return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as CallAgent;
+  return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as DeclarativeCallAgent;
 };
