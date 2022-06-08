@@ -12,7 +12,7 @@ export type DeclarativeIncomingCall = IncomingCall;
 /**
  * Proxies the {@link @azure/communication-calling#IncomingCall} object.
  */
-export class ProxyIncomingCall implements ProxyHandler<IncomingCall> {
+export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> {
   private _context: CallContext;
 
   constructor(context: CallContext) {
