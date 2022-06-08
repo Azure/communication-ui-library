@@ -191,7 +191,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.toggleHold.bind(this);
+    this.holdCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
   }
@@ -358,8 +360,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  public async toggleHold(): Promise<void> {
-    return await this.callAdapter.toggleHold();
+  public async holdCall(): Promise<void> {
+    return await this.callAdapter.holdCall();
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async resumeCall(): Promise<void> {
+    return await this.callAdapter.resumeCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {

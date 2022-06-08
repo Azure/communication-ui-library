@@ -263,11 +263,18 @@ export interface CallAdapterCallManagement {
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * Toggle the hold state of the call.
+   * Holds the call.
    *
    * @beta
    */
-  toggleHold(): Promise<void>;
+  holdCall(): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Resumes the call from a `LocalHold` state.
+   *
+   * @beta
+   */
+  resumeCall(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Add a participant to the call.

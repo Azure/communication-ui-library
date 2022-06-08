@@ -82,6 +82,7 @@ export const parameters = {
           'Accessibility',
           'Custom User Data Model',
           'Error Handling',
+          'Best Practices',
           'Troubleshooting',
           'Identity'
         ],
