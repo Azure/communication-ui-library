@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ControlBarButton } from '@internal/react-components';
 import React from 'react';
 import { generateCustomControlBarButtonStrings } from '../CallComposite/components/buttons/Custom';
