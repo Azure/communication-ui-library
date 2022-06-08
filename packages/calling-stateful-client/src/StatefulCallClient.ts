@@ -128,6 +128,17 @@ export interface StatefulCallClient extends CallClient {
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 
+  /**
+   * The CallAgent is used to handle calls.
+   * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.
+   * - The CallClient can only have one active CallAgent instance at a time.
+   * - You can create a new CallClient instance to create a new CallAgent.
+   * - You can dispose of a CallClient's current active CallAgent, and call the CallClient's
+   *   createCallAgent() method again to create a new CallAgent.
+   * @param tokenCredential - The token credential. Use AzureCommunicationTokenCredential from @azure/communication-common to create a credential.
+   * @param options - The CallAgentOptions for additional options like display name.
+   * @public
+   */
   createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
 }
 

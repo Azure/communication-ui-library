@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, CallClient, DeviceManager, IncomingCall } from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 import { CallErrorTarget } from './CallClientState';
+import { IncomingCall } from '@azure/communication-calling';
 
 /**
  * Internal type-assertion that explicitly listed {@link CallErrorTarget} correspond to the underlying base SDK API.
@@ -24,10 +25,7 @@ type InferredCallErrorTargets =
   | CallObjectMethodNames<'CallAgent', CallAgent>
   | CallObjectMethodNames<'DeviceManager', DeviceManager>
   | CallObjectMethodNames<'Call', Call>
-  | /* @conditional-compile-remove(1-n-calling) */ CallObjectMethodNames<
-      'IncomingCall',
-      Pick<IncomingCall, 'accept' | 'reject'>
-    >
+  | CallObjectMethodNames<'IncomingCall', Pick<IncomingCall, 'accept' | 'reject'>>
   /* Need to explicitly add these because we incorrectly added them to exported type before it was
    * stabilized in @azure/commmunication-calling.
    * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.

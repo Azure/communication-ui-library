@@ -5,12 +5,13 @@ import { IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**
- * @private
+ * @beta
+ * Proxies the {@link @azure/communication-calling#IncomingCall} interface.
  */
 export type DeclarativeIncomingCall = IncomingCall;
 
 /**
- * Proxies the {@link @azure/communication-calling#IncomingCall} object.
+ * @private
  */
 export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> {
   private _context: CallContext;
