@@ -20,12 +20,13 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-calling": "1.4.3-beta.1 || 1.4.4",
+    "@azure/communication-calling": "1.5.4-beta.1 || 1.4.4",
     "@azure/communication-chat": "1.2.0",
     "@azure/communication-common": "2.0.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.2.2-beta.1",
     "@azure/core-http": "1.2.4",
+    "@fluentui/react-file-type-icons": "~8.5.8",
     "@fluentui/react-hooks": "~8.3.8",
     "@fluentui/react-icons": "~1.1.137",
     "@fluentui/react-northstar": "0.61.0",
@@ -35,8 +36,8 @@
     "@microsoft/applicationinsights-web": "~2.6.2",
     "copy-to-clipboard": "~3.3.1",
     "resize-observer-polyfill": "~1.5.1",
-    "@fluentui/react-file-type-icons": "~8.5.8",
-    "tslib": "~2.3.1"
+    "tslib": "~2.3.1",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
