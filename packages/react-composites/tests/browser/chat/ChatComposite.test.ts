@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from '../common/constants';
 import {
   dataUiId,
   stubMessageTimestamps,
@@ -71,30 +70,6 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
     await page0.waitForSelector('[id="chat-composite-message-contextual-menu-read-name-list"]');
     expect(await page0.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
-  });
-
-  test('page[0] can view typing indicator within 10s', async ({ pages, users }) => {
-    const page0 = pages[0];
-
-    const page1 = pages[1];
-    await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
-    await waitForSelector(page0, dataUiId(IDS.typingIndicator));
-    const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
-
-    expect(await indicator0?.innerHTML()).toContain(users[1].displayName);
-    expect(await pages[0].screenshot()).toMatchSnapshot('typing-indicator.png');
-
-    await page0.bringToFront();
-    // Advance time by 10 seconds to make typingindicator go away
-    await page0.evaluate(() => {
-      const currentDate = new Date();
-      currentDate.setSeconds(currentDate.getSeconds() + 10);
-      Date.now = () => currentDate.getTime();
-    });
-    await page0.waitForTimeout(1000);
-    const indicator1 = await page0.$(dataUiId(IDS.typingIndicator));
-    expect(await indicator1?.innerHTML()).toBeFalsy();
-    expect(await page0.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {

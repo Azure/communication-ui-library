@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incoming Call Modal Incoming Call Modal 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -24,7 +24,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
         className="ms-layer"
       >
         <div
-          className="ms-Fabric ms-Layer-content content-10"
+          className="ms-Fabric ms-Layer-content stub-classname"
           onBlur={[Function]}
           onChange={[Function]}
           onClick={[Function]}
@@ -69,15 +69,15 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             }
           >
             <div
-              className="ms-Modal is-open ms-Dialog root-3"
+              className="ms-Modal is-open ms-Dialog stub-classname"
               role="document"
             >
               <div
                 aria-hidden={true}
-                className="ms-Overlay ms-Overlay--dark root-12"
+                className="ms-Overlay ms-Overlay--dark stub-classname"
               />
               <div
-                className="ms-Dialog-main main-4"
+                className="ms-Dialog-main stub-classname"
                 id="ModalFocusTrapZone2"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
@@ -94,29 +94,29 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                   tabIndex={0}
                 />
                 <div
-                  className="ms-Modal-scrollableContent scrollableContent-5"
+                  className="ms-Modal-scrollableContent stub-classname"
                   data-is-scrollable={true}
                 >
                   <div
-                    className="content-13"
+                    className="stub-classname"
                   >
                     <div
-                      className="ms-Dialog-header header-15"
+                      className="ms-Dialog-header stub-classname"
                     >
                       <div
                         aria-level={1}
-                        className="ms-Dialog-title title-18"
+                        className="ms-Dialog-title stub-classname"
                         id="Dialog1-title"
                         role="heading"
                       >
                         Incoming Video Call
                       </div>
                       <div
-                        className="topButton-19"
+                        className="stub-classname"
                       >
                         <button
                           aria-label="Close"
-                          className="ms-Button ms-Button--icon ms-Dialog-button ms-Dialog-button--close root-20"
+                          className="ms-Button ms-Button--icon ms-Dialog-button ms-Dialog-button--close stub-classname"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -128,12 +128,12 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-21"
+                            className="ms-Button-flexContainer stub-classname"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-28 ms-Button-icon icon-23"
+                              className="ms-Icon root-94 stub-classname ms-Button-icon stub-classname"
                               data-icon-name="Cancel"
                               style={
                                 Object {
@@ -148,16 +148,16 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                       </div>
                     </div>
                     <div
-                      className="ms-Dialog-inner inner-16"
+                      className="ms-Dialog-inner stub-classname"
                     >
                       <div
-                        className="ms-Dialog-content innerContent-17"
+                        className="ms-Dialog-content stub-classname"
                       >
                         <div
-                          className="ms-Stack css-29"
+                          className="ms-Stack stub-classname"
                         >
                           <div
-                            className="ms-Stack css-30"
+                            className="ms-Stack stub-classname"
                             style={
                               Object {
                                 "marginRight": "0.5rem",
@@ -166,19 +166,19 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                           >
                             <div
                               aria-label="Maximus Aurelius"
-                              className="ms-Persona ms-Persona--size40 root-31"
+                              className="ms-Persona ms-Persona--size40 stub-classname"
                             >
                               <div
-                                className="ms-Persona-coin ms-Persona--size40 coin-38"
+                                className="ms-Persona-coin ms-Persona--size40 stub-classname"
                                 role="presentation"
                               >
                                 <div
-                                  className="ms-Persona-imageArea imageArea-40"
+                                  className="ms-Persona-imageArea stub-classname"
                                   role="presentation"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="ms-Persona-initials initials-43"
+                                    className="ms-Persona-initials stub-classname"
                                   >
                                     <span>
                                       MA
@@ -189,7 +189,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                             </div>
                           </div>
                           <div
-                            className="ms-Stack css-46"
+                            className="ms-Stack stub-classname"
                             style={
                               Object {
                                 "alignItems": "flex-start",
@@ -197,7 +197,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                             }
                           >
                             <div
-                              className="ms-Stack css-47"
+                              className="ms-Stack stub-classname"
                               style={
                                 Object {
                                   "color": "#000000",
@@ -222,7 +222,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               </span>
                             </div>
                             <div
-                              className="ms-Stack css-47"
+                              className="ms-Stack stub-classname"
                               style={
                                 Object {
                                   "color": "#201f1e",
@@ -238,16 +238,16 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                         </div>
                       </div>
                       <div
-                        className="ms-Dialog-actions actions-48"
+                        className="ms-Dialog-actions stub-classname"
                       >
                         <div
-                          className="ms-Dialog-actionsRight actionsRight-50"
+                          className="ms-Dialog-actionsRight stub-classname"
                         >
                           <span
-                            className="ms-Dialog-action action-49"
+                            className="ms-Dialog-action stub-classname"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-51"
+                              className="ms-Button ms-Button--default stub-classname"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -264,7 +264,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-21"
+                                className="ms-Button-flexContainer stub-classname"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
@@ -294,10 +294,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-49"
+                            className="ms-Dialog-action stub-classname"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-51"
+                              className="ms-Button ms-Button--default stub-classname"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -314,14 +314,14 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-21"
+                                className="ms-Button-flexContainer stub-classname"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  className="ms-Button-textContainer textContainer-22"
+                                  className="ms-Button-textContainer stub-classname"
                                 >
                                   <span
-                                    className="ms-Button-label label-52"
+                                    className="ms-Button-label stub-classname"
                                     id="id__9"
                                   >
                                     Accept
@@ -331,10 +331,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                             </button>
                           </span>
                           <span
-                            className="ms-Dialog-action action-49"
+                            className="ms-Dialog-action stub-classname"
                           >
                             <button
-                              className="ms-Button ms-Button--default root-51"
+                              className="ms-Button ms-Button--default stub-classname"
                               data-is-focusable={true}
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -351,14 +351,14 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               type="button"
                             >
                               <span
-                                className="ms-Button-flexContainer flexContainer-21"
+                                className="ms-Button-flexContainer stub-classname"
                                 data-automationid="splitbuttonprimary"
                               >
                                 <span
-                                  className="ms-Button-textContainer textContainer-22"
+                                  className="ms-Button-textContainer stub-classname"
                                 >
                                   <span
-                                    className="ms-Button-label label-52"
+                                    className="ms-Button-label stub-classname"
                                     id="id__12"
                                   >
                                     Decline
