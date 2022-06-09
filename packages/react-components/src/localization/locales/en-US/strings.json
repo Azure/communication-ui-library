@@ -155,6 +155,9 @@
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected"
   },
+  "dialpad": {
+    "placeholderText": "Enter a number"
+  },
   "HoldButton": {
     "onLabel": "Resume",
     "offLabel": "Hold",
