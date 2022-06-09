@@ -1394,7 +1394,7 @@ export interface CustomMessage extends MessageCommon {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @beta
+// @public
 export type DeclarativeCallAgent = CallAgent & {
     getIncomingCall: (incomingCallId: string) => DeclarativeIncomingCall;
 };

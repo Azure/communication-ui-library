@@ -108,7 +108,7 @@ export type CreateViewResult = {
     view: VideoStreamRendererView;
 };
 
-// @beta
+// @public
 export type DeclarativeCallAgent = CallAgent & {
     getIncomingCall: (incomingCallId: string) => DeclarativeIncomingCall;
 };
