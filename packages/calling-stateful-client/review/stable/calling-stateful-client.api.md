@@ -107,6 +107,9 @@ export type CreateViewResult = {
     view: VideoStreamRendererView;
 };
 
+// @beta
+export type DeclarativeCallAgent = CallAgent & {};
+
 // @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;

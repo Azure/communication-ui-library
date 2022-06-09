@@ -18,7 +18,7 @@ import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 
 /**
- * @beta
+ * @public
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
 export type DeclarativeCallAgent = CallAgent & {
