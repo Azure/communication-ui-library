@@ -114,6 +114,9 @@ export {
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
+/* @conditional-compile-remove(dialpad) */
+export { Dialpad } from '../../react-components/src';
+
 export type {
   _IdentifierProviderProps,
   _Identifiers,
@@ -209,6 +212,14 @@ export type {
   VideoTileProps,
   VideoTileStylesProps,
   ViewScalingMode
+} from '../../react-components/src';
+/* @conditional-compile-remove(dialpad) */
+export type {
+  DialpadProps,
+  DialpadStrings,
+  DialpadStyles,
+  DialpadButtonProps,
+  DtmfTone
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
