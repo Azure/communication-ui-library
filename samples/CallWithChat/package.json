@@ -4,7 +4,7 @@
   "private": true,
   "description": "This is a sample application to show how the UI Library can be used to build a call with chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
-    "build": "rushx clean && webpack --mode=production --env production",
+    "build": "rushx clean && rushx webpack",
     "build:stable": "cross-env FLAVOR=stable rushx build",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
@@ -17,7 +17,10 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 */**/*.{ts,tsx}",
     "lint:fix": "eslint */**/*.{ts,tsx} --fix",
-    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
+    "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
+    "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
+    "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "dependencies": {
     "@azure/communication-identity": "1.0.0",
