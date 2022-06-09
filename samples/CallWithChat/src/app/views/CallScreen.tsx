@@ -12,13 +12,11 @@ import {
   CallWithChatAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
-import MobileDetect from 'mobile-detect';
 import { WEB_APP_TITLE } from '../utils/constants';
-
-const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
+import { useIsMobile } from '../utils/useIsMobile';
 
 export interface CallScreenProps {
   token: string;
@@ -32,6 +30,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, displayName, endpoint, locator } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+  const isMobileSession = useIsMobile();
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -68,19 +67,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     { userId, displayName, credential, endpoint, locator },
     afterAdapterCreate
   );
-
-  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
-  const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
-  useEffect(() => {
-    const updateIsMobile = (): void => {
-      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
-      setTimeout(() => {
-        setIsMobileSession(detectMobileSession());
-      });
-    };
-    window.addEventListener('resize', updateIsMobile);
-    return () => window.removeEventListener('resize', updateIsMobile);
-  }, []);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
