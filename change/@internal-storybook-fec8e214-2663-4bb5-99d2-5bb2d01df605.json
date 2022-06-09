@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add Best Practices documentation to Storybook",
+  "packageName": "@internal/storybook",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

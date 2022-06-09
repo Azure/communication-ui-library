@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,14 +21,14 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       }
     >
       <div
-        className="ms-Stack css-stub-classname"
+        className="ms-Stack stub-classname"
       >
         <div
-          className="css-118 css-stub-classname"
+          className="stub-classname stub-classname"
           dir="ltr"
         >
           <div
-            className="css-118"
+            className="stub-classname"
             data-uses-unhanded-props={true}
           >
             <div
@@ -37,7 +37,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                className="ms-Dropdown css-stub-classname"
+                className="ms-Dropdown stub-classname"
                 data-is-focusable={true}
                 data-ktp-target={true}
                 id="Dropdown116"
@@ -67,11 +67,11 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                   Select an option
                 </span>
                 <span
-                  className="ms-Dropdown-caretDownWrapper css-stub-classname"
+                  className="ms-Dropdown-caretDownWrapper stub-classname"
                 >
                   <i
                     aria-hidden={true}
-                    className="ms-Dropdown-caretDown css-stub-classname"
+                    className="ms-Dropdown-caretDown stub-classname"
                     data-icon-name="ChevronDown"
                   >
                     

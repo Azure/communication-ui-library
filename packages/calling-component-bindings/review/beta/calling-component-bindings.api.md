@@ -27,6 +27,7 @@ import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
+import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
@@ -149,6 +150,14 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+
+// @public
+export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked: boolean;
+};
+
+// @public
+export const holdButtonSelector: HoldButtonSelector;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;

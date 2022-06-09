@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Composites/CallWithChatComposite/Basic Example Basic Example 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots Composites/CallWithChatComposite/Ba
       }
     >
       <div
-        className="ms-Stack css-stub-classname"
+        className="ms-Stack stub-classname"
       >
         <span>
           <div>

@@ -382,6 +382,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
@@ -660,6 +662,23 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// @beta
+export const HoldButton: (props: HoldButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface HoldButtonProps extends ControlBarButtonProps {
+    onToggleHold: () => Promise<void>;
+    strings?: HoldButtonStrings;
+}
+
+// @beta
+export interface HoldButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    toolTipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public

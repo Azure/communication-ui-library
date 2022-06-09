@@ -125,5 +125,10 @@ export { Dialpad } from './Dialpad/Dialpad';
 /* @conditional-compile-remove(dialpad) */
 export type { DialpadProps, DialpadStrings, DialpadButtonProps, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
+/* @conditional-compile-remove(PSTN-calls) */
+export { HoldButton } from './HoldButton';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
+
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
