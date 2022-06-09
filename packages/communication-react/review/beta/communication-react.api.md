@@ -496,7 +496,7 @@ export type CallingHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTone?: (dtmfTones: DtmfTone_2) => Promise<void>;
+    onSendDtmfTone?: (dtmfTone: DtmfTone_2) => Promise<void>;
 };
 
 // @public
@@ -1593,7 +1593,7 @@ export interface DialpadProps {
     // (undocumented)
     onDisplayDialpadInput?: (input: string) => string;
     // (undocumented)
-    onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)

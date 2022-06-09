@@ -25,7 +25,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
       >
         <div
           className="css-stub-classname"
-          id="dialpadContainer"
+          data-test-id="dialpadContainer"
         >
           <div
             className="ms-TextField css-stub-classname"
@@ -39,7 +39,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 <input
                   aria-invalid={false}
                   className="ms-TextField-field css-stub-classname"
-                  id="dialpad-input"
+                  data-test-id="dialpad-input"
+                  id="TextField69"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
@@ -64,7 +65,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-0"
+                data-test-id="dialpad-button-0"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -96,7 +97,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-1"
+                data-test-id="dialpad-button-1"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -128,7 +129,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-2"
+                data-test-id="dialpad-button-2"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -164,7 +165,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-3"
+                data-test-id="dialpad-button-3"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -196,7 +197,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-4"
+                data-test-id="dialpad-button-4"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -228,7 +229,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-5"
+                data-test-id="dialpad-button-5"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -264,7 +265,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-6"
+                data-test-id="dialpad-button-6"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -296,7 +297,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-7"
+                data-test-id="dialpad-button-7"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -328,7 +329,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-8"
+                data-test-id="dialpad-button-8"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -364,7 +365,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-9"
+                data-test-id="dialpad-button-9"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -396,7 +397,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-10"
+                data-test-id="dialpad-button-10"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}
@@ -428,7 +429,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               <button
                 className="ms-Button ms-Button--default css-stub-classname"
                 data-is-focusable={true}
-                id="dialpad-button-11"
+                data-test-id="dialpad-button-11"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 onKeyPress={[Function]}

@@ -24,8 +24,8 @@ test('workaround for conditional compilation. Test suite must contain at least o
 });
 
 /* @conditional-compile-remove(dialpad) */
-const onSendDtmfTone = (dtmfTones: DtmfTone): Promise<void> => {
-  console.log(dtmfTones);
+const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
+  console.log(dtmfTone);
   return Promise.resolve();
 };
 
@@ -36,7 +36,9 @@ describe('Dialpad tests', () => {
       dialpad: { defaultText: Math.random().toString() }
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
-    expect(component.find('#dialpad-input').first().props().placeholder).toBe(testLocale.strings.dialpad.defaultText);
+    expect(component.find('[data-testid="dialpad-input"]').first().props().placeholder).toBe(
+      testLocale.strings.dialpad.defaultText
+    );
   });
 
   test('Clicking on dialpad button 1 should show 1 in input box', async () => {
@@ -44,12 +46,12 @@ describe('Dialpad tests', () => {
       dialpad: { defaultText: Math.random().toString() }
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
-    const button = component.find('#dialpad-button-0').first();
+    const button = component.find('[data-testid="dialpad-button-0"]').first();
     if (button) {
       button.simulate('click');
     }
 
-    expect(component.find('#dialpad-input').first().props().value).toBe('1');
+    expect(component.find('[data-testid="dialpad-input"]').first().props().value).toBe('1');
   });
 
   test('Clicking on dialpad button 6 should send the corresponding dtmf tone Num6', async () => {
@@ -60,7 +62,7 @@ describe('Dialpad tests', () => {
 
     const logSpy = jest.spyOn(console, 'log');
 
-    const button = component.find('#dialpad-button-5').first();
+    const button = component.find('[data-testid="dialpad-button-5"]').first();
     if (button) {
       button.simulate('click');
     }
@@ -75,7 +77,7 @@ describe('Dialpad tests', () => {
 
     const logSpy = jest.spyOn(console, 'log');
 
-    const button = component.find('#dialpad-button-8').first();
+    const button = component.find('[data-testid="dialpad-button-8"]').first();
     if (button) {
       button.simulate('click');
     }
@@ -86,7 +88,9 @@ describe('Dialpad tests', () => {
 
   test('Dialpad should have customizable default input text', async () => {
     const component = mount(<Dialpad strings={customDialpadStrings} />);
-    expect(component.find('#dialpad-input').first().props().placeholder).toBe(customDialpadStrings.defaultText);
+    expect(component.find('[data-testid="dialpad-input"]').first().props().placeholder).toBe(
+      customDialpadStrings.defaultText
+    );
   });
 
   test('Dialpad input box should be editable by keyboard', async () => {

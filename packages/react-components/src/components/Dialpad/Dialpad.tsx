@@ -97,7 +97,7 @@ export interface DialpadProps {
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: DialpadButtonProps[][];
   // function to send dtmf tones on button click
-  onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   // Callback for dialpad button behavior
   onClickDialpadButton?: () => void;
   // customize dialpad input formatting
@@ -116,7 +116,7 @@ const DialpadButton = (props: {
   const theme = useTheme();
   return (
     <DefaultButton
-      id={`dialpad-button-${props.index}`}
+      data-test-id={`dialpad-button-${props.index}`}
       onClick={() => {
         props.onClick(props.primaryContent, props.index);
       }}
@@ -175,7 +175,7 @@ const DtmfTones: DtmfTone[] = [
 const DialpadContainer = (props: {
   defaultText: string;
   // dialpadButtons?: DialpadButtonProps[][];
-  onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   // Callback for dialpad button behavior
   onClickDialpadButton?: () => void;
   // customize dialpad input formatting
@@ -205,34 +205,35 @@ const DialpadContainer = (props: {
     setTextValue(e.target.value);
   };
 
+  // comment out the following line for now to disable customization for dialpad content
   // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
 
   return (
-    <div className={mergeStyles(containerStyles(theme), props.styles?.root)} id="dialpadContainer">
+    <div className={mergeStyles(containerStyles(theme), props.styles?.root)} data-test-id="dialpadContainer">
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
         value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
         onChange={setText}
         errorMessage={error}
         placeholder={props.defaultText}
-        id="dialpad-input"
+        data-test-id="dialpad-input"
       />
       <FocusZone>
-        {dialPadButtonsDefault.map((rows, index) => {
+        {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
-            <Stack horizontal key={`row_${index}`} horizontalAlign="stretch">
-              {rows.map((button, i) => (
+            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch">
+              {rows.map((button, columnIndex) => (
                 <DialpadButton
-                  key={`button_${i}`}
+                  key={`button_${columnIndex}`}
                   /* row index = 0
-                  i: (0,1,2) => (0,1,2)
+                  columnIndex: (0,1,2) => (0,1,2)
                   row index = 1
-                  i: (0,1,2)=> (3,4,5)
+                  columnIndex: (0,1,2)=> (3,4,5)
                   row index = 2
-                  i: (0,1,2)=> (6,7,8)
+                  columnIndex: (0,1,2)=> (6,7,8)
                   row index = 3
-                  i: (0,1,2)=> (9,10,11)
-                  i + index*rows.length calculates the corresponding index for each button
+                  columnIndex: (0,1,2)=> (9,10,11)
+                  columnIndex + rowIndex*rows.length calculates the corresponding index for each button
                   dialpad index:
                   0 1 2
                   3 4 5
@@ -241,7 +242,7 @@ const DialpadContainer = (props: {
                   then use this index to locate the corresponding dtmf tones
                   DtmfTones[index]
                   */
-                  index={i + index * rows.length}
+                  index={columnIndex + rowIndex * rows.length}
                   primaryContent={button.primaryContent}
                   secondaryContent={button.secondaryContent}
                   styles={props.styles}

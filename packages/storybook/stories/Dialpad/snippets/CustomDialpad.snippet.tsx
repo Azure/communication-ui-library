@@ -5,8 +5,8 @@ import { DtmfTone } from '@azure/communication-calling';
 import { Dialpad } from '@azure/communication-react';
 import React from 'react';
 
-const onSendDtmfTone = (dtmfTones: DtmfTone): Promise<void> => {
-  console.log(dtmfTones);
+const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
+  console.log(dtmfTone);
   return Promise.resolve();
 };
 const onDisplayDialpadInput = (value: string): string => {

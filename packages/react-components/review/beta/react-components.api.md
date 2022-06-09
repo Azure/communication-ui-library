@@ -445,7 +445,7 @@ export interface DialpadProps {
     // (undocumented)
     onDisplayDialpadInput?: (input: string) => string;
     // (undocumented)
-    onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
