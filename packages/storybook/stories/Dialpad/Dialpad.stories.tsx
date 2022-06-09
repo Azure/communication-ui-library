@@ -47,7 +47,7 @@ const DialpadStory = (): JSX.Element => {
   const theme = useTheme();
 
   const dialpadStrings = {
-    defaultText: 'Enter a number'
+    placeholderText: 'Enter a number'
   };
 
   return (

@@ -457,7 +457,7 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
-    defaultText: string;
+    placeholderText: string;
 }
 
 // @beta

@@ -450,8 +450,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             </div>
           </div>
           <div
-            className="ms-LayerHost css-stub-classname"
-            id="layerhost223"
+            className="ms-LayerHost stub-classname"
+            id="layerhost1"
           />
         </div>
       </div>

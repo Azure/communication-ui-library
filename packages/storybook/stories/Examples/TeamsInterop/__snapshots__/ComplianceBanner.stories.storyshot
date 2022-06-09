@@ -51,8 +51,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
                 className="ms-Button-textContainer stub-classname"
               >
                 <span
-                  className="ms-Button-label css-stub-classname"
-                  id="id__150"
+                  className="ms-Button-label stub-classname"
+                  id="id__1"
                 >
                   Toggle Recording
                 </span>
@@ -78,8 +78,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
                 className="ms-Button-textContainer stub-classname"
               >
                 <span
-                  className="ms-Button-label css-stub-classname"
-                  id="id__153"
+                  className="ms-Button-label stub-classname"
+                  id="id__4"
                 >
                   Toggle Transcription
                 </span>

@@ -210,8 +210,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-stub-classname ms-ContextualMenu is-open css-stub-classname"
-                          data-focuszone-id="FocusZone210"
+                          className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
+                          data-focuszone-id="FocusZone11"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}
@@ -442,8 +442,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-stub-classname ms-ContextualMenu is-open css-stub-classname"
-                          data-focuszone-id="FocusZone211"
+                          className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
+                          data-focuszone-id="FocusZone12"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}
@@ -678,8 +678,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-stub-classname ms-ContextualMenu is-open css-stub-classname"
-                          data-focuszone-id="FocusZone212"
+                          className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
+                          data-focuszone-id="FocusZone13"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}

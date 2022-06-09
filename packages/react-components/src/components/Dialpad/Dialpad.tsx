@@ -37,7 +37,7 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
  * @beta
  */
 export interface DialpadStrings {
-  defaultText: string;
+  placeholderText: string;
 }
 
 /**
@@ -173,7 +173,7 @@ const DtmfTones: DtmfTone[] = [
 
 /* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
-  defaultText: string;
+  placeholderText: string;
   // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   // Callback for dialpad button behavior
@@ -184,12 +184,10 @@ const DialpadContainer = (props: {
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
-  const [error, setError] = useState('');
 
   const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput } = props;
 
   const onClickDialpad = (input: string, index: number): void => {
-    setError('');
     setTextValue(textValue + input);
     if (onSendDtmfTone) {
       onSendDtmfTone(DtmfTones[index]);
@@ -201,7 +199,6 @@ const DialpadContainer = (props: {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setText = (e: any): void => {
-    setError('');
     setTextValue(e.target.value);
   };
 
@@ -214,8 +211,7 @@ const DialpadContainer = (props: {
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
         value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
         onChange={setText}
-        errorMessage={error}
-        placeholder={props.defaultText}
+        placeholder={props.placeholderText}
         data-test-id="dialpad-input"
       />
       <FocusZone>
@@ -273,7 +269,7 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
     <>
       {
         /* @conditional-compile-remove(dialpad) */
-        <DialpadContainer defaultText={strings.defaultText} {...props} />
+        <DialpadContainer placeholderText={strings.placeholderText} {...props} />
       }
     </>
   );

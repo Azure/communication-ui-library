@@ -28,8 +28,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
           data-ui-id="error-bar-stack"
         >
           <div
-            aria-describedby="MessageBar110"
-            className="ms-MessageBar ms-MessageBar--error ms-MessageBar-multiline css-stub-classname"
+            aria-describedby="MessageBar1"
+            className="ms-MessageBar ms-MessageBar--error ms-MessageBar-multiline stub-classname"
             role="region"
           >
             <div
@@ -49,8 +49,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
               </div>
               <div
                 aria-live="assertive"
-                className="ms-MessageBar-text css-stub-classname"
-                id="MessageBar110"
+                className="ms-MessageBar-text stub-classname"
+                id="MessageBar1"
                 role="alert"
               >
                 <span

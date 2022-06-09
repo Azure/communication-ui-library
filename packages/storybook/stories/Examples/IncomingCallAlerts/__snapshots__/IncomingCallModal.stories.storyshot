@@ -57,7 +57,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
           onTouchStart={[Function]}
         >
           <div
-            aria-labelledby="Dialog118-title"
+            aria-labelledby="Dialog1-title"
             aria-modal={true}
             onKeyDown={[Function]}
             role="alertdialog"
@@ -77,8 +77,8 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                 className="ms-Overlay ms-Overlay--dark stub-classname"
               />
               <div
-                className="ms-Dialog-main css-stub-classname"
-                id="ModalFocusTrapZone119"
+                className="ms-Dialog-main stub-classname"
+                id="ModalFocusTrapZone2"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
               >
@@ -105,8 +105,8 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                     >
                       <div
                         aria-level={1}
-                        className="ms-Dialog-title css-stub-classname"
-                        id="Dialog118-title"
+                        className="ms-Dialog-title stub-classname"
+                        id="Dialog1-title"
                         role="heading"
                       >
                         Incoming Video Call
@@ -321,8 +321,8 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                                   className="ms-Button-textContainer stub-classname"
                                 >
                                   <span
-                                    className="ms-Button-label css-stub-classname"
-                                    id="id__126"
+                                    className="ms-Button-label stub-classname"
+                                    id="id__9"
                                   >
                                     Accept
                                   </span>
@@ -358,8 +358,8 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                                   className="ms-Button-textContainer stub-classname"
                                 >
                                   <span
-                                    className="ms-Button-label css-stub-classname"
-                                    id="id__129"
+                                    className="ms-Button-label stub-classname"
+                                    id="id__12"
                                   >
                                     Decline
                                   </span>

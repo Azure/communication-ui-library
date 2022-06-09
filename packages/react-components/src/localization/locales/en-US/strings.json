@@ -156,7 +156,7 @@
     "localVideoSelectedDescription": "{cameraName} selected"
   },
   "dialpad": {
-    "defaultText": "Enter a number"
+    "placeholderText": "Enter a number"
   },
   "HoldButton": {
     "onLabel": "Resume",

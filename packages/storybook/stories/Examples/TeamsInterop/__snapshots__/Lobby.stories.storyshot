@@ -149,8 +149,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label css-stub-classname"
-                        id="id__158"
+                        className="ms-Button-label stub-classname"
+                        id="id__2"
                       >
                         Turn off
                       </span>
@@ -229,8 +229,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label css-stub-classname"
-                        id="id__162"
+                        className="ms-Button-label stub-classname"
+                        id="id__6"
                       >
                         Mute
                       </span>
@@ -302,8 +302,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label css-stub-classname"
-                        id="id__166"
+                        className="ms-Button-label stub-classname"
+                        id="id__10"
                       >
                         Devices
                       </span>
@@ -381,8 +381,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label css-stub-classname"
-                        id="id__170"
+                        className="ms-Button-label stub-classname"
+                        id="id__14"
                       >
                         Leave
                       </span>
