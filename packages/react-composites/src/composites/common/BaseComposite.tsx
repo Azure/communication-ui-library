@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
+import { Customizer, LayerHost, mergeStyles, PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
+import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * Properties common to all composites exported from this library.
@@ -65,6 +67,8 @@ export const BaseProvider = (
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 
+  const globalLayerHostId = useId('composite-global-hostId');
+
   /**
    * Pass only the children if we previously registered icons, and have previously wrapped the children in
    * FluentThemeProvider and LocalizationProvider
@@ -80,10 +84,13 @@ export const BaseProvider = (
    */
   registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS, ...props.icons } });
 
+  // we use Customizer to override default LayerHost injected to <body />
+  // which stop polluting global dom tree and increase compatibility with react-full-screen
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      {props.children}
+      <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>{props.children}</Customizer>
+      <LayerHost id={globalLayerHostId} className={mergeStyles(globalLayerHostStyle)} />
     </FluentThemeProvider>
   );
   const localizedElement = locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;

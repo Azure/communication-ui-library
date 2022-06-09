@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stylesheet } from '@fluentui/react';
+import path from 'path';
+import { resetIds, Stylesheet } from '@fluentui/react';
 import initStoryshots, { multiSnapshotWithOptions } from '@storybook/addon-storyshots';
 import ReactDom from 'react-dom';
 
@@ -15,18 +16,18 @@ jest.mock('@azure/communication-calling', () => {
 
 ReactDom.createPortal = (node: any) => node;
 
-// Reset the stylesheet classname generator for the snapshot tests.
-// Classnames are of the format css-#, where # is an integer that is
-// incremented with each new classname generated. (css- is the default prefix
-// but it can also use the display name of the component). For more information
-// see: https://github.com/microsoft/fluentui/blob/master/packages/merge-styles/src/Stylesheet.ts#L171
-// As class names are generated from the Stylesheet, which is a global singleton, any
-// tests that have run before this test suite will have incremented the classname count.
-// Here we reset the count to ensure classname generation begins at 0.
-// Currently unsure if tests running in parallel will cause these snapshots to fail again, if that
-// happens we should replace the classname generator with our own deterministic classname generator.
+// Classnames in fluent are of the format <classname-prefix>-# (e.g. css-42), where # is an integer that is incremented by a
+// global singleton when each new classname is generated.
+// Here we mock the classname generation for two reasons:
+//   1. Unblocks parallel tests - if the order in which the tests run changes the generated css classnames
+//      will differ across different runs
+//   2. Prevents unnecessary PR friction - often PRs with small changes to styles would require snapshots to be updated
+//      simply to change the number of a couple of <classname-prefix>-# numbered classes. This caused a lot of developer friction.
+Stylesheet.getInstance().getClassName = () => 'stub-classname';
 beforeEach(() => {
-  Stylesheet.getInstance().reset();
+  // Ideally we could stub out the getId in the same way we can stub out getClassName, but currently this is not
+  // possible: https://github.com/microsoft/fluentui/blob/master/packages/utilities/src/getId.ts#L5
+  resetIds(0);
 });
 
 // Storyshots do not fail on warnings or errors thrown by components, this is a quick fix to ensure we have tests fail when warning are outputted.
@@ -46,6 +47,14 @@ afterAll(() => {
 
 describe('storybook snapshot tests', () => {
   initStoryshots({
-    test: multiSnapshotWithOptions()
+    test: (story) => {
+      const fileName = path.resolve(__dirname, '..', story.context.fileName);
+      return multiSnapshotWithOptions()({
+        ...story,
+        // Workaround for multiSnapshotWithOptions placing snapshots in a directory
+        // one level too high. See more info and workaround snippet: https://github.com/storybookjs/storybook/issues/16692
+        context: { ...story.context, fileName }
+      });
+    }
   });
 });

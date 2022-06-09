@@ -104,12 +104,17 @@ exports.default = babelHelper.declare((_api, opts) => {
             	Handle(identifier_path, featureSet, stabilizedFeatureSet);
             }
         }});
+      },
+
+      TSConditionalType(path) {
+        HandleConditionalType(path, featureSet, stabilizedFeatureSet);
       }
     }
   };
 });
 
-function Handle(path, featureSet, stabilizedFeatureSet) {
+
+function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
   let { node } = path;
 
   if (!node.leadingComments) {
@@ -134,6 +139,7 @@ function Handle(path, featureSet, stabilizedFeatureSet) {
     // next line.
     comment.value = '';
   })
+
   // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
   // Replacing it with jSXEmptyExpression will get us the same result
   // There will always be only one expression under JSXExpressionContainer
@@ -141,6 +147,24 @@ function Handle(path, featureSet, stabilizedFeatureSet) {
     path.replaceWith(t.jSXEmptyExpression());
   } else {
     path.remove();
+  }
+}
+
+function HandleConditionalType(path, featureSet, stabilizedFeatureSet) {
+  let { node } = path;
+  let { trueType, falseType } = node;
+
+  if (trueType.leadingComments) {
+    const removalInstructions = trueType.leadingComments.map((comment) => nodeRemovalInstruction(trueType, comment, featureSet, stabilizedFeatureSet));
+    if (shouldRemoveNode(removalInstructions)) {
+      path.replaceWith(falseType);
+    }
+  }
+  if (falseType.leadingComments) {
+    const removalInstructions = falseType.leadingComments.map((comment) => nodeRemovalInstruction(falseType, comment, featureSet, stabilizedFeatureSet));
+    if (shouldRemoveNode(removalInstructions)) {
+      path.replaceWith(trueType);
+    }
   }
 }
 
