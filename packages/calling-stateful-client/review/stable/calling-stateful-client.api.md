@@ -108,7 +108,7 @@ export type CreateViewResult = {
 };
 
 // @public
-export type DeclarativeCallAgent = CallAgent & {};
+export type DeclarativeCallAgent = CallAgent;
 
 // @public
 export type DeviceManagerState = {

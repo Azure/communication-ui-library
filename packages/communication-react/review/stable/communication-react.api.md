@@ -1318,7 +1318,7 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export type DeclarativeCallAgent = CallAgent & {};
+export type DeclarativeCallAgent = CallAgent;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
