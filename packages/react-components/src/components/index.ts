@@ -121,9 +121,9 @@ export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 /* @conditional-compile-remove(dialpad) */
-export { _Dialpad } from './Dialpad/Dialpad';
+export { Dialpad } from './Dialpad/Dialpad';
 /* @conditional-compile-remove(dialpad) */
-export type { _DialpadProps, _DialpadStrings, _DialpadButtonProps, _DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadProps, DialpadStrings, DialpadButtonProps, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';

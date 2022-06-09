@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
+import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -72,7 +72,7 @@ export default {
   component: DialpadComponent,
   argTypes: {
     strings: hiddenControl,
-    onSendDtmfTones: hiddenControl
+    onSendDtmfTone: hiddenControl
   },
   parameters: {
     docs: {

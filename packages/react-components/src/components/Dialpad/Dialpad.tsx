@@ -32,20 +32,20 @@ import {
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 
 /**
- * Strings of {@link _Dialpad} that can be overridden.
+ * Strings of {@link Dialpad} that can be overridden.
  *
  * @beta
  */
-export interface _DialpadStrings {
+export interface DialpadStrings {
   defaultText: string;
 }
 
 /**
- * Styles for {@link _Dialpad} component.
+ * Styles for {@link Dialpad} component.
  *
  * @beta
  */
-export interface _DialpadStyles {
+export interface DialpadStyles {
   root?: IStyle;
   button?: IButtonStyles;
   textField?: Partial<ITextFieldStyles>;
@@ -54,11 +54,11 @@ export interface _DialpadStyles {
 }
 
 /**
- * Type for  {@link _DialpadButton} input
+ * Type for  {@link DialpadButton} input
  *
  * @beta
  */
-export interface _DialpadButtonProps {
+export interface DialpadButtonProps {
   primaryContent: string;
   secondaryContent?: string;
 }
@@ -88,28 +88,28 @@ export type DtmfTone =
   | 'Star';
 
 /**
- * Props for {@link _Dialpad} component.
+ * Props for {@link Dialpad} component.
  *
  * @beta
  */
-export interface _DialpadProps {
-  strings?: _DialpadStrings;
+export interface DialpadProps {
+  strings?: DialpadStrings;
   // comment out the following prop for now to disable customization for dialpad content
-  // dialpadButtons?: _DialpadButtonProps[][];
+  // dialpadButtons?: DialpadButtonProps[][];
   // function to send dtmf tones on button click
-  onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
-  // add extra functionalities to dialpad buttons
+  onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+  // Callback for dialpad button behavior
   onClickDialpadButton?: () => void;
   // customize dialpad input formatting
   onDisplayDialpadInput?: (input: string) => string;
-  styles?: _DialpadStyles;
+  styles?: DialpadStyles;
 }
 
 /* @conditional-compile-remove(dialpad) */
 const DialpadButton = (props: {
   primaryContent: string;
   secondaryContent?: string;
-  styles?: _DialpadStyles;
+  styles?: DialpadStyles;
   index: number;
   onClick: (input: string, index: number) => void;
 }): JSX.Element => {
@@ -136,7 +136,7 @@ const DialpadButton = (props: {
 };
 
 /* @conditional-compile-remove(dialpad) */
-const dialPadButtonsDefault: _DialpadButtonProps[][] = [
+const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [
     { primaryContent: '1' },
     { primaryContent: '2', secondaryContent: 'ABC' },
@@ -174,25 +174,25 @@ const DtmfTones: DtmfTone[] = [
 /* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
   defaultText: string;
-  // dialpadButtons?: _DialpadButtonProps[][];
-  onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
-  // add extra functionalities to dialpad buttons
+  // dialpadButtons?: DialpadButtonProps[][];
+  onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
+  // Callback for dialpad button behavior
   onClickDialpadButton?: () => void;
   // customize dialpad input formatting
   onDisplayDialpadInput?: (input: string) => string;
-  styles?: _DialpadStyles;
+  styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
   const [error, setError] = useState('');
 
-  const { onSendDtmfTones, onClickDialpadButton, onDisplayDialpadInput } = props;
+  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput } = props;
 
   const onClickDialpad = (input: string, index: number): void => {
     setError('');
     setTextValue(textValue + input);
-    if (onSendDtmfTones) {
-      onSendDtmfTones(DtmfTones[index]);
+    if (onSendDtmfTone) {
+      onSendDtmfTone(DtmfTones[index]);
     }
     if (onClickDialpadButton) {
       onClickDialpadButton();
@@ -262,7 +262,7 @@ const DialpadContainer = (props: {
  *
  * @beta
  */
-export const _Dialpad = (props: _DialpadProps): JSX.Element => {
+export const Dialpad = (props: DialpadProps): JSX.Element => {
   /* @conditional-compile-remove(dialpad) */
   const localeStrings = useLocale().strings.dialpad;
   /* @conditional-compile-remove(dialpad) */

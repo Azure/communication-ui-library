@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { DtmfTone } from '@azure/communication-calling';
-import { _Dialpad } from '@azure/communication-react';
+import { Dialpad } from '@azure/communication-react';
 import React from 'react';
 
-const onSendDtmfTones = (dtmfTones: DtmfTone): Promise<void> => {
+const onSendDtmfTone = (dtmfTones: DtmfTone): Promise<void> => {
   console.log(dtmfTones);
   return Promise.resolve();
 };
@@ -25,5 +25,5 @@ const onDisplayDialpadInput = (value: string): string => {
   }
 };
 export const CustomDialpadExample: () => JSX.Element = () => {
-  return <_Dialpad onSendDtmfTones={onSendDtmfTones} onDisplayDialpadInput={onDisplayDialpadInput} />;
+  return <Dialpad onSendDtmfTone={onSendDtmfTone} onDisplayDialpadInput={onDisplayDialpadInput} />;
 };

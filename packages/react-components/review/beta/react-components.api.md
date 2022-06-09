@@ -247,7 +247,7 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    dialpad: _DialpadStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -428,10 +428,10 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 }
 
 // @beta
-export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface _DialpadButtonProps {
+export interface DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
     // (undocumented)
@@ -439,27 +439,27 @@ export interface _DialpadButtonProps {
 }
 
 // @beta
-export interface _DialpadProps {
+export interface DialpadProps {
     // (undocumented)
     onClickDialpadButton?: () => void;
     // (undocumented)
     onDisplayDialpadInput?: (input: string) => string;
     // (undocumented)
-    onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+    onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
     // (undocumented)
-    strings?: _DialpadStrings;
+    strings?: DialpadStrings;
     // (undocumented)
-    styles?: _DialpadStyles;
+    styles?: DialpadStyles;
 }
 
 // @beta
-export interface _DialpadStrings {
+export interface DialpadStrings {
     // (undocumented)
     defaultText: string;
 }
 
 // @beta
-export interface _DialpadStyles {
+export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
     // (undocumented)

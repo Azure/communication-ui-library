@@ -18,7 +18,7 @@ import {
   VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(dialpad) */
-import { _DialpadStrings } from '../components';
+import { DialpadStrings } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -71,7 +71,7 @@ export interface ComponentStrings {
   videoGallery: VideoGalleryStrings;
   /* @conditional-compile-remove(dialpad) */
   /** Strings for Dialpad */
-  dialpad: _DialpadStrings;
+  dialpad: DialpadStrings;
 }
 
 /**

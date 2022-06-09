@@ -64,7 +64,7 @@ export type CallingHandlers = {
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */
-  onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+  onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
 };
 
 /**
@@ -352,7 +352,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(dialpad) */
-    const onSendDtmfTones = async (dtmfTones: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTones);
+    const onSendDtmfTone = async (dtmfTones: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTones);
 
     return {
       onHangUp,
@@ -376,7 +376,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
       /* @conditional-compile-remove(dialpad) */
-      onSendDtmfTones
+      onSendDtmfTone
     };
   }
 );

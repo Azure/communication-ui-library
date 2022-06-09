@@ -496,7 +496,7 @@ export type CallingHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTones?: (dtmfTones: DtmfTone_2) => Promise<void>;
+    onSendDtmfTone?: (dtmfTones: DtmfTone_2) => Promise<void>;
 };
 
 // @public
@@ -1179,7 +1179,7 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    dialpad: _DialpadStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -1576,10 +1576,10 @@ export interface DiagnosticsCallFeatureState {
 }
 
 // @beta
-export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface _DialpadButtonProps {
+export interface DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
     // (undocumented)
@@ -1587,27 +1587,27 @@ export interface _DialpadButtonProps {
 }
 
 // @beta
-export interface _DialpadProps {
+export interface DialpadProps {
     // (undocumented)
     onClickDialpadButton?: () => void;
     // (undocumented)
     onDisplayDialpadInput?: (input: string) => string;
     // (undocumented)
-    onSendDtmfTones?: (dtmfTones: DtmfTone) => Promise<void>;
+    onSendDtmfTone?: (dtmfTones: DtmfTone) => Promise<void>;
     // (undocumented)
-    strings?: _DialpadStrings;
+    strings?: DialpadStrings;
     // (undocumented)
-    styles?: _DialpadStyles;
+    styles?: DialpadStyles;
 }
 
 // @beta
-export interface _DialpadStrings {
+export interface DialpadStrings {
     // (undocumented)
     defaultText: string;
 }
 
 // @beta
-export interface _DialpadStyles {
+export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
     // (undocumented)
@@ -1778,7 +1778,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof _Dialpad> extends true ? EmptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;

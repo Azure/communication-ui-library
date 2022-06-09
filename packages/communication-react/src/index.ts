@@ -111,7 +111,7 @@ export {
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(dialpad) */
-export { _Dialpad } from '../../react-components/src';
+export { Dialpad } from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -211,10 +211,10 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */
 export type {
-  _DialpadProps,
-  _DialpadStrings,
-  _DialpadStyles,
-  _DialpadButtonProps,
+  DialpadProps,
+  DialpadStrings,
+  DialpadStyles,
+  DialpadButtonProps,
   DtmfTone
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */

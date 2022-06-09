@@ -12,7 +12,7 @@ import {
   VideoGallery
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */
-import { _Dialpad } from '@internal/react-components';
+import { Dialpad } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -103,7 +103,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
-  : AreEqual<Component, typeof _Dialpad> extends true
+  : AreEqual<Component, typeof Dialpad> extends true
   ? /* @conditional-compile-remove(dialpad) */ EmptySelector
   : undefined;
 
@@ -124,7 +124,8 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   /* @conditional-compile-remove(dialpad) */
-  if (component === _Dialpad) {
+  // Dialpad only has handlers currently and doesn't require any props from the stateful layer so return the emptySelector
+  if (component === Dialpad) {
     return emptySelector;
   }
 
