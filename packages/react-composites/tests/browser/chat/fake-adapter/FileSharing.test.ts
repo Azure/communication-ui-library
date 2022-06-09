@@ -307,7 +307,7 @@ test.describe('Filesharing Edit Message', async () => {
   });
 });
 
-async function waitIfMobileLandscape(workerInfo, page) {
+async function waitIfMobileLandscape(workerInfo, page): Promise<void> {
   if (
     workerInfo.project.name.toLowerCase().includes('mobile') &&
     workerInfo.project.name.toLowerCase().includes('landscape')
