@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';
 import {
@@ -13,48 +12,45 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { getIdentifierKind } from '@azure/communication-common';
 import { _updateUserDisplayNames } from './callUtils';
+import { memoizedConvertAllremoteParticipants } from './participantListSelectorUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
 ): CallParticipantListParticipant[] => {
-  return (
-    remoteParticipants
-      // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
-      .filter((participant: RemoteParticipantState) => {
-        return participant.state !== 'InLobby';
-      })
-      .map((participant: RemoteParticipantState) => {
-        const isScreenSharing = Object.values(participant.videoStreams).some(
-          (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
-        );
-        return {
-          userId: toFlatCommunicationIdentifier(participant.identifier),
-          displayName: participant.displayName,
-          state: participant.state,
-          isMuted: participant.isMuted,
-          isScreenSharing: isScreenSharing,
-          isSpeaking: participant.isSpeaking,
-          // ACS users can not remove Teams users.
-          // Removing unknown types of users is undefined.
-          isRemovable:
-            getIdentifierKind(participant.identifier).kind === 'communicationUser' ||
-            getIdentifierKind(participant.identifier).kind === 'phoneNumber'
-        };
-      })
-      .sort((a, b) => {
-        const nameA = a.displayName?.toLowerCase() || '';
-        const nameB = b.displayName?.toLowerCase() || '';
-        if (nameA < nameB) {
-          return -1;
-        } else if (nameA > nameB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      })
-  );
+  return memoizedConvertAllremoteParticipants((memoizeFn) => {
+    return (
+      remoteParticipants
+        // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
+        .filter((participant: RemoteParticipantState) => {
+          return participant.state !== 'InLobby';
+        })
+        .map((participant: RemoteParticipantState) => {
+          const isScreenSharing = Object.values(participant.videoStreams).some(
+            (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
+          );
+          return memoizeFn(
+            participant.identifier,
+            participant.displayName,
+            participant.state,
+            participant.isMuted,
+            isScreenSharing,
+            participant.isSpeaking
+          );
+        })
+        .sort((a, b) => {
+          const nameA = a.displayName?.toLowerCase() || '';
+          const nameB = b.displayName?.toLowerCase() || '';
+          if (nameA < nameB) {
+            return -1;
+          } else if (nameA > nameB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        })
+    );
+  });
 };
 
 /**
