@@ -135,7 +135,7 @@ export interface StatefulCallClient extends CallClient {
    * - You can create a new CallClient instance to create a new CallAgent.
    * - You can dispose of a CallClient's current active CallAgent, and call the CallClient's
    *   createCallAgent() method again to create a new CallAgent.
-   * @param tokenCredential - The token credential. Use AzureCommunicationTokenCredential from {@link @azure/communication-common} to create a credential.
+   * @param tokenCredential - The token credential. Use AzureCommunicationTokenCredential from `@azure/communication-common` to create a credential.
    * @param options - The CallAgentOptions for additional options like display name.
    * @public
    */
