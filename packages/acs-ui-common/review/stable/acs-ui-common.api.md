@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AzureLogger } from '@azure/logger';
+import { AzureLogLevel } from '@azure/logger';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 // @public
@@ -29,11 +30,6 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// Warning: (ae-internal-missing-underscore) The name "EventLevel" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type EventLevel = 'verbose' | 'info' | 'warning' | 'error';
-
 // @internal
 export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
@@ -52,10 +48,8 @@ export interface _IObjectMap<T> {
     [key: string]: T;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "logEvent" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export const logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
+export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
 
 // @internal
 export const _MAX_EVENT_LISTENERS = 50;
@@ -78,7 +72,7 @@ export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, ke
 export type TelemetryEvent = {
     name: string;
     message: string;
-    level: EventLevel;
+    level: AzureLogLevel;
     data?: Record<string, unknown>;
 };
 
