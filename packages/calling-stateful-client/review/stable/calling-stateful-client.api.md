@@ -107,7 +107,7 @@ export type CreateViewResult = {
     view: VideoStreamRendererView;
 };
 
-// @beta
+// @public
 export type DeclarativeCallAgent = CallAgent & {};
 
 // @public
