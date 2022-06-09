@@ -14,6 +14,7 @@ import {
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -30,7 +31,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
           );
           return memoizeFn(
-            participant.identifier,
+            toFlatCommunicationIdentifier(participant.identifier),
             participant.displayName,
             participant.state,
             participant.isMuted,

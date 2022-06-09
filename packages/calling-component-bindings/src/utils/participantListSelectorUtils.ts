@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getIdentifierKind } from '@azure/communication-common';
+import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
 
 /**
@@ -10,7 +10,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
  */
 export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   (
-    userIdentifier: CommunicationIdentifier,
+    userId: string,
     displayName: string | undefined,
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
     isMuted: boolean,
@@ -18,7 +18,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     isSpeaking: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
-      userIdentifier,
+      userId,
       displayName,
       state,
       isMuted,
@@ -29,15 +29,16 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
 );
 
 const convertRemoteParticipantToParticipantListParticipant = (
-  userIdentifier: CommunicationIdentifier,
+  userId: string,
   displayName: string | undefined,
   state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean
 ): CallParticipantListParticipant => {
+  const identifier = fromFlatCommunicationIdentifier(userId);
   return {
-    userId: toFlatCommunicationIdentifier(userIdentifier),
+    userId,
     displayName,
     state,
     isMuted,
@@ -46,7 +47,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
-      getIdentifierKind(userIdentifier).kind === 'communicationUser' ||
-      getIdentifierKind(userIdentifier).kind === 'phoneNumber'
+      getIdentifierKind(identifier).kind === 'communicationUser' || getIdentifierKind(identifier).kind === 'phoneNumber'
   };
 };
