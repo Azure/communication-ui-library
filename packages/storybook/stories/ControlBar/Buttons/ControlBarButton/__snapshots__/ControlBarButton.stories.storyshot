@@ -21,12 +21,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
       }
     >
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="airplane"
@@ -63,6 +64,22 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
             </span>
           </span>
         </button>
+        <div
+          hidden={true}
+          id="airplane-tooltip"
+          style={
+            Object {
+              "border": 0,
+              "height": 1,
+              "margin": -1,
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "absolute",
+              "whiteSpace": "nowrap",
+              "width": 1,
+            }
+          }
+        />
       </div>
     </div>
   </div>

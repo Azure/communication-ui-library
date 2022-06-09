@@ -21,12 +21,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
       }
     >
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-controls={null}
@@ -72,7 +73,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
               data-icon-name="ChevronDown"
               hidden={true}
               style={
@@ -85,6 +86,24 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/P
             </i>
           </span>
         </button>
+        <div
+          hidden={true}
+          id="participantsButtonLabel-tooltip"
+          style={
+            Object {
+              "border": 0,
+              "height": 1,
+              "margin": -1,
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "absolute",
+              "whiteSpace": "nowrap",
+              "width": 1,
+            }
+          }
+        >
+          Show Participants
+        </div>
       </div>
     </div>
   </div>
