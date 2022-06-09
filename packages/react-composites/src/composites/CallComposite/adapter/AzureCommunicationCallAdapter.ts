@@ -27,6 +27,8 @@ import {
   RemoteParticipant,
   PermissionConstraints
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -45,6 +47,8 @@ import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -217,6 +221,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.addParticipant.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.holdCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.resumeCall.bind(this);
   }
 
   public dispose(): void {
@@ -416,6 +426,25 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async removeParticipant(userId: string): Promise<void> {
     this.handlers.onRemoveParticipant(userId);
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
+    this.handlers.onAddParticipant(participant, options);
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async holdCall(): Promise<void> {
+    if (this.call?.state !== 'LocalHold') {
+      this.handlers.onToggleHold();
+    }
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async resumeCall(): Promise<void> {
+    if (this.call?.state === 'LocalHold') {
+      this.handlers.onToggleHold();
+    }
   }
 
   public getState(): CallAdapterState {
