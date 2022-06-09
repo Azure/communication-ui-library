@@ -123,13 +123,13 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  if (participant.displayName) {
+ 
     return (
       <ParticipantItem
         styles={styles}
         key={participant.userId}
         userId={participant.userId}
-        displayName={participant.displayName}
+        displayName={participant.displayName?? strings.displayNamePlaceholder}
         me={myUserId ? participant.userId === myUserId : false}
         menuItems={menuItems}
         presence={presence}
@@ -138,8 +138,7 @@ const onRenderParticipantDefault = (
         onClick={() => onParticipantClick?.(participant)}
       />
     );
-  }
-  return null;
+
 };
 
 const getParticipantsForDefaultRender = (

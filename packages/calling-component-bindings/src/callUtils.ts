@@ -74,7 +74,7 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
   } else if (participant.displayName === undefined || participant.displayName === '') {
     return {
       ...participant,
-      displayName: 'Unnamed Participant'
+      displayName: ""
     };
   } else {
     return participant;

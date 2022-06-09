@@ -94,7 +94,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       : [];
     participants.push({
       userId: userId,
-      displayName: displayName ?? 'Unnamed Participant',
+      displayName: displayName ?? '',
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
       state: 'Connected',

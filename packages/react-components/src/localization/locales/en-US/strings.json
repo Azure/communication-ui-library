@@ -4,7 +4,8 @@
     "menuTitle": "More Options",
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
-    "mutedIconLabel": "Muted"
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
