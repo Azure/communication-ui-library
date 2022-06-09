@@ -30,7 +30,7 @@ export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/u
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
-export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './callUtils';
+export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './utils/callUtils';
 /* @conditional-compile-remove(PSTN-calls) */
-export { _updateUserDisplayNames } from './callUtils';
+export { _updateUserDisplayNames } from './utils/callUtils';
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './videoGalleryUtils';

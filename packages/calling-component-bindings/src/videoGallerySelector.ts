@@ -16,13 +16,13 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-import { _updateUserDisplayNames } from './callUtils';
+import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant
-} from './videoGalleryUtils';
+} from './utils/videoGalleryUtils';
 
 /**
  * Selector type for {@link VideoGallery} component.

@@ -12,8 +12,8 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { _updateUserDisplayNames } from './callUtils';
-import { memoizedConvertAllremoteParticipants } from './participantListSelectorUtils';
+import { _updateUserDisplayNames } from './utils/callUtils';
+import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
