@@ -13,6 +13,8 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -52,6 +54,8 @@ import {
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -185,6 +189,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.holdCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.resumeCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.addParticipant.bind(this);
   }
 
   /** Join existing Call. */
@@ -347,6 +357,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(file-sharing) */
   public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async holdCall(): Promise<void> {
+    return await this.callAdapter.holdCall();
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async resumeCall(): Promise<void> {
+    return await this.callAdapter.resumeCall();
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
+    return await this.callAdapter.addParticipant(participant, options);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
