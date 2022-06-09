@@ -4,7 +4,7 @@
   "private": true,
   "description": "This is a sample application to show how the UI Library can be used to build a call with chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
-    "build": "rushx clean && rushx webpack",
+    "build": "rushx clean && concurrently --kill-others-on-fail \"rushx _typecheck\" \"rushx webpack\"",
     "build:stable": "cross-env FLAVOR=stable rushx build",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
@@ -20,7 +20,8 @@
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
     "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
+    "_typecheck": "if-env COMMUNICATION_REACT_FLAVOR=stable && echo \"skip type check for stable\" || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)"
   },
   "dependencies": {
     "@azure/communication-identity": "1.0.0",
