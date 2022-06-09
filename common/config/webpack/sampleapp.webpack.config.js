@@ -34,7 +34,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           options: {
-            transpileOnly: !!env.development
+            transpileOnly: env.production
           },
           exclude: /dist/
         },
