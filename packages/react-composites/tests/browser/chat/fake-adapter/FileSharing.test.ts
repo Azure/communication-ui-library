@@ -27,7 +27,7 @@ test.describe('Filesharing Attach file icon', async () => {
 
 test.describe('Filesharing SendBox', async () => {
   test.skip(isTestProfileStableFlavor());
-  test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
+  test('shows file cards for uploaded files', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -46,6 +46,8 @@ test.describe('Filesharing SendBox', async () => {
         ]
       })
     );
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-sendbox-filecards.png');
@@ -55,7 +57,7 @@ test.describe('Filesharing SendBox', async () => {
 test.describe('Filesharing ProgressBar', async () => {
   test.skip(isTestProfileStableFlavor());
 
-  test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
+  test('is visible if progress is between 0 and 1', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -76,12 +78,14 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-progress-bar-visible.png');
   });
 
-  test('is not visible if progress is 0 or less than 0', async ({ serverUrl, page }) => {
+  test('is not visible if progress is 0 or less than 0', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -102,12 +106,14 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
   });
 
-  test('is not visible if progress is 1 or greater than 1', async ({ serverUrl, page }) => {
+  test('is not visible if progress is 1 or greater than 1', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -128,6 +134,8 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-greater-than-one.png');
@@ -137,7 +145,7 @@ test.describe('Filesharing ProgressBar', async () => {
 test.describe('Filesharing SendBox Errorbar', async () => {
   test.skip(isTestProfileStableFlavor());
 
-  test('shows file upload error', async ({ serverUrl, page }) => {
+  test('shows file upload error', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -152,12 +160,14 @@ test.describe('Filesharing SendBox Errorbar', async () => {
         ]
       })
     );
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
   });
 
-  test('shows file upload in progress error', async ({ serverUrl, page }) => {
+  test('shows file upload in progress error', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -173,6 +183,8 @@ test.describe('Filesharing SendBox Errorbar', async () => {
       })
     );
     await sendMessage(page, 'Hi');
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
@@ -212,7 +224,7 @@ test.describe('Filesharing Global Errorbar', async () => {
 test.describe('Filesharing Message Thread', async () => {
   test.skip(isTestProfileStableFlavor());
 
-  test('contains File Download Card', async ({ serverUrl, page }) => {
+  test('contains File Download Card', async ({ serverUrl, page }, workerInfo) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
@@ -232,6 +244,8 @@ test.describe('Filesharing Message Thread', async () => {
     await sendMessage(page, testMessageText);
     await page.waitForSelector(dataUiId('file-download-card-group'));
 
+    // timeout for mobile landscape needed because scrollbar appears momentarily when new message in thread causes screen overflow
+    await waitIfMobileLandscape(workerInfo, page);
     expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
@@ -292,3 +306,12 @@ test.describe('Filesharing Edit Message', async () => {
     ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });
+
+async function waitIfMobileLandscape(workerInfo, page) {
+  if (
+    workerInfo.project.name.toLowerCase().includes('mobile') &&
+    workerInfo.project.name.toLowerCase().includes('landscape')
+  ) {
+    await page.waitForTimeout(1000);
+  }
+}
