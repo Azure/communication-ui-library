@@ -17,7 +17,7 @@ import {
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
-import { checkIsSpeaking } from './SelectorUtils';
+import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
