@@ -34,7 +34,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
-  test.only('participant can receive read receipts and readers should show in contextual menu', async ({
+  test('participant can receive read receipts and readers should show in contextual menu', async ({
     serverUrl,
     page
   }) => {
