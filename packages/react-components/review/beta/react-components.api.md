@@ -247,6 +247,7 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -428,37 +429,39 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @internal
-export const _Dialpad: (props: _DialpadProps) => JSX.Element;
+// @beta
+export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @internal
-export interface _DialpadButtonProps {
+// @beta
+export interface DialpadButtonProps {
     // (undocumented)
     primaryContent: string;
     // (undocumented)
     secondaryContent?: string;
 }
 
-// @internal
-export interface _DialpadProps {
+// @beta
+export interface DialpadProps {
     // (undocumented)
-    dialpadButtons?: _DialpadButtonProps[][];
+    onClickDialpadButton?: () => void;
     // (undocumented)
-    strings: _DialpadStrings;
+    onDisplayDialpadInput?: (input: string) => string;
     // (undocumented)
-    styles?: _DialpadStyles;
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    // (undocumented)
+    strings?: DialpadStrings;
+    // (undocumented)
+    styles?: DialpadStyles;
 }
 
-// @internal
-export interface _DialpadStrings {
+// @beta
+export interface DialpadStrings {
     // (undocumented)
-    defaultText: string;
-    // (undocumented)
-    errorText: string;
+    placeholderText: string;
 }
 
-// @internal
-export interface _DialpadStyles {
+// @beta
+export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
     // (undocumented)
@@ -521,6 +524,9 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     drawerContentRoot?: BaseCustomStyles;
     lightDismissRoot?: BaseCustomStyles;
 }
+
+// @beta
+export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
