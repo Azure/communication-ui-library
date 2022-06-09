@@ -21,7 +21,7 @@ import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
  * @public
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(1-n-calling) */ {
+export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
   /**
    * @beta
    * Used to return a declarative incoming call object for an incoming call id.

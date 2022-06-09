@@ -25,5 +25,5 @@ export type {
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { DeclarativeCallAgent } from './CallAgentDeclarative';
-/* @conditional-compile-remove(1-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
