@@ -154,7 +154,8 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "{cameraName} selected"
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "HoldButton": {
     "onLabel": "Resume",

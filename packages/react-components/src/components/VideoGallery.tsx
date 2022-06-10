@@ -69,6 +69,8 @@ export interface VideoGalleryStrings {
   localVideoMovementLabel: string;
   /** String for announcing the selected camera */
   localVideoSelectedDescription: string;
+  /** placeholder text for participants who does not have a display name*/
+  displayNamePlaceholder: string;
 }
 
 /**
@@ -260,6 +262,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       styles?.localVideo
     );
 
+    const initialsName =
+      localParticipant.displayName === '' || !localParticipant.displayName
+        ? strings.displayNamePlaceholder
+        : localParticipant.displayName;
+
     return (
       <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
         <_LocalVideoTile
@@ -270,7 +277,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
           displayName={isNarrow ? '' : strings.localVideoLabel}
-          initialsName={localParticipant.displayName}
+          initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
           showLabel={!(shouldFloatLocalVideo && isNarrow)}
@@ -299,6 +306,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoLabel,
     strings.localVideoMovementLabel,
     strings.localVideoSelectedDescription,
+    strings.displayNamePlaceholder,
     styles?.localVideo,
     theme.effects.roundedCorner4
   ]);

@@ -71,11 +71,6 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
       ...participant,
       displayName: participant.identifier.phoneNumber
     };
-  } else if (participant.displayName === undefined || participant.displayName === '') {
-    return {
-      ...participant,
-      displayName: ""
-    };
   } else {
     return participant;
   }
