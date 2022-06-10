@@ -16,3 +16,6 @@ export type { _IObjectMap } from './localizationUtils';
 export { _MAX_EVENT_LISTENERS } from './constants';
 
 export { _pxToRem } from './cssUtils';
+
+export { _logEvent } from './logEvent';
+export type { TelemetryEvent } from './logEvent';
