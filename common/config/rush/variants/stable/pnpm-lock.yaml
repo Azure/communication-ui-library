@@ -18486,6 +18486,7 @@ packages:
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 2.0.0
+      '@azure/logger': 1.0.3
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
@@ -18516,7 +18517,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-Nn70jMP1YmgkHip3Js8z7feQWGTp9KiUBxW68CxwRjvFpnVmu/SCmM015vIsmNbtlnZkduyyon/rjGBoYD7JdQ==
+      integrity: sha512-MK4HDQLksxN07MYChnuMJlUGPR9g6qGKGWtSLq6iJXVUsK37ons08bbyeUlh9WYhcKFRjGDesu4qujsenfZTHQ==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
