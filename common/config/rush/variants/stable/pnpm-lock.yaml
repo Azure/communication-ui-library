@@ -5890,7 +5890,7 @@ packages:
   /asynckit/0.4.0:
     dev: false
     resolution:
-      integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=
+      integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
   /at-least-node/1.0.0:
     dev: false
     engines:
@@ -18527,6 +18527,7 @@ packages:
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 2.0.0
+      '@azure/logger': 1.0.3
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
@@ -18557,7 +18558,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-Nn70jMP1YmgkHip3Js8z7feQWGTp9KiUBxW68CxwRjvFpnVmu/SCmM015vIsmNbtlnZkduyyon/rjGBoYD7JdQ==
+      integrity: sha512-MK4HDQLksxN07MYChnuMJlUGPR9g6qGKGWtSLq6iJXVUsK37ons08bbyeUlh9WYhcKFRjGDesu4qujsenfZTHQ==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
