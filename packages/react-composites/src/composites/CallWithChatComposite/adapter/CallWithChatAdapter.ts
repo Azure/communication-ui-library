@@ -24,12 +24,16 @@ import {
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * Functionality for managing the current call with chat.
@@ -276,6 +280,27 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Puts the Call in a Localhold.
+   *
+   * @beta
+   */
+  holdCall: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Resumes the call from a LocalHold state.
+   *
+   * @beta
+   */
+  resumeCall: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Adds a new Participant to the call.
+   *
+   * @beta
+   */
+  addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
 }
 
 /**

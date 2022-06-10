@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,21 +21,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-stub-classname"
+        className="ms-Stack stub-classname"
         data-ui-id="video-tile"
       >
         <div
-          className="css-stub-classname"
+          className="stub-classname"
         />
         <div
-          className="ms-Stack css-stub-classname"
+          className="ms-Stack stub-classname"
         >
           <div
-            className="ms-Stack css-stub-classname"
+            className="ms-Stack stub-classname"
           >
             <div
               aria-label=""
-              className="ms-Persona ms-Persona--size48 css-stub-classname"
+              className="ms-Persona ms-Persona--size48 stub-classname"
               style={
                 Object {
                   "height": 100,
@@ -44,11 +44,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
               }
             >
               <div
-                className="ms-Persona-coin ms-Persona--size48 css-stub-classname"
+                className="ms-Persona-coin ms-Persona--size48 stub-classname"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea css-stub-classname"
+                  className="ms-Persona-imageArea stub-classname"
                   role="presentation"
                   style={
                     Object {
@@ -59,7 +59,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials css-stub-classname"
+                    className="ms-Persona-initials stub-classname"
                     style={
                       Object {
                         "height": 100,
@@ -77,13 +77,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           </div>
         </div>
         <div
-          className="ms-Stack css-stub-classname"
+          className="ms-Stack stub-classname"
         >
           <div
-            className="ms-Stack css-stub-classname"
+            className="ms-Stack stub-classname"
           >
             <span
-              className="css-stub-classname"
+              className="stub-classname"
               title="John Smith"
             >
               John Smith

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix tab ordering of the New Messages button in the Chat Composite",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

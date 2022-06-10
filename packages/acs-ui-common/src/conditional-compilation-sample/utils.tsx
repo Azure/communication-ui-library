@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import React from 'react';
+
 /*
  * Some helpers needed for conditional compilation examples
  *
@@ -54,3 +56,19 @@ export function dummyCreateSelector(
     );
   };
 }
+
+/** @private */
+export function StableComponentWithSelector(): JSX.Element {
+  return <></>;
+}
+
+/** @private */
+export type StableSelector = number;
+
+/** @private */
+export function BetaComponentWithSelector(): JSX.Element {
+  return <></>;
+}
+
+/** @private */
+export type BetaSelector = number;

@@ -68,6 +68,8 @@ export type {
   MicrophoneButtonSelector,
   ParticipantsButtonSelector
 } from '../../calling-component-bindings/src';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export {
   ChatClientProvider,
@@ -109,6 +111,11 @@ export {
   VideoGallery,
   VideoTile
 } from '../../react-components/src';
+/* @conditional-compile-remove(PSTN-calls) */
+export { HoldButton } from '../../react-components/src';
+
+/* @conditional-compile-remove(dialpad) */
+export { Dialpad } from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -207,6 +214,14 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(dialpad) */
+export type {
+  DialpadProps,
+  DialpadStrings,
+  DialpadStyles,
+  DialpadButtonProps,
+  DtmfTone
+} from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
   ActiveFileUpload,
@@ -215,6 +230,9 @@ export type {
   FileDownloadError,
   FileMetadata
 } from '../../react-components/src';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
+
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 

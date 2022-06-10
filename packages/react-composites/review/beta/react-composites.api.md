@@ -6,7 +6,9 @@
 
 /// <reference types="react" />
 
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
@@ -14,13 +16,14 @@ import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { FileDownloadHandler } from '@internal/react-components';
@@ -125,12 +128,18 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
+    // @beta
+    addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta
+    resumeCall(): Promise<void>;
     startCall(participants: string[]): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -354,6 +363,8 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @public
 export interface CallWithChatAdapterManagement {
+    // @beta
+    addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -363,6 +374,8 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @beta
+    holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -375,6 +388,8 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
+    // @beta
+    resumeCall: () => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -602,6 +617,8 @@ export interface CallWithChatControlOptions {
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
     microphoneButton?: boolean;
+    // @beta
+    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -795,11 +812,34 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallCompositeIcons;
     placement: CustomCallControlButtonPlacement;
+}
+
+// @beta
+export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+
+// @beta
+export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @beta
+export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallWithChatCompositeIcons;
+    placement: CustomCallWithChatControlButtonPlacement;
+}
+
+// @beta
+export interface CustomControlButtonProps {
+    disabled?: boolean;
+    // (undocumented)
+    onItemClick?: () => void;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public
@@ -871,6 +911,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     MessageResend: JSX.Element;
+    HoldCall: JSX.Element;
+    ResumeCall: JSX.Element;
 };
 
 // @public

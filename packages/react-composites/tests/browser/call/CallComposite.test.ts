@@ -11,7 +11,7 @@ import {
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector,
-  clickOutsideOfPage
+  stableScreenshot
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -52,8 +52,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     const page = pages[0];
     await stubLocalCameraName(page);
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`call-configuration-page.png`);
   });
 
   test('local device settings can toggle camera & audio', async ({ pages }) => {
@@ -65,8 +64,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       return !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
     });
     await stubLocalCameraName(page);
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      `call-configuration-page-camera-enabled.png`
+    );
   });
 
   test('local device buttons should show tooltips on hover', async ({ pages }) => {
@@ -94,8 +94,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       })
     );
     await waitForCallCompositeToLoad(page);
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'call-configuration-page-with-call-details.png'
+    );
   });
 });
 
@@ -113,8 +114,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
       await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
-      // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
-      await page.mouse.move(0, 0);
     }
 
     await loadCallPageWithParticipantVideos(pages);
@@ -124,8 +123,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       await page.bringToFront();
-      await clickOutsideOfPage(page);
-      expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-${idx}.png`);
+      expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
   });
 
@@ -146,8 +144,9 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 1;
     });
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      `video-gallery-page-camera-toggled.png`
+    );
   });
 });
 
