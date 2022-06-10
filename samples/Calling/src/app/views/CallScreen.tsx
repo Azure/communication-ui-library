@@ -50,6 +50,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.on('callEnded', () => {
         onCallEnded();
       });
+      adapter.on('selectedMicrophoneChanged', (e) => {
+        console.log(e);
+      });
+      adapter.on('selectedSpeakerChanged', (e) => {
+        console.log(e);
+      });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).

@@ -23,7 +23,13 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  PermissionConstraints,
+  PropertyChangedEvent,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -317,6 +323,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
+  on(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
@@ -327,6 +335,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
+  off(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
 
   // Chat subscriptions
@@ -372,6 +382,8 @@ export type CallWithChatEvent =
   | 'isSpeakingChanged'
   | 'callParticipantsJoined'
   | 'callParticipantsLeft'
+  | 'selectedMicrophoneChanged'
+  | 'selectedSpeakerChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'

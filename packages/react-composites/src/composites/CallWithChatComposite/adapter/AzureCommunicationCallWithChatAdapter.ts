@@ -10,6 +10,7 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
+  PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -385,6 +386,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
+  on(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -413,6 +416,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.on('isSpeakingChanged', listener);
+        break;
+      case 'selectedMicrophoneChanged':
+        this.callAdapter.on('selectedMicrophoneChanged', listener);
+        break;
+      case 'selectedSpeakerChanged':
+        this.callAdapter.on('selectedMicrophoneChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
@@ -449,6 +458,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
+  off(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
@@ -482,6 +493,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.off('isSpeakingChanged', listener);
+        break;
+      case 'selectedMicrophoneChanged':
+        this.callAdapter.off('selectedMicrophoneChanged', listener);
+        break;
+      case 'selectedSpeakerChanged':
+        this.callAdapter.off('selectedMicrophoneChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);

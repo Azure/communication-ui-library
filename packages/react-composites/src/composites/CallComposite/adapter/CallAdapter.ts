@@ -418,13 +418,13 @@ export interface CallAdapterSubscribers {
    *
    * This event fires whenever the user selects a new microphone device.
    */
-  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
   /**
    * Subscribe function for 'selectedSpeakerChanged' event.
    *
    * This event fires whenever the user selects a new speaker device.
    */
-  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
   /**
    * Subscribe function for 'error' event.
    */
