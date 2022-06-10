@@ -8,6 +8,7 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
@@ -22,7 +23,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { FileDownloadHandler } from '@internal/react-components';
@@ -616,6 +617,8 @@ export interface CallWithChatControlOptions {
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
     microphoneButton?: boolean;
+    // @beta
+    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -809,11 +812,34 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallCompositeIcons;
     placement: CustomCallControlButtonPlacement;
+}
+
+// @beta
+export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+
+// @beta
+export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @beta
+export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallWithChatCompositeIcons;
+    placement: CustomCallWithChatControlButtonPlacement;
+}
+
+// @beta
+export interface CustomControlButtonProps {
+    disabled?: boolean;
+    // (undocumented)
+    onItemClick?: () => void;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public
