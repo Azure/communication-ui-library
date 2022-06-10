@@ -123,10 +123,7 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  const displayName =
-    participant.displayName === '' || !participant.displayName
-      ? strings.displayNamePlaceholder
-      : participant.displayName;
+  const displayName = !participant.displayName ? strings.displayNamePlaceholder : participant.displayName;
 
   return (
     <ParticipantItem

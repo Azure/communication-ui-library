@@ -48,10 +48,9 @@ export const LocalScreenShare = React.memo((props: { localParticipant: VideoGall
     </Stack>
   );
 
-  const displayName =
-    localParticipant?.displayName === '' || !localParticipant?.displayName
-      ? locale.strings.videoGallery.displayNamePlaceholder
-      : localParticipant?.displayName;
+  const displayName = !localParticipant?.displayName
+    ? locale.strings.videoGallery.displayNamePlaceholder
+    : localParticipant?.displayName;
 
   return (
     <VideoTile displayName={displayName} isMuted={localParticipant?.isMuted} onRenderPlaceholder={() => <></>}>
