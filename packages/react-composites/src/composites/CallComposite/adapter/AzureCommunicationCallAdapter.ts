@@ -25,7 +25,8 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints
+  PermissionConstraints,
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -333,12 +334,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onSelectMicrophone(device);
+      this.selectedMicrophoneChanged();
     });
   }
 
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onSelectSpeaker(device);
+      this.selectedSpeakerChanged();
     });
   }
 
@@ -468,6 +471,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -532,6 +537,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   }
 
+  private selectedMicrophoneChanged(): void {
+    this.emitter.emit('selectedMicrophoneChanged', { microphone: this.deviceManager.selectedMicrophone });
+  }
+
+  private selectedSpeakerChanged(): void {
+    this.emitter.emit('selectedSpeakerChanged', { speaker: this.deviceManager.selectedSpeaker });
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -554,6 +567,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

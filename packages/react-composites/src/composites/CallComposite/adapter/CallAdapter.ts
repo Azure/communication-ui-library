@@ -9,7 +9,8 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -413,6 +414,18 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   /**
+   * Subscribe function for 'selectedMicrophoneChanged' event.
+   *
+   * This event fires whenever the user selects a new microphone device.
+   */
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Subscribe function for 'selectedSpeakerChanged' event.
+   *
+   * This event fires whenever the user selects a new speaker device.
+   */
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
+  /**
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
@@ -453,6 +466,14 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'diagnosticChanged' event.
    */
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  /**
+   * Unsubscribe function for 'selectedMicrophoneChanged' event.
+   */
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Unsubscribe function for 'selectedSpeakerChanged' event.
+   */
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'error' event.
    */
