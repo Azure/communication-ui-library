@@ -20,6 +20,7 @@ export type TestRemoteParticipant = {
   isMuted?: boolean;
   isSpeaking?: boolean;
   isVideoStreamAvailable?: boolean;
+  isVideoStreamReceiving?: boolean;
   isScreenSharing?: boolean;
 };
 
