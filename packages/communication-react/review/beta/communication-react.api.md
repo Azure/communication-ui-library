@@ -828,6 +828,8 @@ export interface CallWithChatControlOptions {
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
     microphoneButton?: boolean;
+    // @beta
+    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -1379,11 +1381,34 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallCompositeIcons;
     placement: CustomCallControlButtonPlacement;
+}
+
+// @beta
+export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+
+// @beta
+export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @beta
+export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallWithChatCompositeIcons;
+    placement: CustomCallWithChatControlButtonPlacement;
+}
+
+// @beta
+export interface CustomControlButtonProps {
+    disabled?: boolean;
+    // (undocumented)
+    onItemClick?: () => void;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public
