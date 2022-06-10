@@ -45,15 +45,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
-      adapter.on('selectedMicrophoneChanged', (e) => {
-        console.log(e.selectedMicrophone);
-      });
-      adapter.on('selectedSpeakerChanged', (e) => {
-        console.log(e.selectedSpeaker);
-      });
-      adapter.on('selectedCameraChanged', (e) => {
-        console.log(e.selectedCamera);
-      });
       adapter.on('chatError', (e) => {
         // Error is already acted upon by the Chat composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
