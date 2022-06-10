@@ -52,7 +52,8 @@ import {
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
-  UnknownIdentifier
+  UnknownIdentifier,
+  PhoneNumberIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -60,7 +61,6 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
-import { PhoneNumberIdentifier } from '../../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {

@@ -138,9 +138,9 @@ export interface CallAdapterCallManagement {
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     resumeCall(): Promise<void>;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
