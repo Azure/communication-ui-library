@@ -28,3 +28,10 @@ export type {
 } from './state/CallWithChatAdapterState';
 
 export type { CallWithChatCompositeStrings } from './Strings';
+
+/* @conditional-compile-remove(control-bar-button-injection) */
+export type {
+  CustomCallWithChatControlButtonPlacement,
+  CustomCallWithChatControlButtonCallback,
+  CustomCallWithChatControlButtonProps
+} from './CustomButton';
