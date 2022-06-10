@@ -33,11 +33,11 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(PSTN-calls) */
     onToggleHold: async () => {
-      // not implemented for composites yet
+      return adapter.getState().call?.state === 'LocalHold' ? await adapter.resumeCall() : await adapter.holdCall();
     },
     /* @conditional-compile-remove(PSTN-calls) */
-    onAddParticipant: async () => {
-      // not implemented for composites yet
+    onAddParticipant: async (participant, options?) => {
+      return await adapter.addParticipant(participant, options);
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
