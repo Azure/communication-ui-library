@@ -133,24 +133,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                           </span>
                         </button>
-                        <div
-                          hidden={true}
-                          id="cameraButtonLabel-tooltip"
-                          style={
-                            Object {
-                              "border": 0,
-                              "height": 1,
-                              "margin": -1,
-                              "overflow": "hidden",
-                              "padding": 0,
-                              "position": "absolute",
-                              "whiteSpace": "nowrap",
-                              "width": 1,
-                            }
-                          }
-                        >
-                          Turn on camera
-                        </div>
                       </div>
                       <div
                         aria-live="polite"
@@ -225,24 +207,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                           </span>
                         </button>
-                        <div
-                          hidden={true}
-                          id="microphoneButtonLabel-tooltip"
-                          style={
-                            Object {
-                              "border": 0,
-                              "height": 1,
-                              "margin": -1,
-                              "overflow": "hidden",
-                              "padding": 0,
-                              "position": "absolute",
-                              "whiteSpace": "nowrap",
-                              "width": 1,
-                            }
-                          }
-                        >
-                          Unmute microphone
-                        </div>
                       </div>
                       <div
                         className="ms-TooltipHost root-105"
@@ -294,24 +258,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                           </span>
                         </button>
-                        <div
-                          hidden={true}
-                          id="screenShareButtonLabel-tooltip"
-                          style={
-                            Object {
-                              "border": 0,
-                              "height": 1,
-                              "margin": -1,
-                              "overflow": "hidden",
-                              "padding": 0,
-                              "position": "absolute",
-                              "whiteSpace": "nowrap",
-                              "width": 1,
-                            }
-                          }
-                        >
-                          Present your screen
-                        </div>
                       </div>
                       <div
                         className="ms-TooltipHost root-105"
@@ -376,24 +322,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </span>
                           </span>
                         </button>
-                        <div
-                          hidden={true}
-                          id="endCallButtonLabel-tooltip"
-                          style={
-                            Object {
-                              "border": 0,
-                              "height": 1,
-                              "margin": -1,
-                              "overflow": "hidden",
-                              "padding": 0,
-                              "position": "absolute",
-                              "whiteSpace": "nowrap",
-                              "width": 1,
-                            }
-                          }
-                        >
-                          Leave Call
-                        </div>
                       </div>
                     </div>
                   </div>

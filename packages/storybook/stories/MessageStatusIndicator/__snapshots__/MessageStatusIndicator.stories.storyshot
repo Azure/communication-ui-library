@@ -54,24 +54,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
             </svg>
           </span>
         </i>
-        <div
-          hidden={true}
-          id="tooltip1"
-          style={
-            Object {
-              "border": 0,
-              "height": 1,
-              "margin": -1,
-              "overflow": "hidden",
-              "padding": 0,
-              "position": "absolute",
-              "whiteSpace": "nowrap",
-              "width": 1,
-            }
-          }
-        >
-          Sent
-        </div>
       </div>
     </div>
   </div>

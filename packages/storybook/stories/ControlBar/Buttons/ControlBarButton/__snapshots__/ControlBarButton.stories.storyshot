@@ -64,22 +64,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
             </span>
           </span>
         </button>
-        <div
-          hidden={true}
-          id="airplane-tooltip"
-          style={
-            Object {
-              "border": 0,
-              "height": 1,
-              "margin": -1,
-              "overflow": "hidden",
-              "padding": 0,
-              "position": "absolute",
-              "whiteSpace": "nowrap",
-              "width": 1,
-            }
-          }
-        />
       </div>
     </div>
   </div>

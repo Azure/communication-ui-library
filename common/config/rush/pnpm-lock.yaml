@@ -2156,7 +2156,7 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-Y0j+lAYKeD/qswzFZWPkHmvtBlRS2WPJIkpyGvfBVZaCeq3DGKRppoOCOmED762bKOXzM/G/ZNEcBa7CY1gkYw==
-  /@fluentui/react/8.72.2_c2a703770fc22cd5845ac34fc7d0fe24:
+  /@fluentui/react/8.62.4_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@fluentui/date-time-utilities': 8.5.1
       '@fluentui/font-icons-mdl2': 8.4.1_796713c4bb4631ac40b03d54b6277837
@@ -2237,7 +2237,7 @@ packages:
       integrity: sha512-GfKHJJJs0p3ero+DsM6+pA0kNdXw3slnEJKMx+M+Wpb9csMzr8pxbbu9vAUqqRpVLgnfEBTOhjl0DILiFn83nw==
   /@fluentui/theme-samples/8.1.5_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/scheme-utilities': 8.1.6_796713c4bb4631ac40b03d54b6277837
       '@fluentui/set-version': 8.2.1
       tslib: 2.3.1
@@ -18652,7 +18652,7 @@ packages:
       '@babel/core': 7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
       '@babel/preset-react': 7.14.5_@babel+core@7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
@@ -18729,7 +18729,7 @@ packages:
       '@babel/core': 7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
       '@babel/preset-react': 7.14.5_@babel+core@7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
@@ -18879,7 +18879,7 @@ packages:
       '@azure/core-http': 1.2.4
       '@azure/logger': 1.0.3
       '@babel/core': 7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
       '@testing-library/jest-dom': 5.14.1
@@ -18970,7 +18970,7 @@ packages:
       '@azure/logger': 1.0.3
       '@babel/cli': 7.16.0_@babel+core@7.16.5
       '@babel/core': 7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
@@ -19057,7 +19057,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-http': 1.2.4
       '@babel/core': 7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
@@ -19141,7 +19141,7 @@ packages:
       '@babel/cli': 7.16.0_@babel+core@7.16.5
       '@babel/core': 7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
@@ -19238,7 +19238,7 @@ packages:
       '@babel/core': 7.16.5
       '@babel/plugin-syntax-typescript': 7.16.5_@babel+core@7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
@@ -19458,7 +19458,7 @@ packages:
       '@azure/core-http': 1.2.4
       '@babel/core': 7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
-      '@fluentui/react': 8.72.2_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react': 8.62.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137

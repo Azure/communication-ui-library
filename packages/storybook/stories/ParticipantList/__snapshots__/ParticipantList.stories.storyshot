@@ -76,24 +76,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       role="none"
                     >
                       Rick
-                      <div
-                        hidden={true}
-                        id="tooltip1"
-                        style={
-                          Object {
-                            "border": 0,
-                            "height": 1,
-                            "margin": -1,
-                            "overflow": "hidden",
-                            "padding": 0,
-                            "position": "absolute",
-                            "whiteSpace": "nowrap",
-                            "width": 1,
-                          }
-                        }
-                      >
-                        Rick
-                      </div>
                     </div>
                   </div>
                   <div
@@ -327,24 +309,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       role="none"
                     >
                       Daryl
-                      <div
-                        hidden={true}
-                        id="tooltip4"
-                        style={
-                          Object {
-                            "border": 0,
-                            "height": 1,
-                            "margin": -1,
-                            "overflow": "hidden",
-                            "padding": 0,
-                            "position": "absolute",
-                            "whiteSpace": "nowrap",
-                            "width": 1,
-                          }
-                        }
-                      >
-                        Daryl
-                      </div>
                     </div>
                   </div>
                   <div
@@ -582,24 +546,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       role="none"
                     >
                       Michonne
-                      <div
-                        hidden={true}
-                        id="tooltip7"
-                        style={
-                          Object {
-                            "border": 0,
-                            "height": 1,
-                            "margin": -1,
-                            "overflow": "hidden",
-                            "padding": 0,
-                            "position": "absolute",
-                            "whiteSpace": "nowrap",
-                            "width": 1,
-                          }
-                        }
-                      >
-                        Michonne
-                      </div>
                     </div>
                   </div>
                   <div
@@ -837,24 +783,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       role="none"
                     >
                       You
-                      <div
-                        hidden={true}
-                        id="tooltip10"
-                        style={
-                          Object {
-                            "border": 0,
-                            "height": 1,
-                            "margin": -1,
-                            "overflow": "hidden",
-                            "padding": 0,
-                            "position": "absolute",
-                            "whiteSpace": "nowrap",
-                            "width": 1,
-                          }
-                        }
-                      >
-                        You
-                      </div>
                     </div>
                   </div>
                   <div
