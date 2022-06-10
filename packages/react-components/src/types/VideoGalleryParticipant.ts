@@ -48,6 +48,8 @@ export interface VideoGalleryStream {
   id?: number;
   /** Whether the video stream is available or not */
   isAvailable?: boolean;
+  /** Whether the video stream is receiving data or not */
+  isReceiving?: boolean;
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
   /** Render element of the video stream */

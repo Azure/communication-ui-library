@@ -26,6 +26,7 @@ export const _RemoteVideoTile = React.memo(
     ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
@@ -39,6 +40,7 @@ export const _RemoteVideoTile = React.memo(
   }) => {
     const {
       isAvailable,
+      isReceiving = true, // default to true to prevent any breaking change
       isMuted,
       isSpeaking,
       isScreenSharingOn,
@@ -57,6 +59,7 @@ export const _RemoteVideoTile = React.memo(
         isMirrored: remoteVideoViewOptions?.isMirrored,
         isScreenSharingOn,
         isStreamAvailable: isAvailable,
+        isStreamReceiving: isReceiving,
         onCreateRemoteStreamView,
         onDisposeRemoteStreamView,
         remoteParticipantId: userId,
@@ -65,6 +68,7 @@ export const _RemoteVideoTile = React.memo(
       }),
       [
         isAvailable,
+        isReceiving,
         isScreenSharingOn,
         onCreateRemoteStreamView,
         onDisposeRemoteStreamView,
@@ -86,8 +90,8 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} />;
-    }, [renderElement]);
+      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
+    }, [renderElement, isReceiving]);
 
     return (
       <VideoTile
