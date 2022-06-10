@@ -16752,7 +16752,7 @@ packages:
   /text-table/0.2.0:
     dev: false
     resolution:
-      integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+      integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
   /throat/5.0.0:
     dev: false
     resolution:
@@ -16760,7 +16760,7 @@ packages:
   /through/2.3.8:
     dev: false
     resolution:
-      integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+      integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
   /through2/2.0.5:
     dependencies:
       readable-stream: 2.3.7
@@ -16783,7 +16783,7 @@ packages:
   /timsort/0.3.0:
     dev: false
     resolution:
-      integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+      integrity: sha512-qsdtZH+vMoCARQtyod4imc2nIJwg9Cc7lPRrw9CzF8ZKR0khdr8+2nX80PBhET3tcyTtJDxAffGh2rXH4tyU8A==
   /tiny-invariant/1.2.0:
     dev: false
     resolution:
@@ -16804,13 +16804,13 @@ packages:
   /to-arraybuffer/1.0.1:
     dev: false
     resolution:
-      integrity: sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M=
+      integrity: sha512-okFlQcoGTi4LQBG/PgSYblw9VOyptsz2KJZqc6qtgGdes8VktzUQkj4BI2blit072iS8VODNcMA+tvnS9dnuMA==
   /to-fast-properties/2.0.0:
     dev: false
     engines:
       node: '>=4'
     resolution:
-      integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
+      integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==
   /to-object-path/0.3.0:
     dependencies:
       kind-of: 3.2.2
@@ -16818,7 +16818,7 @@ packages:
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha1-KXWIt7Dn4KwI4E5nL4XB9JmeF68=
+      integrity: sha512-9mWHdnGRuh3onocaHzukyvCZhzvr6tiflAy/JRFXcJX0TjgfWA9pk9t8CMbzmBE4Jfw58pXbkngtBtqYxzNEyg==
   /to-regex-range/2.1.1:
     dependencies:
       is-number: 3.0.0
@@ -16827,7 +16827,7 @@ packages:
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha1-fIDBe53+vlmeJzZ+DU3VWQFB2zg=
+      integrity: sha512-ZZWNfCjUokXXDGXFpZehJIkZqq91BcULFq/Pi7M5i4JnxXdhMKAK682z8bCW3o8Hj1wuuzoKcW3DfVzaP6VuNg==
   /to-regex-range/5.0.1:
     dependencies:
       is-number: 7.0.0
@@ -16854,7 +16854,7 @@ packages:
   /toggle-selection/1.0.6:
     dev: false
     resolution:
-      integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
+      integrity: sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==
   /toidentifier/1.0.1:
     dev: false
     engines:
@@ -16864,7 +16864,7 @@ packages:
   /toposort/2.0.2:
     dev: false
     resolution:
-      integrity: sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
+      integrity: sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==
   /totalist/1.1.0:
     dev: false
     engines:
@@ -16884,7 +16884,7 @@ packages:
   /tr46/0.0.3:
     dev: false
     resolution:
-      integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+      integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
   /tr46/2.1.0:
     dependencies:
       punycode: 2.1.1
@@ -18526,6 +18526,7 @@ packages:
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 2.0.0
+      '@azure/logger': 1.0.3
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
@@ -18556,7 +18557,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-Nn70jMP1YmgkHip3Js8z7feQWGTp9KiUBxW68CxwRjvFpnVmu/SCmM015vIsmNbtlnZkduyyon/rjGBoYD7JdQ==
+      integrity: sha512-MK4HDQLksxN07MYChnuMJlUGPR9g6qGKGWtSLq6iJXVUsK37ons08bbyeUlh9WYhcKFRjGDesu4qujsenfZTHQ==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
@@ -18742,6 +18743,7 @@ packages:
       copyfiles: 2.4.1
       cross-env: 7.0.3
       css-loader: 4.3.0_webpack@5.38.1
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-config-react-app: 6.0.0_f25bcbe3a1d8caee9e9f956afb0061f7
@@ -18754,6 +18756,7 @@ packages:
       eslint-plugin-react-hooks: 4.4.0_eslint@7.32.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      if-env: 1.0.4
       jest: 26.6.0
       jest-junit: 13.0.0
       jquery: 3.6.0
@@ -18781,7 +18784,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-42Y+E7bXPnnBAdxc9kru9YkvB/gsfQlxPpY+7M/7z4wnmtMqTTm0mkPrVXI+2JLIl6GAV1xHYz3Ifu2wisx72g==
+      integrity: sha512-SOha5DQz6yuNszcBVzqDRnUMJbGRcvPw2K7RaKs5XYOYCZ7zi8ja9OK/k6e959k8eJru6Ul4tlqcsKzl4wmKhg==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
