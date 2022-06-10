@@ -2143,6 +2143,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    displayNamePlaceholder: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
