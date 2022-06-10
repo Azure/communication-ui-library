@@ -157,6 +157,9 @@
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed Participant"
   },
+  "dialpad": {
+    "placeholderText": "Enter a number"
+  },
   "HoldButton": {
     "onLabel": "Resume",
     "offLabel": "Hold",
