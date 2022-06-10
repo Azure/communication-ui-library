@@ -10,7 +10,6 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
-  PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -71,6 +70,10 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
+import {
+  SelectedMicrophoneChangedEventListener,
+  SelectedSpeakerChangedEventListener
+} from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -386,8 +389,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
-  on(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
-  on(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
+  on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
+  on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -458,8 +461,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  off(event: 'selectedMicrophoneChanged', listener: (e: PropertyChangedEvent) => void): void;
-  off(event: 'selectedSpeakerChanged', listener: (e: PropertyChangedEvent) => void): void;
+  off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
+  off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;

@@ -51,10 +51,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallEnded();
       });
       adapter.on('selectedMicrophoneChanged', (e) => {
-        console.log(e);
+        console.log(e.selectedMicrophone);
       });
       adapter.on('selectedSpeakerChanged', (e) => {
-        console.log(e);
+        console.log(e.selectedSpeaker);
+      });
+      adapter.on('selectedCameraChanged', (e) => {
+        console.log(e.selectedCamera);
       });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
