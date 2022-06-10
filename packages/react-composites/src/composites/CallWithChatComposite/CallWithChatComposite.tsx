@@ -31,6 +31,8 @@ import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -127,6 +129,13 @@ export interface CallWithChatControlOptions {
    * @defaultValue true
    */
   peopleButton?: boolean;
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  /**
+   * Inject custom buttons in the call controls.
+   *
+   * @beta
+   */
+  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
 }
 
 type CallWithChatScreenProps = {
