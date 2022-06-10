@@ -60,7 +60,7 @@ export interface ParticipantItemStrings {
   /** Label for the muted icon in participant state stack  */
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
-  displayNamePlaceholder: string
+  displayNamePlaceholder: string;
 }
 
 /**
