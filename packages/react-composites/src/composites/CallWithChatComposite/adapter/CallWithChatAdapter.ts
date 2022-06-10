@@ -35,6 +35,7 @@ import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import {
+  SelectedCameraChangedEventListener,
   SelectedMicrophoneChangedEventListener,
   SelectedSpeakerChangedEventListener
 } from '../../CallComposite/adapter/CallAdapter';
@@ -321,6 +322,7 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
   on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
   on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
@@ -333,6 +335,7 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
   off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
   off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
@@ -382,6 +385,7 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
+  | 'selectedCameraChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'

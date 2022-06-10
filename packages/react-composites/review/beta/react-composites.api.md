@@ -439,6 +439,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
     // (undocumented)
+    off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
+    // (undocumented)
     off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
     // (undocumented)
     off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
@@ -472,6 +474,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
     // (undocumented)
     on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
     // (undocumented)
     on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
     // (undocumented)
@@ -637,7 +641,7 @@ export interface CallWithChatControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'selectedCameraChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
