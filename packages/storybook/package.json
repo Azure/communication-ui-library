@@ -34,11 +34,11 @@
     "@fluentui/theme-samples": "8.1.5",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
+    "browserslist": "~4.20.4",
     "copy-to-clipboard": "~3.3.1",
     "resize-observer-polyfill": "~1.5.1",
     "tslib": "~2.3.1",
-    "uuid": "^8.1.0",
-    "browserslist": "~4.20.4"
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
