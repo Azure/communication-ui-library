@@ -85,9 +85,13 @@ test.describe('HorizontalGallery tests', async () => {
     );
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-2.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      'horizontal-gallery-with-many-audio-participants-on-page-2.png'
+    );
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
-    expect(await page.screenshot()).toMatchSnapshot('horizontal-gallery-with-many-audio-participants-on-page-1.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      'horizontal-gallery-with-many-audio-participants-on-page-1.png'
+    );
   });
 });
