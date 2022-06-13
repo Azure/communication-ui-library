@@ -32,7 +32,7 @@ let mockCallState = undefined;
 try {
   mockCallState = JSON.parse(params.mockCallState);
 } catch (e) {
-  console.log('Query parameter mockCallState could not be parsed: ', params.mockCallState);
+  console.error('Query parameter mockCallState could not be parsed: ', params.mockCallState);
 }
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
