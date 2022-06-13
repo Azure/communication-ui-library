@@ -1,7 +1,41 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Theme } from '@fluentui/react';
+import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
+
+// Height and width of the loading spinner
+const LOADING_SPINNER_SIZE_REM = 5;
+
+/**
+ * @private
+ */
+export const container = (): string =>
+  mergeStyles({
+    position: 'relative',
+    display: 'contents'
+  });
+
+/**
+ * @private
+ */
+export const loadingSpinnerContainer = (): string =>
+  mergeStyles({
+    width: `${LOADING_SPINNER_SIZE_REM}rem`,
+    height: `${LOADING_SPINNER_SIZE_REM}rem`,
+    position: 'absolute',
+    top: '50%',
+    bottom: '0',
+    left: '50%',
+    right: '0',
+    transform: 'translate(-50%, -50%)'
+  });
+
+/**
+ * @private
+ */
+export const loadSpinnerStyles: ISpinnerStyles = {
+  circle: { height: `${LOADING_SPINNER_SIZE_REM}rem`, width: `${LOADING_SPINNER_SIZE_REM}rem`, borderWidth: '0.25em' }
+};
 
 /**
  * @private

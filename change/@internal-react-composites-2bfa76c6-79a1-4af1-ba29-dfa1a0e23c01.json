@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Rework how Custom buttons are injected in Call Composite and add Custom Button Injection into CallWithChat Composite",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
