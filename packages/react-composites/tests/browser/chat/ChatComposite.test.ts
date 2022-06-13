@@ -104,7 +104,7 @@ test.describe('Chat Composite custom data model', () => {
     const testMessageText = 'How the turn tables';
     const page = pages[0];
     await sendMessage(page, testMessageText);
-    await waitForMessageDelivered(page);
+    await waitForMessageDelivered(page, { state: 'attached' });
     // Participant list is a beta feature
     if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'stable') {
       await waitForFunction(page, () => {
