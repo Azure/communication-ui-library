@@ -37,7 +37,8 @@
     "copy-to-clipboard": "~3.3.1",
     "resize-observer-polyfill": "~1.5.1",
     "tslib": "~2.3.1",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "browserslist": "~4.20.4"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
