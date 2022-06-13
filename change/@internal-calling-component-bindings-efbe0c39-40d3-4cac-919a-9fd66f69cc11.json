@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed onCreateLocalStreamView handler default videostream options to be cropped and mirrored.",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added error text color in light and dark themes in semanticColors property.",
-  "packageName": "@internal/react-components",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

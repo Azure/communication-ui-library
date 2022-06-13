@@ -1,8 +1,23 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Tue, 19 Apr 2022 20:46:16 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Jun 2022 18:47:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.2-beta.2](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.2-beta.2)
+
+Mon, 13 Jun 2022 18:47:20 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.2.2-beta.1...@internal/chat-stateful-client_v1.2.2-beta.2)
+
+### Patches
+
+- Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat ([PR #1895](https://github.com/azure/communication-ui-library/pull/1895) by 2684369+JamesBurnside@users.noreply.github.com)
+- Only emit stateChanged events where there is an actual change ([PR #1449](https://github.com/azure/communication-ui-library/pull/1449) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.2-beta.2 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.2-beta.1)
 

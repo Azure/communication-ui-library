@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Adding stories for message thread and sendbox file sharing ui",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

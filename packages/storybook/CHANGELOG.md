@@ -1,8 +1,29 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Tue, 19 Apr 2022 20:46:14 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Jun 2022 18:47:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.2.2-beta.2](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.2.2-beta.2)
+
+Mon, 13 Jun 2022 18:47:24 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.2.2-beta.1...@internal/storybook_v1.2.2-beta.2)
+
+### Patches
+
+- updating beta @azure/communication-calling to 1.5.4-beta.1 ([PR #1925](https://github.com/azure/communication-ui-library/pull/1925) by 79475487+mgamis-msft@users.noreply.github.com)
+- update storybook to v6.5.7 ([PR #1972](https://github.com/azure/communication-ui-library/pull/1972) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix video freeze in LocalPreview story ([PR #1949](https://github.com/azure/communication-ui-library/pull/1949) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Resolve icon centering on SendBox storybook examples ([PR #1833](https://github.com/azure/communication-ui-library/pull/1833) by edwardlee@microsoft.com)
+- patched error on storybook participant item not showing name ([PR #1844](https://github.com/azure/communication-ui-library/pull/1844) by carolinecao@microsoft.com)
+- Add Best Practices documentation to Storybook ([PR #1970](https://github.com/azure/communication-ui-library/pull/1970) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @azure/communication-react to v1.2.2-beta.2 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Added examples in message thread stories to show how to customize date time format ([PR #1863](https://github.com/azure/communication-ui-library/pull/1863) by carolinecao@microsoft.com)
+- changed storybook text for custom dialpad ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
+- created storybook preview for dialpad component ([PR #1870](https://github.com/azure/communication-ui-library/pull/1870) by carolinecao@microsoft.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.2.2-beta.1)
 
