@@ -27,7 +27,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
-        role="none"
       >
         <button
           aria-label="Present your screen"

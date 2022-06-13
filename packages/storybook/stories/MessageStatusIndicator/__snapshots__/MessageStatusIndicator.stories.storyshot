@@ -27,7 +27,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
-        role="none"
       >
         <i
           aria-label="Message sent"

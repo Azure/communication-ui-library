@@ -49,7 +49,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-label="Turn on camera"
@@ -123,7 +122,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-label="Unmute microphone"
@@ -193,7 +191,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-label="Present your screen"
@@ -244,7 +241,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-controls={null}
@@ -311,7 +307,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-controls={null}
@@ -378,7 +373,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
-              role="none"
             >
               <button
                 aria-label="Leave Call"

@@ -73,7 +73,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onKeyDown={[Function]}
                       onMouseEnter={[Function]}
                       onMouseLeave={[Function]}
-                      role="none"
                     >
                       Rick
                     </div>
@@ -196,7 +195,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onScroll={[Function]}
                       style={
                         Object {
-                          "maxHeight": "100%",
+                          "maxHeight": undefined,
                           "outline": "none",
                           "overflowY": undefined,
                         }
@@ -306,7 +305,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onKeyDown={[Function]}
                       onMouseEnter={[Function]}
                       onMouseLeave={[Function]}
-                      role="none"
                     >
                       Daryl
                     </div>
@@ -429,7 +427,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onScroll={[Function]}
                       style={
                         Object {
-                          "maxHeight": "100%",
+                          "maxHeight": undefined,
                           "outline": "none",
                           "overflowY": undefined,
                         }
@@ -543,7 +541,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onKeyDown={[Function]}
                       onMouseEnter={[Function]}
                       onMouseLeave={[Function]}
-                      role="none"
                     >
                       Michonne
                     </div>
@@ -666,7 +663,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onScroll={[Function]}
                       style={
                         Object {
-                          "maxHeight": "100%",
+                          "maxHeight": undefined,
                           "outline": "none",
                           "overflowY": undefined,
                         }
@@ -780,7 +777,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       onKeyDown={[Function]}
                       onMouseEnter={[Function]}
                       onMouseLeave={[Function]}
-                      role="none"
                     >
                       You
                     </div>

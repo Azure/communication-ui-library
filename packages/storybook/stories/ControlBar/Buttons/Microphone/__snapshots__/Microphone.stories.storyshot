@@ -31,7 +31,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
-        role="none"
       >
         <button
           aria-label="Unmute microphone"
