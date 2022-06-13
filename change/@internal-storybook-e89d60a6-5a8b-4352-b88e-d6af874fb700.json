@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "added browserlist dev dependency",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
