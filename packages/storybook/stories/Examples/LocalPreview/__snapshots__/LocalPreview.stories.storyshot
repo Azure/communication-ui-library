@@ -75,12 +75,13 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           className="ms-Stack stub-classname"
                         />
                         <div
-                          className="ms-TooltipHost root-94"
+                          className="ms-TooltipHost root-105"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          role="none"
                         >
                           <button
                             aria-label="Turn off camera"
@@ -126,7 +127,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                                className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={
@@ -145,12 +146,13 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           className="ms-Stack stub-classname"
                         />
                         <div
-                          className="ms-TooltipHost root-94"
+                          className="ms-TooltipHost root-105"
                           onBlurCapture={[Function]}
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          role="none"
                         >
                           <button
                             aria-label="Mute microphone"
@@ -196,7 +198,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                               </i>
                               <i
                                 aria-hidden={true}
-                                className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                                className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                                 data-icon-name="ChevronDown"
                                 hidden={true}
                                 style={

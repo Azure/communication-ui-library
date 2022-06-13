@@ -43,12 +43,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               className="ms-Stack stub-classname"
             />
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Turn on camera"
@@ -97,7 +98,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -116,12 +117,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               className="ms-Stack stub-classname"
             />
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Unmute microphone"
@@ -170,7 +172,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -185,12 +187,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Present your screen"
@@ -235,12 +238,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-controls={null}
@@ -286,7 +290,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -301,12 +305,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-controls={null}
@@ -352,7 +357,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -367,12 +372,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-94"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Leave Call"
@@ -392,7 +398,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-94"
+                    className="root-105"
                     data-icon-name="ControlButtonEndCall"
                   >
                     <span

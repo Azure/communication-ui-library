@@ -25,12 +25,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
         className="ms-Stack stub-classname"
       />
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="Unmute microphone"
@@ -79,7 +80,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
               data-icon-name="ChevronDown"
               hidden={true}
               style={
