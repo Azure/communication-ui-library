@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "bump package versions for release",
-  "packageName": "@internal/acs-ui-common",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating beta @azure/communication-calling to 1.5.4-beta.1",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
