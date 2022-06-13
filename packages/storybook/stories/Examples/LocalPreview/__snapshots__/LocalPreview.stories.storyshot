@@ -81,6 +81,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           onKeyDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          role="none"
                         >
                           <button
                             aria-label="Turn off camera"
@@ -151,6 +152,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           onKeyDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          role="none"
                         >
                           <button
                             aria-label="Mute microphone"

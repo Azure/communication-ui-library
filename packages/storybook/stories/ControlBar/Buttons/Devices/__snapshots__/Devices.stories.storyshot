@@ -27,6 +27,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-controls={null}
