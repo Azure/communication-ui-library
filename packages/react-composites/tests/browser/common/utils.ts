@@ -241,7 +241,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
  * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
  */
 export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
-  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > p';
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > div > p';
 
   await page.evaluate((readReceiptsToolTipId) => {
     Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
