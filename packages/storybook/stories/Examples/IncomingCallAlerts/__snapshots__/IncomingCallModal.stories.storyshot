@@ -84,6 +84,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               >
                 <div
                   aria-hidden={true}
+                  data-is-focus-trap-zone-bumper={true}
                   data-is-visible={true}
                   style={
                     Object {
@@ -124,7 +125,6 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                           onKeyUp={[Function]}
                           onMouseDown={[Function]}
                           onMouseUp={[Function]}
-                          title="Close"
                           type="button"
                         >
                           <span
@@ -133,7 +133,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                           >
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 stub-classname ms-Button-icon stub-classname"
+                              className="ms-Icon root-105 stub-classname ms-Button-icon stub-classname"
                               data-icon-name="Cancel"
                               style={
                                 Object {
@@ -374,6 +374,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                 </div>
                 <div
                   aria-hidden={true}
+                  data-is-focus-trap-zone-bumper={true}
                   data-is-visible={true}
                   style={
                     Object {

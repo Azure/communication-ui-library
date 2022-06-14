@@ -144,6 +144,8 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
   const remoteParticipants: Record<string, RemoteParticipantState> = {};
 
   testRemoteParticipants.forEach((testRemoteParticipant, i) => {
+    const isReceiving =
+      testRemoteParticipant.isVideoStreamReceiving === undefined ? true : testRemoteParticipant.isVideoStreamReceiving;
     remoteParticipants[i] = {
       identifier: { kind: 'communicationUser', communicationUserId: `${i}` },
       state: 'Connected',
@@ -151,12 +153,14 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
         1: {
           id: 1,
           mediaStreamType: 'Video',
-          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable
+          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable,
+          isReceiving
         },
         2: {
           id: 2,
           mediaStreamType: 'ScreenSharing',
-          isAvailable: !!testRemoteParticipant.isScreenSharing
+          isAvailable: !!testRemoteParticipant.isScreenSharing,
+          isReceiving
         }
       },
       isMuted: !!testRemoteParticipant.isMuted,

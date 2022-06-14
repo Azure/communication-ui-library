@@ -1690,6 +1690,9 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export type LoadingState = 'loading' | 'none';
+
+// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -1981,6 +1984,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    displayNamePlaceholder: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
@@ -2263,6 +2267,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
+    loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
@@ -2429,11 +2434,13 @@ export interface VideoGalleryStream {
     id?: number;
     isAvailable?: boolean;
     isMirrored?: boolean;
+    isReceiving?: boolean;
     renderElement?: HTMLElement;
 }
 
 // @public
 export interface VideoGalleryStrings {
+    displayNamePlaceholder: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;
