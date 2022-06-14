@@ -6,7 +6,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ElementHandle, expect, Page } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, stableScreenshot, stubReadReceiptsToolTip } from '../../common/utils';
+import { dataUiId, stableScreenshot, stubReadReceiptsToolTip, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -29,7 +29,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await waitForMessageSeen(page);
 
     await page.locator(dataUiId('chat-composite-message-status-icon')).click();
-    await page.waitForSelector(dataUiId('chat-composite-message-tooltip'));
+    await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
     await stubReadReceiptsToolTip(page);
     expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
@@ -61,9 +61,9 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page.locator(dataUiId('chat-composite-message')).first().click();
     await page.locator(dataUiId('chat-composite-message-action-icon')).first().click();
-    await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await waitForSelector(page, '[id="chat-composite-message-contextual-menu"]');
     await page.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
-    await page.waitForSelector('[id="chat-composite-message-contextual-menu-read-name-list"]');
+    await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
     expect(await page.screenshot()).toMatchSnapshot('read-message-contextualMenu.png');
   });
 });
