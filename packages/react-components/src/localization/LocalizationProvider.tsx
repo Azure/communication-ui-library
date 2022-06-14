@@ -15,9 +15,10 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings,
-  _DialpadStrings
+  VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(dialpad) */
+import { DialpadStrings } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -68,6 +69,9 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
+  /* @conditional-compile-remove(dialpad) */
+  /** Strings for Dialpad */
+  dialpad: DialpadStrings;
 }
 
 /**

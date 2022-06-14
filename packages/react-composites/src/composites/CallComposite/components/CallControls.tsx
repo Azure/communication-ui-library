@@ -5,9 +5,10 @@ import { Stack } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-import { generateCustomButtons } from './buttons/Custom';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -34,8 +35,10 @@ export type CallControlsProps = {
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
-    () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
 
@@ -55,15 +58,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal">
-          {customButtons['first']}
           {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
-          {customButtons['afterMicrophoneButton']}
           {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
-          {customButtons['afterCameraButton']}
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {customButtons['afterScreenShareButton']}
           {isEnabled(options?.participantsButton) && (
             <Participants
               option={options?.participantsButton}
@@ -73,14 +72,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               increaseFlyoutItemSize={props.increaseFlyoutItemSize}
             />
           )}
-          {customButtons['afterParticipantsButton']}
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {customButtons['afterDevicesButton']}
+          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
-          {customButtons['afterEndCallButton']}
-          {customButtons['last']}
         </ControlBar>
       </Stack.Item>
     </Stack>
@@ -88,12 +84,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove(control-bar-button-injection) */
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};
