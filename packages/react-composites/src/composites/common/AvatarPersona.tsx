@@ -80,6 +80,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageInitials={data?.imageInitials ?? imageInitials}
       initialsColor={data?.initialsColor ?? initialsColor}
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
+      showOverflowTooltip={false}
     />
   );
 };

@@ -124,7 +124,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     text: displayName,
     size: PersonaSize.size32,
     presence: presence,
-    initialsTextColor: 'white'
+    initialsTextColor: 'white',
+    showOverflowTooltip: false
   };
 
   const avatar = onRenderAvatar ? (
