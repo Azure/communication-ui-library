@@ -3,12 +3,8 @@
 
 import { DtmfTone } from '@azure/communication-calling';
 import { Dialpad } from '@azure/communication-react';
-import React from 'react';
+import React, { useState } from 'react';
 
-const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
-  console.log(dtmfTone);
-  return Promise.resolve();
-};
 const onDisplayDialpadInput = (value: string): string => {
   // if input value is falsy eg if the user deletes the input, then just return
   if (!value) {
@@ -24,6 +20,40 @@ const onDisplayDialpadInput = (value: string): string => {
     return `(${phoneNumber.slice(0, 4)}) ${phoneNumber.slice(4, phoneNumber.length)}`;
   }
 };
+
 export const CustomDialpadExample: () => JSX.Element = () => {
-  return <Dialpad onSendDtmfTone={onSendDtmfTone} onDisplayDialpadInput={onDisplayDialpadInput} />;
+  const [dtmftone, setDtmftone] = useState('');
+  const [buttonValue, setButtonValue] = useState('');
+  const [buttonIndex, setButtonIndex] = useState('');
+  const [textfieldInput, setTextfieldInput] = useState('');
+
+  const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
+    setDtmftone(dtmfTone);
+    return Promise.resolve();
+  };
+
+  const onClickDialpadButton = (buttonValue: string, buttonIndex: number): void => {
+    setButtonValue(buttonValue);
+    setButtonIndex(buttonIndex.toString());
+  };
+
+  const onTextFieldChange = (input: string): void => {
+    setTextfieldInput(input);
+  };
+
+  return (
+    <>
+      <div>DTMF Tone: {dtmftone}</div>
+      <div>
+        Button Clicked: {buttonValue} index at {buttonIndex}
+      </div>
+      <div>Textfield Input from keyboard: {textfieldInput}</div>
+      <Dialpad
+        onSendDtmfTone={onSendDtmfTone}
+        onDisplayDialpadInput={onDisplayDialpadInput}
+        onClickDialpadButton={onClickDialpadButton}
+        onTextFieldChange={onTextFieldChange}
+      />{' '}
+    </>
+  );
 };
