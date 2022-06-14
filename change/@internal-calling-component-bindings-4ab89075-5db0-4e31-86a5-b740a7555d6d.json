@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Memoizes the return from the participant list selector for better optimization.",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
