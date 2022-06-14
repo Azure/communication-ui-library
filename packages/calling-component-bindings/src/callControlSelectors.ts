@@ -43,7 +43,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
   (callExists, isMuted, deviceManager) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     return {
-      disabled: !callExists || !permission,
+      disabled: !callExists || !permission || !deviceManager.microphones.length,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -81,7 +81,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
 
     return {
-      disabled: !deviceManager.selectedCamera || !permission,
+      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera

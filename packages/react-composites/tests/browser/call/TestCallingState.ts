@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import type { DeviceManagerState } from '@internal/calling-stateful-client';
+
 /**
  * Calling state passed as as a query argument to set up MockCallingAdapter in playwright test
  */
@@ -10,6 +12,7 @@ export type TestCallingState = {
   page?: TestPageState;
   diagnostics?: TestDiagnostics;
   latestErrors?: AdapterErrors;
+  devices?: Partial<DeviceManagerState>;
 };
 
 /**
