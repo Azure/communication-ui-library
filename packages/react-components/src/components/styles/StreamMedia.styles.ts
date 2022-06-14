@@ -3,15 +3,12 @@
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
 
-// Height and width of the loading spinner
-const LOADING_SPINNER_SIZE_REM = 5;
-
 /**
  * @private
  */
 export const container = (): string =>
   mergeStyles({
-    position: 'relative',
+    position: 'relative', // ensures child element's `position: absolute` is relative to this container
     display: 'contents'
   });
 
@@ -20,8 +17,7 @@ export const container = (): string =>
  */
 export const loadingSpinnerContainer = (): string =>
   mergeStyles({
-    width: `${LOADING_SPINNER_SIZE_REM}rem`,
-    height: `${LOADING_SPINNER_SIZE_REM}rem`,
+    // Position centrally on top of content. Parent must have position: relative.
     position: 'absolute',
     top: '50%',
     bottom: '0',
@@ -34,7 +30,16 @@ export const loadingSpinnerContainer = (): string =>
  * @private
  */
 export const loadSpinnerStyles: ISpinnerStyles = {
-  circle: { height: `${LOADING_SPINNER_SIZE_REM}rem`, width: `${LOADING_SPINNER_SIZE_REM}rem`, borderWidth: '0.25em' }
+  root: {
+    height: '100%' // ensure height fills container
+  },
+  circle: {
+    maxHeight: '5rem',
+    height: '50%',
+    width: 'unset', // remove default width applied by fluent for spinners
+    aspectRatio: '1 / 1', // make height match width to ensure a circle shape
+    borderWidth: '0.25em'
+  }
 };
 
 /**
