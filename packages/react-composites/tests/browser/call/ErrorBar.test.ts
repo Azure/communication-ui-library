@@ -54,9 +54,9 @@ test.describe('Error bar tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('multiple-errors-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    expect(await page.screenshot()).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    expect(await page.screenshot()).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
   });
 });
 
