@@ -32,14 +32,6 @@
     </style>
 
     <style>
-      /**
-        * The loading spinner for video tiles can show during live service tests (likely due to network flakiness).
-        * This should be removed when tests use a serviceless environment.
-        */
-      [data-ui-id='stream-media-loading-spinner'] {
-        display: none;
-      }
-
       /* Important: For ensuring that blinking cursor doesn't get captured in
          snapshots and cause a diff in subsequent tests. */
       * {
