@@ -8,7 +8,6 @@ import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-clien
 import { _IdentifierProvider, _Identifiers } from '@internal/react-components';
 import React, { useEffect, useState } from 'react';
 import {
-  AdapterErrors,
   ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
@@ -264,53 +263,3 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
     );
   });
 };
-
-const wrapAdapterForTests = (adapter: ChatAdapter, adapterErrors: AdapterErrors): ChatAdapter => {
-  return new Proxy(adapter, new ProxyChatAdapter(adapterErrors));
-};
-
-class ProxyChatAdapter implements ProxyHandler<ChatAdapter> {
-  private adapterErrors: AdapterErrors;
-  constructor(adapterErrors: AdapterErrors) {
-    this.adapterErrors = adapterErrors;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get<P extends keyof ChatAdapter>(target: ChatAdapter, prop: P): any {
-    switch (prop) {
-      case 'getState': {
-        return (...args: Parameters<ChatAdapter['getState']>) => {
-          const state = target.getState(...args);
-          state.latestErrors = this.adapterErrors;
-          return state;
-        };
-      }
-      default:
-        return Reflect.get(target, prop);
-    }
-  }
-}
-
-const wrapChatThreadClientForTests = (chatThreadClient: ChatThreadClient): ChatThreadClient => {
-  return new Proxy(chatThreadClient, new ProxyChatThreadClient());
-};
-
-class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get<P extends keyof ChatThreadClient>(target: ChatThreadClient, prop: P): any {
-    switch (prop) {
-      case 'sendMessage': {
-        return (...args: Parameters<ChatThreadClient['sendMessage']>) => {
-          throw {
-            timestamp: new Date(),
-            name: 'Failure to send message',
-            message: 'Could not send message',
-            target: 'ChatThreadClient.sendMessage',
-            innerError: { name: 'Inner error of failure to list participants', message: '', statusCode: 400 } as Error
-          };
-        };
-      }
-      default:
-        return Reflect.get(target, prop);
-    }
-  }
-}

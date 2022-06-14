@@ -40,7 +40,6 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     //
     // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
     // have timestamps for errors.
-    console.log('latestErrors: ', latestErrors);
     const activeErrorMessages: ActiveErrorMessage[] = [];
     let specificSendMessageErrorSeen = false;
     {
@@ -147,7 +146,6 @@ const latestActiveErrorSatisfying = (
   if (activeErrorMessages.length === 0) {
     return undefined;
   }
-  console.log('activeErrorMessages: ', activeErrorMessages);
   // We're actually sure that both timestamps will always exist, because we set them above.
   activeErrorMessages.sort(
     (a: ActiveErrorMessage, b: ActiveErrorMessage) => (a.timestamp?.getTime() ?? 0) - (b.timestamp?.getTime() ?? 0)
