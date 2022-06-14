@@ -76,7 +76,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 >
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 stub-classname ms-Button-icon stub-classname"
+                    className="ms-Icon root-105 stub-classname ms-Button-icon stub-classname"
                     data-icon-name="Clear"
                     style={
                       Object {

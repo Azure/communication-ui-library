@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "add placeholder participant name for unnamed participants",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

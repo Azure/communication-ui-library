@@ -21,12 +21,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
       }
     >
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="Leave Call"
@@ -46,7 +47,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
           >
             <i
               aria-hidden={true}
-              className="root-94"
+              className="root-105"
               data-icon-name="ControlButtonEndCall"
             >
               <span
