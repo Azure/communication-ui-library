@@ -110,7 +110,7 @@ export type CreateViewResult = {
 
 // @public
 export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
-    getIncomingCall: (incomingCallId: string) => DeclarativeIncomingCall;
+    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
 
 // @beta

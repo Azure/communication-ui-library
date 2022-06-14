@@ -24,13 +24,13 @@ import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
   /**
    * @beta
-   * Used to return a declarative incoming call object for an incoming call id.
+   * A readonly array that returns all the active `incomingCalls`.
+   * An active incoming call is a call that has not been answered, declined or disconnected.
    *
-   * @Remark This function doesn't exist on the {@link @azure/communication-calling#CallAgent} interface.
-   * @param incomingCallId - Incoming Call ID
-   * @returns proxied IncomingCall
+   * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#CallAgent} interface.
+   * @returns readonly array of {@link DeclarativeIncomingCall}
    */
-  getIncomingCall: (incomingCallId: string) => DeclarativeIncomingCall;
+  incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
 
 /**
@@ -216,18 +216,16 @@ class ProxyCallAgent implements ProxyHandler<DeclarativeCallAgent> {
         };
       }
       /**
-       * This function is a special case and doesn't exist on the CallAgent interface.
+       * This attribute is a special case and doesn't exist on the CallAgent interface.
        * We need this to be able to return a declarative incoming call object using the call agent.
        * In a standard headless SDK usage, the right way to get an incoming call is to use the `incomingCall` event.
        * However, using the declarative layer, the ideal usage would be to:
        * 1. subscribe to the `onStateChange` event
        * 2. Get the incoming call from the new state and it's ID
-       * 3. Use `callAgent.getIncomingCall` and the incoming call ID to get a declarative incoming call object
+       * 3. Use `callAgent.incomingCalls` and filter an incoming call ID to get a declarative incoming call object
        */
-      case 'getIncomingCall': {
-        return (incomingCallId: string) => {
-          return this._declarativeIncomingCalls.get(incomingCallId);
-        };
+      case 'incomingCalls': {
+        return this._declarativeIncomingCalls;
       }
       default:
         return Reflect.get(target, prop);
