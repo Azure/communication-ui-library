@@ -69,6 +69,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     afterAdapterCreate
   );
 
+  // Dispose of the adapter in the window's before unload event.
+  // This ensures the service knows the user intentionally left the call if the user
+  // closed the browser tab during an active call.
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
+
   // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
   useEffect(() => {
