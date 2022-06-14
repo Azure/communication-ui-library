@@ -29,11 +29,10 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
 let mockCallState = undefined;
-try {
+if (params.mockCallState) {
   mockCallState = JSON.parse(params.mockCallState);
-} catch (e) {
-  console.error('Query parameter mockCallState could not be parsed: ', params.mockCallState);
 }
+
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
