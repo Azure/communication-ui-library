@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { clickOutsideOfPage, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../common/utils';
+import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../common/utils';
 import { test } from './fixture';
 import { buildUrlWithMockAdapter } from './utils';
 
@@ -14,11 +14,8 @@ test.describe('Page state tests', async () => {
         page: 'lobby'
       })
     );
-    // Click outside of page to turn away initial aria label
-    await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('lobby-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('lobby-page.png');
   });
   test('Page when access is denied', async ({ pages, serverUrl }) => {
     const page = pages[0];
@@ -27,9 +24,8 @@ test.describe('Page state tests', async () => {
         page: 'accessDeniedTeamsMeeting'
       })
     );
-    await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
-    expect(await page.screenshot()).toMatchSnapshot('access-denied-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('access-denied-page.png');
   });
   test('Page when join call failed due to network', async ({ pages, serverUrl }) => {
     const page = pages[0];
@@ -38,9 +34,10 @@ test.describe('Page state tests', async () => {
         page: 'joinCallFailedDueToNoNetwork'
       })
     );
-    await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
-    expect(await page.screenshot()).toMatchSnapshot('call-failed-due-to-network-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'call-failed-due-to-network-page.png'
+    );
   });
   test('Page when local participant left call', async ({ pages, serverUrl }) => {
     const page = pages[0];
@@ -49,9 +46,8 @@ test.describe('Page state tests', async () => {
         page: 'leftCall'
       })
     );
-    await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
-    expect(await page.screenshot()).toMatchSnapshot('left-call-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('left-call-page.png');
   });
   test('Page when local participant is removed from call', async ({ pages, serverUrl }) => {
     const page = pages[0];
@@ -62,6 +58,6 @@ test.describe('Page state tests', async () => {
     );
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
-    expect(await page.screenshot()).toMatchSnapshot('removed-from-call-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('removed-from-call-page.png');
   });
 });

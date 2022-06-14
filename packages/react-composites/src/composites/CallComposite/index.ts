@@ -9,7 +9,8 @@ export type {
   CustomCallControlButtonPlacement,
   CustomCallControlButtonCallback,
   CustomCallControlButtonCallbackArgs,
-  CustomCallControlButtonProps
+  CustomCallControlButtonProps,
+  CustomControlButtonProps
 } from './types/CallControlOptions';
 export * from './adapter';
 export * from './Strings';

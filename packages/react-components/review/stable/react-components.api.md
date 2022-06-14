@@ -20,7 +20,6 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
-import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -412,49 +411,6 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 }
 
 // @internal
-export const _Dialpad: (props: _DialpadProps) => JSX.Element;
-
-// @internal
-export interface _DialpadButtonProps {
-    // (undocumented)
-    primaryContent: string;
-    // (undocumented)
-    secondaryContent?: string;
-}
-
-// @internal
-export interface _DialpadProps {
-    // (undocumented)
-    dialpadButtons?: _DialpadButtonProps[][];
-    // (undocumented)
-    strings: _DialpadStrings;
-    // (undocumented)
-    styles?: _DialpadStyles;
-}
-
-// @internal
-export interface _DialpadStrings {
-    // (undocumented)
-    defaultText: string;
-    // (undocumented)
-    errorText: string;
-}
-
-// @internal
-export interface _DialpadStyles {
-    // (undocumented)
-    button?: IButtonStyles;
-    // (undocumented)
-    primaryContent?: IStyle;
-    // (undocumented)
-    root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
-    // (undocumented)
-    textField?: Partial<ITextFieldStyles>;
-}
-
-// @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
 // @internal
@@ -690,6 +646,9 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public
+export type LoadingState = 'loading' | 'none';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -950,6 +909,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    displayNamePlaceholder: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
@@ -1085,6 +1045,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
+    isReceiving?: boolean | undefined;
     isMuted?: boolean | undefined;
     isSpeaking?: boolean | undefined;
     isScreenSharingOn?: boolean | undefined;
@@ -1154,6 +1115,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
+    loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
@@ -1270,11 +1232,13 @@ export interface VideoGalleryStream {
     id?: number;
     isAvailable?: boolean;
     isMirrored?: boolean;
+    isReceiving?: boolean;
     renderElement?: HTMLElement;
 }
 
 // @public
 export interface VideoGalleryStrings {
+    displayNamePlaceholder: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;

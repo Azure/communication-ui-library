@@ -4,7 +4,7 @@
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, clickOutsideOfPage, waitForPageFontsLoaded, waitForSelector } from '../common/utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../common/utils';
 import { IDS } from '../common/constants';
 
 test.describe('Error bar tests', async () => {
@@ -23,11 +23,10 @@ test.describe('Error bar tests', async () => {
         }
       })
     );
-    // Click off page to turn away initial aria label
-    await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('failure-to-start-video-on-error-bar.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'failure-to-start-video-on-error-bar.png'
+    );
   });
 
   test('Multiple errors should be shown on error bar', async ({ pages, serverUrl }) => {
@@ -52,15 +51,12 @@ test.describe('Error bar tests', async () => {
         }
       })
     );
-    // Click off page to turn away initial aria label
-    await clickOutsideOfPage(page);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForPageFontsLoaded(page);
-    expect(await page.screenshot()).toMatchSnapshot('multiple-errors-on-error-bar.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('multiple-errors-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    expect(await page.screenshot()).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    expect(await page.screenshot()).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
   });
 });
 

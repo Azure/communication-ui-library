@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Use structure event for better parse",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "none"
+}

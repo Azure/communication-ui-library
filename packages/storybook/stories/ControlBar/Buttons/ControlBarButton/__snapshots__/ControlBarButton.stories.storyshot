@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Default Default 1`] = `
 <div
-  className="css-118 css-stub-classname"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,16 +21,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
       }
     >
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="airplane"
-          className="ms-Button ms-Button--default css-stub-classname"
+          className="ms-Button ms-Button--default stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -41,7 +42,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
           type="button"
         >
           <span
-            className="ms-Button-flexContainer css-stub-classname"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <span

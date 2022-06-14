@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
@@ -141,21 +141,6 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
   }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
-  }
-};
-
-/**
- * Click outside of the Composite page
- *
- * @deprecated This method of dismissing tooltips has been shown to be flaky.
- *     Use {@link stableScreenshot} instead.
- */
-export const clickOutsideOfPage = async (page: Page): Promise<void> => {
-  await page.mouse.click(-1, -1);
 };
 
 /**
@@ -190,11 +175,6 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         expectedVideoCount: pages.length
       }
     );
-  }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
   }
 };
 
@@ -260,7 +240,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
  * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
  */
 export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
-  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > p';
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > div > p';
 
   await page.evaluate((readReceiptsToolTipId) => {
     Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
@@ -350,12 +330,18 @@ export const isTestProfileStableFlavor = (): boolean => {
 };
 
 export interface StubOptions {
-  // Stub out all timestamps in the chat message thread.
+  /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
-  // Disable tooltips on all buttons in the call control bar.
+  /** Disable tooltips on all buttons in the call control bar. */
   dismissTooltips?: boolean;
-  // Hide chat message actions icon button.
+  /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
+  /**
+   * The loading spinner for video tiles can show during live service tests (likely due to network flakiness).
+   * This should be removed when tests use a serviceless environment.
+   * @defaultValue true
+   */
+  hideVideoLoadingSpinner?: boolean;
 }
 
 /**
@@ -377,6 +363,9 @@ export async function stableScreenshot(
   }
   if (stubOptions?.dismissChatMessageActions) {
     await hideChatMessageActionsButton(page);
+  }
+  if (stubOptions?.hideVideoLoadingSpinner !== false) {
+    await hideVideoLoadingSpinner(page);
   }
   try {
     return await page.screenshot(screenshotOptions);
@@ -407,4 +396,8 @@ const disableTooltips = async (page: Page): Promise<void> => {
  */
 const enableTooltips = async (page: Page): Promise<void> => {
   await page.addStyleTag({ content: '.ms-Tooltip {display: block}' });
+};
+
+const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
 };

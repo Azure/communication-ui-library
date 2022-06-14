@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
-import { _isInCall, _isPreviewOn } from './callUtils';
+import { _isInCall, _isPreviewOn } from './utils/callUtils';
 
 const deviceManagerMock: DeviceManagerState = {
   isSpeakerSelectionAvailable: false,
