@@ -151,12 +151,14 @@ const convertTestParticipantsToCallAdapterStateParticipants = (
         1: {
           id: 1,
           mediaStreamType: 'Video',
-          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable
+          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable,
+          isReceiving: testRemoteParticipant.isVideoStreamReceiving ?? true
         },
         2: {
           id: 2,
           mediaStreamType: 'ScreenSharing',
-          isAvailable: !!testRemoteParticipant.isScreenSharing
+          isAvailable: !!testRemoteParticipant.isScreenSharing,
+          isReceiving: testRemoteParticipant.isVideoStreamReceiving ?? true
         }
       },
       isMuted: !!testRemoteParticipant.isMuted,

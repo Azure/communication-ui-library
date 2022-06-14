@@ -26,7 +26,7 @@ import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@in
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../callUtils';
+import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
 
 /**
  * Object containing all the handlers required for calling components.
