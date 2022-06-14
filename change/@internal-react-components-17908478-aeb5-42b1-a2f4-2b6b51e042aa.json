@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add new prop to dialpad to grab textfield values and button clicked info ",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
