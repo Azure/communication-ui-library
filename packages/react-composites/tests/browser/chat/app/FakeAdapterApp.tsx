@@ -19,11 +19,12 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
+import { ChatCallbackError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { RestError } from '@azure/core-http';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -49,17 +50,16 @@ export const FakeAdapterApp = (): JSX.Element => {
       );
       const chatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.localParticipant.id);
       const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
-      let adapter = await initializeAdapter({
-        userId: fakeChatAdapterArgs.localParticipant.id,
-        displayName: fakeChatAdapterArgs.localParticipant.displayName,
-        chatClient: chatClient as IChatClient as ChatClient,
-        chatThreadClient: chatClient.getChatThreadClient(
-          fakeChatAdapterArgs.latestErrors ? 'INVALID_THREAD_ID' : thread.chatThread.id
-        )
-      });
-      if (fakeChatAdapterArgs.latestErrors) {
-        adapter = wrapAdapterForTests(adapter, fakeChatAdapterArgs.latestErrors);
-      }
+      const chatThreadClient = chatClient.getChatThreadClient(thread?.chatThread?.id ?? 'INVALID_THREAD_ID');
+      const adapter = await initializeAdapter(
+        {
+          userId: fakeChatAdapterArgs.localParticipant.id,
+          displayName: fakeChatAdapterArgs.localParticipant.displayName,
+          chatClient: chatClient as IChatClient as ChatClient,
+          chatThreadClient: chatThreadClient
+        },
+        fakeChatAdapterArgs.latestErrors
+      );
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
         const remoteAdapters = await initializeAdapters(
@@ -126,7 +126,14 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter> => {
+const initializeAdapter = async (
+  adapterInfo: AdapterInfo,
+  latestErrors?: {
+    sendMessage?: ChatCallbackError;
+    getProperties?: ChatCallbackError;
+    listMessages?: ChatCallbackError;
+  }
+): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
@@ -134,10 +141,37 @@ const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter>
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  return await createAzureCommunicationChatAdapterFromClient(
-    statefulChatClient,
-    await statefulChatClient.getChatThreadClient(adapterInfo.chatThreadClient.threadId)
+  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
+    adapterInfo.chatThreadClient.threadId
   );
+  if (latestErrors?.getProperties) {
+    chatThreadClient.getProperties = () => {
+      throw new RestError(
+        latestErrors?.getProperties?.message ?? '',
+        latestErrors?.getProperties?.code,
+        latestErrors?.getProperties?.statusCode
+      );
+    };
+  }
+  if (latestErrors?.listMessages) {
+    chatThreadClient.listMessages = () => {
+      throw new RestError(
+        latestErrors?.listMessages?.message ?? '',
+        latestErrors?.listMessages?.code,
+        latestErrors?.listMessages?.statusCode
+      );
+    };
+  }
+  if (latestErrors?.sendMessage) {
+    chatThreadClient.sendMessage = () => {
+      throw new RestError(
+        latestErrors?.sendMessage?.message ?? '',
+        latestErrors?.sendMessage?.code,
+        latestErrors?.sendMessage?.statusCode
+      );
+    };
+  }
+  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
 interface AdapterInfo {
@@ -248,6 +282,31 @@ class ProxyChatAdapter implements ProxyHandler<ChatAdapter> {
           const state = target.getState(...args);
           state.latestErrors = this.adapterErrors;
           return state;
+        };
+      }
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+const wrapChatThreadClientForTests = (chatThreadClient: ChatThreadClient): ChatThreadClient => {
+  return new Proxy(chatThreadClient, new ProxyChatThreadClient());
+};
+
+class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public get<P extends keyof ChatThreadClient>(target: ChatThreadClient, prop: P): any {
+    switch (prop) {
+      case 'sendMessage': {
+        return (...args: Parameters<ChatThreadClient['sendMessage']>) => {
+          throw {
+            timestamp: new Date(),
+            name: 'Failure to send message',
+            message: 'Could not send message',
+            target: 'ChatThreadClient.sendMessage',
+            innerError: { name: 'Inner error of failure to list participants', message: '', statusCode: 400 } as Error
+          };
         };
       }
       default:

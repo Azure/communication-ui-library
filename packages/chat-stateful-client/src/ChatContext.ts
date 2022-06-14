@@ -411,8 +411,12 @@ export class ChatContext {
 }
 
 const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
-  if (error instanceof Error) {
-    return new ChatError(target, error);
+  const _error = error as Error;
+  console.log('_error: ', JSON.stringify(_error));
+  if (_error instanceof Error) {
+    console.log('error');
+    return new ChatError(target, _error);
   }
-  return new ChatError(target, new Error(`${error}`));
+  console.log('unknown');
+  return new ChatError(target, new Error(`${_error}`));
 };

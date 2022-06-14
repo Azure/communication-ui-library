@@ -14,13 +14,9 @@ test.describe('ErrorBar is shown correctly', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         latestErrors: {
-          'ChatThreadClient.listMessages': {
-            timestamp: new Date(),
-            name: 'Failure to list messages',
-            message: 'Could not list messages',
-            target: 'ChatThreadClient.listMessages',
-            innerError: { name: 'Inner error of failure to send message', message: '', statusCode: 400 } as Error
-          }
+          getProperties: { message: 'Could not get properties', statusCode: 400 },
+          listMessages: { message: 'Could not list messages', statusCode: 400 },
+          sendMessage: { message: 'Could not send message', statusCode: 400 }
         }
       })
     );
@@ -28,41 +24,59 @@ test.describe('ErrorBar is shown correctly', async () => {
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
-    // await sendMessage(page, TEST_MESSAGE);
-    // await waitForSendMessageFailure(page);
-    // await stubMessageTimestamps(page);
-    // expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
-    // // test resend button in contextual menu
-    // await pageClick(page, dataUiId('chat-composite-message'));
-    // await pageClick(page, dataUiId('chat-composite-message-action-icon'));
-    // await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await sendMessage(page, TEST_MESSAGE);
+    await waitForSendMessageFailure(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
+    // test resend button in contextual menu
+    await pageClick(page, dataUiId('chat-composite-message'));
+    await pageClick(page, dataUiId('chat-composite-message-action-icon'));
+    await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
 
-    // expect(await page.screenshot()).toMatchSnapshot(
-    //   'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'
-    // );
+    expect(await page.screenshot()).toMatchSnapshot(
+      'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'
+    );
   });
 
-  // test('with expired token', async ({ page, serverUrl, users }) => {
-  //   await page.goto(buildUrl(serverUrl, { ...users[0], token: 'INCORRECT_VALUE' + users[0].token }));
-  //   await waitForChatCompositeToLoad(page);
-  //   await stubMessageTimestamps(page);
-  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
+  test('with expired token', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        latestErrors: {
+          getProperties: { message: 'Could not get properties', statusCode: 401 },
+          listMessages: { message: 'Could not list messages', statusCode: 401 },
+          sendMessage: { message: 'Could not send message', statusCode: 401 }
+        }
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
-  //   await sendMessage(page, TEST_MESSAGE);
-  //   await waitForSendMessageFailure(page);
-  //   await stubMessageTimestamps(page);
-  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
-  // });
+    await sendMessage(page, TEST_MESSAGE);
+    await waitForSendMessageFailure(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+  });
 
-  // test('with wrong endpoint', async ({ page, serverUrl, users }) => {
-  //   await page.goto(buildUrl(serverUrl, { ...users[0], endpointUrl: 'https://INCORRECT.VALUE' }));
-  //   await waitForChatCompositeToLoad(page);
-  //   await stubMessageTimestamps(page);
-  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
+  test.only('with wrong endpoint', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        latestErrors: {
+          getProperties: { message: 'Could not get properties', code: 'REQUEST_SEND_ERROR' },
+          listMessages: { message: 'Could not list messages', code: 'REQUEST_SEND_ERROR' },
+          sendMessage: { message: 'Could not send message', code: 'REQUEST_SEND_ERROR' }
+        }
+      })
+    );
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
-  //   await sendMessage(page, TEST_MESSAGE);
-  //   await waitForSendMessageFailure(page);
-  //   await stubMessageTimestamps(page);
-  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
-  // });
+    await sendMessage(page, TEST_MESSAGE);
+    await waitForSendMessageFailure(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
+  });
 });

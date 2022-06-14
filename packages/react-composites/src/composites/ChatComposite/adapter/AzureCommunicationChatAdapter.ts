@@ -132,6 +132,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       this.context.updateClientState(clientState);
     };
 
+    console.log('chatThreadClient.sendMessage: ', chatThreadClient.sendMessage);
     this.handlers = createDefaultChatHandlers(chatClient, chatThreadClient);
 
     this.chatClient.onStateChange(onStateChange);

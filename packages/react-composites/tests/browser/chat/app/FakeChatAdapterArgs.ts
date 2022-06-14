@@ -3,7 +3,6 @@
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { FileMetadata } from '@internal/react-components';
-import { AdapterErrors } from '@internal/react-composites';
 
 /**
  * Type to represent a file upload the local participant will perform.
@@ -55,5 +54,11 @@ export type FakeChatAdapterArgs = {
    * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
-  latestErrors?: AdapterErrors;
+  latestErrors?: {
+    sendMessage?: ChatCallbackError;
+    getProperties?: ChatCallbackError;
+    listMessages?: ChatCallbackError;
+  };
 };
+
+export type ChatCallbackError = { message: string; code?: string; statusCode?: number };
