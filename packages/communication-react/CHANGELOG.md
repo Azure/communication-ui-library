@@ -6,23 +6,22 @@ This log was last generated on Mon, 13 Jun 2022 18:29:25 GMT and should not be m
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.0)
 
+This stable release is mostly minor changes and bug fixes, there are no major feature introductions.
+
+A lot of bug fixes in this stable release are related to accessibility. Fixes include the introduction of a new announcer component that will make screen readers announce when devices are toggled on and off.
+
+Also included are updates to the video streams with new features like a loading spinner in the remote stream when the remote participants connection is loading. As well we introduced the ability to update the local video streams scaling mode without destroying the current local video stream.
+
 Mon, 13 Jun 2022 18:29:25 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.2.2-beta.1...@azure/communication-react_v1.3.0)
 
 ### Minor changes
-
-- `@internal/react-components`
   - Show a loading spinner when remote video stream is loading ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
   - Support updateScalingMode in the VideoGallery to avoid having to destroy and recreate the stream when the localVideoViewOption scaling mode is changed ([PR #1890](https://github.com/azure/communication-ui-library/pull/1890) by 2684369+JamesBurnside@users.noreply.github.com)
   - Announce when microphone is turned on/off and video is turned on/off to screen readers and narrator tools ([PR #1772](https://github.com/azure/communication-ui-library/pull/1772) by 94866715+dmceachernmsft@users.noreply.github.com)
-- `@internal/react-composites`
   - update dominantspeaker selector to work with videoGalleryUtils function changes. ([PR #1929](https://github.com/azure/communication-ui-library/pull/1929) by 94866715+dmceachernmsft@users.noreply.github.com)
-- `@internal/calling-component-bindings`
-  - Update the return from the `ParticipantList` selector to handle PSTN users. ([PR #1929](https://github.com/azure/communication-ui-library/pull/1929) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ### Patches
-
-- `@internal/react-components`
   - Fix support for onDisposeLocalStreamView in `VideoGallery` ([PR #1866](https://github.com/azure/communication-ui-library/pull/1866) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fixed theming of links for html and richtext/html messages in MessageThread. ([PR #1824](https://github.com/azure/communication-ui-library/pull/1824) by miguelgamis@microsoft.com)
   - Added error text color in light and dark themes in semanticColors property. ([PR #1861](https://github.com/azure/communication-ui-library/pull/1861) by 79475487+mgamis-msft@users.noreply.github.com)
@@ -40,11 +39,10 @@ Mon, 13 Jun 2022 18:29:25 GMT
   - Code refactor: Update remote video tile to use the useVideoStreamLifecycleMaintainer ([PR #1906](https://github.com/azure/communication-ui-library/pull/1906) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix local preview in the VideoGallery not re-rendering when localVideoViewOptions property changed ([PR #1841](https://github.com/azure/communication-ui-library/pull/1841) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix tab ordering of the New Messages button in the Chat Composite ([PR #1961](https://github.com/azure/communication-ui-library/pull/1961) by 2684369+JamesBurnside@users.noreply.github.com)
-- `@internal/react-composites`
+
   - Add a default host layer in base provider 1. make our lib compatible with react-full-screen 2. avoid polluting global dom tree ([PR #1950](https://github.com/azure/communication-ui-library/pull/1950) by jinan@microsoft.com)
   - Refactor: Ensure the LocalAndRemotePiP reuses the same LocalVideoTile and RemoteVideoTile the VideoGallery component uses ([PR #1930](https://github.com/azure/communication-ui-library/pull/1930) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix param value in callId change event ([PR #1819](https://github.com/azure/communication-ui-library/pull/1819) by jiangnanhello@live.com)
-  - filecard should be clickable, also in mobile view when waiting in lobby, make more button disabled ([PR #1886](https://github.com/azure/communication-ui-library/pull/1886) by carolinecao@microsoft.com)
   - Fixed font of LocalPreview label that indicates camera is off. ([PR #1827](https://github.com/azure/communication-ui-library/pull/1827) by 79475487+mgamis-msft@users.noreply.github.com)
   - Fix a memoization in Call-based composites to prevent onRenderAvatar triggering unecessary re-renders ([PR #1935](https://github.com/azure/communication-ui-library/pull/1935) by 2684369+JamesBurnside@users.noreply.github.com)
   - Update createStreamView to return the created stream view result ([PR #1891](https://github.com/azure/communication-ui-library/pull/1891) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -66,68 +64,24 @@ Mon, 13 Jun 2022 18:29:25 GMT
   - Add Best Practices documentation to Storybook ([PR #1970](https://github.com/azure/communication-ui-library/pull/1970) by 2684369+JamesBurnside@users.noreply.github.com)
 - `@internal/acs-ui-common`
   - Add default replacer to do safe stringify ([PR #1921](https://github.com/azure/communication-ui-library/pull/1921) by jinan@microsoft.com)
-- `@internal/calling-component-bindings`
+
   - Update VideoGallery bindings to return the created view when starting a local video stream ([PR #1891](https://github.com/azure/communication-ui-library/pull/1891) by 2684369+JamesBurnside@users.noreply.github.com)
   - updating beta @azure/communication-calling to 1.5.4-beta.1 ([PR #1925](https://github.com/azure/communication-ui-library/pull/1925) by 79475487+mgamis-msft@users.noreply.github.com)
   - When participant doesnt have a name, set the name to unnamed participant ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by carolinecao@microsoft.com)
   - Fix Calling handler to correctly dispose a local view when view is attached to a call ([PR #1867](https://github.com/azure/communication-ui-library/pull/1867) by 2684369+JamesBurnside@users.noreply.github.com)
   - Support calling `updateScalingMode` in the Video Gallery with remote video streams instead of recreating the stream when the scaling mode changes ([PR #1907](https://github.com/azure/communication-ui-library/pull/1907) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fixed onCreateLocalStreamView handler default videostream options to be cropped and mirrored. ([PR #1909](https://github.com/azure/communication-ui-library/pull/1909) by miguelgamis@microsoft.com)
-- `@internal/calling-stateful-client`
+
   - Return the renderer and view created when statefulCallClient.createView is called ([PR #1889](https://github.com/azure/communication-ui-library/pull/1889) by 2684369+JamesBurnside@users.noreply.github.com)
   - - Add callIdHistory to context + internal context - Update all visit to callId using latestCallId - Encapsule the access to internalMap directly to ensure no leaks ([PR #1817](https://github.com/azure/communication-ui-library/pull/1817) by jiangnanhello@live.com)
   - Update the right call.id into state ([PR #1818](https://github.com/azure/communication-ui-library/pull/1818) by jiangnanhello@live.com)
-- `@internal/chat-component-bindings`
+
   - Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat ([PR #1895](https://github.com/azure/communication-ui-library/pull/1895) by 2684369+JamesBurnside@users.noreply.github.com)
-- `@internal/chat-stateful-client`
+
   - Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat ([PR #1895](https://github.com/azure/communication-ui-library/pull/1895) by 2684369+JamesBurnside@users.noreply.github.com)
   - Only emit stateChanged events where there is an actual change ([PR #1449](https://github.com/azure/communication-ui-library/pull/1449) by 82062616+prprabhu-ms@users.noreply.github.com)
 
-### Changes
 
-- `@internal/react-components`
-  - Added unit test for dialpad, disabled customization for dialpad content, allowed format customization ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
-  - Allow sending message without text if the sendbox contains an error free active file upload. ([PR #1814](https://github.com/azure/communication-ui-library/pull/1814) by anjulgarg@live.com)
-  - Allow removal of files when editing a message  ([PR #1872](https://github.com/azure/communication-ui-library/pull/1872) by anjulgarg@live.com)
-  - File download cards to use fileMetadata extension instead of parsing it from filename ([PR #1850](https://github.com/azure/communication-ui-library/pull/1850) by anjulgarg@live.com)
-  - Added max height and scroll to file uploads as it was covering entire screen ([PR #1918](https://github.com/azure/communication-ui-library/pull/1918) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Created dialpad component ([PR #1870](https://github.com/azure/communication-ui-library/pull/1870) by carolinecao@microsoft.com)
-  - Added new prop onDisplayDateTimeString to both messagethread and locale to allow custom date/time format on component and composite level ([PR #1863](https://github.com/azure/communication-ui-library/pull/1863) by carolinecao@microsoft.com)
-  - Added Icon button for upload button, cancel file upload icon and download icon to make it tab navigable ([PR #1881](https://github.com/azure/communication-ui-library/pull/1881) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Attached files are shown while editing a message. ([PR #1864](https://github.com/azure/communication-ui-library/pull/1864) by anjulgarg@live.com)
-  - Add hold button with strings and icons ([PR #1919](https://github.com/azure/communication-ui-library/pull/1919) by 94866715+dmceachernmsft@users.noreply.github.com)
-- `@internal/react-composites`
-  - Rework how Custom buttons are injected in Call Composite and add Custom Button Injection into CallWithChat Composite ([PR #1931](https://github.com/azure/communication-ui-library/pull/1931) by edwardlee@microsoft.com)
-  - add placeholders for PSTN functions in the adapters for when time to add to composites ([PR #1914](https://github.com/azure/communication-ui-library/pull/1914) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Added Icon button for upload button, cancel file upload icon and download icon to make it tab navigable ([PR #1881](https://github.com/azure/communication-ui-library/pull/1881) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Update the Call and CallWithChat Adapters to use `onToggleHold` and `onAddParticipant` calling handlers ([PR #1973](https://github.com/azure/communication-ui-library/pull/1973) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Performance improvement by preventing CallWithChat composite reloads when toggling side panes on mobile devices ([PR #1941](https://github.com/azure/communication-ui-library/pull/1941) by anjulgarg@live.com)
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-  - Allow removal of files when editing a message  ([PR #1872](https://github.com/azure/communication-ui-library/pull/1872) by anjulgarg@live.com)
-  - Show a loading spinner when remote video stream is loading ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
-  - Introduce Icons for hold button to composites. ([PR #1919](https://github.com/azure/communication-ui-library/pull/1919) by 94866715+dmceachernmsft@users.noreply.github.com)
-- `@internal/storybook`
-  - Added examples in message thread stories to show how to customize date time format ([PR #1863](https://github.com/azure/communication-ui-library/pull/1863) by carolinecao@microsoft.com)
-  - changed storybook text for custom dialpad ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
-  - created storybook preview for dialpad component ([PR #1870](https://github.com/azure/communication-ui-library/pull/1870) by carolinecao@microsoft.com)
-- `@internal/acs-ui-common`
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-- `@internal/calling-component-bindings`
-  - Add PSTN Calling handlers for Hold, Resume, and AddParticipant. ([PR #1914](https://github.com/azure/communication-ui-library/pull/1914) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-  - Support `isReceiving` flag for video streams ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
-  - Introduce selector for HoldButton component. ([PR #1919](https://github.com/azure/communication-ui-library/pull/1919) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Added onsenddtmf handler for dialpad ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
-- `@internal/calling-stateful-client`
-  - Support `isReceiving` flag for video streams ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-  - Update Calling declarative to handle new PSTN functions ([PR #1917](https://github.com/azure/communication-ui-library/pull/1917) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - updating beta @azure/communication-calling to 1.5.4-beta.1 ([PR #1925](https://github.com/azure/communication-ui-library/pull/1925) by 79475487+mgamis-msft@users.noreply.github.com)
-- `@internal/chat-component-bindings`
-  - Allow removal of files when editing a message  ([PR #1872](https://github.com/azure/communication-ui-library/pull/1872) by anjulgarg@live.com)
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-- `@internal/chat-stateful-client`
-  - Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.2.2-beta.1)
 
