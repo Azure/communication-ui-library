@@ -2,13 +2,22 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { useMemo } from 'react';
 import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
-  _DrawerMenuItemProps as DrawerMenuItemProps
+  _DrawerMenuItemProps as DrawerMenuItemProps,
+  _DrawerMenuItemProps
 } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatDrawerButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../CustomButton';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -170,6 +179,30 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: props.onPeopleButtonClicked
     });
   }
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomCallWithChatDrawerButtons(
+        onFetchCustomButtonPropsTrampoline(drawerSelectionOptions !== false ? drawerSelectionOptions : undefined),
+        drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
+      ),
+    [drawerSelectionOptions]
+  );
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['overflow']?.props.children.forEach((element) => {
+    drawerMenuItems.push(element);
+  });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['primary']?.props.children
+    .slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS)
+    .forEach((element) => {
+      drawerMenuItems.push(element);
+    });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['secondary']?.props.children.forEach((element) => {
+    drawerMenuItems.push(element);
+  });
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
