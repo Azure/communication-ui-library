@@ -4,8 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@internal/react-components": ["../../react-components/src/components/index.ts"],
-      "@internal/acs-ui-common": ["../../acs-ui-common/src"],
-      "@internal/react-composites": ["../src/composites/common/adapters.ts"]
+      "@internal/acs-ui-common": ["../../acs-ui-common/src"]
     }
   },
   "include": [
