@@ -66,6 +66,17 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     }
 
+    const cameraStoppedUnexpectedlyDiagnostic = diagnostics?.media.latest.cameraStoppedUnexpectedly;
+    if (cameraStoppedUnexpectedlyDiagnostic) {
+      if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+        // Inform the user that camera stopped working and inform them to start video again
+        activeErrorMessages.push({ type: 'callVideoStoppedBySystem' });
+      } else if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+        // Inform the user that camera recovered
+        activeErrorMessages.push({ type: 'callVideoRecoveredBySystem' });
+      }
+    }
+
     if (deviceManager.deviceAccess?.video === false) {
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
