@@ -24,9 +24,11 @@ test.describe('Localization tests', async () => {
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {
     const page = pages[0];
     await waitForCallCompositeToLoad(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot('localized-call-configuration-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'localized-call-configuration-page.png'
+    );
 
     await loadCallPage([page]);
-    expect(await stableScreenshot(page)).toMatchSnapshot('localized-call-screen.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('localized-call-screen.png');
   });
 });
