@@ -56,14 +56,23 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
-    if (deviceManager.deviceAccess?.audio === false || diagnostics?.media.latest.microphoneNotFunctioning) {
+    if (deviceManager.deviceAccess?.audio === false) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
-    }
-    if (diagnostics?.media.latest.microphoneMuteUnexpectedly) {
-      activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
     }
     if (diagnostics?.media.latest.microphonePermissionDenied) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
+    }
+
+    const microphoneMuteUnexpectedlyDiagnostic =
+      diagnostics?.media.latest.microphoneMuteUnexpectedly || diagnostics?.media.latest.microphoneNotFunctioning;
+    if (microphoneMuteUnexpectedlyDiagnostic) {
+      if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+        // Inform the user that microphone stopped working and inform them to start microphone again
+        activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
+      } else if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+        // Inform the user that microphone recovered
+        activeErrorMessages.push({ type: 'callMicrophoneUnmutedBySystem' });
+      }
     }
 
     const cameraStoppedUnexpectedlyDiagnostic = diagnostics?.media.latest.cameraStoppedUnexpectedly;

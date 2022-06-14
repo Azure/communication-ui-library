@@ -120,6 +120,12 @@ export interface ErrorBarStrings {
   callMicrophoneMutedBySystem: string;
 
   /**
+   * Message shown when microphone is unmuted by the system (not by local or remote participants).
+   * This typically occurs if the system recovers from an unexpected mute.
+   */
+  callMicrophoneUnmutedBySystem: string;
+
+  /**
    * Mac OS specific message shown when microphone can be enumerated but access is
    * blocked by the system.
    */
@@ -334,6 +340,7 @@ const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callNoMicrophoneFound':
     case 'callMicrophoneAccessDenied':
     case 'callMicrophoneMutedBySystem':
+    case 'callMicrophoneUnmutedBySystem':
     case 'callMacOsMicrophoneAccessDenied':
     case 'callLocalVideoFreeze':
     case 'callCameraAccessDenied':
@@ -359,6 +366,7 @@ const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
   callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
+  callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
   callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
   callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
   callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',

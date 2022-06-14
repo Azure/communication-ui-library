@@ -137,6 +137,7 @@
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
     "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
     "callMicrophoneMutedBySystem": "You are muted by your system.",
+    "callMicrophoneUnmutedBySystem": "Your microphone recovered and you were unmuted by your system.",
     "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
     "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",

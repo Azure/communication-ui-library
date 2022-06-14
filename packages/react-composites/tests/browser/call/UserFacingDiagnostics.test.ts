@@ -74,4 +74,34 @@ test.describe('User Facing Diagnostics tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('error-bar-camera-recovered.png');
   });
+
+  test('Message bar should show when microphone stops unexpectedly', async ({ pages, serverUrl }) => {
+    const page = pages[0];
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, {
+        diagnostics: {
+          media: { microphoneMuteUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' } }
+        }
+      })
+    );
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'error-bar-microphone-stops-unexpectedly.png'
+    );
+  });
+
+  test('Message bar should show when microphone recovers', async ({ pages, serverUrl }) => {
+    const page = pages[0];
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, {
+        diagnostics: {
+          media: { microphoneMuteUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' } }
+        }
+      })
+    );
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'error-bar-microphone-recovered.png'
+    );
+  });
 });
