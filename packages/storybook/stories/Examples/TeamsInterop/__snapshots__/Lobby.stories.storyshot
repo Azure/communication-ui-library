@@ -96,12 +96,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 className="ms-Stack stub-classname"
               />
               <div
-                className="ms-TooltipHost root-94"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Turn off camera"
@@ -157,7 +158,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -176,12 +177,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 className="ms-Stack stub-classname"
               />
               <div
-                className="ms-TooltipHost root-94"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Mute microphone"
@@ -237,7 +239,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -252,12 +254,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </button>
               </div>
               <div
-                className="ms-TooltipHost root-94"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Manage devices"
@@ -310,7 +313,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -325,12 +328,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </button>
               </div>
               <div
-                className="ms-TooltipHost root-94"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Leave Call"
@@ -356,7 +360,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-105"
                       data-icon-name="ControlButtonEndCall"
                     >
                       <span
