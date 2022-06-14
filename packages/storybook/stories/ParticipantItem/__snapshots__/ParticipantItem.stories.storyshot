@@ -73,6 +73,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                     onKeyDown={[Function]}
                     onMouseEnter={[Function]}
                     onMouseLeave={[Function]}
+                    role="none"
                   >
                     August Manning
                   </div>
@@ -240,7 +241,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
                     onScroll={[Function]}
                     style={
                       Object {
-                        "maxHeight": undefined,
+                        "maxHeight": "100%",
                         "outline": "none",
                         "overflowY": undefined,
                       }
