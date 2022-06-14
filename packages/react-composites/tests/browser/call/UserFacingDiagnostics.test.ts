@@ -62,7 +62,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test.only('Message bar should show when camera recovers', async ({ pages, serverUrl }) => {
+  test('Message bar should show when camera recovers', async ({ pages, serverUrl }) => {
     const page = pages[0];
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
