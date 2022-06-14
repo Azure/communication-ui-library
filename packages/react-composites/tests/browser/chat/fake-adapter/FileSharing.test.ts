@@ -186,7 +186,6 @@ test.describe('Filesharing Global Errorbar', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        showParticipantPane: false,
         fileSharingEnabled: true,
         fileUploads: [
           {
@@ -263,7 +262,6 @@ test.describe('Filesharing Edit Message', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        showParticipantPane: false,
         fileSharingEnabled: true,
         fileUploads: [
           {

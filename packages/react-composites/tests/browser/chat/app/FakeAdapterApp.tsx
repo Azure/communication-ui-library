@@ -101,7 +101,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             adapter={adapter}
             locale={fakeChatAdapterArgs.frenchLocaleEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
-              participantPane: fakeChatAdapterArgs.showParticipantPane ?? true,
+              participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     downloadHandler: fileDownloadHandler,

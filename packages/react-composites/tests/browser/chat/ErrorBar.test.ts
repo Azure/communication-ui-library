@@ -21,9 +21,7 @@ test.describe('ErrorBar is shown correctly', async () => {
   });
 
   test('with wrong thread ID', async ({ page, serverUrl, users }) => {
-    await page.goto(
-      buildUrl(serverUrl, { ...users[0], threadId: 'INCORRECT_VALUE' }, { showParticipantPane: 'false' })
-    );
+    await page.goto(buildUrl(serverUrl, { ...users[0], threadId: 'INCORRECT_VALUE' }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-wrong-thread-id.png');
@@ -43,9 +41,7 @@ test.describe('ErrorBar is shown correctly', async () => {
   });
 
   test('with expired token', async ({ page, serverUrl, users }) => {
-    await page.goto(
-      buildUrl(serverUrl, { ...users[0], token: 'INCORRECT_VALUE' + users[0].token }, { showParticipantPane: 'false' })
-    );
+    await page.goto(buildUrl(serverUrl, { ...users[0], token: 'INCORRECT_VALUE' + users[0].token }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-expired-token.png');
@@ -57,9 +53,7 @@ test.describe('ErrorBar is shown correctly', async () => {
   });
 
   test('with wrong endpoint', async ({ page, serverUrl, users }) => {
-    await page.goto(
-      buildUrl(serverUrl, { ...users[0], endpointUrl: 'https://INCORRECT.VALUE' }, { showParticipantPane: 'false' })
-    );
+    await page.goto(buildUrl(serverUrl, { ...users[0], endpointUrl: 'https://INCORRECT.VALUE' }));
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-wrong-endpoint-url.png');

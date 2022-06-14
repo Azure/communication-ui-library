@@ -37,7 +37,7 @@ export const LiveTestApp = (): JSX.Element => {
   const useFileSharing = Boolean(params.useFileSharing);
   const failFileDownload = Boolean(params.failDownload);
   const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
-  const showParticipantPane = params.showParticipantPane === 'false' ? false : true;
+  const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
   const args = useMemo(
     () => ({

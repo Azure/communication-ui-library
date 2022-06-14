@@ -22,7 +22,7 @@ import {
 
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl, qArgs: { showParticipantPane: 'false' } });
+    await chatTestSetup({ pages, users, serverUrl });
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -97,7 +97,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
 test.describe('Chat Composite custom data model', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl, qArgs: { customDataModel: 'true' } });
+    await chatTestSetup({ pages, users, serverUrl, qArgs: { customDataModel: 'true', showParticipantPane: 'true' } });
   });
 
   test('can be viewed by user[1]', async ({ pages }) => {
