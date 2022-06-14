@@ -65,12 +65,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         className="ms-Stack stub-classname"
                       />
                       <div
-                        className="ms-TooltipHost root-94"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Turn on camera"
@@ -119,7 +120,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -138,12 +139,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         className="ms-Stack stub-classname"
                       />
                       <div
-                        className="ms-TooltipHost root-94"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Unmute microphone"
@@ -192,7 +194,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 stub-classname ms-Button-menuIcon stub-classname"
+                              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -207,12 +209,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </button>
                       </div>
                       <div
-                        className="ms-TooltipHost root-94"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Present your screen"
@@ -257,12 +260,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </button>
                       </div>
                       <div
-                        className="ms-TooltipHost root-94"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Leave Call"
@@ -282,7 +286,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94"
+                              className="root-105"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span

@@ -54,7 +54,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
           </div>
           <div
             className="ms-FocusZone stub-classname"
-            data-focuszone-id="FocusZone4"
+            data-focuszone-id="FocusZone6"
             onFocus={[Function]}
             onKeyDown={[Function]}
             onMouseDownCapture={[Function]}

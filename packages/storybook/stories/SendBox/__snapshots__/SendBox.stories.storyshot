@@ -76,6 +76,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                     onKeyDown={[Function]}
                     onMouseEnter={[Function]}
                     onMouseLeave={[Function]}
+                    role="none"
                   >
                     <button
                       aria-label="Send message"
