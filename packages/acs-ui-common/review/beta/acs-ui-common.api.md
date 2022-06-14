@@ -6,6 +6,8 @@
 
 /// <reference types="react" />
 
+import { AzureLogger } from '@azure/logger';
+import { AzureLogLevel } from '@azure/logger';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 // @public
@@ -47,6 +49,9 @@ export interface _IObjectMap<T> {
 }
 
 // @internal
+export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
+
+// @internal
 export const _MAX_EVENT_LISTENERS = 50;
 
 // @public
@@ -60,6 +65,16 @@ export const _pxToRem: (px: number) => string;
 
 // @internal
 export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined, space?: string | number | undefined) => string | undefined;
+
+// Warning: (ae-internal-missing-underscore) The name "TelemetryEvent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type TelemetryEvent = {
+    name: string;
+    message: string;
+    level: AzureLogLevel;
+    data?: Record<string, unknown>;
+};
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;

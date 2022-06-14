@@ -4,7 +4,8 @@
     "menuTitle": "More Options",
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
-    "mutedIconLabel": "Muted"
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -153,7 +154,11 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "{cameraName} selected"
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed Participant"
+  },
+  "dialpad": {
+    "placeholderText": "Enter a number"
   },
   "HoldButton": {
     "onLabel": "Resume",

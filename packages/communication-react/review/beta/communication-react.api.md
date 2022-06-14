@@ -32,6 +32,7 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -44,6 +45,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -500,6 +502,7 @@ export type CallingHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onSendDtmfTone?: (dtmfTone: DtmfTone_2) => Promise<void>;
 };
 
 // @public
@@ -825,6 +828,8 @@ export interface CallWithChatControlOptions {
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
     microphoneButton?: boolean;
+    // @beta
+    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
     screenShareButton?: boolean | {
         disabled: boolean;
@@ -1188,6 +1193,7 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -1375,11 +1381,34 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterDevicesButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
-export interface CustomCallControlButtonProps extends ControlBarButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallCompositeIcons;
     placement: CustomCallControlButtonPlacement;
+}
+
+// @beta
+export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+
+// @beta
+export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @beta
+export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+    iconName?: keyof CallWithChatCompositeIcons;
+    placement: CustomCallWithChatControlButtonPlacement;
+}
+
+// @beta
+export interface CustomControlButtonProps {
+    disabled?: boolean;
+    // (undocumented)
+    onItemClick?: () => void;
+    showLabel?: boolean;
+    styles?: ControlBarButtonStyles | BaseCustomStyles;
+    text?: string;
 }
 
 // @public
@@ -1587,6 +1616,51 @@ export interface DiagnosticsCallFeatureState {
     network: NetworkDiagnosticsState;
 }
 
+// @beta
+export const Dialpad: (props: DialpadProps) => JSX.Element;
+
+// @beta
+export interface DialpadButtonProps {
+    // (undocumented)
+    primaryContent: string;
+    // (undocumented)
+    secondaryContent?: string;
+}
+
+// @beta
+export interface DialpadProps {
+    // (undocumented)
+    onClickDialpadButton?: () => void;
+    // (undocumented)
+    onDisplayDialpadInput?: (input: string) => string;
+    // (undocumented)
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    // (undocumented)
+    strings?: DialpadStrings;
+    // (undocumented)
+    styles?: DialpadStyles;
+}
+
+// @beta
+export interface DialpadStrings {
+    // (undocumented)
+    placeholderText: string;
+}
+
+// @beta
+export interface DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    primaryContent?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    secondaryContent?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
+}
+
 // @public
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
@@ -1597,6 +1671,9 @@ export type DisplayNameChangedListener = (event: {
 export interface Disposable {
     dispose(): void;
 }
+
+// @beta
+export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export type EmptySelector = () => Record<string, never>;
@@ -1742,7 +1819,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -1859,6 +1936,9 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public
+export type LoadingState = 'loading' | 'none';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -2155,6 +2235,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    displayNamePlaceholder: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
@@ -2316,6 +2397,8 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
+    // @beta
+    isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
 }
@@ -2450,6 +2533,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
+    loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
@@ -2618,11 +2702,13 @@ export interface VideoGalleryStream {
     id?: number;
     isAvailable?: boolean;
     isMirrored?: boolean;
+    isReceiving?: boolean;
     renderElement?: HTMLElement;
 }
 
 // @public
 export interface VideoGalleryStrings {
+    displayNamePlaceholder: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;

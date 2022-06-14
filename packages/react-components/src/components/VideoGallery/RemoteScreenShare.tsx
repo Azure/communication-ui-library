@@ -25,11 +25,20 @@ export const RemoteScreenShare = React.memo(
     ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
   }) => {
-    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
+    const {
+      userId,
+      displayName,
+      isMuted,
+      renderElement,
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      isReceiving
+    } = props;
     const locale = useLocale();
 
     if (!renderElement) {
@@ -53,7 +62,11 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={displayName}
         isMuted={isMuted}
-        renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
+        renderElement={
+          renderElement ? (
+            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />
+          ) : undefined
+        }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
       />
     );

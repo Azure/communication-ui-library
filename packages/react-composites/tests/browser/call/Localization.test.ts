@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, loadCallPage, buildUrl } from '../common/utils';
+import { waitForCallCompositeToLoad, loadCallPage, buildUrl, stableScreenshot } from '../common/utils';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 
@@ -24,9 +24,11 @@ test.describe('Localization tests', async () => {
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {
     const page = pages[0];
     await waitForCallCompositeToLoad(page);
-    expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'localized-call-configuration-page.png'
+    );
 
     await loadCallPage([page]);
-    expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png');
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('localized-call-screen.png');
   });
 });

@@ -123,23 +123,22 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  if (participant.displayName) {
-    return (
-      <ParticipantItem
-        styles={styles}
-        key={participant.userId}
-        userId={participant.userId}
-        displayName={participant.displayName}
-        me={myUserId ? participant.userId === myUserId : false}
-        menuItems={menuItems}
-        presence={presence}
-        onRenderIcon={onRenderIcon}
-        onRenderAvatar={onRenderAvatar}
-        onClick={() => onParticipantClick?.(participant)}
-      />
-    );
-  }
-  return null;
+  const displayName = !participant.displayName ? strings.displayNamePlaceholder : participant.displayName;
+
+  return (
+    <ParticipantItem
+      styles={styles}
+      key={participant.userId}
+      userId={participant.userId}
+      displayName={displayName}
+      me={myUserId ? participant.userId === myUserId : false}
+      menuItems={menuItems}
+      presence={presence}
+      onRenderIcon={onRenderIcon}
+      onRenderAvatar={onRenderAvatar}
+      onClick={() => onParticipantClick?.(participant)}
+    />
+  );
 };
 
 const getParticipantsForDefaultRender = (

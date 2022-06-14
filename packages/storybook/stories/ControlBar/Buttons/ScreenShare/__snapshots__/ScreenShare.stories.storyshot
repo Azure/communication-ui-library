@@ -21,12 +21,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
       }
     >
       <div
-        className="ms-TooltipHost root-94"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="Present your screen"

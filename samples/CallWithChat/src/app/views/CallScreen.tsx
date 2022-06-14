@@ -12,7 +12,7 @@ import {
   CallWithChatAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
@@ -67,6 +67,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     { userId, displayName, credential, endpoint, locator },
     afterAdapterCreate
   );
+
+  // Dispose of the adapter in the window's before unload event.
+  // This ensures the service knows the user intentionally left the call if the user
+  // closed the browser tab during an active call.
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
