@@ -14,7 +14,7 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
-import { _isPreviewOn } from './callUtils';
+import { _isPreviewOn } from './utils/callUtils';
 
 /**
  * Selector type for {@link MicrophoneButton} component.
