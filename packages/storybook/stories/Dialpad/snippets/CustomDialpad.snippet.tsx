@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { DtmfTone } from '@azure/communication-calling';
-import { Dialpad } from '@azure/communication-react';
+import { Dialpad, FluentThemeProvider } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
 const onDisplayDialpadInput = (value: string): string => {
@@ -37,23 +38,28 @@ export const CustomDialpadExample: () => JSX.Element = () => {
     setButtonIndex(buttonIndex.toString());
   };
 
-  const onTextFieldChange = (input: string): void => {
+  const onChange = (input: string): void => {
     setTextfieldInput(input);
   };
 
   return (
-    <>
-      <div>DTMF Tone: {dtmftone}</div>
-      <div>
-        Button Clicked: {buttonValue} index at {buttonIndex}
-      </div>
-      <div>Textfield Input from keyboard: {textfieldInput}</div>
-      <Dialpad
-        onSendDtmfTone={onSendDtmfTone}
-        onDisplayDialpadInput={onDisplayDialpadInput}
-        onClickDialpadButton={onClickDialpadButton}
-        onTextFieldChange={onTextFieldChange}
-      />{' '}
-    </>
+    <FluentThemeProvider>
+      <Stack>
+        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>DTMF Tone: {dtmftone}</div>
+        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>
+          Button Clicked: {buttonValue} index at {buttonIndex}
+        </div>
+        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>
+          Textfield Input from keyboard: {textfieldInput}
+        </div>
+
+        <Dialpad
+          onSendDtmfTone={onSendDtmfTone}
+          onDisplayDialpadInput={onDisplayDialpadInput}
+          onClickDialpadButton={onClickDialpadButton}
+          onChange={onChange}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };
