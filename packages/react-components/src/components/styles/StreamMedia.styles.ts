@@ -34,9 +34,9 @@ export const loadSpinnerStyles: ISpinnerStyles = {
     height: '100%' // ensure height fills container
   },
   circle: {
-    maxWidth: '5rem',
-    width: '50%',
-    height: 'unset', // remove default height applied by fluent for spinners
+    maxHeight: '5rem',
+    height: '50%',
+    width: 'unset', // remove default width applied by fluent for spinners
     aspectRatio: '1 / 1', // make height match width to ensure a circle shape
     borderWidth: '0.25em'
   }
