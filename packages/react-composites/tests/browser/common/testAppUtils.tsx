@@ -72,3 +72,41 @@ export function verifyParamExists<T>(param: T, paramName: string): T {
  */
 export const isMobile = (): boolean =>
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+/**
+ * Due to service throttling and/or network issues creating the adapter does not always succeed.
+ * Here we retry the creation of the adapter until it succeeds.
+ * This uses a timeout to kill creating the adapter if a specific createAdapter run is taking too
+ * long and then will retry.
+ * @private
+ */
+export async function createAdapterWithRetries<T>(
+  createAdapter: () => Promise<T>,
+  retries = 10,
+  createAdapterTimeout = 3000
+): Promise<T> {
+  let attempts = 0;
+
+  // keep trying to create the adapter
+  while (attempts < retries) {
+    try {
+      const result = await Promise.race([createAdapter(), timeout(createAdapterTimeout, 'Adapter creation timed out')]);
+      if (result) {
+        return result;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    attempts++;
+  }
+
+  throw new Error('Failed to create adapter');
+}
+
+const timeout = (timeoutInMs, timeoutMessage): Promise<void> => {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error(timeoutMessage));
+    }, timeoutInMs);
+  });
+};

@@ -18,7 +18,12 @@ import {
   CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
+import {
+  createAdapterWithRetries,
+  initializeIconsForUITests,
+  isMobile,
+  verifyParamExists
+} from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
@@ -161,13 +166,17 @@ const createCallAdapterWithCredentials = async (): Promise<CallAdapter> => {
   const groupId = verifyParamExists(params.groupId, 'groupId');
   const userId = verifyParamExists(params.userId, 'userId');
 
-  const callAdapter = await createAzureCommunicationCallAdapter({
+  const args = {
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName,
     credential: new AzureCommunicationTokenCredential(token),
     locator: { groupId: groupId }
-  });
-  return callAdapter;
+  };
+
+  const createAdapter = async (): Promise<CallAdapter> => {
+    return await createAzureCommunicationCallAdapter(args);
+  };
+  return await createAdapterWithRetries(createAdapter);
 };
 
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {

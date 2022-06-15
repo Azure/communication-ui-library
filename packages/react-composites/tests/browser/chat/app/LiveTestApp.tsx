@@ -5,17 +5,18 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MessageProps, _IdentifierProvider } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
+  ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
+  createAzureCommunicationChatAdapter,
   FileDownloadError,
-  FileDownloadHandler,
-  useAzureCommunicationChatAdapter
+  FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { createAdapterWithRetries, verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -48,18 +49,20 @@ export const LiveTestApp = (): JSX.Element => {
     }),
     [displayName, endpoint, token, threadId, userId]
   );
-  const adapter = useAzureCommunicationChatAdapter(args, async (adapter) => {
-    // fetch initial data before we render the component to avoid flaky test (time gap between header and participant list)
-    try {
-      await adapter.fetchInitialData();
-      return adapter;
-    } catch {
-      // If we fail on fetching the initial data we still want to return just the adapter.
-      return adapter;
-    }
-  });
 
-  React.useEffect(() => {
+  const [adapter, setAdapter] = useState<ChatAdapter>();
+  useEffect(() => {
+    (async () => {
+      const createAdapter = async (): Promise<ChatAdapter> => {
+        return await createAzureCommunicationChatAdapter(args);
+      };
+      const adapter = await createAdapterWithRetries(createAdapter);
+      await adapter.fetchInitialData();
+      setAdapter(adapter);
+    })();
+  }, [args]);
+
+  useEffect(() => {
     if (adapter && uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
         if (file.uploadComplete) {

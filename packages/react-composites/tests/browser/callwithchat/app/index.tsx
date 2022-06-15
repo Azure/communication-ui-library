@@ -2,18 +2,24 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import {
+  AzureCommunicationCallWithChatAdapterArgs,
   CallWithChatAdapter,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  useAzureCommunicationCallWithChatAdapter
+  createAzureCommunicationCallWithChatAdapter
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
+import {
+  createAdapterWithRetries,
+  initializeIconsForUITests,
+  isMobile,
+  verifyParamExists
+} from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -31,25 +37,31 @@ const threadId = verifyParamExists(params.threadId, 'threadId');
 initializeIconsForUITests();
 
 function App(): JSX.Element {
-  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier, []);
-  const locator = useMemo(
+  const args: AzureCommunicationCallWithChatAdapterArgs = useMemo(
     () => ({
-      callLocator: { groupId: groupId },
-      chatThreadId: threadId
+      endpoint,
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential: new AzureCommunicationTokenCredential(token),
+      threadId,
+      locator: {
+        callLocator: { groupId: groupId },
+        chatThreadId: threadId
+      }
     }),
     []
   );
-  const credential = useMemo(() => new AzureCommunicationTokenCredential(token), []);
-  const adapter = useAzureCommunicationCallWithChatAdapter(
-    {
-      userId: userIdArg,
-      displayName,
-      credential,
-      endpoint,
-      locator
-    },
-    wrapAdapterForTests
-  );
+
+  const [adapter, setAdapter] = useState<CallWithChatAdapter>();
+  useEffect(() => {
+    (async () => {
+      const createAdapter = async (): Promise<CallWithChatAdapter> => {
+        return await createAzureCommunicationCallWithChatAdapter(args);
+      };
+      const adapter = wrapAdapterForTests(await createAdapterWithRetries(createAdapter));
+      setAdapter(adapter);
+    })();
+  }, [args]);
 
   if (!token) {
     return <h3>ERROR: No token set.</h3>;
@@ -85,7 +97,7 @@ function App(): JSX.Element {
   );
 }
 
-const wrapAdapterForTests = async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
+const wrapAdapterForTests = (adapter: CallWithChatAdapter): CallWithChatAdapter => {
   return new Proxy(adapter, new ProxyCallWithChatAdapter());
 };
 
