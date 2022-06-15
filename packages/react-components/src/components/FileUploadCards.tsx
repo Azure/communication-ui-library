@@ -11,9 +11,9 @@ import { iconButtonClassName } from './styles/IconButton.styles';
 import { useLocale } from '../localization';
 
 /**
- * Strings of {@link _FileUploadCards} that can be overridden.
+ * Strings of _FileUploadCards that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface FileUploadCardsStrings {
   /** Aria label to notify user when focus is on cancel file upload button. */

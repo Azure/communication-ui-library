@@ -616,7 +616,7 @@ export interface _FileCardProps {
     progress?: number;
 }
 
-// @public
+// @beta
 export interface FileCardStrings {
     uploadCompleted?: string;
     uploading?: string;
@@ -633,7 +633,7 @@ export interface _FileDownloadCards {
 // @internal (undocumented)
 export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
-// @public
+// @beta
 export interface FileDownloadCardsStrings {
     downloadFile?: string;
 }
@@ -664,7 +664,7 @@ export interface FileUploadCardsProps {
     onCancelFileUpload?: (fileId: string) => void;
 }
 
-// @public
+// @beta
 export interface FileUploadCardsStrings {
     removeFile?: string;
 }

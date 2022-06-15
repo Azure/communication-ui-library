@@ -29,9 +29,9 @@ export interface FileMetadata {
 }
 
 /**
- * Strings of {@link _FileDownloadCards} that can be overridden.
+ * Strings of _FileDownloadCards that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface FileDownloadCardsStrings {
   /** Aria label to notify user when focus is on file download button. */

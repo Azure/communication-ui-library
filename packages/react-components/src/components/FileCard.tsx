@@ -47,9 +47,9 @@ export interface _FileCardProps {
 }
 
 /**
- * Strings of {@link _FileCard} that can be overridden.
+ * Strings of FileCard that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface FileCardStrings {
   /** Aria label to notify user that the file upload started. */

@@ -1738,13 +1738,13 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
-// @public
+// @beta
 export interface FileCardStrings {
     uploadCompleted?: string;
     uploading?: string;
 }
 
-// @public
+// @beta
 export interface FileDownloadCardsStrings {
     downloadFile?: string;
 }
@@ -1790,7 +1790,7 @@ export interface FileUploadAdapter {
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
-// @public
+// @beta
 export interface FileUploadCardsStrings {
     removeFile?: string;
 }
