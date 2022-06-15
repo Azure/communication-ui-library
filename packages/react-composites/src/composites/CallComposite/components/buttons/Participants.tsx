@@ -36,7 +36,7 @@ export const Participants = (props: {
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
       disabled={isDisabled(props.option)}
       styles={participantsButtonStyles}
-      isMobile={props.isMobile}
+      showParticipantOverflowTooltip={!props.isMobile}
     />
   );
 };

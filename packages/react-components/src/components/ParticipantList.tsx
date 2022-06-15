@@ -81,8 +81,8 @@ export type ParticipantListProps = {
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
-  /** True if using mobile */
-  isMobile?: boolean;
+  /** prop to determine if we should show tooltip for participants or not */
+  showParticipantOverflowTooltip?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -93,7 +93,7 @@ const onRenderParticipantDefault = (
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
-  isMobile?: boolean
+  showParticipantOverflowTooltip?: boolean
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -140,7 +140,7 @@ const onRenderParticipantDefault = (
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatar}
       onClick={() => onParticipantClick?.(participant)}
-      isMobile={isMobile}
+      showParticipantOverflowTooltip={showParticipantOverflowTooltip}
     />
   );
 };
@@ -182,7 +182,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
-    isMobile
+    showParticipantOverflowTooltip
   } = props;
 
   const ids = useIdentifiers();
@@ -228,7 +228,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               createParticipantMenuItems,
               participantItemStyles,
               props.onParticipantClick,
-              isMobile
+              showParticipantOverflowTooltip
             )
       )}
     </Stack>

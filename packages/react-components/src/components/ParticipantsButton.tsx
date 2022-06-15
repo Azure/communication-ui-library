@@ -141,10 +141,8 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantsButtonStrings>;
-  /**
-   * If using mobile,set to True,else set to false
-   */
-  isMobile?: boolean;
+  /** prop to determine if we should show tooltip for participants or not */
+  showParticipantOverflowTooltip?: boolean;
 }
 
 /**
@@ -172,7 +170,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderAvatar,
     onRemoveParticipant,
     onFetchParticipantMenuItems,
-    isMobile
+    showParticipantOverflowTooltip
   } = props;
 
   const onRenderPeopleIcon = (): JSX.Element => (
@@ -198,7 +196,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         onRemoveParticipant={onRemoveParticipant}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
-        isMobile={isMobile}
+        showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       />
     );
   }, [
@@ -210,7 +208,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     participants,
     styles?.menuStyles?.participantListStyles,
     onFetchParticipantMenuItems,
-    isMobile
+    showParticipantOverflowTooltip
   ]);
 
   const onCopyCallback = useCallback(() => {
