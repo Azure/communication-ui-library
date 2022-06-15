@@ -10,7 +10,7 @@ This stable release is mostly minor changes and bug fixes and quality of life im
 
 A lot of bug fixes in this stable release are related to accessibility. Fixes include improved narration from screen readers in CallWithChat composite as well as improved keyboard navigation.
 
-Also included are updates to the video streams with new features like a loading spinner in the remote stream when the remote participants connection is loading. As well we introduced the ability to update the local video streams scaling mode without destroying the current local video stream.
+Also included are updates to the video streams with new features like a loading spinner in the remote stream when the remote participants connection is loading. Available in the components now and coming soon to the composites.
 
 Mon, 13 Jun 2022 18:29:25 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.2.2-beta.1...@azure/communication-react_v1.3.0)
