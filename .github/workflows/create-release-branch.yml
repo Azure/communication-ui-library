@@ -51,7 +51,7 @@ jobs:
 
       # Make sure that Rush is installed in run
       - name: Add rush to run
-      - run: npm i -g @microsoft/rush
+        run: npm i -g @microsoft/rush
 
       # Ensure that node modules are installed
       - name: Update rush to use node_modules
