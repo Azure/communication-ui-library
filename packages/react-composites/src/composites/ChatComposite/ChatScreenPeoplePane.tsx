@@ -33,7 +33,7 @@ export const ChatScreenPeoplePane = (props: ChatScreenPeoplePaneProps): JSX.Elem
       title={chatListHeader}
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-      showParticipantOverflowTooltip={!props.isMobile}
+      isMobile={isMobile}
     />
   );
 };
