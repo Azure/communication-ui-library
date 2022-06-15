@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add incomingCalls array to declarative call agent",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
