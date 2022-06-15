@@ -83,6 +83,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     afterCreate
   );
 
+  // Dispose of the adapter in the window's before unload event.
+  // This ensures the service knows the user intentionally left the call if the user
+  // closed the browser tab during an active call.
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
+
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }

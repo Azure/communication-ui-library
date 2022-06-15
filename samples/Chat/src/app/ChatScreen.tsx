@@ -11,7 +11,7 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
 import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
@@ -64,6 +64,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [endpointUrl, userId, displayName, token, threadId]
   );
   const adapter = useAzureCommunicationChatAdapter(adapterArgs, adapterAfterCreate);
+
+  // Dispose of the adapter in the window's before unload event
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
 
   if (adapter) {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>

@@ -6243,7 +6243,7 @@ packages:
   /batch/0.6.1:
     dev: false
     resolution:
-      integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
+      integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==
   /beachball/2.20.0:
     dependencies:
       cosmiconfig: 6.0.0
@@ -6345,7 +6345,7 @@ packages:
     engines:
       node: '>= 0.8'
     resolution:
-      integrity: sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=
+      integrity: sha512-YQyoqQG3sO8iCmf8+hyVpgHHOv0/hCEFiS4zTGUwTA1HjAFX66wRcNQrVCeJq9pgESMRvUAOvSil5MJlmccuKQ==
   /body-parser/1.19.2:
     dependencies:
       bytes: 3.1.2
@@ -6577,7 +6577,7 @@ packages:
     engines:
       node: '>= 0.8'
     resolution:
-      integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
+      integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==
   /bytes/3.1.2:
     dev: false
     engines:
@@ -19287,6 +19287,7 @@ packages:
       core-js: 3.16.2
       cpx: 1.5.0
       cross-env: 7.0.3
+      css-loader: 4.3.0_webpack@5.38.1
       dotenv: 10.0.0
       env-cmd: 10.1.0
       enzyme: 3.11.0
@@ -19329,6 +19330,7 @@ packages:
       rimraf: 2.7.1
       rollup: 2.42.4
       source-map-explorer: 2.5.2
+      style-loader: 2.0.0_webpack@5.38.1
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1

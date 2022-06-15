@@ -442,11 +442,9 @@ export interface DialpadButtonProps {
 
 // @beta
 export interface DialpadProps {
-    // (undocumented)
-    onClickDialpadButton?: () => void;
-    // (undocumented)
+    onChange?: (input: string) => void;
+    onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onDisplayDialpadInput?: (input: string) => string;
-    // (undocumented)
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
     strings?: DialpadStrings;

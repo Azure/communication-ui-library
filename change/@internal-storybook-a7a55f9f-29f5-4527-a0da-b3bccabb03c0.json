@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "storybook to show how to use dialpad props",
+  "packageName": "@internal/storybook",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
