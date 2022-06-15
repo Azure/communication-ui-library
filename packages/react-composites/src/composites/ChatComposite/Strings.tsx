@@ -13,6 +13,7 @@ export interface ChatCompositeStrings {
    * Chat list header text
    */
   chatListHeader: string;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Upload file button aria label
    */
