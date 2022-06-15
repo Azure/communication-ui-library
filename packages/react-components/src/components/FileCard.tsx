@@ -13,10 +13,13 @@ import {
   useTheme
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(file-sharing) */
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(file-sharing) */
+import { useEffect, useState } from 'react';
 
 /**
  * @internal
@@ -65,11 +68,14 @@ export interface FileCardStrings {
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(file-sharing) */
   const localeStrings = useLocale().strings.fileCard;
+  /* @conditional-compile-remove(file-sharing) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 
+  /* @conditional-compile-remove(file-sharing) */
   useEffect(() => {
     if (showProgressIndicator) {
       setAnnouncerString(`${localeStrings.uploading} ${fileName}`);
@@ -127,7 +133,10 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   return (
     <>
-      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {
+        /* @conditional-compile-remove(file-sharing) */
+        <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      }
       <Stack
         className={containerClassName}
         onClick={() => {

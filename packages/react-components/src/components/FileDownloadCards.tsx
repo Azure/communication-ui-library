@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+// @conditional-compile-remove(file-sharing)
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -116,7 +117,6 @@ const actionIconStyle = { height: '1rem' };
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
-  const localeStrings = useLocale().strings.fileDownloadCards;
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
       if (!props.downloadHandler) {
@@ -156,9 +156,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 showSpinner ? (
                   <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                 ) : (
-                  <IconButton className={iconButtonClassName} ariaLabel={`${localeStrings.downloadFile}`}>
-                    <DownloadIconTrampoline />
-                  </IconButton>
+                  <DownloadIconTrampoline />
                 )
               }
               actionHandler={() => fileDownloadHandler(userId, file)}
@@ -174,7 +172,17 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
+  const localeStrings = useLocale().strings.fileDownloadCards;
+  // @conditional-compile-remove(file-sharing)
+  return (
+    <IconButton className={iconButtonClassName} ariaLabel={`${localeStrings.downloadFile}`}>
+      <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />
+    </IconButton>
+  );
   // Return _some_ available icon, as the real icon is beta-only.
-  return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
+  return (
+    <IconButton className={iconButtonClassName}>
+      <Icon iconName="EditBoxCancel" style={actionIconStyle} />
+    </IconButton>
+  );
 };
