@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
-import { useHandlers } from '../hooks/useHandlers';
-import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
+// import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
+// import { useHandlers } from '../hooks/useHandlers';
+// import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { DevicesButton, ErrorBar } from '@internal/react-components';
-import { getCallingSelector } from '@internal/calling-component-bindings';
+import { ErrorBar } from '@internal/react-components';
+// import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
@@ -45,9 +45,9 @@ export interface ConfigurationPageProps {
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
   const { startCallHandler, mobileView } = props;
 
-  const options = useAdaptedSelector(getCallingSelector(DevicesButton));
-  const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
-  const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  // const options = useAdaptedSelector(getCallingSelector(DevicesButton));
+  // const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
+  const { audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
 
   const locale = useLocale();
@@ -86,15 +86,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           {!mobileView && (
             <>
               <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                {title}
-                {callDescription}
+                {/* {title} */}
+                {/* {callDescription} */}
               </Stack.Item>
-              <LocalDeviceSettings
+              {/* <LocalDeviceSettings
                 {...options}
                 {...localDeviceSettingsHandlers}
                 cameraPermissionGranted={cameraPermissionGranted}
                 microphonePermissionGranted={microphonePermissionGranted}
-              />
+              /> */}
             </>
           )}
           <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
