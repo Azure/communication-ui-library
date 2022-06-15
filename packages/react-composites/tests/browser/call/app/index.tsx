@@ -166,14 +166,14 @@ const createCallAdapterWithCredentials = async (): Promise<CallAdapter> => {
   const groupId = verifyParamExists(params.groupId, 'groupId');
   const userId = verifyParamExists(params.userId, 'userId');
 
-  const args = {
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-    displayName,
-    credential: new AzureCommunicationTokenCredential(token),
-    locator: { groupId: groupId }
-  };
-
   const createAdapter = async (): Promise<CallAdapter> => {
+    const args = {
+      userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+      displayName,
+      credential: new AzureCommunicationTokenCredential(token),
+      locator: { groupId: groupId }
+    };
+
     return await createAzureCommunicationCallAdapter(args);
   };
   return await createAdapterWithRetries(createAdapter);
