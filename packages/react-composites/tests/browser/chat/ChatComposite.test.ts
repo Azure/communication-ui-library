@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  dataUiId,
-  stubMessageTimestamps,
-  stubReadReceiptsToolTip,
-  waitForChatCompositeToLoad,
-  waitForFunction,
-  waitForSelector
-} from '../common/utils';
+import { dataUiId, stubMessageTimestamps, stubReadReceiptsToolTip, waitForChatCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import {
@@ -92,28 +85,5 @@ test.describe('Chat Composite E2E Tests', () => {
     // we are getting read receipt for previous messages, so the message here should be seen, otherwise it could cause flaky test
     await waitForMessageSeen(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
-  });
-});
-
-test.describe('Chat Composite custom data model', () => {
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
-    await chatTestSetup({ pages, users, serverUrl, qArgs: { customDataModel: 'true', showParticipantPane: 'true' } });
-  });
-
-  test('can be viewed by user[1]', async ({ pages }) => {
-    const testMessageText = 'How the turn tables';
-    const page = pages[0];
-    await sendMessage(page, testMessageText);
-    await waitForMessageDelivered(page, { state: 'attached' });
-    // Participant list is a beta feature
-    if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'stable') {
-      await waitForFunction(page, () => {
-        return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 3;
-      });
-    }
-    await waitForSelector(page, '#custom-data-model-typing-indicator');
-    await waitForSelector(page, '#custom-data-model-message');
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
