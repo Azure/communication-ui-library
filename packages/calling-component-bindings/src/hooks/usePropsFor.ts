@@ -11,6 +11,10 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(dialpad) */
+import { Dialpad } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */
+import { HoldButton } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -21,6 +25,8 @@ import {
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
+/* @conditional-compile-remove(PSTN-calls) */
+import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
 import { ParticipantsButtonSelector, participantsButtonSelector } from '../participantsButtonSelector';
@@ -101,6 +107,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
+  : AreEqual<Component, typeof Dialpad> extends true
+  ? /* @conditional-compile-remove(dialpad) */ EmptySelector
+  : AreEqual<Component, typeof HoldButton> extends true
+  ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
   : undefined;
 
 /**
@@ -115,10 +125,20 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (component === HoldButton) {
+    return findConditionalCompiledSelector(component);
+  }
   return findSelector(component);
 };
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  /* @conditional-compile-remove(dialpad) */
+  // Dialpad only has handlers currently and doesn't require any props from the stateful layer so return the emptySelector
+  if (component === Dialpad) {
+    return emptySelector;
+  }
+
   switch (component) {
     case VideoGallery:
       return videoGallerySelector;
@@ -140,4 +160,12 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
   }
   return undefined;
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  switch (component) {
+    case HoldButton:
+      return holdButtonSelector;
+  }
 };

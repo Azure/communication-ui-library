@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/End Call End Call 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,16 +21,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="Leave Call"
-          className="ms-Button ms-Button--default root-2"
+          className="ms-Button ms-Button--default stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -41,12 +42,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
           type="button"
         >
           <span
-            className="ms-Button-flexContainer flexContainer-3"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="root-94"
+              className="root-105"
               data-icon-name="ControlButtonEndCall"
             >
               <span

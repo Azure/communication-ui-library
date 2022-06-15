@@ -4,7 +4,8 @@
     "menuTitle": "More Options",
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
-    "mutedIconLabel": "Muted"
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -153,7 +154,8 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "{cameraName} selected"
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "fileUploadCards": {
     "removeFile": "Remove file from uploads"
@@ -165,5 +167,14 @@
   },
   "fileDownloadCards": {
     "downloadFile": "download file"
+  },
+  "dialpad": {
+    "placeholderText": "Enter a number"
+  },
+  "HoldButton": {
+    "onLabel": "Resume",
+    "offLabel": "Hold",
+    "toolTipOnContent": "Resume call",
+    "toolTipOffContent": "Hold call"
   }
 }

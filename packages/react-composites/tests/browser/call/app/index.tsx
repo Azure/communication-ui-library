@@ -21,7 +21,7 @@ import { IDS } from '../../common/constants';
 import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 // eslint-disable-next-line no-restricted-imports
-import { Icon, IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 
@@ -29,11 +29,10 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
 let mockCallState = undefined;
-try {
+if (params.mockCallState) {
   mockCallState = JSON.parse(params.mockCallState);
-} catch (e) {
-  console.log('Query parameter mockCallState could not be parsed: ', params.mockCallState);
 }
+
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
@@ -199,36 +198,27 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="MessageSeen" />,
-      onRenderOnIcon: () => <Icon iconName="MessageSeen" />,
-      strings: {
-        label: 'custom #1'
-      },
-      placement: 'first'
+      iconName: 'ParticipantItemOptions',
+      text: 'custom #1',
+      placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="SendBoxSend" />,
-      onRenderOnIcon: () => <Icon iconName="SendBoxSend" />,
-      strings: {
-        label: 'custom #2'
-      },
-      placement: 'afterMicrophoneButton'
+      iconName: 'NetworkReconnectIcon',
+      text: 'custom #2',
+      placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      onRenderOffIcon: () => <Icon iconName="EditBoxCancel" />,
-      onRenderOnIcon: () => <Icon iconName="EditBoxCancel" />,
-      strings: {
-        label: 'custom #3'
-      },
-      placement: 'last'
+      iconName: 'HorizontalGalleryRightButton',
+      text: 'custom #3',
+      placement: 'primary'
     };
   }
 ];

@@ -32,7 +32,7 @@
     "@fluentui/react-icons": "~1.1.137",
     "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react-window-provider": "~2.2.0",
-    "@fluentui/react": "~8.17.2",
+    "@fluentui/react": "~8.62.4",
     "copy-to-clipboard": "~3.3.1",
     "events": "~3.3.0",
     "html-to-react": "~1.4.5",
@@ -45,7 +45,7 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.4.3-beta.1 || 1.4.4",
+    "@azure/communication-calling": "1.5.4-beta.1 || 1.4.4",
     "@azure/communication-chat": "1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",

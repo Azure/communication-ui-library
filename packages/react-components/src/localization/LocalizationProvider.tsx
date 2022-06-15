@@ -16,11 +16,12 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  _DialpadStrings,
   FileCardStrings,
   FileDownloadCardsStrings,
   FileUploadCardsStrings
 } from '../components';
+/* @conditional-compile-remove(dialpad) */
+import { DialpadStrings } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -77,6 +78,9 @@ export interface ComponentStrings {
   fileCard: FileCardStrings;
   /** Strings for FileDownloadCard */
   fileDownloadCards: FileDownloadCardsStrings;
+  /* @conditional-compile-remove(dialpad) */
+  /** Strings for Dialpad */
+  dialpad: DialpadStrings;
 }
 
 /**

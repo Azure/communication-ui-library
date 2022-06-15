@@ -4,11 +4,11 @@
 import { IDS, TEST_PARTICIPANTS } from '../common/constants';
 import {
   buildUrl,
-  clickOutsideOfPage,
   dataUiId,
   isTestProfileDesktop,
   loadCallPageWithParticipantVideos,
   pageClick,
+  stableScreenshot,
   stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
   waitForPiPiPToHaveLoaded,
@@ -33,8 +33,9 @@ test.describe('CallWithChat Composite Pre-Join Tests', () => {
 
   test('Pre-join screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      `call-with-chat-pre-join-screen.png`
+    );
   });
 });
 
@@ -46,8 +47,9 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
   test('CallWithChat gallery screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    await clickOutsideOfPage(page);
-    expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      `call-with-chat-gallery-screen.png`
+    );
   });
 
   test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
@@ -76,7 +78,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     }
 
     await stubMessageTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
+    expect(await stableScreenshot(pages[0])).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
   });
 
   test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }) => {
@@ -90,7 +92,9 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await waitForTypingIndicatorHidden(pages[1]);
 
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
-    expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
+    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
+      `call-with-chat-gallery-screen-with-one-unread-messages.png`
+    );
   });
 
   test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }) => {
@@ -107,7 +111,9 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     // Ensure typing indicator has disappeared to prevent flakey test
     await waitForTypingIndicatorHidden(pages[1]);
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
-    expect(await pages[1].screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
+    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
+      `call-with-chat-gallery-screen-with-10-unread-messages.png`
+    );
   });
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
@@ -125,14 +131,14 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await waitForPiPiPToHaveLoaded(page, 2);
     }
 
-    expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
   test('More Drawer menu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
     const page = pages[1];
     if (!isTestProfileDesktop(testInfo)) {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
     }
   });
 
@@ -142,7 +148,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const moreDrawerSpeakerDiv = await page.$('div[role="menu"] >> text=Speaker');
       await moreDrawerSpeakerDiv?.click();
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
     }
   });
 
@@ -154,7 +160,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await moreDrawerSpeakerDiv?.click();
       const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Output 1"');
       await submenuNewAudioDeviceDiv?.click();
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
     }
   });
 
@@ -173,7 +179,9 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       // Display MoreDrawer to view newly selected audio device
       await page.mouse.click(100, 100);
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-speaker-screen.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        `call-with-chat-more-drawer-new-selected-speaker-screen.png`
+      );
     }
   });
 
@@ -183,7 +191,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const moreDrawerMicrophoneDiv = await page.$('div[role="menu"] >> text=Microphone');
       await moreDrawerMicrophoneDiv?.click();
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
     }
   });
 
@@ -195,7 +203,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await moreDrawerMicrophoneDiv?.click();
       const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
       await submenuNewAudioDeviceDiv?.click();
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
     }
   });
 
@@ -214,7 +222,9 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       // Display MoreDrawer to view newly selected audio device
       await page.mouse.click(100, 100);
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      expect(await page.screenshot()).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-microphone-screen.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        `call-with-chat-more-drawer-new-selected-microphone-screen.png`
+      );
     }
   });
 });

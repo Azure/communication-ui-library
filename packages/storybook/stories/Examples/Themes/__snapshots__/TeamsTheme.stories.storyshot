@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,15 +31,15 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-118 body-1"
+          className="stub-classname stub-classname"
           dir="ltr"
         >
           <div
-            className="css-118"
+            className="stub-classname"
             data-uses-unhanded-props={true}
           >
             <div
-              className="ms-Stack css-3"
+              className="ms-Stack stub-classname"
               style={
                 Object {
                   "background": "#1a1a1a",
@@ -49,32 +49,33 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
               }
             >
               <div
-                className="ms-Stack css-4"
+                className="ms-Stack stub-classname"
               >
                 <div
-                  className="ms-StackItem css-5"
+                  className="ms-StackItem stub-classname"
                 >
                   <div
-                    className="css-7"
+                    className="stub-classname"
                   >
                     <div
-                      className="ms-Stack css-8"
+                      className="ms-Stack stub-classname"
                     >
                       <div
                         aria-live="polite"
-                        className="ms-Stack css-9"
+                        className="ms-Stack stub-classname"
                       />
                       <div
-                        className="ms-TooltipHost root-10"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Turn on camera"
-                          className="ms-Button ms-Button--default root-11"
+                          className="ms-Button ms-Button--default stub-classname"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -85,12 +86,12 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-12"
+                            className="ms-Button-flexContainer stub-classname"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="stub-classname"
                               data-icon-name="ControlButtonCameraOff"
                             >
                               <span
@@ -119,7 +120,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-21 ms-Button-menuIcon menuIcon-16"
+                              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -135,19 +136,20 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       </div>
                       <div
                         aria-live="polite"
-                        className="ms-Stack css-9"
+                        className="ms-Stack stub-classname"
                       />
                       <div
-                        className="ms-TooltipHost root-10"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Unmute microphone"
-                          className="ms-Button ms-Button--default root-11"
+                          className="ms-Button ms-Button--default stub-classname"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -158,12 +160,12 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-12"
+                            className="ms-Button-flexContainer stub-classname"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="stub-classname"
                               data-icon-name="ControlButtonMicOff"
                             >
                               <span
@@ -192,7 +194,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             </i>
                             <i
                               aria-hidden={true}
-                              className="ms-Icon root-94 css-21 ms-Button-menuIcon menuIcon-16"
+                              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                               data-icon-name="ChevronDown"
                               hidden={true}
                               style={
@@ -207,16 +209,17 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </button>
                       </div>
                       <div
-                        className="ms-TooltipHost root-10"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Present your screen"
-                          className="ms-Button ms-Button--default root-23"
+                          className="ms-Button ms-Button--default stub-classname"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -227,12 +230,12 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-12"
+                            className="ms-Button-flexContainer stub-classname"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-20"
+                              className="stub-classname"
                               data-icon-name="ControlButtonScreenShareStart"
                             >
                               <span
@@ -257,16 +260,17 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </button>
                       </div>
                       <div
-                        className="ms-TooltipHost root-10"
+                        className="ms-TooltipHost root-105"
                         onBlurCapture={[Function]}
                         onFocusCapture={[Function]}
                         onKeyDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
+                        role="none"
                       >
                         <button
                           aria-label="Leave Call"
-                          className="ms-Button ms-Button--default root-24"
+                          className="ms-Button ms-Button--default stub-classname"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -277,12 +281,12 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-12"
+                            className="ms-Button-flexContainer stub-classname"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94"
+                              className="root-105"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span
@@ -304,7 +308,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                               </span>
                             </i>
                             <span
-                              className="ms-Button-textContainer textContainer-13"
+                              className="ms-Button-textContainer stub-classname"
                             >
                               <span
                                 style={
@@ -324,24 +328,24 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-111 css-26"
+                className="stub-classname"
               >
                 <div
-                  className="ms-Stack css-33"
+                  className="ms-Stack stub-classname"
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="css-30"
+                    className="stub-classname"
                   />
                   <div
-                    className="ms-Stack css-34"
+                    className="ms-Stack stub-classname"
                   >
                     <div
-                      className="ms-Stack css-36"
+                      className="ms-Stack stub-classname"
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size48 root-37"
+                        className="ms-Persona ms-Persona--size48 stub-classname"
                         style={
                           Object {
                             "height": 100,
@@ -350,11 +354,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size48 coin-44"
+                          className="ms-Persona-coin ms-Persona--size48 stub-classname"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-46"
+                            className="ms-Persona-imageArea stub-classname"
                             role="presentation"
                             style={
                               Object {
@@ -365,7 +369,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-49"
+                              className="ms-Persona-initials stub-classname"
                               style={
                                 Object {
                                   "height": 100,
@@ -383,13 +387,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-140 css-52"
+                    className="ms-Stack stub-classname"
                   >
                     <div
-                      className="ms-Stack css-141 css-53"
+                      className="ms-Stack stub-classname"
                     >
                       <span
-                        className="css-54"
+                        className="stub-classname"
                         title="Michael"
                       >
                         Michael

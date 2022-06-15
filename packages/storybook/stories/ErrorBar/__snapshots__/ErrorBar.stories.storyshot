@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1`] = `
 <div
-  className="css-118 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-118"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,27 +21,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
       }
     >
       <div
-        className="css-1"
+        className="stub-classname"
       >
         <div
-          className="ms-Stack css-2"
+          className="ms-Stack stub-classname"
           data-ui-id="error-bar-stack"
         >
           <div
             aria-describedby="MessageBar1"
-            className="ms-MessageBar ms-MessageBar--error ms-MessageBar-multiline root-3"
+            className="ms-MessageBar ms-MessageBar--error ms-MessageBar-multiline stub-classname"
             role="region"
           >
             <div
-              className="ms-MessageBar-content content-4"
+              className="ms-MessageBar-content stub-classname"
             >
               <div
                 aria-hidden={true}
-                className="ms-MessageBar-icon iconContainer-5"
+                className="ms-MessageBar-icon stub-classname"
               >
                 <i
                   aria-hidden={true}
-                  className="root-94 icon-14"
+                  className="stub-classname"
                   data-icon-name="ErrorBadge"
                 >
                   
@@ -49,17 +49,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
               </div>
               <div
                 aria-live="assertive"
-                className="ms-MessageBar-text text-7"
+                className="ms-MessageBar-text stub-classname"
                 id="MessageBar1"
                 role="alert"
               >
                 <span
-                  className="ms-MessageBar-innerText innerText-8"
+                  className="ms-MessageBar-innerText stub-classname"
                 />
               </div>
               <button
                 aria-label="Close"
-                className="ms-Button ms-Button--icon ms-MessageBar-dismissal dismissal-15"
+                className="ms-Button ms-Button--icon ms-MessageBar-dismissal stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -71,12 +71,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-16"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 css-23 ms-Button-icon icon-18"
+                    className="ms-Icon root-105 stub-classname ms-Button-icon stub-classname"
                     data-icon-name="Clear"
                     style={
                       Object {
