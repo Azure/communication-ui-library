@@ -49,6 +49,9 @@ jobs:
         with:
           node-version: '14.x'
 
+      - name: Add rush to run
+      - run: npm i -g @microsoft/rush
+
       - name: Update rush to use node_modules
         run: rush update
 
