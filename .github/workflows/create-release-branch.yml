@@ -107,4 +107,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} pre-release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
