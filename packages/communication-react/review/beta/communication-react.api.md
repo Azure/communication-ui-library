@@ -1742,7 +1742,6 @@ export type ErrorType = keyof ErrorBarStrings;
 export interface FileCardStrings {
     uploadCompleted?: string;
     uploading?: string;
-    uploadProgress?: string;
 }
 
 // @public

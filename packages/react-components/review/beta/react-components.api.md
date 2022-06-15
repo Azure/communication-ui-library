@@ -620,7 +620,6 @@ export interface _FileCardProps {
 export interface FileCardStrings {
     uploadCompleted?: string;
     uploading?: string;
-    uploadProgress?: string;
 }
 
 // @internal (undocumented)
