@@ -57,7 +57,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       background: 'transparent'
     }
   });
-  const uploadFileString = useLocale().strings.chat.uploadFileButton;
+  const uploadFileButtonString = useLocale().strings.chat.uploadFileButton;
   return (
     <>
       <Stack
@@ -68,7 +68,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={uploadFileString}>
+        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonString}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>

@@ -156,7 +156,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 showSpinner ? (
                   <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                 ) : (
-                  <IconButton className={iconButtonClassName} ariaLabel={`${file.name} ${localeStrings.downloadFile}`}>
+                  <IconButton className={iconButtonClassName} ariaLabel={`${localeStrings.downloadFile}`}>
                     <DownloadIconTrampoline />
                   </IconButton>
                 )

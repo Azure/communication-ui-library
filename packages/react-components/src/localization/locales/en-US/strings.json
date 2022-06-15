@@ -158,15 +158,14 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "fileUploadCards": {
-    "removeFile": "Remove file from uploads"
+    "removeFile": "Remove file"
   },
   "fileCard": {
-    "uploadProgress": "upload progress",
     "uploading": "uploading",
-    "uploadCompleted": "uploaded, enter a message in edit field."
+    "uploadCompleted": "upload completed"
   },
   "fileDownloadCards": {
-    "downloadFile": "download file"
+    "downloadFile": "Download file"
   },
   "dialpad": {
     "placeholderText": "Enter a number"

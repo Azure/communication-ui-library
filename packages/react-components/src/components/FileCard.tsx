@@ -52,8 +52,6 @@ export interface _FileCardProps {
  * @public
  */
 export interface FileCardStrings {
-  /** Aria label to notify user about the progress of file upload. */
-  uploadProgress?: string;
   /** Aria label to notify user that the file upload started. */
   uploading?: string;
   /** Aria label to notify user that the file upload completed. */
@@ -75,7 +73,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   useEffect(() => {
     if (showProgressIndicator) {
       setAnnouncerString(`${localeStrings.uploading} ${fileName}`);
-    } else if (progress && progress >= 1) {
+    } else if (progress === 1) {
       setAnnouncerString(`${fileName} ${localeStrings.uploadCompleted}`);
     } else {
       setAnnouncerString(undefined);
@@ -154,13 +152,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
             {actionIcon && actionIcon}
           </Stack>
         </Stack>
-        {showProgressIndicator && (
-          <ProgressIndicator
-            percentComplete={progress}
-            styles={progressIndicatorStyles}
-            ariaValueText={`${fileName} ${localeStrings.uploadProgress}`}
-          />
-        )}
+        {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
     </>
   );
