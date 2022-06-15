@@ -49,6 +49,9 @@ jobs:
         with:
           node-version: '14.x'
 
+      - name: Update rush to use node_modules
+        run: rush update
+
       # get version number from communication react folder
       - name: Retrieve new version from package.json
         id: version
