@@ -25,8 +25,9 @@ adapter={chatAdapter}
 options={{
   fileSharing: {
     uploadHandler: fileUploadHandler,
-    // If fileDownloadHandler is not provided. The file URL is opened in a new tab. 
-    // You can find examples of fileDownloadHandler and fileUploadHandler in the tutorial linked above.
+    // If fileDownloadHandler is not provided. The file URL is opened in a new tab.
+    // You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
+    // https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
     downloadHandler: fileDownloadHandler,
     accept: 'image/png, image/jpeg, text/plain, .docx',
     multiple: true
