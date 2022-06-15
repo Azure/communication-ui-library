@@ -65,7 +65,8 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
+  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
+    props;
   const userIds = useMemo(() => {
     return [userId];
   }, [userId]);
@@ -80,7 +81,8 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageInitials={data?.imageInitials ?? imageInitials}
       initialsColor={data?.initialsColor ?? initialsColor}
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
-      showOverflowTooltip={false}
+      // default disable tooltip unless specified
+      showOverflowTooltip={showOverflowTooltip ?? false}
     />
   );
 };

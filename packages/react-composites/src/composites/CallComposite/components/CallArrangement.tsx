@@ -85,6 +85,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               {...props.callControlProps}
               containerWidth={containerWidth}
               containerHeight={containerHeight}
+              isMobile={props.mobileView}
             />
           </Stack.Item>
         )}

@@ -76,6 +76,7 @@ export const ParticipantListWithHeading = (props: {
             />
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          isMobile={props.isMobile}
         />
       </FocusZone>
     </Stack>

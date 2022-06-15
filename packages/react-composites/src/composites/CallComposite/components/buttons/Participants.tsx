@@ -16,6 +16,7 @@ export const Participants = (props: {
   displayType?: CallControlDisplayType;
   increaseFlyoutItemSize?: boolean;
   styles?: ControlBarButtonStyles;
+  isMobile?: boolean;
 }): JSX.Element => {
   const participantsButtonProps = usePropsFor(ParticipantsButton);
   const participantsButtonStyles = useMemo(
@@ -35,6 +36,7 @@ export const Participants = (props: {
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
       disabled={isDisabled(props.option)}
       styles={participantsButtonStyles}
+      isMobile={props.isMobile}
     />
   );
 };

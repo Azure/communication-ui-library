@@ -81,6 +81,8 @@ export type ParticipantListProps = {
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
+  /** True if using mobile */
+  isMobile?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -90,7 +92,8 @@ const onRenderParticipantDefault = (
   onRenderAvatar?: OnRenderAvatarCallback,
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
-  onParticipantClick?: (participant?: ParticipantListParticipant) => void
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void,
+  isMobile?: boolean
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -137,6 +140,7 @@ const onRenderParticipantDefault = (
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatar}
       onClick={() => onParticipantClick?.(participant)}
+      isMobile={isMobile}
     />
   );
 };
@@ -177,7 +181,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRemoveParticipant,
     onRenderAvatar,
     onRenderParticipant,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    isMobile
   } = props;
 
   const ids = useIdentifiers();
@@ -222,7 +227,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               onRenderAvatar,
               createParticipantMenuItems,
               participantItemStyles,
-              props.onParticipantClick
+              props.onParticipantClick,
+              isMobile
             )
       )}
     </Stack>
