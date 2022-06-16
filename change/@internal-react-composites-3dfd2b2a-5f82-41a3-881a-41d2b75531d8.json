@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions paramter needed to start a PSTN Call.",
+  "comment": "Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions parameter needed to start a PSTN Call.",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
