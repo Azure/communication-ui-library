@@ -70,6 +70,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       hidePersonaDetails: true,
       size: PersonaSize.size24,
       text: person.displayName,
+      showOverflowTooltip: false,
       styles: {
         root: {
           margin: '0.25rem'
