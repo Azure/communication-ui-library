@@ -4,7 +4,13 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  Call,
+  PermissionConstraints,
+  StartCallOptions
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
@@ -71,8 +77,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
   public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
-  public startCall = (participants: string[]): Call | undefined => {
-    return this.callWithChatAdapter.startCall(participants);
+  public startCall = (participants: string[], options: StartCallOptions): Call | undefined => {
+    return this.callWithChatAdapter.startCall(participants, options);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);

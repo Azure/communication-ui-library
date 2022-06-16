@@ -12,6 +12,22 @@ const formFactorSnippet = `
 <CallWithChatComposite formFactor="mobile" />
 `;
 
+const addFileSharingSnippet = `
+<CallWithChatComposite
+adapter={chatAdapter}
+options={{
+  fileSharing: {
+    uploadHandler: fileUploadHandler,
+    /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
+    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
+    https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
+    downloadHandler: fileDownloadHandler,
+    accept: 'image/png, image/jpeg, text/plain, .docx',
+    multiple: true
+  }
+}} />
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -82,6 +98,16 @@ export const getDocs: () => JSX.Element = () => {
         easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
         Teams interop scenario.
       </Description>
+
+      <Heading>Adding file sharing</Heading>
+      <Description>
+        The CallWithChat Composite supports file sharing capabilities in conjunction with your choice of a storage
+        solution. Using the provided APIs, you can enable the composite to support uploading files and displaying them
+        on the send box before sending, and the message thread once they have been sent or received. For an end to end
+        tutorial on enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our
+        tutorial. https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
+      </Description>
+      <Source code={addFileSharingSnippet} />
     </>
   );
 };
