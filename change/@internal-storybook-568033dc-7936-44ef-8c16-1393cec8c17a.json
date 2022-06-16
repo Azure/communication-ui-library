@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "adding file sharing snippet to composite documentation",
+  "packageName": "@internal/storybook",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
