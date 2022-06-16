@@ -59,7 +59,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
-  test.only('with wrong endpoint', async ({ page, serverUrl }) => {
+  test('with wrong endpoint', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
