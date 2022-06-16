@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { initializeIconsForUITests } from '../../common/testAppUtils';
 import { FakeAdapterApp } from './FakeAdapterApp';
 import { LiveTestApp } from './LiveTestApp';
+import './index.css';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
