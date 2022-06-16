@@ -249,8 +249,8 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
 const registerChatThreadClientFunctionErrors = (
   chatThreadClient: ChatThreadClient,
   chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
-) => {
-  for (let k in chatThreadClientFunctionErrors) {
+): void => {
+  for (const k in chatThreadClientFunctionErrors) {
     chatThreadClient[k] = () => {
       throw new RestError(
         chatThreadClientFunctionErrors[k].message ?? '',
