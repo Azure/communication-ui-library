@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { FileMetadata } from '@internal/react-components';
 
 /**
@@ -58,11 +58,10 @@ export type FakeChatAdapterArgs = {
    * Determines if chat composite will be using a custom data model
    */
   customDataModelEnabled?: boolean;
-  latestErrors?: {
-    sendMessage?: ChatCallbackError;
-    getProperties?: ChatCallbackError;
-    listMessages?: ChatCallbackError;
-  };
+  /*
+   * Record of rest errors to throw when functions of ChatThreadClient are called
+   */
+  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>;
 };
 
-export type ChatCallbackError = { message: string; code?: string; statusCode?: number };
+export type ChatThreadRestError = { message: string; code?: string; statusCode?: number };

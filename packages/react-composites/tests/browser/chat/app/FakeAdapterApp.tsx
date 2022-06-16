@@ -27,7 +27,7 @@ import {
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
-import { ChatCallbackError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
+import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { RestError } from '@azure/core-http';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -62,7 +62,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           chatClient: chatClient as IChatClient as ChatClient,
           chatThreadClient: chatThreadClient
         },
-        fakeChatAdapterArgs.latestErrors
+        fakeChatAdapterArgs.chatThreadClientFunctionErrors
       );
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
@@ -139,11 +139,7 @@ export const FakeAdapterApp = (): JSX.Element => {
 
 const initializeAdapter = async (
   adapterInfo: AdapterInfo,
-  latestErrors?: {
-    sendMessage?: ChatCallbackError;
-    getProperties?: ChatCallbackError;
-    listMessages?: ChatCallbackError;
-  }
+  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
 ): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
@@ -155,33 +151,7 @@ const initializeAdapter = async (
   const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
     adapterInfo.chatThreadClient.threadId
   );
-  if (latestErrors?.getProperties) {
-    chatThreadClient.getProperties = () => {
-      throw new RestError(
-        latestErrors?.getProperties?.message ?? '',
-        latestErrors?.getProperties?.code,
-        latestErrors?.getProperties?.statusCode
-      );
-    };
-  }
-  if (latestErrors?.listMessages) {
-    chatThreadClient.listMessages = () => {
-      throw new RestError(
-        latestErrors?.listMessages?.message ?? '',
-        latestErrors?.listMessages?.code,
-        latestErrors?.listMessages?.statusCode
-      );
-    };
-  }
-  if (latestErrors?.sendMessage) {
-    chatThreadClient.sendMessage = () => {
-      throw new RestError(
-        latestErrors?.sendMessage?.message ?? '',
-        latestErrors?.sendMessage?.code,
-        latestErrors?.sendMessage?.statusCode
-      );
-    };
-  }
+  registerChatThreadClientFunctionErrors(chatThreadClient, chatThreadClientFunctionErrors);
   return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
@@ -274,4 +244,19 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
       </div>
     );
   });
+};
+
+const registerChatThreadClientFunctionErrors = (
+  chatThreadClient: ChatThreadClient,
+  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+) => {
+  for (let k in chatThreadClientFunctionErrors) {
+    chatThreadClient[k] = () => {
+      throw new RestError(
+        chatThreadClientFunctionErrors[k].message ?? '',
+        chatThreadClientFunctionErrors[k].code,
+        chatThreadClientFunctionErrors[k].statusCode
+      );
+    };
+  }
 };
