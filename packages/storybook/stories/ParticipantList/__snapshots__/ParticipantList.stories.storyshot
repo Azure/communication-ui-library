@@ -66,7 +66,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     className="ms-Persona-primaryText stub-classname"
                     dir="auto"
                   >
-                    Rick
+                    <div
+                      className="ms-TooltipHost stub-classname"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      role="none"
+                    >
+                      Rick
+                    </div>
                   </div>
                   <div
                     className="ms-Persona-secondaryText stub-classname"
@@ -202,7 +212,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       >
                         <div
                           className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
-                          data-focuszone-id="FocusZone7"
+                          data-focuszone-id="FocusZone11"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}
@@ -289,7 +299,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     className="ms-Persona-primaryText stub-classname"
                     dir="auto"
                   >
-                    Daryl
+                    <div
+                      className="ms-TooltipHost stub-classname"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      role="none"
+                    >
+                      Daryl
+                    </div>
                   </div>
                   <div
                     className="ms-Persona-secondaryText stub-classname"
@@ -425,7 +445,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       >
                         <div
                           className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
-                          data-focuszone-id="FocusZone8"
+                          data-focuszone-id="FocusZone12"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}
@@ -516,7 +536,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     className="ms-Persona-primaryText stub-classname"
                     dir="auto"
                   >
-                    Michonne
+                    <div
+                      className="ms-TooltipHost stub-classname"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      role="none"
+                    >
+                      Michonne
+                    </div>
                   </div>
                   <div
                     className="ms-Persona-secondaryText stub-classname"
@@ -652,7 +682,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       >
                         <div
                           className="ms-FocusZone stub-classname ms-ContextualMenu is-open stub-classname"
-                          data-focuszone-id="FocusZone9"
+                          data-focuszone-id="FocusZone13"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
                           onMouseDownCapture={[Function]}
@@ -743,7 +773,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     className="ms-Persona-primaryText stub-classname"
                     dir="auto"
                   >
-                    You
+                    <div
+                      className="ms-TooltipHost stub-classname"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      role="none"
+                    >
+                      You
+                    </div>
                   </div>
                   <div
                     className="ms-Persona-secondaryText stub-classname"
