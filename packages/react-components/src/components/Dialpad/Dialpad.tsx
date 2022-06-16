@@ -96,12 +96,14 @@ export interface DialpadProps {
   strings?: DialpadStrings;
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: DialpadButtonProps[][];
-  // function to send dtmf tones on button click
+  /**  function to send dtmf tones on button click */
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-  // Callback for dialpad button behavior
-  onClickDialpadButton?: () => void;
-  // customize dialpad input formatting
+  /**  Callback for dialpad button behavior*/
+  onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
+  /**  customize dialpad input formatting */
   onDisplayDialpadInput?: (input: string) => string;
+  /**  on change function for text field */
+  onChange?: (input: string) => void;
   styles?: DialpadStyles;
 }
 
@@ -176,16 +178,18 @@ const DialpadContainer = (props: {
   placeholderText: string;
   // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-  // Callback for dialpad button behavior
-  onClickDialpadButton?: () => void;
-  // customize dialpad input formatting
+  /**  Callback for dialpad button behavior */
+  onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
+  /**  customize dialpad input formatting */
   onDisplayDialpadInput?: (input: string) => string;
+  /**  on change function for text field */
+  onChange?: (input: string) => void;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput } = props;
+  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange } = props;
 
   const onClickDialpad = (input: string, index: number): void => {
     setTextValue(textValue + input);
@@ -193,7 +197,10 @@ const DialpadContainer = (props: {
       onSendDtmfTone(DtmfTones[index]);
     }
     if (onClickDialpadButton) {
-      onClickDialpadButton();
+      onClickDialpadButton(input, index);
+    }
+    if (onChange) {
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(textValue + input) : formatPhoneNumber(textValue + input));
     }
   };
 
@@ -210,7 +217,13 @@ const DialpadContainer = (props: {
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
         value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
-        onChange={setText}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onChange={(e: any) => {
+          setText(e);
+          if (onChange) {
+            onChange(onDisplayDialpadInput ? onDisplayDialpadInput(e.target.value) : formatPhoneNumber(e.target.value));
+          }
+        }}
         placeholder={props.placeholderText}
         data-test-id="dialpad-input"
       />

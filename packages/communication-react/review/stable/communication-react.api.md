@@ -451,7 +451,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1318,6 +1318,9 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
+export type DeclarativeCallAgent = CallAgent;
+
+// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
@@ -1971,6 +1974,7 @@ export interface ParticipantItemProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStyles;
     userId?: string;
@@ -2018,6 +2022,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
+    showParticipantOverflowTooltip?: boolean;
 };
 
 // @public
@@ -2069,6 +2074,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     participants: ParticipantListParticipant[];
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -2211,6 +2217,7 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

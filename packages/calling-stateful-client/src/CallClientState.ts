@@ -498,7 +498,9 @@ export type CallErrorTarget =
   | 'DeviceManager.off'
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
-  | 'DeviceManager.selectSpeaker';
+  | 'DeviceManager.selectSpeaker'
+  | 'IncomingCall.accept'
+  | 'IncomingCall.reject';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

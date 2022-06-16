@@ -59,9 +59,6 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 
 export const isLandscape = (): boolean => window.innerWidth < window.innerHeight;
 
-export const isMobileSession = (): boolean =>
-  !!window.navigator.userAgent.match(/(iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone)/g);
-
 export const navigateToHomePage = (): void => {
   window.location.href = window.location.href.split('?')[0];
 };
