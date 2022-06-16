@@ -119,6 +119,7 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
         text={text ?? ''}
         initialsTextColor="white"
         aria-label={noVideoAvailableAriaLabel ?? ''}
+        showOverflowTooltip={false}
       />
     </Stack>
   );
