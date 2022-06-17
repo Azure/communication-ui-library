@@ -2,16 +2,18 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Spinner } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   invertedVideoInPipStyle,
   mediaContainer,
   container,
   loadingSpinnerContainer,
-  loadSpinnerStyles
+  loadSpinnerStyles,
+  mediaParentContainer
 } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
+import { PanZoomWrapperComponent } from './PanZoomManager/PanZoomWrapperComponent';
 
 /**
  * Whether the stream is loading or not.
@@ -31,6 +33,11 @@ export interface StreamMediaProps {
   isMirrored?: boolean;
   /** Whether the stream is loading data */
   loadingState?: LoadingState;
+  /**
+   * Support pan and zoom gestures with mouse, keyboard and touch
+   * @defaultValue false
+   */
+  enablePanAndZoomGestures?: boolean;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -82,15 +89,30 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
     };
   }, [videoStreamElement]);
 
+  const streamContainer = useMemo(
+    () => (
+      <div className={mediaParentContainer()}>
+        <div
+          className={mergeStyles(
+            isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
+            styles?.root
+          )}
+          ref={containerEl}
+        />
+      </div>
+    ),
+    [isMirrored, pipEnabled, styles?.root, theme]
+  );
+
   return (
-    <div className={container()}>
-      <div
-        className={mergeStyles(
-          isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
-          styles?.root
-        )}
-        ref={containerEl}
-      />
+    <div className={container(theme)}>
+      {!props.enablePanAndZoomGestures ? (
+        <PanZoomWrapperComponent ariaLabel="" className={mergeStyles({ height: '100%', width: '100%' })}>
+          {streamContainer}
+        </PanZoomWrapperComponent>
+      ) : (
+        streamContainer
+      )}
       {loadingState === 'loading' && (
         <div className={loadingSpinnerContainer()}>
           <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />

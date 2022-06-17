@@ -6,10 +6,12 @@ import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
 /**
  * @private
  */
-export const container = (): string =>
+export const container = (theme: Theme): string =>
   mergeStyles({
     position: 'relative', // ensures child element's `position: absolute` is relative to this container
-    display: 'contents'
+    borderRadius: theme.effects.roundedCorner4,
+    overflow: 'hidden',
+    height: '100%'
   });
 
 /**
@@ -55,6 +57,16 @@ export const mediaContainer = (theme: Theme): string =>
     '& video': {
       borderRadius: theme.effects.roundedCorner4
     }
+  });
+
+/**
+ * @private
+ */
+export const mediaParentContainer = (): string =>
+  mergeStyles({
+    height: '100%',
+    width: '100%',
+    display: 'contents'
   });
 
 /**
