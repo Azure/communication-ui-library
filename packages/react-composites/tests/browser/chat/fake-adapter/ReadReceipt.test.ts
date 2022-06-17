@@ -72,9 +72,13 @@ async function getHiddenCompositeHandleOfParticipant(
   page: Page,
   participantIdentifier: CommunicationIdentifier
 ): Promise<ElementHandle<SVGElement | HTMLElement>> {
-  return await page.waitForSelector(`[id="hidden-composite-${toFlatCommunicationIdentifier(participantIdentifier)}"]`, {
-    state: 'attached'
-  });
+  return await waitForSelector(
+    page,
+    `[id="hidden-composite-${toFlatCommunicationIdentifier(participantIdentifier)}"]`,
+    {
+      state: 'attached'
+    }
+  );
 }
 
 async function setParticipantAbleToSeeMessages(
