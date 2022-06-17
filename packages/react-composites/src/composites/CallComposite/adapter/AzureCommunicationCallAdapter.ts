@@ -25,6 +25,7 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
+  StartCallOptions,
   PermissionConstraints
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -46,7 +47,14 @@ import {
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  isCommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  UnknownIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -392,8 +400,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  //TODO: a better way to expose option parameter
-  public startCall(participants: string[]): Call | undefined {
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -401,11 +408,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant) as CommunicationUserIdentifier;
-      return backendId;
+      const backendId = fromFlatCommunicationIdentifier(participant);
+      if (isPhoneNumberIdentifier(backendId)) {
+        if (options?.alternateCallerId === undefined) {
+          throw new Error('unable to start call, PSTN user present with no alternativeCallerID.');
+        }
+        return backendId as PhoneNumberIdentifier;
+      } else if (isCommunicationUserIdentifier(backendId)) {
+        return backendId as CommunicationUserIdentifier;
+      }
+      return backendId as UnknownIdentifier;
     });
 
-    const call = this.handlers.onStartCall(idsToAdd);
+    const call = this.handlers.onStartCall(idsToAdd, options);
     if (!call) {
       throw new Error('Unable to start call.');
     }
