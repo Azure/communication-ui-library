@@ -49,6 +49,14 @@ jobs:
         with:
           node-version: '14.x'
 
+      # Make sure that Rush is installed in run
+      - name: Add rush to run
+        run: npm i -g @microsoft/rush
+
+      # Ensure that node modules are installed
+      - name: Update rush to use node_modules
+        run: rush update
+
       # get version number from communication react folder
       - name: Retrieve new version from package.json
         id: version
@@ -79,7 +87,7 @@ jobs:
 
       # we will want to run rush changelog with type none make sure that all packlets have change files
       - name: Add beachball changelog
-        run: node common/config/node_modules/beachball/bin/beachball.js change -m Create release branch and update SDK versions --type none
+        run: node ./common/config/node_modules/beachball/bin/beachball.js change -m Create release branch and update SDK versions --type none
 
       # Commit new dependencies
       - name: Commit changes
@@ -99,4 +107,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} pre-release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
