@@ -26,8 +26,8 @@ import {
   VideoDeviceInfo,
   RemoteParticipant,
   PermissionConstraints,
-  PropertyChangedEvent
-  StartCallOptions,
+  PropertyChangedEvent,
+  StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
