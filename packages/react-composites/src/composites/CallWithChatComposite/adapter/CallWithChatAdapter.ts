@@ -23,7 +23,13 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  PermissionConstraints,
+  PropertyChangedEvent,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -34,11 +40,6 @@ import { FileMetadata } from '@internal/react-components';
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-import {
-  SelectedCameraChangedEventListener,
-  SelectedMicrophoneChangedEventListener,
-  SelectedSpeakerChangedEventListener
-} from '../../CallComposite/adapter/CallAdapter';
 
 /**
  * Functionality for managing the current call with chat.
@@ -322,9 +323,9 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
-  on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
@@ -335,9 +336,9 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
-  off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
 
   // Chat subscriptions

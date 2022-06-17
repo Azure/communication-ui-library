@@ -9,7 +9,8 @@ import type {
   PermissionConstraints,
   RemoteParticipant,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -158,26 +159,6 @@ export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
 
-/**
- * Callback for {@link CallAdapterSubscribers} 'selectedCameraChanged' event.
- *
- * @public
- */
-export type SelectedCameraChangedEventListener = (event: { selectedCamera: VideoDeviceInfo }) => void;
-
-/**
- * Callback for {@link CallAdapterSubscribers} 'selectedSpeakerChanged' event.
- *
- * @public
- */
-export type SelectedSpeakerChangedEventListener = (event: { selectedSpeaker: AudioDeviceInfo }) => void;
-
-/**
- * Callback for {@link CallAdapterSubscribers} 'selectedMicrophoneChanged' event.
- *
- * @public
- */
-export type SelectedMicrophoneChangedEventListener = (event: { selectedMicrophone: AudioDeviceInfo }) => void;
 /**
  * Functionality for managing the current call.
  *
@@ -437,19 +418,19 @@ export interface CallAdapterSubscribers {
    *
    * This event fires whenever the user changes the selected camera.
    */
-  on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
+  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for 'selectedMicrophoneChanged' event.
    *
    * This event fires whenever the user selects a new microphone device.
    */
-  on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for 'selectedSpeakerChanged' event.
    *
    * This event fires whenever the user selects a new speaker device.
    */
-  on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for 'error' event.
    */
@@ -494,15 +475,15 @@ export interface CallAdapterSubscribers {
   /**
    * Unsubscribe function for 'selectedCameraChanged' event.
    */
-  off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
+  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'selectedMicrophoneChanged' event.
    */
-  off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'selectedSpeakerChanged' event.
    */
-  off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'error' event.
    */

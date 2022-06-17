@@ -10,6 +10,7 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
+  PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -70,11 +71,6 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
-import {
-  SelectedCameraChangedEventListener,
-  SelectedMicrophoneChangedEventListener,
-  SelectedSpeakerChangedEventListener
-} from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -390,9 +386,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
-  on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -466,9 +462,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;

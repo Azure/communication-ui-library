@@ -25,7 +25,8 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  PermissionConstraints
+  PermissionConstraints,
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -41,10 +42,7 @@ import {
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  DiagnosticChangedEventListner,
-  SelectedCameraChangedEventListener,
-  SelectedMicrophoneChangedEventListener,
-  SelectedSpeakerChangedEventListener
+  DiagnosticChangedEventListner
 } from './CallAdapter';
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -194,7 +192,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     this.onClientStateChange = onStateChange;
 
+    this.subscribeDeviceManagerEvents();
+
     this.callClient.onStateChange(onStateChange);
+  }
+
+  // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
+  private subscribeDeviceManagerEvents(): void {
+    this.deviceManager.on('selectedMicrophoneChanged', () => {
+      this.emitter.emit('selectedMicrophoneChanged');
+    });
+    this.deviceManager.on('selectedSpeakerChanged', () => {
+      this.emitter.emit('selectedSpeakerChanged');
+    });
   }
 
   private bindPublicMethods(): void {
@@ -337,14 +347,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onSelectMicrophone(device);
-      this.selectedMicrophoneChanged();
     });
   }
 
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onSelectSpeaker(device);
-      this.selectedSpeakerChanged();
     });
   }
 
@@ -474,9 +482,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-  on(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  on(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  on(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -541,18 +549,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   }
 
+  // TODO: Remove this function when calling adds this event to the deviceManager
   private selectedCameraChanged(): void {
-    const callState = this.callClient.getState();
-    const deviceManager = callState.deviceManager;
-    this.emitter.emit('selectedCameraChanged', { selectedCamera: deviceManager.selectedCamera });
-  }
-
-  private selectedMicrophoneChanged(): void {
-    this.emitter.emit('selectedMicrophoneChanged', { selectedMicrophone: this.deviceManager.selectedMicrophone });
-  }
-
-  private selectedSpeakerChanged(): void {
-    this.emitter.emit('selectedSpeakerChanged', { selectedSpeaker: this.deviceManager.selectedSpeaker });
+    this.emitter.emit('selectedCameraChanged');
   }
 
   private callIdChanged(): void {
@@ -577,9 +576,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-  off(event: 'selectedCameraChanged', listener: SelectedCameraChangedEventListener): void;
-  off(event: 'selectedMicrophoneChanged', listener: SelectedMicrophoneChangedEventListener): void;
-  off(event: 'selectedSpeakerChanged', listener: SelectedSpeakerChangedEventListener): void;
+  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
