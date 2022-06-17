@@ -12,6 +12,7 @@ import {
   PermissionConstraints,
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
+  StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -208,8 +209,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.leaveCall();
   }
   /** Start a new Call. */
-  public startCall(participants: string[]): Call | undefined {
-    return this.callAdapter.startCall(participants);
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
+    return this.callAdapter.startCall(participants, options);
   }
   /**
    * Subscribe to state change events.

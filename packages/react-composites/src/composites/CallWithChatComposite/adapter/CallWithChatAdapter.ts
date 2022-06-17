@@ -28,6 +28,7 @@ import {
   Call,
   PermissionConstraints,
   PropertyChangedEvent,
+  StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -110,7 +111,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  startCall(participants: string[]): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *

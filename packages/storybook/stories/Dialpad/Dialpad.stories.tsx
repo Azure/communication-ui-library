@@ -31,8 +31,10 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Example Dialpad with custom content</Heading>
       <Description>
-        On Dialpad button click, the corresponding dtmf tone will be logged on the console. This example showcases how
-        to customize the format for dialpad input.
+        On Dialpad button click, the corresponding dtmf tone, the index and value of the button clicked will be shown on
+        the screen. On Keyboard click, the corresponding keyboard input will be shown on the screen as well. This
+        example showcases how to customize the format for dialpad input, and how to add custom functions to textfield to
+        listen to keyboard changes and how to add extra functionality to dialpad buttons.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />

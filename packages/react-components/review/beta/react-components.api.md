@@ -442,11 +442,9 @@ export interface DialpadButtonProps {
 
 // @beta
 export interface DialpadProps {
-    // (undocumented)
-    onClickDialpadButton?: () => void;
-    // (undocumented)
+    onChange?: (input: string) => void;
+    onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onDisplayDialpadInput?: (input: string) => string;
-    // (undocumented)
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
     strings?: DialpadStrings;
@@ -989,6 +987,7 @@ export interface ParticipantItemProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStyles;
     userId?: string;
@@ -1036,6 +1035,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
+    showParticipantOverflowTooltip?: boolean;
 };
 
 // @public
@@ -1075,6 +1075,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     participants: ParticipantListParticipant[];
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }

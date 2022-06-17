@@ -15,15 +15,17 @@ import {
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
   isLandscape,
-  isMobileSession,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
+import { useIsMobile } from './utils/useIsMobile';
+import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
+import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
 setLogLevel('warning');
@@ -62,13 +64,23 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
+  const isMobileSession = useIsMobile();
+  const isLandscapeSession = isLandscape();
+  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
+
+  useEffect(() => {
+    if (isMobileSession && isLandscapeSession) {
+      console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
+    }
+  }, [isMobileSession, isLandscapeSession]);
+
+  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
+    return <PageOpenInAnotherTab />;
+  }
+
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
     return <UnsupportedBrowserPage />;
-  }
-
-  if (isMobileSession() && isLandscape()) {
-    console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
   switch (page) {

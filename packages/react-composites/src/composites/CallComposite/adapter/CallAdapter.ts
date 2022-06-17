@@ -8,6 +8,7 @@ import type {
   Call,
   PermissionConstraints,
   RemoteParticipant,
+  StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent
@@ -216,7 +217,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[]): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *

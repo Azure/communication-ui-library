@@ -40,6 +40,7 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
           size={PersonaSize.size40}
           hidePersonaDetails={true}
           aria-label={callerName}
+          showOverflowTooltip={false}
         />
       </Stack>
 
@@ -130,6 +131,7 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
               size={PersonaSize.size40}
               hidePersonaDetails={true}
               aria-label={callerName}
+              showOverflowTooltip={false}
             />
           </Stack>
           <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start' }}>
