@@ -9,6 +9,7 @@ export const CustomAvatarExample: () => JSX.Element = () => {
         size={PersonaSize.size32}
         text={options.text}
         imageUrl="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
+        showOverflowTooltip={false}
       />
     );
   };

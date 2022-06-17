@@ -62,7 +62,14 @@ const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
     );
   }
 
-  return <Persona text={options.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
+  return (
+    <Persona
+      text={options.displayName}
+      hidePersonaDetails={true}
+      size={PersonaSize.size32}
+      showOverflowTooltip={false}
+    />
+  );
 };
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';

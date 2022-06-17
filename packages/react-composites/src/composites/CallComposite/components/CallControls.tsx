@@ -28,6 +28,7 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
+  isMobile?: boolean;
 };
 
 /**
@@ -70,6 +71,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
               displayType={options?.displayType}
               increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              isMobile={props.isMobile}
             />
           )}
           {isEnabled(options?.devicesButton) && (

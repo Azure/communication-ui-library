@@ -54,4 +54,8 @@ export type FakeChatAdapterArgs = {
    * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
+  /*
+   * Determines if chat composite will be using a custom data model
+   */
+  customDataModelEnabled?: boolean;
 };

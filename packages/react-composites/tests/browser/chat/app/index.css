@@ -1,0 +1,13 @@
+/* Copyright (c) Microsoft Corporation. */
+/* Licensed under the MIT license. */
+
+body,
+html,
+.Root {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-provider {
+  height: 0;
+}
