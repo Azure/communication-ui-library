@@ -226,6 +226,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
       {toShow.map((error) => (
         <MessageBar
           {...props}
+          styles={{
+            root: {
+              paddingTop: '0.3rem'
+            }
+          }}
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
