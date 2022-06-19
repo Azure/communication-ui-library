@@ -23,7 +23,8 @@ import {
   inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
-  inputButtonTooltipStyle
+  inputButtonTooltipStyle,
+  iconWrapperStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -192,8 +193,9 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
-        onRenderIcon={() => onRenderIcon(isHover)}
       />
+      {/* VoiceOver fix: Avoid rerender of element with onMouseEnter and onMouseLeave handlers by keeping rerendering icon separate */}
+      <div className={iconWrapperStyle}>{onRenderIcon(isHover)}</div>
     </TooltipHost>
   );
 };
