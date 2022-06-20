@@ -19,7 +19,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileUploadCards } from './FileUploadCards';
+import { _FileUploadCardsStrings, _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
@@ -183,6 +183,12 @@ export interface SendBoxProps {
    * @beta
    */
   onCancelFileUpload?: (fileId: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional arialabel strings for file upload cards
+   * @beta
+   */
+  fileUploadStrings?: _FileUploadCardsStrings;
 }
 
 /**
@@ -203,7 +209,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderIcon,
     onRenderSystemMessage,
     styles,
-    autoFocus
+    autoFocus,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadStrings
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -318,10 +326,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderFileUploads()
     ) : (
       <Stack className={fileUploadCardsStyles}>
-        <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
+        <_FileUploadCards
+          activeFileUploads={props.activeFileUploads}
+          onCancelFileUpload={props.onCancelFileUpload}
+          strings={fileUploadStrings}
+        />
       </Stack>
     );
-  }, [props]);
+  }, [props, fileUploadStrings]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>

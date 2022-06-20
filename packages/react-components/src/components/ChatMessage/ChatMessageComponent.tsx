@@ -8,7 +8,7 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+import { _FileDownloadCardsStrings, FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -65,6 +65,10 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /**
+   * Optional arialabel strings for file download cards
+   */
+  fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 /**
@@ -119,6 +123,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onRenderAvatar={props.onRenderAvatar}
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
+        fileDownloadStrings={props.fileDownloadStrings}
       />
     );
   }

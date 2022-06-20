@@ -16,6 +16,8 @@ import {
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { useMemo } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -46,6 +48,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { useLocale } from '../localization';
 
 /**
  * @private
@@ -127,6 +131,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
   }, [adapter]);
+  /* @conditional-compile-remove(file-sharing) */
+  const locale = useLocale();
+  /* @conditional-compile-remove(file-sharing) */
+  const fileDownloadAriaLabels = locale.strings.chat.fileSharing.fileDownloadCards;
+  /* @conditional-compile-remove(file-sharing) */
+  const fileUploadAriaLabels = locale.strings.chat.fileSharing.fileUploadCards;
+  /* @conditional-compile-remove(file-sharing) */
+  const fileDownloadStrings = useMemo(() => fileDownloadAriaLabels, [fileDownloadAriaLabels]);
+  /* @conditional-compile-remove(file-sharing) */
+  const fileUploadStrings = useMemo(() => fileUploadAriaLabels, [fileUploadAriaLabels]);
 
   const messageThreadProps = usePropsFor(MessageThread);
   const sendBoxProps = usePropsFor(SendBox);
@@ -177,9 +191,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
+        strings={fileDownloadStrings}
       />
     ),
-    [fileSharing?.downloadHandler]
+    [fileDownloadStrings, fileSharing?.downloadHandler]
   );
 
   const AttachFileButton = useCallback(() => {
@@ -216,6 +231,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(file-sharing) */
+            fileDownloadStrings={fileDownloadStrings}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -242,6 +259,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   activeFileUploads={useSelector(fileUploadsSelector).files}
                   /* @conditional-compile-remove(file-sharing) */
                   onCancelFileUpload={adapter.cancelFileUpload}
+                  /* @conditional-compile-remove(file-sharing) */
+                  fileUploadStrings={fileUploadStrings}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}

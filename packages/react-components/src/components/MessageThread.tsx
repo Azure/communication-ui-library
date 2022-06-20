@@ -60,7 +60,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { _FileDownloadCardsStrings, FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -624,6 +624,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional arialabel strings for file download cards
+   * @beta
+   */
+  fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 /**
@@ -717,7 +723,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(file-sharing) */
+    fileDownloadStrings
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -982,6 +990,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           <ChatMessageComponent
             {...messageProps}
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(file-sharing) */
+            fileDownloadStrings={fileDownloadStrings}
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -1005,6 +1015,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onRenderAvatar,
       onActionButtonClickMemo,
       onRenderFileDownloads,
+      /* @conditional-compile-remove(file-sharing) */
+      fileDownloadStrings,
       props.userId,
       showMessageStatus,
       /* @conditional-compile-remove(date-time-customization) */

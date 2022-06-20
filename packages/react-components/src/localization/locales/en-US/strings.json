@@ -157,14 +157,12 @@
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed Participant"
   },
-  "fileUploadCards": {
-    "removeFile": "Remove file"
-  },
-  "fileCard": {
+  "fileUploadStrings": {
+    "removeFile": "Remove file",
     "uploading": "uploading",
     "uploadCompleted": "upload completed"
   },
-  "fileDownloadCards": {
+  "fileDownloadStrings": {
     "downloadFile": "Download file"
   },
   "dialpad": {

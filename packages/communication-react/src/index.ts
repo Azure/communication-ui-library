@@ -148,9 +148,6 @@ export type {
   EndCallButtonStrings,
   ErrorBarProps,
   ErrorBarStrings,
-  FileCardStrings,
-  FileDownloadCardsStrings,
-  FileUploadCardsStrings,
   ErrorType,
   GridLayoutProps,
   GridLayoutStyles,
@@ -231,7 +228,9 @@ export type {
   SendBoxErrorBarError,
   FileDownloadHandler,
   FileDownloadError,
-  FileMetadata
+  FileMetadata,
+  _FileDownloadCardsStrings,
+  _FileUploadCardsStrings
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';

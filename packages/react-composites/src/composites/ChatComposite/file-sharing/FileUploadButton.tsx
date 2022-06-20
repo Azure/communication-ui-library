@@ -3,6 +3,7 @@
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
+/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../../localization';
 
 /**
@@ -57,7 +58,14 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       background: 'transparent'
     }
   });
-  const uploadFileButtonString = useLocale().strings.chat.uploadFileButton;
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadFileButtonString = useLocale().strings.chat.fileSharing.uploadFileButton;
+  const uploadFileButtonStringTrampoline = (): string => {
+    // @conditional-compile-remove(file-sharing)
+    return uploadFileButtonString;
+    // Return _some_ available icon, as the real icon is beta-only.
+    return '';
+  };
   return (
     <>
       <Stack
@@ -68,7 +76,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonString}>
+        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonStringTrampoline()}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>

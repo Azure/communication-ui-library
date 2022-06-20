@@ -20,7 +20,6 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
-import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -35,15 +34,6 @@ import { Theme } from '@fluentui/react';
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
-}
-
-// @beta
-export interface ActiveFileUpload {
-    error?: SendBoxErrorBarError;
-    filename: string;
-    id: string;
-    progress: number;
-    uploadComplete?: boolean;
 }
 
 // @public
@@ -116,8 +106,6 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -238,8 +226,6 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 // @public
 export interface ComponentLocale {
-    // @beta
-    onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
 
@@ -247,11 +233,8 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
-    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    fileDownloadStrings: _FileDownloadCardsStrings;
-    fileUploadStrings: _FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -354,8 +337,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    CancelFileUpload: JSX.Element;
-    DownloadFile: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -384,8 +365,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
-    ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
@@ -429,49 +408,6 @@ export interface DevicesButtonStrings {
 // @public
 export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
-}
-
-// @beta
-export const Dialpad: (props: DialpadProps) => JSX.Element;
-
-// @beta
-export interface DialpadButtonProps {
-    // (undocumented)
-    primaryContent: string;
-    // (undocumented)
-    secondaryContent?: string;
-}
-
-// @beta
-export interface DialpadProps {
-    onChange?: (input: string) => void;
-    onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
-    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-    // (undocumented)
-    strings?: DialpadStrings;
-    // (undocumented)
-    styles?: DialpadStyles;
-}
-
-// @beta
-export interface DialpadStrings {
-    // (undocumented)
-    placeholderText: string;
-}
-
-// @beta
-export interface DialpadStyles {
-    // (undocumented)
-    button?: IButtonStyles;
-    // (undocumented)
-    primaryContent?: IStyle;
-    // (undocumented)
-    root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
-    // (undocumented)
-    textField?: Partial<ITextFieldStyles>;
 }
 
 // @internal
@@ -524,9 +460,6 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     drawerContentRoot?: BaseCustomStyles;
     lightDismissRoot?: BaseCustomStyles;
 }
-
-// @beta
-export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -676,23 +609,6 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
-}
-
-// @beta
-export const HoldButton: (props: HoldButtonProps) => JSX.Element;
-
-// @beta (undocumented)
-export interface HoldButtonProps extends ControlBarButtonProps {
-    onToggleHold: () => Promise<void>;
-    strings?: HoldButtonStrings;
-}
-
-// @beta
-export interface HoldButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    toolTipOffContent: string;
-    tooltipOnContent: string;
 }
 
 // @public
@@ -873,15 +789,11 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
-    onDisplayDateTimeString?: (messageDate: Date) => string;
-    fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 // @public
@@ -1181,24 +1093,10 @@ export interface ScreenShareButtonStrings {
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
 
-// @beta
-export interface SendBoxErrorBarError {
-    message: string;
-    timestamp: number;
-}
-
 // @public
 export interface SendBoxProps {
-    // @beta
-    activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    // @beta
-    fileUploadStrings?: _FileUploadCardsStrings;
-    // @beta
-    onCancelFileUpload?: (fileId: string) => void;
-    // @beta
-    onRenderFileUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -1211,7 +1109,6 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
     placeholderText: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
@@ -1286,9 +1183,7 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
-    attachedFilesMetadata?: FileMetadata[];
-}) => Promise<void>;
+export type UpdateMessageCallback = (messageId: string, content: string) => Promise<void>;
 
 // @internal
 export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => number | undefined;

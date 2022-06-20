@@ -41,7 +41,17 @@
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadFileButton": "Upload file"
+    "fileSharing": {
+      "uploadFileButton": "Upload file",
+      "fileUploadCards": {
+        "removeFile": "Remove file",
+        "uploading": "uploading",
+        "uploadCompleted": "upload completed"
+      },
+      "fileDownloadCards": {
+        "downloadFile": "Download file"
+      }
+    }
   },
   "callWithChat": {
     "peopleButtonLabel": "People",

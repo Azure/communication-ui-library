@@ -1008,7 +1008,17 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    uploadFileButton: string;
+    fileSharing: {
+        uploadFileButton: string;
+        fileUploadCards: {
+            removeFile: string;
+            uploading: string;
+            uploadCompleted: string;
+        };
+        fileDownloadCards: {
+            downloadFile: string;
+        };
+    };
 }
 
 // @public
@@ -1198,9 +1208,8 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    fileCard: FileCardStrings;
-    fileDownloadCards: FileDownloadCardsStrings;
-    fileUploadCards: FileUploadCardsStrings;
+    fileDownloadStrings: _FileDownloadCardsStrings;
+    fileUploadStrings: _FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1745,15 +1754,9 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
-// @beta
-export interface FileCardStrings {
-    uploadCompleted?: string;
-    uploading?: string;
-}
-
-// @beta
-export interface FileDownloadCardsStrings {
-    downloadFile?: string;
+// @internal
+export interface _FileDownloadCardsStrings {
+    downloadFile: string;
 }
 
 // @beta
@@ -1797,9 +1800,11 @@ export interface FileUploadAdapter {
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
 
-// @beta
-export interface FileUploadCardsStrings {
-    removeFile?: string;
+// @internal
+export interface _FileUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @beta
@@ -2108,6 +2113,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 // @public
@@ -2471,6 +2477,8 @@ export interface SendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    fileUploadStrings?: _FileUploadCardsStrings;
     // @beta
     onCancelFileUpload?: (fileId: string) => void;
     // @beta

@@ -15,11 +15,13 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { useLocale } from '../localization';
 /* @conditional-compile-remove(file-sharing) */
 import { Announcer } from './Announcer';
 /* @conditional-compile-remove(file-sharing) */
 import { useEffect, useState } from 'react';
+import { _FileUploadCardsStrings } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { useLocale } from '../localization';
 
 /**
  * @internal
@@ -47,18 +49,10 @@ export interface _FileCardProps {
    * Function that runs when actionIcon is clicked
    */
   actionHandler?: () => void;
-}
-
-/**
- * Strings of FileCard that can be overridden.
- *
- * @beta
- */
-export interface FileCardStrings {
-  /** Aria label to notify user that the file upload started. */
-  uploading?: string;
-  /** Aria label to notify user that the file upload completed. */
-  uploadCompleted?: string;
+  /**
+   * Optional arialabel strings for file cards
+   */
+  strings?: _FileUploadCardsStrings;
 }
 
 /**
@@ -69,22 +63,28 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.fileCard;
-  /* @conditional-compile-remove(file-sharing) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+  /* @conditional-compile-remove(file-sharing) */
+  const localeStrings = useLocale().strings.fileUploadStrings;
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadStartedString = props.strings?.uploading ? props.strings.uploading : localeStrings.uploading;
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadCompletedString = props.strings?.uploadCompleted
+    ? props.strings?.uploadCompleted
+    : localeStrings.uploadCompleted;
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 
   /* @conditional-compile-remove(file-sharing) */
   useEffect(() => {
     if (showProgressIndicator) {
-      setAnnouncerString(`${localeStrings.uploading} ${fileName}`);
+      setAnnouncerString(`${uploadStartedString} ${fileName}`);
     } else if (progress === 1) {
-      setAnnouncerString(`${fileName} ${localeStrings.uploadCompleted}`);
+      setAnnouncerString(`${fileName} ${uploadCompletedString}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, localeStrings.uploading, localeStrings.uploadCompleted, fileName]);
+  }, [progress, showProgressIndicator, props.strings, fileName]);
 
   const progressBarThicknessPx = 4;
 

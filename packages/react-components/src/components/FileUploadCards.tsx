@@ -8,17 +8,20 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
-// @conditional-compile-remove(file-sharing)
 import { useLocale } from '../localization';
 
 /**
  * Strings of _FileUploadCards that can be overridden.
  *
- * @beta
+ * @internal
  */
-export interface FileUploadCardsStrings {
+export interface _FileUploadCardsStrings {
   /** Aria label to notify user when focus is on cancel file upload button. */
-  removeFile?: string;
+  removeFile: string;
+  /** Aria label to notify user file uploading starts. */
+  uploading: string;
+  /** Aria label to notify user file is uploaded. */
+  uploadCompleted: string;
 }
 
 /**
@@ -35,6 +38,10 @@ export interface FileUploadCardsProps {
    * cancel icon.
    */
   onCancelFileUpload?: (fileId: string) => void;
+  /**
+   * Optional arialabel strings for file upload cards
+   */
+  strings?: _FileUploadCardsStrings;
 }
 
 const actionIconStyle = { height: '1rem' };
@@ -44,9 +51,12 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
+  const localeStrings = useLocale().strings.fileUploadStrings;
+  const removeFileButtonString = props.strings?.removeFile ? props.strings?.removeFile : localeStrings.removeFile;
   if (!files || files.length === 0) {
     return <></>;
   }
+
   return (
     <_FileCardGroup>
       {files &&
@@ -58,10 +68,15 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               progress={file.progress}
               key={file.id}
               fileExtension={extension(file.filename)}
-              actionIcon={<UploadIconTrampoline />}
+              actionIcon={
+                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString}>
+                  <UploadIconTrampoline />
+                </IconButton>
+              }
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}
+              strings={props.strings}
             />
           ))}
     </_FileCardGroup>
@@ -73,17 +88,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
  */
 const UploadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  const localeStrings = useLocale().strings.fileUploadCards;
-  // @conditional-compile-remove(file-sharing)
-  return (
-    <IconButton className={iconButtonClassName} ariaLabel={localeStrings.removeFile}>
-      <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-    </IconButton>
-  );
+  return <Icon iconName="CancelFileUpload" style={actionIconStyle} />;
   // Return cancel button without aria label
-  return (
-    <IconButton className={iconButtonClassName}>
-      <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-    </IconButton>
-  );
+  return <Icon iconName="CancelFileUpload" style={actionIconStyle} />;
 };
