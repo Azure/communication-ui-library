@@ -273,6 +273,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <ChatScreenPeoplePane
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              isMobile={formFactor === 'mobile'}
             />
           )
         }

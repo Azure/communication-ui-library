@@ -76,6 +76,7 @@ export const ParticipantListWithHeading = (props: {
             />
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          showParticipantOverflowTooltip={!props.isMobile}
         />
       </FocusZone>
     </Stack>

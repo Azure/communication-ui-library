@@ -198,7 +198,7 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
-    startCall(participants: string[]): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -608,7 +608,7 @@ export interface CallWithChatAdapterManagement {
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    startCall(participants: string[]): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -2261,6 +2261,7 @@ export interface ParticipantItemProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStyles;
     userId?: string;
@@ -2308,6 +2309,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
+    showParticipantOverflowTooltip?: boolean;
 };
 
 // @public
@@ -2359,6 +2361,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     participants: ParticipantListParticipant[];
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
