@@ -227,11 +227,17 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
         <MessageBar
           {...props}
           styles={{
-            text: {
-              paddingTop: '0.3625rem'
+            innerText: {
+              paddingTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.15rem'
             },
             icon: {
-              paddingTop: '0.3rem'
+              paddingTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.2rem'
+            },
+            dismissal: {
+              marginTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.15rem'
+            },
+            root: {
+              lineHeight: 'inherit'
             }
           }}
           key={error.type}
