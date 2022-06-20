@@ -194,7 +194,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
           setIsHover(false);
         }}
       />
-      {/* VoiceOver fix: Avoid rerender of DefaultButton above that handles click and hovering by keeping rerendering icon separate */}
+      {/* VoiceOver fix: Avoid rerender of DefaultButton above that handles clicking and hovering by keeping rerendering icon separate */}
       <div className={iconWrapperStyle}>{onRenderIcon(isHover)}</div>
     </TooltipHost>
   );
