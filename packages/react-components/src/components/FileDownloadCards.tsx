@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
