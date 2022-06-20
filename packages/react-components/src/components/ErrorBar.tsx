@@ -232,9 +232,6 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
             },
             icon: {
               paddingTop: '0.3rem'
-            },
-            dismissal: {
-              marginTop: '0.4rem'
             }
           }}
           key={error.type}
