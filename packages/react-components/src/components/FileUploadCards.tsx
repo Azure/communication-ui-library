@@ -8,6 +8,7 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
+/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 
 /**
@@ -51,8 +52,14 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
+  /* @conditional-compile-remove(file-sharing) */
   const localeStrings = useLocale().strings.fileUploadStrings;
-  const removeFileButtonString = props.strings?.removeFile ? props.strings?.removeFile : localeStrings.removeFile;
+  const removeFileButtonString = (): string | undefined => {
+    /* @conditional-compile-remove(file-sharing) */
+    return props.strings?.removeFile ? props.strings?.removeFile : localeStrings.removeFile;
+    // Return cancel button without aria label
+    return props.strings?.removeFile ? props.strings?.removeFile : '';
+  };
   if (!files || files.length === 0) {
     return <></>;
   }
@@ -69,7 +76,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               key={file.id}
               fileExtension={extension(file.filename)}
               actionIcon={
-                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString}>
+                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
                   <UploadIconTrampoline />
                 </IconButton>
               }

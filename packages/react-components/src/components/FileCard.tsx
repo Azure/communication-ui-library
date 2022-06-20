@@ -84,7 +84,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, props.strings, fileName]);
+  }, [progress, showProgressIndicator, fileName, uploadStartedString, uploadCompletedString]);
 
   const progressBarThicknessPx = 4;
 

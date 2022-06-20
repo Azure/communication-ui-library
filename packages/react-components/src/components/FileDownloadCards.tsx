@@ -120,10 +120,14 @@ const actionIconStyle = { height: '1rem' };
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
+  /* @conditional-compile-remove(file-sharing) */
   const localeStrings = useLocale().strings.fileDownloadStrings;
-  const downloadFileButtonString = props.strings?.downloadFile
-    ? props.strings?.downloadFile
-    : localeStrings.downloadFile;
+  const downloadFileButtonString = (): string | undefined => {
+    /* @conditional-compile-remove(file-sharing) */
+    return props.strings?.downloadFile ? props.strings?.downloadFile : localeStrings.downloadFile;
+    // Return download button without aria label
+    return props.strings?.downloadFile ? props.strings?.downloadFile : '';
+  };
 
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
@@ -164,7 +168,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 showSpinner ? (
                   <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                 ) : (
-                  <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString}>
+                  <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                     <DownloadIconTrampoline />
                   </IconButton>
                 )
