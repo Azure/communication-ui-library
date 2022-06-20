@@ -80,7 +80,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                   >
                     <button
                       aria-label="Send message"
-                      className="ms-Button ms-Button--icon stub-classname"
+                      className="ms-Button ms-Button--default stub-classname"
                       data-is-focusable={true}
                       id="sendIconWrapper"
                       onClick={[Function]}
