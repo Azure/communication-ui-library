@@ -9,7 +9,11 @@ import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, tes
 test.describe('Chat Composite with custom data model', () => {
   test('custom onRenderTypingIndicator and custom onRenderMessage', async ({ serverUrl, page }) => {
     await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, customDataModelEnabled: true })
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+        customDataModelEnabled: true,
+        showParticipantPane: true
+      })
     );
     const testMessageText = 'How the turn tables';
     await sendMessage(page, testMessageText);
