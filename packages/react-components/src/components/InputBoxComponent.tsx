@@ -9,9 +9,9 @@ import {
   IStyle,
   ITextField,
   concatStyleSets,
-  IconButton,
   TooltipHost,
-  ICalloutContentStyles
+  ICalloutContentStyles,
+  DefaultButton
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -182,7 +182,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   };
   return (
     <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
-      <IconButton
+      <DefaultButton
         className={mergedButtonStyle}
         ariaLabel={ariaLabel}
         onClick={onClick}

@@ -81,8 +81,11 @@ export const textFieldStyle: IStyle = {
 export const inputButtonStyle = mergeStyles({
   color: 'grey',
   margin: 'auto',
+  padding: '0',
   width: '1.0625rem',
   height: '1.0625rem',
+  border: 'none',
+  minWidth: '0',
   '&:hover': {
     backgroundColor: 'transparent'
   }
