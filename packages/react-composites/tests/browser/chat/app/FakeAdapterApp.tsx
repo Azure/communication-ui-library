@@ -62,7 +62,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           chatClient: chatClient as IChatClient as ChatClient,
           chatThreadClient: chatThreadClient
         },
-        fakeChatAdapterArgs.chatThreadClientFunctionErrors
+        fakeChatAdapterArgs.chatThreadClientMethodErrors
       );
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
@@ -139,7 +139,7 @@ export const FakeAdapterApp = (): JSX.Element => {
 
 const initializeAdapter = async (
   adapterInfo: AdapterInfo,
-  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
 ): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
@@ -151,7 +151,7 @@ const initializeAdapter = async (
   const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
     adapterInfo.chatThreadClient.threadId
   );
-  registerChatThreadClientFunctionErrors(chatThreadClient, chatThreadClientFunctionErrors);
+  registerchatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
   return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
@@ -246,16 +246,16 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
   });
 };
 
-const registerChatThreadClientFunctionErrors = (
+const registerchatThreadClientMethodErrors = (
   chatThreadClient: ChatThreadClient,
-  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
 ): void => {
-  for (const k in chatThreadClientFunctionErrors) {
+  for (const k in chatThreadClientMethodErrors) {
     chatThreadClient[k] = () => {
       throw new RestError(
-        chatThreadClientFunctionErrors[k].message ?? '',
-        chatThreadClientFunctionErrors[k].code,
-        chatThreadClientFunctionErrors[k].statusCode
+        chatThreadClientMethodErrors[k].message ?? '',
+        chatThreadClientMethodErrors[k].code,
+        chatThreadClientMethodErrors[k].statusCode
       );
     };
   }

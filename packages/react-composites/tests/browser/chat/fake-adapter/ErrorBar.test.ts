@@ -13,7 +13,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        chatThreadClientFunctionErrors: {
+        chatThreadClientMethodErrors: {
           getProperties: { message: 'Could not get properties', statusCode: 400 },
           listMessages: { message: 'Could not list messages', statusCode: 400 },
           sendMessage: { message: 'Could not send message', statusCode: 400 }
@@ -42,7 +42,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        chatThreadClientFunctionErrors: {
+        chatThreadClientMethodErrors: {
           getProperties: { message: 'Could not get properties', statusCode: 401 },
           listMessages: { message: 'Could not list messages', statusCode: 401 },
           sendMessage: { message: 'Could not send message', statusCode: 401 }
@@ -63,7 +63,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        chatThreadClientFunctionErrors: {
+        chatThreadClientMethodErrors: {
           getProperties: { message: 'Could not get properties', code: 'REQUEST_SEND_ERROR' },
           listMessages: { message: 'Could not list messages', code: 'REQUEST_SEND_ERROR' },
           sendMessage: { message: 'Could not send message', code: 'REQUEST_SEND_ERROR' }

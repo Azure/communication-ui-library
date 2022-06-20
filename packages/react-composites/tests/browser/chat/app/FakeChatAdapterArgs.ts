@@ -59,9 +59,9 @@ export type FakeChatAdapterArgs = {
    */
   customDataModelEnabled?: boolean;
   /*
-   * Record of rest errors to throw when functions of ChatThreadClient are called
+   * Record of rest errors to throw when methods of interface ChatThreadClient are called
    */
-  chatThreadClientFunctionErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>;
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>;
 };
 
 export type ChatThreadRestError = { message: string; code?: string; statusCode?: number };
