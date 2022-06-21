@@ -1008,11 +1008,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    downloadFileButton: string;
-    fileUploadCompleted: string;
-    removeUploadFileButton: string;
-    uploadFileButton: string;
-    uploadingFile: string;
+    uploadFile: string;
 }
 
 // @public
