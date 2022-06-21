@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
@@ -122,13 +123,21 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.fileDownloadStrings;
-  const downloadFileButtonString = (): string | undefined => {
-    /* @conditional-compile-remove(file-sharing) */
-    return props.strings?.downloadFile ? props.strings?.downloadFile : localeStrings.downloadFile;
-    // Return download button without aria label
-    return props.strings?.downloadFile ? props.strings?.downloadFile : '';
-  };
+  const localeStrings = useLocale().strings.messageThread;
+
+  const downloadFileButtonString = useMemo(
+    () => () => {
+      /* @conditional-compile-remove(file-sharing) */
+      return props.strings?.downloadFile ?? localeStrings.downloadFile;
+      // Return download button without aria label
+      return props.strings?.downloadFile ?? '';
+    },
+    [
+      props.strings?.downloadFile,
+      /* @conditional-compile-remove(file-sharing) */
+      localeStrings.downloadFile
+    ]
+  );
 
   const fileDownloadHandler = useCallback(
     async (userId, file) => {

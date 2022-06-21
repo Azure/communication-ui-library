@@ -59,7 +59,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
     }
   });
   /* @conditional-compile-remove(file-sharing) */
-  const uploadFileButtonString = useLocale().strings.chat.fileSharing.uploadFileButton;
+  const uploadFileButtonString = useLocale().strings.chat.uploadFileButton;
   const uploadFileButtonStringTrampoline = (): string => {
     // @conditional-compile-remove(file-sharing)
     return uploadFileButtonString;

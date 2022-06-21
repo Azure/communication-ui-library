@@ -19,8 +19,6 @@ import {
 } from '../components';
 /* @conditional-compile-remove(dialpad) */
 import { DialpadStrings } from '../components';
-/* @conditional-compile-remove(file-sharing) */
-import { _FileDownloadCardsStrings, _FileUploadCardsStrings } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -74,12 +72,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(dialpad) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
-  /* @conditional-compile-remove(file-sharing) */
-  /** Strings for file download cards */
-  fileDownloadStrings: _FileDownloadCardsStrings;
-  /* @conditional-compile-remove(file-sharing) */
-  /** Strings for file upload cards */
-  fileUploadStrings: _FileUploadCardsStrings;
 }
 
 /**

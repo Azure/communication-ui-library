@@ -10,6 +10,7 @@ import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
+import { useMemo } from 'react';
 
 /**
  * Strings of _FileUploadCards that can be overridden.
@@ -52,14 +53,24 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
+
   /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.fileUploadStrings;
-  const removeFileButtonString = (): string | undefined => {
-    /* @conditional-compile-remove(file-sharing) */
-    return props.strings?.removeFile ? props.strings?.removeFile : localeStrings.removeFile;
-    // Return cancel button without aria label
-    return props.strings?.removeFile ? props.strings?.removeFile : '';
-  };
+  const localeStrings = useLocale().strings.sendBox;
+
+  const removeFileButtonString = useMemo(
+    () => () => {
+      /* @conditional-compile-remove(file-sharing) */
+      return props.strings?.removeFile ?? localeStrings.removeFile;
+      // Return download button without aria label
+      return props.strings?.removeFile ?? '';
+    },
+    [
+      props.strings?.removeFile,
+      /* @conditional-compile-remove(file-sharing) */
+      localeStrings.removeFile
+    ]
+  );
+
   if (!files || files.length === 0) {
     return <></>;
   }

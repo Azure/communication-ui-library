@@ -62,10 +62,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /**
-   * Optional arialabel strings for file download cards
-   */
-  fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 const generateDefaultTimestamp = (
@@ -115,8 +111,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    fileDownloadHandler,
-    fileDownloadStrings
+    fileDownloadHandler
   } = props;
 
   const defaultTimeStamp = message.createdOn
@@ -169,10 +164,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
-        strings={fileDownloadStrings}
+        strings={{ downloadFile: props.strings?.downloadFile ?? locale.strings.messageThread.downloadFile }}
       />
     ),
-    [userId, message, fileDownloadHandler, fileDownloadStrings]
+    [userId, message, fileDownloadHandler, props, locale]
   );
 
   const chatMessage = (

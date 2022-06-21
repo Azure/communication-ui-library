@@ -65,10 +65,6 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /**
-   * Optional arialabel strings for file download cards
-   */
-  fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 /**
@@ -123,7 +119,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onRenderAvatar={props.onRenderAvatar}
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
-        fileDownloadStrings={props.fileDownloadStrings}
+        strings={props.strings}
       />
     );
   }

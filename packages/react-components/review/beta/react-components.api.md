@@ -250,8 +250,6 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    fileDownloadStrings: _FileDownloadCardsStrings;
-    fileUploadStrings: _FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -881,12 +879,12 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
-    fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions: string;
+    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -1197,8 +1195,6 @@ export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
-    fileUploadStrings?: _FileUploadCardsStrings;
-    // @beta
     onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
@@ -1216,8 +1212,11 @@ export interface SendBoxProps {
 export interface SendBoxStrings {
     fileUploadsPendingError: string;
     placeholderText: string;
+    removeFile: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

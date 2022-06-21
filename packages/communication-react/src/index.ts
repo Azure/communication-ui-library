@@ -228,9 +228,7 @@ export type {
   SendBoxErrorBarError,
   FileDownloadHandler,
   FileDownloadError,
-  FileMetadata,
-  _FileDownloadCardsStrings,
-  _FileUploadCardsStrings
+  FileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';

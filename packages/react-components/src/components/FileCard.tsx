@@ -65,7 +65,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.fileUploadStrings;
+  const localeStrings = useLocale().strings.sendBox;
   /* @conditional-compile-remove(file-sharing) */
   const uploadStartedString = props.strings?.uploading ? props.strings.uploading : localeStrings.uploading;
   /* @conditional-compile-remove(file-sharing) */

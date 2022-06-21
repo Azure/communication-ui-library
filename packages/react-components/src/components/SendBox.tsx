@@ -104,6 +104,21 @@ export interface SendBoxStrings {
    * Error message indicating that all file uploads are not complete.
    */
   fileUploadsPendingError: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user when focus is on cancel file upload button.
+   */
+  removeFile: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user file uploading starts.
+   */
+  uploading: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user file is uploaded.
+   */
+  uploadCompleted: string;
 }
 
 /**
@@ -183,12 +198,6 @@ export interface SendBoxProps {
    * @beta
    */
   onCancelFileUpload?: (fileId: string) => void;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Optional arialabel strings for file upload cards
-   * @beta
-   */
-  fileUploadStrings?: _FileUploadCardsStrings;
 }
 
 /**
@@ -209,9 +218,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderIcon,
     onRenderSystemMessage,
     styles,
-    autoFocus,
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploadStrings
+    autoFocus
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -329,11 +336,15 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         <_FileUploadCards
           activeFileUploads={props.activeFileUploads}
           onCancelFileUpload={props.onCancelFileUpload}
-          strings={fileUploadStrings}
+          strings={{
+            removeFile: props.strings?.removeFile ?? localeStrings.removeFile,
+            uploading: props.strings?.uploading ?? localeStrings.uploading,
+            uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+          }}
         />
       </Stack>
     );
-  }, [props, fileUploadStrings]);
+  }, [props, localeStrings]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>

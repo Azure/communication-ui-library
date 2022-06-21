@@ -214,6 +214,9 @@ export interface MessageThreadStrings {
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
   actionMenuMoreOptions: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /** String for download file button in file card */
+  downloadFile: string;
 }
 
 /**
@@ -625,12 +628,6 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Optional arialabel strings for file download cards
-   * @beta
-   */
-  fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 /**
@@ -724,9 +721,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString,
-    /* @conditional-compile-remove(file-sharing) */
-    fileDownloadStrings
+    onDisplayDateTimeString
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -983,6 +978,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     []
   );
 
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -992,7 +989,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             {...messageProps}
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(file-sharing) */
-            fileDownloadStrings={fileDownloadStrings}
+            strings={strings}
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -1009,24 +1006,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return <></>;
     },
     [
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString(),
-      isNarrow,
-      participantCount,
-      onRenderAvatar,
-      onActionButtonClickMemo,
       onRenderFileDownloads,
       /* @conditional-compile-remove(file-sharing) */
-      fileDownloadStrings,
+      strings,
       props.userId,
+      participantCount,
+      isNarrow,
+      onRenderAvatar,
       showMessageStatus,
+      onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString
     ]
   );
-
-  const localeStrings = useLocale().strings.messageThread;
-  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const defaultStatusRenderer = useCallback(
     (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {

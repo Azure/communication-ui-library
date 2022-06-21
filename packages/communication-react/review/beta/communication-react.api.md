@@ -1008,17 +1008,11 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    fileSharing: {
-        uploadFileButton: string;
-        fileUploadCards: {
-            removeFile: string;
-            uploading: string;
-            uploadCompleted: string;
-        };
-        fileDownloadCards: {
-            downloadFile: string;
-        };
-    };
+    downloadFileButton: string;
+    fileUploadCompleted: string;
+    removeUploadFileButton: string;
+    uploadFileButton: string;
+    uploadingFile: string;
 }
 
 // @public
@@ -1208,8 +1202,6 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    fileDownloadStrings: _FileDownloadCardsStrings;
-    fileUploadStrings: _FileUploadCardsStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1754,11 +1746,6 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
-// @internal
-export interface _FileDownloadCardsStrings {
-    downloadFile: string;
-}
-
 // @beta
 export interface FileDownloadError {
     errorMessage: string;
@@ -1798,13 +1785,6 @@ export interface FileUploadAdapter {
     updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
-}
-
-// @internal
-export interface _FileUploadCardsStrings {
-    removeFile: string;
-    uploadCompleted: string;
-    uploading: string;
 }
 
 // @beta
@@ -2113,7 +2093,6 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
-    fileDownloadStrings?: _FileDownloadCardsStrings;
 };
 
 // @public
@@ -2126,6 +2105,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions: string;
+    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -2481,8 +2461,6 @@ export interface SendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
-    fileUploadStrings?: _FileUploadCardsStrings;
-    // @beta
     onCancelFileUpload?: (fileId: string) => void;
     // @beta
     onRenderFileUploads?: () => JSX.Element;
@@ -2506,8 +2484,11 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 export interface SendBoxStrings {
     fileUploadsPendingError: string;
     placeholderText: string;
+    removeFile: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

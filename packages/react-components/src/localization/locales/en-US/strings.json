@@ -18,7 +18,10 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait."
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "uploading",
+    "uploadCompleted": "upload completed"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "More Options"
+    "actionMenuMoreOptions": "More Options",
+    "downloadFile": "Download file"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -156,14 +160,6 @@
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed Participant"
-  },
-  "fileUploadStrings": {
-    "removeFile": "Remove file",
-    "uploading": "uploading",
-    "uploadCompleted": "upload completed"
-  },
-  "fileDownloadStrings": {
-    "downloadFile": "Download file"
   },
   "dialpad": {
     "placeholderText": "Enter a number"
