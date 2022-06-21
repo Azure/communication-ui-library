@@ -16,8 +16,6 @@ import {
   TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
-/* @conditional-compile-remove(file-sharing) */
-import { useMemo } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -133,13 +131,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const locale = useLocale();
   /* @conditional-compile-remove(file-sharing) */
-  const fileDownloadButtonString = useMemo(() => locale.strings.chat.downloadFileButton, [locale.strings]);
+  const fileDownloadButtonString = locale.strings.chat.downloadFile;
   /* @conditional-compile-remove(file-sharing) */
-  const removeUploadFileButtonString = useMemo(() => locale.strings.chat.removeUploadFileButton, [locale.strings]);
+  const cancelUploadFileButtonString = locale.strings.chat.cancelFileUploadButton;
   /* @conditional-compile-remove(file-sharing) */
-  const uploadingFileString = useMemo(() => locale.strings.chat.uploadingFile, [locale.strings]);
+  const uploadingFileString = locale.strings.chat.uploadingFile;
   /* @conditional-compile-remove(file-sharing) */
-  const fileUploadCompletedString = useMemo(() => locale.strings.chat.fileUploadCompleted, [locale.strings]);
+  const fileUploadCompletedString = locale.strings.chat.fileUploadCompleted;
 
   const messageThreadProps = usePropsFor(MessageThread);
   const sendBoxProps = usePropsFor(SendBox);
@@ -259,7 +257,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onCancelFileUpload={adapter.cancelFileUpload}
                   /* @conditional-compile-remove(file-sharing) */
                   strings={{
-                    removeFile: removeUploadFileButtonString,
+                    removeFile: cancelUploadFileButtonString,
                     uploading: uploadingFileString,
                     uploadCompleted: fileUploadCompletedString
                   }}

@@ -22,7 +22,7 @@ export interface ChatCompositeStrings {
   /**
    * Arialabel strings for remove file upload button
    */
-  removeUploadFileButton: string;
+  cancelFileUploadButton: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Arialabel strings for to notify user that file upload started
@@ -37,5 +37,5 @@ export interface ChatCompositeStrings {
   /**
    * Arialabel strings for download file button
    */
-  downloadFileButton: string;
+  downloadFile: string;
 }
