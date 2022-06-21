@@ -15,6 +15,13 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(file-sharing) */
+import { Announcer } from './Announcer';
+/* @conditional-compile-remove(file-sharing) */
+import { useEffect, useState } from 'react';
+import { _FileUploadCardsStrings } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { useLocale } from '../localization';
 
 /**
  * @internal
@@ -42,6 +49,10 @@ export interface _FileCardProps {
    * Function that runs when actionIcon is clicked
    */
   actionHandler?: () => void;
+  /**
+   * Optional arialabel strings for file cards
+   */
+  strings?: _FileUploadCardsStrings;
 }
 
 /**
@@ -51,8 +62,28 @@ export interface _FileCardProps {
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(file-sharing) */
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+  /* @conditional-compile-remove(file-sharing) */
+  const localeStrings = useLocale().strings.sendBox;
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
+  /* @conditional-compile-remove(file-sharing) */
+  const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
+
+  /* @conditional-compile-remove(file-sharing) */
+  useEffect(() => {
+    if (showProgressIndicator) {
+      setAnnouncerString(`${uploadStartedString} ${fileName}`);
+    } else if (progress === 1) {
+      setAnnouncerString(`${fileName} ${uploadCompletedString}`);
+    } else {
+      setAnnouncerString(undefined);
+    }
+  }, [progress, showProgressIndicator, fileName, uploadStartedString, uploadCompletedString]);
+
   const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({
@@ -99,31 +130,37 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   };
 
   return (
-    <Stack
-      className={containerClassName}
-      onClick={() => {
-        props.actionHandler && props.actionHandler();
-      }}
-    >
-      <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <Stack>
-          {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-          <Icon
-            {...getFileTypeIconProps({
-              extension: fileExtension,
-              size: 24,
-              imageFileType: 'svg'
-            })}
-          />
+    <>
+      {
+        /* @conditional-compile-remove(file-sharing) */
+        <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      }
+      <Stack
+        className={containerClassName}
+        onClick={() => {
+          props.actionHandler && props.actionHandler();
+        }}
+      >
+        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
+          <Stack>
+            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+            <Icon
+              {...getFileTypeIconProps({
+                extension: fileExtension,
+                size: 24,
+                imageFileType: 'svg'
+              })}
+            />
+          </Stack>
+          <Stack className={fileNameContainerClassName}>
+            <Text className={fileNameTextClassName}>{fileName}</Text>
+          </Stack>
+          <Stack verticalAlign="center" className={actionIconClassName}>
+            {actionIcon && actionIcon}
+          </Stack>
         </Stack>
-        <Stack className={fileNameContainerClassName}>
-          <Text className={fileNameTextClassName}>{fileName}</Text>
-        </Stack>
-        <Stack verticalAlign="center" className={actionIconClassName}>
-          {actionIcon && actionIcon}
-        </Stack>
+        {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
-      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
-    </Stack>
+    </>
   );
 };

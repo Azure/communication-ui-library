@@ -742,6 +742,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadFile: string;
 }
 
 // @public

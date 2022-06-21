@@ -214,6 +214,9 @@ export interface MessageThreadStrings {
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
   actionMenuMoreOptions: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /** String for download file button in file card */
+  downloadFile: string;
 }
 
 /**
@@ -975,6 +978,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     []
   );
 
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -983,6 +988,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           <ChatMessageComponent
             {...messageProps}
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(file-sharing) */
+            strings={strings}
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -999,22 +1006,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return <></>;
     },
     [
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString(),
-      isNarrow,
-      participantCount,
-      onRenderAvatar,
-      onActionButtonClickMemo,
       onRenderFileDownloads,
+      /* @conditional-compile-remove(file-sharing) */
+      strings,
       props.userId,
+      participantCount,
+      isNarrow,
+      onRenderAvatar,
       showMessageStatus,
+      onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString
     ]
   );
-
-  const localeStrings = useLocale().strings.messageThread;
-  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const defaultStatusRenderer = useCallback(
     (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
