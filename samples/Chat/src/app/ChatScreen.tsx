@@ -87,6 +87,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatScreenContainerStyle}>
         <Stack.Item className={chatCompositeContainerStyle}>
           <ChatComposite
+            locale={{
+              component: {
+                strings: {
+                  sendBox: {}
+                }
+              },
+              strings: {
+                chat: {
+                  chatListHeader: 'Chat'
+                }
+              }
+            }}
             adapter={adapter}
             fluentTheme={currentTheme.theme}
             options={{ autoFocus: 'sendBoxTextField', participantPane: !hideParticipants }}

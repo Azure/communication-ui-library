@@ -40,12 +40,7 @@
     "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
   },
   "chat": {
-    "chatListHeader": "In this chat",
-    "uploadFileButton": "Upload file",
-    "cancelFileUploadButton": "Remove file",
-    "uploadingFile": "uploading",
-    "fileUploadCompleted": "upload completed",
-    "downloadFile": "Download file"
+    "chatListHeader": "In this chat"
   },
   "callWithChat": {
     "peopleButtonLabel": "People",

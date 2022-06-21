@@ -13,29 +13,4 @@ export interface ChatCompositeStrings {
    * Chat list header text
    */
   chatListHeader: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Arialabel strings for upload file button
-   */
-  uploadFile: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Arialabel strings for remove file upload button
-   */
-  cancelFileUpload: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Arialabel strings for to notify user that file upload started
-   */
-  uploadingFile: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Arialabel strings for upload file button
-   */
-  fileUploadCompleted: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Arialabel strings for download file button
-   */
-  downloadFile: string;
 }
