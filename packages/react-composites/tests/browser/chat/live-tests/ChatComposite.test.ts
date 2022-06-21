@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
-import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { chatTestSetup, sendMessage, waitForMessageSeen, waitForMessageWithContent } from '../common/chatTestHelpers';
+import {
+  chatTestSetup,
+  sendMessage,
+  waitForMessageSeen,
+  waitForMessageWithContent
+} from '../../common/chatTestHelpers';
+import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../../common/utils';
+import { test } from '../fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
