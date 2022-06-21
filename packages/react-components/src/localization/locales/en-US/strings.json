@@ -20,8 +20,8 @@
     "sendButtonAriaLabel": "Send message",
     "fileUploadsPendingError": "Uploading... Please wait.",
     "removeFile": "Remove file",
-    "uploading": "uploading",
-    "uploadCompleted": "upload completed"
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
