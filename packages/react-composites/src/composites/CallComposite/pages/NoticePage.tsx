@@ -42,7 +42,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
           {props.moreDetails}
         </Text>
         <Stack styles={rejoinCallButtonContainerStyles}>
-          <StartCallButton onClickHandler={() => adapter.joinCall()} isDisabled={false} rejoinCall={true} />
+          <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
         </Stack>
       </Stack>
     </Stack>
