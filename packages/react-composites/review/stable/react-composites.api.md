@@ -553,7 +553,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
-    dismissSidePaneButton: string;
+    dismissSidePaneButtonLabel: string;
     moreDrawerAudioDeviceMenuTitle: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
