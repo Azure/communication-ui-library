@@ -46,6 +46,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+import { useCustomAvatarPersonaData } from '../common/CustomDataModelUtils';
+import { SendMessageOptions } from '@azure/communication-chat';
 
 /**
  * @private
@@ -134,6 +136,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  const chatAdapterState = adapter.getState();
+  const userAvatarData = useCustomAvatarPersonaData([toFlatCommunicationIdentifier(chatAdapterState.userId)]);
+
+  const onSendMessage = async (content: string, options?: SendMessageOptions): Promise<void> => {
+    if (userAvatarData[0]?.text) {
+      const newOptions: SendMessageOptions = { ...options, senderDisplayName: userAvatarData[0]?.text };
+      messageThreadProps.onSendMessage(content, newOptions);
+    } else {
+      messageThreadProps.onSendMessage(content, options);
+    }
+  };
+
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
       return (
@@ -212,6 +226,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           }
           <MessageThread
             {...messageThreadProps}
+            onSendMessage={onSendMessage}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */

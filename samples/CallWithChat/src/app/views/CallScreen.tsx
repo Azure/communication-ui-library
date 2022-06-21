@@ -17,6 +17,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { AvatarPersonaData } from '@internal/react-composites';
 
 export interface CallScreenProps {
   token: string;
@@ -81,6 +82,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  const onFetchAvatarPersonaData = async (userId: string): Promise<AvatarPersonaData> => ({
+    text: 'apples'
+  });
+
   return (
     <CallWithChatComposite
       adapter={adapter}
@@ -88,6 +93,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
     />
   );
 };
