@@ -17,12 +17,12 @@ export interface ChatCompositeStrings {
   /**
    * Arialabel strings for upload file button
    */
-  uploadFileButton: string;
+  uploadFile: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Arialabel strings for remove file upload button
    */
-  cancelFileUploadButton: string;
+  cancelFileUpload: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Arialabel strings for to notify user that file upload started

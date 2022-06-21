@@ -133,7 +133,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const fileDownloadButtonString = locale.strings.chat.downloadFile;
   /* @conditional-compile-remove(file-sharing) */
-  const cancelUploadFileButtonString = locale.strings.chat.cancelFileUploadButton;
+  const cancelUploadFileButtonString = locale.strings.chat.cancelFileUpload;
   /* @conditional-compile-remove(file-sharing) */
   const uploadingFileString = locale.strings.chat.uploadingFile;
   /* @conditional-compile-remove(file-sharing) */
