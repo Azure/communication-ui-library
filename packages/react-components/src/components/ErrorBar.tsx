@@ -234,7 +234,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               paddingTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.2rem'
             },
             dismissal: {
-              marginTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.15rem'
+              height: 'none'
             },
             root: {
               lineHeight: 'inherit'
