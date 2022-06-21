@@ -164,9 +164,19 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
+        /* @conditional-compile-remove(file-sharing) */
+        strings={{ downloadFile: props.strings.downloadFile ?? locale.strings.messageThread.downloadFile }}
       />
     ),
-    [message, fileDownloadHandler, userId]
+    [
+      userId,
+      message,
+      /* @conditional-compile-remove(file-sharing) */
+      props,
+      /* @conditional-compile-remove(file-sharing) */
+      locale,
+      fileDownloadHandler
+    ]
   );
 
   const chatMessage = (

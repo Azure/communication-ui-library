@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Making tooltips inline-block to prevent sizing and positioning issues in read receipts",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

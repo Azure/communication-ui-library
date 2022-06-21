@@ -544,6 +544,7 @@ export interface _FileCardProps {
     fileExtension: string;
     fileName: string;
     progress?: number;
+    strings?: _FileUploadCardsStrings;
 }
 
 // @internal (undocumented)
@@ -551,11 +552,17 @@ export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
     fileMetadata: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
+    strings?: _FileDownloadCardsStrings;
     userId: string;
 }
 
 // @internal (undocumented)
 export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @internal
+export interface _FileDownloadCardsStrings {
+    downloadFile: string;
+}
 
 // @beta
 export interface FileDownloadError {
@@ -570,6 +577,13 @@ export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
+}
+
+// @internal
+export interface _FileUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

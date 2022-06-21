@@ -8,6 +8,23 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
+/* @conditional-compile-remove(file-sharing) */
+import { useLocale } from '../localization';
+import { useMemo } from 'react';
+
+/**
+ * Strings of _FileUploadCards that can be overridden.
+ *
+ * @internal
+ */
+export interface _FileUploadCardsStrings {
+  /** Aria label to notify user when focus is on cancel file upload button. */
+  removeFile: string;
+  /** Aria label to notify user file uploading starts. */
+  uploading: string;
+  /** Aria label to notify user file is uploaded. */
+  uploadCompleted: string;
+}
 
 /**
  * @internal
@@ -23,6 +40,10 @@ export interface FileUploadCardsProps {
    * cancel icon.
    */
   onCancelFileUpload?: (fileId: string) => void;
+  /**
+   * Optional arialabel strings for file upload cards
+   */
+  strings?: _FileUploadCardsStrings;
 }
 
 const actionIconStyle = { height: '1rem' };
@@ -32,9 +53,28 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
+
+  /* @conditional-compile-remove(file-sharing) */
+  const localeStrings = useLocale().strings.sendBox;
+
+  const removeFileButtonString = useMemo(
+    () => () => {
+      /* @conditional-compile-remove(file-sharing) */
+      return props.strings?.removeFile ?? localeStrings.removeFile;
+      // Return download button without aria label
+      return props.strings?.removeFile ?? '';
+    },
+    [
+      props.strings?.removeFile,
+      /* @conditional-compile-remove(file-sharing) */
+      localeStrings.removeFile
+    ]
+  );
+
   if (!files || files.length === 0) {
     return <></>;
   }
+
   return (
     <_FileCardGroup>
       {files &&
@@ -47,13 +87,14 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               key={file.id}
               fileExtension={extension(file.filename)}
               actionIcon={
-                <IconButton className={iconButtonClassName}>
+                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
                   <Icon iconName="CancelFileUpload" style={actionIconStyle} />
                 </IconButton>
               }
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(file.id);
               }}
+              strings={props.strings}
             />
           ))}
     </_FileCardGroup>
