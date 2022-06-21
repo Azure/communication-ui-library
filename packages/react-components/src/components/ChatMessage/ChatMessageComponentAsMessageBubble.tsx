@@ -164,7 +164,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
-        strings={{ downloadFile: props.strings?.downloadFile ?? locale.strings.messageThread.downloadFile }}
+        strings={{ downloadFile: props.strings.downloadFile ?? locale.strings.messageThread.downloadFile }}
       />
     ),
     [userId, message, fileDownloadHandler, props, locale]
@@ -180,9 +180,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           content={
             <div>
               <ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />
-              {props.onRenderFileDownloads
-                ? props.onRenderFileDownloads(userId, message)
-                : defaultOnRenderFileDownloads()}
+              {
+                /* @conditional-compile-remove(file-sharing) */
+                props.onRenderFileDownloads
+                  ? props.onRenderFileDownloads(userId, message)
+                  : defaultOnRenderFileDownloads()
+              }
             </div>
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
