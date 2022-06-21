@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
   },
   "chat": {
-    "chatListHeader": "In this chat"
+    "chatListHeader": "In this chat",
+    "uploadFile": "Upload File"
   },
   "callWithChat": {
     "peopleButtonLabel": "People",
