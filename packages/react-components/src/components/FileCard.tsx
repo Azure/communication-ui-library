@@ -67,11 +67,9 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const localeStrings = useLocale().strings.sendBox;
   /* @conditional-compile-remove(file-sharing) */
-  const uploadStartedString = props.strings?.uploading ? props.strings.uploading : localeStrings.uploading;
+  const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
   /* @conditional-compile-remove(file-sharing) */
-  const uploadCompletedString = props.strings?.uploadCompleted
-    ? props.strings?.uploadCompleted
-    : localeStrings.uploadCompleted;
+  const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 

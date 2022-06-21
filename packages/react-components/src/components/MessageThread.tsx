@@ -60,7 +60,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileDownloadCardsStrings, FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {

@@ -8,7 +8,7 @@ import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { _FileDownloadCardsStrings, FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;

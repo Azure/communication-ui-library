@@ -88,7 +88,7 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               fileExtension={extension(file.filename)}
               actionIcon={
                 <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
-                  <UploadIconTrampoline />
+                  <Icon iconName="CancelFileUpload" style={actionIconStyle} />
                 </IconButton>
               }
               actionHandler={() => {
@@ -99,14 +99,4 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
           ))}
     </_FileCardGroup>
   );
-};
-
-/**
- * @private
- */
-const UploadIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(file-sharing)
-  return <Icon iconName="CancelFileUpload" style={actionIconStyle} />;
-  // Return cancel button without aria label
-  return <Icon iconName="CancelFileUpload" style={actionIconStyle} />;
 };

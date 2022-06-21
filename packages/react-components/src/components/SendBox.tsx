@@ -19,7 +19,7 @@ import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileUploadCardsStrings, _FileUploadCards } from './FileUploadCards';
+import { _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';

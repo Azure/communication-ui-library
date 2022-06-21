@@ -19,7 +19,7 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
-import { _FileDownloadCards, FileDownloadHandler, _FileDownloadCardsStrings } from '../FileDownloadCards';
+import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
