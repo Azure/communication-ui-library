@@ -158,6 +158,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(file-sharing) */
   const defaultOnRenderFileDownloads = useCallback(
     () => (
       <_FileDownloadCards
