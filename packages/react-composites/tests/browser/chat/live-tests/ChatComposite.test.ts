@@ -9,7 +9,7 @@ import {
   waitForMessageWithContent
 } from '../../common/chatTestHelpers';
 import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../../common/utils';
-import { test } from '../fixture';
+import { test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
