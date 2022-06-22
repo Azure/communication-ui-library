@@ -115,7 +115,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             }
             onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
-              participantPane: true,
+              participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     downloadHandler: fileDownloadHandler,

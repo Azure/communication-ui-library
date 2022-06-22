@@ -51,6 +51,10 @@ export type FakeChatAdapterArgs = {
    */
   frenchLocaleEnabled?: boolean;
   /**
+   * Determines if participant pane will be visible.
+   */
+  showParticipantPane?: boolean;
+  /**
    * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
