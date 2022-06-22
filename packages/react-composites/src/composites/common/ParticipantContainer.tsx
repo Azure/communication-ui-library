@@ -6,7 +6,8 @@ import {
   participantListMobileStyle,
   participantListStack,
   participantListStyle,
-  participantListWrapper
+  participantListWrapper,
+  displayNameStyles
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -14,7 +15,7 @@ import {
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { FocusZone, ITextStyles, Stack, Text, useTheme } from '@fluentui/react';
+import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 type ParticipantContainerProps = {
@@ -78,7 +79,11 @@ export const ParticipantListWithHeading = (props: {
                 {...{ hidePersonaDetails: options?.text ? true : false }}
                 dataProvider={onFetchAvatarPersonaData}
               />
-              {options?.text && <Text styles={displayNameStyle}>{options?.text}</Text>}
+              {options?.text && (
+                <Text nowrap={true} styles={displayNameStyles}>
+                  {options?.text}
+                </Text>
+              )}
             </>
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
@@ -87,10 +92,4 @@ export const ParticipantListWithHeading = (props: {
       </FocusZone>
     </Stack>
   );
-};
-
-const displayNameStyle: ITextStyles = {
-  root: {
-    padding: '0.5rem'
-  }
 };
