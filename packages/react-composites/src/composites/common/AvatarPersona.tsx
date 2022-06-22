@@ -72,11 +72,13 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (dataProvider && userId) {
-        const data = await dataProvider(userId);
-        setData(data);
+        const newData = await dataProvider(userId);
+        if (avatarDeepDifferenceCheck(data, newData)) {
+          setData(newData);
+        }
       }
     })();
-  }, [dataProvider, userId]);
+  }, [data, dataProvider, userId]);
 
   return (
     <Persona
@@ -89,5 +91,15 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       // default disable tooltip unless specified
       showOverflowTooltip={showOverflowTooltip ?? false}
     />
+  );
+};
+
+const avatarDeepDifferenceCheck = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
+  return (
+    currentData?.text !== newData?.text ||
+    currentData?.imageUrl !== newData?.imageUrl ||
+    currentData?.initialsColor !== newData?.initialsColor ||
+    currentData?.imageInitials !== newData?.imageInitials ||
+    currentData?.initialsTextColor !== newData?.initialsTextColor
   );
 };
