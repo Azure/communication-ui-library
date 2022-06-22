@@ -233,11 +233,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
             icon: {
               paddingTop: messageBarType(error.type) === 5 ? '0.3rem' : '0.2rem'
             },
-            dismissal: {
-              height: 'none'
-            },
-            root: {
+            content: {
               lineHeight: 'inherit'
+            },
+            dismissal: {
+              paddingTop: messageBarType(error.type) === 5 ? '0.5rem' : '0.375rem'
             }
           }}
           key={error.type}
@@ -245,6 +245,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
           dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}
         </MessageBar>
