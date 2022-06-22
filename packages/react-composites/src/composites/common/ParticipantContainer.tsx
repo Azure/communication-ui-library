@@ -30,8 +30,10 @@ type ParticipantContainerProps = {
  * @private
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
+  const theme = useTheme();
+  const participantListWrapperClassName = useMemo(() => participantListWrapper(theme), [theme]);
   return (
-    <Stack className={participantListWrapper}>
+    <Stack className={participantListWrapperClassName}>
       <ParticipantListWithHeading {...props} />
     </Stack>
   );
