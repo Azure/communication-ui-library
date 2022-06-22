@@ -124,7 +124,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
 
   const adapter = useAdapter();
-
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
@@ -208,7 +207,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
-
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}

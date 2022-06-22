@@ -13,4 +13,10 @@ export interface ChatCompositeStrings {
    * Chat list header text
    */
   chatListHeader: string;
+
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Upload File Button text
+   */
+  uploadFile: string;
 }
