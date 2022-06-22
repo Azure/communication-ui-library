@@ -14,7 +14,7 @@ import {
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { FocusZone, Stack, useTheme } from '@fluentui/react';
+import { FocusZone, ITextStyles, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 type ParticipantContainerProps = {
@@ -68,12 +68,16 @@ export const ParticipantListWithHeading = (props: {
           {...participantListProps}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
           onRenderAvatar={(userId, options) => (
-            <AvatarPersona
-              data-ui-id="chat-composite-participant-custom-avatar"
-              userId={userId}
-              {...options}
-              dataProvider={onFetchAvatarPersonaData}
-            />
+            <>
+              <AvatarPersona
+                data-ui-id="chat-composite-participant-custom-avatar"
+                userId={userId}
+                {...options}
+                {...{ hidePersonaDetails: true }}
+                dataProvider={onFetchAvatarPersonaData}
+              />
+              {<Text styles={displayNameStyle}>{options?.text}</Text>}
+            </>
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
@@ -81,4 +85,10 @@ export const ParticipantListWithHeading = (props: {
       </FocusZone>
     </Stack>
   );
+};
+
+const displayNameStyle: ITextStyles = {
+  root: {
+    padding: '0.5rem'
+  }
 };
