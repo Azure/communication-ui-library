@@ -37,6 +37,7 @@ export const LiveTestApp = (): JSX.Element => {
   const useFileSharing = Boolean(params.useFileSharing);
   const failFileDownload = Boolean(params.failDownload);
   const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
+  const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
   const args = useMemo(
     () => ({
@@ -137,7 +138,7 @@ export const LiveTestApp = (): JSX.Element => {
             }
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
-              participantPane: true,
+              participantPane: showParticipantPane,
               fileSharing: useFileSharing
                 ? {
                     downloadHandler: fileDownloadHandler,
