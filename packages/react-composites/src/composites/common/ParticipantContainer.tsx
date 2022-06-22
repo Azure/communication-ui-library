@@ -73,10 +73,10 @@ export const ParticipantListWithHeading = (props: {
                 data-ui-id="chat-composite-participant-custom-avatar"
                 userId={userId}
                 {...options}
-                {...{ hidePersonaDetails: true }}
+                {...{ hidePersonaDetails: options.text ? true : false }}
                 dataProvider={onFetchAvatarPersonaData}
               />
-              {<Text styles={displayNameStyle}>{options?.text}</Text>}
+              {options.text && <Text styles={displayNameStyle}>{options.text}</Text>}
             </>
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
