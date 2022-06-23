@@ -805,8 +805,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
-    dismissSidePaneButton: string;
-    moreDrawerAudioDeviceMenuTitle: string;
+    dismissSidePaneButtonLabel?: string;
+    moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -818,8 +818,8 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
-    returnToCallButtonAriaDescription: string;
-    returnToCallButtonAriaLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -870,8 +870,8 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export interface CameraButtonStrings {
-    cameraActionTurnedOffAnnouncement: string;
-    cameraActionTurnedOnAnnouncement: string;
+    cameraActionTurnedOffAnnouncement?: string;
+    cameraActionTurnedOnAnnouncement?: string;
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
@@ -1730,9 +1730,9 @@ export interface ErrorBarStrings {
     callNoSpeakerFound: string;
     callVideoRecoveredBySystem: string;
     callVideoStoppedBySystem: string;
-    dismissButtonAriaLabel: string;
-    failedToJoinCallGeneric: string;
-    failedToJoinCallInvalidMeetingLink: string;
+    dismissButtonAriaLabel?: string;
+    failedToJoinCallGeneric?: string;
+    failedToJoinCallInvalidMeetingLink?: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -2106,7 +2106,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
-    actionMenuMoreOptions: string;
+    actionMenuMoreOptions?: string;
     downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
@@ -2180,9 +2180,9 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneActionTurnedOffAnnouncement: string;
-    microphoneActionTurnedOnAnnouncement: string;
-    microphoneButtonSplitRoleDescription: string;
+    microphoneActionTurnedOffAnnouncement?: string;
+    microphoneActionTurnedOnAnnouncement?: string;
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -2236,7 +2236,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    displayName: string;
+    displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
@@ -2251,7 +2251,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
-    displayNamePlaceholder: string;
+    displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
