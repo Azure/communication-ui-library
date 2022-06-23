@@ -213,7 +213,10 @@ export interface MessageThreadStrings {
   /** String for Submit in EditBox when there is no user input*/
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
-  actionMenuMoreOptions: string;
+  actionMenuMoreOptions?: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /** String for download file button in file card */
+  downloadFile: string;
 }
 
 /**

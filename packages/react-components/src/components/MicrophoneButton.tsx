@@ -46,7 +46,7 @@ export interface MicrophoneButtonStrings {
   /**
    * Description of microphone button split button role
    */
-  microphoneButtonSplitRoleDescription: string;
+  microphoneButtonSplitRoleDescription?: string;
   /**
    * Microphone split button aria label when mic is enabled.
    */
@@ -58,11 +58,11 @@ export interface MicrophoneButtonStrings {
   /**
    * Microphone action turned on string for announcer
    */
-  microphoneActionTurnedOnAnnouncement: string;
+  microphoneActionTurnedOnAnnouncement?: string;
   /**
    * Microphone action turned off string for announcer
    */
-  microphoneActionTurnedOffAnnouncement: string;
+  microphoneActionTurnedOffAnnouncement?: string;
 }
 
 /**
