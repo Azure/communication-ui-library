@@ -113,7 +113,9 @@ const errorOptions: ErrorType[] = [
   'callLocalVideoFreeze',
   'callCameraAlreadyInUse',
   'callMacOsCameraAccessDenied',
-  'callMacOsScreenShareAccessDenied'
+  'callMacOsScreenShareAccessDenied',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
