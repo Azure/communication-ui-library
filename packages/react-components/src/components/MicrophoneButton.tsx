@@ -162,7 +162,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const disabled =
     props.disabled ||
     (isSplit && !props.microphones?.length && !props.speakers?.length) ||
-    (!isSplit && !props.microphones?.length);
+    (!isSplit && props.microphones && props.microphones?.length === 0);
 
   const onRenderMicOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;
