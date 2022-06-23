@@ -184,6 +184,14 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
+  const isSplit = props.split ?? props.enableDeviceSelectionMenu;
+
+  // The button should be disabled when there are no mics. However if the button is a split button, if there are
+  // no mics but there are speakers, then only the primary part of the button should be disabled to allow for
+  // speaker change.
+  const primaryDisabled = props.primaryDisabled || (isSplit && !props.microphones?.length ? true : undefined);
+  const disabled = props.disabled || (isSplit && !props.microphones?.length && !props.speakers?.length);
+
   return (
     <>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -206,6 +214,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
         }
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
+        disabled={disabled}
+        primaryDisabled={primaryDisabled}
       />
     </>
   );

@@ -43,7 +43,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
   (callExists, isMuted, deviceManager) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     return {
-      disabled: !callExists || !permission || !deviceManager.microphones.length,
+      disabled: !callExists || !permission,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
