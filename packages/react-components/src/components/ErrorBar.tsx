@@ -142,6 +142,16 @@ export interface ErrorBarStrings {
   callCameraAlreadyInUse: string;
 
   /**
+   * Message shown when local video is stopped by the system (not by local or remote participants)
+   */
+  callVideoStoppedBySystem: string;
+
+  /**
+   * Message shown when local video was recovered by the system (not by the local participant)
+   */
+  callVideoRecoveredBySystem: string;
+
+  /**
    * Mac OS specific message shown when system denies access to camera.
    */
   callMacOsCameraAccessDenied: string;
@@ -153,17 +163,17 @@ export interface ErrorBarStrings {
   /**
    * Dimiss errorbar button aria label read by screen reader accessibility tools
    */
-  dismissButtonAriaLabel: string;
+  dismissButtonAriaLabel?: string;
 
   /**
    * An error message when joining a call fails.
    */
-  failedToJoinCallGeneric: string;
+  failedToJoinCallGeneric?: string;
 
   /**
    * An error message when joining a call fails specifically due to an invalid meeting link.
    */
-  failedToJoinCallInvalidMeetingLink: string;
+  failedToJoinCallInvalidMeetingLink?: string;
 }
 
 /**
@@ -328,6 +338,8 @@ const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callLocalVideoFreeze':
     case 'callCameraAccessDenied':
     case 'callCameraAlreadyInUse':
+    case 'callVideoStoppedBySystem':
+    case 'callVideoRecoveredBySystem':
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
       return MessageBarType.warning;
@@ -351,5 +363,7 @@ const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
   callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
+  callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
+  callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };
