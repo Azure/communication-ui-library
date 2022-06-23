@@ -155,6 +155,7 @@ export type {
   JumpToNewMessageButtonProps,
   LocalizationProviderProps,
   LocalVideoCameraCycleButtonProps,
+  LoadingState,
   Message,
   MessageAttachedStatus,
   MessageCommon,
@@ -236,6 +237,7 @@ export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 
 export * from '../../calling-stateful-client/src';
+export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {
   StatefulChatClient,

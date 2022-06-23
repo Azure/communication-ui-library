@@ -59,6 +59,8 @@ export interface ParticipantItemStrings {
   sharingIconLabel: string;
   /** Label for the muted icon in participant state stack  */
   mutedIconLabel: string;
+  /** placeholder text for participants who does not have a display name*/
+  displayNamePlaceholder: string;
 }
 
 /**
@@ -97,6 +99,8 @@ export interface ParticipantItemProps {
    * Optional callback when component is clicked
    */
   onClick?: (props?: ParticipantItemProps) => void;
+  /** prop to determine if we should show tooltip for participants or not */
+  showParticipantOverflowTooltip?: boolean;
 }
 
 /**
@@ -107,7 +111,18 @@ export interface ParticipantItemProps {
  * @public
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me, onClick } = props;
+  const {
+    userId,
+    displayName,
+    onRenderAvatar,
+    menuItems,
+    onRenderIcon,
+    presence,
+    styles,
+    me,
+    onClick,
+    showParticipantOverflowTooltip
+  } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -122,7 +137,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     text: displayName,
     size: PersonaSize.size32,
     presence: presence,
-    initialsTextColor: 'white'
+    initialsTextColor: 'white',
+    showOverflowTooltip: showParticipantOverflowTooltip
   };
 
   const avatar = onRenderAvatar ? (

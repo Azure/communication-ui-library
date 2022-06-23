@@ -550,6 +550,7 @@ export interface _FileCardProps {
     fileExtension: string;
     fileName: string;
     progress?: number;
+    strings?: _FileUploadCardsStrings;
 }
 
 // @internal (undocumented)
@@ -557,11 +558,17 @@ export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
     fileMetadata: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
+    strings?: _FileDownloadCardsStrings;
     userId: string;
 }
 
 // @internal (undocumented)
 export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @internal
+export interface _FileDownloadCardsStrings {
+    downloadFile: string;
+}
 
 // @beta
 export interface FileDownloadError {
@@ -576,6 +583,13 @@ export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
+}
+
+// @internal
+export interface _FileUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public
@@ -652,6 +666,9 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public
+export type LoadingState = 'loading' | 'none';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -905,6 +922,7 @@ export interface ParticipantItemProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStyles;
     userId?: string;
@@ -912,6 +930,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    displayNamePlaceholder: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
@@ -951,6 +970,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
+    showParticipantOverflowTooltip?: boolean;
 };
 
 // @public
@@ -990,6 +1010,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     participants: ParticipantListParticipant[];
+    showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -1047,6 +1068,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
+    isReceiving?: boolean | undefined;
     isMuted?: boolean | undefined;
     isSpeaking?: boolean | undefined;
     isScreenSharingOn?: boolean | undefined;
@@ -1116,6 +1138,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
+    loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
@@ -1232,11 +1255,13 @@ export interface VideoGalleryStream {
     id?: number;
     isAvailable?: boolean;
     isMirrored?: boolean;
+    isReceiving?: boolean;
     renderElement?: HTMLElement;
 }
 
 // @public
 export interface VideoGalleryStrings {
+    displayNamePlaceholder: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;

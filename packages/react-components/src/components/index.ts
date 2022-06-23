@@ -31,6 +31,7 @@ export type {
 
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
+export type { LoadingState } from './StreamMedia';
 
 export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
@@ -115,6 +116,7 @@ export * from './FileCard';
 export * from './FileCardGroup';
 export * from './ModalClone/ModalClone';
 export * from './FileDownloadCards';
+export type { _FileUploadCardsStrings } from './FileUploadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

@@ -81,6 +81,38 @@ useEffect(() => {
 }, [adapter]);
 ```
 
+## Do not permit more than one Call to be active at a time on mobile browsers
+
+Your application should not connect to calls from multiple browser tabs simultaneously as this can cause undefined behavior due to resource allocation for microphone and camera on the device. Developers are encouraged to always hang up calls when completed in the background before starting a new one.
+
+An example to enforce this behavior using the [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) API:
+
+```tsx
+const [isSecondaryInstance, setIsSecondaryInstance] = useState(false);
+
+// Only allow one instance of the sample to be open at a time on mobile
+useEffect(() => {
+  const channel = new BroadcastChannel('secondary-instance-check');
+  let isOriginalInstance = true;
+
+  channel.postMessage('new-instance-opened');
+
+  // Listen for messages from the other instances. When a message is received, if this is original instance
+  // it will send a message back to the other instances to inform them an instance is already open.
+  channel.addEventListener('message', (msg) => {
+    if (msg.data === 'new-instance-opened' && isOriginalInstance) {
+      // Received a message from a secondary instance, respond to all new instances the app is already running in this tab
+      channel.postMessage('instance-already-open');
+    }
+    if (msg.data === 'instance-already-open') {
+      // Received a message from the original instance informing this App it is a secondary instance.
+      isOriginalInstance = false;
+      setIsSecondaryInstance(true);
+    }
+  });
+}, []);
+```
+
 ## Follow Azure Communication Services Calling SDKs Best Practices
 
-For further guidelines regarding Calling experiences, also follow: [Best practices: Azure Communication Services calling SDKs](https://docs.microsoft.com/en-us/azure/communication-services/communication-services-calling-best-practices)
+For further guidelines regarding Calling experiences, also follow: [Best practices: Azure Communication Services calling SDKs](https://docs.microsoft.com/en-us/azure/communication-services/concepts/best-practices)

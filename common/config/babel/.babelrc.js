@@ -27,6 +27,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'PSTN-calls',
         // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
         'date-time-customization',
+        // 1 to N Calling feature.
+        'one-to-n-calling',
+        // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
+        'video-stream-is-receiving-flag',
         // dialpad
         'dialpad'
       ],

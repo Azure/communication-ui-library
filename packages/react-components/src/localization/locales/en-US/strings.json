@@ -4,7 +4,8 @@
     "menuTitle": "More Options",
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
-    "mutedIconLabel": "Muted"
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -17,7 +18,10 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait."
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -116,7 +120,8 @@
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "More Options"
+    "actionMenuMoreOptions": "More Options",
+    "downloadFile": "Download file"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -156,7 +161,8 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "{cameraName} selected"
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
     "placeholderText": "Enter a number"

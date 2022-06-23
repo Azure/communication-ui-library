@@ -15,13 +15,14 @@ import { usePropsFor } from './hooks/usePropsFor';
 type ChatScreenPeoplePaneProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  isMobile?: boolean;
 };
 
 /**
  * @private
  */
 export const ChatScreenPeoplePane = (props: ChatScreenPeoplePaneProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, isMobile } = props;
   const locale = useLocale();
   const chatListHeader = locale.strings.chat.chatListHeader;
   const participantListProps = usePropsFor(ParticipantList);
@@ -32,6 +33,7 @@ export const ChatScreenPeoplePane = (props: ChatScreenPeoplePaneProps): JSX.Elem
       title={chatListHeader}
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+      isMobile={isMobile}
     />
   );
 };

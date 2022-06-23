@@ -21,12 +21,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       }
     >
       <div
-        className="ms-TooltipHost stub-classname"
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <i
           aria-label="Message sent"

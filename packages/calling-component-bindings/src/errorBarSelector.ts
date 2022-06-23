@@ -50,16 +50,16 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
     }
-    if (diagnostics?.media.latest.noSpeakerDevicesEnumerated) {
+    if (diagnostics?.media.latest.noSpeakerDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoSpeakerFound' });
     }
-    if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
+    if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
     if (deviceManager.deviceAccess?.audio === false) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
-    if (diagnostics?.media.latest.microphonePermissionDenied) {
+    if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     }
 
@@ -89,15 +89,15 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (deviceManager.deviceAccess?.video === false) {
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
-      if (diagnostics?.media.latest.cameraFreeze) {
+      if (diagnostics?.media.latest.cameraFreeze?.value === true) {
         activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
       }
     }
 
-    if (diagnostics?.media.latest.cameraPermissionDenied) {
+    if (diagnostics?.media.latest.cameraPermissionDenied?.value === true) {
       activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
     }
-    if (diagnostics?.media.latest.screenshareRecordingDisabled) {
+    if (diagnostics?.media.latest.screenshareRecordingDisabled?.value === true) {
       activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
     }
 

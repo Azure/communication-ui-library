@@ -85,6 +85,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
             showLabel: false,
             showMuteIndicator: false,
             isAvailable: dominantRemoteParticipant.videoStream?.isAvailable,
+            isReceiving: dominantRemoteParticipant.videoStream?.isReceiving,
             renderElement: dominantRemoteParticipant.videoStream?.renderElement,
             userId: dominantRemoteParticipant.userId,
             key: dominantRemoteParticipant.userId

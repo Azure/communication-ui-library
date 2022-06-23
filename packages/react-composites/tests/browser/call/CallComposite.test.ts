@@ -75,7 +75,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
     await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
     await stubLocalCameraName(page);
-    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
   });
 
   test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
@@ -134,7 +134,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
-      expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
 
@@ -208,7 +208,7 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-hangup-button'));
     await waitForSelector(page, dataUiId('left-call-page'));
-    expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`left-call-page.png`);
   });
 
   test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
@@ -222,7 +222,7 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     await pageClick(page0, dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
 
     await waitForSelector(page1, dataUiId('removed-from-call-page'));
-    expect(await page1.screenshot()).toMatchSnapshot(`remove-from-call-page.png`);
+    expect(await stableScreenshot(page1)).toMatchSnapshot(`remove-from-call-page.png`);
   });
 });
 
@@ -261,7 +261,7 @@ test.describe('Call composite participant menu items injection tests', () => {
     const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
     await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
 
-    expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 });
 
@@ -288,6 +288,6 @@ test.describe('Call composite custom button injection tests', () => {
 
   test('injected buttons appear', async ({ pages }) => {
     const page = pages[0];
-    expect(await page.screenshot()).toMatchSnapshot(`custom-buttons.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
   });
 });

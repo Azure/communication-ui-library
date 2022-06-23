@@ -68,9 +68,12 @@ export const waitForSendMessageFailure = async (page: Page): Promise<void> => {
   await waitForSelector(page, '[data-ui-status="failed"]');
 };
 
-export const waitForMessageDelivered = async (page: Page): Promise<void> => {
+export const waitForMessageDelivered = async (
+  page: Page,
+  options?: { state?: 'visible' | 'attached' }
+): Promise<void> => {
   await page.bringToFront();
-  await waitForSelector(page, '[data-ui-status="delivered"]');
+  await waitForSelector(page, '[data-ui-status="delivered"]', options);
 };
 
 export const waitForMessageSeen = async (page: Page): Promise<void> => {
