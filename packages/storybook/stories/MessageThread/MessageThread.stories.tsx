@@ -246,6 +246,7 @@ const MessageThreadStory = (args): JSX.Element => {
               presence={PersonaPresence.online}
               text={userId}
               imageUrl={GetAvatarUrlByUserId(userId ?? '')}
+              showOverflowTooltip={false}
             />
           );
         }}

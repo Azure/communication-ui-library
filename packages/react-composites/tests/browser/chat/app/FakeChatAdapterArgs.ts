@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { FileMetadata } from '@internal/react-components';
 
 /**
@@ -51,7 +51,21 @@ export type FakeChatAdapterArgs = {
    */
   frenchLocaleEnabled?: boolean;
   /**
+   * Determines if participant pane will be visible.
+   */
+  showParticipantPane?: boolean;
+  /**
    * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
+  /*
+   * Determines if chat composite will be using a custom data model
+   */
+  customDataModelEnabled?: boolean;
+  /*
+   * Record of rest errors to throw when methods of interface ChatThreadClient are called
+   */
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>;
 };
+
+export type ChatThreadRestError = { message: string; code?: string; statusCode?: number };

@@ -4,8 +4,9 @@
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider, _Identifiers } from '@internal/react-components';
+import { _IdentifierProvider } from '@internal/react-components';
 import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
@@ -18,11 +19,16 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
-import { FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
+import {
+  customOnFetchAvatarPersonaData,
+  customOnRenderMessage,
+  customOnRenderTypingIndicator
+} from './CustomDataModel';
 import { FakeChatClient } from './fake-back-end/FakeChatClient';
 import { Model } from './fake-back-end/Model';
 import { IChatClient } from './fake-back-end/types';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
+import { RestError } from '@azure/core-http';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -48,12 +54,16 @@ export const FakeAdapterApp = (): JSX.Element => {
       );
       const chatClient = new FakeChatClient(chatClientModel, fakeChatAdapterArgs.localParticipant.id);
       const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
-      const adapter = await initializeAdapter({
-        userId: fakeChatAdapterArgs.localParticipant.id,
-        displayName: fakeChatAdapterArgs.localParticipant.displayName,
-        chatClient: chatClient as IChatClient as ChatClient,
-        chatThreadClient: chatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
-      });
+      const chatThreadClient = chatClient.getChatThreadClient(thread?.chatThread?.id ?? 'INVALID_THREAD_ID');
+      const adapter = await initializeAdapter(
+        {
+          userId: fakeChatAdapterArgs.localParticipant.id,
+          displayName: fakeChatAdapterArgs.localParticipant.displayName,
+          chatClient: chatClient as IChatClient as ChatClient,
+          chatThreadClient: chatThreadClient
+        },
+        fakeChatAdapterArgs.chatThreadClientMethodErrors
+      );
       setAdapter(adapter);
       if (fakeChatAdapterArgs.participantsWithHiddenComposites) {
         const remoteAdapters = await initializeAdapters(
@@ -100,8 +110,12 @@ export const FakeAdapterApp = (): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             locale={fakeChatAdapterArgs.frenchLocaleEnabled ? COMPOSITE_LOCALE_FR_FR : undefined}
+            onRenderTypingIndicator={
+              fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderTypingIndicator : undefined
+            }
+            onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
-              participantPane: true,
+              participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     downloadHandler: fileDownloadHandler,
@@ -112,6 +126,9 @@ export const FakeAdapterApp = (): JSX.Element => {
                   }
                 : undefined
             }}
+            onFetchAvatarPersonaData={
+              fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
+            }
           />
         </_IdentifierProvider>
       )}
@@ -120,7 +137,10 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter> => {
+const initializeAdapter = async (
+  adapterInfo: AdapterInfo,
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
@@ -128,10 +148,11 @@ const initializeAdapter = async (adapterInfo: AdapterInfo): Promise<ChatAdapter>
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  return await createAzureCommunicationChatAdapterFromClient(
-    statefulChatClient,
-    await statefulChatClient.getChatThreadClient(adapterInfo.chatThreadClient.threadId)
+  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
+    adapterInfo.chatThreadClient.threadId
   );
+  registerchatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
+  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
 interface AdapterInfo {
@@ -223,4 +244,19 @@ const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] =>
       </div>
     );
   });
+};
+
+const registerchatThreadClientMethodErrors = (
+  chatThreadClient: ChatThreadClient,
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+): void => {
+  for (const k in chatThreadClientMethodErrors) {
+    chatThreadClient[k] = () => {
+      throw new RestError(
+        chatThreadClientMethodErrors[k].message ?? '',
+        chatThreadClientMethodErrors[k].code,
+        chatThreadClientMethodErrors[k].statusCode
+      );
+    };
+  }
 };
