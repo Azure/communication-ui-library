@@ -7,10 +7,5 @@
       "@internal/acs-ui-common": ["../../acs-ui-common/src"]
     }
   },
-  "include": [
-    "./browser/**/*.test.ts",
-    "browser/chat/fixture.ts",
-    "browser/chat/fake-adapter/fixture.ts",
-    "browser/call/fixture.ts"
-  ]
+  "include": ["/browser/**/*.ts", "server/**/*.ts"]
 }
