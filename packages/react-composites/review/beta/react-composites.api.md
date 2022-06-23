@@ -723,6 +723,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadFile: string;
 }
 
 // @public
@@ -911,6 +912,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChatMessageOptions: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;

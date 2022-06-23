@@ -1008,6 +1008,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadFile: string;
 }
 
 // @public
@@ -1457,6 +1458,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
     MessageDelivered: JSX.Element;
@@ -1548,6 +1551,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChatMessageOptions: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;
@@ -1723,6 +1728,8 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    callVideoRecoveredBySystem: string;
+    callVideoStoppedBySystem: string;
     dismissButtonAriaLabel: string;
     failedToJoinCallGeneric: string;
     failedToJoinCallInvalidMeetingLink: string;
@@ -2100,6 +2107,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions: string;
+    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -2478,8 +2486,11 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 export interface SendBoxStrings {
     fileUploadsPendingError: string;
     placeholderText: string;
+    removeFile: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

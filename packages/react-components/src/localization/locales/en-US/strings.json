@@ -18,7 +18,10 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait."
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "More Options"
+    "actionMenuMoreOptions": "More Options",
+    "downloadFile": "Download file"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -142,6 +146,8 @@
     "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
+    "callVideoStoppedBySystem": "Your video has been stopped by your system.",
+    "callVideoRecoveredBySystem": "Your video has resumed.",
     "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
     "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
     "dismissButtonAriaLabel": "Close",

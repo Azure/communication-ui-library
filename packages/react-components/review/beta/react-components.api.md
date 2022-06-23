@@ -366,6 +366,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
     MessageDelivered: JSX.Element;
@@ -564,6 +566,8 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
+    callVideoRecoveredBySystem: string;
+    callVideoStoppedBySystem: string;
     dismissButtonAriaLabel: string;
     failedToJoinCallGeneric: string;
     failedToJoinCallInvalidMeetingLink: string;
@@ -609,6 +613,7 @@ export interface _FileCardProps {
     fileExtension: string;
     fileName: string;
     progress?: number;
+    strings?: _FileUploadCardsStrings;
 }
 
 // @internal (undocumented)
@@ -616,11 +621,17 @@ export interface _FileDownloadCards {
     downloadHandler?: FileDownloadHandler;
     fileMetadata: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
+    strings?: _FileDownloadCardsStrings;
     userId: string;
 }
 
 // @internal (undocumented)
 export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
+
+// @internal
+export interface _FileDownloadCardsStrings {
+    downloadFile: string;
+}
 
 // @beta
 export interface FileDownloadError {
@@ -635,6 +646,13 @@ export interface FileMetadata {
     extension: string;
     name: string;
     url: string;
+}
+
+// @internal
+export interface _FileUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public
@@ -870,6 +888,7 @@ export type MessageThreadProps = {
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions: string;
+    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -1197,8 +1216,11 @@ export interface SendBoxProps {
 export interface SendBoxStrings {
     fileUploadsPendingError: string;
     placeholderText: string;
+    removeFile: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

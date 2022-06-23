@@ -1,7 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// @azure/communication-calling makes reference to the window object at import time so cannot be directly
+// imported here because tests are run in a node environment (which does not have a window object.)
+// Instead ensure we only import types.
+import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { DeviceManagerState } from '@internal/calling-stateful-client';
+
+// Redeclare runtime values from the calling sdk package to above the issue mentioned above where the calling
+// sdk package makes reference to the window object at import time.
+export enum DiagnosticQuality {
+  Good = 1,
+  Poor = 2,
+  Bad = 3
+}
 
 /**
  * Calling state passed as as a query argument to set up MockCallingAdapter in playwright test
@@ -46,34 +58,12 @@ export type TestDiagnostics = {
   /**
    * Stores diagnostics related to network conditions.
    */
-  network?: { networkReconnect?: DiagnosticValue };
+  network?: LatestNetworkDiagnostics;
   /**
    * Stores diagnostics related to media quality.
    */
-  media?: { speakingWhileMicrophoneIsMuted?: DiagnosticValue; cameraFreeze?: DiagnosticValue };
+  media?: LatestMediaDiagnostics;
 };
-
-/**
- * Diagnostic value used for a child property in {@link TestDiagnostics}
- */
-export type DiagnosticValue = {
-  value: DiagnosticQuality | boolean;
-  valueType: DiagnosticValueType;
-};
-
-/**
- * Enum for value in {@link DiagnosticValue}
- */
-export enum DiagnosticQuality {
-  Good = 1,
-  Poor = 2,
-  Bad = 3
-}
-
-/**
- * Value types for {@link DiagnosticValue}
- */
-export type DiagnosticValueType = 'DiagnosticQuality' | 'DiagnosticFlag';
 
 /**
  * Record of errors to represent latest errors state in {@link TestCallingState}
