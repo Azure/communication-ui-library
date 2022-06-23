@@ -754,8 +754,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
-    dismissSidePaneButtonLabel: string;
-    moreDrawerAudioDeviceMenuTitle: string;
+    dismissSidePaneButtonLabel?: string;
+    moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -767,8 +767,8 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
-    returnToCallButtonAriaDescription: string;
-    returnToCallButtonAriaLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -1967,7 +1967,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    displayName: string;
+    displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
@@ -1982,7 +1982,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
-    displayNamePlaceholder: string;
+    displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
