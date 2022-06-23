@@ -78,7 +78,7 @@ export const textFieldStyle: IStyle = {
 /**
  * @private
  */
-export const inputButtonStyle = mergeStyles({
+export const inputButtonStyle: IStyle = {
   color: 'grey',
   margin: 'auto',
   padding: '0',
@@ -89,7 +89,7 @@ export const inputButtonStyle = mergeStyles({
   '&:hover': {
     backgroundColor: 'transparent'
   }
-});
+};
 
 /**
  * @private
