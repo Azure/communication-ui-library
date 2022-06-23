@@ -76,6 +76,9 @@ jobs:
       # Perform lint check
       - name: Run linter
         run: rush lint
+      # Type check test folder
+      - name: Type check test folder
+        run: cd packages/react-composites && rushx tsc:e2e
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
