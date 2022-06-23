@@ -817,8 +817,8 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export interface CameraButtonStrings {
-    cameraActionTurnedOffAnnouncement: string;
-    cameraActionTurnedOnAnnouncement: string;
+    cameraActionTurnedOffAnnouncement?: string;
+    cameraActionTurnedOnAnnouncement?: string;
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
@@ -1558,9 +1558,9 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
-    dismissButtonAriaLabel: string;
-    failedToJoinCallGeneric: string;
-    failedToJoinCallInvalidMeetingLink: string;
+    dismissButtonAriaLabel?: string;
+    failedToJoinCallGeneric?: string;
+    failedToJoinCallInvalidMeetingLink?: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1838,7 +1838,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
-    actionMenuMoreOptions: string;
+    actionMenuMoreOptions?: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -1911,9 +1911,9 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneActionTurnedOffAnnouncement: string;
-    microphoneActionTurnedOnAnnouncement: string;
-    microphoneButtonSplitRoleDescription: string;
+    microphoneActionTurnedOffAnnouncement?: string;
+    microphoneActionTurnedOnAnnouncement?: string;
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;

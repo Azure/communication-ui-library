@@ -42,7 +42,7 @@ export interface CallWithChatCompositeStrings {
    *
    * Only used with `mobileView` set to `true` and when no speakers are available.
    */
-  moreDrawerAudioDeviceMenuTitle: string;
+  moreDrawerAudioDeviceMenuTitle?: string;
   /**
    * Title for the microphone selection sub-menu in more button drawer.
    *
@@ -98,13 +98,13 @@ export interface CallWithChatCompositeStrings {
   /**
    * Label for SidePaneHeader dismiss button
    */
-  dismissSidePaneButtonLabel: string;
+  dismissSidePaneButtonLabel?: string;
   /**
    * Aria Description string for return to call button
    */
-  returnToCallButtonAriaDescription: string;
+  returnToCallButtonAriaDescription?: string;
   /**
    * Aria label string for return to call back button
    */
-  returnToCallButtonAriaLabel: string;
+  returnToCallButtonAriaLabel?: string;
 }

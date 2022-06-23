@@ -92,8 +92,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface CameraButtonStrings {
-    cameraActionTurnedOffAnnouncement: string;
-    cameraActionTurnedOnAnnouncement: string;
+    cameraActionTurnedOffAnnouncement?: string;
+    cameraActionTurnedOnAnnouncement?: string;
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
@@ -564,9 +564,9 @@ export interface ErrorBarStrings {
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
-    dismissButtonAriaLabel: string;
-    failedToJoinCallGeneric: string;
-    failedToJoinCallInvalidMeetingLink: string;
+    dismissButtonAriaLabel?: string;
+    failedToJoinCallGeneric?: string;
+    failedToJoinCallInvalidMeetingLink?: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -883,7 +883,7 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
-    actionMenuMoreOptions: string;
+    actionMenuMoreOptions?: string;
     downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
@@ -947,9 +947,9 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
-    microphoneActionTurnedOffAnnouncement: string;
-    microphoneActionTurnedOnAnnouncement: string;
-    microphoneButtonSplitRoleDescription: string;
+    microphoneActionTurnedOffAnnouncement?: string;
+    microphoneActionTurnedOnAnnouncement?: string;
+    microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
     offLabel: string;
@@ -995,7 +995,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
-    displayName: string;
+    displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
@@ -1010,7 +1010,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
-    displayNamePlaceholder: string;
+    displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
