@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon } from '@fluentui/react';
 import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import React from 'react';
+import { CallCompositeIcon } from '../../../common/icons';
 import {
   CallControlDisplayType,
   CustomCallControlButtonCallback,
@@ -48,7 +48,7 @@ export const generateCustomControlBarButtons = (
               styles={buttonProps.styles}
               key={`${buttonProps.placement}_${i}`}
               // set default icon if not provided
-              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? ''} />}
+              onRenderIcon={() => <CallCompositeIcon iconName={buttonProps.iconName ?? ''} />}
               disabled={buttonProps.disabled}
             />
           ))}

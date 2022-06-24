@@ -83,7 +83,7 @@ export const DEFAULT_COMPOSITE_ICONS = {
 };
 
 /** @private */
-export type CompositeIconProps<Icons> = IIconProps & { iconName: keyof Icons };
+export type CompositeIconProps<Icons> = IIconProps | { iconName: keyof Icons };
 
 /**
  * Icons that can be overridden for {@link ChatComposite}.
