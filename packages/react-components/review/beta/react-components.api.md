@@ -363,6 +363,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
@@ -563,6 +564,7 @@ export interface ErrorBarStrings {
     callMacOsScreenShareAccessDenied: string;
     callMicrophoneAccessDenied: string;
     callMicrophoneMutedBySystem: string;
+    callMicrophoneUnmutedBySystem: string;
     callNetworkQualityLow: string;
     callNoMicrophoneFound: string;
     callNoSpeakerFound: string;
