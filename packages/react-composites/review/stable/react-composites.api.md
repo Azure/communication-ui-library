@@ -553,8 +553,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
-    dismissSidePaneButton: string;
-    moreDrawerAudioDeviceMenuTitle: string;
+    dismissSidePaneButtonLabel?: string;
+    moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -566,8 +566,8 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
-    returnToCallButtonAriaDescription: string;
-    returnToCallButtonAriaLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -820,6 +820,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
 };
 

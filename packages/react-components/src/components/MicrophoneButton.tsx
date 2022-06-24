@@ -46,7 +46,7 @@ export interface MicrophoneButtonStrings {
   /**
    * Description of microphone button split button role
    */
-  microphoneButtonSplitRoleDescription: string;
+  microphoneButtonSplitRoleDescription?: string;
   /**
    * Microphone split button aria label when mic is enabled.
    */
@@ -58,11 +58,11 @@ export interface MicrophoneButtonStrings {
   /**
    * Microphone action turned on string for announcer
    */
-  microphoneActionTurnedOnAnnouncement: string;
+  microphoneActionTurnedOnAnnouncement?: string;
   /**
    * Microphone action turned off string for announcer
    */
-  microphoneActionTurnedOffAnnouncement: string;
+  microphoneActionTurnedOffAnnouncement?: string;
 }
 
 /**
@@ -152,11 +152,23 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
+  const isSplit = props.split ?? props.enableDeviceSelectionMenu;
+
+  // The button should be disabled when there are no mics. However if the button is a split button, if there are
+  // no mics but there are speakers, then only the primary part of the button should be disabled to allow for
+  // speaker change.
+  const primaryDisabled = props.primaryDisabled || (isSplit && !props.microphones?.length ? true : undefined);
+  const disabled =
+    props.disabled ||
+    (isSplit && !props.microphones?.length && !props.speakers?.length) ||
+    (!isSplit && props.microphones && props.microphones?.length === 0);
+
   const onRenderMicOnIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />;
+    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;
   };
   const onRenderMicOffIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />;
+    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
   };
 
   const isMicOn = props.checked;
@@ -206,6 +218,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
         }
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
+        disabled={disabled}
+        primaryDisabled={primaryDisabled}
       />
     </>
   );
