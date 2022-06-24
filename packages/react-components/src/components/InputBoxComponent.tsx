@@ -9,9 +9,9 @@ import {
   IStyle,
   ITextField,
   concatStyleSets,
+  IconButton,
   TooltipHost,
-  ICalloutContentStyles,
-  DefaultButton
+  ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -23,8 +23,7 @@ import {
   inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
-  inputButtonTooltipStyle,
-  iconWrapperStyle
+  inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -182,7 +181,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   };
   return (
     <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
-      <DefaultButton
+      <IconButton
         className={mergedButtonStyle}
         ariaLabel={ariaLabel}
         onClick={onClick}
@@ -193,9 +192,8 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
+        onRenderIcon={() => onRenderIcon(isHover)}
       />
-      {/* VoiceOver fix: Avoid rerender of DefaultButton above that handles clicking and hovering by keeping rerendering icon separate */}
-      <div className={iconWrapperStyle}>{onRenderIcon(isHover)}</div>
     </TooltipHost>
   );
 };

@@ -81,11 +81,8 @@ export const textFieldStyle: IStyle = {
 export const inputButtonStyle = mergeStyles({
   color: 'grey',
   margin: 'auto',
-  padding: '0',
   width: '1.0625rem',
   height: '1.0625rem',
-  border: 'none',
-  minWidth: '0',
   '&:hover': {
     backgroundColor: 'transparent'
   }
@@ -120,8 +117,3 @@ export const inputButtonTooltipStyle = mergeStyles({
   // The toolTip host container show be a flex box, so that alignItems: 'center' works for inside buttons
   display: 'flex'
 });
-
-/**
- * @private
- */
-export const iconWrapperStyle = mergeStyles({ position: 'absolute', pointerEvents: 'none' });
