@@ -8,7 +8,6 @@ import {
   ChevronDown20Regular,
   ChevronRight20Regular,
   Dismiss16Regular,
-  Dismiss20Regular,
   DismissCircle20Regular,
   Link16Regular,
   People16Regular,
