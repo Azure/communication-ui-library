@@ -104,7 +104,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
   ErrorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
-  ErrorBarClear: <Dismiss20Regular />,
+  ErrorBarClear: <Dismiss16Regular />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
   MessageDelivered: <CheckmarkCircle16Regular />,
