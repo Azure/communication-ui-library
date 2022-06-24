@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Autofocus rejoin call button on call end page",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

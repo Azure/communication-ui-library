@@ -32,13 +32,17 @@ export interface NoticePageProps {
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
   return (
-    <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId}>
+    <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
-        <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
-        <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>
+        <Text className={mergeStyles(titleStyles)} aria-live="assertive">
+          {props.title}
+        </Text>
+        <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
+          {props.moreDetails}
+        </Text>
         <Stack styles={rejoinCallButtonContainerStyles}>
-          <StartCallButton onClickHandler={() => adapter.joinCall()} isDisabled={false} rejoinCall={true} />
+          <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
         </Stack>
       </Stack>
     </Stack>
