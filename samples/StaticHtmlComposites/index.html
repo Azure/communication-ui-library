@@ -3,6 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <title>Basic example for CallComposite and ChatComposite</title>
+
+  <!-- Ensure that fonts have loaded before tests are run -->
+  <link rel="preload" href="./fonts/segoeui-regular.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-semibold.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-bold.woff2" as="font" crossorigin="anonymous" />
+  <style>
+    @font-face {
+      font-weight: 400;
+      src: url('./fonts/segoeui-regular.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 600;
+      src: url('./fonts/segoeui-semibold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 700;
+      src: url('./fonts/segoeui-bold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+  </style>
 </head>
 
 <body>
