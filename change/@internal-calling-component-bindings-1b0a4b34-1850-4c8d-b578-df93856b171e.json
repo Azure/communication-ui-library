@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

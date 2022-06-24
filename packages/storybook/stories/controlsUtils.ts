@@ -109,11 +109,14 @@ const errorOptions: ErrorType[] = [
   'callNoMicrophoneFound',
   'callMicrophoneAccessDenied',
   'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
   'callMacOsMicrophoneAccessDenied',
   'callLocalVideoFreeze',
   'callCameraAlreadyInUse',
   'callMacOsCameraAccessDenied',
-  'callMacOsScreenShareAccessDenied'
+  'callMacOsScreenShareAccessDenied',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];

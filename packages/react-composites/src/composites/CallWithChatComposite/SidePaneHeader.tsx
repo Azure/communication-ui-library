@@ -27,7 +27,7 @@ export const SidePaneHeader = (props: { headingText: string; onClose: () => void
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles}>
       <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
       <CommandBarButton
-        ariaLabel={callWithChatStrings.dismissSidePaneButton}
+        ariaLabel={callWithChatStrings.dismissSidePaneButtonLabel}
         styles={sidePaneCloseButtonStyles}
         iconProps={{ iconName: 'cancel' }}
         onClick={props.onClose}

@@ -56,17 +56,34 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
-    if (
-      deviceManager.deviceAccess?.audio === false ||
-      diagnostics?.media.latest.microphoneNotFunctioning?.value === true
-    ) {
+    if (deviceManager.deviceAccess?.audio === false) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
-    }
-    if (diagnostics?.media.latest.microphoneMuteUnexpectedly?.value === true) {
-      activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
     }
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
+    }
+
+    const microphoneMuteUnexpectedlyDiagnostic =
+      diagnostics?.media.latest.microphoneMuteUnexpectedly || diagnostics?.media.latest.microphoneNotFunctioning;
+    if (microphoneMuteUnexpectedlyDiagnostic) {
+      if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+        // Inform the user that microphone stopped working and inform them to start microphone again
+        activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
+      } else if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+        // Inform the user that microphone recovered
+        activeErrorMessages.push({ type: 'callMicrophoneUnmutedBySystem' });
+      }
+    }
+
+    const cameraStoppedUnexpectedlyDiagnostic = diagnostics?.media.latest.cameraStoppedUnexpectedly;
+    if (cameraStoppedUnexpectedlyDiagnostic) {
+      if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+        // Inform the user that camera stopped working and inform them to start video again
+        activeErrorMessages.push({ type: 'callVideoStoppedBySystem' });
+      } else if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+        // Inform the user that camera recovered
+        activeErrorMessages.push({ type: 'callVideoRecoveredBySystem' });
+      }
     }
 
     if (deviceManager.deviceAccess?.video === false) {
