@@ -4,7 +4,8 @@
     "menuTitle": "Diğer Seçenekler",
     "removeButtonLabel": "Kaldır",
     "sharingIconLabel": "Paylaşım",
-    "mutedIconLabel": "Ses kapatıldı"
+    "mutedIconLabel": "Ses kapatıldı",
+    "displayNamePlaceholder": "Adsız Katılımcı"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -42,7 +43,12 @@
     "tooltipOffContent": "Kamerayı aç",
     "tooltipVideoLoadingContent": "Video yükleniyor",
     "cameraMenuTitle": "Kamera",
-    "cameraMenuTooltip": "Kamera Seç"
+    "cameraMenuTooltip": "Kamera Seç",
+    "cameraButtonSplitRoleDescription": "Bölünmüş düğme",
+    "onSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini devre dışı bırak",
+    "offSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini etkinleştir",
+    "cameraActionTurnedOnAnnouncement": "Kameranız açıldı",
+    "cameraActionTurnedOffAnnouncement": "Kameranız kapatıldı"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
@@ -53,13 +59,20 @@
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Mikrofon Seç",
     "speakerMenuTitle": "Hoparlör",
-    "speakerMenuTooltip": "Hoparlör Seç"
+    "speakerMenuTooltip": "Hoparlör Seç",
+    "microphoneButtonSplitRoleDescription": "Bölünmüş düğme",
+    "onSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini kapat",
+    "offSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini aç",
+    "microphoneActionTurnedOnAnnouncement": "Mikrofonunuz açıldı",
+    "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı"
   },
   "devicesButton": {
     "label": "Cihazlar",
     "tooltipContent": "Cihazları yönet",
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera Seç",
+    "audioDeviceMenuTitle": "Ses Cihazı",
+    "audioDeviceMenuTooltip": "Ses Cihazı Seç",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Mikrofon Seç",
     "speakerMenuTitle": "Hoparlör",
@@ -93,6 +106,8 @@
     "participantLeft": "sohbetten ayrıldı.",
     "editMessage": "Düzenle",
     "removeMessage": "Sil",
+    "resendMessage": "Yeniden göndermeyi deneyin",
+    "failToSendTag": "Gönderilemedi",
     "editedTag": "Düzenlendi",
     "liveAuthorIntro": "{author} şöyle diyor:",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
@@ -101,7 +116,8 @@
     "noDisplayNameSub": "Ad yok",
     "editBoxCancelButton": "İptal",
     "editBoxSubmitButton": "Gönder",
-    "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu"
+    "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
+    "actionMenuMoreOptions": "Diğer Seçenekler"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -127,12 +143,27 @@
     "callCameraAccessDenied": "Kameraya erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
     "callCameraAlreadyInUse": "Kameraya erişemiyor. Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
     "callMacOsCameraAccessDenied": "MacOS kameranıza erişimi engelliyor. Bu tarayıcının kameranıza erişmesine izin vermek için gizlilik ayarlarınızı güncelleştirin.",
-    "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin."
+    "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin.",
+    "dismissButtonAriaLabel": "Kapat",
+    "failedToJoinCallGeneric": "Aramaya katılınamadı.",
+    "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
     "localVideoLabel": "Siz",
-    "localVideoCameraSwitcherLabel": "Kamerayı değiştir"
+    "localVideoCameraSwitcherLabel": "Kamerayı değiştir",
+    "localVideoMovementLabel": "Taşınabilir Yerel Video Kutucuğu",
+    "localVideoSelectedDescription": "{cameraName} seçildi",
+    "displayNamePlaceholder": "Adsız Katılımcı"
+  },
+  "dialpad": {
+    "placeholderText": "Numara Girin"
+  },
+  "HoldButton": {
+    "onLabel": "Devam et",
+    "offLabel": "Beklet",
+    "toolTipOnContent": "Görüşmeye devam etme",
+    "toolTipOffContent": "Aramayı bekletme"
   }
 }
