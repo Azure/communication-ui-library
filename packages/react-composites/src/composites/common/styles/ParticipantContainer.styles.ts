@@ -159,7 +159,7 @@ export const participantListMobileStyle: ParticipantListStyles = {
 export const displayNameStyles: ITextStyles = {
   root: {
     padding: '0.5rem',
-    textOverflow: 'ellipses',
+    textOverflow: 'ellipsis',
     overflow: 'hidden'
   }
 };
