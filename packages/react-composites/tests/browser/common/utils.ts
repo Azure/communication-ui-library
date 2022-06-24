@@ -44,12 +44,13 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
  */
 export const waitForSelector = async (
   page: Page,
-  selector: string
+  selector: string,
+  options?: { state?: 'visible' | 'attached' }
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
   await page.bringToFront();
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS, ...options })
   );
 };
 

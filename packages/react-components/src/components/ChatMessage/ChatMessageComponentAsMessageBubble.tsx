@@ -140,7 +140,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const actionMenuProps = wasInteractionByTouch
     ? undefined
     : chatMessageActionMenuProps({
-        ariaLabel: strings.actionMenuMoreOptions,
+        ariaLabel: strings.actionMenuMoreOptions ?? '',
         enabled: chatActionsEnabled,
         menuButtonRef: messageActionButtonRef,
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
@@ -164,9 +164,19 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
+        /* @conditional-compile-remove(file-sharing) */
+        strings={{ downloadFile: props.strings.downloadFile ?? locale.strings.messageThread.downloadFile }}
       />
     ),
-    [message, fileDownloadHandler, userId]
+    [
+      userId,
+      message,
+      /* @conditional-compile-remove(file-sharing) */
+      props,
+      /* @conditional-compile-remove(file-sharing) */
+      locale,
+      fileDownloadHandler
+    ]
   );
 
   const chatMessage = (

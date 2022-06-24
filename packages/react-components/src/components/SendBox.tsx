@@ -14,7 +14,8 @@ import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
-import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
+import { InputBoxComponent } from './InputBoxComponent';
+import { VoiceOverButton } from './VoiceOverButton';
 
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
@@ -104,6 +105,21 @@ export interface SendBoxStrings {
    * Error message indicating that all file uploads are not complete.
    */
   fileUploadsPendingError: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user when focus is on cancel file upload button.
+   */
+  removeFile: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user file uploading starts.
+   */
+  uploading: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Aria label to notify user file is uploaded.
+   */
+  uploadCompleted: string;
 }
 
 /**
@@ -318,10 +334,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderFileUploads()
     ) : (
       <Stack className={fileUploadCardsStyles}>
-        <_FileUploadCards activeFileUploads={props.activeFileUploads} onCancelFileUpload={props.onCancelFileUpload} />
+        <_FileUploadCards
+          activeFileUploads={props.activeFileUploads}
+          onCancelFileUpload={props.onCancelFileUpload}
+          strings={{
+            removeFile: props.strings?.removeFile ?? localeStrings.removeFile,
+            uploading: props.strings?.uploading ?? localeStrings.uploading,
+            uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+          }}
+        />
       </Stack>
     );
-  }, [props]);
+  }, [props, localeStrings]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
@@ -360,7 +384,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
         >
-          <InputBoxButton
+          <VoiceOverButton
             onRenderIcon={onRenderSendIcon}
             onClick={(e) => {
               if (!textValueOverflow) {
