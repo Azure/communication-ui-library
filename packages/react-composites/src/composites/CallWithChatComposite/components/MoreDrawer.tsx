@@ -31,7 +31,7 @@ export interface MoreDrawerStrings {
    * @remarks This replaces the microphoneMenuTitle speakers can not be enumerated
    *
    */
-  audioDeviceMenuTitle: string;
+  audioDeviceMenuTitle?: string;
   /**
    * Label for microphone drawerMenuItem.
    *
