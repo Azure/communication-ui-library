@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Better announce lobby, network failure and call end notices for screen reader users",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

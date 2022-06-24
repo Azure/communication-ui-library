@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update selectors for microphone and camera to disable buttons when there are no cameras or microphones present",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
