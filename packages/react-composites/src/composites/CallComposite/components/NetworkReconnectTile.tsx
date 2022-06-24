@@ -41,14 +41,20 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
     <ExpandedLocalVideoTile
       localParticipantVideoStream={props.localParticipantVideoStream}
       overlayContent={
-        <Stack verticalFill horizontalAlign="center" verticalAlign="center" className={mergeStyles(containerStyle)}>
+        <Stack
+          verticalFill
+          horizontalAlign="center"
+          verticalAlign="center"
+          className={mergeStyles(containerStyle)}
+          aria-atomic
+        >
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
             <CallCompositeIcon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
-            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
+            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'assertive'}>
               {strings.networkReconnectTitle}
             </Text>
           </Stack>
-          <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'polite'}>
+          <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'assertive'}>
             {strings.networkReconnectMoreDetails}
           </Text>
         </Stack>
