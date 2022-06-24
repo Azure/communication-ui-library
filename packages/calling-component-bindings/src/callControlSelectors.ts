@@ -81,7 +81,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
 
     return {
-      disabled: !deviceManager.selectedCamera || !permission,
+      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
