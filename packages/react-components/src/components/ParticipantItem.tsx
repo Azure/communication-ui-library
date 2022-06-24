@@ -60,7 +60,7 @@ export interface ParticipantItemStrings {
   /** Label for the muted icon in participant state stack  */
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
-  displayNamePlaceholder: string;
+  displayNamePlaceholder?: string;
 }
 
 /**
@@ -72,7 +72,7 @@ export interface ParticipantItemProps {
   /** Unique User ID of the participant. This `userId` is available in the `onRenderAvatar` callback function */
   userId?: string;
   /** Name of participant. */
-  displayName: string;
+  displayName?: string;
   /** Optional indicator to show participant is the user. */
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */

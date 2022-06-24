@@ -58,11 +58,11 @@ export interface CameraButtonStrings {
   /**
    * Camera action turned on string for announcer
    */
-  cameraActionTurnedOnAnnouncement: string;
+  cameraActionTurnedOnAnnouncement?: string;
   /**
    * Camera action turned off string for announcer
    */
-  cameraActionTurnedOffAnnouncement: string;
+  cameraActionTurnedOffAnnouncement?: string;
 }
 
 /**
