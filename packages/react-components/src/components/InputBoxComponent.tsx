@@ -169,6 +169,7 @@ export type InputBoxButtonProps = {
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
   const [isHover, setIsHover] = useState(false);
+  const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
 
   const theme = useTheme();
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
@@ -182,10 +183,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   return (
     <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
       <DefaultButton
-        className={className}
-        styles={{
-          root: inputButtonStyle
-        }}
+        className={mergedButtonStyle}
         ariaLabel={ariaLabel}
         onClick={onClick}
         id={id}
