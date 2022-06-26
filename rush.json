@@ -64,6 +64,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/web-components",
+      "projectFolder": "packages/web-components",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "calling",
       "projectFolder": "samples/Calling",
       "reviewCategory": "sample"

@@ -6,7 +6,8 @@ import {
   VideoGallery,
   VideoStreamOptions,
   OnRenderAvatarCallback,
-  VideoGalleryRemoteParticipant
+  VideoGalleryRemoteParticipant,
+  LocalVideoCameraCycleButton
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -15,7 +16,6 @@ import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
-import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { useCustomAvatarPersonaData } from '../../common/CustomDataModelUtils';
 
 const VideoGalleryStyles = {

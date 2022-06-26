@@ -1,0 +1,73 @@
+{
+  "name": "@internal/web-components",
+  "version": "1.2.2-beta.1",
+  "description": "Starter template to get up and running quickly with React and Storybook",
+  "author": "Chromatic <https://chromatic.com/>",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chromaui/intro-storybook-react-template"
+  },
+  "bugs": {
+    "url": "https://github.com/chromaui/intro-storybook-react-template/issues"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@microsoft/fast-components": "^2.30.6",
+    "@microsoft/fast-element": "^1.10.2",
+    "@microsoft/fast-react-wrapper": "^0.3.9",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "react": "~16.14.0",
+    "react-dom": "16.13.1",
+    "typescript": "4.3.5",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "storybook": "tsc && start-storybook -p 6006",
+    "build:tsc": "tsc",
+    "build": "tsc",
+    "build-storybook": "build-storybook"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "~7.16.0",
+    "babel-loader": "8.1.0",
+    "msw": "^0.36.8",
+    "msw-storybook-addon": "^1.6.0",
+    "webpack": "5.38.1",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-junit": "~13.0.0",
+    "jest": "26.6.0",
+    "preact": "^10.5.12"
+  }
+}
