@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, ITextStyles } from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';
 
 /**
@@ -143,5 +143,16 @@ export const participantListMobileStyle: ParticipantListStyles = {
     root: {
       padding: '0.5rem 1rem'
     }
+  }
+};
+
+/**
+ * @private
+ */
+export const displayNameStyles: ITextStyles = {
+  root: {
+    padding: '0.5rem',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden'
   }
 };
