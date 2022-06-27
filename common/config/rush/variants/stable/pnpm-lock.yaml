@@ -6215,7 +6215,7 @@ packages:
   /batch/0.6.1:
     dev: false
     resolution:
-      integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
+      integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==
   /beachball/2.20.0:
     dependencies:
       cosmiconfig: 6.0.0
@@ -6317,7 +6317,7 @@ packages:
     engines:
       node: '>= 0.8'
     resolution:
-      integrity: sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=
+      integrity: sha512-YQyoqQG3sO8iCmf8+hyVpgHHOv0/hCEFiS4zTGUwTA1HjAFX66wRcNQrVCeJq9pgESMRvUAOvSil5MJlmccuKQ==
   /body-parser/1.19.2:
     dependencies:
       bytes: 3.1.2
@@ -6549,7 +6549,7 @@ packages:
     engines:
       node: '>= 0.8'
     resolution:
-      integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
+      integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==
   /bytes/3.1.2:
     dev: false
     engines:
@@ -7148,7 +7148,7 @@ packages:
   /concat-map/0.0.1:
     dev: false
     resolution:
-      integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
+      integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
   /concat-stream/1.6.2:
     dependencies:
       buffer-from: 1.1.2
@@ -7210,7 +7210,7 @@ packages:
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha1-DPaLud318r55YcOoUXjLhdunjLQ=
+      integrity: sha512-kRGRZw3bLlFISDBgwTSA1TMBFN6J6GWDeubmDE3AF+3+yXL8hTWv8r5rkLbqYXY4RjPk/EzHnClI3zQf1cFmHA==
   /content-disposition/0.5.4:
     dependencies:
       safe-buffer: 5.2.1
@@ -7243,13 +7243,13 @@ packages:
   /cookie-signature/1.0.6:
     dev: false
     resolution:
-      integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
+      integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==
   /cookie/0.3.1:
     dev: false
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
+      integrity: sha512-+IJOX0OqlHCszo2mBUq+SrEbCj6w7Kpffqx60zYbPTFaO4+yYgRjHwcZNpWvaTylDHaV7PPmBHzSecZiMhtPgw==
   /cookie/0.4.1:
     dev: false
     engines:
@@ -7916,7 +7916,7 @@ packages:
       wrappy: 1.0.2
     dev: false
     resolution:
-      integrity: sha1-f3Qt4Gb8dIvI24IFad3c5Jvw1FY=
+      integrity: sha512-K7i4zNfT2kgQz3GylDw40ot9GAE47sFZ9EXHFSPP6zONLgH6kWXE0KWJchkbQJLBkRazq4APwZ4OwiFFlT95OQ==
   /diff-sequences/26.6.2:
     dev: false
     engines:
@@ -7956,7 +7956,7 @@ packages:
   /discontinuous-range/1.0.0:
     dev: false
     resolution:
-      integrity: sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=
+      integrity: sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==
   /dns-equal/1.0.0:
     dev: false
     resolution:
@@ -8145,7 +8145,7 @@ packages:
   /ee-first/1.1.1:
     dev: false
     resolution:
-      integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
+      integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
   /ejs/3.1.6:
     dependencies:
       jake: 10.8.4
@@ -8893,7 +8893,7 @@ packages:
       through: 2.3.8
     dev: false
     resolution:
-      integrity: sha1-SrTJoPWlTbkzi0w02Gv86PSzVXE=
+      integrity: sha512-QHpkERcGsR0T7Qm3HNJSyXKEEj8AHNxkY3PK8TS2KJvQ7NiSHe3DDpwVKKtoYprL/AreyzFBeIkBIWChAqn60g==
   /eventemitter3/4.0.7:
     dev: false
     resolution:
@@ -9702,7 +9702,7 @@ packages:
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
+      integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==
   /from/0.1.7:
     dev: false
     resolution:
@@ -12401,7 +12401,7 @@ packages:
   /lodash.uniq/4.5.0:
     dev: false
     resolution:
-      integrity: sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
+      integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
   /lodash/4.17.21:
     dev: false
     resolution:
@@ -12596,7 +12596,7 @@ packages:
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
+      integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
   /memfs/3.4.1:
     dependencies:
       fs-monkey: 1.0.3
@@ -12652,7 +12652,7 @@ packages:
   /merge-descriptors/1.0.1:
     dev: false
     resolution:
-      integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
+      integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==
   /merge-stream/2.0.0:
     dev: false
     resolution:
@@ -14228,7 +14228,7 @@ packages:
     engines:
       node: '>= 0.6.0'
     resolution:
-      integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
+      integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
   /progress/2.0.1:
     dev: false
     engines:
@@ -16074,6 +16074,7 @@ packages:
     resolution:
       integrity: sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==
   /stable/0.1.8:
+    deprecated: 'Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility'
     dev: false
     resolution:
       integrity: sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==
@@ -19330,10 +19331,12 @@ packages:
       '@azure/communication-identity': 1.0.0
       '@babel/core': 7.16.12
       '@playwright/test': 1.22.2
+      '@types/copy-webpack-plugin': 6.4.3
       '@types/node': 14.18.12
       '@types/node-static': 0.7.7
       babel-loader: 8.1.0_aa6d88355c68f323db0a612de3ad0c55
       concurrently: 5.3.0
+      copy-webpack-plugin: 6.4.1_webpack@5.38.1
       dotenv: 10.0.0
       ecstatic: 4.1.4
       env-cmd: 10.1.0
@@ -19353,7 +19356,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-0IableGUOafrzCd6L3WpeIJDJ7nhwIQ+J1VVHGlrlFHJSJYoBOTTRM5xkI3mHOMaXA8Mxmc3D1POgw1xkhGPbA==
+      integrity: sha512-y9TChmWYXqMTBja4uTpw2RDUJkcgWuyuVl7lIs8U+Faxiv94Yusp4xlBKrQBMAZg2l+laxjtxX5Zt+BVE0eYLQ==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
