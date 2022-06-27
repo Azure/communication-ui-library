@@ -1027,6 +1027,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadFile: string;
 }
 
 // @public
@@ -2119,6 +2120,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions: string;
+    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -2497,8 +2499,11 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 export interface SendBoxStrings {
     fileUploadsPendingError: string;
     placeholderText: string;
+    removeFile: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @public

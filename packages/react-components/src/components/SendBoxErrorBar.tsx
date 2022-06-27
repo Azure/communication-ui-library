@@ -3,6 +3,7 @@
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
+import { Announcer } from './Announcer';
 
 /**
  * @beta
@@ -62,16 +63,19 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
 
   if (errorMessage) {
     return (
-      <MessageBar
-        messageBarType={MessageBarType.warning}
-        styles={{
-          iconContainer: {
-            display: 'none'
-          }
-        }}
-      >
-        {errorMessage}
-      </MessageBar>
+      <>
+        <Announcer announcementString={errorMessage} ariaLive={'polite'} />
+        <MessageBar
+          messageBarType={MessageBarType.warning}
+          styles={{
+            iconContainer: {
+              display: 'none'
+            }
+          }}
+        >
+          {errorMessage}
+        </MessageBar>
+      </>
     );
   } else {
     return <></>;

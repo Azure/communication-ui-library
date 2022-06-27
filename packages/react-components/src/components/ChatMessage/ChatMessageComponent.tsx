@@ -119,6 +119,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onRenderAvatar={props.onRenderAvatar}
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
+        strings={props.strings}
       />
     );
   }
