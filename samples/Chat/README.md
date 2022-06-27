@@ -47,7 +47,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 1. Start the calling app
 
     ```bash
-    cd samples\Chat
+    cd samples/Chat
     rushx start
     ```
 
