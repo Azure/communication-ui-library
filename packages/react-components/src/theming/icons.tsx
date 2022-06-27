@@ -10,6 +10,7 @@ import {
   Circle16Regular,
   Delete20Regular,
   Dismiss20Regular,
+  Dismiss16Regular,
   Edit20Regular,
   ErrorCircle16Regular,
   EyeShow16Regular,
@@ -41,7 +42,7 @@ import {
 } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
-import { ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Pause20Filled, Play20Filled } from '@fluentui/react-icons';
 
