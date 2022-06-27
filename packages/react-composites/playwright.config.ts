@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import { PlaywrightTestConfig, devices, ReporterDescription } from '@playwright/test';
 import path from 'path';
 
 const DESKTOP_VIEWPORT = {
@@ -10,6 +10,7 @@ const DESKTOP_VIEWPORT = {
 };
 
 const TEST_ROOT = './tests/browser';
+const OUTPUT_DIR = './test-results';
 
 const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
 
@@ -32,7 +33,11 @@ const chromeLaunchOptions = {
   ]
 };
 
+const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
+const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
+
 const config: PlaywrightTestConfig = {
+  outputDir: OUTPUT_DIR,
   timeout: 60000,
 
   // Ensure tests run sequentially. All tests in this suite *must be run sequentially*.
@@ -93,9 +98,9 @@ const config: PlaywrightTestConfig = {
         launchOptions: { ...chromeLaunchOptions }
       }
     }
-  ]
+  ],
+  reporter: !!process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
+  snapshotDir: `${TEST_ROOT}/snapshots/${buildFlavor}`
 };
-
-config.snapshotDir = `${TEST_ROOT}/snapshots/${buildFlavor}`;
 
 export default config;
