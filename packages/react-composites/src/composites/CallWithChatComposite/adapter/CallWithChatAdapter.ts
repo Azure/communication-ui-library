@@ -385,7 +385,6 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
-  | 'selectedCameraChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'
