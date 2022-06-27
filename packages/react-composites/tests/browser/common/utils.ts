@@ -337,6 +337,8 @@ export interface StubOptions {
   dismissTooltips?: boolean;
   /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
+  /** wait for file type icon to render. */
+  awaitFileTypeIcon?: boolean;
   /**
    * The loading spinner for video tiles can show during live service tests (likely due to network flakiness).
    * This should be removed when tests use a serviceless environment.
@@ -367,6 +369,9 @@ export async function stableScreenshot(
   }
   if (stubOptions?.hideVideoLoadingSpinner !== false) {
     await hideVideoLoadingSpinner(page);
+  }
+  if (stubOptions?.awaitFileTypeIcon !== false) {
+    await awaitFileTypeIcon(page);
   }
   try {
     return await page.screenshot(screenshotOptions);
@@ -401,4 +406,22 @@ const enableTooltips = async (page: Page): Promise<void> => {
 
 const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
   await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
+};
+
+/**
+ * Helper function for waiting for file type icons.
+ */
+const awaitFileTypeIcon = async (page: Page): Promise<void> => {
+  const fileTypeIconId: string = dataUiId(IDS.fileTypeIcon);
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const iconNodes = Array.from(document.querySelectorAll(args.fileTypeIconId));
+      return iconNodes.every((node) => node?.querySelector('img').height > 0);
+    },
+    {
+      fileTypeIconId: fileTypeIconId
+    }
+  );
 };
