@@ -26,8 +26,8 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
     git clone https://github.com/Azure/communication-ui-library.git
     ```
 
-1. Get the `Connection String` from the Azure portal. For more information on connection strings, see [Create an Azure Communication Resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource)
-1. Once you get the `Connection String`, add the connection string to the **samples/Server/appsetting.json** file found under the Chat folder. Input your connection string in the variable: `ResourceConnectionString`.
+1. Get the `Connection String` and `EndpointUrl` from the Azure portal. For more information on connection strings and EndpointUrl, see [Create an Azure Communication Resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource)
+1. Once you get the `Connection String` and `EndpointUrl`, add both strings to the **samples/Server/appsetting.json** file found under the Chat folder. Input your connection string in the variable: `ResourceConnectionString`. Input your endpoint url in the variable: `EndpointUrl`.
 
 ## Local run
 
