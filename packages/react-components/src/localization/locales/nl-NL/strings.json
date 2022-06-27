@@ -4,7 +4,8 @@
     "menuTitle": "Meer opties",
     "removeButtonLabel": "Verwijderen",
     "sharingIconLabel": "Delen",
-    "mutedIconLabel": "Gedempt"
+    "mutedIconLabel": "Gedempt",
+    "displayNamePlaceholder": "Naamloze deelnemer"
   },
   "typingIndicator": {
     "singleUser": "{user} typt ...",
@@ -42,7 +43,12 @@
     "tooltipOffContent": "Camera inschakelen",
     "tooltipVideoLoadingContent": "Video wordt geladen",
     "cameraMenuTitle": "Camera",
-    "cameraMenuTooltip": "Camera kiezen"
+    "cameraMenuTooltip": "Camera kiezen",
+    "cameraButtonSplitRoleDescription": "Knop Splitsen",
+    "onSplitButtonAriaLabel": "Camera- en cameraopties uitschakelen",
+    "offSplitButtonAriaLabel": "Camera- en cameraopties inschakelen",
+    "cameraActionTurnedOnAnnouncement": "Uw camera is ingeschakeld",
+    "cameraActionTurnedOffAnnouncement": "Uw camera is uitgeschakeld"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
@@ -53,13 +59,20 @@
     "microphoneMenuTitle": "Microfoon",
     "microphoneMenuTooltip": "Microfoon kiezen",
     "speakerMenuTitle": "Luidspreker",
-    "speakerMenuTooltip": "Luidspreker kiezen"
+    "speakerMenuTooltip": "Luidspreker kiezen",
+    "microphoneButtonSplitRoleDescription": "Knop Splitsen",
+    "onSplitButtonAriaLabel": "Microfoon- en audioopties dempen",
+    "offSplitButtonAriaLabel": "Microfoon- en audioopties dempen opheffen",
+    "microphoneActionTurnedOnAnnouncement": "Uw microfoon is ingeschakeld",
+    "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld"
   },
   "devicesButton": {
     "label": "Apparaten",
     "tooltipContent": "Apparaten beheren",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Camera kiezen",
+    "audioDeviceMenuTitle": "Audioapparaat",
+    "audioDeviceMenuTooltip": "Audioapparaat kiezen",
     "microphoneMenuTitle": "Microfoon",
     "microphoneMenuTooltip": "Microfoon kiezen",
     "speakerMenuTitle": "Spreker",
@@ -93,6 +106,8 @@
     "participantLeft": "heeft de chat verlaten.",
     "editMessage": "Bewerken",
     "removeMessage": "Verwijderen",
+    "resendMessage": "Probeer opnieuw te verzenden",
+    "failToSendTag": "Verzenden mislukt",
     "editedTag": "Bewerkt",
     "liveAuthorIntro": "{author} zegt",
     "editBoxTextLimit": "Uw bericht heeft de limiet van {limitNumber} tekens overschreden",
@@ -101,7 +116,8 @@
     "noDisplayNameSub": "Geen naam",
     "editBoxCancelButton": "Annuleren",
     "editBoxSubmitButton": "Verzenden",
-    "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}"
+    "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Meer opties"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -127,12 +143,27 @@
     "callCameraAccessDenied": "Kan geen toegang krijgen tot de camera. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
     "callCameraAlreadyInUse": "Kan geen toegang krijgen tot de camera. Het wordt mogelijk al gebruikt door een andere toepassing.",
     "callMacOsCameraAccessDenied": "MacOS blokkeert de toegang tot jouw camera. Werk je privacyinstellingen bij, zodat deze browser toegang heeft tot jouw camera.",
-    "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen."
+    "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen.",
+    "dismissButtonAriaLabel": "Sluiten",
+    "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
+    "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
     "localVideoLabel": "U",
-    "localVideoCameraSwitcherLabel": "Camera wisselen"
+    "localVideoCameraSwitcherLabel": "Camera wisselen",
+    "localVideoMovementLabel": "Tegel voor verwisselbare lokale video",
+    "localVideoSelectedDescription": "{cameraName} geselecteerd",
+    "displayNamePlaceholder": "Naamloze deelnemer"
+  },
+  "dialpad": {
+    "placeholderText": "Voer een nummer in"
+  },
+  "HoldButton": {
+    "onLabel": "Hervatten",
+    "offLabel": "Pauze",
+    "toolTipOnContent": "Gesprek hervatten",
+    "toolTipOffContent": "Gesprek in wachtrij plaatsen"
   }
 }

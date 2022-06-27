@@ -4,7 +4,8 @@
     "menuTitle": "추가 옵션",
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
-    "mutedIconLabel": "음소거됨"
+    "mutedIconLabel": "음소거됨",
+    "displayNamePlaceholder": "명명되지 않은 참가자"
   },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
@@ -42,7 +43,12 @@
     "tooltipOffContent": "카메라 켜기",
     "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다.",
     "cameraMenuTitle": "카메라",
-    "cameraMenuTooltip": "카메라 선택"
+    "cameraMenuTooltip": "카메라 선택",
+    "cameraButtonSplitRoleDescription": "분할 단추",
+    "onSplitButtonAriaLabel": "카메라 사용 안 함 및 카메라 옵션",
+    "offSplitButtonAriaLabel": "카메라 사용 및 카메라 옵션",
+    "cameraActionTurnedOnAnnouncement": "카메라가 켜져 있습니다.",
+    "cameraActionTurnedOffAnnouncement": "카메라가 꺼져 있습니다."
   },
   "microphoneButton": {
     "onLabel": "음소거",
@@ -53,13 +59,20 @@
     "microphoneMenuTitle": "마이크",
     "microphoneMenuTooltip": "마이크 선택",
     "speakerMenuTitle": "발언자",
-    "speakerMenuTooltip": "스피커 선택"
+    "speakerMenuTooltip": "스피커 선택",
+    "microphoneButtonSplitRoleDescription": "분할 단추",
+    "onSplitButtonAriaLabel": "마이크 및 오디오 음소거 옵션",
+    "offSplitButtonAriaLabel": "마이크 및 오디오 음소거 해제 옵션",
+    "microphoneActionTurnedOnAnnouncement": "마이크가 켜져 있습니다.",
+    "microphoneActionTurnedOffAnnouncement": "마이크가 꺼져 있습니다."
   },
   "devicesButton": {
     "label": "장치",
     "tooltipContent": "장치 관리",
     "cameraMenuTitle": "카메라",
     "cameraMenuTooltip": "카메라 선택",
+    "audioDeviceMenuTitle": "오디오 장치",
+    "audioDeviceMenuTooltip": "오디오 장치 선택",
     "microphoneMenuTitle": "마이크",
     "microphoneMenuTooltip": "마이크 선택",
     "speakerMenuTitle": "발언자",
@@ -93,6 +106,8 @@
     "participantLeft": "이 채팅을 나갔습니다.",
     "editMessage": "편집",
     "removeMessage": "삭제",
+    "resendMessage": "전송 다시 시도",
+    "failToSendTag": "보내기 실패",
     "editedTag": "편집됨",
     "liveAuthorIntro": "{author} 님이 말합니다.",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
@@ -101,7 +116,8 @@
     "noDisplayNameSub": "이름 없음",
     "editBoxCancelButton": "취소",
     "editBoxSubmitButton": "제출",
-    "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음"
+    "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음",
+    "actionMenuMoreOptions": "추가 옵션"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
@@ -127,12 +143,27 @@
     "callCameraAccessDenied": "카메라에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
     "callCameraAlreadyInUse": "카메라에 액세스할 수 없습니다. 다른 응용 프로그램에서 이미 사용 중일 수 있습니다.",
     "callMacOsCameraAccessDenied": "MacOS에서 카메라에 대한 액세스를 차단하고 있습니다. 이 브라우저에서 카메라에 액세스할 수 있도록 개인 정보 설정을 업데이트합니다.",
-    "callMacOsScreenShareAccessDenied": "MacOS에서 화면 공유를 차단하고 있습니다. 이 브라우저에서 화면을 녹화할 수 있도록 개인 정보 설정을 업데이트합니다."
+    "callMacOsScreenShareAccessDenied": "MacOS에서 화면 공유를 차단하고 있습니다. 이 브라우저에서 화면을 녹화할 수 있도록 개인 정보 설정을 업데이트합니다.",
+    "dismissButtonAriaLabel": "닫기",
+    "failedToJoinCallGeneric": "통화에 참가하지 못했습니다.",
+    "failedToJoinCallInvalidMeetingLink": "모임에 참가할 수 없습니다. 잘못된 링크입니다."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
     "localVideoLabel": "나",
-    "localVideoCameraSwitcherLabel": "카메라 주기"
+    "localVideoCameraSwitcherLabel": "카메라 전환",
+    "localVideoMovementLabel": "이동 가능한 로컬 비디오 타일",
+    "localVideoSelectedDescription": "{cameraName} 선택함",
+    "displayNamePlaceholder": "명명되지 않은 참가자"
+  },
+  "dialpad": {
+    "placeholderText": "번호 입력"
+  },
+  "HoldButton": {
+    "onLabel": "계속",
+    "offLabel": "보류",
+    "toolTipOnContent": "통화 계속하기",
+    "toolTipOffContent": "통화 대기"
   }
 }
