@@ -153,6 +153,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
           path: packages/react-composites/test-results/e2e-results.json
@@ -221,6 +222,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
           path: packages/react-composites/test-results/e2e-results.json
@@ -289,6 +291,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
           path: packages/react-composites/test-results/e2e-results.json
