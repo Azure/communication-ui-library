@@ -100,8 +100,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
             <StartCallButton
               className={mobileView ? startCallButtonStyleMobile : undefined}
-              onClickHandler={startCallHandler}
-              isDisabled={!microphonePermissionGranted}
+              onClick={startCallHandler}
+              disabled={!microphonePermissionGranted}
             />
           </Stack>
         </Stack>

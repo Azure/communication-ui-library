@@ -45,15 +45,16 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             horizontalAlign="center"
             verticalAlign="center"
             className={mergeStyles(overlayContainerStyle)}
+            aria-atomic
           >
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
-            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
+            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live="assertive">
               {props.overlayProps.title}
             </Text>
             {props.overlayProps.moreDetails && (
-              <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
+              <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live="assertive">
                 {props.overlayProps.moreDetails}
               </Text>
             )}
