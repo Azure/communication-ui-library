@@ -5,6 +5,7 @@
 // imported here because tests are run in a node environment (which does not have a window object.)
 // Instead ensure we only import types.
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
+import type { DeviceManagerState } from '@internal/calling-stateful-client';
 
 // Redeclare runtime values from the calling sdk package to above the issue mentioned above where the calling
 // sdk package makes reference to the window object at import time.
@@ -23,6 +24,7 @@ export type TestCallingState = {
   page?: TestPageState;
   diagnostics?: TestDiagnostics;
   latestErrors?: AdapterErrors;
+  devices?: Partial<DeviceManagerState>;
 };
 
 /**
