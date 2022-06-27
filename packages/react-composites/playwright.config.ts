@@ -33,7 +33,7 @@ const chromeLaunchOptions = {
   ]
 };
 
-const CI_REPORTERS: ReporterDescription[] = [['github'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
+const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 
 const config: PlaywrightTestConfig = {
