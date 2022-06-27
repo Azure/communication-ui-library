@@ -2,12 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  VideoGallery,
-  VideoStreamOptions,
-  OnRenderAvatarCallback,
-  VideoGalleryRemoteParticipant
-} from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -16,7 +11,6 @@ import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
-import { useCustomAvatarPersonaData } from '../../common/CustomDataModelUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -61,11 +55,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const remoteParticipants = useRemoteParticipantsWithCustomDisplayNames(
-    videoGalleryProps.remoteParticipants,
-    props.onFetchAvatarPersonaData
-  );
-
   const onRenderAvatar = useCallback(
     (userId, options) => (
       <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
@@ -80,7 +69,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
-        remoteParticipants={remoteParticipants}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
@@ -90,7 +78,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
       />
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, remoteParticipants, cameraSwitcherProps]);
+  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 
   return VideoGalleryMemoized;
 };
@@ -120,28 +108,4 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
       setIsButtonStatusSynced(true);
     }
   }, [shouldTransition, isButtonStatusSynced, isPreviewCameraOn, isLocalVideoAvailable, mediaGalleryHandlers]);
-};
-
-/**
- * Hook to fetch new participant avatar and video gallery displayName information if it is present.
- * @param onFetchAvatarPersonaData
- */
-const useRemoteParticipantsWithCustomDisplayNames = (
-  remoteParticipants: VideoGalleryRemoteParticipant[],
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback
-): VideoGalleryRemoteParticipant[] => {
-  const userIds = useMemo(() => {
-    return remoteParticipants.map((p) => p.userId);
-  }, [remoteParticipants]);
-
-  const avatarPersonaData = useCustomAvatarPersonaData(userIds, onFetchAvatarPersonaData);
-  const newParticipants = remoteParticipants.map((p, i) => {
-    const newName = avatarPersonaData[i]?.text;
-    if (!newName) {
-      return p;
-    }
-    return { ...p, displayName: newName };
-  });
-
-  return newParticipants;
 };
