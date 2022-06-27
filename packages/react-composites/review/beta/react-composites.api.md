@@ -189,7 +189,6 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
     off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-    off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
     off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
@@ -202,7 +201,6 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
     on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-    on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
     on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
@@ -442,8 +440,6 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
     // (undocumented)
-    off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
-    // (undocumented)
     off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
@@ -477,8 +473,6 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
     // (undocumented)
     on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
@@ -930,6 +924,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChatMessageOptions: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
+    ErrorBarClear: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;

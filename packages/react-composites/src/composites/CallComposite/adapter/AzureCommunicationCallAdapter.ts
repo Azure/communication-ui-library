@@ -348,7 +348,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onSelectCamera(device, options);
-      this.selectedCameraChanged();
     });
   }
 
@@ -497,7 +496,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
@@ -564,11 +562,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   }
 
-  // TODO: Remove this function when calling adds this event to the deviceManager
-  private selectedCameraChanged(): void {
-    this.emitter.emit('selectedCameraChanged');
-  }
-
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -591,7 +584,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;

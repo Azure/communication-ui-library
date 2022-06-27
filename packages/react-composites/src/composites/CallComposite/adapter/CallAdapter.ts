@@ -415,12 +415,6 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   /**
-   * Subscribe function for 'selectedCameraChanged' event.
-   *
-   * This event fires whenever the user changes the selected camera.
-   */
-  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
-  /**
    * Subscribe function for 'selectedMicrophoneChanged' event.
    *
    * This event fires whenever the user selects a new microphone device.
@@ -473,10 +467,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'diagnosticChanged' event.
    */
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
-  /**
-   * Unsubscribe function for 'selectedCameraChanged' event.
-   */
-  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'selectedMicrophoneChanged' event.
    */

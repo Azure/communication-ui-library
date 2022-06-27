@@ -387,7 +387,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
-  on(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
@@ -418,9 +417,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.on('isSpeakingChanged', listener);
-        break;
-      case 'selectedCameraChanged':
-        this.callAdapter.on('selectedCameraChanged', listener);
         break;
       case 'selectedMicrophoneChanged':
         this.callAdapter.on('selectedMicrophoneChanged', listener);
@@ -463,7 +459,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-  off(event: 'selectedCameraChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -499,9 +494,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.off('isSpeakingChanged', listener);
-        break;
-      case 'selectedCameraChanged':
-        this.callAdapter.off('selectedCameraChanged', listener);
         break;
       case 'selectedMicrophoneChanged':
         this.callAdapter.off('selectedMicrophoneChanged', listener);
