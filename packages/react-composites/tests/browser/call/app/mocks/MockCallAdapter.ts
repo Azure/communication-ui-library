@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
+import { merge } from '@fluentui/react';
 import {
   LocalVideoStreamState,
   RemoteParticipantState,
@@ -47,6 +48,8 @@ export class MockCallAdapter implements CallAdapter {
     if (testState.latestErrors) {
       initialState.latestErrors = testState.latestErrors;
     }
+
+    initialState.devices = merge(initialState.devices, testState.devices);
 
     this.state = initialState;
   }

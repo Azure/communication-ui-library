@@ -229,6 +229,7 @@ export type CallCompositeIcons = {
     ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
@@ -509,6 +510,7 @@ export type CallWithChatCompositeIcons = {
     ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
@@ -572,8 +574,8 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
-    dismissSidePaneButton: string;
-    moreDrawerAudioDeviceMenuTitle: string;
+    dismissSidePaneButtonLabel?: string;
+    moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
@@ -585,8 +587,8 @@ export interface CallWithChatCompositeStrings {
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
     removeMenuLabel: string;
-    returnToCallButtonAriaDescription: string;
-    returnToCallButtonAriaLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -803,6 +805,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
@@ -839,6 +842,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
 };
 
