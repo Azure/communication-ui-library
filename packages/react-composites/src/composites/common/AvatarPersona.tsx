@@ -64,8 +64,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
-    props;
+  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
 
   const [data, setData] = useState<AvatarPersonaData | undefined>();
 
