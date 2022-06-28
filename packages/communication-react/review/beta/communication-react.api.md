@@ -347,6 +347,7 @@ export type CallCompositeIcons = {
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
+    ErrorBarClear?: JSX.Element;
     HorizontalGalleryLeftButton?: JSX.Element;
     HorizontalGalleryRightButton?: JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element;
@@ -759,6 +760,7 @@ export type CallWithChatCompositeIcons = {
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
+    ErrorBarClear?: JSX.Element;
     HorizontalGalleryLeftButton?: JSX.Element;
     HorizontalGalleryRightButton?: JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element;
@@ -1474,6 +1476,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
@@ -1534,6 +1537,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;

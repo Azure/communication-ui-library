@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix the display name of the remote participants when they provide onFetchAvatarPersonaData prop.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

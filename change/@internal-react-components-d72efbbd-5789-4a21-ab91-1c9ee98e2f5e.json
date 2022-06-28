@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "when there is no menu items, participant item should not be clickable",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

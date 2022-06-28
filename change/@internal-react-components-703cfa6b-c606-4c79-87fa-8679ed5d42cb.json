@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix local preview in the VideoGallery not re-rendering when localVideoViewOptions property changed",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

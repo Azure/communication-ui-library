@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed contextual menus in CallWithChatComposite and CallComposite to be responsive to window resize.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

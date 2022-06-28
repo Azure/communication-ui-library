@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed theming of links for html and richtext/html messages in MessageThread.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

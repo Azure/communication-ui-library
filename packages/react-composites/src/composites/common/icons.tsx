@@ -144,6 +144,7 @@ export type CallCompositeIcons = {
   ErrorBarCallNetworkQualityLow?: JSX.Element;
   ErrorBarCallNoMicrophoneFound?: JSX.Element;
   ErrorBarCallNoSpeakerFound?: JSX.Element;
+  ErrorBarClear?: JSX.Element;
   HorizontalGalleryLeftButton?: JSX.Element;
   HorizontalGalleryRightButton?: JSX.Element;
   LobbyScreenConnectingToCall?: JSX.Element;
@@ -218,6 +219,7 @@ export type CallWithChatCompositeIcons = {
   ErrorBarCallNetworkQualityLow?: JSX.Element;
   ErrorBarCallNoMicrophoneFound?: JSX.Element;
   ErrorBarCallNoSpeakerFound?: JSX.Element;
+  ErrorBarClear?: JSX.Element;
   HorizontalGalleryLeftButton?: JSX.Element;
   HorizontalGalleryRightButton?: JSX.Element;
   LobbyScreenConnectingToCall?: JSX.Element;

@@ -1,8 +1,37 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Tue, 19 Apr 2022 20:46:15 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Jun 2022 18:29:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.3.0)
+
+Mon, 13 Jun 2022 18:29:30 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.2.2-beta.1...@internal/calling-component-bindings_v1.3.0)
+
+### Minor changes
+
+- Update the return from the `ParticipantList` selector to handle PSTN users. ([PR #1929](https://github.com/azure/communication-ui-library/pull/1929) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Update VideoGallery bindings to return the created view when starting a local video stream ([PR #1891](https://github.com/azure/communication-ui-library/pull/1891) by 2684369+JamesBurnside@users.noreply.github.com)
+- updating beta @azure/communication-calling to 1.5.4-beta.1 ([PR #1925](https://github.com/azure/communication-ui-library/pull/1925) by 79475487+mgamis-msft@users.noreply.github.com)
+- When participant doesnt have a name, set the name to unnamed participant ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by carolinecao@microsoft.com)
+- Fix Calling handler to correctly dispose a local view when view is attached to a call ([PR #1867](https://github.com/azure/communication-ui-library/pull/1867) by 2684369+JamesBurnside@users.noreply.github.com)
+- Support calling `updateScalingMode` in the Video Gallery with remote video streams instead of recreating the stream when the scaling mode changes ([PR #1907](https://github.com/azure/communication-ui-library/pull/1907) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixed onCreateLocalStreamView handler default videostream options to be cropped and mirrored. ([PR #1909](https://github.com/azure/communication-ui-library/pull/1909) by miguelgamis@microsoft.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+- Bump @internal/calling-stateful-client to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+- Bump @internal/react-components to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Add PSTN Calling handlers for Hold, Resume, and AddParticipant. ([PR #1914](https://github.com/azure/communication-ui-library/pull/1914) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
+- Support `isReceiving` flag for video streams ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
+- Introduce selector for HoldButton component. ([PR #1919](https://github.com/azure/communication-ui-library/pull/1919) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added onsenddtmf handler for dialpad ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.2.2-beta.1)
 
