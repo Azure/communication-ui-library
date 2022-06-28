@@ -9,6 +9,7 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { MicrophoneButtonComponent } from '@internal/web-components';
+import { MicOn28Regular } from '@fluentui/react-icons';
 
 /**
  * @private
@@ -42,6 +43,7 @@ export const Microphone = (): JSX.Element => {
   return (
     <MicrophoneButtonComponent
       data-ui-id="call-composite-microphone-button"
+      onRenderOnIcon={() => <MicOn28Regular />}
       {...microphoneButtonProps}
       {...microphoneButtonStrings}
     />
