@@ -109,6 +109,7 @@ const errorOptions: ErrorType[] = [
   'callNoMicrophoneFound',
   'callMicrophoneAccessDenied',
   'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
   'callMacOsMicrophoneAccessDenied',
   'callLocalVideoFreeze',
   'callCameraAlreadyInUse',
