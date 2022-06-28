@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "update storybook to v6.5.7",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

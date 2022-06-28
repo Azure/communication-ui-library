@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Introduce the usage of the adapters error handling to the fetchInitialData function.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

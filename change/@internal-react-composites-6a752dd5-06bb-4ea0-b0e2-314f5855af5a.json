@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added Icon button for upload button, cancel file upload icon and download icon to make it tab navigable",
-  "packageName": "@internal/react-composites",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

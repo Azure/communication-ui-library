@@ -44,11 +44,13 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "Personen",
-    "peopleButtonTooltipContentOpen": "Teilnehmer anzeigen",
-    "peopleButtonTooltipContentClose": "Teilnehmer ausblenden",
+    "peopleButtonTooltipOpen": "Teilnehmende anzeigen",
+    "peopleButtonTooltipClose": "Teilnehmende ausblenden",
     "chatButtonLabel": "Chat",
-    "chatButtonTooltipContentOpen": "Chat anzeigen",
-    "chatButtonTooltipContentClose": "Chat ausblenden",
+    "chatButtonTooltipClosedWithMessageCount": "Chat anzeigen ({unreadMessagesCount} ungelesen)",
+    "chatButtonTooltipOpen": "Chat anzeigen",
+    "chatButtonTooltipClose": "Chat ausblenden",
+    "moreDrawerAudioDeviceMenuTitle": "Audiogerät",
     "moreDrawerMicrophoneMenuTitle": "Mikrofon",
     "moreDrawerSpeakerMenuTitle": "Lautsprecher",
     "moreDrawerButtonLabel": "Weitere Optionen",
@@ -59,6 +61,9 @@
     "chatButtonNewMessageNotificationLabel": "Neue Nachricht",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren.",
     "removeMenuLabel": "Entfernen",
-    "copyInviteLinkButtonLabel": "Einladungslink kopieren"
+    "copyInviteLinkButtonLabel": "Einladungslink kopieren",
+    "dismissSidePaneButton": "Schließen",
+    "returnToCallButtonAriaDescription": "Zurück zum Anruf",
+    "returnToCallButtonAriaLabel": "Zurück"
   }
 }
