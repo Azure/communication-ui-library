@@ -2,6 +2,309 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 28 Jun 2022 23:45:43 GMT",
+      "tag": "@azure/communication-react_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "aeb3191d04c62b95b07ac625466a4a820e4e9a2d",
+            "comment": "Added css-loader and style-loader to style chat UI test app"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c3174989f637b7b96d4ed50fe2ca956d0fcbcf4d",
+            "comment": "Add tsc:e2e typecheck command to composite"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Add cameraStoppedUnexpectedly strings to error bar story"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "22c31f5b69585a8d0509151a184412a49eb1889a",
+            "comment": "adding file sharing snippet to composite documentation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0843cd23931ed0b27bf9666d8ee8330a77f9eac0",
+            "comment": "storybook to show how to use dialpad props"
+          }
+        ],
+        "minor": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "8d0e73540107a711ebf2ee1e89551656689703d7",
+            "comment": "Update selectors for microphone and camera to disable buttons when there are no cameras or microphones present"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Update ErrorBar selector to return new messages when cameraStoppedUnexpectedly call diagnostic is triggered"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add strings for new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "bc9b16e859b22bce51a178da6f32a8c13809066d",
+            "comment": "Update string types and names per comments from ARB"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2a952829bbdc92245814a9258926359e0a16b3c5",
+            "comment": "Update the Calling and CallWithChat Adapters so that they emit events for device changes in a call."
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "32a3fa4ca12e0bccfca2bbd4d31a23668334f706",
+            "comment": "Memoizes the return from the participant list selector for better optimization."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "d43adcfd6ea2766660efb0d3022b9156f1fdc3bb",
+            "comment": "Fix 'No Microphones Found' message persisting when new microphones have been reconnected"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "53a9c2e9832c0ea865c597e77004218fef6aec78",
+            "comment": "Fixes spacing for text in errorbar component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "bab520df72ae132d45d8ca0fc14652aad4403392",
+            "comment": "Fix SendBox button when using VoiceOver on iOS"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8d0e73540107a711ebf2ee1e89551656689703d7",
+            "comment": "Update microphone button to be disabled when there are no microphones present"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Update ErrorBar to accept strings and icons for the cameraStoppedUnexpectedly call diagnostic"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "bcc8af9443eb04138155b45182c570ce05fdb7c7",
+            "comment": "disable tooltip for persona"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "eb5180865bace171dc88349c0188a2ca1b35015f",
+            "comment": "Making tooltips inline-block to prevent sizing and positioning issues in read receipts"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "648b7b05de71c455f9b145ede98f88b3d9b5bfed",
+            "comment": "Autofocus rejoin call button on call end page"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "bc9b16e859b22bce51a178da6f32a8c13809066d",
+            "comment": "Update DismissSidePaneButtonLabel to have correct naming."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Show cameraStoppedUnexpectedly call diagnostics in message bar on the call page"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "53a9c2e9832c0ea865c597e77004218fef6aec78",
+            "comment": "update styles for errorBar and add registered icon for dissmissal button"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "cf4bcebd979c8c913ec01ceb530a02542ff277e4",
+            "comment": "Fix displayName disparity in different parts of the composites to match expected behavior from documentation."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "e4f4beb97aad389b2285be106daa2e3b963e9e5a",
+            "comment": "Better announce lobby, network failure and call end notices for screen reader users"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "bcc8af9443eb04138155b45182c570ce05fdb7c7",
+            "comment": "disable tooltip for persona"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c233329a92200a3dcf4f689c9333a084483beee6",
+            "comment": "Add best practice around only allowing one instance of the sample to be open at a time on mobile"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "bcc8af9443eb04138155b45182c570ce05fdb7c7",
+            "comment": "disable tooltip for persona"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "48a7b22debd05a09e621bdbbcb94f0209ab65c02",
+            "comment": "Add incomingCalls array to declarative call agent"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "0843cd23931ed0b27bf9666d8ee8330a77f9eac0",
+            "comment": "Add new prop onChange to dialpad to grab textfield values and modified onClickDialpadButton type to (buttonValue: string, buttonIndex: number) => void so we can grab info regarding which button is clicked"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c45276870656cfe4bda219f70368b322e015006e",
+            "comment": "Fix loading spinner size in small containers"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2ce42ccf81f59f5fab02d9f8d4045c0942c1ec9a",
+            "comment": "Make file sharing narrator compliant. Components contain aria labels and announcer"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "11bfb367f73ea28d83d60cba01a36d646b222f8f",
+            "comment": "Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions parameter needed to start a PSTN Call."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "0f03e32d540dac4557eb929bba3f134e2eac4a43",
+            "comment": "Participant pane overlays on top of message thread to make sure the message thread is responsive"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2ce42ccf81f59f5fab02d9f8d4045c0942c1ec9a",
+            "comment": "Make file sharing narrator compliant. Components contain aria labels and announcer"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:25 GMT",
       "tag": "@azure/communication-react_v1.3.0",
       "version": "1.3.0",

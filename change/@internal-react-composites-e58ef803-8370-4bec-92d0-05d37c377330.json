@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix displayName disparity in different parts of the composites to match expected behavior from documentation.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,23 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Mon, 13 Jun 2022 18:29:28 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jun 2022 23:45:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.4.0)
+
+Tue, 28 Jun 2022 23:45:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.3.0...@internal/storybook_v1.4.0)
+
+### Patches
+
+- Add best practice around only allowing one instance of the sample to be open at a time on mobile ([PR #1981](https://github.com/azure/communication-ui-library/pull/1981) by 2684369+JamesBurnside@users.noreply.github.com)
+- disable tooltip for persona ([PR #1990](https://github.com/azure/communication-ui-library/pull/1990) by carolinecao@microsoft.com)
+- Bump @azure/communication-react to v1.4.0 ([PR #2003](https://github.com/azure/communication-ui-library/pull/2003) by beachball)
+
+### Changes
+
+- Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.3.0)
 
