@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add tsc:e2e typecheck command to composite",
+  "packageName": "@internal/react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "none"
+}
