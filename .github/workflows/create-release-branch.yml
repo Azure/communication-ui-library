@@ -100,6 +100,13 @@ jobs:
       - name: Hop back to pre-release branch
         run: git checkout ${{ github.event.inputs.branch }}
 
+      # if a stable release bump the package versions to beta.0 numbers for next beta release
+      - name: Bump versions for pre-release branch if stable release
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
+        run: |
+          node common/scripts/bump-beta-versions.js
+          rush update
+
       - name: Create pull request for pre-release back to main
         run: |
           curl \
