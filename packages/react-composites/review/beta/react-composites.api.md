@@ -234,6 +234,7 @@ export type CallCompositeIcons = {
     ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
@@ -530,6 +531,7 @@ export type CallWithChatCompositeIcons = {
     ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
     ErrorBarCallNetworkQualityLow?: JSX.Element;
     ErrorBarCallNoMicrophoneFound?: JSX.Element;
     ErrorBarCallNoSpeakerFound?: JSX.Element;
@@ -875,6 +877,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneAccessDenied: JSX.Element;
     ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;

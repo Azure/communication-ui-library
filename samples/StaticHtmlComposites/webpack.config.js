@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const babelConfig = require('./.babelrc.js');
 
@@ -42,7 +43,16 @@ const config = {
       }
     ]
   },
-  plugins: [new HtmlWebpackPlugin({ template: 'index.html' })]
+  plugins: [
+    new HtmlWebpackPlugin({ template: 'index.html' }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.join(__dirname, 'fonts', 'segoeui-bold.woff2'), to: 'fonts' },
+        { from: path.join(__dirname, 'fonts', 'segoeui-regular.woff2'), to: 'fonts' },
+        { from: path.join(__dirname, 'fonts', 'segoeui-semibold.woff2'), to: 'fonts' }
+      ]
+    })
+  ]
 };
 
 if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
