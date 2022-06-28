@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "introduce exception handling for creating list messages and get read reciepts chat handlers.",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

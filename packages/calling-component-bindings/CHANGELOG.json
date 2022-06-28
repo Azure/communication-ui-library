@@ -2,6 +2,141 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 13 Jun 2022 18:29:30 GMT",
+      "tag": "@internal/calling-component-bindings_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6f4943127479ad2915ab1911a716f762b36d2166",
+            "comment": "Add PSTN Calling handlers for Hold, Resume, and AddParticipant."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "934ba677f4ae65954fc63f2be529e5a4adc35371",
+            "comment": "Updating @azure/communication-chat to 1.2.0"
+          },
+          {
+            "author": "chwhilar@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a562fc1d3e7aa7dc1b1df2fe6d487ecfd6d2c406",
+            "comment": "Support `isReceiving` flag for video streams"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "11dc96e68d7487804d9741c6b0aaeb7a6e630a7c",
+            "comment": "Introduce selector for HoldButton component."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6de3de26e06cab476f0a961f0d400c0045b8bc4c",
+            "comment": "Added onsenddtmf handler for dialpad"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "57c9d394d1c40e9382a8e1a4f8eb1d5cd7faa6e1",
+            "comment": "Update VideoGallery bindings to return the created view when starting a local video stream"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "bc91818a4ce729d3d86fdc462c9941a3e4d104e1",
+            "comment": "updating beta @azure/communication-calling to 1.5.4-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "de87d04e8d99bc266b4d44bdea7608a78a52008e",
+            "comment": "When participant doesnt have a name, set the name to unnamed participant"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f51ec6ba613ffaf78282ca5ee50f7f3b7511d330",
+            "comment": "Fix Calling handler to correctly dispose a local view when view is attached to a call"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4e86a2ec1be092d3b640ae9bfde54e2395ab30fc",
+            "comment": "Support calling `updateScalingMode` in the Video Gallery with remote video streams instead of recreating the stream when the scaling mode changes"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "434d23da6e881e3704d085595c925eb82607ced3",
+            "comment": "Fixed onCreateLocalStreamView handler default videostream options to be cropped and mirrored."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.3.0",
+            "commit": "de87d04e8d99bc266b4d44bdea7608a78a52008e"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.3.0",
+            "commit": "de87d04e8d99bc266b4d44bdea7608a78a52008e"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.3.0",
+            "commit": "de87d04e8d99bc266b4d44bdea7608a78a52008e"
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4d202fa62dc3f90002ccec181f0f2509286e773f",
+            "comment": "Reorganize generated API file paths"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "aa382cee7eac5cd5cc5de26b8f8b6a316e22cab4",
+            "comment": "Build fix for return type"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "5f0c4c7145ed08da3ce79f36aa003b5646bb75b8",
+            "comment": "bump package versions for release"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6af9d22c8c15c36f2d44401cd18b499e3138269f",
+            "comment": "Use rushx to enable error report for rush build"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "9a85af933e09a71f28ff16fc87db624d26afdc2e",
+            "comment": "Remove stabilized feature flag control-bar-split-buttons"
+          }
+        ],
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "7cd61d97a7244990929541a0b2289737adf1447e",
+            "comment": "Update the return from the `ParticipantList` selector to handle PSTN users."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Apr 2022 20:46:15 GMT",
       "tag": "@internal/calling-component-bindings_v1.2.2-beta.1",
       "version": "1.2.2-beta.1",

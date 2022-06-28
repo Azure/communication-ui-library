@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "changed storybook text for custom dialpad",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

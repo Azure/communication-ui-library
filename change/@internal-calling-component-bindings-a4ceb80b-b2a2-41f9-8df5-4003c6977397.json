@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "When participant doesnt have a name, set the name to unnamed participant",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

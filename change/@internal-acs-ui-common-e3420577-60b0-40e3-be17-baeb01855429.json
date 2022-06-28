@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add default replacer to do safe stringify",
-  "packageName": "@internal/acs-ui-common",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

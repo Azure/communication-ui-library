@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "- Add callIdHistory to context + internal context - Update all visit to callId using latestCallId - Encapsule the access to internalMap directly to ensure no leaks",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

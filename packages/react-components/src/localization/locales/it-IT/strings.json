@@ -4,7 +4,8 @@
     "menuTitle": "Altre opzioni",
     "removeButtonLabel": "Rimuovi",
     "sharingIconLabel": "Condivisione",
-    "mutedIconLabel": "Disattivato"
+    "mutedIconLabel": "Disattivato",
+    "displayNamePlaceholder": "Partecipante senza nome"
   },
   "typingIndicator": {
     "singleUser": "{user} sta scrivendo ...",
@@ -42,7 +43,12 @@
     "tooltipOffContent": "Accendi la videocamera",
     "tooltipVideoLoadingContent": "Il video è in corso di caricamento",
     "cameraMenuTitle": "Fotocamera",
-    "cameraMenuTooltip": "Scegli la fotocamera"
+    "cameraMenuTooltip": "Scegli la fotocamera",
+    "cameraButtonSplitRoleDescription": "Pulsante di menu combinato",
+    "onSplitButtonAriaLabel": "Disattiva fotocamera e le opzioni della fotocamera",
+    "offSplitButtonAriaLabel": "Attiva fotocamera e le opzioni della fotocamera",
+    "cameraActionTurnedOnAnnouncement": "La videocamera è stata attivata",
+    "cameraActionTurnedOffAnnouncement": "La videocamera è stata disattivata"
   },
   "microphoneButton": {
     "onLabel": "Disattiva audio",
@@ -53,13 +59,20 @@
     "microphoneMenuTitle": "Microfono",
     "microphoneMenuTooltip": "Scegli il microfono",
     "speakerMenuTitle": "Altoparlante",
-    "speakerMenuTooltip": "Scegli l’altoparlante"
+    "speakerMenuTooltip": "Scegli l’altoparlante",
+    "microphoneButtonSplitRoleDescription": "Pulsante di menu combinato",
+    "onSplitButtonAriaLabel": "Disattiva microfono e opzioni audio",
+    "offSplitButtonAriaLabel": "Attiva microfono e opzioni audio",
+    "microphoneActionTurnedOnAnnouncement": "Il microfono è stato attivato",
+    "microphoneActionTurnedOffAnnouncement": "Il microfono è stato disattivato"
   },
   "devicesButton": {
     "label": "Dispositivi",
     "tooltipContent": "Gestisci dispositivi",
     "cameraMenuTitle": "Fotocamera",
     "cameraMenuTooltip": "Scegli la fotocamera",
+    "audioDeviceMenuTitle": "Dispositivo audio",
+    "audioDeviceMenuTooltip": "Scegli dispositivo audio",
     "microphoneMenuTitle": "Microfono",
     "microphoneMenuTooltip": "Scegli il microfono",
     "speakerMenuTitle": "Altoparlante",
@@ -93,6 +106,8 @@
     "participantLeft": "ha abbandonato la chat.",
     "editMessage": "Modifica",
     "removeMessage": "Elimina",
+    "resendMessage": "Riprova a inviare",
+    "failToSendTag": "Invio non riuscito",
     "editedTag": "Modificato",
     "liveAuthorIntro": "{author} dice",
     "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
@@ -101,7 +116,8 @@
     "noDisplayNameSub": "Nessun nome",
     "editBoxCancelButton": "Annulla",
     "editBoxSubmitButton": "Invia",
-    "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}"
+    "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Altre opzioni"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -127,12 +143,27 @@
     "callCameraAccessDenied": "Non è possibile accedere alla fotocamera. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
     "callCameraAlreadyInUse": "Non è possibile accedere alla fotocamera. Potrebbe essere già in uso da un'altra applicazione.",
     "callMacOsCameraAccessDenied": "MacOS sta bloccando l'accesso alla fotocamera. Aggiorna le impostazioni di privacy per consentire a questo browser di accedere alla fotocamera.",
-    "callMacOsScreenShareAccessDenied": "MacOS sta bloccando la condivisione dello schermo. Aggiorna le impostazioni di privacy per consentire a questo browser di registrare lo schermo."
+    "callMacOsScreenShareAccessDenied": "MacOS sta bloccando la condivisione dello schermo. Aggiorna le impostazioni di privacy per consentire a questo browser di registrare lo schermo.",
+    "dismissButtonAriaLabel": "Chiudi",
+    "failedToJoinCallGeneric": "Non è stato possibile partecipare alla chiamata.",
+    "failedToJoinCallInvalidMeetingLink": "Impossibile partecipare alla riunione. Collegamento non valido."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
     "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
     "localVideoLabel": "Tu",
-    "localVideoCameraSwitcherLabel": "Ciclo fotocamera"
+    "localVideoCameraSwitcherLabel": "Cambia videocamera",
+    "localVideoMovementLabel": "Riquadro video locale mobile",
+    "localVideoSelectedDescription": "{cameraName} selezionata",
+    "displayNamePlaceholder": "Partecipante senza nome"
+  },
+  "dialpad": {
+    "placeholderText": "Inserisci un numero"
+  },
+  "HoldButton": {
+    "onLabel": "Riprendi",
+    "offLabel": "Mantenere",
+    "toolTipOnContent": "Riprendi chiamata",
+    "toolTipOffContent": "Metti in attesa chiamata"
   }
 }
