@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// eslint-disable-next-line no-restricted-imports
+import { Icon } from '@fluentui/react';
 import { ControlBarButton } from '@internal/react-components';
 import React from 'react';
 import { generateCustomControlBarButtonStrings } from '../CallComposite/components/buttons/Custom';
@@ -9,7 +11,6 @@ import {
   CustomCallControlButtonCallbackArgs,
   CustomControlButtonProps
 } from '../CallComposite/types/CallControlOptions';
-import { CallWithChatCompositeIcon, CallWithChatCompositeIcons } from '../common/icons';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 
@@ -57,7 +58,7 @@ export const generateCustomCallWithChatControlBarButton = (
               strings={generateCustomControlBarButtonStrings(buttonProps.text)}
               styles={buttonProps.styles}
               key={`${buttonProps.placement}_${i}`}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName={buttonProps.iconName ?? ''} />}
+              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               disabled={buttonProps.disabled}
             />
           ))}
@@ -146,7 +147,7 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
    * Icon to render. Icon is a non-default icon name that needs to be registered as a
    * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
    */
-  iconName?: string | keyof CallWithChatCompositeIcons;
+  iconName?: string;
 }
 
 /* @conditional-compile-remove(control-bar-button-injection) */

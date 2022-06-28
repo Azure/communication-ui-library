@@ -818,7 +818,7 @@ export type CustomCallControlButtonPlacement = 'primary';
 
 // @beta
 export interface CustomCallControlButtonProps extends CustomControlButtonProps {
-    iconName?: string | keyof CallCompositeIcons;
+    iconName?: string;
     placement: CustomCallControlButtonPlacement;
 }
 
@@ -830,7 +830,7 @@ export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 
 
 // @beta
 export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
-    iconName?: string | keyof CallWithChatCompositeIcons;
+    iconName?: string;
     placement: CustomCallWithChatControlButtonPlacement;
 }
 

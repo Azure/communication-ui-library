@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
-import { CallCompositeIcons } from '../../common/icons';
 
 /**
  * Control bar display type for {@link CallComposite}.
@@ -150,5 +149,5 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
    * Icon to render. Icon is a non-default icon name that needs to be registered as a
    * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
    */
-  iconName?: string | keyof CallCompositeIcons;
+  iconName?: string;
 }
