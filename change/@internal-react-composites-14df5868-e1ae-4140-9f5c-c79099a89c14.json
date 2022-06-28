@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add a default host layer in base provider 1. make our lib compatible with react-full-screen 2. avoid polluting global dom tree",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

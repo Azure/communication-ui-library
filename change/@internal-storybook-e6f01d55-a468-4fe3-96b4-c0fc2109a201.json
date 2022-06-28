@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Composite quickstarts: Create groupId and threadId in the quickstart instead of requiring inputs",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

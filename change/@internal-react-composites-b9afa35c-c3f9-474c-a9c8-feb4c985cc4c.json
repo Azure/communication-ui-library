@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "updating beta @azure/communication-calling to 1.5.4-beta.1",
-  "packageName": "@internal/react-composites",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

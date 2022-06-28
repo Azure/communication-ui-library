@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Internally exporting _createStatefulChatClientWithDeps",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

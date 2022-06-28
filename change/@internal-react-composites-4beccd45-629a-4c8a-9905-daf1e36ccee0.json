@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "upgraded playwright to version 1.22.2",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}
