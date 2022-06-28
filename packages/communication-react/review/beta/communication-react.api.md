@@ -60,6 +60,7 @@ import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
+import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -245,6 +246,8 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
     off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+    off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+    off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -255,6 +258,8 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
     on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+    on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+    on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -647,6 +652,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
     // (undocumented)
+    off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+    // (undocumented)
+    off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
+    // (undocumented)
     off(event: 'callError', listener: (e: AdapterError) => void): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -676,6 +685,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
     // (undocumented)
     on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+    // (undocumented)
+    on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+    // (undocumented)
+    on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     on(event: 'callError', listener: (e: AdapterError) => void): void;
     // (undocumented)
@@ -840,7 +853,7 @@ export interface CallWithChatControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
