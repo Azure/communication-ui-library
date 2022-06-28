@@ -113,7 +113,7 @@ jobs:
       - name: Bump versions for pre-release branch if stable release
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
         run: |
-          node common/scripts/bump-beta-versions.js
+          node common/scripts/bump-beta-version.js
           rush update
           git add .
           git commit -m "Bump package versions to beta.0 for next release"
