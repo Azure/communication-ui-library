@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add split button aria labels to the microphone and camera buttons. Remove the aria-role of menu from the split buttons.",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

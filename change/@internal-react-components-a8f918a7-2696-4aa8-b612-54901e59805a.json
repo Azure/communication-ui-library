@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow sending message without text if the sendbox contains an error free active file upload.",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
