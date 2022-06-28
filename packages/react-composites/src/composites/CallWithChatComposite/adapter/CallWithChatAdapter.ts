@@ -27,6 +27,7 @@ import {
   AudioDeviceInfo,
   Call,
   PermissionConstraints,
+  PropertyChangedEvent,
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -323,6 +324,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
@@ -333,6 +336,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
 
   // Chat subscriptions
@@ -378,6 +383,8 @@ export type CallWithChatEvent =
   | 'isSpeakingChanged'
   | 'callParticipantsJoined'
   | 'callParticipantsLeft'
+  | 'selectedMicrophoneChanged'
+  | 'selectedSpeakerChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'

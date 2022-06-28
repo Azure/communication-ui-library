@@ -18,7 +18,7 @@ type CallWorkerFixture = WorkerFixture<CallUserType>;
  *
  * The @returns values are available to reference in tests.
  */
-export const test = base.extend<unknown, CallWorkerFixture>({
+export const test = base.extend<Record<string, unknown>, CallWorkerFixture>({
   /** @returns string URL for the server. */
   serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
 
