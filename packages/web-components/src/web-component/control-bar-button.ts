@@ -2,8 +2,6 @@
 import { attr, css, customElement, FASTElement, html, observable, repeat, when } from '@microsoft/fast-element';
 import { fastButton, provideFASTDesignSystem } from '@microsoft/fast-components';
 
-import { FileSharingCardEventDetail, UserJoinedEventDetail, UserLeftEventDetail } from './event';
-
 provideFASTDesignSystem().register(fastButton());
 
 const template = html<ControlBarButton>`
