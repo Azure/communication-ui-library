@@ -324,6 +324,7 @@ describe('declarative call agent', () => {
     expect((receivedEvent.removed[0] as DeclarativeCall).unsubscribe).toBeDefined();
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   test('`incomingCalls` should return declarative incoming calls array', () => {
     const mockIncomingCallOne = createMockIncomingCall('mockIncomingCallIdOne');
     const mockIncomingCallTwo = createMockIncomingCall('mockIncomingCallIdTwo');
