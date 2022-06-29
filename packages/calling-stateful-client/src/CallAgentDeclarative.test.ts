@@ -333,8 +333,13 @@ describe('declarative call agent', () => {
     const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
     mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCallOne });
     mockCallAgent.emit('incomingCall', { incomingCall: mockIncomingCallTwo });
-    expect(declarativeCallAgent.incomingCalls).toBeDefined();
     expect(declarativeCallAgent.incomingCalls.length).toBe(2);
+    expect(
+      declarativeCallAgent.incomingCalls.find((incomingCall) => incomingCall.id === 'mockIncomingCallIdOne')
+    ).toBeDefined();
+    expect(
+      declarativeCallAgent.incomingCalls.find((incomingCall) => incomingCall.id === 'mockIncomingCallIdTwo')
+    ).toBeDefined();
   });
 });
 
