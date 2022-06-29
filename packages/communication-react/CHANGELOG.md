@@ -1,8 +1,50 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 13 Jun 2022 18:29:25 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:05 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.0...1.3.1-beta.1)
+
+### Features
+
+  - Add two new UFDs based on cameraStoppedUnexpectedly call diagnostic: 'callVideoStoppedBySystem','callVideoRecoveredBySystem' ([PR #1991](https://github.com/azure/communication-ui-library/pull/1991) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add error message for call video stopped unexpectedly and call video resumed ([PR #1991](https://github.com/azure/communication-ui-library/pull/1991) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add callMicrophoneUnmutedBySystem UFD and e2e tests for callMicrophoneUnmutedBySystem and callMicrophoneMutedBySystem ([PR #1994](https://github.com/azure/communication-ui-library/pull/1994) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update error message shown when microphoneNotFunctioning is triggered per Calling guidence([PR #1994](https://github.com/azure/communication-ui-library/pull/1994) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update device change events in Calling and CallWithChat Adapters : 'selectedCameraChanged', 'selectedMicrophoneChanged'
+'selectedSpeakerChanged', expose these events so that contoso can perform actions on them ([PR #1982](https://github.com/azure/communication-ui-library/pull/1982) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Update microphone and camera button to be disabled when there are no cameras or microphones present ([PR #1993](https://github.com/azure/communication-ui-library/pull/1993) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add autofocus to rejoin call button on call end page ([PR #2008](https://github.com/azure/communication-ui-library/pull/2008) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Add new prop onChange to dialpad to grab textfield values and modified onClickDialpadButton type to (buttonValue: string, buttonIndex: number) => void so we can grab info regarding which button is clicked ([PR #1989](https://github.com/azure/communication-ui-library/pull/1989) by carolinecao@microsoft.com)
+  
+
+### Bug Fixes
+
+  - Fix SendBox button for VoiceOver user on iOS so it is actionable by double tap on it  ([PR #2004](https://github.com/azure/communication-ui-library/pull/2004) by miguelgamis@microsoft.com)
+  - Disable tooltip for Persona components for mobile users ([PR #1990](https://github.com/azure/communication-ui-library/pull/1990) by carolinecao@microsoft.com)
+  - Fix read receipts tooltip position issue in UI tests ([PR #2005](https://github.com/azure/communication-ui-library/pull/2005) by anjulgarg@live.com)
+  - Fix bug: When a developer uses the onFetchPersonaAvatarData prop for the CallWIthChat Composite to override the name of the participants, the display name in the chat thread on messages sent will not be overridden. ([PR #2013](https://github.com/azure/communication-ui-library/pull/2013) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix 'No Microphones Found' message persisting when new microphones have been reconnected ([PR #2000](https://github.com/azure/communication-ui-library/pull/2000) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix loading spinner size in small containers ([PR #1995](https://github.com/azure/communication-ui-library/pull/1995) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add aria labels and announcer to file sharing components to make file sharing meet accessibility standards ([PR #1960](https://github.com/azure/communication-ui-library/pull/1960) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Update Participant pane to be an overlay on top of message thread so it can be tapped into when opened ([PR #1943](https://github.com/azure/communication-ui-library/pull/1943) by 97124699+prabhjot-msft@users.noreply.github.com)
+
+
+### Improvements
+
+  - Update variable name dismissSidePaneButton to dismissSidePaneButtonLabel, make some localization string variable optional ([PR #2009](https://github.com/azure/communication-ui-library/pull/2009) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Add 0.3rem padding to the top of the fluent message bar to create even spacing in the errorbar component between the text and the edges of the bar and add registered icon for dissmissal button. ([PR #2003](https://github.com/azure/communication-ui-library/pull/2003) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Add aria-live: "assertive" for announcing lobby, network failure and call end notices so screen reader users can be aware of call status change immediately([PR #2007](https://github.com/azure/communication-ui-library/pull/2007) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Add best practice around only allowing one instance of the sample to be open at a time on mobile ([PR #1981](https://github.com/azure/communication-ui-library/pull/1981) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Memoizes the return from the participant list selector for better optimization. ([PR #1980](https://github.com/azure/communication-ui-library/pull/1980) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
+  - Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions parameter needed to start a PSTN Call. ([PR #1976](https://github.com/azure/communication-ui-library/pull/1976) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Add a new attribute `incomingCalls` to CallAgentDeclarative that returns all active incoming calls ([PR #1975](https://github.com/azure/communication-ui-library/pull/1975) by anjulgarg@live.com)
+
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.0)
 

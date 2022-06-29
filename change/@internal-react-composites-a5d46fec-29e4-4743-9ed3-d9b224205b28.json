@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Show cameraStoppedUnexpectedly call diagnostics in message bar on the call page",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
