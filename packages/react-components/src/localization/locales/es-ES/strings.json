@@ -4,7 +4,8 @@
     "menuTitle": "Más opciones",
     "removeButtonLabel": "Quitar",
     "sharingIconLabel": "Compartiendo",
-    "mutedIconLabel": "Silenciado"
+    "mutedIconLabel": "Silenciado",
+    "displayNamePlaceholder": "Participante sin nombre"
   },
   "typingIndicator": {
     "singleUser": "{user} está escribiendo...",
@@ -42,24 +43,36 @@
     "tooltipOffContent": "Activar la cámara",
     "tooltipVideoLoadingContent": "El vídeo se está cargando",
     "cameraMenuTitle": "Cámara",
-    "cameraMenuTooltip": "Elegir cámara"
+    "cameraMenuTooltip": "Elegir cámara",
+    "cameraButtonSplitRoleDescription": "Botón de expansión",
+    "onSplitButtonAriaLabel": "Desactivar la cámara y las opciones de cámara",
+    "offSplitButtonAriaLabel": "Activar la cámara y las opciones de cámara",
+    "cameraActionTurnedOnAnnouncement": "La cámara se ha activado",
+    "cameraActionTurnedOffAnnouncement": "La cámara se ha desactivado"
   },
   "microphoneButton": {
     "onLabel": "Silenciar",
     "offLabel": "Reactivar audio",
-    "tooltipDisabledContent": "El micrófono está deshabilitado",
+    "tooltipDisabledContent": "Micrófono deshabilitado",
     "tooltipOnContent": "Silenciar micrófono",
     "tooltipOffContent": "Reactivar micrófono",
     "microphoneMenuTitle": "Micrófono",
     "microphoneMenuTooltip": "Elegir micrófono",
     "speakerMenuTitle": "Altavoz",
-    "speakerMenuTooltip": "Elegir altavoz"
+    "speakerMenuTooltip": "Elegir altavoz",
+    "microphoneButtonSplitRoleDescription": "Botón de expansión",
+    "onSplitButtonAriaLabel": "Silenciar opciones de micrófono y audio",
+    "offSplitButtonAriaLabel": "Reactivar el micrófono y las opciones de audio",
+    "microphoneActionTurnedOnAnnouncement": "El micrófono se ha activado",
+    "microphoneActionTurnedOffAnnouncement": "El micrófono se ha desactivado"
   },
   "devicesButton": {
     "label": "Dispositivos",
     "tooltipContent": "Administrar dispositivos",
     "cameraMenuTitle": "Cámara",
     "cameraMenuTooltip": "Elegir cámara",
+    "audioDeviceMenuTitle": "Dispositivo de audio",
+    "audioDeviceMenuTooltip": "Elegir dispositivo de audio",
     "microphoneMenuTitle": "Micrófono",
     "microphoneMenuTooltip": "Elegir micrófono",
     "speakerMenuTitle": "Altavoz",
@@ -93,6 +106,8 @@
     "participantLeft": "abandonó el chat.",
     "editMessage": "Editar",
     "removeMessage": "Eliminar",
+    "resendMessage": "Intente enviar de nuevo",
+    "failToSendTag": "Error al enviar",
     "editedTag": "Editado",
     "liveAuthorIntro": "{author} dice",
     "editBoxTextLimit": "El mensaje supera el límite de {limitNumber} caracteres",
@@ -101,7 +116,8 @@
     "noDisplayNameSub": "Sin nombre",
     "editBoxCancelButton": "Cancelar",
     "editBoxSubmitButton": "Enviar",
-    "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}"
+    "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Más opciones"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",
@@ -127,12 +143,27 @@
     "callCameraAccessDenied": "No se puede acceder a la cámara. Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
     "callCameraAlreadyInUse": "No se puede acceder a la cámara. Puede que ya la esté usando otra aplicación.",
     "callMacOsCameraAccessDenied": "MacOS está bloqueando el acceso a la cámara. Actualiza la configuración de privacidad para permitir que este explorador acceda a la cámara.",
-    "callMacOsScreenShareAccessDenied": "MacOS está bloqueando el uso compartido de la pantalla. Actualice la configuración de privacidad para permitir que este explorador grabe la pantalla."
+    "callMacOsScreenShareAccessDenied": "MacOS está bloqueando el uso compartido de la pantalla. Actualice la configuración de privacidad para permitir que este explorador grabe la pantalla.",
+    "dismissButtonAriaLabel": "Cerrar",
+    "failedToJoinCallGeneric": "No se pudo unir a la llamada.",
+    "failedToJoinCallInvalidMeetingLink": "No se puede unir a la reunión. Vínculo no válido."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
     "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
     "localVideoLabel": "Tú",
-    "localVideoCameraSwitcherLabel": "Cámara de ciclo"
+    "localVideoCameraSwitcherLabel": "Cambiar de cámara",
+    "localVideoMovementLabel": "Mosaico de vídeo local movible",
+    "localVideoSelectedDescription": "{cameraName} seleccionada",
+    "displayNamePlaceholder": "Participante sin nombre"
+  },
+  "dialpad": {
+    "placeholderText": "Introducir un número"
+  },
+  "HoldButton": {
+    "onLabel": "Reanudar",
+    "offLabel": "En espera",
+    "toolTipOnContent": "Reanudar llamada",
+    "toolTipOffContent": "Poner llamada en espera"
   }
 }
