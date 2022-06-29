@@ -5,11 +5,11 @@ Along with the NPM package, we also update the documentation hosted on [storyboo
 
 This repository follows a green-trunk development model. All development happens on the `main` branch. Releasing a new version of the package involves three distinct steps:
 
-1. Create a git branch to release the package. This step is mostly automated via GitHub workflows.
-1. Prepare the branch for release. This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
-1. Release the package to NPM for release branch. This step is mostly automated via GitHub workflows.
+1. [Create a git branch to release the package](#step-1-creating-a-release-branch). This step is mostly automated via GitHub workflows.
+1. [Prepare the branch for release](#step-2-prepare-for-release). This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
+1. [Release the package to NPM for release branch](#step-3-publish-to-npm). This step is mostly automated via GitHub workflows.
 
-This document applies to beta and stable releases. Alpha releases are created nightly through a separate light-weight mechanism.
+_This document applies to beta and stable releases. Alpha releases are created nightly through a separate [light-weight mechanism](#creating-alpha-releases)._
 
 ## Step 1: Creating a release branch
 
@@ -113,6 +113,8 @@ This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
+
+**Exception**: When [fetching translated strings](../references/string-translations.md), create a PR directly against the release branch. The fetched strings depend on the english strings in the branch that triggers the workflow, so translating the strings on `main` and then cherry-picking over the PR can result in the wrong strings getting translated.
 
 ## Step 3: Publish to NPM
 
