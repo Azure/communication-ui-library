@@ -25,8 +25,9 @@ import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   RemoteParticipant,
-  StartCallOptions,
-  PermissionConstraints
+  PermissionConstraints,
+  PropertyChangedEvent,
+  StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -199,7 +200,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     this.onClientStateChange = onStateChange;
 
+    this.subscribeDeviceManagerEvents();
+
     this.callClient.onStateChange(onStateChange);
+  }
+
+  // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
+  private subscribeDeviceManagerEvents(): void {
+    this.deviceManager.on('selectedMicrophoneChanged', () => {
+      this.emitter.emit('selectedMicrophoneChanged');
+    });
+    this.deviceManager.on('selectedSpeakerChanged', () => {
+      this.emitter.emit('selectedSpeakerChanged');
+    });
   }
 
   private bindPublicMethods(): void {
@@ -483,6 +496,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -569,6 +584,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
