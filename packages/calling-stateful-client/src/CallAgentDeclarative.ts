@@ -225,7 +225,7 @@ class ProxyCallAgent implements ProxyHandler<DeclarativeCallAgent> {
        * 3. Use `callAgent.incomingCalls` and filter an incoming call ID to get a declarative incoming call object
        */
       case 'incomingCalls': {
-        return this._declarativeIncomingCalls;
+        return Array.from(this._declarativeIncomingCalls.values());
       }
       default:
         return Reflect.get(target, prop);
