@@ -350,6 +350,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;

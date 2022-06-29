@@ -1,8 +1,25 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Tue, 19 Apr 2022 20:46:15 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Jun 2022 18:29:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.3.0)
+
+Mon, 13 Jun 2022 18:29:31 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.2.2-beta.1...@internal/chat-component-bindings_v1.3.0)
+
+### Patches
+
+- Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat ([PR #1895](https://github.com/azure/communication-ui-library/pull/1895) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+- Bump @internal/chat-stateful-client to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+- Bump @internal/react-components to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Allow removal of files when editing a message  ([PR #1872](https://github.com/azure/communication-ui-library/pull/1872) by anjulgarg@live.com)
+- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.2.2-beta.1)
 

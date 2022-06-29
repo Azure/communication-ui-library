@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Changed stateful quickstart file name for call components.",
-  "packageName": "@internal/storybook",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

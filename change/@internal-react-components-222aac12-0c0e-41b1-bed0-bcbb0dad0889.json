@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Disable hover behavior when no content in sendBox",
-  "packageName": "@internal/react-components",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

@@ -242,11 +242,28 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
       {toShow.map((error) => (
         <MessageBar
           {...props}
+          styles={{
+            innerText: {
+              paddingTop: messageBarType(error.type) === 5 ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
+              lineHeight: 'none'
+            },
+            icon: {
+              height: 0
+            },
+            content: {
+              lineHeight: 'inherit'
+            },
+            dismissal: {
+              height: 0,
+              paddingTop: '0.8rem'
+            }
+          }}
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
           dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}
         </MessageBar>

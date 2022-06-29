@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Show a loading spinner when remote video stream is loading",
-  "packageName": "@internal/react-composites",
-  "email": "chwhilar@microsoft.com",
-  "dependentChangeType": "patch"
-}

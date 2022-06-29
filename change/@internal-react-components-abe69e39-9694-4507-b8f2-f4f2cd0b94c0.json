@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove feature flag local-camera-switcher",
-  "packageName": "@internal/react-components",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
