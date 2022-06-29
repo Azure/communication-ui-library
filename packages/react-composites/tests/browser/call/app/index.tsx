@@ -198,7 +198,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      iconName: 'MessageSeen',
+      iconName: 'ParticipantItemOptions',
       text: 'custom #1',
       placement: 'primary'
     };
@@ -207,7 +207,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      iconName: 'MessageResend',
+      iconName: 'NetworkReconnectIcon',
       text: 'custom #2',
       placement: 'primary'
     };
@@ -216,7 +216,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      iconName: 'ParticipantItemOptions',
+      iconName: 'HorizontalGalleryRightButton',
       text: 'custom #3',
       placement: 'primary'
     };
