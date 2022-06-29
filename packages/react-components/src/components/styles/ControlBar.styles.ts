@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles } from '@fluentui/react';
-import { ParticipantListStyles } from '../ParticipantList';
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -156,15 +155,6 @@ export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = 
     paddingLeft: '.5rem',
     fontWeight: 600,
     fontSize: '.75rem'
-  }
-};
-
-/**
- * @private
- */
-export const defaultParticipantListContainerStyle: ParticipantListStyles = {
-  root: {
-    maxHeight: '20rem'
   }
 };
 
