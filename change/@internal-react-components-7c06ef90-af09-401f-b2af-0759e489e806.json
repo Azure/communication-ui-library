@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "correctly setting maxHeight for people context menu",
+  "packageName": "@internal/react-components",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
