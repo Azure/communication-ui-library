@@ -1,28 +1,21 @@
-# Creating a Release
+# Release process for @azure/communication-react
 
-    TODO: Create a new directory for release docs?
-    TODO: Add release section in docs/README.md
+[@azure/communication-react](https://www.npmjs.com/package/@azure/communication-react) is the primary NPM package released from this repository.
+Along with the NPM package, we also update the documentation hosted on [storybook](https://azure.github.io/communication-ui-library/).
+
+This repository follows a green-trunk development model. All development happens on the `main` branch. Releasing a new version of the package involves three distinct steps:
+
+1. Create a git branch to release the package. This step is mostly automated via GitHub workflows.
+1. Prepare the branch for release. This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
+1. Release the package to NPM for release branch. This step is mostly automated via GitHub workflows.
 
 This document applies to beta and stable releases. Alpha releases are created nightly through a separate light-weight mechanism.
 
-All new major/minor releases and new beta releases should be posted on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
-
-## Ensuring release quality
-
-     TODO: Move below before release NPM
-
-We must do due diligence in testing our packages before any new major/minor or beta release (alpha releases are exempt). To do so a release branch should be created at least 1 week before release and thoroughly bug bashed. All critical bugs must be fixed.
-
-See the [release checklist](../references/release-checklist.md) for tasks that must be completed before releasing.
-
-
-    TODO: Add three higher-level sections: (1) Create the release branch; (2) Do stuff to make it releasable; (3) Publish the NPM package.
-
-## Release workflow
+## Step 1: Creating a release branch
 
 Both beta and stable release follow a two step workflow, aided by github actions.
 
-### Step 1: Create a Pre-release branch
+### Step 1.1: Create a Pre-release branch
 
 We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main.
 
@@ -35,11 +28,16 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
         - `stable-minor` - This option is best for when you want to release from `1.2.0 -> 1.3.0`
         - `stable-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1`
 
-This workflow will:
+![Trigger prerelease branch creation](../images/trigger-create-prerelease-branch.png)
+
+#### Workflow details
+
+This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
 1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
-1. Creates another branch for manually summarizing the changes collected in the changelog and opens a Pull Request into the `prerelease/<release-tag>`. **Merge this PR before going to step 2**.
+1. Creates another branch for manually summarizing the changes collected in the changelog and opens a Pull Request into the `prerelease/<release-tag>`. **Merge this PR before going to step 1.2**.
     1. This step will also create a file called `GROOMME.md` which should be deleted when completing the PR back into the pre-release branch to signify that the changelog has been manually groomed.
+    1. See [tips for how to prune the generated changelog](./pruning-a-changelog.md) into a readable summary of the release.
 
 For example, when creating a release off of `main` tagged `3.3.0`, the following branches and Pull Requests will be created:
 
@@ -54,14 +52,7 @@ graph LR
   pr -.-o|Create Pull Request| prerelease
 ```
 
-    TODO: this step is no longer needed.
-
-* Following the conclusion of this workflow you will need to kick off [the string localization workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) on the `pre-release` branch that results from this.
-
-
-     TODO: Link to the "how to groom a changelog doc"
-
-### Step 2: Create release branch
+### Step 1.2: Create release branch
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
@@ -70,7 +61,11 @@ String translations should have been updated in this branch 5 days before releas
 1. Options for GH Action:
     1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
 
-This workflow will:
+![Trigger release branch creation](../images/trigger-create-release-branch.png)
+
+#### Workflow details
+
+This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
     1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
@@ -91,11 +86,19 @@ graph LR
   prerelease -->|Create Branch| release
   prerelease -.-o|Create Pull Request| main
 ```
-Something that should be done is disable the `beta` checks on the CI if a `stable` release, or the `stable` checks if this is a `beta` relase. This is to ensure that any cherry pick PR's going into release dont run against the beta CI causing failures this is done by editing the [CI](https://github.com/Azure/communication-ui-library/actions/workflows/ci.yml) workflow Matrix definition. This can be done in this [file](../../.github/workflows/ci.yml) by editing the output `JSON` string to remove the `beta` flavor.
 
-    TODO: Talk about bug bash
-    TODO: Talk about ARB
-    TODO: Talk about fetching back strings once ready. Needs its own doc for how to fetch back strings.
+- Manual step for now: Disable the beta checks on the CI if this is a stable release, or the stable checks if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. Editing the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
+
+## Step 2: Prepare for release
+
+Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
+
+- Setup a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
+  - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in section below.
+- For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
+- We use a Microsoft-internal service to translate strings. Strings are sent for translation automatically for any changes to `main` or the release branches. But we need to manually fetch back and commit translated strings before release. This repository has a GitHub workflow to [fetch back translated strings](../references/string-translations.md).
+
+This step typically lasts ~2 weeks.
 
 ### Cherry-picking changes
 
@@ -111,32 +114,29 @@ This process has the following benefits:
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
-## Publishing the package
+## Step 3: Publish to NPM
 
 You are now ready to publish the package!
 
-    TODO: link to workflow
-    TODO: Refer to the rule of two
+**Releasing to NPM is an irreversible action**.
+Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](../references/release-checklist.md) to take to ensure a confident release.
+
+**Rule of two**: It is recommended to pair up with a team member for this last step to reduce the changes of human error.
 
 
-1. Run the "Publish npm packages" GitHub action _off the release branch_.
-    * Enter the tag also, normally if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`. However while our package has no major version and is in beta only, we use `latest` for the tag and not `next`. So for current beta releases be sure to use the tag `latest`.
-
-        <https://user-images.githubusercontent.com/2684369/130102770-21da0fff-ffe3-42fb-8e80-d8a8761b8067.mp4>
-
+1. Run the [Publish npm packages" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/npm-release-publish.yml) **off the release branch**.
+    - Pick the right tag: For stable release, pick `latest`, for beta release pick `next`.
+    ![Trigger the NPM release action](../images/trigger-npm-publich-action.png)
 1. This deployment must then be approved by one of the repo administrators:
-
     ![Screenshot highlighting reuired approval before publishing npm package](../images/npm-publish-required-approval.png)
-
 1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
-1. Complete the post-release verification steps in [Release Checklist](./release-checklist.md).
-1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.
+1. For *beta releases only*, also deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
+    ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
 1. Once everything is deployed and published on npm, delete the release branch from github.
 
-    TODO: Publish storybook only on beta
-    TODO: Link to publish storybook workflow
+# Appendix
 
-## Submitting a hotfix
+## Releasing a hotfix for an older release
 
 There is currently no GitHub action for creating a hotfix and must be done manually.
 
@@ -169,21 +169,13 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 1. Publish the package. _documentation to follow on publishing packages._
 
-## Other release types
-
-### Creating alpha releases
+## Creating alpha releases
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
 They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
-### Creating beta releases
-
-Creating a beta release is the same as creating a regular release, however each package.json version must have the `-beta` suffix and all changelogs must have `prerelease` or `none` as their change type. This will be typically during prerelease phases before a new major version is released.
-
-To create a beta release, ensure the above conditions then follow the instructions for "Creating a release through GitHub actions" or "Manually creating a release".
-
-## Publishing packages
+## NPM publish pipeline
 
 To ensure our packages are part of the `@azure` organization our packages are published using [Azure's publishing pipeline](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline).
 
