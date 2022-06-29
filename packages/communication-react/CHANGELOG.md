@@ -43,8 +43,7 @@ Wed, 29 Jun 2022 17:31:05 GMT
   - Memoizes the return from the participant list selector for better optimization. ([PR #1980](https://github.com/azure/communication-ui-library/pull/1980) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
   - Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions parameter needed to start a PSTN Call. ([PR #1976](https://github.com/azure/communication-ui-library/pull/1976) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Add DeclarativeIncomingCall class and a new method getIncomingCall in declarative call agent to allow contoso to obtain a declarative incoming call object using incoming call id. ([PR #1975](https://github.com/azure/communication-ui-library/pull/1975) by anjulgarg@live.com)
-
+  - Add a new attribute `incomingCalls` to CallAgentDeclarative that returns all active incoming calls ([PR #1975](https://github.com/azure/communication-ui-library/pull/1975) by anjulgarg@live.com)
 
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.0)
