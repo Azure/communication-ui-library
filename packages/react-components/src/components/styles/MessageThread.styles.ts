@@ -52,7 +52,10 @@ export const chatStyle: ComponentSlotStyle = {
   paddingBottom: '0.5rem',
   paddingTop: '0.8rem',
   border: 'none',
-  overflow: 'auto'
+  overflow: 'auto',
+  // `height: 100%` ensures that the Chat component covers 100% of it's parents height
+  // to prevent intermittent scrollbars when gifs are present in the chat.
+  height: '100%'
 };
 
 /**
