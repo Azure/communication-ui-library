@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Update the Calling and CallWithChat Adapters so that they emit events for device changes in a call.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,73 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 29 Jun 2022 17:31:07 GMT",
+      "tag": "@internal/storybook_v1.3.1-beta.1",
+      "version": "1.3.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Add cameraStoppedUnexpectedly strings to error bar story"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "22c31f5b69585a8d0509151a184412a49eb1889a",
+            "comment": "adding file sharing snippet to composite documentation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0843cd23931ed0b27bf9666d8ee8330a77f9eac0",
+            "comment": "storybook to show how to use dialpad props"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c233329a92200a3dcf4f689c9333a084483beee6",
+            "comment": "Add best practice around only allowing one instance of the sample to be open at a time on mobile"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "bcc8af9443eb04138155b45182c570ce05fdb7c7",
+            "comment": "disable tooltip for persona"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.3.1-beta.1",
+            "commit": "ca7646cfad4f55c21d80355235d29b35ca2c40c1"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:28 GMT",
       "tag": "@internal/storybook_v1.3.0",
       "version": "1.3.0",

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Update ErrorBar selector to return new messages when cameraStoppedUnexpectedly call diagnostic is triggered",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

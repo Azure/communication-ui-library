@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make file sharing narrator compliant. Components contain aria labels and announcer",
-  "packageName": "@internal/react-components",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
