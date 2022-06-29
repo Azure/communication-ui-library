@@ -43,7 +43,8 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * A callback function that can be used to provide custom data to Avatars rendered
    * in Composite.
    *
-   * This will not affect the displayName prop provided to the composite's adapter. The displayName throughout the composite
+   * This will not affect the displayName shown in the composite.
+   * The displayName throughout the composite will be what is provided to the adapter when the adapter is created.
    * will be what is provided to the adapter when the adapter is created.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
