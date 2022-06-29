@@ -56,8 +56,6 @@ graph LR
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
-String translations should have been updated in this branch 5 days before release. if they have not, run [translation workflow](https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml) in the pre-release branch and cherry pick the string changes into the release branch.
-
 1. Options for GH Action:
     1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
 
@@ -97,6 +95,7 @@ Once the release branch has been created, we must make sure that the package we 
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in section below.
 - For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
 - We use a Microsoft-internal service to translate strings. Strings are sent for translation automatically for any changes to `main` or the release branches. But we need to manually fetch back and commit translated strings before release. This repository has a GitHub workflow to [fetch back translated strings](../references/string-translations.md).
+  - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once the release branch is created, and to fetch back strings 5 days after the release branch creation / last strings change cherry-picked into the release branch.
 
 This step typically lasts ~2 weeks.
 

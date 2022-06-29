@@ -15,4 +15,6 @@ To fetch back strings:
 * You _may_ need to add the `ui change` label to update [e2e test snapshots](../references/ui-tests.md).
 * Follow the [usual process](../contributing-guide/6.%20submitting-a-pr.md) for merging the PR into `main` or the release branch.
 
+**Note**: String translation can take up to 5 working days to complete. Be careful when making (i.e., cherry-picking into a release branch) string changes close to a release.
+
 Further reading: [Internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/25949/Localization) for details on how string translation service is setup.
