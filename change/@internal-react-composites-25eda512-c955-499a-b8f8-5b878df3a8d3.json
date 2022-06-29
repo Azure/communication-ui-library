@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Icons usage in Custom Buttons to use iconNames from registered Icons",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
