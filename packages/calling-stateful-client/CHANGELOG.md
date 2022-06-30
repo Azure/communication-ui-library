@@ -1,8 +1,40 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Tue, 19 Apr 2022 20:46:15 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.3.0...@internal/calling-stateful-client_v1.3.1-beta.1)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+
+### Changes
+
+- Add incomingCalls array to declarative call agent ([PR #1975](https://github.com/azure/communication-ui-library/pull/1975) by anjulgarg@live.com)
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.3.0)
+
+Mon, 13 Jun 2022 18:29:30 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.2.2-beta.1...@internal/calling-stateful-client_v1.3.0)
+
+### Patches
+
+- Return the renderer and view created when statefulCallClient.createView is called ([PR #1889](https://github.com/azure/communication-ui-library/pull/1889) by 2684369+JamesBurnside@users.noreply.github.com)
+- - Add callIdHistory to context + internal context - Update all visit to callId using latestCallId - Encapsule the access to internalMap directly to ensure no leaks ([PR #1817](https://github.com/azure/communication-ui-library/pull/1817) by jiangnanhello@live.com)
+- Update the right call.id into state ([PR #1818](https://github.com/azure/communication-ui-library/pull/1818) by jiangnanhello@live.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Support `isReceiving` flag for video streams ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
+- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
+- Update Calling declarative to handle new PSTN functions ([PR #1917](https://github.com/azure/communication-ui-library/pull/1917) by 94866715+dmceachernmsft@users.noreply.github.com)
+- updating beta @azure/communication-calling to 1.5.4-beta.1 ([PR #1925](https://github.com/azure/communication-ui-library/pull/1925) by 79475487+mgamis-msft@users.noreply.github.com)
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.2.2-beta.1)
 

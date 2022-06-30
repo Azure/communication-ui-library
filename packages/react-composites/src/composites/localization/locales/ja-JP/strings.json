@@ -44,11 +44,13 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "ユーザー",
-    "peopleButtonTooltipContentOpen": "参加者を表示",
-    "peopleButtonTooltipContentClose": "参加者を非表示",
+    "peopleButtonTooltipOpen": "参加者を表示",
+    "peopleButtonTooltipClose": "参加者を非表示",
     "chatButtonLabel": "チャット",
-    "chatButtonTooltipContentOpen": "チャットを表示",
-    "chatButtonTooltipContentClose": "チャットを非表示",
+    "chatButtonTooltipClosedWithMessageCount": "チャットを表示する ({unreadMessagesCount} 件の未読)",
+    "chatButtonTooltipOpen": "チャットを表示",
+    "chatButtonTooltipClose": "チャットを非表示",
+    "moreDrawerAudioDeviceMenuTitle": "オーディオ デバイス",
     "moreDrawerMicrophoneMenuTitle": "マイク",
     "moreDrawerSpeakerMenuTitle": "スピーカー",
     "moreDrawerButtonLabel": "その他のオプション",
@@ -59,6 +61,9 @@
     "chatButtonNewMessageNotificationLabel": "新規メッセージ",
     "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。",
     "removeMenuLabel": "削除",
-    "copyInviteLinkButtonLabel": "招待用のリンクをコピー"
+    "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
+    "dismissSidePaneButton": "閉じる",
+    "returnToCallButtonAriaDescription": "通話に戻る",
+    "returnToCallButtonAriaLabel": "戻る"
   }
 }

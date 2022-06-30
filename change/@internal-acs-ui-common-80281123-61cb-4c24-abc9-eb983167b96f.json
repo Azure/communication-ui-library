@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updating @azure/communication-chat to 1.2.0",
-  "packageName": "@internal/acs-ui-common",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

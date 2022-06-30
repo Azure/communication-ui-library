@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update DismissSidePaneButtonLabel to have correct naming.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

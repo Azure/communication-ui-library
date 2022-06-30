@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// eslint-disable-next-line no-restricted-imports
+import { Icon } from '@fluentui/react';
 import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import React from 'react';
-import { CallCompositeIcon } from '../../../common/icons';
 import {
   CallControlDisplayType,
   CustomCallControlButtonCallback,
@@ -48,7 +49,7 @@ export const generateCustomControlBarButtons = (
               styles={buttonProps.styles}
               key={`${buttonProps.placement}_${i}`}
               // set default icon if not provided
-              onRenderIcon={() => <CallCompositeIcon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
+              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               disabled={buttonProps.disabled}
             />
           ))}

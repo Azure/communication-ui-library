@@ -18,7 +18,7 @@ import {
   ParticipantListStyles,
   ParticipantMenuItemsCallback
 } from './ParticipantList';
-import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
+import { participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { useIdentifiers } from '../identifiers';
@@ -195,7 +195,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         onRenderAvatar={onRenderAvatar}
         onRemoveParticipant={onRemoveParticipant}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
+        styles={styles?.menuStyles?.participantListStyles}
         showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       />
     );
@@ -299,6 +299,9 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
                 // More info: https://github.com/microsoft/fluentui/issues/18835
                 maxWidth: '100%'
               }
+            },
+            style: {
+              maxHeight: '20rem'
             },
             // Disable dismiss on resize to work around a couple Fluent UI bugs
             // See reasoning in the props for the parent menu.

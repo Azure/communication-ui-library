@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removing ae-incompatible-tags warning from API files",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}
