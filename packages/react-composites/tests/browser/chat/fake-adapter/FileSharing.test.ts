@@ -77,7 +77,11 @@ test.describe('Filesharing ProgressBar', async () => {
       })
     );
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-progress-bar-visible.png');
   });
 
@@ -103,7 +107,11 @@ test.describe('Filesharing ProgressBar', async () => {
       })
     );
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
   });
 
@@ -129,7 +137,11 @@ test.describe('Filesharing ProgressBar', async () => {
       })
     );
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-greater-than-one.png');
   });
 });

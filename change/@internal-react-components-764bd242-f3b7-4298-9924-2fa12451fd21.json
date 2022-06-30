@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update microphone button to be disabled when there are no microphones present",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
