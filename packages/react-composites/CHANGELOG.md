@@ -1,8 +1,40 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Mon, 13 Jun 2022 18:29:27 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:06 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.3.0...@internal/react-composites_v1.3.1-beta.1)
+
+### Minor changes
+
+- Update the Calling and CallWithChat Adapters so that they emit events for device changes in a call. ([PR #1982](https://github.com/azure/communication-ui-library/pull/1982) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Autofocus rejoin call button on call end page ([PR #2008](https://github.com/azure/communication-ui-library/pull/2008) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update DismissSidePaneButtonLabel to have correct naming. ([PR #2009](https://github.com/azure/communication-ui-library/pull/2009) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Show cameraStoppedUnexpectedly call diagnostics in message bar on the call page ([PR #1991](https://github.com/azure/communication-ui-library/pull/1991) by 2684369+JamesBurnside@users.noreply.github.com)
+- update styles for errorBar and add registered icon for dissmissal button ([PR #2003](https://github.com/azure/communication-ui-library/pull/2003) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix displayName disparity in different parts of the composites to match expected behavior from documentation. ([PR #2013](https://github.com/azure/communication-ui-library/pull/2013) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Better announce lobby, network failure and call end notices for screen reader users ([PR #2007](https://github.com/azure/communication-ui-library/pull/2007) by 82062616+prprabhu-ms@users.noreply.github.com)
+- disable tooltip for persona ([PR #1990](https://github.com/azure/communication-ui-library/pull/1990) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+- Bump @internal/calling-component-bindings to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+- Bump @internal/calling-stateful-client to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+- Bump @internal/chat-component-bindings to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+- Bump @internal/chat-stateful-client to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+- Bump @internal/react-components to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+
+### Changes
+
+- Update startCall handler in the Calling and CallWithChat Adapters to support the StartCallOptions parameter needed to start a PSTN Call. ([PR #1976](https://github.com/azure/communication-ui-library/pull/1976) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
+- Participant pane overlays on top of message thread to make sure the message thread is responsive ([PR #1943](https://github.com/azure/communication-ui-library/pull/1943) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Make file sharing narrator compliant. Components contain aria labels and announcer ([PR #1960](https://github.com/azure/communication-ui-library/pull/1960) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.3.0)
 
