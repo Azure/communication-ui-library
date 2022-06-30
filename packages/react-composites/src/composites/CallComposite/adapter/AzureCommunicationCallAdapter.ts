@@ -20,6 +20,7 @@ import {
   CallAgent,
   Call,
   GroupCallLocator,
+  RoomCallLocator,
   TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
   AudioDeviceInfo,
@@ -297,15 +298,26 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
       const isTeamsMeeting = !('groupId' in this.locator);
-      const call = isTeamsMeeting
-        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-            audioOptions,
-            videoOptions
-          })
-        : this.callAgent.join(this.locator as GroupCallLocator, {
-            audioOptions,
-            videoOptions
-          });
+      const isRoomsCall = !('roomId' in this.locator);
+
+      let call;
+
+      if (isTeamsMeeting) {
+        call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        });
+      } else if (isRoomsCall) {
+        call = this.callAgent.join(this.locator as RoomCallLocator, {
+          audioOptions,
+          videoOptions
+        });
+      } else {
+        call = this.callAgent.join(this.locator as GroupCallLocator, {
+          audioOptions,
+          videoOptions
+        });
+      }
 
       this.processNewCall(call);
       return call;
@@ -642,6 +654,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
+  | RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
 
 /**
