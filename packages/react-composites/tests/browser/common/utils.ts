@@ -370,7 +370,7 @@ export async function stableScreenshot(
   if (stubOptions?.hideVideoLoadingSpinner !== false) {
     await hideVideoLoadingSpinner(page);
   }
-  if (stubOptions?.awaitFileTypeIcon !== false) {
+  if (stubOptions?.awaitFileTypeIcon) {
     await awaitFileTypeIcon(page);
   }
   try {
@@ -409,7 +409,9 @@ const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
 };
 
 /**
- * Helper function for waiting for file type icons.
+ * Helper function for waiting for file type icons. File type icons
+ * cannot be registered as they are loaded dynamically based on the
+ * type of file being loaded (e.g.- .pdf, .docx, .png, .txt)
  */
 const awaitFileTypeIcon = async (page: Page): Promise<void> => {
   const fileTypeIconId: string = dataUiId(IDS.fileTypeIcon);
@@ -418,7 +420,7 @@ const awaitFileTypeIcon = async (page: Page): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const iconNodes = Array.from(document.querySelectorAll(args.fileTypeIconId));
-      return iconNodes.every((node) => node?.querySelector('img').height > 0);
+      return iconNodes.every((node) => node?.querySelector('img').complete);
     },
     {
       fileTypeIconId: fileTypeIconId
