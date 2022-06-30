@@ -1,8 +1,35 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Mon, 13 Jun 2022 18:29:26 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:05 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.3.0...@internal/react-components_v1.3.1-beta.1)
+
+### Minor changes
+
+- Add strings for new UFDs for microphone stopped unexpectedly and microphone recovered ([PR #1994](https://github.com/azure/communication-ui-library/pull/1994) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update string types and names per comments from ARB ([PR #2009](https://github.com/azure/communication-ui-library/pull/2009) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Fixes spacing for text in errorbar component ([PR #2003](https://github.com/azure/communication-ui-library/pull/2003) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix SendBox button when using VoiceOver on iOS ([PR #2004](https://github.com/azure/communication-ui-library/pull/2004) by miguelgamis@microsoft.com)
+- Update microphone button to be disabled when there are no microphones present ([PR #1993](https://github.com/azure/communication-ui-library/pull/1993) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update ErrorBar to accept strings and icons for the cameraStoppedUnexpectedly call diagnostic ([PR #1991](https://github.com/azure/communication-ui-library/pull/1991) by 2684369+JamesBurnside@users.noreply.github.com)
+- disable tooltip for persona ([PR #1990](https://github.com/azure/communication-ui-library/pull/1990) by carolinecao@microsoft.com)
+- Making tooltips inline-block to prevent sizing and positioning issues in read receipts ([PR #2005](https://github.com/azure/communication-ui-library/pull/2005) by anjulgarg@live.com)
+- Bump @internal/acs-ui-common to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+
+### Changes
+
+- Add new prop onChange to dialpad to grab textfield values and modified onClickDialpadButton type to (buttonValue: string, buttonIndex: number) => void so we can grab info regarding which button is clicked ([PR #1989](https://github.com/azure/communication-ui-library/pull/1989) by carolinecao@microsoft.com)
+- Fix loading spinner size in small containers ([PR #1995](https://github.com/azure/communication-ui-library/pull/1995) by 2684369+JamesBurnside@users.noreply.github.com)
+- Make file sharing narrator compliant. Components contain aria labels and announcer ([PR #1960](https://github.com/azure/communication-ui-library/pull/1960) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.0)
 
