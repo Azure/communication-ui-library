@@ -11,6 +11,7 @@ import {
   callingSDKVersion,
   communicationReactSDKVersion,
   createGroupId,
+  createRoomId,
   fetchTokenResponse,
   getGroupIdFromUrl,
   getRoomIdFromUrl,
@@ -93,18 +94,30 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
-          startCallHandler={(callDetails) => {
+          startCallHandler={async (callDetails) => {
             setDisplayName(callDetails.displayName);
-            const callLocator =
+            let callLocator =
               callDetails.callLocator ||
               getTeamsLinkFromUrl() ||
               getGroupIdFromUrl() ||
               getRoomIdFromUrl() ||
               createGroupId();
 
+            // There is an API call involved with creating a room so lets only create one if we know we have to
+            if (callDetails.option === 'StartRooms') {
+              let roomId = '';
+              try {
+                roomId = await createRoomId();
+              } catch (e) {
+                console.log(e);
+              }
+
+              callLocator = { roomId: roomId };
+            }
+
             if ('roomId' in callLocator) {
               if (userId) {
-                joinRoom(userId.communicationUserId, callLocator.roomId);
+                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role);
               } else {
                 throw 'Invalid userId!';
               }

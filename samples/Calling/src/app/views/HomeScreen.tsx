@@ -21,13 +21,17 @@ import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
-import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { getRoomIdFromUrl } from 'app/utils/AppUtils';
+import { RoomCallLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; callLocator?: TeamsMeetingLinkLocator | RoomLocator }): void;
+  startCallHandler(callDetails: {
+    displayName: string;
+    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    option?: string;
+    role?: string;
+  }): void;
   joiningExistingCall: boolean;
-  roomId: string | undefined;
+  roomId: RoomCallLocator | undefined;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
@@ -37,7 +41,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
-    { key: 'RoomsCall', text: 'Start a Rooms Call' },
+    { key: 'StartRooms', text: 'Start a Rooms call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
     { key: 'Rooms', text: 'Join a Rooms Call' }
   ];
@@ -94,7 +98,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }
               />
             )}
-            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'RoomsCall' || props.roomId) && (
+            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || props.roomId) && (
               <ChoiceGroup
                 styles={callOptionsGroupStyles}
                 label={roomsRoleGroupLabel}
@@ -112,7 +116,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, callLocator: callLocator });
+                props.startCallHandler({ displayName, callLocator: callLocator, option: chosenCallOption.key });
               }
             }}
           />

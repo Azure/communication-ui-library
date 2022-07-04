@@ -21,25 +21,6 @@ export const fetchTokenResponse = async (): Promise<any> => {
 };
 
 /**
- * Get ACS user token from the Contoso server.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const joinRoom = async (userId: string, roomId: string): Promise<void> => {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    },
-    body: JSON.stringify({ userId, roomId })
-  };
-  const response = await fetch('http://localhost:7071/api/Rooms-AddParticipants', requestOptions);
-  if (!response.ok) {
-    throw 'Invalid token response';
-  }
-};
-
-/**
  * Generate a random user name.
  * @return username in the format user####
  */
@@ -55,6 +36,42 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 };
 
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
+
+export const createRoomId = async (): Promise<string> => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      Host: 'alkwa-fn-test.azurewebsites.net',
+      'Content-Type': 'application/json',
+      'Referrer-Policy': 'no-referrer'
+    }
+  };
+  const response = await fetch('http://localhost:7071/api/Rooms-CreateRoom', requestOptions);
+  if (!response.ok) {
+    throw 'Invalid token response';
+  }
+
+  const body = await response.json();
+  return body['id'];
+};
+
+/**
+ * Joins an ACS room with a given roomId and role
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const joinRoom = async (userId: string, roomId: string, role): Promise<void> => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ acsUserId: userId, roomId: roomId, role: role })
+  };
+  const response = await fetch('http://localhost:7071/api/Rooms-AddParticipants', requestOptions);
+  if (!response.ok) {
+    throw 'Invalid token response';
+  }
+};
 
 /**
  * Get teams meeting link from the url's query params.
