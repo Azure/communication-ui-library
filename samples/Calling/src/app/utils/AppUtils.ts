@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
 
 /**
@@ -18,6 +18,24 @@ export const fetchTokenResponse = async (): Promise<any> => {
     }
   }
   throw 'Invalid token response';
+};
+
+/**
+ * Get ACS user token from the Contoso server.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const joinRoom = async (userId: string, roomId: string): Promise<void> => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId, roomId })
+  };
+  const response = await fetch('http://localhost:7071/api/Rooms-AddParticipants', requestOptions);
+  if (!response.ok) {
+    throw 'Invalid token response';
+  }
 };
 
 /**
@@ -46,6 +64,15 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
+/**
+ * Get room id from the url's query params.
+ */
+export const getRoomIdFromUrl = (): RoomLocator | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomId = urlParams.get('roomId');
+  return roomId ? { roomId } : undefined;
+};
+
 /*
  * TODO:
  *  Remove this method once the SDK improves error handling for unsupported browser.
@@ -61,6 +88,20 @@ export const isLandscape = (): boolean => window.innerWidth < window.innerHeight
 
 export const navigateToHomePage = (): void => {
   window.location.href = window.location.href.split('?')[0];
+};
+
+const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
+
+const isGroupLink = (link: string): boolean => link.indexOf('-') !== -1;
+
+export const createLocator = (link: string): TeamsMeetingLinkLocator | GroupLocator | RoomLocator => {
+  if (isTeamsMeetingLink(link)) {
+    return { meetingLink: link };
+  } else if (isGroupLink(link)) {
+    return { groupId: link };
+  } else {
+    return { roomId: link };
+  }
 };
 
 export const WEB_APP_TITLE = document.title;

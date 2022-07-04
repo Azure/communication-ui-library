@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
@@ -13,9 +13,11 @@ import {
   createGroupId,
   fetchTokenResponse,
   getGroupIdFromUrl,
+  getRoomIdFromUrl,
   getTeamsLinkFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
+  joinRoom,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
@@ -47,7 +49,7 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator | RoomLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
 
   // Get Azure Communications Service token from the server
@@ -87,23 +89,32 @@ const App = (): JSX.Element => {
     case 'home': {
       document.title = `home - ${WEB_APP_TITLE}`;
       // Show a simplified join home screen if joining an existing call
-      const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
+      const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl() || !!getRoomIdFromUrl();
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
-            const isTeamsCall = !!callDetails.teamsLink;
             const callLocator =
-              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+              callDetails.callLocator ||
+              getTeamsLinkFromUrl() ||
+              getGroupIdFromUrl() ||
+              getRoomIdFromUrl() ||
+              createGroupId();
+
+            if ('roomId' in callLocator) {
+              if (userId) {
+                joinRoom(userId.communicationUserId, callLocator.roomId);
+              } else {
+                throw 'Invalid userId!';
+              }
+            }
+
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
             if (!joiningExistingCall) {
-              const joinParam = isTeamsCall
-                ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (callLocator as GroupCallLocator).groupId;
-              window.history.pushState({}, document.title, window.location.origin + joinParam);
+              window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
             }
 
             setPage('call');
@@ -145,6 +156,16 @@ const App = (): JSX.Element => {
     default:
       document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
+  }
+};
+
+const getJoinParams = (locator: TeamsMeetingLinkLocator | GroupCallLocator | RoomLocator): string => {
+  if ('meetingLink' in locator) {
+    return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
+  } else if ('groupId' in locator) {
+    return '?groupId=' + encodeURIComponent(locator.groupId);
+  } else {
+    return '?roomId=' + encodeURIComponent(locator.roomId);
   }
 };
 

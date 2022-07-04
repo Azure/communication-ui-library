@@ -21,10 +21,10 @@ import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: { displayName: string; callLocator?: TeamsMeetingLinkLocator | RoomLocator }): void;
   joiningExistingCall: boolean;
 }
 
@@ -35,7 +35,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
-    { key: 'TeamsMeeting', text: 'Join a Teams meeting' }
+    { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
+    { key: 'Rooms', text: 'Join a Rooms Call' }
   ];
 
   // Get display name from local storage if available
@@ -43,10 +44,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [callLocator, setCallLocator] = useState<TeamsMeetingLinkLocator | RoomLocator>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
+  const buttonEnabled = displayName && (!teamsCallChosen || callLocator);
 
   return (
     <Stack
@@ -74,12 +75,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, option) => option && setChosenCallOption(option)}
               />
             )}
-            {teamsCallChosen && (
+            {chosenCallOption.key !== 'ACSCall' && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
-                placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                placeholder={getPlaceHolderString(chosenCallOption.key as CallType)}
+                onChange={(_, newValue) =>
+                  newValue && setCallLocator(getLocator(chosenCallOption.key as CallType, newValue))
+                }
               />
             )}
           </Stack>
@@ -91,7 +94,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, teamsLink });
+                props.startCallHandler({ displayName, callLocator: callLocator });
               }
             }}
           />
@@ -102,4 +105,24 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+type CallType = 'ACSCall' | 'TeamsMeeting' | 'Rooms';
+
+const getPlaceHolderString = (callType: CallType): string => {
+  if (callType === 'ACSCall') {
+    return '';
+  } else if (callType === 'TeamsMeeting') {
+    return 'Enter a Teams meeting link';
+  } else {
+    return 'Enter a room id';
+  }
+};
+
+const getLocator = (callType: CallType, value: string): TeamsMeetingLinkLocator | RoomLocator => {
+  if (callType === 'TeamsMeeting') {
+    return { meetingLink: value };
+  } else {
+    return { roomId: value };
+  }
 };
