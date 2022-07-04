@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "setup more workers for UI tests using fake chat adapter",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
