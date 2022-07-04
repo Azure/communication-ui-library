@@ -8,7 +8,7 @@ import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, 'app');
 
 type CallWorkerFixture = WorkerFixture<CallUserType>;
