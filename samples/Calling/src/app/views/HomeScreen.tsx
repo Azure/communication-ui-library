@@ -24,7 +24,12 @@ import { DisplayNameField } from './DisplayNameField';
 import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; callLocator?: TeamsMeetingLinkLocator | RoomLocator }): void;
+  startCallHandler(callDetails: {
+    displayName: string;
+    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    option?: string;
+    role?: string;
+  }): void;
   joiningExistingCall: boolean;
 }
 
@@ -35,6 +40,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
+    { key: 'StartRooms', text: 'Start a Rooms call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
     { key: 'Rooms', text: 'Join a Rooms Call' }
   ];
@@ -94,7 +100,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, callLocator: callLocator });
+                props.startCallHandler({ displayName, callLocator: callLocator, option: chosenCallOption.key });
               }
             }}
           />
