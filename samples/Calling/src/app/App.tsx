@@ -119,6 +119,7 @@ const App = (): JSX.Element => {
 
             setPage('call');
           }}
+          roomId={getRoomIdFromUrl()}
         />
       );
     }

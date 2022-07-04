@@ -28,7 +28,8 @@ export const joinRoom = async (userId: string, roomId: string): Promise<void> =>
   const requestOptions = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     },
     body: JSON.stringify({ userId, roomId })
   };

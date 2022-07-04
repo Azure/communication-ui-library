@@ -22,10 +22,12 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { getRoomIdFromUrl } from 'app/utils/AppUtils';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: { displayName: string; callLocator?: TeamsMeetingLinkLocator | RoomLocator }): void;
   joiningExistingCall: boolean;
+  roomId: string | undefined;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
@@ -35,8 +37,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
+    { key: 'RoomsCall', text: 'Start a Rooms Call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
     { key: 'Rooms', text: 'Join a Rooms Call' }
+  ];
+  const roomsRoleGroupLabel = 'Rooms Role';
+  const roomRoleOptions: IChoiceGroupOption[] = [
+    { key: 'Consumer', text: 'Consumer' },
+    { key: 'Presenter', text: 'Presenter' },
+    { key: 'Attendee', text: 'Attendee' }
   ];
 
   // Get display name from local storage if available
@@ -83,6 +92,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) =>
                   newValue && setCallLocator(getLocator(chosenCallOption.key as CallType, newValue))
                 }
+              />
+            )}
+            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'RoomsCall' || props.roomId) && (
+              <ChoiceGroup
+                styles={callOptionsGroupStyles}
+                label={roomsRoleGroupLabel}
+                defaultSelectedKey="Presenter"
+                options={roomRoleOptions}
+                required={true}
               />
             )}
           </Stack>
