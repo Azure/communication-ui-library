@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "disable tooltip for persona",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

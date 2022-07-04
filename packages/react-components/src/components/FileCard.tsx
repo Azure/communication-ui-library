@@ -145,6 +145,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
           <Stack>
             {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
             <Icon
+              data-ui-id={'filetype-icon'}
               {...getFileTypeIconProps({
                 extension: fileExtension,
                 size: 24,

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add cameraStoppedUnexpectedly strings to error bar story",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
