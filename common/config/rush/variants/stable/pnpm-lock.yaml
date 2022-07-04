@@ -12,6 +12,7 @@ dependencies:
   '@rush-temp/communication-react': file:projects/communication-react.tgz
   '@rush-temp/component-examples': file:projects/component-examples.tgz
   '@rush-temp/config': file:projects/config.tgz
+  '@rush-temp/fake-backends': file:projects/fake-backends.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:projects/sample-automation-tests.tgz
@@ -7331,17 +7332,19 @@ packages:
     resolution:
       integrity: sha512-gbgX5AUvMb8gwxC7FLVWYT7Kkgu/y7+h/h1X43yJkNqhlK2fuYyQimqvKGNZFAY6CKii/GFKJ2cp/1/42TN36g==
   /core-js-pure/3.21.1:
+    deprecated: core-js-pure@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js-pure.
     dev: false
     requiresBuild: true
     resolution:
       integrity: sha512-12VZfFIu+wyVbBebyHmRTuEE/tZrB4tJToWcwAMcsp3h4+sHR+fMJWbKpYiCRWlhFBq+KNyO8rIV9rTkeVmznQ==
   /core-js/2.6.12:
-    deprecated: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
     dev: false
     requiresBuild: true
     resolution:
       integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
   /core-js/3.21.1:
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
     dev: false
     requiresBuild: true
     resolution:
@@ -13159,7 +13162,7 @@ packages:
       readable-stream: 1.0.34
     dev: false
     resolution:
-      integrity: sha1-2o69nzr51nYJGbJ9nNyAkqczKFk=
+      integrity: sha512-lNDU9VJaOPxUmXcLb+HQFeUgQQPtMI24Gt6hgfuMHRJgMRHMF/qZ4HJD3GDru4sSw9IQl2jPjAYnQrdIeLbwow==
   /normalize-package-data/2.5.0:
     dependencies:
       hosted-git-info: 2.8.9
@@ -13205,7 +13208,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-pGm7n+q+W/OqmRaDO69ndlguiUg=
+      integrity: sha512-Le4iFE4VsbjPG4IMtuMN7gHu3UXIVnywPqBS2s3vHQe0JMGewfyWE8WYyqM509PjUybi4wbSqgW69mr3XGFr0w==
   /npm-run-path/2.0.2:
     dependencies:
       path-key: 2.0.1
@@ -13860,7 +13863,7 @@ packages:
       through: 2.3.8
     dev: false
     resolution:
-      integrity: sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
+      integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==
   /pbkdf2/3.1.2:
     dependencies:
       create-hash: 1.2.0
@@ -15564,7 +15567,7 @@ packages:
   /secure-compare/3.0.1:
     dev: false
     resolution:
-      integrity: sha1-8aAymzCLIh+uN7mXTz1XjQypmeM=
+      integrity: sha512-AckIIV90rPDcBcglUwXPF3kg0P0qmPsPXAj6BBEENQE1p5yA1xfmDJzfi1Tappj37Pv2mVbKpL3Z1T+Nn7k1Qw==
   /select-hose/2.0.0:
     dev: false
     resolution:
@@ -16913,7 +16916,7 @@ packages:
   /trim/0.0.1:
     dev: false
     resolution:
-      integrity: sha1-WFhUf2spB1fulczMZm+1AITEYN0=
+      integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==
   /trough/1.0.5:
     dev: false
     resolution:
@@ -17059,7 +17062,7 @@ packages:
   /tty-browserify/0.0.0:
     dev: false
     resolution:
-      integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+      integrity: sha512-JVa5ijo+j/sOoHGjw0sxw734b1LhBkQ3bvUGNdxnVXDCX81Yx7TFgnZygxrIIWn23hbfTaMYLwRmAxFyDuFmIw==
   /ttypescript/1.5.13_ts-node@9.1.1+typescript@4.3.5:
     dependencies:
       resolve: 1.22.0
@@ -17505,7 +17508,7 @@ packages:
     engines:
       node: '>= 0.4.0'
     resolution:
-      integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
+      integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
   /uuid-browser/3.1.0:
     dev: false
     resolution:
@@ -18597,7 +18600,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-0DwB5r9il46dJ64vt4xI0OxUNUMyefjH5rk81KvVB3uw9FkhIerRkQ4QjNzoX1JzBvnhsXtuD75EVTVm/4W3nQ==
+      integrity: sha512-ER8vCZoDja07xMcV+DwO0zHKhpejvtgoGo2fH3XdX0eXAllGUxZ/VAUCldBjfkc+uKkS6wWBy08NGnuRWQPObA==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18637,7 +18640,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-MjBv0M/r6ljWxKkoUb8MIJpPfNEQj7+lVhnXsQrtz/tajdqM/Ulhk5eqOds3j0IbD0uHNlkGdTX+G5ZIDwqElg==
+      integrity: sha512-9KslN8sBN2/NVhZNa1XCDSZsxBLdLIzgio/KrpqFD0MpcTx7rrAIzpIM2D0AWPGx2FG3yFC89TX0DFHwuVOv4w==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -18712,7 +18715,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-jh1kZ87D4gJvM9C1S0JqleVk28mKZXlPEuV/GX3D6iUlkeKrLyP1Alv4d4phoDv/7AOzuAVrdGyb8tf9nj9eoQ==
+      integrity: sha512-YuD5PDzj6Tau7aqBrS0pUbSO614nU9zzorB9Ki051xD3vG3WDcGkNh1x6zooOmCGurNLcDfS+gyC1A+fZJ40RQ==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
@@ -18785,7 +18788,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-sh20QpemUG9FwggOHF/W7CsiNPPblJLgVZVFT2DUV+gz3vluxRzMXLEKXt8MlmW+ftpX3iYyaqPr39FDNA74ag==
+      integrity: sha512-OBMm8KbYt+d69hHglKU3uqXCCDG+IflkZJsej9A8/Z1PZ7NxZSoOpRP/+NsT8MiAAH4kGVzYK2yi3qcXLaNr5Q==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -18823,7 +18826,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-ypuQ5x6jlx24w92GkftJbnnExaPPCAtVkX3kbW5NHal6EHAh7d0AdJSKVLWplYJDdAFuLGfhiU4sL+AWJiVHNw==
+      integrity: sha512-9mxtVZfbvCiAbBx3vjlXS5hWoFK46Ph42zo/dEpvbpq2VhDHAiTsaFIal72yR7veWl/M1keu/KYT2f10n+9b/g==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -18865,7 +18868,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-B5u57FoCXOF/CFXcL5OticHuqdol8YdHQGvPnN1BWT2nPNf/HNe6e5kB/xvS1suMABOziU66p3FgRDkGXsDYDg==
+      integrity: sha512-paRlaBAv2hf/4yC1KiXHD4faJH1mGySJhHd6lgaL83kqecqKaHWpfWg9yadvnmuvJv9oU2TEF3/iD2+xG93mDA==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -18933,7 +18936,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-fp9GYMdmmd1ODlKe/WSBd+AQo0MCikP+G0DrBz0pjVZAj2sW7YBi5gfxhGOcuAiJB3ey6Np9oAsJgjT6MkQD4w==
+      integrity: sha512-ImICaQ//o6HfO4ByJFJ1wn99saG7Hn/n8qp2GWxNWgpFNfjgsiIQIBeJDHAH8hwp9p/ZEBdIFTfvGtU/qfZ4HQ==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -18950,7 +18953,7 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-4jmcbPdDUxTPYRKGRK6QV1Gug0jpv1U3UY7NXwOFhD7F2kGs9ZaosaSHbU56sobkGNxqwbpN2AT+Xv33WG4DRQ==
+      integrity: sha512-kbNTHzire1xBnTQmStIaoDy4qJEPvgtK/OMrkdMv5AX9OicHNdxqumTWLv9DGwzfkFfn0eGr0p5V7Sh4W25kGg==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19037,7 +19040,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-ACqf2JqjsqTC6ejSCOcXwpjUuCezUcyz6ZkddLP06HXy+bks5nkP0xX4V+gVxmIu4FR166NFKOA3dyytP3suOQ==
+      integrity: sha512-1m8ySH0QpETdF0AuzPySU5ZC0iH9rDyQn4rz2NwJtn7g29Gw47aUIkOYn0tfNcM0/FyHS4m0A/hv2uzTBWa+MQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19087,7 +19090,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-hPoQ7YQ5bkdbANHK0UY+1oP8DvT9IgEUI7qVnVNQ2oUaRGnkuzCSTt2+e4wAhc8Q+OvpJZ28Ep/cMzKJgP1CYw==
+      integrity: sha512-VBv4X6ASvgN69o/kIW7b3bd/k+CHAcOgJVuPlg9cEgt0bUPBWq/XaaQ5cg41oOS8WOjtKNZEkefHjSx5RJ8yzw==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19106,6 +19109,36 @@ packages:
     resolution:
       integrity: sha512-LajJDphtrUD1UV8FOQQb40dW9Cn7AjVFD7wIeqHEqeE3PUB8KNPMc+LjWGxz7YNm2PGCK5jruP073l+tCFqt4w==
       tarball: file:projects/config.tgz
+    version: 0.0.0
+  file:projects/fake-backends.tgz:
+    dependencies:
+      '@azure/communication-chat': 1.2.0
+      '@azure/communication-common': 2.0.0
+      '@azure/communication-signaling': 1.0.0-beta.13
+      '@azure/core-paging': 1.1.3
+      '@types/jest': 26.0.24
+      '@typescript-eslint/eslint-plugin': 4.33.0_d212f40a84a592446cd1718bfda08a13
+      '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.3.5
+      copyfiles: 2.4.1
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0_eslint@7.32.0
+      eslint-plugin-header: 3.1.1_eslint@7.32.0
+      eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.1_eslint@7.32.0
+      eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
+      events: 3.3.0
+      immer: 9.0.6
+      jest: 26.6.0
+      nanoid: 3.1.32
+      prettier: 2.3.1
+      rimraf: 2.7.1
+      ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
+      typescript: 4.3.5
+    dev: false
+    name: '@rush-temp/fake-backends'
+    resolution:
+      integrity: sha512-MT/KEEgkh4asg1NMHuduXv/TU5D6KItOfASBR5P7i5Mz7Wwvsj1H2iUipKJ9F26KEMiWU4PeIlEY+aPAxuu3xA==
+      tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
@@ -19189,7 +19222,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-HjT/532bkjhSriv2uMxazk3atm8amjEYageobMf6MvMx4jRIj2bgqXjhVFmH6kfdOMMT5+RbfjqxCEG0UyzChA==
+      integrity: sha512-MTVdl8BQKrSfD+MbxZSMXiHwwVdLP3AwBxYsYheESLAiVkHi1X/AJAPtnjaao3sHMXykhUiTvF5E3a+D44mtaw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19296,7 +19329,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-BeNZ/wWdRsYh3kb8+9HvejCxyAnGJSawnEZuKUnfrIwNUNmqOMKSBPXAbC68JDhLrhJ3C6O22Rwz5Qmt9PrlLg==
+      integrity: sha512-mHmrzLnttDVt6+gGhvAY8fIjSbfB2ZE8hmBsRz7qa8/m0KJhFv9hCRQgUYMQL1EsejDQCrE8jtk24uIR6kLePw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -19320,7 +19353,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-rzXxhsuai+N0/me6yQgOWghfLFjBcC2oHJLtusflGjI8uTU1yo2SA9+RwpEWdORrq0kLuTeQ03nK0JDYTR098g==
+      integrity: sha512-okBVkl+EOHqUMXDccYAgGMBrdNqBwSTy9CqgWN7QXEuBEqDSnHMyTjIWTqouDuVd7YGtKa4GiAgrUYaD14jYKg==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19356,7 +19389,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-y9TChmWYXqMTBja4uTpw2RDUJkcgWuyuVl7lIs8U+Faxiv94Yusp4xlBKrQBMAZg2l+laxjtxX5Zt+BVE0eYLQ==
+      integrity: sha512-qOIG3iuJXsp9K/V9O+kTWs61RyT5VDpqEmMSo3NLujUbgPxAK4UMBhDeHcw28aftHVyROSCZi/yF8GeJ66cpVg==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19509,7 +19542,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-bltR1gft8TrmKsRAvyl7KucVim334dLlN4sJ4PEiU3rc12l+mGKab62plrkILixxEBZPpRpq5PwG+bVNVaa1+Q==
+      integrity: sha512-utqxsSG3GuPuM4UmW5II58voomXl6zKw2ZBxyopbuJbxJrLrD9xmAM1uYUwPHoLMR3XX/sxZcsPqbUV1A/6NBA==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
@@ -19526,6 +19559,7 @@ specifiers:
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/component-examples': file:./projects/component-examples.tgz
   '@rush-temp/config': file:./projects/config.tgz
+  '@rush-temp/fake-backends': file:./projects/fake-backends.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:./projects/sample-automation-tests.tgz

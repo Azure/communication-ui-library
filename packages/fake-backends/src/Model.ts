@@ -9,22 +9,22 @@ import { ThreadEventEmitter } from './ThreadEventEmitter';
 import { NetworkEventModel, Thread } from './types';
 
 export class Model {
-  private threadMap: Record<string, { thread: Thread; eventEmitter: ThreadEventEmitter }> = {};
+  private threads: { [key: string]: Thread } = {};
+  private threadEventEmitters: { [key: string]: ThreadEventEmitter } = {};
 
   constructor(private networkEventModel: NetworkEventModel) {}
 
-  public addThread(thread: Thread) {
-    this.threadMap[thread.id] = { thread, eventEmitter: new ThreadEventEmitter(this.networkEventModel) };
+  public addThread(thread: Thread): void {
+    this.threads[thread.id] = thread;
+    this.threadEventEmitters[thread.id] = new ThreadEventEmitter(this.networkEventModel);
   }
 
   public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {
-    return Object.values(this.threadMap)
-      .map((t) => t.thread)
-      .filter((t) => containsUser(userId, t.participants));
+    return Object.values(this.threads).filter((t) => containsUser(userId, t.participants));
   }
 
   public checkedGetThread(userId: CommunicationIdentifier, threadId: string): Thread {
-    const thread = this.threadMap[threadId].thread;
+    const thread = this.threads[threadId];
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
@@ -36,14 +36,14 @@ export class Model {
 
   public checkedGetThreadEventEmitter(userId: CommunicationIdentifier, threadId: string): ThreadEventEmitter {
     this.checkedGetThread(userId, threadId);
-    return this.threadMap[threadId].eventEmitter;
+    return this.threadEventEmitters[threadId];
   }
 
-  public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
+  public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void): void {
     const thread = this.checkedGetThread(userId, threadId);
     const newThread = produce(thread, (draft: Thread) => action(draft));
     if (thread !== newThread) {
-      this.threadMap[threadId].thread = produce(newThread, (draft) => {
+      this.threads[threadId] = produce(newThread, (draft) => {
         draft.version++;
       });
     }

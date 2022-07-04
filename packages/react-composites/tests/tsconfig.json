@@ -4,7 +4,8 @@
     "baseUrl": "./",
     "paths": {
       "@internal/react-components": ["../../react-components/src/components/index.ts"],
-      "@internal/acs-ui-common": ["../../acs-ui-common/src"]
+      "@internal/acs-ui-common": ["../../acs-ui-common/src"],
+      "@internal/fake-backends": ["../../fake-backends/src/index.ts"]
     }
   },
   "include": ["/browser/**/*.ts", "server/**/*.ts"]

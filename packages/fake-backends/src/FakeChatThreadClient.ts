@@ -74,7 +74,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  sendMessage(request: SendMessageRequest, options: SendMessageOptions = {}): Promise<SendChatMessageResult> {
+  sendMessage(request: SendMessageRequest, options?: SendMessageOptions): Promise<SendChatMessageResult> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.messages = [
@@ -84,8 +84,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
           type: 'text',
           content: {
             message: request.content
-          },
-          metadata: options.metadata
+          }
         }
       ];
     });
@@ -97,7 +96,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
       getThreadEventTargets(this.checkedGetThread(), this.userId),
       {
         ...this.baseChatMessageEvent(message),
-        message: request.content
+        message: request.content,
+        metadata: options?.metadata ?? {}
       }
     );
     return Promise.resolve({ id: message.id });
@@ -166,7 +166,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
     this.checkedGetThreadEventEmitter().chatMessageEdited(getThreadEventTargets(this.checkedGetThread(), this.userId), {
       ...this.baseChatMessageEvent(message),
       message: content,
-      editedOn: now
+      editedOn: now,
+      metadata: options?.metadata ?? {}
     });
     return Promise.resolve();
   }
@@ -310,7 +311,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return this.model.checkedGetThread(this.userId, this.threadId);
   }
 
-  private modifyThreadForUser(action: (thread: Thread) => void) {
+  private modifyThreadForUser(action: (thread: Thread) => void): void {
     this.model.modifyThreadForUser(this.userId, this.threadId, action);
   }
 
@@ -332,7 +333,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   private baseChatMessage(
-    now?: Date
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    now: Date
   ): Pick<ChatMessage, 'id' | 'sequenceId' | 'version' | 'senderDisplayName' | 'createdOn' | 'sender'> {
     const thread = this.checkedGetThread();
     const me = this.checkedGetMe();
@@ -341,7 +343,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
       sequenceId: `${thread.messages.length}`,
       version: '0',
       senderDisplayName: me.displayName,
-      createdOn: now ?? new Date(Date.now()),
+      createdOn: new Date(Date.now()),
       sender: getIdentifierKind(me.id)
     };
   }
