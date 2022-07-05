@@ -10,7 +10,7 @@ import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
 import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../app');
 
 interface WorkerFixture {
