@@ -50,7 +50,8 @@ export const chatContainer = mergeStyles({
 export const chatArea = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'auto'
+  overflow: 'auto',
+  position: 'relative' // Ensure that the absolute children components are positioned relative to the chat area
 });
 
 /**
