@@ -21,6 +21,15 @@ import {
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
 /**
+ * @internal
+ */
+export const _VIDEO_TILE_Z_INDEX = 0;
+/**
+ * @internal
+ */
+export const _VIDEO_TILE_VIDEO_Z_INDEX = _VIDEO_TILE_Z_INDEX + 1;
+
+/**
  * Fluent styles for {@link VideoTile}.
  *
  * @public
@@ -219,23 +228,24 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           })}
         />
 
-        {isVideoRendered ? (
+        <Stack className={mergeStyles(videoContainerStyles, { zIndex: _VIDEO_TILE_Z_INDEX })}>
+          {onRenderPlaceholder ? (
+            onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
+          ) : (
+            <DefaultPlaceholder {...placeholderOptions} />
+          )}
+        </Stack>
+
+        {isVideoRendered && (
           <Stack
             className={mergeStyles(
               videoContainerStyles,
               isMirrored && { transform: 'scaleX(-1)' },
-              styles?.videoContainer
+              styles?.videoContainer,
+              { zIndex: _VIDEO_TILE_VIDEO_Z_INDEX }
             )}
           >
             {renderElement}
-          </Stack>
-        ) : (
-          <Stack className={mergeStyles(videoContainerStyles)}>
-            {onRenderPlaceholder ? (
-              onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
-            ) : (
-              <DefaultPlaceholder {...placeholderOptions} />
-            )}
           </Stack>
         )}
 
