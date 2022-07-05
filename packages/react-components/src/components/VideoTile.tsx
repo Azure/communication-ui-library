@@ -61,7 +61,10 @@ export interface VideoTileProps {
   styles?: VideoTileStylesProps;
   /** user id for the VideoTile placeholder. */
   userId?: string;
-  /** Component with the video stream. */
+  /** A JSX Element that can be rendered inside the Video Tile.
+   * Ideally an element containing the video stream.
+   * This element will be overalyed on top of the Video Tile placeholder.
+   * */
   renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
