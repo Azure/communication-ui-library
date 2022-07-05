@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Overlaying renderElement in VideoTile instead of replacing it with placeholder",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
