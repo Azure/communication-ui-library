@@ -117,7 +117,7 @@ const App = (): JSX.Element => {
 
             if ('roomId' in callLocator) {
               if (userId) {
-                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role);
+                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role ?? '');
               } else {
                 throw 'Invalid userId!';
               }
@@ -132,7 +132,6 @@ const App = (): JSX.Element => {
 
             setPage('call');
           }}
-          roomId={getRoomIdFromUrl()}
         />
       );
     }

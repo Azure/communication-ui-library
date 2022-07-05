@@ -21,7 +21,8 @@ import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
-import { RoomCallLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { getRoomIdFromUrl } from '../utils/AppUtils';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -31,7 +32,6 @@ export interface HomeScreenProps {
     role?: string;
   }): void;
   joiningExistingCall: boolean;
-  roomId: RoomCallLocator | undefined;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
@@ -58,6 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [callLocator, setCallLocator] = useState<TeamsMeetingLinkLocator | RoomLocator>();
+  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const buttonEnabled = displayName && (!teamsCallChosen || callLocator);
@@ -88,7 +89,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, option) => option && setChosenCallOption(option)}
               />
             )}
-            {chosenCallOption.key !== 'ACSCall' && (
+            {chosenCallOption.key !== 'ACSCall' && chosenCallOption.key !== 'StartRooms' && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
@@ -98,13 +99,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }
               />
             )}
-            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || props.roomId) && (
+            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
               <ChoiceGroup
                 styles={callOptionsGroupStyles}
                 label={roomsRoleGroupLabel}
                 defaultSelectedKey="Presenter"
                 options={roomRoleOptions}
                 required={true}
+                onChange={(_, option) => option && setRoomsRoleOption(option)}
               />
             )}
           </Stack>
@@ -116,7 +118,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, callLocator: callLocator, option: chosenCallOption.key });
+                props.startCallHandler({
+                  displayName,
+                  callLocator: callLocator,
+                  option: chosenCallOption.key,
+                  role: chosenRoomsRoleOption.key
+                });
               }
             }}
           />
