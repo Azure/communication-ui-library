@@ -167,7 +167,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const theme = useTheme();
 
-  const isVideoRendered = !!renderElement;
+  const isRenderElementAvailable = !!renderElement;
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
@@ -199,11 +199,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
-        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
+        isRenderElementAvailable ? videoHintWithBorderRadius : disabledVideoHint,
+        getVideoTileOverrideColor(isRenderElementAvailable, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
-    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
+    [isRenderElementAvailable, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
   );
 
   const ids = useIdentifiers();
@@ -236,7 +236,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           )}
         </Stack>
 
-        {isVideoRendered && (
+        {isRenderElementAvailable && (
           <Stack
             className={mergeStyles(
               videoContainerStyles,
