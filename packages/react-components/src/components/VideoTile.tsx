@@ -27,7 +27,7 @@ export const _VIDEO_TILE_Z_INDEX = 0;
 /**
  * @internal
  */
-export const _VIDEO_TILE_VIDEO_Z_INDEX = _VIDEO_TILE_Z_INDEX + 1;
+export const _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX = _VIDEO_TILE_Z_INDEX + 1;
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -242,7 +242,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               videoContainerStyles,
               isMirrored && { transform: 'scaleX(-1)' },
               styles?.videoContainer,
-              { zIndex: _VIDEO_TILE_VIDEO_Z_INDEX }
+              { zIndex: _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX }
             )}
           >
             {renderElement}
