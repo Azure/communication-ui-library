@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Increase workers to 3 for UI tests using fake adapter",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
