@@ -21,6 +21,8 @@ const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
 const CHAT_MESSAGE_ZINDEX = 1;
 const AVATAR_ZINDEX = 2;
+// new message button should be on top of chat message
+const NEW_MESSAGE_BUTTON_ZINDEX = 2;
 
 /**
  * @private
@@ -58,7 +60,7 @@ export const chatStyle: ComponentSlotStyle = {
  */
 export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
-  zIndex: 1,
+  zIndex: NEW_MESSAGE_BUTTON_ZINDEX,
   bottom: 0,
   right: '1.5rem'
 });
