@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix invalid scrollbars when gif images are shared in chat",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
