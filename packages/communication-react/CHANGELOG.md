@@ -32,6 +32,9 @@ Wed, 29 Jun 2022 17:31:05 GMT
   - Fix loading spinner size in small containers ([PR #1995](https://github.com/azure/communication-ui-library/pull/1995) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add aria labels and announcer to file sharing components to make file sharing meet accessibility standards ([PR #1960](https://github.com/azure/communication-ui-library/pull/1960) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Update Participant pane to be an overlay on top of message thread so it can be tapped into when opened ([PR #1943](https://github.com/azure/communication-ui-library/pull/1943) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Fix bug where the "New Message" button was getting hidden under messages ([PR #2046](https://github.com/Azure/communication-ui-library/pull/2046) by carolinecao@microsoft.com)
+  - Fix bug where Chat participant pane in chat composite mobile view causing overflow ([PR #2038](https://github.com/Azure/communication-ui-library/pull/2038) by anjulgarg@live.com)
+  - Fix bug where Chat message thread size is wrong and shows scrollbar when it shouldn't ([PR #2037](https://github.com/Azure/communication-ui-library/pull/2037) by anjulgarg@live.com)
 
 
 ### Improvements
