@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, PermissionsProvider } from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -18,6 +18,12 @@ import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
+import { getPermissions } from './utils';
+
+/**
+ * @public
+ */
+export type Role = 'Presenter' | 'Consumer';
 
 /**
  * Props for {@link CallComposite}.
@@ -45,6 +51,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
+  role?: Role;
 }
 
 /**
@@ -74,6 +81,7 @@ type MainScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
+  role?: 'Presenter' | 'Consumer';
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -82,10 +90,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+  // const role = useSelector(roleSelector);
+
+  let pageElement: JSX.Element;
 
   switch (page) {
     case 'configuration':
-      return (
+      pageElement = (
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
@@ -93,8 +104,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }}
         />
       );
+      break;
     case 'accessDeniedTeamsMeeting':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
@@ -102,8 +114,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'access-denied-teams-meeting-page'}
         />
       );
+      break;
     case 'removedFromCall':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
@@ -111,8 +124,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'removed-from-call-page'}
         />
       );
+      break;
     case 'joinCallFailedDueToNoNetwork':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageJoinCallFailedDueToNoNetwork"
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
@@ -120,8 +134,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
+      break;
     case 'leftCall':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
@@ -129,10 +144,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'left-call-page'}
         />
       );
+      break;
     case 'lobby':
-      return <LobbyPage mobileView={props.mobileView} options={props.options} />;
+      pageElement = <LobbyPage mobileView={props.mobileView} options={props.options} />;
+      break;
     case 'call':
-      return (
+      pageElement = (
         <CallPage
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
@@ -142,9 +159,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
         />
       );
+      break;
     default:
       throw new Error('Invalid call composite page');
   }
+  const permissions = getPermissions(props.role);
+
+  return <PermissionsProvider permissions={permissions}>{pageElement}</PermissionsProvider>;
 };
 
 /**
@@ -163,7 +184,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop'
+    formFactor = 'desktop',
+    role
   } = props;
   useEffect(() => {
     (async () => {
@@ -190,6 +212,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
             options={options}
+            role={role}
           />
         </CallAdapterProvider>
       </BaseProvider>

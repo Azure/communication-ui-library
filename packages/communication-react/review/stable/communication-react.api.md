@@ -163,6 +163,41 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     rtl?: boolean;
 }
 
+
+current implementation proposal
+
+A permission provider to provide permission map
+
+<PermissionProvider permissions={}>
+</PermissionProvider>
+
+stateful -> participantChanged -> role change -> change role internally -> find the right permission object -> reflect the change to UI
+
+
+----------
+apis when Custom Roles come (TBD)
+stateful -> participantChanged -> role change -> change role internally -> * find the right permission object -> reflect the change to UI
+
+Option 1 - single permission object:
+- Smaller object to maintain
+- Need customer to provide json when permission updated
+export PresenterPermissions = {...};
+export AttendeePermissions = {...};
+
+<composite permissions={permissions} />
+<composite role={{...PresenterPermissions, share: false}} />
+
+Option 2 - permission map :
+- Auto update UI just one time hook up
+- Huge object in the end
+export defaultPermissionMap = {
+    Presenter: {...},
+    Attendee: {...},
+    'RoleName': {}
+}
+
+<composite permissionMap={permissionMap} />
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;

@@ -285,6 +285,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
+    // (undocumented)
+    role?: Role;
 }
 
 // @public
@@ -1071,6 +1073,9 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public (undocumented)
+export type Role = 'Presenter' | 'Consumer';
 
 // @public
 export type TopicChangedListener = (event: {

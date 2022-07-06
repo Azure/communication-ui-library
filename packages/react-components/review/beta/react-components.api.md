@@ -261,6 +261,11 @@ export interface ComponentStrings {
     videoGallery: VideoGalleryStrings;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const consumerPermissions: Permissions_2;
+
 // @public
 export interface ContentSystemMessage extends SystemMessageCommon {
     // (undocumented)
@@ -1117,6 +1122,30 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @internal (undocumented)
+type Permissions_2 = {
+    cameraButton: boolean;
+    microphoneButton: boolean;
+    screenShare: boolean;
+    participantList: boolean;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "Permissions" should be prefixed with an underscore because the declaration is marked as @internal
+export { Permissions_2 as Permissions }
+
+// Warning: (ae-internal-missing-underscore) The name "PermissionsProvider" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const PermissionsProvider: (props: PermissionsProviderProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "PermissionsProviderProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type PermissionsProviderProps = {
+    permissions: Permissions_2;
+    children: React_2.ReactNode;
+};
+
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1140,6 +1169,11 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
+
+// Warning: (ae-internal-missing-underscore) The name "presenterPermissions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const presenterPermissions: Permissions_2;
 
 // @public
 export type ReadReceiptsBySenderId = {

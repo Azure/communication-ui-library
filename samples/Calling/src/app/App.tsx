@@ -3,6 +3,7 @@
 
 import { GroupCallLocator, GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { Role } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
@@ -52,6 +53,7 @@ const App = (): JSX.Element => {
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator | RoomLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
+  const [role, setRole] = useState<Role>('Presenter');
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -117,6 +119,7 @@ const App = (): JSX.Element => {
 
             if ('roomId' in callLocator) {
               if (userId) {
+                setRole(callDetails.role as Role);
                 await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role ?? '');
               } else {
                 throw 'Invalid userId!';
@@ -163,6 +166,7 @@ const App = (): JSX.Element => {
           displayName={displayName}
           callLocator={callLocator}
           onCallEnded={() => setPage('endCall')}
+          role={role}
         />
       );
     }

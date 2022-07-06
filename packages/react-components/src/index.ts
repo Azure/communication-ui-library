@@ -6,6 +6,8 @@ export { _IdentifierProvider } from './identifiers';
 export type { _Identifiers, _IdentifierProviderProps } from './identifiers';
 export * from './localization/locales';
 export { LocalizationProvider } from './localization';
+export { PermissionsProvider, presenterPermissions, consumerPermissions } from './permissions';
+export type { Permissions, PermissionsProviderProps } from './permissions';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 

@@ -16,6 +16,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
+import { Role } from '@internal/react-composites';
 
 export interface CallScreenProps {
   token: string;
@@ -23,10 +24,11 @@ export interface CallScreenProps {
   callLocator: CallAdapterLocator;
   displayName: string;
   onCallEnded: () => void;
+  role: Role;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded } = props;
+  const { token, userId, callLocator, displayName, onCallEnded, role } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
@@ -89,6 +91,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      role={role}
     />
   );
 };
