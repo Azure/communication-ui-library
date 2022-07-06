@@ -61,7 +61,7 @@ export const chatStyle: ComponentSlotStyle = {
  */
 export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
-  zIndex: 1,
+  zIndex: 2,
   bottom: 0,
   right: '1.5rem'
 });
