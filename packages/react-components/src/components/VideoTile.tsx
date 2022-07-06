@@ -28,6 +28,14 @@ export const _VIDEO_TILE_Z_INDEX = 0;
  * @internal
  */
 export const _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX = _VIDEO_TILE_Z_INDEX + 1;
+/**
+ * @internal
+ */
+export const _VIDEO_TILE_INFO_CONTAINER_Z_INDEX = _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX + 1;
+/**
+ * @internal
+ */
+export const _VIDEO_TILE_OVERLAY_CONTAINER_Z_INDEX = _VIDEO_TILE_INFO_CONTAINER_Z_INDEX + 1;
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -255,7 +263,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         )}
 
         {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
-          <Stack horizontal className={tileInfoContainerStyle}>
+          <Stack
+            horizontal
+            className={mergeStyles(tileInfoContainerStyle, { zIndex: _VIDEO_TILE_INFO_CONTAINER_Z_INDEX })}
+          >
             <Stack horizontal className={tileInfoStyle}>
               {displayName && (
                 <Text className={mergeStyles(displayNameStyle)} title={displayName}>
@@ -272,7 +283,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         )}
 
         {children && (
-          <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
+          <Stack
+            className={mergeStyles(
+              overlayContainerStyles,
+              { zIndex: _VIDEO_TILE_OVERLAY_CONTAINER_Z_INDEX },
+              styles?.overlayContainer
+            )}
+          >
+            {children}
+          </Stack>
         )}
       </Stack>
     </Ref>
