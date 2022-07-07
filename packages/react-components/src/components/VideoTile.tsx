@@ -31,6 +31,10 @@ export const _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX = _VIDEO_TILE_Z_INDEX + 1;
 /**
  * @internal
  */
+export const _VIDEO_TILE_IS_SPEAKING_BORDER_Z_INDEX = _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX + 1;
+/**
+ * @internal
+ */
 export const _VIDEO_TILE_INFO_CONTAINER_Z_INDEX = _VIDEO_TILE_RENDER_ELEMENT_Z_INDEX + 1;
 /**
  * @internal
@@ -237,7 +241,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         <div
           className={mergeStyles(isSpeakingBorderDiv, {
             borderRadius: theme.effects.roundedCorner4,
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`,
+            zIndex: _VIDEO_TILE_IS_SPEAKING_BORDER_Z_INDEX
           })}
         />
 
