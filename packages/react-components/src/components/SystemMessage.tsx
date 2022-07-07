@@ -39,7 +39,7 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={iconName} className={mergeStyles(systemMessageIconStyle)} />;
 
   return (
-    <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)}>
+    <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)} tabIndex={0}>
       {Icon}
       <Text style={{ wordBreak: 'break-word' }} role="status" title={content}>
         {content}
