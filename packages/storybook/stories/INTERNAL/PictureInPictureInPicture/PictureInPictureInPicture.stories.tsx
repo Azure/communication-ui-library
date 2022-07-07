@@ -86,6 +86,8 @@ export default {
     onClick: hiddenControl,
     primaryTile: hiddenControl,
     secondaryTile: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    // TODO: Fix this story. Hiding it temporarily because it is not loading properly
+    options: { showPanel: false }
   }
 } as Meta;
