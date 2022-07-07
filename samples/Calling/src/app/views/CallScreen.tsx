@@ -16,7 +16,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
-import { Role } from '@internal/react-composites';
+import { Role } from '@internal/react-components';
 
 export interface CallScreenProps {
   token: string;
