@@ -24,6 +24,8 @@ import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
+import { roleStyles } from './styles/CallPage.styles';
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * Props for {@link CallComposite}.
@@ -85,7 +87,7 @@ type MainScreenProps = {
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems, role } = props;
   const page = useSelector(getPage);
 
   const adapter = useAdapter();
@@ -150,14 +152,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
     case 'call':
       pageElement = (
-        <CallPage
-          onRenderAvatar={onRenderAvatar}
-          callInvitationURL={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          mobileView={props.mobileView}
-          options={props.options}
-        />
+        <>
+          {role && <div className={mergeStyles(roleStyles)}>{`Role: ${role}`}</div>}
+          <CallPage
+            onRenderAvatar={onRenderAvatar}
+            callInvitationURL={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            mobileView={props.mobileView}
+            options={props.options}
+          />
+        </>
       );
       break;
     default:

@@ -82,3 +82,13 @@ export const bannerNotificationStyles: IStackStyles = {
     pointerEvents: 'auto' // to allow the dismissal or error and warning bars in the notification container
   }
 };
+
+/**
+ * @private
+ */
+export const roleStyles: IStyle = {
+  position: 'absolute',
+  left: '0.625rem',
+  bottom: '0',
+  backgroundColor: 'yellow'
+};
