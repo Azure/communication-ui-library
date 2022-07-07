@@ -6,7 +6,7 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-import { usePermissions } from '../permissions/PermissionsProvider';
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Strings of {@link ScreenShareButton} that can be overridden.
@@ -58,7 +58,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const theme = useTheme();
   const styles = screenshareButtonStyles(theme);
 
-  const isAllowed = usePermissions().screenShare;
+  const isAllowed = _usePermissions().screenShare;
   const disabled = !isAllowed || props.disabled;
 
   const onRenderScreenShareOnIcon = (): JSX.Element => (

@@ -188,6 +188,7 @@ export type {
   ParticipantsButtonStrings,
   ParticipantsButtonStyles,
   ReadReceiptsBySenderId,
+  Role,
   ScreenShareButtonProps,
   ScreenShareButtonStrings,
   SendBoxProps,

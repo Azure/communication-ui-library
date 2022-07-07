@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, PermissionsProvider } from '@internal/react-components';
+import {
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  PermissionsProvider,
+  Role,
+  _getPermissions
+} from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -18,12 +24,6 @@ import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
-import { getPermissions } from './utils';
-
-/**
- * @public
- */
-export type Role = 'Presenter' | 'Consumer';
 
 /**
  * Props for {@link CallComposite}.
@@ -81,7 +81,7 @@ type MainScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
-  role?: 'Presenter' | 'Consumer';
+  role?: Role;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -163,7 +163,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     default:
       throw new Error('Invalid call composite page');
   }
-  const permissions = getPermissions(props.role);
+  const permissions = _getPermissions(props.role);
 
   return <PermissionsProvider permissions={permissions}>{pageElement}</PermissionsProvider>;
 };

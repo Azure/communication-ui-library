@@ -11,7 +11,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
-import { usePermissions } from '../permissions';
+import { _usePermissions } from '../permissions';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -146,7 +146,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
-  const isAllowed = usePermissions().cameraButton;
+  const isAllowed = _usePermissions().cameraButton;
   const disabled = !isAllowed || props.disabled || waitForCamera;
 
   const onRenderCameraOnIcon = (): JSX.Element => (

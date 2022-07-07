@@ -6,7 +6,7 @@ import React, { createContext, useContext } from 'react';
 /**
  * @internal
  */
-export type Permissions = {
+export type _Permissions = {
   cameraButton: boolean; // or 'disabled'/'hide'?
   microphoneButton: boolean;
   screenShare: boolean;
@@ -16,7 +16,7 @@ export type Permissions = {
 /**
  * @internal
  */
-export const presenterPermissions: Permissions = {
+export const presenterPermissions: _Permissions = {
   cameraButton: true,
   microphoneButton: true,
   screenShare: true,
@@ -26,7 +26,7 @@ export const presenterPermissions: Permissions = {
 /**
  * @internal
  */
-export const consumerPermissions: Permissions = {
+export const consumerPermissions: _Permissions = {
   cameraButton: false,
   microphoneButton: false,
   screenShare: false,
@@ -36,7 +36,17 @@ export const consumerPermissions: Permissions = {
 /**
  * @internal
  */
-export const PermissionsContext = createContext<Permissions>(presenterPermissions);
+export const attendeePermissions: _Permissions = {
+  cameraButton: true,
+  microphoneButton: true,
+  screenShare: false,
+  participantList: true
+};
+
+/**
+ * @internal
+ */
+export const PermissionsContext = createContext<_Permissions>(presenterPermissions);
 
 /**
  * Props for {@link PermissionsProviderProps}.
@@ -45,7 +55,7 @@ export const PermissionsContext = createContext<Permissions>(presenterPermission
  */
 export type PermissionsProviderProps = {
   /** Permission context to provide components */
-  permissions: Permissions;
+  permissions: _Permissions;
   /** Children to provide locale context. */
   children: React.ReactNode;
 };
@@ -58,5 +68,26 @@ export const PermissionsProvider = (props: PermissionsProviderProps): JSX.Elemen
   return <PermissionsContext.Provider value={permissions}>{children}</PermissionsContext.Provider>;
 };
 
-/** React hook to access permissions */
-export const usePermissions = (): Permissions => useContext(PermissionsContext);
+/**
+ * @internal
+ * React hook to access permissions
+ */
+export const _usePermissions = (): _Permissions => useContext(PermissionsContext);
+
+/**
+ * @beta
+ */
+export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+
+/**
+ * @internal
+ */
+export const _getPermissions = (role?: Role): _Permissions => {
+  if (role === 'Consumer') {
+    return consumerPermissions;
+  } else if (role === 'Attendee') {
+    return attendeePermissions;
+  } else {
+    return presenterPermissions;
+  }
+};

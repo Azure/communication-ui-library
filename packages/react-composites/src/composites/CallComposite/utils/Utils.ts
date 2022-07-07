@@ -5,8 +5,6 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
-import { consumerPermissions, Permissions, presenterPermissions } from '@internal/react-components';
-import { Role } from '../CallComposite';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
@@ -131,15 +129,4 @@ export const getCallCompositePage = (
 
   // No call state - show starting page (configuration)
   return 'configuration';
-};
-
-/**
- * @private
- */
-export const getPermissions = (role?: Role): Permissions => {
-  if (role === 'Consumer') {
-    return consumerPermissions;
-  } else {
-    return presenterPermissions;
-  }
 };

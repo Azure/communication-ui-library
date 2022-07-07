@@ -10,7 +10,7 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
-import { usePermissions } from '../permissions/PermissionsProvider';
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -153,7 +153,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
-  const isAllowed = usePermissions().microphoneButton;
+  const isAllowed = _usePermissions().microphoneButton;
 
   const isSplit = props.split ?? props.enableDeviceSelectionMenu;
 
