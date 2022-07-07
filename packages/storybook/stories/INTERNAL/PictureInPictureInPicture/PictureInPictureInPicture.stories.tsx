@@ -17,9 +17,6 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
 
   return (
     <PictureInPictureInPictureComponent
-      // TODO: Fix this story and remove this attribute. Temporarily ignoring this on chromatic because
-      // this is not loading properly in storybook
-      data-chromatic="ignore"
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
