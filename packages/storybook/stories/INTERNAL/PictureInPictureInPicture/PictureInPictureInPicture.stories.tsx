@@ -87,7 +87,7 @@ export default {
     primaryTile: hiddenControl,
     secondaryTile: hiddenControl,
     strings: hiddenControl,
-    // TODO: Fix this story. Hiding it temporarily because it is not loading properly
+    // TODO: Fix this story and remove this. Hiding it temporarily because this is not loading properly in storybook
     options: { showPanel: false }
   }
 } as Meta;
