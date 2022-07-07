@@ -110,6 +110,8 @@ export const parameters = {
       title: 'Preview'
     }
   },
+  // TODO: Fix PictureInPictureInPictureStory.stories.tsx and remove this. Disabling chromatic tests 
+  // because that story is not loading correctly 
   chromatic: { disableSnapshot: true }
 };
 
