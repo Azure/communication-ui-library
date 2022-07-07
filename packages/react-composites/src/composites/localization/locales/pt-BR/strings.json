@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Não é possível ativar ou desativar mudo enquanto estiver no lobby."
   },
   "chat": {
-    "chatListHeader": "Neste chat"
+    "chatListHeader": "Neste chat",
+    "uploadFile": "Carregar Arquivo"
   },
   "callWithChat": {
     "peopleButtonLabel": "Pessoas",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Feeds de vídeo. Clique para retornar à tela de chamada.",
     "removeMenuLabel": "Remover",
     "copyInviteLinkButtonLabel": "Copiar o link de convite",
-    "dismissSidePaneButton": "Fechar",
+    "dismissSidePaneButtonLabel": "Fechar",
     "returnToCallButtonAriaDescription": "Retornar à Chamada",
     "returnToCallButtonAriaLabel": "Voltar"
   }

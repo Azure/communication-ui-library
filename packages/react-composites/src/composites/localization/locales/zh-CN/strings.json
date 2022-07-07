@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "在大厅中时无法静音或取消静音。"
   },
   "chat": {
-    "chatListHeader": "在此聊天中"
+    "chatListHeader": "在此聊天中",
+    "uploadFile": "上传文件"
   },
   "callWithChat": {
     "peopleButtonLabel": "人员",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。",
     "removeMenuLabel": "删除",
     "copyInviteLinkButtonLabel": "复制邀请链接",
-    "dismissSidePaneButton": "关闭",
+    "dismissSidePaneButtonLabel": "关闭",
     "returnToCallButtonAriaDescription": "返回通话",
     "returnToCallButtonAriaLabel": "返回"
   }

@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "無法在大廳中靜音或取消靜音。"
   },
   "chat": {
-    "chatListHeader": "在此聊天中"
+    "chatListHeader": "在此聊天中",
+    "uploadFile": "上傳檔案"
   },
   "callWithChat": {
     "peopleButtonLabel": "人員",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "影片摘要。按一下以返回通話畫面。",
     "removeMenuLabel": "移除",
     "copyInviteLinkButtonLabel": "複製邀請連結",
-    "dismissSidePaneButton": "關閉",
+    "dismissSidePaneButtonLabel": "關閉",
     "returnToCallButtonAriaDescription": "返回通話",
     "returnToCallButtonAriaLabel": "返回"
   }

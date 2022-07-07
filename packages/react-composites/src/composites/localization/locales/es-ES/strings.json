@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "No se puede silenciar ni reactivar el audio mientras se está en la sala de espera."
   },
   "chat": {
-    "chatListHeader": "En este chat"
+    "chatListHeader": "En este chat",
+    "uploadFile": "Subir archivo"
   },
   "callWithChat": {
     "peopleButtonLabel": "Contactos",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Fuentes de vídeo. Hacer clic para volver a la pantalla de la llamada.",
     "removeMenuLabel": "Quitar",
     "copyInviteLinkButtonLabel": "Copiar vínculo de invitación",
-    "dismissSidePaneButton": "Cerrar",
+    "dismissSidePaneButtonLabel": "Cerrar",
     "returnToCallButtonAriaDescription": "Volver a llamada",
     "returnToCallButtonAriaLabel": "Volver"
   }

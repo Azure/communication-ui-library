@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Impossibile attivare o disattivare l'audio nella sala di attesa."
   },
   "chat": {
-    "chatListHeader": "In questa chat"
+    "chatListHeader": "In questa chat",
+    "uploadFile": "Carica file"
   },
   "callWithChat": {
     "peopleButtonLabel": "Persone",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Feed video. Fare clic per tornare alla schermata della chiamata.",
     "removeMenuLabel": "Rimuovi",
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito",
-    "dismissSidePaneButton": "Chiudi",
+    "dismissSidePaneButtonLabel": "Chiudi",
     "returnToCallButtonAriaDescription": "Torna alla chiamata",
     "returnToCallButtonAriaLabel": "Indietro"
   }

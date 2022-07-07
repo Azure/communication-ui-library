@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "대기실에 있는 동안에는 음소거하거나 음소거를 해제할 수 없습니다."
   },
   "chat": {
-    "chatListHeader": "채팅 참가자"
+    "chatListHeader": "채팅 참가자",
+    "uploadFile": "파일 업로드"
   },
   "callWithChat": {
     "peopleButtonLabel": "사용자",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "비디오 피드입니다. 클릭하면 통화 화면으로 돌아갑니다.",
     "removeMenuLabel": "제거",
     "copyInviteLinkButtonLabel": "초대 링크 복사",
-    "dismissSidePaneButton": "닫기",
+    "dismissSidePaneButtonLabel": "닫기",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로"
   }

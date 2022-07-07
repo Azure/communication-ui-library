@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Stummschalten oder Aufheben der Stummschaltung im Wartebereich nicht zulässig."
   },
   "chat": {
-    "chatListHeader": "In diesem Chat"
+    "chatListHeader": "In diesem Chat",
+    "uploadFile": "Datei hochladen"
   },
   "callWithChat": {
     "peopleButtonLabel": "Personen",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren.",
     "removeMenuLabel": "Entfernen",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
-    "dismissSidePaneButton": "Schließen",
+    "dismissSidePaneButtonLabel": "Schließen",
     "returnToCallButtonAriaDescription": "Zurück zum Anruf",
     "returnToCallButtonAriaLabel": "Zurück"
   }

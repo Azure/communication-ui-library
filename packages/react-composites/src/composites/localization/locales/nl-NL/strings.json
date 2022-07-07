@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Kan niet dempen of dempen opheffen in de lobby."
   },
   "chat": {
-    "chatListHeader": "In deze chat"
+    "chatListHeader": "In deze chat",
+    "uploadFile": "Bestand uploaden"
   },
   "callWithChat": {
     "peopleButtonLabel": "Personen",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm.",
     "removeMenuLabel": "Verwijderen",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
-    "dismissSidePaneButton": "Sluiten",
+    "dismissSidePaneButtonLabel": "Sluiten",
     "returnToCallButtonAriaDescription": "Terug naar gesprek",
     "returnToCallButtonAriaLabel": "Terug"
   }

@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "ロビーにいる間はミュートまたはミュート解除できません。"
   },
   "chat": {
-    "chatListHeader": "このチャット内"
+    "chatListHeader": "このチャット内",
+    "uploadFile": "ファイルのアップロード"
   },
   "callWithChat": {
     "peopleButtonLabel": "ユーザー",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。",
     "removeMenuLabel": "削除",
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
-    "dismissSidePaneButton": "閉じる",
+    "dismissSidePaneButtonLabel": "閉じる",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る"
   }

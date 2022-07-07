@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Lobideyken sesi kapatılamaz veya açılamaz."
   },
   "chat": {
-    "chatListHeader": "Bu sohbette"
+    "chatListHeader": "Bu sohbette",
+    "uploadFile": "Dosyayı Karşıya Yükle"
   },
   "callWithChat": {
     "peopleButtonLabel": "Kişiler",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın.",
     "removeMenuLabel": "Kaldır",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
-    "dismissSidePaneButton": "Kapat",
+    "dismissSidePaneButtonLabel": "Kapat",
     "returnToCallButtonAriaDescription": "Aramaya Dön",
     "returnToCallButtonAriaLabel": "Geri"
   }

@@ -40,7 +40,8 @@
     "microphoneToggleInLobbyNotAllowed": "Impossible de désactiver ou d’activer le son dans la salle d’attente."
   },
   "chat": {
-    "chatListHeader": "Dans cette conversation"
+    "chatListHeader": "Dans cette conversation",
+    "uploadFile": "Charger un fichier"
   },
   "callWithChat": {
     "peopleButtonLabel": "Personnes",
@@ -62,7 +63,7 @@
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",
     "removeMenuLabel": "Supprimer",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
-    "dismissSidePaneButton": "Fermer",
+    "dismissSidePaneButtonLabel": "Fermer",
     "returnToCallButtonAriaDescription": "Revenir à l’appel",
     "returnToCallButtonAriaLabel": "Précédent"
   }
