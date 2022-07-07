@@ -208,6 +208,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         setMenuHidden(false);
         onClick?.(props);
       }}
+      tabIndex={0}
     >
       <Stack
         horizontal
