@@ -61,6 +61,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         onClick={props.onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
+        autoFocus
       ></DefaultButton>
       <Stack.Item grow>
         {props.onChatButtonClicked && (
