@@ -109,7 +109,8 @@ export const parameters = {
     'canvas': {
       title: 'Preview'
     }
-  }
+  },
+  chromatic: { disableSnapshot: true }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
