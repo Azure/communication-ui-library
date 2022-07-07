@@ -815,6 +815,7 @@ export interface MessageThreadStrings {
     failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
+    messageContentAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
