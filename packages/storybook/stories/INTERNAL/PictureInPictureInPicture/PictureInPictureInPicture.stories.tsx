@@ -20,7 +20,7 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
-        content: (
+        children: (
           <VideoTile
             displayName={args.primaryTileParticipantName}
             renderElement={
@@ -34,7 +34,7 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
       }}
       secondaryTile={{
         orientation: args.secondaryTileOrientation,
-        content: (
+        children: (
           <VideoTile
             displayName={args.secondaryTileParticipantName}
             renderElement={
@@ -86,6 +86,8 @@ export default {
     onClick: hiddenControl,
     primaryTile: hiddenControl,
     secondaryTile: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    // TODO: Fix this story and remove this. Hiding it temporarily because this is not loading properly in storybook
+    options: { showPanel: false }
   }
 } as Meta;
