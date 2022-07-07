@@ -179,16 +179,28 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ]
   );
 
+  const messageContentRef = useRef<HTMLDivElement | null>(null);
+
   const chatMessage = (
     <>
-      <div ref={messageRef}>
+      <div
+        ref={messageRef}
+        tabIndex={0}
+        onFocus={() => {
+          messageContentRef.current?.focus();
+        }}
+      >
         <Chat.Message
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
           content={
-            <div>
-              <ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />
+            <div ref={messageContentRef} tabIndex={0}>
+              <ChatMessageContent
+                message={message}
+                liveAuthorIntro={strings.liveAuthorIntro}
+                messageContentAriaText={strings.messageContentAriaText}
+              />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)
                 : defaultOnRenderFileDownloads()}
@@ -209,6 +221,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onTouchStart={() => setWasInteractionByTouch(true)}
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}
+          onBlur={() => setWasInteractionByTouch(false)}
           onClick={() => {
             if (!wasInteractionByTouch) {
               return;
