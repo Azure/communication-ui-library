@@ -18,7 +18,10 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld."
+    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "removeFile": "Bestand verwijderen",
+    "uploading": "Uploaden",
+    "uploadCompleted": "Upload voltooid"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Annuleren",
     "editBoxSubmitButton": "Verzenden",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Meer opties"
+    "actionMenuMoreOptions": "Meer opties",
+    "downloadFile": "Bestand downloaden"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Geen microfoons gevonden. Sluit een audio-invoerapparaat aan.",
     "callMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
     "callMicrophoneMutedBySystem": "U bent gedempt door jouw systeem.",
+    "callMicrophoneUnmutedBySystem": "De microfoon is hersteld en het dempen van de microfoon is door het systeem opgeheven.",
     "callMacOsMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Verleen microfoonmachtiging in de privacyinstellingen voor macOS.",
     "callLocalVideoFreeze": "De netwerkbandbreedte is slecht. Je video wordt mogelijk onderbroken weergegeven voor anderen in het gesprek.",
     "callCameraAccessDenied": "Kan geen toegang krijgen tot de camera. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
     "callCameraAlreadyInUse": "Kan geen toegang krijgen tot de camera. Het wordt mogelijk al gebruikt door een andere toepassing.",
+    "callVideoStoppedBySystem": "Uw video is gestopt door uw systeem.",
+    "callVideoRecoveredBySystem": "Uw video is hervat.",
     "callMacOsCameraAccessDenied": "MacOS blokkeert de toegang tot jouw camera. Werk je privacyinstellingen bij, zodat deze browser toegang heeft tot jouw camera.",
     "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen.",
     "dismissButtonAriaLabel": "Sluiten",

@@ -18,7 +18,10 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "fileUploadsPendingError": "Caricamento in corso... Attendere."
+    "fileUploadsPendingError": "Caricamento in corso... Attendere.",
+    "removeFile": "Rimuovi file",
+    "uploading": "Caricamento in corso",
+    "uploadCompleted": "Caricamento completato"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Annulla",
     "editBoxSubmitButton": "Invia",
     "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Altre opzioni"
+    "actionMenuMoreOptions": "Altre opzioni",
+    "downloadFile": "Scarica file"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Nessun microfono trovato. Connetti un dispositivo di input audio.",
     "callMicrophoneAccessDenied": "Impossibile accedere al microfono. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
     "callMicrophoneMutedBySystem": "Il sistema disattiva l'audio.",
+    "callMicrophoneUnmutedBySystem": "Il microfono è stato ripristinato e il sistema ha riattivato l'audio.",
     "callMacOsMicrophoneAccessDenied": "Impossibile accedere al microfono. Concedi l'autorizzazione al microfono nelle impostazioni di privacy di macOS.",
     "callLocalVideoFreeze": "Larghezza di banda di rete insufficiente. Il video potrebbe essere sospeso per gli altri partecipanti alla chiamata.",
     "callCameraAccessDenied": "Non è possibile accedere alla fotocamera. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
     "callCameraAlreadyInUse": "Non è possibile accedere alla fotocamera. Potrebbe essere già in uso da un'altra applicazione.",
+    "callVideoStoppedBySystem": "Il video è stato arrestato dal sistema.",
+    "callVideoRecoveredBySystem": "Il video è ripreso.",
     "callMacOsCameraAccessDenied": "MacOS sta bloccando l'accesso alla fotocamera. Aggiorna le impostazioni di privacy per consentire a questo browser di accedere alla fotocamera.",
     "callMacOsScreenShareAccessDenied": "MacOS sta bloccando la condivisione dello schermo. Aggiorna le impostazioni di privacy per consentire a questo browser di registrare lo schermo.",
     "dismissButtonAriaLabel": "Chiudi",

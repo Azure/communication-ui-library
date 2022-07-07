@@ -18,7 +18,10 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter."
+    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "removeFile": "Supprimer un fichier",
+    "uploading": "Chargement",
+    "uploadCompleted": "Téléchargement terminé"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Annuler",
     "editBoxSubmitButton": "Envoyer",
     "messageReadCount": "Lu par {messageReadByCount} participants sur {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Plus d’options"
+    "actionMenuMoreOptions": "Plus d’options",
+    "downloadFile": "Télécharger un fichier"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Aucun micro n’a été trouvé. Connectez un périphérique d’entrée audio.",
     "callMicrophoneAccessDenied": "Impossible d’accéder au microphone. Cliquez sur le verrou dans la barre d’adresses pour accorder l’autorisation à cette page Web.",
     "callMicrophoneMutedBySystem": "Votre micro est désactivé par votre système.",
+    "callMicrophoneUnmutedBySystem": "Votre micro a été récupéré et la son a été activé par votre système.",
     "callMacOsMicrophoneAccessDenied": "Impossible d’accéder au microphone. Accordez l’autorisation de microphone dans vos paramètres de confidentialité macOS.",
     "callLocalVideoFreeze": "La bande passante réseau est médiocre. Votre vidéo peut apparaître suspendue pour les autres participants à l’appel.",
     "callCameraAccessDenied": "Impossible d’accéder à la caméra. Cliquez sur le verrou dans la barre d’adresses pour accorder l’autorisation à cette page Web.",
     "callCameraAlreadyInUse": "Impossible d’accéder à la caméra. Il est peut-être déjà utilisé par une autre application.",
+    "callVideoStoppedBySystem": "Votre vidéo a été arrêtée par votre système.",
+    "callVideoRecoveredBySystem": "Votre vidéo a repris.",
     "callMacOsCameraAccessDenied": "MacOS bloque l’accès à votre caméra. Mettez à jour vos paramètres de confidentialité pour autoriser ce navigateur à accéder à votre caméra.",
     "callMacOsScreenShareAccessDenied": "MacOS bloque le partage d’écran. Mettez à jour vos paramètres de confidentialité pour permettre à ce navigateur d’enregistrer votre écran.",
     "dismissButtonAriaLabel": "Fermer",

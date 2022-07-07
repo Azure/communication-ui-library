@@ -18,7 +18,10 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите..."
+    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "removeFile": "Удалить файл",
+    "uploading": "Отправка",
+    "uploadCompleted": "Отправка завершена"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Отмена",
     "editBoxSubmitButton": "Отправить",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Дополнительные параметры"
+    "actionMenuMoreOptions": "Дополнительные параметры",
+    "downloadFile": "Скачать файл"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Микрофоны не найдены. Подключение звукового устройства ввода.",
     "callMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
     "callMicrophoneMutedBySystem": "Система отключила ваш микрофон.",
+    "callMicrophoneUnmutedBySystem": "Микрофон восстановлен, и система включила ваш звук.",
     "callMacOsMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Предоставьте разрешение на доступ к микрофону в параметрах конфиденциальности macOS.",
     "callLocalVideoFreeze": "Низкая пропускная способность сети. Ваше видео может отображаться как приостановленное для других участников вызова.",
     "callCameraAccessDenied": "Не удается получить доступ к камере. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
     "callCameraAlreadyInUse": "Не удается получить доступ к камере. Возможно, оно уже используется другим приложением.",
+    "callVideoStoppedBySystem": "Воспроизведение видео остановлено системой.",
+    "callVideoRecoveredBySystem": "Воспроизведение видео возобновлено.",
     "callMacOsCameraAccessDenied": "MacOS блокирует доступ к камере. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру доступ к камере.",
     "callMacOsScreenShareAccessDenied": "MacOS блокирует демонстрацию экрана. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру записывать ваш экран.",
     "dismissButtonAriaLabel": "Закрыть",

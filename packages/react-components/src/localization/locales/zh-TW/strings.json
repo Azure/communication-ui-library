@@ -18,7 +18,10 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳... 請稍候。"
+    "fileUploadsPendingError": "正在上傳... 請稍候。",
+    "removeFile": "移除檔案",
+    "uploading": "正在上傳",
+    "uploadCompleted": "上傳完成"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "訊息已傳送",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "取消",
     "editBoxSubmitButton": "提交",
     "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "更多選項"
+    "actionMenuMoreOptions": "更多選項",
+    "downloadFile": "下載檔案"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "找不到麥克風。請連接音訊輸入裝置。",
     "callMicrophoneAccessDenied": "無法存取麥克風。按一下網址列中的鎖定以授與此網頁的許可權。",
     "callMicrophoneMutedBySystem": "系統已將您設為靜音。",
+    "callMicrophoneUnmutedBySystem": "您的麥克風已復原，系統已取消您的靜音。",
     "callMacOsMicrophoneAccessDenied": "無法存取麥克風。請在您的 MacOS 隱私權設定中授與麥克風權限。",
     "callLocalVideoFreeze": "網路頻寬不佳。通話中的其他人可能會暫停您的視訊。",
     "callCameraAccessDenied": "無法存取相機。按一下網址列中的鎖定以授與此網頁的許可權。",
     "callCameraAlreadyInUse": "無法存取相機。其他應用程式可能已在使用它。",
+    "callVideoStoppedBySystem": "您的影片已遭系統停止。",
+    "callVideoRecoveredBySystem": "您的影片已繼續。",
     "callMacOsCameraAccessDenied": "MacOS 已封鎖您的相機存取權限。請更新您的隱私權設定，允許此瀏覽器存取您的相機。",
     "callMacOsScreenShareAccessDenied": "MacOS 正在封鎖螢幕畫面分享。更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。",
     "dismissButtonAriaLabel": "關閉",

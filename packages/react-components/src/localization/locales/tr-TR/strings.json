@@ -18,7 +18,10 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "İleti gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin."
+    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeFile": "Dosyayı kaldır",
+    "uploading": "Karşıya yükleniyor",
+    "uploadCompleted": "Karşıya yükleme tamamlandı"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "İptal",
     "editBoxSubmitButton": "Gönder",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
-    "actionMenuMoreOptions": "Diğer Seçenekler"
+    "actionMenuMoreOptions": "Diğer Seçenekler",
+    "downloadFile": "Dosyayı indir"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Mikrofon bulunamadı. Ses giriş cihazı bağlan.",
     "callMicrophoneAccessDenied": "Mikrofona erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
     "callMicrophoneMutedBySystem": "Sisteminiz tarafından sessize alındınız.",
+    "callMicrophoneUnmutedBySystem": "Mikrofonunuz kurtarıldı ve sisteminiz tarafından sesiniz açıldı.",
     "callMacOsMicrophoneAccessDenied": "Mikrofona erişilemiyor. macOS gizlilik ayarlarınızda mikrofon izni verin.",
     "callLocalVideoFreeze": "Ağ bant genişliği düşük. Görüntülü aramada başkaları için duraklatılmış görünüyor olabilir.",
     "callCameraAccessDenied": "Kameraya erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
     "callCameraAlreadyInUse": "Kameraya erişemiyor. Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
+    "callVideoStoppedBySystem": "Videonuz sisteminiz tarafından durduruldu.",
+    "callVideoRecoveredBySystem": "Videonuz devam ediyor.",
     "callMacOsCameraAccessDenied": "MacOS kameranıza erişimi engelliyor. Bu tarayıcının kameranıza erişmesine izin vermek için gizlilik ayarlarınızı güncelleştirin.",
     "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin.",
     "dismissButtonAriaLabel": "Kapat",

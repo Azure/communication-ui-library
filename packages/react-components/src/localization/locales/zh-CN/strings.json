@@ -18,7 +18,10 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送消息",
-    "fileUploadsPendingError": "正在上载...请稍候。"
+    "fileUploadsPendingError": "正在上载...请稍候。",
+    "removeFile": "删除文件",
+    "uploading": "正在上传",
+    "uploadCompleted": "已完成上传"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "取消",
     "editBoxSubmitButton": "提交",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读",
-    "actionMenuMoreOptions": "更多选项"
+    "actionMenuMoreOptions": "更多选项",
+    "downloadFile": "下载文件"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "找不到麦克风。连接音频输入设备。",
     "callMicrophoneAccessDenied": "无法访问麦克风。单击地址栏中的锁定以授予对此网页的权限。",
     "callMicrophoneMutedBySystem": "系统已将你设为静音。",
+    "callMicrophoneUnmutedBySystem": "你的麦克风已恢复，系统已取消静音。",
     "callMacOsMicrophoneAccessDenied": "无法访问麦克风。在 macOS 隐私设置中授予麦克风权限。",
     "callLocalVideoFreeze": "网络带宽较差。你的视频可能会在通话中为其他人暂停。",
     "callCameraAccessDenied": "无法访问照相机。单击地址栏中的锁定以授予对此网页的权限。",
     "callCameraAlreadyInUse": "无法访问照相机。它可能已被其他应用程序使用。",
+    "callVideoStoppedBySystem": "你的系统已停止你的视频。",
+    "callVideoRecoveredBySystem": "你的视频已恢复。",
     "callMacOsCameraAccessDenied": "MacOS 正在阻止访问你的相机。更新你的隐私设置以允许此浏览器访问你的相机。",
     "callMacOsScreenShareAccessDenied": "MacOS 正在阻止屏幕共享。更新你的隐私设置以允许此浏览器录制你的屏幕。",
     "dismissButtonAriaLabel": "关闭",

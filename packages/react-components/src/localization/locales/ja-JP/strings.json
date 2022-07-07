@@ -18,7 +18,10 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。"
+    "fileUploadsPendingError": "アップロード中です... お待ちください。",
+    "removeFile": "ファイルを削除します",
+    "uploading": "アップロード中",
+    "uploadCompleted": "アップロードが完了しました"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "取り消し",
     "editBoxSubmitButton": "送信",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
-    "actionMenuMoreOptions": "その他のオプション"
+    "actionMenuMoreOptions": "その他のオプション",
+    "downloadFile": "ファイルをダウンロード"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "マイクが見つかりません。オーディオ入力デバイスを接続します。",
     "callMicrophoneAccessDenied": "マイクにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
     "callMicrophoneMutedBySystem": "システムによってミュートになっています。",
+    "callMicrophoneUnmutedBySystem": "マイクが回復し、システムによってミュートが解除されました。",
     "callMacOsMicrophoneAccessDenied": "マイクにアクセスできません。macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
     "callLocalVideoFreeze": "ネットワーク帯域幅が不十分です。通話中に他のユーザーのビデオが一時停止している可能性があります。",
     "callCameraAccessDenied": "カメラにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
     "callCameraAlreadyInUse": "カメラにアクセスできません。別のアプリケーションによって既に使用されている可能性があります。",
+    "callVideoStoppedBySystem": "ビデオはシステムによって停止されました。",
+    "callVideoRecoveredBySystem": "ビデオが再開されました。",
     "callMacOsCameraAccessDenied": "MacOS がカメラへのアクセスをブロックしています。プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
     "callMacOsScreenShareAccessDenied": "MacOS は画面の共有をブロックしています。プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
     "dismissButtonAriaLabel": "閉じる",

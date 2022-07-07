@@ -18,7 +18,10 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "fileUploadsPendingError": "Carregando... Aguarde."
+    "fileUploadsPendingError": "Carregando... Aguarde.",
+    "removeFile": "Remover arquivo",
+    "uploading": "Carregando",
+    "uploadCompleted": "Carregamento concluído"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
@@ -117,7 +120,8 @@
     "editBoxCancelButton": "Cancelar",
     "editBoxSubmitButton": "Enviar",
     "messageReadCount": "Lido por {messageReadByCount} de {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Mais opções"
+    "actionMenuMoreOptions": "Mais opções",
+    "downloadFile": "Baixar arquivo"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",
@@ -138,10 +142,13 @@
     "callNoMicrophoneFound": "Nenhum microfone encontrado. Conecte um dispositivo de entrada de áudio.",
     "callMicrophoneAccessDenied": "Não é possível acessar o microfone. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
     "callMicrophoneMutedBySystem": "Você está com as notificações desativada pelo sistema.",
+    "callMicrophoneUnmutedBySystem": "Seu microfone se recuperou e você foi desativado pelo sistema.",
     "callMacOsMicrophoneAccessDenied": "Não é possível acessar o microfone. Conceda permissão ao microfone nas configurações de privacidade do macOS.",
     "callLocalVideoFreeze": "A largura de banda da rede é ruim. Seu vídeo pode aparecer em pausa para outras pessoas na chamada.",
     "callCameraAccessDenied": "Não é possível acessar a câmera. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
     "callCameraAlreadyInUse": "Não é possível acessar a câmera. Talvez ele já esteja em uso por outro aplicativo.",
+    "callVideoStoppedBySystem": "Seu vídeo foi interrompido pelo sistema.",
+    "callVideoRecoveredBySystem": "Seu vídeo foi retomado.",
     "callMacOsCameraAccessDenied": "O MacOS está bloqueando o acesso à sua câmera. Atualize suas configurações de privacidade para permitir que este navegador acesse sua câmera.",
     "callMacOsScreenShareAccessDenied": "O MacOS está bloqueando o compartilhamento de tela. Atualize suas configurações de privacidade para permitir que este navegador grave sua tela.",
     "dismissButtonAriaLabel": "Fechar",
