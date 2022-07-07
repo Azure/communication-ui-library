@@ -89,7 +89,5 @@ export default {
     strings: hiddenControl,
     // TODO: Fix this story and remove this. Hiding it temporarily because this is not loading properly in storybook
     options: { showPanel: false }
-  },
-  // TODO: Fix this story and remove this. Avoiding this chromatic test temporarily because this is not loading properly in storybook
-  chromatic: { disableSnapshot: true }
+  }
 } as Meta;
