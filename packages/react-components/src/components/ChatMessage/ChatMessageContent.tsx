@@ -12,42 +12,55 @@ import { Link } from '@fluentui/react';
 type ChatMessageContentProps = {
   message: ChatMessage;
   liveAuthorIntro: string;
+  messageContentAriaText: string;
 };
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   switch (props.message.contentType) {
     case 'text':
-      return MessageContentAsText(props.message, props.liveAuthorIntro);
+      return MessageContentAsText(props);
     case 'html':
-      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
+      return MessageContentAsRichTextHTML(props);
     case 'richtext/html':
-      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
+      return MessageContentAsRichTextHTML(props);
     default:
       console.warn('unknown message content type');
       return <></>;
   }
 };
 
-const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
+const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = new Parser();
-  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
+  const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const messageAriaText = props.message.content
+    ? _formatString(props.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: props.message.content
+      })
+    : undefined;
   return (
-    <div data-ui-status={message.status}>
+    <div data-ui-status={props.message.status} role="text" aria-text={messageAriaText}>
       <LiveMessage
-        message={`${message.mine ? '' : liveAuthor} ${extractContent(message.content || '')}`}
+        message={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
         aria-live="polite"
       />
-      {htmlToReactParser.parse(message.content)}
+      {htmlToReactParser.parse(props.message.content)}
     </div>
   );
 };
 
-const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
+const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
+  const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const messageAriaText = props.message.content
+    ? _formatString(props.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: props.message.content
+      })
+    : undefined;
   return (
-    <div data-ui-status={message.status}>
-      <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
+    <div data-ui-status={props.message.status} role="text" aria-label={messageAriaText}>
+      <LiveMessage message={`${props.message.mine ? '' : liveAuthor} ${props.message.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
           return (
@@ -57,7 +70,7 @@ const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JS
           );
         }}
       >
-        {message.content}
+        {props.message.content}
       </Linkify>
     </div>
   );
