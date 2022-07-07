@@ -42,14 +42,23 @@ export class FakeChatClient implements IChatClient {
   ): Promise<CreateChatThreadResult> {
     const now = new Date(Date.now());
     const participants = this.withCurrentUserInThread(options?.participants ?? []);
-    const thread = {
+    const thread: Thread = {
       id: nanoid(),
       version: 0,
       createdOn: now,
       createdBy: getIdentifierKind(this.userId),
       topic: request.topic,
       participants,
-      messages: [],
+      messages: [
+        {
+          id: '0',
+          type: 'participantAdded',
+          sequenceId: '0',
+          version: '0',
+          createdOn: new Date(),
+          content: { participants }
+        }
+      ],
       readReceipts: []
     };
     this.model.addThread(thread);
@@ -122,8 +131,7 @@ export class FakeChatClient implements IChatClient {
     throw new Error('Not Implemented');
   }
 
-  // TODO tighten the type
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, listener: any): void {
     if (!this.realtimeNotificationsEnabled) {
       throw new Error('Must enable real time notifications first');
