@@ -26,6 +26,7 @@ import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -173,8 +174,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     showParticipantOverflowTooltip
   } = props;
 
+  const isAllowed = _usePermissions().participantList;
+
   const onRenderPeopleIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonParticipants" />
+    <HighContrastAwareIcon disabled={props.disabled || !isAllowed} iconName="ControlButtonParticipants" />
   );
 
   const ids = useIdentifiers();
@@ -341,6 +344,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   return (
     <ControlBarButton
       {...props}
+      disabled={!isAllowed}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
