@@ -99,6 +99,7 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
+  disabled?: boolean;
 };
 
 /**
@@ -107,10 +108,12 @@ export type ScreenShareButtonSelector = (
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn],
-  (isScreenSharingOn) => {
+  [getIsScreenSharingOn, getCallState],
+  (isScreenSharingOn, callState) => {
+    console.log(callState);
     return {
-      checked: isScreenSharingOn
+      checked: isScreenSharingOn,
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
     };
   }
 );
