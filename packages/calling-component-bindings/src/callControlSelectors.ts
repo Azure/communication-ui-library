@@ -110,7 +110,6 @@ export type ScreenShareButtonSelector = (
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
   [getIsScreenSharingOn, getCallState],
   (isScreenSharingOn, callState) => {
-    console.log(callState);
     return {
       checked: isScreenSharingOn,
       disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
