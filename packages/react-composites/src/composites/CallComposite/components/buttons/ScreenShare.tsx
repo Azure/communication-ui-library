@@ -21,7 +21,7 @@ export const ScreenShare = (props: {
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={screenShareButtonProps.disabled ? screenShareButtonProps.disabled : isDisabled(props.option)}
+      disabled={screenShareButtonProps?.disabled ? screenShareButtonProps.disabled : isDisabled(props.option)}
       styles={styles}
     />
   );
