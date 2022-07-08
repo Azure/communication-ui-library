@@ -32,6 +32,8 @@ export interface _PictureInPictureInPictureProps {
 
   primaryTile: _PictureInPictureInPictureTileProps;
   secondaryTile?: _PictureInPictureInPictureTileProps;
+  primaryChild?: React.ReactNode;
+  secondaryChild?: React.ReactNode;
 
   strings: _PictureInPictureInPictureStrings;
 }
@@ -49,8 +51,12 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
   return (
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
-      primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
-      secondaryView={props.secondaryTile && <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
+      primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} children={props.primaryChild} />}
+      secondaryView={
+        props.secondaryTile && (
+          <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} children={props.secondaryChild} />
+        )
+      }
       ariaLabel={props.strings.rootAriaLabel}
     />
   );

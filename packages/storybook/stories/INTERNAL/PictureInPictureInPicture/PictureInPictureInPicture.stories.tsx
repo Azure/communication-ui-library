@@ -19,35 +19,35 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
     <PictureInPictureInPictureComponent
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
-        orientation: args.primaryTileOrientation,
-        children: (
-          <VideoTile
-            displayName={args.primaryTileParticipantName}
-            renderElement={
-              args.primaryTileVideoAvailable ? (
-                <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
-              ) : undefined
-            }
-            showLabel={false}
-          />
-        )
+        orientation: args.primaryTileOrientation
       }}
+      primaryChild={
+        <VideoTile
+          displayName={args.primaryTileParticipantName}
+          renderElement={
+            args.primaryTileVideoAvailable ? (
+              <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
+            ) : undefined
+          }
+          showLabel={false}
+        />
+      }
       secondaryTile={{
-        orientation: args.secondaryTileOrientation,
-        children: (
-          <VideoTile
-            displayName={args.secondaryTileParticipantName}
-            renderElement={
-              args.secondaryTileVideoAvailable ? (
-                <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
-              ) : undefined
-            }
-            isMirrored={true}
-            showLabel={false}
-            personaMinSize={20}
-          />
-        )
+        orientation: args.secondaryTileOrientation
       }}
+      secondaryChild={
+        <VideoTile
+          displayName={args.secondaryTileParticipantName}
+          renderElement={
+            args.secondaryTileVideoAvailable ? (
+              <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
+            ) : undefined
+          }
+          isMirrored={true}
+          showLabel={false}
+          personaMinSize={20}
+        />
+      }
       strings={{ rootAriaLabel: 'Picture in Picture in Picture surfaces' }}
     />
   );
