@@ -109,7 +109,7 @@ export type ScreenShareButtonSelector = (
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn, getCallState],
+  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
   (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
     return {
       checked: isScreenSharingOn,
