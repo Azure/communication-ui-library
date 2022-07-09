@@ -116,7 +116,7 @@
     {
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
-      "reviewCategory": "internal"
+      "reviewCategory": "tools"
     }
   ]
 }
