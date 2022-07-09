@@ -289,7 +289,6 @@ export const generateDefaultDeviceMenuProps = (
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -324,7 +323,6 @@ export const generateDefaultDeviceMenuProps = (
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -352,7 +350,6 @@ export const generateDefaultDeviceMenuProps = (
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
