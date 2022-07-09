@@ -138,4 +138,4 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} groom branch -> pre-release branch", "head":"${{steps.groom.outputs.groom}}", "base":"${{steps.prereleasebranch.outputs.prereleasebranch  }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type }} pre-release branch - create` GitHub action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} groom branch -> pre-release branch", "head":"${{ steps.groombranch.outputs.groombranch }}", "base":"${{ steps.prereleasebranch.outputs.prereleasebranch }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type }} pre-release branch - create` GitHub action. Please review." }'
