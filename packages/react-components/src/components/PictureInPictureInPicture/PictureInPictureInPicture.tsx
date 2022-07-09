@@ -53,17 +53,15 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
       primaryView={
-        <PictureInPictureInPicturePrimaryTile
-          orientation={props.primaryTileOrientation ?? 'portrait'}
-          children={props.primaryTile}
-        />
+        <PictureInPictureInPicturePrimaryTile orientation={props.primaryTileOrientation ?? 'portrait'}>
+          {props.primaryTile}
+        </PictureInPictureInPicturePrimaryTile>
       }
       secondaryView={
         props.secondaryTile && (
-          <PictureInPictureInPictureSecondaryTile
-            orientation={props.secondaryTileOrientation ?? 'portrait'}
-            children={props.secondaryTile}
-          />
+          <PictureInPictureInPictureSecondaryTile orientation={props.secondaryTileOrientation ?? 'portrait'}>
+            {props.secondaryTile}
+          </PictureInPictureInPictureSecondaryTile>
         )
       }
       ariaLabel={props.strings.rootAriaLabel}
