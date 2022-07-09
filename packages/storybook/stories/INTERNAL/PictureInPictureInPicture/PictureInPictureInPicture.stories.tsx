@@ -18,10 +18,8 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
   return (
     <PictureInPictureInPictureComponent
       onClick={() => alert('PictureInPictureInPicture clicked')}
-      primaryTile={{
-        orientation: args.primaryTileOrientation
-      }}
-      primaryChild={
+      primaryTileOrientation={args.primaryTileOrientation}
+      primaryTile={
         <VideoTile
           displayName={args.primaryTileParticipantName}
           renderElement={
@@ -32,10 +30,8 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
           showLabel={false}
         />
       }
-      secondaryTile={{
-        orientation: args.secondaryTileOrientation
-      }}
-      secondaryChild={
+      secondaryTileOrientation={args.secondaryTileOrientation}
+      secondaryTile={
         <VideoTile
           displayName={args.secondaryTileParticipantName}
           renderElement={

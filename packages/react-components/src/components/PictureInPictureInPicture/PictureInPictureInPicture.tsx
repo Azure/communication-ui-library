@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { ReactChild } from 'react';
+import React from 'react';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import {
   PictureInPictureInPicturePrimaryTile,
   PictureInPictureInPictureSecondaryTile,
-  _PictureInPictureInPictureTileProps
+  _PictureInPictureInPictureTileProps,
+  _TileOrientation
 } from './PictureInPictureInPictureTile';
 
 /**
@@ -30,10 +31,10 @@ export interface _PictureInPictureInPictureProps {
    */
   onClick?: () => void;
 
-  primaryTile: _PictureInPictureInPictureTileProps;
-  secondaryTile?: _PictureInPictureInPictureTileProps;
-  primaryChild?: React.ReactNode;
-  secondaryChild?: React.ReactNode;
+  primaryTile: React.ReactNode;
+  primaryTileOrientation?: _TileOrientation;
+  secondaryTile?: React.ReactNode;
+  secondaryTileOrientation?: _TileOrientation;
 
   strings: _PictureInPictureInPictureStrings;
 }
@@ -51,10 +52,18 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
   return (
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
-      primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} children={props.primaryChild} />}
+      primaryView={
+        <PictureInPictureInPicturePrimaryTile
+          orientation={props.primaryTileOrientation ?? 'portrait'}
+          children={props.primaryTile}
+        />
+      }
       secondaryView={
         props.secondaryTile && (
-          <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} children={props.secondaryChild} />
+          <PictureInPictureInPictureSecondaryTile
+            orientation={props.secondaryTileOrientation ?? 'portrait'}
+            children={props.secondaryTile}
+          />
         )
       }
       ariaLabel={props.strings.rootAriaLabel}
@@ -66,8 +75,8 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
  * This governs positioning and floating of the secondary PiP.
  */
 const PictureInPictureInPictureContainer = (props: {
-  primaryView: ReactChild;
-  secondaryView?: ReactChild;
+  primaryView: React.ReactNode;
+  secondaryView?: React.ReactNode;
   onClick?: () => void;
   ariaLabel: string;
 }): JSX.Element => {

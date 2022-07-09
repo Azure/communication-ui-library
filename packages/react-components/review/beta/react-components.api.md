@@ -1125,9 +1125,13 @@ export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps
 export interface _PictureInPictureInPictureProps {
     onClick?: () => void;
     // (undocumented)
-    primaryTile: _PictureInPictureInPictureTileProps;
+    primaryTile: React_2.ReactNode;
     // (undocumented)
-    secondaryTile?: _PictureInPictureInPictureTileProps;
+    primaryTileOrientation?: _TileOrientation;
+    // (undocumented)
+    secondaryTile?: React_2.ReactNode;
+    // (undocumented)
+    secondaryTileOrientation?: _TileOrientation;
     // (undocumented)
     strings: _PictureInPictureInPictureStrings;
 }
