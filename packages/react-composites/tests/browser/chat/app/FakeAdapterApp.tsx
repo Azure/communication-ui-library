@@ -24,8 +24,7 @@ import {
   customOnRenderMessage,
   customOnRenderTypingIndicator
 } from './CustomDataModel';
-// TODO: Should import using path '@internal/fake-backends' from tsconfig but it is not working
-import { FakeChatClient, IChatClient, Model } from '../../../../../fake-backends/src';
+import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { RestError } from '@azure/core-http';
 
