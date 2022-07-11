@@ -16,12 +16,19 @@ export const ScreenShare = (props: {
 }): JSX.Element => {
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
+
+  const screenShareButtonDisabled = (): boolean => {
+    /* @conditional-compile-remove(PSTN-calls) */
+    return screenShareButtonProps?.disabled ? screenShareButtonProps.disabled : isDisabled(props.option);
+    return isDisabled(props.option);
+  };
+
   return (
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={screenShareButtonProps?.disabled ? screenShareButtonProps.disabled : isDisabled(props.option)}
+      disabled={screenShareButtonDisabled()}
       styles={styles}
     />
   );
