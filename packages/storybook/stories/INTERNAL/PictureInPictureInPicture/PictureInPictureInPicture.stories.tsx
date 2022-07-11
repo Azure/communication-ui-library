@@ -56,6 +56,10 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const PictureInPictureInPicture = PictureInPictureInPictureStory.bind({});
+// TODO: Fix this story and remove this. Hiding it temporarily because this is not loading properly in storybook v6.5.7
+PictureInPictureInPicture.arguments = {
+  options: { showPanel: false }
+};
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-pictureinpictureinpicture`,
@@ -86,8 +90,6 @@ export default {
     onClick: hiddenControl,
     primaryTile: hiddenControl,
     secondaryTile: hiddenControl,
-    strings: hiddenControl,
-    // TODO: Fix this story and remove this. Hiding it temporarily because this is not loading properly in storybook
-    options: { showPanel: false }
+    strings: hiddenControl
   }
 } as Meta;

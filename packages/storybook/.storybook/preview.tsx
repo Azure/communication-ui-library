@@ -109,10 +109,7 @@ export const parameters = {
     'canvas': {
       title: 'Preview'
     }
-  },
-  // TODO: Fix PictureInPictureInPictureStory.stories.tsx and remove this. Disabling chromatic tests 
-  // because that story is not loading correctly 
-  chromatic: { disableSnapshot: true }
+  }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
