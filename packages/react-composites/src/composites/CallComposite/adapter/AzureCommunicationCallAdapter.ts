@@ -676,7 +676,10 @@ export const createAzureCommunicationCallAdapter = async ({
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId, alternativeCallerId });
+  const callClient = createStatefulCallClient({
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
+  });
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
