@@ -1,14 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import {
   CallAdapter,
-  CallAdapterState,
-  createAzureCommunicationCallAdapter,
   CallComposite,
   COMPOSITE_LOCALE_FR_FR,
   COMPOSITE_LOCALE_EN_US,
@@ -17,14 +14,10 @@ import {
   CustomCallControlButtonCallbackArgs
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
-import memoizeOne from 'memoize-one';
+import { initializeIconsForUITests, isMobile } from '../../common/testAppUtils';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { MockCallAdapter } from './mocks/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
-import { TestCallingState } from '../TestCallingState';
 
 initializeIconsForUITests();
 
