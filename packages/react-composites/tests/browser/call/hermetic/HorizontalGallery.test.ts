@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from './fixture';
+import { test } from '../fixture';
 import { expect } from '@playwright/test';
-import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, pageClick, waitForSelector, stableScreenshot } from '../common/utils';
-import { IDS } from '../common/constants';
+import { buildUrlWithMockAdapter } from '../utils';
+import { dataUiId, pageClick, waitForSelector, stableScreenshot } from '../../common/utils';
+import { IDS } from '../../common/constants';
 
 test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have 1 audio participant', async ({ pages, serverUrl }) => {

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from './fixture';
+import { test } from '../fixture';
 import { expect } from '@playwright/test';
-import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, stableScreenshot, waitForSelector } from '../common/utils';
-import { IDS } from '../common/constants';
+import { buildUrlWithMockAdapter } from '../utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
+import { IDS } from '../../common/constants';
 
 test.describe('CallControls tests', async () => {
   test('CallControls when number of mics drops to zero', async ({ pages, serverUrl }) => {

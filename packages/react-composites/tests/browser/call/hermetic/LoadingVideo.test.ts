@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { IDS } from '../../browser/common/constants';
-import { stableScreenshot, waitForSelector, dataUiId } from '../common/utils';
-import { test } from './fixture';
-import { TestRemoteParticipant } from './TestCallingState';
-import { buildUrlWithMockAdapter } from './utils';
+import { IDS } from '../../common/constants';
+import { stableScreenshot, waitForSelector, dataUiId } from '../../common/utils';
+import { test } from '../fixture';
+import { TestRemoteParticipant } from '../TestCallingState';
+import { buildUrlWithMockAdapter } from '../utils';
 
 test.describe('Loading Video Spinner tests', async () => {
   test('Video Gallery shows loading spinners in tiles', async ({ pages, serverUrl }) => {

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from './fixture';
+import { test } from '../fixture';
 import { expect, Page } from '@playwright/test';
-import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, stableScreenshot, waitForSelector } from '../common/utils';
-import { IDS } from '../common/constants';
+import { buildUrlWithMockAdapter } from '../utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
+import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
   test('Failure to start video should be shown on error bar', async ({ pages, serverUrl }) => {

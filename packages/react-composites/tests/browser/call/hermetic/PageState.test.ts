@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../common/utils';
-import { test } from './fixture';
-import { buildUrlWithMockAdapter } from './utils';
+import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../../common/utils';
+import { test } from '../fixture';
+import { buildUrlWithMockAdapter } from '../utils';
 
 test.describe('Page state tests', async () => {
   test('Page when waiting in lobby', async ({ pages, serverUrl }) => {

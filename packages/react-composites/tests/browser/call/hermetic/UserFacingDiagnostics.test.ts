@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot } from '../common/utils';
-import { test } from './fixture';
-import { DiagnosticQuality } from './TestCallingState';
-import { buildUrlWithMockAdapter } from './utils';
+import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
+import { test } from '../fixture';
+import { DiagnosticQuality } from '../TestCallingState';
+import { buildUrlWithMockAdapter } from '../utils';
 
 test.describe('User Facing Diagnostics tests', async () => {
   test('A banner is shown when user is speaking while muted', async ({ pages, serverUrl }) => {

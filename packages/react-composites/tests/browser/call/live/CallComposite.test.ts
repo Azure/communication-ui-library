@@ -12,11 +12,11 @@ import {
   waitForFunction,
   waitForSelector,
   stableScreenshot
-} from '../common/utils';
-import { test } from './fixture';
+} from '../../common/utils';
+import { test } from '../fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
-import { IDS } from '../common/constants';
+import { IDS } from '../../common/constants';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome

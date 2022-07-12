@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from './fixture';
+import { test } from '../fixture';
 import { expect } from '@playwright/test';
-import { buildUrlWithMockAdapter } from './utils';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../common/utils';
-import { IDS } from '../common/constants';
+import { buildUrlWithMockAdapter } from '../utils';
+import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { IDS } from '../../common/constants';
 
 test.describe('Screenshare tests', async () => {
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
