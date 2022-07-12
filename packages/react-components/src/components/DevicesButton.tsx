@@ -268,7 +268,8 @@ export const generateDefaultDeviceMenuProps = (
       // A side effect of this workaround is that the context menu stays open when window is resized, and may
       // get detached from original target visually. That bug is preferable to the bug when this value is not set -
       // The Callout (frequently) gets dismissed automatically.
-      preventDismissOnResize: true
+      preventDismissOnResize: true,
+      preventDismissOnScroll: true
     }
   };
 
