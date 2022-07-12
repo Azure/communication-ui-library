@@ -11,6 +11,7 @@ export type _Permissions = {
   microphoneButton: boolean;
   screenShare: boolean;
   participantList: boolean;
+  removeParticipantButton: boolean;
 };
 
 /**
@@ -20,7 +21,8 @@ export const presenterPermissions: _Permissions = {
   cameraButton: true,
   microphoneButton: true,
   screenShare: true,
-  participantList: true
+  participantList: true,
+  removeParticipantButton: true
 };
 
 /**
@@ -30,7 +32,8 @@ export const consumerPermissions: _Permissions = {
   cameraButton: false,
   microphoneButton: false,
   screenShare: false,
-  participantList: false
+  participantList: false,
+  removeParticipantButton: false
 };
 
 /**
@@ -40,7 +43,8 @@ export const attendeePermissions: _Permissions = {
   cameraButton: true,
   microphoneButton: true,
   screenShare: false,
-  participantList: true
+  participantList: true,
+  removeParticipantButton: false
 };
 
 /**

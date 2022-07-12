@@ -13,6 +13,7 @@ import {
 import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
+import { _usePermissions } from '../permissions/PermissionsProvider';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -194,6 +195,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
 
   const createParticipantMenuItems = (participant: ParticipantListParticipant): IContextualMenuItem[] => {
     let menuItems: IContextualMenuItem[] = [];
+    const isRemovable = _usePermissions().removeParticipantButton;
+    const disabled = !isRemovable || !participant.isRemovable;
+
     if (participant.userId !== myUserId && onRemoveParticipant) {
       menuItems.push({
         key: 'remove',
@@ -202,7 +206,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         itemProps: {
           styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
         },
-        disabled: !participant.isRemovable,
+        disabled: disabled,
         'data-ui-id': ids.participantListRemoveParticipantButton
       });
     }
