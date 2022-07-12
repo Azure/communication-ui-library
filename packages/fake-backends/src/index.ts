@@ -3,6 +3,5 @@
 
 export { FakeChatService } from './ChatService';
 export { FakeChatClient } from './FakeChatClient';
-export { FakeChatThreadClient } from './FakeChatThreadClient';
 export { Model } from './Model';
-export type { IChatClient, IChatThreadClient, Thread, NetworkEventModel } from './types';
+export type { IChatClient } from './types';
