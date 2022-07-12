@@ -226,6 +226,12 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId: CommunicationUserIdentifier;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * ACS phone number required to make outbound PSTN calls. This is provided for developer convenience to easily access the alternativeCallerId from the
+   * state. It is not used by StatefulCallClient.
+   */
+  alternativeCallerId?: string;
 };
 
 /**
@@ -266,7 +272,11 @@ export const createStatefulCallClient = (
   callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
-    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
+    new CallContext(
+      getIdentifierKind(args.userId),
+      options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(PSTN-calls) */ args.alternativeCallerId
+    ),
     new InternalCallContext()
   );
 };

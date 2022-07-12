@@ -66,7 +66,7 @@ export type CallAdapterClientState = {
   /**
    * Azure communications Phone number to make PSTN calls with.
    */
-  alternativeCallerID?: string;
+  alternativeCallerId?: string;
 };
 
 /**
