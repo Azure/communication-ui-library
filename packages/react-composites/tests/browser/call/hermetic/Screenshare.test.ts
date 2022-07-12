@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from '../fixture';
+import { buildUrlWithMockAdapter, test } from './fixture';
 import { expect } from '@playwright/test';
-import { buildUrlWithMockAdapter } from '../utils';
 import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Screenshare tests', async () => {
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
-    pages,
+    page,
     serverUrl
   }) => {
-    const page = pages[0];
     const testRemoteParticipants = [
       {
         displayName: 'Paul Bridges',
@@ -57,8 +55,7 @@ test.describe('Screenshare tests', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('local-screenshare.png');
   });
 
-  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
     const testRemoteParticipants = [
       {
         displayName: 'Pardeep Singh'

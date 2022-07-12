@@ -4,13 +4,11 @@
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 import { stableScreenshot, waitForSelector, dataUiId } from '../../common/utils';
-import { test } from '../fixture';
+import { buildUrlWithMockAdapter, test } from './fixture';
 import { TestRemoteParticipant } from '../TestCallingState';
-import { buildUrlWithMockAdapter } from '../utils';
 
 test.describe('Loading Video Spinner tests', async () => {
-  test('Video Gallery shows loading spinners in tiles', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {
     // Create more than 4 users to ensure that some are placed in the horizontal gallery
     const numParticipants = 10;
     const testRemoteParticipants: TestRemoteParticipant[] = Array.from({ length: numParticipants }).map((_, i) => ({
@@ -29,8 +27,7 @@ test.describe('Loading Video Spinner tests', async () => {
     );
   });
 
-  test('Video Gallery shows loading spinners in screen share and horizontal gallery', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Video Gallery shows loading spinners in screen share and horizontal gallery', async ({ page, serverUrl }) => {
     const testRemoteParticipantScreenSharing: TestRemoteParticipant = {
       displayName: 'Screen Sharer',
       isVideoStreamAvailable: false,
