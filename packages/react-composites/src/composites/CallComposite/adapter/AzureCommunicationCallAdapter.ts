@@ -169,7 +169,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callClient: StatefulCallClient,
     locator: CallAdapterLocator,
     callAgent: CallAgent,
-    deviceManager: StatefulDeviceManager
+    deviceManager: StatefulDeviceManager,
+    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerID?: string
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -656,6 +657,8 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternativeCallerId?: string;
 };
 
 /**
@@ -671,11 +674,12 @@ export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({ userId });
   const callAgent = await callClient.createCallAgent(credential, { displayName });
-  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator, alternativeCallerId);
   return adapter;
 };
 
@@ -714,7 +718,7 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  const { credential, displayName, locator, userId } = args;
+  const { credential, displayName, locator, userId, alternativeCallerId } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -753,7 +757,8 @@ export const useAzureCommunicationCallAdapter = (
           credential,
           displayName,
           locator,
-          userId
+          userId,
+          /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -763,7 +768,16 @@ export const useAzureCommunicationCallAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, locator, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId,
+      beforeDisposeRef,
+      credential,
+      displayName,
+      locator,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.
@@ -795,9 +809,12 @@ export const useAzureCommunicationCallAdapter = (
 export const createAzureCommunicationCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: CallAdapterLocator
+  locator: CallAdapterLocator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId?: string
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  /* @conditional-compile-remove(PSTN-calls) */
+  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, alternativeCallerId);
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
