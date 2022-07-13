@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update screenshare button logic to utilize new screenshare button selector properties.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
