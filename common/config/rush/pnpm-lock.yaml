@@ -4867,6 +4867,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-yEJzHoxf6SyQGhBhIYGXQDSCkJjB6HohDShto7m8vaKg9Yp0Yn8+71J9eakh2bnPg6BfsH9PRMhiRTZnd4eXGQ==
+  /@types/yargs/17.0.10:
+    dependencies:
+      '@types/yargs-parser': 20.2.1
+    dev: false
+    resolution:
+      integrity: sha512-gmEaFwpj/7f/ROdtIlci1R1VYU1J4j95m8T+Tj3iBgiBFKg1foE/PSl93bBd5T9LDXNPo8UlNN6W0qwD8O5OaA==
   /@types/yauzl/2.9.2:
     dependencies:
       '@types/node': 14.17.9
@@ -13136,7 +13142,7 @@ packages:
       readable-stream: 1.0.34
     dev: false
     resolution:
-      integrity: sha512-lNDU9VJaOPxUmXcLb+HQFeUgQQPtMI24Gt6hgfuMHRJgMRHMF/qZ4HJD3GDru4sSw9IQl2jPjAYnQrdIeLbwow==
+      integrity: sha1-2o69nzr51nYJGbJ9nNyAkqczKFk=
   /normalize-package-data/2.5.0:
     dependencies:
       hosted-git-info: 2.8.9
@@ -13182,7 +13188,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-Le4iFE4VsbjPG4IMtuMN7gHu3UXIVnywPqBS2s3vHQe0JMGewfyWE8WYyqM509PjUybi4wbSqgW69mr3XGFr0w==
+      integrity: sha1-pGm7n+q+W/OqmRaDO69ndlguiUg=
   /npm-run-path/2.0.2:
     dependencies:
       path-key: 2.0.1
@@ -13829,7 +13835,7 @@ packages:
       through: 2.3.8
     dev: false
     resolution:
-      integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==
+      integrity: sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
   /pbkdf2/3.1.2:
     dependencies:
       create-hash: 1.2.0
@@ -15547,7 +15553,7 @@ packages:
   /secure-compare/3.0.1:
     dev: false
     resolution:
-      integrity: sha512-AckIIV90rPDcBcglUwXPF3kg0P0qmPsPXAj6BBEENQE1p5yA1xfmDJzfi1Tappj37Pv2mVbKpL3Z1T+Nn7k1Qw==
+      integrity: sha1-8aAymzCLIh+uN7mXTz1XjQypmeM=
   /select-hose/2.0.0:
     dev: false
     resolution:
@@ -16897,7 +16903,7 @@ packages:
   /trim/0.0.1:
     dev: false
     resolution:
-      integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==
+      integrity: sha1-WFhUf2spB1fulczMZm+1AITEYN0=
   /trough/1.0.5:
     dev: false
     resolution:
@@ -17042,7 +17048,7 @@ packages:
   /tty-browserify/0.0.0:
     dev: false
     resolution:
-      integrity: sha512-JVa5ijo+j/sOoHGjw0sxw734b1LhBkQ3bvUGNdxnVXDCX81Yx7TFgnZygxrIIWn23hbfTaMYLwRmAxFyDuFmIw==
+      integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
   /ttypescript/1.5.12_ts-node@9.1.1+typescript@4.3.5:
     dependencies:
       resolve: 1.20.0
@@ -17492,7 +17498,7 @@ packages:
     engines:
       node: '>= 0.4.0'
     resolution:
-      integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+      integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
   /uuid-browser/3.1.0:
     dev: false
     resolution:
@@ -18428,6 +18434,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
+  /yargs-parser/21.0.1:
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-9BK1jFpLzJROCI5TzwZL/TU4gqjK5xiHV/RfWLOahrjAko/e4DJkRDZQXfvqAsiZzzYhgAzbgz6lg48jcm4GLg==
   /yargs/13.3.2:
     dependencies:
       cliui: 5.0.0
@@ -18475,6 +18487,20 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
+  /yargs/17.5.1:
+    dependencies:
+      cliui: 7.0.4
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.0.1
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-t6YAJcxDkNX7NFYiVtKvWUz8l+PaKTLiL63mJYWR2GnHq2gjEWISzsLp9wg3aY36dY1j+gfIEL3pIF+XlJJfbA==
   /yauzl/2.10.0:
     dependencies:
       buffer-crc32: 0.2.13
@@ -19248,6 +19274,7 @@ packages:
       '@types/react-dom': 16.9.14
       '@types/react-linkify': 1.0.1
       '@types/uuid': 8.3.1
+      '@types/yargs': 17.0.10
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       '@uifabric/react-hooks': 7.13.12_c2a703770fc22cd5845ac34fc7d0fe24
@@ -19317,10 +19344,11 @@ packages:
       webpack: 5.38.1_webpack-cli@4.9.2
       webpack-cli: 4.9.2_6162a62ebb8c895864a3a412aa800002
       webpack-dev-server: 4.8.1_webpack-cli@4.9.2+webpack@5.38.1
+      yargs: 17.5.1
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-+muT8HJx7FVOi8SMiu+Y7FW4YRQChQRIWcDzOef6YfPL20Q2Bej6bsKup6vFGLG+6xAZhdkZD+vnhAg6QXUfzA==
+      integrity: sha512-WGgyCPL26YdkxuNx6CibkQxI2NYUMgl4rgC3SIVOTzxI/qNaWUzlnVS0SB1qlsO0vwUtdFS5IPvyt6N+F/ERag==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
