@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
