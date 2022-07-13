@@ -179,6 +179,11 @@ export interface CallAdapterCallManagement {
    * @public
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Join or start a call based on the adapter's locator.
+   */
+  joinOrStartCall(): Call | undefined;
   /**
    * Leave the call
    *

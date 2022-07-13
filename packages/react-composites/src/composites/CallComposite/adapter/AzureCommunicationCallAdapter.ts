@@ -285,12 +285,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
-    /* @conditional-compile-remove(teams-adhoc-call) */
-    // Check if we should be starting a new call or joining an existing call
-    if (isAdhocCall(this.locator)) {
-      return this.startCall(this.locator.participantIDs);
-    }
-
     return this.teeErrorToEventEmitter(() => {
       const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
       // TODO: find a way to expose stream to here
@@ -310,6 +304,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.processNewCall(call);
       return call;
     });
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public joinOrStartCall(): Call | undefined {
+    if (isOutboundCall(this.locator)) {
+      return this.startCall(this.locator.participantIDs);
+    } else {
+      return this.joinCall();
+    }
   }
 
   public async createStreamView(
@@ -642,7 +645,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -817,6 +820,7 @@ const isCallError = (e: Error): e is CallError => {
 };
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
+/* @conditional-compile-remove(PSTN-calls) */
+const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };

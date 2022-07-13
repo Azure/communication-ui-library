@@ -88,7 +88,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall();
+            adapter.joinOrStartCall();
           }}
         />
       );
