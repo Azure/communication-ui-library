@@ -64,7 +64,7 @@ async function runOne(args, composite, hermeticity) {
   }
 }
 
-async function exec(cmd, env, label) {
+async function exec(cmd, env) {
   const ls = child_process.exec(cmd, { env: env });
   ls.stdout.on('data', (data) => {
     console.log(`${data}`);
