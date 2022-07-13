@@ -89,6 +89,19 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  test('should update callAgent state and have alternativeCallerId set when callAgent is created', async () => {
+    const displayName = 'PSTN time booya';
+    const phoneNumber = '+15555555';
+    const agent = createMockCallAgent(displayName);
+    const client = createStatefulCallClientWithAgent(agent);
+
+    await client.createCallAgent(stubCommunicationTokenCredential(), { alternativeCallerId: phoneNumber });
+
+    expect(client.getState().callAgent).toBeDefined();
+    expect(client.getState().callAgent?.alternativeCallerId).toBe(phoneNumber);
+  });
+
   test('should update call in state when new call is added and removed', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);

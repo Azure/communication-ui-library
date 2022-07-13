@@ -682,13 +682,10 @@ export const createAzureCommunicationCallAdapter = async ({
   const callClient = createStatefulCallClient({
     userId
   });
-  const callAgent = await callClient.createCallAgent(
-    credential,
-    {
-      displayName
-    },
+  const callAgent = await callClient.createCallAgent(credential, {
+    displayName,
     /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
-  );
+  });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
 };
