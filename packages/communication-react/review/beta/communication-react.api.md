@@ -233,7 +233,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
