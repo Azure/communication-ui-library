@@ -82,13 +82,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+
   switch (page) {
     case 'configuration':
       return (
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinOrStartCall();
+            adapter.joinCall();
           }}
         />
       );

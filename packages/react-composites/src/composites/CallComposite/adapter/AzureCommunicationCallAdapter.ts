@@ -285,6 +285,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
+    /* @conditional-compile-remove(teams-adhoc-call) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    if (isOutboundCall(this.locator)) {
+      const phoneNumber = this.getState().alternativeCallerId;
+      return this.startCall(this.locator.participantIDs, {
+        alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
+      });
+    }
+
     return this.teeErrorToEventEmitter(() => {
       const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
       // TODO: find a way to expose stream to here
@@ -304,15 +313,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.processNewCall(call);
       return call;
     });
-  }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  public joinOrStartCall(): Call | undefined {
-    if (isOutboundCall(this.locator)) {
-      return this.startCall(this.locator.participantIDs);
-    } else {
-      return this.joinCall();
-    }
   }
 
   public async createStreamView(
@@ -620,6 +620,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 /* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
