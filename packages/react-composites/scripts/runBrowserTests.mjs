@@ -87,6 +87,11 @@ async function exec(cmd, env) {
 
 function parseArgs(argv) {
   const args = yargs(argv.slice(2))
+    .usage(
+      '$0 [options]',
+      'Use this script to run end to end tests for this packlet.' +
+        '\nThis script invokes playwright with packlet specific configuration & flags.'
+    )
     .example([
       ['$0 -l', 'Run only hermetic tests. Most useful for local development cycle.'],
       ['$0 -c call', 'Run only CallComposite tests. Used by CI to shard out tests by composite.'],
