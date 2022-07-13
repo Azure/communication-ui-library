@@ -11,9 +11,7 @@ import {
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '.';
-import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
-import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
@@ -32,15 +30,14 @@ import {
  */
 export const PeoplePaneContent = (props: {
   inviteLink?: string;
-  callAdapter: CallAdapter;
-  chatAdapter: ChatAdapter;
+  onRemoveParticipant: (participantId: string) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings } = props;
+  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -76,7 +73,7 @@ export const PeoplePaneContent = (props: {
 
   const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveParticipant = async (participantId: string): Promise<void> =>
-      removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
+      props.onRemoveParticipant(participantId);
     return {
       ...participantListDefaultProps,
       // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
@@ -84,7 +81,7 @@ export const PeoplePaneContent = (props: {
       // We want the drawer menu items to appear when participants in ParticipantList are clicked
       onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
-  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, callAdapter, chatAdapter]);
+  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, props.onRemoveParticipant]);
 
   const participantList = (
     <ParticipantListWithHeading
@@ -143,19 +140,6 @@ export const PeoplePaneContent = (props: {
       {participantList}
     </Stack>
   );
-};
-
-/**
- * In a CallWithChat when a participant is removed, we must remove them from both
- * the call and the chat thread.
- */
-const removeParticipantFromCallWithChat = async (
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter,
-  participantId: string
-): Promise<void> => {
-  await callAdapter.removeParticipant(participantId);
-  await chatAdapter.removeParticipant(participantId);
 };
 
 /**

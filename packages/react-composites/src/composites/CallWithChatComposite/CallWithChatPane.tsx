@@ -91,9 +91,23 @@ export const CallWithChatPane = (props: {
     />
   );
 
+  /**
+   * In a CallWithChat when a participant is removed, we must remove them from both
+   * the call and the chat thread.
+   */
+  const removeParticipantFromCallWithChat = async (participantId: string): Promise<void> => {
+    await props.callAdapter.removeParticipant(participantId);
+    await props.chatAdapter.removeParticipant(participantId);
+  };
+
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
-      <PeoplePaneContent {...props} setDrawerMenuItems={setDrawerMenuItems} strings={callWithChatStrings} />
+      <PeoplePaneContent
+        {...props}
+        onRemoveParticipant={removeParticipantFromCallWithChat}
+        setDrawerMenuItems={setDrawerMenuItems}
+        strings={callWithChatStrings}
+      />
     </CallAdapterProvider>
   );
 
