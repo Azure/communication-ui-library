@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { ReactChild } from 'react';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import {
   PictureInPictureInPicturePrimaryTile,
   PictureInPictureInPictureSecondaryTile,
-  _PictureInPictureInPictureTileProps,
-  _TileOrientation
+  _PictureInPictureInPictureTileProps
 } from './PictureInPictureInPictureTile';
 
 /**
@@ -31,10 +30,8 @@ export interface _PictureInPictureInPictureProps {
    */
   onClick?: () => void;
 
-  primaryTile: React.ReactNode;
-  primaryTileOrientation?: _TileOrientation;
-  secondaryTile?: React.ReactNode;
-  secondaryTileOrientation?: _TileOrientation;
+  primaryTile: _PictureInPictureInPictureTileProps;
+  secondaryTile?: _PictureInPictureInPictureTileProps;
 
   strings: _PictureInPictureInPictureStrings;
 }
@@ -52,18 +49,8 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
   return (
     <PictureInPictureInPictureContainer
       onClick={props.onClick}
-      primaryView={
-        <PictureInPictureInPicturePrimaryTile orientation={props.primaryTileOrientation ?? 'portrait'}>
-          {props.primaryTile}
-        </PictureInPictureInPicturePrimaryTile>
-      }
-      secondaryView={
-        props.secondaryTile && (
-          <PictureInPictureInPictureSecondaryTile orientation={props.secondaryTileOrientation ?? 'portrait'}>
-            {props.secondaryTile}
-          </PictureInPictureInPictureSecondaryTile>
-        )
-      }
+      primaryView={<PictureInPictureInPicturePrimaryTile {...props.primaryTile} />}
+      secondaryView={props.secondaryTile && <PictureInPictureInPictureSecondaryTile {...props.secondaryTile} />}
       ariaLabel={props.strings.rootAriaLabel}
     />
   );
@@ -73,8 +60,8 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
  * This governs positioning and floating of the secondary PiP.
  */
 const PictureInPictureInPictureContainer = (props: {
-  primaryView: React.ReactNode;
-  secondaryView?: React.ReactNode;
+  primaryView: ReactChild;
+  secondaryView?: ReactChild;
   onClick?: () => void;
   ariaLabel: string;
 }): JSX.Element => {

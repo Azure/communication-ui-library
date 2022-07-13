@@ -1039,13 +1039,9 @@ export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps
 export interface _PictureInPictureInPictureProps {
     onClick?: () => void;
     // (undocumented)
-    primaryTile: React_2.ReactNode;
+    primaryTile: _PictureInPictureInPictureTileProps;
     // (undocumented)
-    primaryTileOrientation?: _TileOrientation;
-    // (undocumented)
-    secondaryTile?: React_2.ReactNode;
-    // (undocumented)
-    secondaryTileOrientation?: _TileOrientation;
+    secondaryTile?: _PictureInPictureInPictureTileProps;
     // (undocumented)
     strings: _PictureInPictureInPictureStrings;
 }

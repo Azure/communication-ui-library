@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updated code in CallWithChat composite based on api updates in internal PictureInPictureInPicture component.",
-  "packageName": "@internal/react-composites",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

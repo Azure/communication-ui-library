@@ -18,32 +18,36 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
   return (
     <PictureInPictureInPictureComponent
       onClick={() => alert('PictureInPictureInPicture clicked')}
-      primaryTileOrientation={args.primaryTileOrientation}
-      primaryTile={
-        <VideoTile
-          displayName={args.primaryTileParticipantName}
-          renderElement={
-            args.primaryTileVideoAvailable ? (
-              <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
-            ) : undefined
-          }
-          showLabel={false}
-        />
-      }
-      secondaryTileOrientation={args.secondaryTileOrientation}
-      secondaryTile={
-        <VideoTile
-          displayName={args.secondaryTileParticipantName}
-          renderElement={
-            args.secondaryTileVideoAvailable ? (
-              <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
-            ) : undefined
-          }
-          isMirrored={true}
-          showLabel={false}
-          personaMinSize={20}
-        />
-      }
+      primaryTile={{
+        orientation: args.primaryTileOrientation,
+        content: (
+          <VideoTile
+            displayName={args.primaryTileParticipantName}
+            renderElement={
+              args.primaryTileVideoAvailable ? (
+                <StreamMedia videoStreamElement={primaryTileVideoStreamElement} />
+              ) : undefined
+            }
+            showLabel={false}
+          />
+        )
+      }}
+      secondaryTile={{
+        orientation: args.secondaryTileOrientation,
+        content: (
+          <VideoTile
+            displayName={args.secondaryTileParticipantName}
+            renderElement={
+              args.secondaryTileVideoAvailable ? (
+                <StreamMedia videoStreamElement={secondaryTileVideoStreamElement} />
+              ) : undefined
+            }
+            isMirrored={true}
+            showLabel={false}
+            personaMinSize={20}
+          />
+        )
+      }}
       strings={{ rootAriaLabel: 'Picture in Picture in Picture surfaces' }}
     />
   );

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Redefined properties of internal PictureInPictureInPicture component to fix its storybook page.",
-  "packageName": "@internal/react-components",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
