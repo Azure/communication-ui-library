@@ -87,6 +87,14 @@ async function exec(cmd, env) {
 
 function parseArgs(argv) {
   const args = yargs(argv.slice(2))
+    .example([
+      ['$0 -l', 'Run only hermetic tests. Most useful for local development cycle.'],
+      ['$0 -c call', 'Run only CallComposite tests. Used by CI to shard out tests by composite.'],
+      [
+        '$0 -b stable',
+        'Run tests for stable flavor build. You can also set the COMMUNICATION_REACT_FLAVOR as is done by package.json invocations.'
+      ]
+    ])
     .options({
       buildFlavor: {
         alias: 'b',
