@@ -96,7 +96,7 @@ describe('Stateful call client', () => {
     const agent = createMockCallAgent(displayName);
     const client = createStatefulCallClientWithAgent(agent);
 
-    await client.createCallAgent(stubCommunicationTokenCredential(), {}, phoneNumber);
+    await client.createCallAgent(stubCommunicationTokenCredential(), { alternativeCallerId: phoneNumber });
 
     expect(client.getState().callAgent).toBeDefined();
     expect(client.getState().callAgent?.alternativeCallerId).toBe(phoneNumber);

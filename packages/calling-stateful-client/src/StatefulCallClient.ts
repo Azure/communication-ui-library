@@ -24,6 +24,18 @@ import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 
 /**
+ * Options for creating the stateful client's call agent. extends {@link CallAgentOptions}
+ *
+ * @public
+ */
+export interface StatefulCallAgentOptions extends CallAgentOptions {
+  /**
+   * Phone number required for making outbound PSTN calls.
+   */
+  alternativeCallerId?: string;
+}
+
+/**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
  * The interface provides access to proxied state and also allows registering a handler for state change events. For
  * state definition see {@link CallClientState}.
@@ -152,8 +164,7 @@ export interface StatefulCallClient extends CallClient {
    */
   createCallAgent(
     tokenCredential: CommunicationTokenCredential,
-    options?: CallAgentOptions,
-    /*@conditional-compile-remove(PSTN-calls) */ alternativeCallerId?: string
+    options?: StatefulCallAgentOptions
   ): Promise<DeclarativeCallAgent>;
 }
 
@@ -192,8 +203,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         return this._context.withAsyncErrorTeedToState(
           async (
             tokenCredential: CommunicationTokenCredential,
-            options?: CallAgentOptions,
-            /*@conditional-compile-remove(PSTN-calls) */ alternativeCallerId?: string
+            options?: StatefulCallAgentOptions
           ): Promise<DeclarativeCallAgent> => {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
@@ -202,7 +212,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
             this._context.setCallAgent({
               displayName: this._callAgent.displayName,
-              /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId: alternativeCallerId
+              /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId: options?.alternativeCallerId
             });
             return this._callAgent;
           },

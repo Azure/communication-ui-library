@@ -2246,8 +2246,13 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 // @public
+export interface StatefulCallAgentOptions extends CallAgentOptions {
+    alternativeCallerId?: string;
+}
+
+// @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(tokenCredential: CommunicationTokenCredential, options?: CallAgentOptions): Promise<DeclarativeCallAgent>;
+    createCallAgent(tokenCredential: CommunicationTokenCredential, options?: StatefulCallAgentOptions): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
