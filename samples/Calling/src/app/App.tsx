@@ -51,7 +51,6 @@ const App = (): JSX.Element => {
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
 
-  const [participants, setParticipants] = useState<string[] | undefined>();
   const [alternativeCallerId, setAlternativeCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
@@ -97,7 +96,6 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
-            setParticipants(callDetails.outboundParticipants);
             setAlternativeCallerId(callDetails.alternativeCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
             console.log(callDetails);
