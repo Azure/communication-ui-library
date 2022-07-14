@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Disable flakey e2e tests and drop retries",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
