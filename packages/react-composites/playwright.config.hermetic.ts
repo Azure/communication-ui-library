@@ -11,7 +11,10 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 3 : undefined,
 
   // All these tests are hermetic. It is safe to run them in parallel.
-  fullyParallel: true
+  fullyParallel: true,
+
+  // TODO(prprabhu): Remove retries once super flakey tests are fixed or removed.
+  retries: 2
 };
 
 export default config;
