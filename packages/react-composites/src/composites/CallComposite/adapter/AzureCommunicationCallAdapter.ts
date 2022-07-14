@@ -27,7 +27,8 @@ import {
   RemoteParticipant,
   PermissionConstraints,
   PropertyChangedEvent,
-  StartCallOptions
+  StartCallOptions,
+  VideoOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
@@ -298,35 +299,38 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = !('groupId' in this.locator);
-      /* @conditional-compile-remove(rooms) */
-      const isRoomsCall = !('roomId' in this.locator);
-
-      let call;
-
-      if (isTeamsMeeting) {
-        call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        });
-      } else {
-        call = this.callAgent.join(this.locator as GroupCallLocator, {
-          audioOptions,
-          videoOptions
-        });
-      }
-
-      /* @conditional-compile-remove(rooms) */
-      if (isRoomsCall) {
-        call = this.callAgent.join(this.locator as RoomCallLocator, {
-          audioOptions,
-          videoOptions
-        });
-      }
+      let call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
       return call;
     });
+  }
+
+  private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions) {
+    const isTeamsMeeting = !('groupId' in this.locator);
+    /* @conditional-compile-remove(rooms) */
+    const isRoomsCall = !('roomId' in this.locator);
+
+    let call;
+
+    if (isTeamsMeeting) {
+      call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        audioOptions,
+        videoOptions
+      });
+    } else if (isRoomsCall) {
+    /* @conditional-compile-remove(rooms) */
+      call = this.callAgent.join(this.locator as RoomCallLocator, {
+        audioOptions,
+        videoOptions
+      });
+    } else {
+      call = this.callAgent.join(this.locator as GroupCallLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+    return call;
   }
 
   public async createStreamView(
