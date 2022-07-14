@@ -3,12 +3,11 @@
 
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
-import { stringify } from 'querystring';
 import { createTestServer } from '../../../server';
 import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
-import { MockCallAdapterState } from '../MockCallAdapterState';
-import { TestCallingState } from '../TestCallingState';
+import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type { TestCallingState } from '../TestCallingState';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../app');

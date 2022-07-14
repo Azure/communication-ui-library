@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
 import { merge } from '@fluentui/react';
-import {
+import type {
   LocalVideoStreamState,
   RemoteParticipantState,
   VideoStreamRendererViewState
 } from '@internal/calling-stateful-client';
-import { CallAdapter, CallAdapterState } from '../../../../../src';
-import { MockCallAdapterState } from '../../MockCallAdapterState';
-import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
+import type { CallAdapter, CallAdapterState } from '../../../../../src';
+import type { MockCallAdapterState } from '../../MockCallAdapterState';
+import type { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
