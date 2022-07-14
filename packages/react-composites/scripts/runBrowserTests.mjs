@@ -30,6 +30,30 @@ const PLAYWRIGHT_CONFIG = {
 
 async function main(argv) {
   const args = parseArgs(argv);
+  if (args.stress) {
+    await runStress(args);
+  } else {
+    await runAll(args);
+  }
+}
+
+async function runStress(args) {
+  let failureCount = 0;
+  for (let i = 0; i < args.stress; i++) {
+    try {
+      await runAll(args);
+    } catch (e) {
+      failureCount += 1;
+      console.log('Test failed with', e);
+    }
+  }
+  console.log(`### STRESS TEST ${args.stress - failureCount} succeeded out of ${args.stress} attempts ###`);
+  if (failureCount > 0) {
+    throw new Error('stress test failed');
+  }
+}
+
+async function runAll(args) {
   for (const composite of args.composites) {
     await runOne(args, composite, 'hermetic');
   }
@@ -131,6 +155,13 @@ function parseArgs(argv) {
         type: 'boolean',
         default: false,
         describe: 'Run only hermetic tests. By default both hermetic and live tests will be run.\n'
+      },
+      stress: {
+        alias: 's',
+        type: 'number',
+        describe:
+          'Repeat execution a number of times and report failure count. Useful for stabilizing a new / flakey test.\n' +
+          'You should to enable just one test to stress via `test.only`.\n'
       },
       update: {
         alias: 'u',
