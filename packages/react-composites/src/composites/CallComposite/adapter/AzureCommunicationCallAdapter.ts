@@ -78,7 +78,8 @@ class CallContext {
       call: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
-      isTeamsCall
+      isTeamsCall,
+      /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId: clientState.alternativeCallerId
     };
   }
 
@@ -726,7 +727,8 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  const { credential, displayName, locator, userId } = args;
+  const { credential, displayName, locator, userId, /*@conditional-compile-remove(PSTN-calls) */ alternativeCallerId } =
+    args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -765,7 +767,8 @@ export const useAzureCommunicationCallAdapter = (
           credential,
           displayName,
           locator,
-          userId
+          userId,
+          /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -775,7 +778,7 @@ export const useAzureCommunicationCallAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, locator, userId]
+    [adapterRef, afterCreateRef, alternativeCallerId, beforeDisposeRef, credential, displayName, locator, userId]
   );
 
   // Dispose any existing adapter when the component unmounts.

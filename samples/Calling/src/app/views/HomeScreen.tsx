@@ -134,13 +134,22 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
 /**
  * splits the participant Id's so we can call multiple people.
+ *
+ * will also make it raw id format for phone numbers
  */
 const parseParticipants = (participantsString: string | undefined): string[] | undefined => {
   console.log(participantsString);
   if (participantsString) {
     const participants = participantsString.split(', ');
     console.log(participants);
-    return participants;
+    const formattedParticipants = participants.map((p) => {
+      if (p.charAt(0) === '+') {
+        return '4:' + p;
+      } else {
+        return p;
+      }
+    });
+    return formattedParticipants;
   } else {
     return undefined;
   }
