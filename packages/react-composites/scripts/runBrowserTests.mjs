@@ -127,6 +127,10 @@ function parseArgs(argv) {
       [
         '$0 -- --debug',
         'Run `playwright` in debug mode with Playwright inspector. This is the recommended way to debug e2e tests.'
+      ],
+      [
+        '$0 -c call -s 10',
+        'Run CallComposite tests 10 times and report success count. Usually a single test should be enabled using `test.only`.'
       ]
     ])
     .options({
