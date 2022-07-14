@@ -318,18 +318,21 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         audioOptions,
         videoOptions
       });
-    } else if (isRoomsCall) {
-    /* @conditional-compile-remove(rooms) */
-      call = this.callAgent.join(this.locator as RoomCallLocator, {
-        audioOptions,
-        videoOptions
-      });
     } else {
       call = this.callAgent.join(this.locator as GroupCallLocator, {
         audioOptions,
         videoOptions
       });
     }
+
+    /* @conditional-compile-remove(rooms) */
+    if (isRoomsCall) {
+      call = this.callAgent.join(this.locator as RoomCallLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+
     return call;
   }
 
