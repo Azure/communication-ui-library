@@ -63,8 +63,14 @@
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
     "copyInviteLinkButtonLabel": "Copy invite link",
+    "openDialpadButtonLabel": "Dial phone number",
     "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Return to Call",
-    "returnToCallButtonAriaLabel": "Back"
+    "returnToCallButtonAriaLabel": "Back",
+    "addPeopleButtonLabel": "Add People",
+    "callButtonLabel": "Call",
+    "DialpadModalTitle": "Dial Phone Number",
+    "dialpadModalAriaLabel": "Dialpad",
+    "closeModalButtonAriaLabel": "Close Dialpad"
   }
 }

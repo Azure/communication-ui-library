@@ -1,23 +1,36 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+import {
+  concatStyleSets,
+  DefaultButton,
+  IContextualMenuItem,
+  IContextualMenuProps,
+  PrimaryButton,
+  Stack,
+  useTheme,
+  IContextualMenuStyles
+} from '@fluentui/react';
+import { Dialpad20Regular, Link20Regular, PersonAdd20Regular } from '@fluentui/react-icons';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
-  _DrawerMenuItemProps
+  _DrawerMenuItemProps,
+  _DrawerMenu as DrawerMenu,
+  _DrawerSurface
 } from '@internal/react-components';
+import { DialpadModal, DialpadModalStrings } from './components/DialpadModal';
 import copy from 'copy-to-clipboard';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonStackStyles,
   copyLinkButtonContainerStyles,
@@ -109,39 +122,155 @@ export const PeoplePaneContent = (props: {
     [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
   );
 
+  const dialpadModalStrings: DialpadModalStrings = useMemo(
+    () => ({
+      dialpadModalAriaLabel: strings.dialpadModalAriaLabel,
+      DialpadModalTitle: strings.DialpadModalTitle,
+      closeModalButtonAriaLabel: strings.closeModalButtonAriaLabel,
+      callButtonLabel: strings.callButtonLabel
+    }),
+    [strings]
+  );
+
+  // desktop add people button with context menu
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const menuStyleThemed: Partial<IContextualMenuStyles> = useMemo(
+    () => ({
+      root: {
+        borderRadius: theme.effects.roundedCorner6
+      },
+
+      title: {
+        background: 'initial',
+        paddingLeft: '.5rem',
+        fontWeight: 600,
+        fontSize: '0.875rem'
+      },
+      list: {
+        background: 'initial',
+        fontWeight: 600,
+        fontSize: '0.875rem'
+      }
+    }),
+    [theme.effects.roundedCorner6]
+  );
+
+  const defaultMenuProps = useMemo((): IContextualMenuProps => {
+    const menuProps: IContextualMenuProps = {
+      styles: menuStyleThemed,
+      items: [],
+      useTargetWidth: true,
+      calloutProps: {
+        // Disable dismiss on resize to work around a couple Fluent UI bugs
+        // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
+        //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
+        //   by the headless SDK.
+        // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
+        //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
+        //   deterministically avoid dismissal.
+        //
+        // A side effect of this workaround is that the context menu stays open when window is resized, and may
+        // get detached from original target visually. That bug is preferable to the bug when this value is not set -
+        // The Callout (frequently) gets dismissed automatically.
+        preventDismissOnResize: true
+      }
+    };
+
+    if (inviteLink) {
+      menuProps.items.push({
+        key: 'InviteLinkKey',
+        name: strings.copyInviteLinkButtonLabel,
+        title: strings.copyInviteLinkButtonLabel,
+        text: strings.copyInviteLinkButtonLabel,
+        onRenderIcon: () => <Link20Regular style={linkIconStyles} />,
+        itemProps: { styles: copyLinkButtonStylesThemed },
+        iconProps: { iconName: 'Link' },
+        onClick: () => copy(inviteLink)
+      });
+    }
+
+    menuProps.items.push({
+      key: 'DialpadKey',
+      name: strings.openDialpadButtonLabel,
+      title: strings.openDialpadButtonLabel,
+      text: strings.openDialpadButtonLabel,
+      onRenderIcon: () => <Dialpad20Regular style={linkIconStyles} />,
+      itemProps: { styles: copyLinkButtonStylesThemed },
+      iconProps: { iconName: 'Dialpad' },
+      onClick: () => setIsModalOpen(true)
+    });
+
+    return menuProps;
+  }, [strings.copyInviteLinkButtonLabel, copyLinkButtonStylesThemed, linkIconStyles, inviteLink]);
+
+  const hideModal = () => {
+    setIsModalOpen(false);
+  };
+
+  //mobile add people button with botten sheet drawers
+
+  const [addPeopleDrawerMenuItems, setAddPeopleDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+
+  const setDrawerMenuItemsForAddPeople: () => void = useMemo(() => {
+    return () => {
+      const drawerMenuItems = defaultMenuProps.items.map((contextualMenu: IContextualMenuItem) =>
+        convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setAddPeopleDrawerMenuItems([]))
+      );
+      setAddPeopleDrawerMenuItems(drawerMenuItems);
+    };
+  }, [defaultMenuProps, setAddPeopleDrawerMenuItems]);
+
   if (props.mobileView) {
     return (
       <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
         <Stack.Item grow styles={participantListContainerStyles}>
           {participantList}
         </Stack.Item>
-        {inviteLink && (
-          <Stack.Item styles={copyLinkButtonContainerStyles}>
-            <PrimaryButton
-              onClick={() => copy(inviteLink)}
-              styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              text={strings.copyInviteLinkButtonLabel}
-            />
-          </Stack.Item>
+
+        <Stack.Item styles={copyLinkButtonContainerStyles}>
+          <PrimaryButton
+            onClick={setDrawerMenuItemsForAddPeople}
+            styles={copyLinkButtonStylesThemed}
+            onRenderIcon={() => <PersonAdd20Regular />}
+            text={strings.addPeopleButtonLabel}
+          />
+        </Stack.Item>
+
+        {addPeopleDrawerMenuItems.length > 0 && (
+          <Stack styles={drawerContainerStyles}>
+            <DrawerMenu onLightDismiss={() => setAddPeopleDrawerMenuItems([])} items={addPeopleDrawerMenuItems} />
+          </Stack>
         )}
+
+        <DialpadModal isMobile strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
       </Stack>
     );
   }
+
   return (
-    <Stack tokens={peoplePaneContainerTokens}>
-      {inviteLink && (
+    <>
+      <DialpadModal isMobile={false} strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
+      <Stack tokens={peoplePaneContainerTokens}>
         <Stack styles={copyLinkButtonStackStyles}>
-          <DefaultButton
+          {/* <DefaultButton
             text={strings.copyInviteLinkButtonLabel}
             onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
             onClick={() => copy(inviteLink)}
             styles={copyLinkButtonStylesThemed}
+          /> */}
+
+          <DefaultButton
+            onRenderIcon={() => <PersonAdd20Regular />}
+            text={strings.addPeopleButtonLabel}
+            menuProps={defaultMenuProps}
+            styles={copyLinkButtonStylesThemed}
           />
         </Stack>
-      )}
-      {participantList}
-    </Stack>
+
+        {participantList}
+      </Stack>
+    </>
   );
 };
 
