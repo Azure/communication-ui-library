@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapterNext, test } from './fixture';
+import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
-  test('Failure to start video should be shown on error bar', async ({ page, serverUrl, initialState }) => {
+  test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {
       'Call.startVideo': {
         timestamp: new Date(),
@@ -25,7 +26,8 @@ test.describe('Error bar tests', async () => {
     );
   });
 
-  test('Multiple errors should be shown on error bar', async ({ page, serverUrl, initialState }) => {
+  test('Multiple errors should be shown on error bar', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {
       'Call.unmute': {
         timestamp: new Date(),

@@ -58,7 +58,6 @@ export const buildUrlWithMockAdapterNext = (
 export interface TestFixture {
   serverUrl: string;
   page: Page;
-  initialState: MockCallAdapterState;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -69,8 +68,8 @@ const usePage = async ({ serverUrl, browser }, use) => {
   await use(page);
 };
 
-function useMockCallAdapterState({}, use) {
-  const state: MockCallAdapterState = {
+export function defaultMockCallAdapterState(): MockCallAdapterState {
+  return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
     page: 'call',
@@ -110,7 +109,6 @@ function useMockCallAdapterState({}, use) {
     isTeamsCall: false,
     latestErrors: {}
   };
-  use(state);
 }
 
 /**
@@ -124,8 +122,5 @@ export const test = base.extend<TestFixture>({
   serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'test' }],
 
   /** @returns An empty browser page. Tests should load the app via page.goto(). */
-  page: [usePage, { scope: 'test' }],
-
-  /** @returns A default {@link MockCallAdapterState}. Tests should modify this state as needed. */
-  initialState: [useMockCallAdapterState, { scope: 'test' }]
+  page: [usePage, { scope: 'test' }]
 });
