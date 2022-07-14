@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapter, buildUrlWithMockAdapterNext, test } from './fixture';
+import { buildUrlWithMockAdapterNext, test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
@@ -25,27 +25,24 @@ test.describe('Error bar tests', async () => {
     );
   });
 
-  test('Multiple errors should be shown on error bar', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        latestErrors: {
-          'Call.unmute': {
-            timestamp: new Date(),
-            name: 'Failure to unmute',
-            message: 'Could not unmute',
-            target: 'Call.unmute',
-            innerError: new Error('Inner error of failure to unmute')
-          },
-          'Call.stopVideo': {
-            timestamp: new Date(),
-            name: 'Failure to stop video',
-            message: 'Could not stop video',
-            target: 'Call.stopVideo',
-            innerError: new Error('Inner error of failure to stop video')
-          }
-        }
-      })
-    );
+  test('Multiple errors should be shown on error bar', async ({ page, serverUrl, initialState }) => {
+    initialState.latestErrors = {
+      'Call.unmute': {
+        timestamp: new Date(),
+        name: 'Failure to unmute',
+        message: 'Could not unmute',
+        target: 'Call.unmute',
+        innerError: new Error('Inner error of failure to unmute')
+      },
+      'Call.stopVideo': {
+        timestamp: new Date(),
+        name: 'Failure to stop video',
+        message: 'Could not stop video',
+        target: 'Call.stopVideo',
+        innerError: new Error('Inner error of failure to stop video')
+      }
+    };
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('multiple-errors-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
