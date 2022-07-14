@@ -10,7 +10,9 @@ import { dataUiId, stableScreenshot, stubReadReceiptsToolTip, waitForSelector } 
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
-  test('participant can receive message and send readReceipt to message sender', async ({ serverUrl, page }) => {
+  // FIXME: This test is very flakey. It fails >25% of the times post-submit (on `main`).
+  // TODO(https://skype.visualstudio.com/SPOOL/_workitems/edit/2925017): Stabilize and re-enable.
+  test.skip('participant can receive message and send readReceipt to message sender', async ({ serverUrl, page }) => {
     const messageReader = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -34,7 +36,9 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
-  test('participant can receive read receipts and readers should show in contextual menu', async ({
+  // FIXME: This test is very flakey. It fails >25% of the times post-submit (on `main`).
+  // TODO(https://skype.visualstudio.com/SPOOL/_workitems/edit/2925017): Stabilize and re-enable.
+  test.skip('participant can receive read receipts and readers should show in contextual menu', async ({
     serverUrl,
     page
   }) => {
