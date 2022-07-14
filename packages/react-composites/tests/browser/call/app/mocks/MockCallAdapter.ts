@@ -56,7 +56,7 @@ export class MockCallAdapter implements CallAdapter {
 
   state: CallAdapterState;
 
-  addParticipant(): void {
+  addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
   onStateChange(): void {
@@ -118,6 +118,12 @@ export class MockCallAdapter implements CallAdapter {
   }
   async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return [];
+  }
+  holdCall(): Promise<void> {
+    throw Error('holdCall not implemented');
+  }
+  resumeCall(): Promise<void> {
+    throw Error('resumeCall not implemented');
   }
   setCamera(): Promise<void> {
     throw Error('setCamera not implemented');

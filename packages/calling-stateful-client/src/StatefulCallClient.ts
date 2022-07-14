@@ -2,38 +2,15 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallAgentOptions,
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager
-} from '@azure/communication-calling';
+import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
-import {
-  CommunicationIdentifier,
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  getIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
-
-/**
- * Options for creating the stateful client's call agent. extends {@link CallAgentOptions}
- *
- * @public
- */
-export interface StatefulCallAgentOptions extends CallAgentOptions {
-  /**
-   * Phone number required for making outbound PSTN calls.
-   */
-  alternativeCallerId?: string;
-}
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -162,10 +139,7 @@ export interface StatefulCallClient extends CallClient {
    * @param options - The CallAgentOptions for additional options like display name.
    * @public
    */
-  createCallAgent(
-    tokenCredential: CommunicationTokenCredential,
-    options?: StatefulCallAgentOptions
-  ): Promise<DeclarativeCallAgent>;
+  createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
 }
 
 /**
@@ -201,18 +175,14 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     switch (prop) {
       case 'createCallAgent': {
         return this._context.withAsyncErrorTeedToState(
-          async (
-            tokenCredential: CommunicationTokenCredential,
-            options?: StatefulCallAgentOptions
-          ): Promise<DeclarativeCallAgent> => {
+          async (...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent> => {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
             // callAgent if the createCallAgent succeeds.
-            const callAgent = await target.createCallAgent(tokenCredential, options);
+            const callAgent = await target.createCallAgent(...args);
             this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
             this._context.setCallAgent({
-              displayName: this._callAgent.displayName,
-              /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId: options?.alternativeCallerId
+              displayName: this._callAgent.displayName
             });
             return this._callAgent;
           },
@@ -258,6 +228,12 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId: CommunicationUserIdentifier;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * ACS phone number required to make outbound PSTN calls. This is provided for developer convenience to easily access the alternativeCallerId from the
+   * state. It is not used by StatefulCallClient.
+   */
+  alternativeCallerId?: string;
 };
 
 /**
@@ -298,7 +274,11 @@ export const createStatefulCallClient = (
   callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
-    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
+    new CallContext(
+      getIdentifierKind(args.userId),
+      options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(PSTN-calls) */ args.alternativeCallerId
+    ),
     new InternalCallContext()
   );
 };

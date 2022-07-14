@@ -37,11 +37,6 @@ export interface CallAgentState {
    * Proxy of {@link @azure/communication-calling#CallAgent.displayName}.
    */
   displayName?: string;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * Stores an ACS aquired phone number for making PSTN calls.
-   */
-  alternativeCallerId?: string;
 }
 
 /**
@@ -416,6 +411,11 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Stores an ACS aquired phone number for making PSTN calls.
+   */
+  alternativeCallerId?: string;
 }
 
 /**

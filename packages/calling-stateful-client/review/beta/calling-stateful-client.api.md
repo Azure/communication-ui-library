@@ -6,7 +6,6 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallAgentOptions } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
@@ -15,7 +14,6 @@ import { CallerInfo } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
@@ -37,12 +35,12 @@ import { VideoStreamRendererView } from '@azure/communication-calling';
 
 // @public
 export interface CallAgentState {
-    alternativeCallerId?: string;
     displayName?: string;
 }
 
 // @public
 export interface CallClientState {
+    alternativeCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -195,13 +193,8 @@ export interface RemoteVideoStreamState {
 }
 
 // @public
-export interface StatefulCallAgentOptions extends CallAgentOptions {
-    alternativeCallerId?: string;
-}
-
-// @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(tokenCredential: CommunicationTokenCredential, options?: StatefulCallAgentOptions): Promise<DeclarativeCallAgent>;
+    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
@@ -212,6 +205,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier;
+    alternativeCallerId?: string;
 };
 
 // @public
