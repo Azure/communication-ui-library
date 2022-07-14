@@ -299,14 +299,14 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      let call = this._joinCall(audioOptions, videoOptions);
+      const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
       return call;
     });
   }
 
-  private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions) {
+  private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
     const isTeamsMeeting = !('groupId' in this.locator);
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = !('roomId' in this.locator);
