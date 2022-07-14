@@ -96,6 +96,10 @@ export interface CallWithChatCompositeStrings {
    */
   copyInviteLinkButtonLabel: string;
   /**
+   * Label for button to open dialpad
+   */
+  openDialpadButtonLabel: string;
+  /**
    * Label for SidePaneHeader dismiss button
    */
   dismissSidePaneButtonLabel?: string;
@@ -107,4 +111,24 @@ export interface CallWithChatCompositeStrings {
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
+  /**
+   * Label for add people dropdown
+   */
+  addPeopleButtonLabel: string;
+  /**
+   * Label for button to start a call
+   */
+  callButtonLabel: string;
+  /**
+   * Title for dialpad Modal
+   */
+  DialpadModalTitle: string;
+  /**
+   * Aria Label for dialpad Modal
+   */
+  dialpadModalAriaLabel: string;
+  /**
+   * Aria Label for dialpad Modal close button
+   */
+  closeModalButtonAriaLabel: string;
 }

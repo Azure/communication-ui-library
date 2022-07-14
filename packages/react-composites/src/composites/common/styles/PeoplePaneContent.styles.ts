@@ -52,7 +52,7 @@ export const copyLinkButtonStyles: IButtonStyles = {
 /**
  * @private
  */
-export const linkIconStyles = { marginRight: '0.5rem' };
+export const linkIconStyles = { marginRight: '0.5rem', lineHeight: '0' };
 
 /**
  * @private

@@ -73,7 +73,13 @@
     "peoplePaneTitle": "People",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
+    "openDialpadButtonLabel": "Dial phone number",
     "returnToCallButtonAriaDescription": "Return to Call",
-    "returnToCallButtonAriaLabel": "Back"
+    "returnToCallButtonAriaLabel": "Back",
+    "addPeopleButtonLabel": "Add People",
+    "callButtonLabel": "Call",
+    "DialpadModalTitle": "Dial Phone Number",
+    "dialpadModalAriaLabel": "Dialpad",
+    "closeModalButtonAriaLabel": "Close Dialpad"
   }
 }

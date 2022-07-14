@@ -158,7 +158,7 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number"
+    "placeholderText": "Enter phone number"
   },
   "HoldButton": {
     "onLabel": "Resume",
