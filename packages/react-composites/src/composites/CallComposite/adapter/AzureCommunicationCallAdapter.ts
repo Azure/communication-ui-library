@@ -311,29 +311,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = !('roomId' in this.locator);
 
-    let call;
-
     if (isTeamsMeeting) {
-      call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-        audioOptions,
-        videoOptions
-      });
-    } else {
-      call = this.callAgent.join(this.locator as GroupCallLocator, {
+      return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
         audioOptions,
         videoOptions
       });
     }
-
     /* @conditional-compile-remove(rooms) */
     if (isRoomsCall) {
-      call = this.callAgent.join(this.locator as RoomCallLocator, {
+      return this.callAgent.join(this.locator as RoomCallLocator, {
         audioOptions,
         videoOptions
       });
     }
-
-    return call;
+    return this.callAgent.join(this.locator as GroupCallLocator, {
+      audioOptions,
+      videoOptions
+    });
   }
 
   public async createStreamView(
