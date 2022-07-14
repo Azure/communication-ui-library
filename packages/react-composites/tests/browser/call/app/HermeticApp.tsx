@@ -9,6 +9,7 @@ import { QueryArgs } from './QueryArgs';
 import { TestCallingState } from '../TestCallingState';
 import { BaseApp } from './BaseApp';
 
+/** @internal */
 export function HermeticApp(props: { queryArgs: HermeticAppQueryArgs }): JSX.Element {
   const { queryArgs } = props;
 
@@ -23,10 +24,12 @@ export function HermeticApp(props: { queryArgs: HermeticAppQueryArgs }): JSX.Ele
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }
 
+/** @internal */
 export interface HermeticAppQueryArgs extends QueryArgs {
   mockCallState: TestCallingState;
 }
 
+/** @internal */
 export function shouldLoadHermeticApp(queryArgs: QueryArgs): queryArgs is HermeticAppQueryArgs {
   return !!queryArgs.mockCallState;
 }
