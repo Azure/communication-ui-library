@@ -95,17 +95,23 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
-          setOutBoundCallParticipants={setParticipants}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
+            setParticipants(callDetails.outboundParticipants);
             setAlternativeCallerId(callDetails.alternativeCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
-            const callLocator =
-              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-            setCallLocator(callLocator);
+            console.log(callDetails);
+            if (callDetails.outboundParticipants) {
+              // set call participants and do not update the window URL since there is not a joinable link
+              setCallLocator({ participantIDs: callDetails.outboundParticipants });
+            } else {
+              const callLocator =
+                callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+              setCallLocator(callLocator);
+            }
 
             // Update window URL to have a joinable link
-            if (!joiningExistingCall) {
+            if (!joiningExistingCall && !callDetails.outboundParticipants) {
               const joinParam = isTeamsCall
                 ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
                 : '?groupId=' + (callLocator as GroupCallLocator).groupId;

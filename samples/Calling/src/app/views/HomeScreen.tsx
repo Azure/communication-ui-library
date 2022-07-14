@@ -27,10 +27,10 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     teamsLink?: TeamsMeetingLinkLocator;
+    outboundParticipants?: string[];
     alternativeCallerId?: string;
   }): void;
   joiningExistingCall: boolean;
-  setOutBoundCallParticipants(participants: string[]): void;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
@@ -57,6 +57,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const outBoundCallChosen: boolean = chosenCallOption.key === 'outboundCall';
   const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
+  console.log(outboundParticipants);
   return (
     <Stack
       horizontal
@@ -94,8 +95,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {outBoundCallChosen && (
               <Stack>
                 <TextField
-                  placeholder={'Phone number or ACS userId to call'}
-                  onChange={(_, newValue) => newValue && setOutboundParticipants}
+                  placeholder={'Phone numbers or ACS userIds to call'}
+                  onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                 />
                 <TextField
                   placeholder={'Enter your ACS aquired phone number'}
@@ -112,10 +113,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, teamsLink, alternativeCallerId });
-              }
-              if (outboundParticipants) {
-                props.setOutBoundCallParticipants(parseParticipants(outboundParticipants));
+                const participantsToCall = parseParticipants(outboundParticipants);
+                props.startCallHandler({
+                  displayName,
+                  teamsLink,
+                  outboundParticipants: participantsToCall,
+                  alternativeCallerId
+                });
               }
             }}
           />
@@ -131,6 +135,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 /**
  * splits the participant Id's so we can call multiple people.
  */
-const parseParticipants = (participantsString: string): string[] => {
-  return participantsString.split(', ');
+const parseParticipants = (participantsString: string | undefined): string[] | undefined => {
+  console.log(participantsString);
+  if (participantsString) {
+    const participants = participantsString.split(', ');
+    console.log(participants);
+    return participants;
+  } else {
+    return undefined;
+  }
 };
