@@ -10,7 +10,6 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallAgentOptions } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
@@ -285,7 +284,6 @@ export interface CallAgentProviderProps {
 
 // @public
 export interface CallAgentState {
-    alternativeCallerId?: string;
     displayName?: string;
 }
 
@@ -308,6 +306,7 @@ export interface CallClientProviderProps {
 
 // @public
 export interface CallClientState {
+    alternativeCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -2531,13 +2530,8 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 // @public
-export interface StatefulCallAgentOptions extends CallAgentOptions {
-    alternativeCallerId?: string;
-}
-
-// @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(tokenCredential: CommunicationTokenCredential, options?: StatefulCallAgentOptions): Promise<DeclarativeCallAgent>;
+    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
@@ -2548,6 +2542,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier;
+    alternativeCallerId?: string;
 };
 
 // @public
