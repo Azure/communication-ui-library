@@ -8,6 +8,7 @@ import {
   VideoStreamRendererViewState
 } from '@internal/calling-stateful-client';
 import { CallAdapter, CallAdapterState } from '../../../../../src';
+import { MockCallAdapterState } from '../../MockCallAdapterState';
 import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
@@ -16,42 +17,18 @@ import { TestCallingState, TestRemoteParticipant } from '../../TestCallingState'
  * MockCallAdapter is intended to talk snapshot based only on the state of a CallAdapter.
  */
 export class MockCallAdapter implements CallAdapter {
-  constructor(testState?: TestCallingState) {
-    if (!testState) {
-      this.state = defaultCallAdapterState;
+  /**
+   * `testState` is deprecated. Use `initialState` instead.
+   */
+  constructor(testState?: TestCallingState, initialState?: MockCallAdapterState) {
+    if (testState && initialState) {
+      throw new Error('At most one of `testState` or `initialState` must be set');
+    }
+    if (initialState) {
+      this.state = populateViewTargets(initialState);
       return;
     }
-
-    const initialState = defaultCallAdapterState;
-
-    if (initialState.call) {
-      if (testState?.remoteParticipants) {
-        const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-        Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-        initialState.call.remoteParticipants = remoteParticipants;
-      }
-      if (testState?.isScreenSharing) {
-        initialState.call.isScreenSharingOn = true;
-        const screenShareStream: LocalVideoStreamState = createLocalScreenShareStream();
-        initialState.call.localVideoStreams = [screenShareStream];
-      }
-      if (testState?.diagnostics) {
-        initialState.call.diagnostics = {
-          network: { latest: { ...initialState.call.diagnostics.network.latest, ...testState.diagnostics?.network } },
-          media: { latest: { ...initialState.call.diagnostics.media.latest, ...testState.diagnostics?.media } }
-        };
-      }
-    }
-    if (testState.page) {
-      initialState.page = testState.page;
-    }
-    if (testState.latestErrors) {
-      initialState.latestErrors = testState.latestErrors;
-    }
-
-    initialState.devices = merge(initialState.devices, testState.devices);
-
-    this.state = initialState;
+    this.state = convertTestStateToCallAdapterState(testState);
   }
 
   state: CallAdapterState;
@@ -140,6 +117,76 @@ export class MockCallAdapter implements CallAdapter {
   off(): void {
     throw Error('off not implemented');
   }
+}
+
+function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
+  const call = state.call;
+  if (!call) {
+    return state;
+  }
+  call.localVideoStreams.forEach((s) => {
+    if (s.dummyView) {
+      s.view = {
+        ...s.dummyView,
+        target: createMockHTMLElement()
+      };
+    }
+  });
+  for (const p of Object.values(call.remoteParticipants)) {
+    for (const s of Object.values(p.videoStreams)) {
+      if (s.dummyView) {
+        s.view = {
+          ...s.dummyView,
+          target: createMockHTMLElement(p.displayName)
+        };
+      }
+    }
+  }
+  for (const p of Object.values(call.remoteParticipantsEnded)) {
+    for (const s of Object.values(p.videoStreams)) {
+      if (s.dummyView) {
+        s.view = {
+          ...s.dummyView,
+          target: createMockHTMLElement(p.displayName)
+        };
+      }
+    }
+  }
+  return state;
+}
+
+function convertTestStateToCallAdapterState(testState?: TestCallingState): CallAdapterState {
+  const initialState = defaultCallAdapterState;
+  if (!testState) {
+    return initialState;
+  }
+
+  if (initialState.call) {
+    if (testState?.remoteParticipants) {
+      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
+      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
+      initialState.call.remoteParticipants = remoteParticipants;
+    }
+    if (testState?.isScreenSharing) {
+      initialState.call.isScreenSharingOn = true;
+      const screenShareStream: LocalVideoStreamState = createLocalScreenShareStream();
+      initialState.call.localVideoStreams = [screenShareStream];
+    }
+    if (testState?.diagnostics) {
+      initialState.call.diagnostics = {
+        network: { latest: { ...initialState.call.diagnostics.network.latest, ...testState.diagnostics?.network } },
+        media: { latest: { ...initialState.call.diagnostics.media.latest, ...testState.diagnostics?.media } }
+      };
+    }
+  }
+  if (testState.page) {
+    initialState.page = testState.page;
+  }
+  if (testState.latestErrors) {
+    initialState.latestErrors = testState.latestErrors;
+  }
+  initialState.devices = merge(initialState.devices, testState.devices);
+  return initialState;
 }
 
 /**
