@@ -89,8 +89,9 @@ function parseArgs(argv) {
   const args = yargs(argv.slice(2))
     .usage(
       '$0 [options]',
-      'Use this script to run end to end tests for this packlet.' +
-        '\nThis script invokes playwright with packlet specific configuration & flags.'
+      'Use this script to run end-to-end tests for this packlet.' +
+        '\nThis script invokes playwright with packlet specific configuration & flags.' +
+        '\n\nAll arguments after `--` are forwarded to `playwright`.'
     )
     .example([
       ['$0 -l', 'Run only hermetic tests. Most useful for local development cycle.'],
@@ -98,6 +99,10 @@ function parseArgs(argv) {
       [
         '$0 -b stable',
         'Run tests for stable flavor build. You can also set the COMMUNICATION_REACT_FLAVOR as is done by package.json invocations.'
+      ],
+      [
+        '$0 -- --debug',
+        'Run `playwright` in debug mode with Playwright inspector. This is the recommended way to debug e2e tests.'
       ]
     ])
     .options({
@@ -131,7 +136,7 @@ function parseArgs(argv) {
         alias: 'u',
         type: 'boolean',
         default: false,
-        describe: 'Update the test snapshots. In this mode, snapshot conflicts to not cause test failures.\n'
+        describe: 'Update the test snapshots. In this mode, snapshot conflicts do not cause test failures.\n'
       }
     })
     .parseSync();
