@@ -2456,6 +2456,7 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
+    disabled?: boolean;
 };
 
 // @public

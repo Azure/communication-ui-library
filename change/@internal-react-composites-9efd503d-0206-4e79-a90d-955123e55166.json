@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixes issue where you can start a call if you unplug it on the configuration screen.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
