@@ -24,8 +24,13 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: {
+    displayName: string;
+    teamsLink?: TeamsMeetingLinkLocator;
+    alternativeCallerId?: string;
+  }): void;
   joiningExistingCall: boolean;
+  setOutBoundCallParticipants(participants: string[]): void;
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
@@ -35,7 +40,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
-    { key: 'TeamsMeeting', text: 'Join a Teams meeting' }
+    { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
+    { key: 'outboundCall', text: 'Start a PSTN or 1:N ACS call' }
   ];
 
   // Get display name from local storage if available
@@ -44,8 +50,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [alternativeCallerId, setAlternativeCallerId] = useState<string | undefined>();
+  const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
+  const outBoundCallChosen: boolean = chosenCallOption.key === 'outboundCall';
   const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
   return (
@@ -82,6 +91,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
               />
             )}
+            {outBoundCallChosen && (
+              <Stack>
+                <TextField
+                  placeholder={'Phone number or ACS userId to call'}
+                  onChange={(_, newValue) => newValue && setOutboundParticipants}
+                />
+                <TextField
+                  placeholder={'Enter your ACS aquired phone number'}
+                  onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
+                />
+              </Stack>
+            )}
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
           <PrimaryButton
@@ -91,7 +112,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, teamsLink });
+                props.startCallHandler({ displayName, teamsLink, alternativeCallerId });
+              }
+              if (outboundParticipants) {
+                props.setOutBoundCallParticipants(parseParticipants(outboundParticipants));
               }
             }}
           />
@@ -102,4 +126,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+/**
+ * splits the participant Id's so we can call multiple people.
+ */
+const parseParticipants = (participantsString: string): string[] => {
+  return participantsString.split(', ');
 };

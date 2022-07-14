@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
+import { CallAdapterLocator } from '@internal/react-composites';
 import React, { useEffect, useState } from 'react';
 import {
   buildTime,
@@ -47,8 +48,11 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
+
+  const [participants, setParticipants] = useState<string[] | undefined>();
+  const [alternativeCallerId, setAlternativeCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -91,8 +95,10 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
+          setOutBoundCallParticipants={setParticipants}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
+            setAlternativeCallerId(callDetails.alternativeCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
             const callLocator =
               callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
@@ -138,6 +144,7 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
+          alternativeCallerId={alternativeCallerId}
           onCallEnded={() => setPage('endCall')}
         />
       );
