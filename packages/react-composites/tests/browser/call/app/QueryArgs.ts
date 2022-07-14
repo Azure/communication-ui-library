@@ -28,6 +28,7 @@ export function parseQueryArgs(): QueryArgs {
   const params = Object.fromEntries(urlSearchParams.entries());
   return {
     mockCallState: params.mockCallState ? JSON.parse(params.mockCallState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
     useFrLocale: Boolean(params.useFrLocale),
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),

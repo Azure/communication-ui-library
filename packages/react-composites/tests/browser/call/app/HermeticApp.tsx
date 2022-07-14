@@ -15,6 +15,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
 
   useEffect(() => {
     (async (): Promise<void> => {
+      console.log('Creating mock adapter with args', queryArgs.mockCallState, queryArgs.mockCallAdapterState);
       setCallAdapter(new MockCallAdapter(queryArgs.mockCallState, queryArgs.mockCallAdapterState));
     })();
   }, [queryArgs.mockCallState]);
