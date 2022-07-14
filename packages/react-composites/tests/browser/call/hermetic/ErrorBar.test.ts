@@ -1,26 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapter, test } from './fixture';
+import { buildUrlWithMockAdapter, buildUrlWithMockAdapterNext, test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
-  test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        latestErrors: {
-          'Call.startVideo': {
-            timestamp: new Date(),
-            name: 'Failure to start video',
-            message: 'Could not start video',
-            target: 'Call.startVideo',
-            innerError: new Error('Inner error of failure to start video')
-          }
-        }
-      })
-    );
+  test('Failure to start video should be shown on error bar', async ({ page, serverUrl, initialState }) => {
+    initialState.latestErrors = {
+      'Call.startVideo': {
+        timestamp: new Date(),
+        name: 'Failure to start video',
+        message: 'Could not start video',
+        target: 'Call.startVideo',
+        innerError: new Error('Inner error of failure to start video')
+      }
+    };
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'failure-to-start-video-on-error-bar.png'

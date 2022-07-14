@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { MockCallAdapterState } from '../MockCallAdapterState';
 import { TestCallingState } from '../TestCallingState';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.
+  // Deprecated: Use `mockCallAdapterState` instead.
   mockCallState?: TestCallingState;
+  // Defined only for hermetic tests.
+  mockCallAdapterState?: MockCallAdapterState;
   useFrLocale: boolean;
   showCallDescription: boolean;
   injectParticipantMenuItems: boolean;
