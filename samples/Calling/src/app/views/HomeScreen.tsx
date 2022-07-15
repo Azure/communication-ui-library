@@ -15,7 +15,8 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle
+  buttonStyle,
+  outboundtextField
 } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
@@ -95,10 +96,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {outBoundCallChosen && (
               <Stack>
                 <TextField
+                  className={outboundtextField}
+                  label={'Participants'}
                   placeholder={'Phone numbers or ACS userIds to call'}
                   onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                 />
                 <TextField
+                  className={outboundtextField}
+                  label={'ACS phone number for PSTN'}
                   placeholder={'Enter your ACS aquired phone number'}
                   onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
                 />
