@@ -4,6 +4,7 @@
 
 import child_process from 'child_process';
 import path from 'path';
+import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
 
@@ -26,6 +27,11 @@ const TESTS = {
 const PLAYWRIGHT_CONFIG = {
   hermetic: path.join(PACKLET_ROOT, 'playwright.config.hermetic.ts'),
   live: path.join(PACKLET_ROOT, 'playwright.config.live.ts')
+};
+const PLAYWRIGHT_PROJECT = {
+  desktop: 'Desktop Chrome',
+  'mobile-portrait': 'Mobile Android Portrait',
+  'mobile-landscape': 'Mobile Android Landscape'
 };
 
 async function main(argv) {
@@ -79,9 +85,14 @@ async function runOne(args, composite, hermeticity) {
   if (args.update) {
     cmdArgs.push('--update-snapshots');
   }
+  if (args.projects) {
+    for (const project of args.projects) {
+      cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
+    }
+  }
   cmdArgs.push(...args['_']);
 
-  const cmd = cmdArgs.join(' ');
+  const cmd = quote(cmdArgs);
   console.log(`Running: ${cmd}`);
   if (!args.dryRun) {
     await exec(cmd, env, 'playwright');
@@ -129,8 +140,8 @@ function parseArgs(argv) {
         'Run `playwright` in debug mode with Playwright inspector. This is the recommended way to debug e2e tests.'
       ],
       [
-        '$0 -c call -s 10',
-        'Run CallComposite tests 10 times and report success count. Usually a single test should be enabled using `test.only`.'
+        '$0 -c call -p desktop -s 10',
+        'Run CallComposite tests on Desktop Chrome 10 times and report success count. Usually a single test should be enabled using `test.only`.'
       ]
     ])
     .options({
@@ -159,6 +170,12 @@ function parseArgs(argv) {
         type: 'boolean',
         default: false,
         describe: 'Run only hermetic tests. By default both hermetic and live tests will be run.\n'
+      },
+      projects: {
+        alias: 'p',
+        type: 'array',
+        choices: ['desktop', 'mobile-portrait', 'mobile-landscape'],
+        description: 'Choose playwright projects to run. By default, all projects will be run.\n'
       },
       stress: {
         alias: 's',

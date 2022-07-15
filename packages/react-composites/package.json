@@ -151,6 +151,7 @@
     "regenerator-runtime": "^0.13.7",
     "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
+    "shell-quote": "1.7.3",
     "source-map-explorer": "^2.5.0",
     "style-loader": "~2.0.0",
     "styled-components": "~5.2.1",

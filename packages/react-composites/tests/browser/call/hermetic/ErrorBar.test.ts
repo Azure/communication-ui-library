@@ -7,7 +7,7 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
-  test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
+  test.only('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         latestErrors: {
