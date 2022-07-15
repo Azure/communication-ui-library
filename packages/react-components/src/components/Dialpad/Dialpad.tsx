@@ -263,7 +263,7 @@ const DialpadContainer = (props: {
         onRenderSuffix={(): JSX.Element => (
           <>
             {textValue.replace(/[^\d*#+]/g, '').length !== 0 && (
-              <IconButton aria-Label={props.deleteButtonAriaLabel} onClick={deleteNumbers} style={{ color: 'black' }}>
+              <IconButton ariaLabel={props.deleteButtonAriaLabel} onClick={deleteNumbers} style={{ color: 'black' }}>
                 <Backspace20Regular />
               </IconButton>
             )}
