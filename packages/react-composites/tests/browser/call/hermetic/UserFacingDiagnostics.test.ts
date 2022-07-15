@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
-import { buildUrlWithMockAdapter, buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
+import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
 import { DiagnosticQuality } from '../TestCallingState';
 import { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MockCallAdapterState } from '../MockCallAdapterState';

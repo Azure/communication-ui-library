@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../../common/utils';
-import { buildUrlWithMockAdapter, buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
+import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
 
 test.describe('Page state tests', async () => {
   test('Page when waiting in lobby', async ({ page, serverUrl }) => {
