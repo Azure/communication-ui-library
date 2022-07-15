@@ -3,12 +3,10 @@
 
 import { expect } from '@playwright/test';
 import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../../common/utils';
-import { test } from '../fixture';
-import { buildUrlWithMockAdapter } from '../utils';
+import { buildUrlWithMockAdapter, test } from './fixture';
 
 test.describe('Page state tests', async () => {
-  test('Page when waiting in lobby', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Page when waiting in lobby', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         page: 'lobby'
@@ -17,8 +15,7 @@ test.describe('Page state tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('lobby-page.png');
   });
-  test('Page when access is denied', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Page when access is denied', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         page: 'accessDeniedTeamsMeeting'
@@ -27,8 +24,7 @@ test.describe('Page state tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('access-denied-page.png');
   });
-  test('Page when join call failed due to network', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Page when join call failed due to network', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         page: 'joinCallFailedDueToNoNetwork'
@@ -39,8 +35,7 @@ test.describe('Page state tests', async () => {
       'call-failed-due-to-network-page.png'
     );
   });
-  test('Page when local participant left call', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Page when local participant left call', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         page: 'leftCall'
@@ -49,8 +44,7 @@ test.describe('Page state tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('left-call-page.png');
   });
-  test('Page when local participant is removed from call', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Page when local participant is removed from call', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         page: 'removedFromCall'

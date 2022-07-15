@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TEST_PARTICIPANTS } from '../common/constants';
-import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../common/fixtureHelpers';
-import { WorkerFixture, CallUserType } from '../common/fixtureTypes';
-import { createTestServer } from '../../server';
+import { TEST_PARTICIPANTS } from '../../common/constants';
+import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../../common/fixtureHelpers';
+import { WorkerFixture, CallUserType } from '../../common/fixtureTypes';
+import { createTestServer } from '../../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, 'app');
+const APP_DIR = path.join(__dirname, '..', 'app');
 
 type CallWorkerFixture = WorkerFixture<CallUserType>;
 

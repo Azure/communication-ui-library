@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from '../fixture';
+import { test } from './fixture';
 import { waitForCallCompositeToLoad, loadCallPage, buildUrl, stableScreenshot } from '../../common/utils';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
