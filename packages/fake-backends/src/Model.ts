@@ -13,7 +13,7 @@ export class Model {
 
   constructor(private networkEventModel: NetworkEventModel) {}
 
-  public addThread(thread: Thread) {
+  public addThread(thread: Thread): void {
     this.threadMap[thread.id] = { thread, eventEmitter: new ThreadEventEmitter(this.networkEventModel) };
   }
 
