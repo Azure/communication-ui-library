@@ -259,13 +259,6 @@ export const PeoplePaneContent = (props: {
       <DialpadModal isMobile={false} strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
       <Stack tokens={peoplePaneContainerTokens}>
         <Stack styles={copyLinkButtonStackStyles}>
-          {/* <DefaultButton
-            text={strings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-            onClick={() => copy(inviteLink)}
-            styles={copyLinkButtonStylesThemed}
-          /> */}
-
           <DefaultButton
             onRenderIcon={() => <PersonAdd20Regular />}
             text={strings.addPeopleButtonLabel}
