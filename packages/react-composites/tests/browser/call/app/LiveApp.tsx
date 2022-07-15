@@ -13,6 +13,7 @@ import { BaseApp } from './BaseApp';
 
 initializeIconsForUITests();
 
+/** @internal */
 export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const { queryArgs } = props;
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
