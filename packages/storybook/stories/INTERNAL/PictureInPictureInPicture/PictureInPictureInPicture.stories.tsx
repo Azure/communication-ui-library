@@ -9,6 +9,7 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl, orientationArg } from '../../controlsUtils';
 import { useVideoStreams } from '../../utils';
+import { PictureInPictureInPictureWrapper } from './PictureInPictureInPictureWrapper';
 
 const PictureInPictureInPictureStory = (args): JSX.Element => {
   const videoStreams = useVideoStreams(2);
@@ -16,11 +17,11 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
   const secondaryTileVideoStreamElement = args.secondaryTileVideoAvailable ? videoStreams[1] : null;
 
   return (
-    <PictureInPictureInPictureComponent
+    <PictureInPictureInPictureWrapper
       onClick={() => alert('PictureInPictureInPicture clicked')}
       primaryTile={{
         orientation: args.primaryTileOrientation,
-        content: (
+        getTile: () => (
           <VideoTile
             displayName={args.primaryTileParticipantName}
             renderElement={
@@ -34,7 +35,7 @@ const PictureInPictureInPictureStory = (args): JSX.Element => {
       }}
       secondaryTile={{
         orientation: args.secondaryTileOrientation,
-        content: (
+        getTile: () => (
           <VideoTile
             displayName={args.secondaryTileParticipantName}
             renderElement={
