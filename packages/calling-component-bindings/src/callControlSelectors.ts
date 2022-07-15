@@ -99,6 +99,8 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  disabled?: boolean;
 };
 
 /**
@@ -107,10 +109,12 @@ export type ScreenShareButtonSelector = (
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn],
-  (isScreenSharingOn) => {
+  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
+  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
     return {
-      checked: isScreenSharingOn
+      checked: isScreenSharingOn,
+      /* @conditional-compile-remove(PSTN-calls) */
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
     };
   }
 );
