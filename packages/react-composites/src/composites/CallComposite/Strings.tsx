@@ -173,4 +173,16 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
+  /**
+   * Side pane People section subheader.
+   */
+  peoplePaneSubTitle: string;
+  /**
+   * Label for button to copy invite link
+   */
+  copyInviteLinkButtonLabel: string;
+  /**
+   * Label for menu item to remove participant
+   */
+  removeMenuLabel: string;
 }

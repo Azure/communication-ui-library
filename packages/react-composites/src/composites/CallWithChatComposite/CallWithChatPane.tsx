@@ -22,7 +22,7 @@ import {
 import { SidePaneHeader } from './SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
-import { PeoplePaneContent } from './PeoplePaneContent';
+import { PeoplePaneContent } from '../common/PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from './TabHeader';
 /* @conditional-compile-remove(file-sharing) */

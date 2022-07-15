@@ -10,7 +10,7 @@ import {
 } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
-import { CallWithChatCompositeStrings } from '.';
+import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
@@ -24,6 +24,7 @@ import {
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/PeoplePaneContent.styles';
+import { CallCompositeStrings } from '../CallComposite';
 
 /**
  * @private
@@ -33,7 +34,7 @@ export const PeoplePaneContent = (props: {
   onRemoveParticipant: (participantId: string) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  strings: CallWithChatCompositeStrings;
+  strings: CallWithChatCompositeStrings | CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
@@ -152,7 +153,7 @@ export const PeoplePaneContent = (props: {
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  callWithChatStrings: CallWithChatCompositeStrings,
+  strings: CallWithChatCompositeStrings | CallCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
@@ -160,7 +161,7 @@ const createDefaultContextualMenuItems = (
   if (participant?.userId !== localParticipantUserId) {
     menuItems.push({
       key: 'remove',
-      text: callWithChatStrings.removeMenuLabel,
+      text: strings.removeMenuLabel,
       onClick: () => {
         if (participant?.userId) {
           onRemoveParticipant?.(participant?.userId);
