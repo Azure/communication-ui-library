@@ -38,7 +38,7 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
     setTextfieldInput(input);
   };
 
-  const onClickCall = () => {
+  const onClickCall = (): void => {
     //place holder for adding calling functionality
     console.log(textfieldInput);
   };
@@ -77,7 +77,7 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
         color: theme.palette.themeDarkAlt
       }
     }),
-    [theme.palette.themeDarkAlt]
+    [theme.palette.themeDarkAlt, isMobile]
   );
 
   const callButtonStyle: IButtonStyles = {
