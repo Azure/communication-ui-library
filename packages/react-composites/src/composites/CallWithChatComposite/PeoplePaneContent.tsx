@@ -202,9 +202,15 @@ export const PeoplePaneContent = (props: {
     });
 
     return menuProps;
-  }, [strings.copyInviteLinkButtonLabel, copyLinkButtonStylesThemed, linkIconStyles, inviteLink]);
+  }, [
+    strings.copyInviteLinkButtonLabel,
+    strings.openDialpadButtonLabel,
+    copyLinkButtonStylesThemed,
+    inviteLink,
+    menuStyleThemed
+  ]);
 
-  const hideModal = () => {
+  const hideModal = (): void => {
     setIsModalOpen(false);
   };
 
