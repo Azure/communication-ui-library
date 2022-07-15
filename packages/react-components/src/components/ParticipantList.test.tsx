@@ -12,6 +12,7 @@ import { _getPermissions } from '../permissions';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const dummyOnRemoveParticipantCallback = () => {
   console.log('Removing participant');
 };
