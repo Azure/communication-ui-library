@@ -84,7 +84,11 @@ CallWithChatAdapterUiStateRequiredTypeAssertion;
 
 type CallWithChatClientStateInternal = Omit<
   CallAdapterClientState,
-  'displayName' | 'endedCall' | 'latestErrors' | 'userId'
+  | 'displayName'
+  | 'endedCall'
+  | 'latestErrors'
+  | 'userId'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'alternativeCallerId'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;
