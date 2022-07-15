@@ -34,7 +34,7 @@ export interface TestFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ serverUrl, browser }, use) => {
+const usePage = async ({ browser }, use) => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
   const page = await context.newPage();
   bindConsoleErrorForwarding(page);
