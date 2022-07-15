@@ -51,8 +51,9 @@ export const primaryContentStyles = (theme: Theme): IStyle => {
 export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
   field: {
     padding: 0,
-    textAlign: 'center',
-    fontSize: '0.875rem'
+    textAlign: 'left',
+    fontSize: '0.875rem',
+    paddingLeft: '0.5rem'
   },
   root: {
     backgroundColor: `${theme.palette.neutralLighter}`,

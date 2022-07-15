@@ -42,6 +42,10 @@ export const CustomDialpadExample: () => JSX.Element = () => {
     setTextfieldInput(input);
   };
 
+  const returnModifiedDialpadInputOnClickDelete = (input: string): string => {
+    return input.replace(/[^\d*#+]/g, '').substring(0, input.replace(/[^\d*#+]/g, '').length - 2);
+  };
+
   return (
     <FluentThemeProvider>
       <Stack>
@@ -58,6 +62,7 @@ export const CustomDialpadExample: () => JSX.Element = () => {
           onDisplayDialpadInput={onDisplayDialpadInput}
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
+          returnModifiedDialpadInputOnClickDelete={returnModifiedDialpadInputOnClickDelete}
         />
       </Stack>
     </FluentThemeProvider>

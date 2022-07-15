@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
+import { IStyle, IButtonStyles, ITextFieldStyles, Icon } from '@fluentui/react';
 import React from 'react';
 /* @conditional-compile-remove(dialpad) */
 import {
@@ -30,6 +30,7 @@ import {
 } from '../styles/Dialpad.styles';
 /* @conditional-compile-remove(dialpad) */
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
+import { Backspace20Regular } from '@fluentui/react-icons';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -102,6 +103,12 @@ export interface DialpadProps {
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /**  customize dialpad input formatting */
   onDisplayDialpadInput?: (input: string) => string;
+  /**
+   * custom function that takes unformatted dialpad input and return a modified input.
+   * This function is called when clicking on delete button in textfield
+   * Please provide this function if onDisplayDialpadInput is modified in a way that characters excluding numbers and +, *, # can be typed in the dialpad textfield
+   * */
+  returnModifiedDialpadInputOnClickDelete?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
   styles?: DialpadStyles;
@@ -182,6 +189,12 @@ const DialpadContainer = (props: {
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /**  customize dialpad input formatting */
   onDisplayDialpadInput?: (input: string) => string;
+  /**
+   * custom function that takes unformatted dialpad input and return a modified input.
+   * This function is called when clicking on delete button in textfield
+   * Please provide this function if onDisplayDialpadInput is modified in a way that characters excluding numbers and +, *, # can be typed in the dialpad textfield
+   * */
+  returnModifiedDialpadInputOnClickDelete?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
   styles?: DialpadStyles;
@@ -189,7 +202,13 @@ const DialpadContainer = (props: {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange } = props;
+  const {
+    onSendDtmfTone,
+    onClickDialpadButton,
+    onDisplayDialpadInput,
+    onChange,
+    returnModifiedDialpadInputOnClickDelete
+  } = props;
 
   const onClickDialpad = (input: string, index: number): void => {
     setTextValue(textValue + input);
@@ -208,9 +227,16 @@ const DialpadContainer = (props: {
   const setText = (e: any): void => {
     setTextValue(e.target.value);
   };
-
   // comment out the following line for now to disable customization for dialpad content
   // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
+
+  const deleteNumbers = (): void => {
+    if (returnModifiedDialpadInputOnClickDelete) {
+      setTextValue(returnModifiedDialpadInputOnClickDelete(textValue));
+    } else {
+      setTextValue(textValue.replace(/[^\d*#+]/g, '').substring(0, textValue.replace(/[^\d*#+]/g, '').length - 1));
+    }
+  };
 
   return (
     <div className={mergeStyles(containerStyles(theme), props.styles?.root)} data-test-id="dialpadContainer">
@@ -226,6 +252,12 @@ const DialpadContainer = (props: {
         }}
         placeholder={props.placeholderText}
         data-test-id="dialpad-input"
+        onRenderSuffix={(): JSX.Element => (
+          <Backspace20Regular
+            style={{ display: textValue.replace(/[^\d*#+]/g, '').length === 0 ? 'none' : 'block', cursor: 'pointer' }}
+            onClick={deleteNumbers}
+          />
+        )}
       />
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
