@@ -3,13 +3,11 @@
 
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
-import { test } from '../fixture';
+import { buildUrlWithMockAdapter, test } from './fixture';
 import { DiagnosticQuality } from '../TestCallingState';
-import { buildUrlWithMockAdapter } from '../utils';
 
 test.describe('User Facing Diagnostics tests', async () => {
-  test('A banner is shown when user is speaking while muted', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: { media: { speakingWhileMicrophoneIsMuted: { value: true, valueType: 'DiagnosticFlag' } } }
@@ -21,8 +19,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test('Tile should be showing when network reconnect is bad ', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: { network: { networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' } } }
@@ -34,8 +31,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test('Error bar should be showing when camera freezes ', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Error bar should be showing when camera freezes ', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: { media: { cameraFreeze: { value: true, valueType: 'DiagnosticFlag' } } }
@@ -47,8 +43,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test('Message bar should show when camera stops unexpectedly', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Message bar should show when camera stops unexpectedly', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: {
@@ -62,8 +57,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test('Message bar should show when camera recovers', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Message bar should show when camera recovers', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: {
@@ -75,8 +69,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('error-bar-camera-recovered.png');
   });
 
-  test('Message bar should show when microphone stops unexpectedly', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Message bar should show when microphone stops unexpectedly', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: {
@@ -90,8 +83,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     );
   });
 
-  test('Message bar should show when microphone recovers', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Message bar should show when microphone recovers', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         diagnostics: {

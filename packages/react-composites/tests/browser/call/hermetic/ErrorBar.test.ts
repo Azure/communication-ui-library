@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from '../fixture';
+import { buildUrlWithMockAdapter, test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import { buildUrlWithMockAdapter } from '../utils';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
-  test('Failure to start video should be shown on error bar', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         latestErrors: {
@@ -29,8 +27,7 @@ test.describe('Error bar tests', async () => {
     );
   });
 
-  test('Multiple errors should be shown on error bar', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('Multiple errors should be shown on error bar', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         latestErrors: {

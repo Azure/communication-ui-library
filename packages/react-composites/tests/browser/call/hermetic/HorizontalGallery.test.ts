@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { test } from '../fixture';
+import { buildUrlWithMockAdapter, test } from './fixture';
 import { expect } from '@playwright/test';
-import { buildUrlWithMockAdapter } from '../utils';
 import { dataUiId, pageClick, waitForSelector, stableScreenshot } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('HorizontalGallery tests', async () => {
-  test('HorizontalGallery should have 1 audio participant', async ({ pages, serverUrl }) => {
-    const page = pages[0];
+  test('HorizontalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
     const testRemoteParticipants = [
       {
         displayName: 'Paul Bridges',
@@ -36,10 +34,9 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
-    pages,
+    page,
     serverUrl
   }) => {
-    const page = pages[0];
     const testRemoteParticipants = [
       {
         displayName: 'Paul Bridges',
