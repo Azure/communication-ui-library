@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapter, test } from './fixture';
+import {
+  addScreenshareStream,
+  addVideoStream,
+  buildUrlWithMockAdapterNext,
+  defaultMockCallAdapterState,
+  defaultMockRemoteParticipant,
+  test
+} from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
@@ -11,94 +18,62 @@ test.describe('Screenshare tests', async () => {
     page,
     serverUrl
   }) => {
-    const testRemoteParticipants = [
-      {
-        displayName: 'Paul Bridges',
-        isSpeaking: true,
-        isVideoStreamAvailable: true
-      },
-      {
-        displayName: 'Eryka Klein'
-      },
-      {
-        displayName: 'Fiona Harper',
-        isVideoStreamAvailable: true
-      },
-      {
-        displayName: 'Pardeep Singh'
-      },
-      {
-        displayName: 'Reina Takizawa',
-        isSpeaking: true
-      },
-      {
-        displayName: 'Vasily Podkolzin',
-        isMuted: true
-      },
-      {
-        displayName: 'Luciana Rodriguez'
-      },
-      {
-        displayName: 'Antonie van Leeuwenhoek'
-      },
-      {
-        displayName: 'Gerald Ho'
-      }
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+
+    const participants = [
+      paul,
+      defaultMockRemoteParticipant('Eryka Klein'),
+      fiona,
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho')
     ];
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        isScreenSharing: true,
-        remoteParticipants: testRemoteParticipants
-      })
-    );
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('local-screenshare.png');
   });
 
   test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
-    const testRemoteParticipants = [
-      {
-        displayName: 'Pardeep Singh'
-      },
-      {
-        displayName: 'Reina Takizawa',
-        isSpeaking: true
-      },
-      {
-        displayName: 'Vasily Podkolzin',
-        isMuted: true
-      },
-      {
-        displayName: 'Luciana Rodriguez'
-      },
-      {
-        displayName: 'Antonie van Leeuwenhoek'
-      },
-      {
-        displayName: 'Gerald Ho'
-      },
-      {
-        displayName: 'Helen Sediq',
-        isScreenSharing: true
-      },
-      {
-        displayName: 'Paul Bridges',
-        isSpeaking: true,
-        isVideoStreamAvailable: true
-      },
-      {
-        displayName: 'Eryka Klein'
-      },
-      {
-        displayName: 'Fiona Harper',
-        isVideoStreamAvailable: true
-      }
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+    const helen = defaultMockRemoteParticipant('Helen Sediq');
+    addScreenshareStream(helen, true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+
+    const participants = [
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho'),
+      helen,
+      paul,
+      defaultMockRemoteParticipant('Eryka Klein'),
+      fiona
     ];
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        remoteParticipants: testRemoteParticipants
-      })
-    );
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'remote-screenshare-horizontal-gallery-page-1.png'

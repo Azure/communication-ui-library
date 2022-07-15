@@ -1,12 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../../server';
 import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
-import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type {
+  MockCallAdapterState,
+  MockRemoteParticipantState,
+  MockVideoStreamRendererViewState
+} from '../MockCallAdapterState';
 import type { TestCallingState } from '../TestCallingState';
 
 const SERVER_URL = 'http://localhost';
@@ -68,7 +73,14 @@ const usePage = async ({ serverUrl, browser }, use) => {
   await use(page);
 };
 
-export function defaultMockCallAdapterState(): MockCallAdapterState {
+/**
+ * Create the default {@link MockCallAdapterState}for hermetic e2e tests.
+ */
+export function defaultMockCallAdapterState(participants?: MockRemoteParticipantState[]): MockCallAdapterState {
+  const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
+  participants?.forEach((p) => {
+    remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
+  });
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
@@ -86,7 +98,7 @@ export function defaultMockCallAdapterState(): MockCallAdapterState {
       localVideoStreams: [],
       isMuted: false,
       isScreenSharingOn: false,
-      remoteParticipants: {},
+      remoteParticipants,
       remoteParticipantsEnded: {}
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
@@ -109,6 +121,75 @@ export function defaultMockCallAdapterState(): MockCallAdapterState {
     isTeamsCall: false,
     latestErrors: {}
   };
+}
+
+/**
+ * Create the default {@link MockRemoteParticipantState} for hermetic e2e tests.
+ *
+ * Use this to add participants to state created via {@link defaultCallAdapterState}.
+ */
+export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'communicationUser', communicationUserId: `${displayName}-id` },
+    state: 'Connected',
+    videoStreams: {
+      1: {
+        id: 1,
+        mediaStreamType: 'Video',
+        isAvailable: false,
+        isReceiving: false
+      },
+      2: {
+        id: 2,
+        mediaStreamType: 'ScreenSharing',
+        isAvailable: false,
+        isReceiving: false
+      }
+    },
+    isMuted: false,
+    isSpeaking: false,
+    displayName: displayName
+  };
+}
+
+/**
+ * Add a video stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addVideoStream(participant: MockRemoteParticipantState, isReceiving: boolean) {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType == 'Video');
+  if (streams.length != 1) {
+    throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
+  }
+  addDummyView(streams[0], isReceiving);
+}
+
+/**
+ * Add a screenshare stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addScreenshareStream(participant: MockRemoteParticipantState, isReceiving: boolean) {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType == 'ScreenSharing');
+  if (streams.length != 1) {
+    throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
+  }
+  addDummyView(streams[0], isReceiving);
+}
+
+/**
+ * Add a dummy view to a stream that will be replaced by an actual {@link HTMLElement} by the test app.
+ *
+ * Supports local / remote streams for video / screenshare.
+ */
+export function addDummyView(
+  stream: { isAvailable?: boolean; isReceiving?: boolean; dummyView?: MockVideoStreamRendererViewState },
+  isReceiving: boolean
+) {
+  stream.isAvailable = true;
+  stream.isReceiving = isReceiving;
+  stream.dummyView = { scalingMode: 'Crop', isMirrored: false };
 }
 
 /**

@@ -3,16 +3,19 @@
 
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
-import { buildUrlWithMockAdapter, test } from './fixture';
+import { buildUrlWithMockAdapter, buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
 import { DiagnosticQuality } from '../TestCallingState';
+import { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { MockCallAdapterState } from '../MockCallAdapterState';
 
 test.describe('User Facing Diagnostics tests', async () => {
   test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: { media: { speakingWhileMicrophoneIsMuted: { value: true, valueType: 'DiagnosticFlag' } } }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      speakingWhileMicrophoneIsMuted: { value: true, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'banner-when-speaking-while-muted.png'
@@ -20,11 +23,12 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 
   test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: { network: { networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' } } }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setNetworkDiagnostic(initialState, {
+      networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'tile-when-ufd-network-reconnect-is-bad.png'
@@ -32,11 +36,12 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 
   test('Error bar should be showing when camera freezes ', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: { media: { cameraFreeze: { value: true, valueType: 'DiagnosticFlag' } } }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      cameraFreeze: { value: true, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'error-bar-when-camera-freezes.png'
@@ -44,13 +49,12 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 
   test('Message bar should show when camera stops unexpectedly', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: {
-          media: { cameraStoppedUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' } }
-        }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      cameraStoppedUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'error-bar-camera-stops-unexpectedly.png'
@@ -58,25 +62,23 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 
   test('Message bar should show when camera recovers', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: {
-          media: { cameraStoppedUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' } }
-        }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      cameraStoppedUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('error-bar-camera-recovered.png');
   });
 
   test('Message bar should show when microphone stops unexpectedly', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: {
-          media: { microphoneMuteUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' } }
-        }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      microphoneMuteUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'error-bar-microphone-stops-unexpectedly.png'
@@ -84,16 +86,33 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 
   test('Message bar should show when microphone recovers', async ({ page, serverUrl }) => {
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, {
-        diagnostics: {
-          media: { microphoneMuteUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' } }
-        }
-      })
-    );
+    const initialState = defaultMockCallAdapterState();
+    setMediaDiagnostic(initialState, {
+      microphoneMuteUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' }
+    });
+    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'error-bar-microphone-recovered.png'
     );
   });
 });
+
+function setMediaDiagnostic(state: MockCallAdapterState, value: LatestMediaDiagnostics) {
+  if (!state.call?.diagnostics.media) {
+    throw new Error('State must have default values for diagnostic values');
+  }
+  state.call.diagnostics.media = {
+    latest: value
+  };
+}
+
+function setNetworkDiagnostic(state: MockCallAdapterState, value: LatestNetworkDiagnostics) {
+  if (!state.call?.diagnostics.network) {
+    throw new Error('State must have default values for diagnostic values');
+  }
+  state.call.diagnostics.network = {
+    latest: value
+  };
+}
