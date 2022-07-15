@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import { Dialpad, DialpadStyles, _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 
