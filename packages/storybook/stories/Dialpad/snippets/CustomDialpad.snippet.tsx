@@ -6,14 +6,11 @@ import { Dialpad, FluentThemeProvider } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
-const onDisplayDialpadInput = (value: string): string => {
+const onDisplayDialpadInput = (phoneNumber: string): string => {
   // if input value is falsy eg if the user deletes the input, then just return
-  if (!value) {
-    return value;
+  if (!phoneNumber) {
+    return phoneNumber;
   }
-
-  // clean the input for any non-digit values.
-  const phoneNumber = value.replace(/[^\d*#+]/g, '');
 
   if (phoneNumber.length <= 4) {
     return phoneNumber;
@@ -42,8 +39,8 @@ export const CustomDialpadExample: () => JSX.Element = () => {
     setTextfieldInput(input);
   };
 
-  const returnModifiedDialpadInputOnClickDelete = (input: string): string => {
-    return input.replace(/[^\d*#+]/g, '').substring(0, input.replace(/[^\d*#+]/g, '').length - 2);
+  const onDelete = (input: string): string => {
+    return input.substring(0, input.length - 2);
   };
 
   return (
@@ -62,7 +59,7 @@ export const CustomDialpadExample: () => JSX.Element = () => {
           onDisplayDialpadInput={onDisplayDialpadInput}
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
-          returnModifiedDialpadInputOnClickDelete={returnModifiedDialpadInputOnClickDelete}
+          onDelete={onDelete}
         />
       </Stack>
     </FluentThemeProvider>
