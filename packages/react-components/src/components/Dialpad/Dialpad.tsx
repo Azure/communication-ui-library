@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
+import { IStyle, IButtonStyles, ITextFieldStyles, IconButton } from '@fluentui/react';
 import React from 'react';
 /* @conditional-compile-remove(dialpad) */
 import {
@@ -39,6 +39,7 @@ import { Backspace20Regular } from '@fluentui/react-icons';
  */
 export interface DialpadStrings {
   placeholderText: string;
+  deleteButtonAriaLabel: string;
 }
 
 /**
@@ -183,6 +184,7 @@ const DtmfTones: DtmfTone[] = [
 /* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
   placeholderText: string;
+  deleteButtonAriaLabel: string;
   // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior */
@@ -231,10 +233,16 @@ const DialpadContainer = (props: {
   // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
 
   const deleteNumbers = (): void => {
+    let modifiedInput = '';
     if (returnModifiedDialpadInputOnClickDelete) {
-      setTextValue(returnModifiedDialpadInputOnClickDelete(textValue));
+      modifiedInput = returnModifiedDialpadInputOnClickDelete(textValue);
     } else {
-      setTextValue(textValue.replace(/[^\d*#+]/g, '').substring(0, textValue.replace(/[^\d*#+]/g, '').length - 1));
+      modifiedInput = textValue.replace(/[^\d*#+]/g, '').substring(0, textValue.replace(/[^\d*#+]/g, '').length - 1);
+    }
+
+    setTextValue(modifiedInput);
+    if (onChange) {
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(modifiedInput) : formatPhoneNumber(modifiedInput));
     }
   };
 
@@ -253,10 +261,13 @@ const DialpadContainer = (props: {
         placeholder={props.placeholderText}
         data-test-id="dialpad-input"
         onRenderSuffix={(): JSX.Element => (
-          <Backspace20Regular
-            style={{ display: textValue.replace(/[^\d*#+]/g, '').length === 0 ? 'none' : 'block', cursor: 'pointer' }}
-            onClick={deleteNumbers}
-          />
+          <>
+            {textValue.replace(/[^\d*#+]/g, '').length !== 0 && (
+              <IconButton aria-Label={props.deleteButtonAriaLabel} onClick={deleteNumbers} style={{ color: 'black' }}>
+                <Backspace20Regular />
+              </IconButton>
+            )}
+          </>
         )}
       />
       <FocusZone>
@@ -314,7 +325,11 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
     <>
       {
         /* @conditional-compile-remove(dialpad) */
-        <DialpadContainer placeholderText={strings.placeholderText} {...props} />
+        <DialpadContainer
+          placeholderText={strings.placeholderText}
+          deleteButtonAriaLabel={strings.deleteButtonAriaLabel}
+          {...props}
+        />
       }
     </>
   );

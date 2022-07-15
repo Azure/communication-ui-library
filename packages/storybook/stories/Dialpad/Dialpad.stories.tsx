@@ -49,7 +49,8 @@ const DialpadStory = (): JSX.Element => {
   const theme = useTheme();
 
   const dialpadStrings = {
-    placeholderText: 'Enter a number'
+    placeholderText: 'Enter phone number',
+    deleteButtonAriaLabel: 'Delete'
   };
 
   return (

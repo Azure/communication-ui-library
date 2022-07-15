@@ -67,6 +67,9 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
 
   errorMessage: {
     color: theme.semanticColors.errorText
+  },
+  suffix: {
+    padding: 0
   }
 });
 
