@@ -48,11 +48,6 @@ const getDocs: () => JSX.Element = () => {
 const DialpadStory = (): JSX.Element => {
   const theme = useTheme();
 
-  const dialpadStrings = {
-    placeholderText: 'Enter phone number',
-    deleteButtonAriaLabel: 'Delete'
-  };
-
   return (
     <div
       className={mergeStyles({
@@ -62,7 +57,7 @@ const DialpadStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <DialpadComponent strings={dialpadStrings} />
+      <DialpadComponent />
     </div>
   );
 };

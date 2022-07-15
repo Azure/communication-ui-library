@@ -97,6 +97,7 @@ export type DtmfTone =
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
+  // Potential Improvement:
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: DialpadButtonProps[][];
   /**  function to send dtmf tones on button click */
@@ -221,6 +222,7 @@ const DialpadContainer = (props: {
     setTextValue(input);
   };
 
+  // Potential Improvement:
   // comment out the following line for now to disable customization for dialpad content
   // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
 

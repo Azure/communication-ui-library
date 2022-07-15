@@ -46,7 +46,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                   onChange={[Function]}
                   onFocus={[Function]}
                   onInput={[Function]}
-                  placeholder="Enter phone number"
+                  placeholder="Enter a number"
                   type="text"
                   value=""
                 />
