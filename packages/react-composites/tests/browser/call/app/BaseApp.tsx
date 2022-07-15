@@ -21,6 +21,7 @@ import { QueryArgs } from './QueryArgs';
 
 initializeIconsForUITests();
 
+/** @internal */
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {
   const { queryArgs, callAdapter } = props;
 
