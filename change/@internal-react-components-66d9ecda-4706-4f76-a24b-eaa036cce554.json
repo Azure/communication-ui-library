@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Added delete button for dialpad",
+  "comment": "Delete button added to the Dialpad",
   "packageName": "@internal/react-components",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"

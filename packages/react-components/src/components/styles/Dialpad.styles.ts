@@ -85,3 +85,14 @@ export const secondaryContentStyles = (theme: Theme): IStyle => {
     minHeight: '0.75rem'
   };
 };
+
+/**
+ * @private
+ */
+export const iconButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      color: `${theme.palette.black}`
+    }
+  };
+};
