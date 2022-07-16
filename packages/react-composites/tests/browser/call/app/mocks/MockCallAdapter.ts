@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
 import { merge } from '@fluentui/react';
 import {
   LocalVideoStreamState,
@@ -52,11 +52,15 @@ export class MockCallAdapter implements CallAdapter {
     initialState.devices = merge(initialState.devices, testState.devices);
 
     this.state = initialState;
+
+    if (testState.askDevicePermission) {
+      this.askDevicePermission = testState.askDevicePermission;
+    }
   }
 
   state: CallAdapterState;
 
-  addParticipant(): void {
+  addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
   onStateChange(): void {
@@ -92,6 +96,12 @@ export class MockCallAdapter implements CallAdapter {
   startCall(): Call | undefined {
     throw Error('startCall not implemented');
   }
+  holdCall(): Promise<void> {
+    return Promise.resolve();
+  }
+  resumeCall(): Promise<void> {
+    return Promise.resolve();
+  }
   startScreenShare(): Promise<void> {
     throw Error('startScreenShare not implemented');
   }
@@ -107,7 +117,8 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     throw Error('disposeStreamView not implemented');
   }
-  askDevicePermission(): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  askDevicePermission(constrain: PermissionConstraints): Promise<void> {
     throw Error('askDevicePermission not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
