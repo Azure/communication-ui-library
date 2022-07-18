@@ -66,6 +66,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       displayName,
       credential,
       locator: callLocator,
+      /* @conditional-compile-remove(PSTN-calls) */
       alternativeCallerId
     },
     afterCreate

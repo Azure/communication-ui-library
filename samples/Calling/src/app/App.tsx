@@ -99,17 +99,29 @@ const App = (): JSX.Element => {
             setAlternativeCallerId(callDetails.alternativeCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
             console.log(callDetails);
-            if (callDetails.outboundParticipants) {
-              // set call participants and do not update the window URL since there is not a joinable link
-              setCallLocator({ participantIDs: callDetails.outboundParticipants });
-            } else {
-              const callLocator =
-                callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-              setCallLocator(callLocator);
-            }
+            const makeLocator = (
+              teamsLink?: TeamsMeetingLinkLocator | undefined,
+              outboundParticipants?: string[]
+            ): CallAdapterLocator => {
+              /* @conditional-compile-remove(PSTN-calls) */
+              if (outboundParticipants) {
+                // set call participants and do not update the window URL since there is not a joinable link
+                return { participantIDs: outboundParticipants };
+              }
+              return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+            };
+            setCallLocator(
+              makeLocator(
+                callDetails.teamsLink,
+                /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
+              )
+            );
 
             // Update window URL to have a joinable link
-            if (!joiningExistingCall && !callDetails.outboundParticipants) {
+            if (
+              !joiningExistingCall &&
+              /* @conditional-compile-remove(PSTN-calls) */ !callDetails.outboundParticipants
+            ) {
               const joinParam = isTeamsCall
                 ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
                 : '?groupId=' + (callLocator as GroupCallLocator).groupId;
@@ -148,6 +160,7 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
+          /* @conditional-compile-remove(PSTN-calls) */
           alternativeCallerId={alternativeCallerId}
           onCallEnded={() => setPage('endCall')}
         />
