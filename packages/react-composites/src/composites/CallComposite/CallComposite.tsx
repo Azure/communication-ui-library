@@ -82,7 +82,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
-
   switch (page) {
     case 'configuration':
       return (
