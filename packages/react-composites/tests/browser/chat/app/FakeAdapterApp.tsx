@@ -24,9 +24,7 @@ import {
   customOnRenderMessage,
   customOnRenderTypingIndicator
 } from './CustomDataModel';
-import { FakeChatClient } from './fake-back-end/FakeChatClient';
-import { Model } from './fake-back-end/Model';
-import { IChatClient } from './fake-back-end/types';
+import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
 import { RestError } from '@azure/core-http';
 

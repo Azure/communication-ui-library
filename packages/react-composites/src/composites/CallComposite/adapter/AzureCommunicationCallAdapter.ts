@@ -27,8 +27,11 @@ import {
   RemoteParticipant,
   PermissionConstraints,
   PropertyChangedEvent,
-  StartCallOptions
+  StartCallOptions,
+  VideoOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -286,9 +289,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
 
     /* @conditional-compile-remove(teams-adhoc-call) */
-    // Check if we should be starting a new call or joining an existing call
-    if (isAdhocCall(this.locator)) {
-      return this.startCall(this.locator.participantIDs);
+    /* @conditional-compile-remove(PSTN-calls) */
+    if (isOutboundCall(this.locator)) {
+      const phoneNumber = this.getState().alternativeCallerId;
+      return this.startCall(this.locator.participantIDs, {
+        alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
+      });
     }
 
     return this.teeErrorToEventEmitter(() => {
@@ -296,19 +302,34 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = !('groupId' in this.locator);
-      const call = isTeamsMeeting
-        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-            audioOptions,
-            videoOptions
-          })
-        : this.callAgent.join(this.locator as GroupCallLocator, {
-            audioOptions,
-            videoOptions
-          });
+      const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
       return call;
+    });
+  }
+
+  private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
+    const isTeamsMeeting = !('groupId' in this.locator);
+    /* @conditional-compile-remove(rooms) */
+    const isRoomsCall = !('roomId' in this.locator);
+
+    if (isTeamsMeeting) {
+      return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+    /* @conditional-compile-remove(rooms) */
+    if (isRoomsCall) {
+      return this.callAgent.join(this.locator as RoomCallLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+    return this.callAgent.join(this.locator as GroupCallLocator, {
+      audioOptions,
+      videoOptions
     });
   }
 
@@ -617,6 +638,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 /* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -642,7 +664,8 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(rooms) */ RoomCallLocator
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -656,6 +679,8 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternativeCallerId?: string;
 };
 
 /**
@@ -671,10 +696,16 @@ export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId });
-  const callAgent = await callClient.createCallAgent(credential, { displayName });
+  const callClient = createStatefulCallClient({
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
+  });
+  const callAgent = await callClient.createCallAgent(credential, {
+    displayName
+  });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
 };
@@ -806,6 +837,7 @@ const isCallError = (e: Error): e is CallError => {
 };
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
+/* @conditional-compile-remove(PSTN-calls) */
+const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };

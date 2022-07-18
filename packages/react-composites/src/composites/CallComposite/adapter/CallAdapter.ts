@@ -62,6 +62,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Azure communications Phone number to make PSTN calls with.
+   */
+  alternativeCallerId?: string;
 };
 
 /**
