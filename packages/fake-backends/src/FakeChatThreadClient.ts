@@ -74,7 +74,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  sendMessage(request: SendMessageRequest, options: SendMessageOptions = {}): Promise<SendChatMessageResult> {
+  sendMessage(request: SendMessageRequest, options?: SendMessageOptions): Promise<SendChatMessageResult> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.messages = [
@@ -85,7 +85,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
           content: {
             message: request.content
           },
-          metadata: options.metadata
+          metadata: options?.metadata
         }
       ];
     });
@@ -97,7 +97,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
       getThreadEventTargets(this.checkedGetThread(), this.userId),
       {
         ...this.baseChatMessageEvent(message),
-        message: request.content
+        message: request.content,
+        metadata: options?.metadata ?? {}
       }
     );
     return Promise.resolve({ id: message.id });
@@ -166,7 +167,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
     this.checkedGetThreadEventEmitter().chatMessageEdited(getThreadEventTargets(this.checkedGetThread(), this.userId), {
       ...this.baseChatMessageEvent(message),
       message: content,
-      editedOn: now
+      editedOn: now,
+      metadata: options?.metadata ?? {}
     });
     return Promise.resolve();
   }
@@ -310,7 +312,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return this.model.checkedGetThread(this.userId, this.threadId);
   }
 
-  private modifyThreadForUser(action: (thread: Thread) => void) {
+  private modifyThreadForUser(action: (thread: Thread) => void): void {
     this.model.modifyThreadForUser(this.userId, this.threadId, action);
   }
 

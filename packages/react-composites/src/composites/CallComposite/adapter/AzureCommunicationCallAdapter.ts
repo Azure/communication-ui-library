@@ -675,6 +675,8 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternativeCallerId?: string;
 };
 
 /**
@@ -690,10 +692,16 @@ export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId });
-  const callAgent = await callClient.createCallAgent(credential, { displayName });
+  const callClient = createStatefulCallClient({
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
+  });
+  const callAgent = await callClient.createCallAgent(credential, {
+    displayName
+  });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
 };
