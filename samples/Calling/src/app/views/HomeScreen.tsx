@@ -28,7 +28,9 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     teamsLink?: TeamsMeetingLinkLocator;
+    /* @conditional-compile-remove(PSTN-calls) */
     outboundParticipants?: string[];
+    /* @conditional-compile-remove(PSTN-calls) */
     alternativeCallerId?: string;
   }): void;
   joiningExistingCall: boolean;
@@ -42,6 +44,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
+    /* @conditional-compile-remove(PSTN-calls) */
     { key: 'outboundCall', text: 'Start a PSTN or 1:N ACS call' }
   ];
 
@@ -55,6 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
+  /* @conditional-compile-remove(PSTN-calls) */
   const outBoundCallChosen: boolean = chosenCallOption.key === 'outboundCall';
   const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
@@ -93,22 +97,24 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
               />
             )}
-            {outBoundCallChosen && (
-              <Stack>
-                <TextField
-                  className={outboundtextField}
-                  label={'Participants'}
-                  placeholder={'Phone numbers or ACS userIds to call'}
-                  onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
-                />
-                <TextField
-                  className={outboundtextField}
-                  label={'ACS phone number for PSTN'}
-                  placeholder={'Enter your ACS aquired phone number'}
-                  onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
-                />
-              </Stack>
-            )}
+            {
+              /* @conditional-compile-remove(PSTN-calls) */ outBoundCallChosen && (
+                <Stack>
+                  <TextField
+                    className={outboundtextField}
+                    label={'Participants'}
+                    placeholder={'Phone numbers or ACS userIds to call'}
+                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                  />
+                  <TextField
+                    className={outboundtextField}
+                    label={'ACS phone number for PSTN'}
+                    placeholder={'Enter your ACS aquired phone number'}
+                    onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
+                  />
+                </Stack>
+              )
+            }
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
           <PrimaryButton
@@ -122,7 +128,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 props.startCallHandler({
                   displayName,
                   teamsLink,
+                  /* @conditional-compile-remove(PSTN-calls) */
                   outboundParticipants: participantsToCall,
+                  /* @conditional-compile-remove(PSTN-calls) */
                   alternativeCallerId
                 });
               }
