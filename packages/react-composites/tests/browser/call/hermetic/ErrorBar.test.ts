@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
+import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
@@ -18,7 +18,7 @@ test.describe('Error bar tests', async () => {
         innerError: new Error('Inner error of failure to start video')
       }
     };
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -44,7 +44,7 @@ test.describe('Error bar tests', async () => {
         innerError: new Error('Inner error of failure to stop video')
       }
     };
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('multiple-errors-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
