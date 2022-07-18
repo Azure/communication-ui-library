@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, ITextFieldStyles, IconButton } from '@fluentui/react';
 import React from 'react';
+/* @conditional-compile-remove(dialpad) */
+import { IStyle, IButtonStyles, ITextFieldStyles, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
