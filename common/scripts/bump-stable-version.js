@@ -1,5 +1,5 @@
 const path = require('path');
-const { updateAllVersions, findAllPackageJSON, getAllNames, updateAllDepVersions } = require('./package-utils');
+const { updateAllVersions, findAllPackageJSON, getAllNames } = require('./package-utils');
 
 const PACKAGES_DIR = path.join(__dirname, '..', '..', 'packages');
 
@@ -12,8 +12,6 @@ const main = () => {
     throw '\nplease add either minor/patch as parameter!\n\n  Syntax:\n  node bump-stable-version.js minor\n'
   }
   updateAllVersions(bumpVersion);
-  // Need to update all internal project dependencies using the same rule
-  updateAllDepVersions(bumpVersion, depNames);
 }
 
 const bumpVersion = (currentVersion) => {
