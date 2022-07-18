@@ -372,6 +372,7 @@ export type CallCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    AddPerson?: JSX.Element;
 };
 
 // @public
@@ -783,6 +784,7 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    AddPerson?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -816,19 +818,25 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 
 // @public
 export interface CallWithChatCompositeStrings {
+    addPeopleButtonLabel: string;
+    callButtonLabel: string;
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    closeModalButtonAriaLabel: string;
     copyInviteLinkButtonLabel: string;
+    dialpadModalAriaLabel: string;
+    DialpadModalTitle: string;
     dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
+    openDialpadButtonLabel: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -1560,6 +1568,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
+    AddPerson?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
