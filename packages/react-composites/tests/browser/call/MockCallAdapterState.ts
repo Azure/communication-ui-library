@@ -17,7 +17,7 @@ import type { CallAdapterState } from '../../../src';
  * - HTMLElement views are replaced with placeholders to be populated
  *   by the test app.
  */
-export interface MockCallAdapterState extends CallAdapterState {
+export interface MockCallAdapterState extends Omit<CallAdapterState, 'call'> {
   call?: MockCallState;
 }
 
@@ -28,7 +28,8 @@ export interface MockCallAdapterState extends CallAdapterState {
  * - HTMLElement views are replaced with placeholders to be populated
  *   by the test app.
  */
-export interface MockCallState extends CallState {
+export interface MockCallState
+  extends Omit<CallState, 'localVideoStreams' | 'remoteParticipants' | 'remoteParticipantsEnded'> {
   localVideoStreams: MockLocalVideoStreamState[];
   remoteParticipants: {
     [keys: string]: MockRemoteParticipantState;
@@ -61,7 +62,7 @@ export interface MockLocalVideoStreamState extends LocalVideoStreamState {
  * - HTMLElement views are replaced with placeholders to be populated
  *   by the test app.
  */
-export interface MockRemoteParticipantState extends RemoteParticipantState {
+export interface MockRemoteParticipantState extends Omit<RemoteParticipantState, 'videoStreams'> {
   videoStreams: {
     [key: number]: MockRemoteVideoStreamState;
   };
@@ -89,4 +90,4 @@ export interface MockRemoteVideoStreamState extends RemoteVideoStreamState {
  *
  * This interface does not contain the `target` field. It is populated by the test application with a dummy HTMLElement.
  */
-export interface MockVideoStreamRendererViewState extends Omit<VideoStreamRendererViewState, 'target'> {}
+export type MockVideoStreamRendererViewState = Omit<VideoStreamRendererViewState, 'target'>;
