@@ -7424,7 +7424,7 @@ packages:
       mkdirp: 0.5.5
       resolve: 1.20.0
       safe-buffer: 5.2.1
-      shell-quote: 1.7.2
+      shell-quote: 1.7.3
       subarg: 1.0.0
     dev: false
     hasBin: true
@@ -15786,10 +15786,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
-  /shell-quote/1.7.2:
-    dev: false
-    resolution:
-      integrity: sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
   /shell-quote/1.7.3:
     dev: false
     resolution:
