@@ -85,7 +85,7 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -160,7 +160,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -807,7 +807,7 @@ export interface CompositeStrings {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternativeCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
