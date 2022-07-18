@@ -12,7 +12,7 @@ import {
   defaultMockRemoteParticipant,
   test
 } from './fixture';
-import { MockRemoteParticipantState } from '../MockCallAdapterState';
+import type { MockRemoteParticipantState } from '../MockCallAdapterState';
 
 test.describe('Loading Video Spinner tests', async () => {
   test('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {

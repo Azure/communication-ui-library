@@ -12,7 +12,7 @@ import {
 import { expect } from '@playwright/test';
 import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
-import { MockCallState } from '../MockCallAdapterState';
+import type { MockCallState } from '../MockCallAdapterState';
 
 test.describe('Screenshare tests', async () => {
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
