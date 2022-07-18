@@ -415,7 +415,7 @@ export interface CallClientState {
   /**
    * Stores an ACS aquired phone number for making PSTN calls.
    */
-  alternativeCallerId?: string;
+  alternateCallerId?: string;
 }
 
 /**
