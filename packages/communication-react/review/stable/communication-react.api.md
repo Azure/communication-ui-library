@@ -391,7 +391,6 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
-    copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -409,12 +408,10 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
-    peoplePaneSubTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    removeMenuLabel: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }

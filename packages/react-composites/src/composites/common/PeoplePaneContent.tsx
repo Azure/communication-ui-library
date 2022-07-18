@@ -24,7 +24,6 @@ import {
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/PeoplePaneContent.styles';
-import { CallCompositeStrings } from '../CallComposite';
 
 /**
  * @private
@@ -34,7 +33,7 @@ export const PeoplePaneContent = (props: {
   onRemoveParticipant: (participantId: string) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  strings: CallWithChatCompositeStrings | CallCompositeStrings;
+  strings: CallWithChatCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
@@ -153,7 +152,7 @@ export const PeoplePaneContent = (props: {
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  strings: CallWithChatCompositeStrings | CallCompositeStrings,
+  strings: CallWithChatCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
