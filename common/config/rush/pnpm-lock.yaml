@@ -7424,7 +7424,7 @@ packages:
       mkdirp: 0.5.5
       resolve: 1.20.0
       safe-buffer: 5.2.1
-      shell-quote: 1.7.2
+      shell-quote: 1.7.3
       subarg: 1.0.0
     dev: false
     hasBin: true
@@ -13143,7 +13143,7 @@ packages:
       readable-stream: 1.0.34
     dev: false
     resolution:
-      integrity: sha512-lNDU9VJaOPxUmXcLb+HQFeUgQQPtMI24Gt6hgfuMHRJgMRHMF/qZ4HJD3GDru4sSw9IQl2jPjAYnQrdIeLbwow==
+      integrity: sha1-2o69nzr51nYJGbJ9nNyAkqczKFk=
   /normalize-package-data/2.5.0:
     dependencies:
       hosted-git-info: 2.8.9
@@ -13189,7 +13189,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-Le4iFE4VsbjPG4IMtuMN7gHu3UXIVnywPqBS2s3vHQe0JMGewfyWE8WYyqM509PjUybi4wbSqgW69mr3XGFr0w==
+      integrity: sha1-pGm7n+q+W/OqmRaDO69ndlguiUg=
   /npm-run-path/2.0.2:
     dependencies:
       path-key: 2.0.1
@@ -13836,7 +13836,7 @@ packages:
       through: 2.3.8
     dev: false
     resolution:
-      integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==
+      integrity: sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
   /pbkdf2/3.1.2:
     dependencies:
       create-hash: 1.2.0
@@ -15554,7 +15554,7 @@ packages:
   /secure-compare/3.0.1:
     dev: false
     resolution:
-      integrity: sha512-AckIIV90rPDcBcglUwXPF3kg0P0qmPsPXAj6BBEENQE1p5yA1xfmDJzfi1Tappj37Pv2mVbKpL3Z1T+Nn7k1Qw==
+      integrity: sha1-8aAymzCLIh+uN7mXTz1XjQypmeM=
   /select-hose/2.0.0:
     dev: false
     resolution:
@@ -15786,10 +15786,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
-  /shell-quote/1.7.2:
-    dev: false
-    resolution:
-      integrity: sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
   /shell-quote/1.7.3:
     dev: false
     resolution:
@@ -16908,7 +16904,7 @@ packages:
   /trim/0.0.1:
     dev: false
     resolution:
-      integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==
+      integrity: sha1-WFhUf2spB1fulczMZm+1AITEYN0=
   /trough/1.0.5:
     dev: false
     resolution:
@@ -17053,7 +17049,7 @@ packages:
   /tty-browserify/0.0.0:
     dev: false
     resolution:
-      integrity: sha512-JVa5ijo+j/sOoHGjw0sxw734b1LhBkQ3bvUGNdxnVXDCX81Yx7TFgnZygxrIIWn23hbfTaMYLwRmAxFyDuFmIw==
+      integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
   /ttypescript/1.5.12_ts-node@9.1.1+typescript@4.3.5:
     dependencies:
       resolve: 1.20.0
@@ -17503,7 +17499,7 @@ packages:
     engines:
       node: '>= 0.4.0'
     resolution:
-      integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+      integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
   /uuid-browser/3.1.0:
     dev: false
     resolution:
