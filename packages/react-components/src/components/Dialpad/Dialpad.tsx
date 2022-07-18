@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 /* @conditional-compile-remove(dialpad) */
-import { IStyle, IButtonStyles, ITextFieldStyles, IconButton } from '@fluentui/react';
+import { IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
