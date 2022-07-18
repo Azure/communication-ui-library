@@ -230,8 +230,12 @@ export type StatefulCallClientArgs = {
   userId: CommunicationUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * ACS phone number required to make outbound PSTN calls. This is provided for developer convenience to easily access the alternateCallerId from the
-   * state. It is not used by StatefulCallClient.
+   * A phone number in E.164 format that will be used to represent the callers identity. This number is required
+   * to start a PSTN call.
+   *
+   * example: +11234567
+   *
+   * This is not a cached value from the headless calling client.
    */
   alternateCallerId?: string;
 };
