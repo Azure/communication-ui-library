@@ -7,6 +7,9 @@ import { CallAdapter } from '../../../../src';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
+import { initializeIconsForUITests } from '../../common/testAppUtils';
+
+initializeIconsForUITests();
 
 /**
  * A hermetic test application that simpy loads the given static `{@link mockCallAdapterState}.
