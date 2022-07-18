@@ -778,7 +778,16 @@ export const useAzureCommunicationCallAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, alternativeCallerId, beforeDisposeRef, credential, displayName, locator, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId,
+      beforeDisposeRef,
+      credential,
+      displayName,
+      locator,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.
