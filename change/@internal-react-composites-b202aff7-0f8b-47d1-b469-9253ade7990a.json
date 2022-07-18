@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Call adapter can join a room",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
