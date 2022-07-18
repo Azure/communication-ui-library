@@ -665,7 +665,7 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */  /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
