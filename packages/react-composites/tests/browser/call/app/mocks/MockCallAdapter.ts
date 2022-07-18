@@ -14,7 +14,7 @@ import type { TestCallingState, TestRemoteParticipant } from '../../TestCallingS
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
  * some composite behaviour will not work like clicking the 'Start Call' button in the Configuration page. The usage of
- * MockCallAdapter is intended to talk snapshot based only on the state of a CallAdapter.
+ * MockCallAdapter is intended to take snapshot based only on the state of a CallAdapter.
  */
 export class MockCallAdapter implements CallAdapter {
   /**

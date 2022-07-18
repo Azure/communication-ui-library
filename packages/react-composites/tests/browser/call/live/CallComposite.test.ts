@@ -13,7 +13,7 @@ import {
   waitForSelector,
   stableScreenshot
 } from '../../common/utils';
-import { test } from '../fixture';
+import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 import { IDS } from '../../common/constants';
