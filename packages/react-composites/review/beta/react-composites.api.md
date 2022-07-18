@@ -939,6 +939,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;
+    BackSpace: JSX.Element;
 };
 
 // @public
