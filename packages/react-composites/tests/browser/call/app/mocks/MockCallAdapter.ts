@@ -9,7 +9,6 @@ import type {
 } from '@internal/calling-stateful-client';
 import type { CallAdapter, CallAdapterState } from '../../../../../src';
 import type { MockCallAdapterState } from '../../MockCallAdapterState';
-import type { TestCallingState, TestRemoteParticipant } from '../../TestCallingState';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -20,15 +19,11 @@ export class MockCallAdapter implements CallAdapter {
   /**
    * `testState` is deprecated. Use `initialState` instead.
    */
-  constructor(testState?: TestCallingState, initialState?: MockCallAdapterState) {
-    if (testState && initialState) {
-      throw new Error('At most one of `testState` or `initialState` must be set');
+  constructor(initialState?: MockCallAdapterState) {
+    if (!initialState) {
+      throw new Error('`initialState` must be set');
     }
-    if (initialState) {
-      this.state = populateViewTargets(initialState);
-      return;
-    }
-    this.state = convertTestStateToCallAdapterState(testState);
+    this.state = populateViewTargets(initialState);
   }
 
   state: CallAdapterState;
@@ -155,113 +150,6 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
   return state;
 }
 
-function convertTestStateToCallAdapterState(testState?: TestCallingState): CallAdapterState {
-  const initialState = defaultCallAdapterState;
-  if (!testState) {
-    return initialState;
-  }
-
-  if (initialState.call) {
-    if (testState?.remoteParticipants) {
-      const remoteParticipants = convertTestParticipantsToCallAdapterStateParticipants(testState.remoteParticipants);
-      Object.values(remoteParticipants).forEach((participant) => addMockVideo(participant));
-      initialState.call.remoteParticipants = remoteParticipants;
-    }
-    if (testState?.isScreenSharing) {
-      initialState.call.isScreenSharingOn = true;
-      const screenShareStream: LocalVideoStreamState = createLocalScreenShareStream();
-      initialState.call.localVideoStreams = [screenShareStream];
-    }
-    if (testState?.diagnostics) {
-      initialState.call.diagnostics = {
-        network: { latest: { ...initialState.call.diagnostics.network.latest, ...testState.diagnostics?.network } },
-        media: { latest: { ...initialState.call.diagnostics.media.latest, ...testState.diagnostics?.media } }
-      };
-    }
-  }
-  if (testState.page) {
-    initialState.page = testState.page;
-  }
-  if (testState.latestErrors) {
-    initialState.latestErrors = testState.latestErrors;
-  }
-  initialState.devices = merge(initialState.devices, testState.devices);
-  return initialState;
-}
-
-/**
- * Helper function to convert array of TestRemoteParticipant to record of RemoteParticipantState
- * @param mockRemoteParticipants - array of TestRemoteParticipant
- * @returns Record of RemoteParticipantState
- */
-const convertTestParticipantsToCallAdapterStateParticipants = (
-  testRemoteParticipants: TestRemoteParticipant[]
-): Record<string, RemoteParticipantState> => {
-  const remoteParticipants: Record<string, RemoteParticipantState> = {};
-
-  testRemoteParticipants.forEach((testRemoteParticipant, i) => {
-    const isReceiving =
-      testRemoteParticipant.isVideoStreamReceiving === undefined ? true : testRemoteParticipant.isVideoStreamReceiving;
-    remoteParticipants[i] = {
-      identifier: { kind: 'communicationUser', communicationUserId: `${i}` },
-      state: 'Connected',
-      videoStreams: {
-        1: {
-          id: 1,
-          mediaStreamType: 'Video',
-          isAvailable: !!testRemoteParticipant.isVideoStreamAvailable,
-          isReceiving
-        },
-        2: {
-          id: 2,
-          mediaStreamType: 'ScreenSharing',
-          isAvailable: !!testRemoteParticipant.isScreenSharing,
-          isReceiving
-        }
-      },
-      isMuted: !!testRemoteParticipant.isMuted,
-      isSpeaking: !!testRemoteParticipant.isSpeaking,
-      displayName: testRemoteParticipant.displayName
-    };
-  });
-
-  return remoteParticipants;
-};
-
-/**
- * Helper function to add mock video element to RemoteParticipantState
- * @param remoteParticipant - RemoteParticipantState
- * @returns void
- */
-const addMockVideo = (remoteParticipant: RemoteParticipantState): void => {
-  for (const videoStream of Object.values(remoteParticipant.videoStreams)) {
-    if (videoStream.isAvailable) {
-      const mockVideoElement = createMockHTMLElement(remoteParticipant.displayName);
-      const view: VideoStreamRendererViewState = { scalingMode: 'Crop', isMirrored: false, target: mockVideoElement };
-      videoStream.view = view;
-    }
-  }
-};
-
-/**
- * Helper function to create local screen share stream
- * @returns LocalVideoStreamState
- */
-const createLocalScreenShareStream = (): LocalVideoStreamState => {
-  const screenShareElement = createMockHTMLElement();
-  const view: VideoStreamRendererViewState = {
-    scalingMode: 'Crop',
-    isMirrored: false,
-    target: screenShareElement
-  };
-  const screenShareStream: LocalVideoStreamState = {
-    source: { id: 'screenshare1', name: 'Screenshare', deviceType: 'CaptureAdapter' },
-    mediaStreamType: 'ScreenSharing',
-    view: view
-  };
-  return screenShareStream;
-};
-
 /**
  * Helper function that creates an html element with a colored background with an input string. To ensure a consistent color,
  * the background coloris the hex representation of the participant's display name.
@@ -295,48 +183,4 @@ const stringToHexColor = (str: string): string => {
     colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
-};
-
-/**
- * Default call adapter state that the {@link MockCallAdapter} class is initialized with
- */
-const defaultCallAdapterState: CallAdapterState = {
-  displayName: 'Agnes Thompson',
-  isLocalPreviewMicrophoneEnabled: true,
-  page: 'call',
-  call: {
-    id: 'call1',
-    callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
-    direction: 'Incoming',
-    transcription: { isTranscriptionActive: false },
-    recording: { isRecordingActive: false },
-    startTime: new Date(500000000000),
-    endTime: new Date(500000000000),
-    diagnostics: { network: { latest: {} }, media: { latest: {} } },
-    state: 'Connected',
-    localVideoStreams: [],
-    isMuted: false,
-    isScreenSharingOn: false,
-    remoteParticipants: {},
-    remoteParticipantsEnded: {}
-  },
-  userId: { kind: 'communicationUser', communicationUserId: '1' },
-  devices: {
-    isSpeakerSelectionAvailable: true,
-    selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
-    cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
-    selectedMicrophone: {
-      id: 'microphone1',
-      name: '1st Microphone',
-      deviceType: 'Microphone',
-      isSystemDefault: true
-    },
-    microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-    selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
-    speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
-    unparentedViews: [],
-    deviceAccess: { video: true, audio: true }
-  },
-  isTeamsCall: false,
-  latestErrors: {}
 };
