@@ -37,7 +37,7 @@ export const PeoplePaneContent = (props: {
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings } = props;
+  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -72,16 +72,15 @@ export const PeoplePaneContent = (props: {
   ]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
-    const onRemoveParticipant = async (participantId: string): Promise<void> =>
-      props.onRemoveParticipant(participantId);
+    const onRemoveAParticipant = async (participantId: string): Promise<void> => onRemoveParticipant(participantId);
     return {
       ...participantListDefaultProps,
       // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
-      onRemoveParticipant: props.mobileView ? undefined : onRemoveParticipant,
+      onRemoveParticipant: props.mobileView ? undefined : onRemoveAParticipant,
       // We want the drawer menu items to appear when participants in ParticipantList are clicked
       onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
-  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, props.onRemoveParticipant]);
+  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, onRemoveParticipant]);
 
   const participantList = (
     <ParticipantListWithHeading
