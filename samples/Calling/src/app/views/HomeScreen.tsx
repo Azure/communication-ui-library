@@ -54,7 +54,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
-  const [alternativeCallerId, setAlternativeCallerId] = useState<string | undefined>();
+  const [alternativeCallerId, setAlternativeCallerId] = useState<string>();
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
@@ -102,7 +102,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <Stack>
                   <TextField
                     className={outboundtextField}
-                    label={'Participants'}
+                    label={'Participants: Comma seperated ID values for calling multiple people'}
                     placeholder={'Phone numbers or ACS userIds to call'}
                     onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                   />
@@ -145,18 +145,23 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  *
  * will also make it raw id format for phone numbers
  */
-const parseParticipants = (participantsString: string | undefined): string[] | undefined => {
-  console.log(participantsString);
+const parseParticipants = (participantsString?: string): string[] | undefined => {
   if (participantsString) {
-    const participants = participantsString.split(', ');
+    const participants = participantsString.replace(' ', '').split(',');
     console.log(participants);
     const formattedParticipants = participants.map((p) => {
       if (p.charAt(0) === '+') {
+        /**
+         * When we have the case that there is a phone number in the array we want to
+         * make sure that the correct prefix to the id is added so the adapter can parse out
+         * what kind of user it is and start the call.
+         */
         return '4:' + p;
       } else {
         return p;
