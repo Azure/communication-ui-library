@@ -98,7 +98,6 @@ const App = (): JSX.Element => {
             setDisplayName(callDetails.displayName);
             setAlternativeCallerId(callDetails.alternativeCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
-            console.log(callDetails);
             const makeLocator = (
               teamsLink?: TeamsMeetingLinkLocator | undefined,
               outboundParticipants?: string[]
