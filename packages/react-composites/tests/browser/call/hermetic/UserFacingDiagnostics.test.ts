@@ -99,7 +99,7 @@ test.describe('User Facing Diagnostics tests', async () => {
   });
 });
 
-function setMediaDiagnostic(state: MockCallAdapterState, value: LatestMediaDiagnostics) {
+function setMediaDiagnostic(state: MockCallAdapterState, value: LatestMediaDiagnostics): void {
   if (!state.call?.diagnostics.media) {
     throw new Error('State must have default values for diagnostic values');
   }
@@ -108,7 +108,7 @@ function setMediaDiagnostic(state: MockCallAdapterState, value: LatestMediaDiagn
   };
 }
 
-function setNetworkDiagnostic(state: MockCallAdapterState, value: LatestNetworkDiagnostics) {
+function setNetworkDiagnostic(state: MockCallAdapterState, value: LatestNetworkDiagnostics): void {
   if (!state.call?.diagnostics.network) {
     throw new Error('State must have default values for diagnostic values');
   }

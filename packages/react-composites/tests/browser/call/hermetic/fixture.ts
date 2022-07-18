@@ -66,7 +66,7 @@ export interface TestFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ serverUrl, browser }, use) => {
+const usePage = async ({ browser }, use) => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
   const page = await context.newPage();
   bindConsoleErrorForwarding(page);
@@ -157,9 +157,9 @@ export function defaultMockRemoteParticipant(displayName: string): MockRemotePar
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
  */
-export function addVideoStream(participant: MockRemoteParticipantState, isReceiving: boolean) {
-  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType == 'Video');
-  if (streams.length != 1) {
+export function addVideoStream(participant: MockRemoteParticipantState, isReceiving: boolean): void {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'Video');
+  if (streams.length !== 1) {
     throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving);
@@ -170,9 +170,9 @@ export function addVideoStream(participant: MockRemoteParticipantState, isReceiv
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
  */
-export function addScreenshareStream(participant: MockRemoteParticipantState, isReceiving: boolean) {
-  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType == 'ScreenSharing');
-  if (streams.length != 1) {
+export function addScreenshareStream(participant: MockRemoteParticipantState, isReceiving: boolean): void {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'ScreenSharing');
+  if (streams.length !== 1) {
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving);
@@ -186,7 +186,7 @@ export function addScreenshareStream(participant: MockRemoteParticipantState, is
 export function addDummyView(
   stream: { isAvailable?: boolean; isReceiving?: boolean; dummyView?: MockVideoStreamRendererViewState },
   isReceiving: boolean
-) {
+): void {
   stream.isAvailable = true;
   stream.isReceiving = isReceiving;
   stream.dummyView = { scalingMode: 'Crop', isMirrored: false };
