@@ -109,7 +109,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={outboundtextField}
                     label={'ACS phone number for Caller ID'}
-                    placeholder={'Enter your ACS aquired phone number'}
+                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
                     onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
                   />
                 </Stack>
@@ -149,25 +149,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 /**
  * splits the participant Id's so we can call multiple people.
  *
- * will also make it raw id format for phone numbers
  */
 const parseParticipants = (participantsString?: string): string[] | undefined => {
   if (participantsString) {
-    const participants = participantsString.replace(' ', '').split(',');
-    console.log(participants);
-    const formattedParticipants = participants.map((p) => {
-      if (p.charAt(0) === '+') {
-        /**
-         * When we have the case that there is a phone number in the array we want to
-         * make sure that the correct prefix to the id is added so the adapter can parse out
-         * what kind of user it is and start the call.
-         */
-        return '4:' + p;
-      } else {
-        return p;
-      }
-    });
-    return formattedParticipants;
+    return participantsString.replace(' ', '').split(',');
   } else {
     return undefined;
   }
