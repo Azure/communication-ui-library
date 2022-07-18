@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce the alternativeCallerId property to the CallAdapter and AzureCommunicationsCallAdapter",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

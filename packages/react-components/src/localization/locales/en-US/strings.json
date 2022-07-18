@@ -166,7 +166,8 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number"
+    "placeholderText": "Enter a number",
+    "deleteButtonAriaLabel": "Delete"
   },
   "HoldButton": {
     "onLabel": "Resume",
