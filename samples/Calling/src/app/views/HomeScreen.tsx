@@ -102,13 +102,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <Stack>
                   <TextField
                     className={outboundtextField}
-                    label={'Participants: Comma seperated ID values for calling multiple people'}
-                    placeholder={'Phone numbers or ACS userIds to call'}
+                    label={'Participants'}
+                    placeholder={"Comma seperated phone numbers or ACS ID's"}
                     onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                   />
                   <TextField
                     className={outboundtextField}
-                    label={'ACS phone number for PSTN'}
+                    label={'ACS phone number for Caller ID'}
                     placeholder={'Enter your ACS aquired phone number'}
                     onChange={(_, newValue) => newValue && setAlternativeCallerId(newValue)}
                   />
