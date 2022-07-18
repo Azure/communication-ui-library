@@ -58,8 +58,8 @@ export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdenti
     return { communicationUserId: id };
   }
   if (id.startsWith(PHONE_NUMBER_PREFIX) || id.startsWith('+')) {
-    const phoneNumber = id.startsWith(PHONE_NUMBER_PREFIX) ? id.replace(PHONE_NUMBER_PREFIX, '') : id;
-    return { phoneNumber: phoneNumber };
+    const isPhoneNumber = id.startsWith(PHONE_NUMBER_PREFIX) ? id.replace(PHONE_NUMBER_PREFIX, '') : id;
+    return { phoneNumber: isPhoneNumber };
   }
   if (id.startsWith(TEAMS_USER_PREFIX)) {
     return { microsoftTeamsUserId: id.replace(TEAMS_USER_PREFIX, '') };
