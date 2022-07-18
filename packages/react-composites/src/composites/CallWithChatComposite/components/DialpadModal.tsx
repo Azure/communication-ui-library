@@ -1,12 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import React, { useState } from 'react';
+import React from 'react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
+import { useState } from 'react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { useMemo } from 'react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { Dialpad, DialpadStyles, _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
-
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { IButtonStyles, IModalStyles, Modal, Stack, useTheme, Text, IconButton, PrimaryButton } from '@fluentui/react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { Call20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
 
 /** @private */
@@ -27,21 +32,24 @@ export interface DialpadModalProps {
 
 /** @private */
 export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const { strings, isMobile, isModalOpen, hideModal } = props;
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const [textfieldInput, setTextfieldInput] = useState('');
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const theme = useTheme();
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const onLightDismissTriggered = (): void => hideModal();
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const onChange = (input: string): void => {
     setTextfieldInput(input);
   };
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const onClickCall = (): void => {
     //place holder for adding calling functionality
     console.log(textfieldInput);
   };
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const dialpadModelStyle: Partial<IModalStyles> = useMemo(
     () => ({
       main: {
@@ -51,7 +59,7 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
     }),
     [theme.effects.roundedCorner6]
   );
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const dialpadStyle: Partial<DialpadStyles> = useMemo(
     () => ({
       root: {
@@ -78,7 +86,7 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
     }),
     [theme.palette.themeDarkAlt, isMobile]
   );
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const callButtonStyle: IButtonStyles = {
     root: {
       fontWeight: 600,
@@ -92,10 +100,10 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
       display: 'contents'
     }
   };
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   if (isMobile) {
     return (
-      <>
+      <Stack>
         {isModalOpen && (
           <Stack styles={drawerContainerStyles}>
             <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
@@ -112,38 +120,43 @@ export const DialpadModal = (props: DialpadModalProps): JSX.Element => {
             </_DrawerSurface>
           </Stack>
         )}
-      </>
+      </Stack>
     );
   }
 
   return (
-    <Modal
-      titleAriaId={strings.dialpadModalAriaLabel}
-      isOpen={isModalOpen}
-      onDismiss={hideModal}
-      isBlocking={true}
-      styles={dialpadModelStyle}
-    >
-      <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-        <Text style={{ fontWeight: 600 }}>{strings.DialpadModalTitle}</Text>
-        <IconButton
-          iconProps={{ iconName: 'Cancel' }}
-          ariaLabel={strings.closeModalButtonAriaLabel}
-          onClick={hideModal}
-          style={{ color: 'black' }}
-        />
-      </Stack>
+    <>
+      {
+        /* @conditional-compile-remove(PeoplePaneDropdown) */
+        <Modal
+          titleAriaId={strings.dialpadModalAriaLabel}
+          isOpen={isModalOpen}
+          onDismiss={hideModal}
+          isBlocking={true}
+          styles={dialpadModelStyle}
+        >
+          <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+            <Text style={{ fontWeight: 600 }}>{strings.DialpadModalTitle}</Text>
+            <IconButton
+              iconProps={{ iconName: 'Cancel' }}
+              ariaLabel={strings.closeModalButtonAriaLabel}
+              onClick={hideModal}
+              style={{ color: 'black' }}
+            />
+          </Stack>
 
-      <Stack>
-        <Dialpad onChange={onChange} styles={dialpadStyle} />
-        <PrimaryButton
-          text={strings.callButtonLabel}
-          onRenderIcon={() => <Call20Regular />}
-          onClick={onClickCall}
-          styles={callButtonStyle}
-          disabled={textfieldInput === ''}
-        />
-      </Stack>
-    </Modal>
+          <Stack>
+            <Dialpad onChange={onChange} styles={dialpadStyle} />
+            <PrimaryButton
+              text={strings.callButtonLabel}
+              onRenderIcon={() => <Call20Regular />}
+              onClick={onClickCall}
+              styles={callButtonStyle}
+              disabled={textfieldInput === ''}
+            />
+          </Stack>
+        </Modal>
+      }
+    </>
   );
 };

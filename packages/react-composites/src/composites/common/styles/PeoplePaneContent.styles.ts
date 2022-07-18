@@ -52,7 +52,10 @@ export const copyLinkButtonStyles: IButtonStyles = {
 /**
  * @private
  */
-export const linkIconStyles = { marginRight: '0.5rem', lineHeight: '0' };
+export const linkIconStyles = {
+  marginRight: '0.5rem',
+  /* @conditional-compile-remove(PeoplePaneDropdown) */ lineHeight: '0'
+};
 
 /**
  * @private

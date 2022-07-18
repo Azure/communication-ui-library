@@ -1,34 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  concatStyleSets,
-  DefaultButton,
-  IContextualMenuItem,
-  IContextualMenuProps,
-  PrimaryButton,
-  Stack,
-  useTheme,
-  IContextualMenuStyles
-} from '@fluentui/react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
+import { IContextualMenuProps, IContextualMenuStyles } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { Dialpad20Regular, Link20Regular, PersonAdd20Regular } from '@fluentui/react-icons';
 import {
   ParticipantList,
   ParticipantListParticipant,
   ParticipantListProps,
   ParticipantMenuItemsCallback,
-  _DrawerMenuItemProps,
-  _DrawerMenu as DrawerMenu,
-  _DrawerSurface
+  _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
+import { _DrawerMenu as DrawerMenu, _DrawerSurface } from '@internal/react-components';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { DialpadModal, DialpadModalStrings } from './components/DialpadModal';
 import copy from 'copy-to-clipboard';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
+import { useState } from 'react';
 import { CallWithChatCompositeStrings } from '.';
 import { CallAdapter } from '../CallComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove(PeoplePaneDropdown) */
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import {
   copyLinkButtonStackStyles,
@@ -121,6 +120,7 @@ export const PeoplePaneContent = (props: {
     [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
   );
 
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const dialpadModalStrings: DialpadModalStrings = useMemo(
     () => ({
       dialpadModalAriaLabel: strings.dialpadModalAriaLabel,
@@ -131,9 +131,11 @@ export const PeoplePaneContent = (props: {
     [strings]
   );
 
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   // desktop add people button with context menu
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const [isModalOpen, setIsModalOpen] = useState(false);
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const menuStyleThemed: Partial<IContextualMenuStyles> = useMemo(
     () => ({
       root: {
@@ -154,7 +156,7 @@ export const PeoplePaneContent = (props: {
     }),
     [theme.effects.roundedCorner6]
   );
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       styles: menuStyleThemed,
@@ -208,15 +210,15 @@ export const PeoplePaneContent = (props: {
     inviteLink,
     menuStyleThemed
   ]);
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const hideModal = (): void => {
     setIsModalOpen(false);
   };
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   //mobile add people button with botten sheet drawers
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const [addPeopleDrawerMenuItems, setAddPeopleDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
-
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
   const setDrawerMenuItemsForAddPeople: () => void = useMemo(() => {
     return () => {
       const drawerMenuItems = defaultMenuProps.items.map((contextualMenu: IContextualMenuItem) =>
@@ -226,13 +228,11 @@ export const PeoplePaneContent = (props: {
     };
   }, [defaultMenuProps, setAddPeopleDrawerMenuItems]);
 
-  if (props.mobileView) {
+  // for conditional compile
+  const mobileViewAddPeopleButton = (inviteLink?: string): JSX.Element => {
+    /* @conditional-compile-remove(PeoplePaneDropdown) */
     return (
-      <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
-        <Stack.Item grow styles={participantListContainerStyles}>
-          {participantList}
-        </Stack.Item>
-
+      <Stack>
         <Stack.Item styles={copyLinkButtonContainerStyles}>
           <PrimaryButton
             onClick={setDrawerMenuItemsForAddPeople}
@@ -251,25 +251,72 @@ export const PeoplePaneContent = (props: {
         <DialpadModal isMobile strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
       </Stack>
     );
-  }
 
-  return (
-    <>
-      <DialpadModal isMobile={false} strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
-      <Stack tokens={peoplePaneContainerTokens}>
-        <Stack styles={copyLinkButtonStackStyles}>
-          <DefaultButton
-            onRenderIcon={() => <PersonAdd20Regular />}
-            text={strings.addPeopleButtonLabel}
-            menuProps={defaultMenuProps}
-            styles={copyLinkButtonStylesThemed}
-          />
+    return (
+      <Stack>
+        {inviteLink && (
+          <Stack.Item styles={copyLinkButtonContainerStyles}>
+            <PrimaryButton
+              onClick={() => copy(inviteLink ?? '')}
+              styles={copyLinkButtonStylesThemed}
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
+              text={strings.copyInviteLinkButtonLabel}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
+    );
+  };
+
+  const desktopViewAddPeopleButton = (inviteLink?: string): JSX.Element => {
+    /* @conditional-compile-remove(PeoplePaneDropdown) */
+    return (
+      <Stack>
+        <DialpadModal isMobile={false} strings={dialpadModalStrings} isModalOpen={isModalOpen} hideModal={hideModal} />
+        <Stack tokens={peoplePaneContainerTokens}>
+          <Stack styles={copyLinkButtonStackStyles}>
+            <DefaultButton
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="AddPerson" />}
+              text={strings.addPeopleButtonLabel}
+              menuProps={defaultMenuProps}
+              styles={copyLinkButtonStylesThemed}
+            />
+          </Stack>
+
+          {participantList}
         </Stack>
+      </Stack>
+    );
 
+    return (
+      <Stack tokens={peoplePaneContainerTokens}>
+        {inviteLink && (
+          <Stack styles={copyLinkButtonStackStyles}>
+            <DefaultButton
+              text={strings.copyInviteLinkButtonLabel}
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
+              onClick={() => copy(inviteLink ?? '')}
+              styles={copyLinkButtonStylesThemed}
+            />
+          </Stack>
+        )}
         {participantList}
       </Stack>
-    </>
-  );
+    );
+  };
+  if (props.mobileView) {
+    return (
+      <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
+        <Stack.Item grow styles={participantListContainerStyles}>
+          {participantList}
+        </Stack.Item>
+
+        {mobileViewAddPeopleButton(inviteLink)}
+      </Stack>
+    );
+  }
+
+  return desktopViewAddPeopleButton(inviteLink);
 };
 
 /**
