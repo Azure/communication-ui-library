@@ -3,8 +3,8 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import {
   mobilePaneBackButtonStyles,
   mobilePaneButtonStyles,
@@ -22,14 +22,16 @@ type TabHeaderProps = {
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
+  strings: CallWithChatCompositeStrings;
 };
 
 /**
  * @private
  */
 export const TabHeader = (props: TabHeaderProps): JSX.Element => {
+  const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab, strings } = props;
   const theme = useTheme();
-  const haveMultipleTabs = props.onChatButtonClicked && props.onPeopleButtonClicked;
+  const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
       mobilePaneButtonStyles,
@@ -51,24 +53,23 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         : {}
     );
   }, [theme, haveMultipleTabs]);
-  const strings = useCallWithChatCompositeStrings();
 
   return (
     <Stack horizontal grow styles={mobilePaneControlBarStyle}>
       <DefaultButton
         ariaLabel={strings.returnToCallButtonAriaLabel}
         ariaDescription={strings.returnToCallButtonAriaDescription}
-        onClick={props.onClose}
+        onClick={onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
         autoFocus
       ></DefaultButton>
       <Stack.Item grow>
-        {props.onChatButtonClicked && (
+        {onChatButtonClicked && (
           <DefaultButton
-            onClick={props.onChatButtonClicked}
+            onClick={onChatButtonClicked}
             styles={mobilePaneButtonStylesThemed}
-            checked={props.activeTab === 'chat'}
+            checked={activeTab === 'chat'}
             role={'tab'}
           >
             {strings.chatButtonLabel}
@@ -76,11 +77,11 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
         )}
       </Stack.Item>
       <Stack.Item grow>
-        {props.onPeopleButtonClicked && (
+        {onPeopleButtonClicked && (
           <DefaultButton
-            onClick={props.onPeopleButtonClicked}
+            onClick={onPeopleButtonClicked}
             styles={mobilePaneButtonStylesThemed}
-            checked={props.activeTab === 'people'}
+            checked={activeTab === 'people'}
             role={'tab'}
           >
             {strings.peopleButtonLabel}
