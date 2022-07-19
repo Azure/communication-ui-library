@@ -59,6 +59,14 @@
     },
     {
       "commandKind": "global",
+      "name": "update:full",
+      "summary": "Update dependencies for all build flavours to latest SemVers.",
+      "description": "Updates dependendencies to latest SemVer for all build flavors. This update is more aggressive than a routine `rush update`.",
+      "shellCommand": "rush update -p --variant stable --full && rush update -p --full",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "build:all-flavors",
       "summary": "Build all packages for all flavors in one command",
       "description": "Build all packages for all flavors in one command. This command will switch current flavor to beta.",
