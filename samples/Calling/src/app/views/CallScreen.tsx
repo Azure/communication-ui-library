@@ -34,7 +34,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
-        onCallEnded();
+        //   onCallEnded();
       });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
@@ -89,6 +89,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      options={{ endCallScreen: false }}
     />
   );
 };

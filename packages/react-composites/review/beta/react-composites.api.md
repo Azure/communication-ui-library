@@ -273,6 +273,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    endCallScreen?: boolean;
 };
 
 // @public

@@ -65,6 +65,13 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
+
+  /**
+   * Hide or Customize the end call screen.
+   * Can be customized by providing an object of type {@link @azure/communication-react#CallControlOptions}.
+   * @defaultValue true
+   */
+  endCallScreen?: boolean;
 };
 
 type MainScreenProps = {
@@ -94,21 +101,31 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     case 'accessDeniedTeamsMeeting':
+      if (props.options?.endCallScreen === false) {
+        return <></>;
+      }
+
       return (
         <NoticePage
           iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
+          showStartOrRejoinButton={false}
         />
       );
     case 'removedFromCall':
+      if (props.options?.endCallScreen === false) {
+        return <></>;
+      }
+
       return (
         <NoticePage
           iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
+          showStartOrRejoinButton={false}
         />
       );
     case 'joinCallFailedDueToNoNetwork':
@@ -121,14 +138,20 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     case 'leftCall':
+      if (props.options?.endCallScreen === false) {
+        return <></>;
+      }
+
       return (
         <NoticePage
           iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
           moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
+          showStartOrRejoinButton={false}
         />
       );
+
     case 'lobby':
       return <LobbyPage mobileView={props.mobileView} options={props.options} />;
     case 'call':

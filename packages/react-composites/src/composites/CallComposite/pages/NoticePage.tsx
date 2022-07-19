@@ -22,6 +22,7 @@ export interface NoticePageProps {
   title: string;
   moreDetails?: string;
   dataUiId: string;
+  showStartOrRejoinButton?: boolean;
 }
 
 /**
@@ -41,9 +42,11 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
           {props.moreDetails}
         </Text>
-        <Stack styles={rejoinCallButtonContainerStyles}>
-          <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
-        </Stack>
+        {props.showStartOrRejoinButton && (
+          <Stack styles={rejoinCallButtonContainerStyles}>
+            <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );
