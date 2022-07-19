@@ -28,7 +28,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { useLocale } from '../../localization';
 
 /**
- * Pane that is used to store chat and people for Call composite
+ * Pane that is used to store participants for Call composite
  * @private
  */
 /** @beta */
@@ -37,7 +37,6 @@ export const CallPane = (props: {
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
   activePane: CallPaneOption;
@@ -117,7 +116,7 @@ export const CallPane = (props: {
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
-  const dataUiId = props.activePane === 'people' ? 'call-with-chat-composite-people-pane' : '';
+  const dataUiId = props.activePane === 'people' ? 'call-composite-people-pane' : '';
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
