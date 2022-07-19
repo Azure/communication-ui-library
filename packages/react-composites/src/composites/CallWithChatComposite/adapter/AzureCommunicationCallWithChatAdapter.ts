@@ -333,33 +333,33 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.deleteMessage(messageId);
   }
   /* @conditional-compile-remove(file-sharing) */
-  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
     return this.chatAdapter.registerActiveFileUploads(files);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
     return this.chatAdapter.registerCompletedFileUploads(metadata);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public clearFileUploads(): void {
+  public clearFileUploads = (): void => {
     this.chatAdapter.clearFileUploads();
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public cancelFileUpload(id: string): void {
+  public cancelFileUpload = (id: string): void => {
     this.chatAdapter.cancelFileUpload(id);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadProgress(id: string, progress: number): void {
+  public updateFileUploadProgress = (id: string, progress: number): void => {
     this.chatAdapter.updateFileUploadProgress(id, progress);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
     this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
-  }
+  };
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     return await this.callAdapter.holdCall();
