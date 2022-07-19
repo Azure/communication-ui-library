@@ -9,11 +9,12 @@ import {
   IContextualMenuStyles,
   merge
 } from '@fluentui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
+import { preventDismissOnEvent } from './utils/common';
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -257,19 +258,7 @@ export const generateDefaultDeviceMenuProps = (
           maxWidth: '95%'
         }
       },
-      // Disable dismiss on resize to work around a couple Fluent UI bugs
-      // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
-      //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
-      //   by the headless SDK.
-      // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
-      //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
-      //   deterministically avoid dismissal.
-      //
-      // A side effect of this workaround is that the context menu stays open when window is resized, and may
-      // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-      // The Callout (frequently) gets dismissed automatically.
-      preventDismissOnResize: true,
-      preventDismissOnScroll: true
+      preventDismissOnEvent
     }
   };
 
