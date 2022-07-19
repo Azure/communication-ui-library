@@ -32,6 +32,7 @@ import { WEB_APP_TITLE } from './utils/constants';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { useIsMobile } from './utils/useIsMobile';
+import { CallParticipantsLocator } from '@internal/react-composites';
 
 setLogLevel('warning');
 initializeIcons();
@@ -123,7 +124,11 @@ export default App;
 
 const generateCallWithChatArgs = async (
   displayName: string,
-  teamsLink?: TeamsMeetingLinkLocator
+  teamsLink?: TeamsMeetingLinkLocator,
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string,
+  /* @conditional-compile-remove(PSTN-calls) */
+  outboundParticipants?: string[]
 ): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
@@ -137,8 +142,7 @@ const generateCallWithChatArgs = async (
     locator = teamsLink;
     ensureJoinableTeamsLinkPushedToUrl(teamsLink);
   } else {
-    const callLocator: GroupCallLocator = getGroupIdFromUrl() || createGroupId();
-    ensureJoinableCallLocatorPushedToUrl(callLocator);
+    const callLocator = callLocatorGen(outboundParticipants);
 
     const chatThreadId = await getThread();
     await joinThread(chatThreadId, credentials.userId.communicationUserId, displayName);
@@ -156,4 +160,16 @@ const generateCallWithChatArgs = async (
     credentials,
     locator
   };
+};
+
+const callLocatorGen = (
+  /* @conditional-compilation-remove(PSTN-calls) */ outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (outBoundParticipants) {
+    return { participantIDs: outBoundParticipants };
+  }
+  const callLocator = getGroupIdFromUrl() || createGroupId();
+  ensureJoinableCallLocatorPushedToUrl(callLocator);
+  return callLocator;
 };

@@ -25,7 +25,13 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: {
+    displayName: string;
+    teamsLink?: TeamsMeetingLinkLocator /* @conditional-compile-remove(PSTN-calls) */;
+    outboundParticipants?: string[];
+    /* @conditional-compile-remove(PSTN-calls) */
+    alternateCallerId?: string;
+  }): void;
   joiningExistingCall: boolean;
 }
 
@@ -51,7 +57,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
-  const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [outboundParticipants, setOutboundParticipants] = useState<string>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
 
@@ -121,7 +128,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                startCallHandler({ displayName, teamsLink });
+                startCallHandler({
+                  displayName,
+                  teamsLink,
+                  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+                  /* @conditional-compile-remove(PSTN-calls) */ outboundParticipants:
+                    parseParticipants(outboundParticipants)
+                });
               }
             }}
           />
@@ -132,4 +145,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * splits the participant Id's so we can call multiple people.
+ *
+ */
+const parseParticipants = (participantsString?: string): string[] | undefined => {
+  if (participantsString) {
+    return participantsString.replace(' ', '').split(',');
+  } else {
+    return undefined;
+  }
 };
