@@ -83,7 +83,9 @@ const App = (): JSX.Element => {
             try {
               const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
-                homeScreenDetails?.teamsLink
+                homeScreenDetails?.teamsLink,
+                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
+                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants
               );
               setCallWithChatArgs(callWithChatArgs);
             } catch (e) {
