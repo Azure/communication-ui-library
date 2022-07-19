@@ -7,9 +7,9 @@ import { useMemo } from 'react';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
 import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
-import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, IButtonStyles } from '@fluentui/react';
+import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
-import { PrimaryButton } from '@fluentui/react';
+import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
 import { themedDialpadModelStyle } from './PreparedDialpad.styles';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
