@@ -41,7 +41,7 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
 
   const theme = useTheme();
 
-  const onDismissTriggered = () => {
+  const onDismissTriggered = (): void => {
     /* @conditional-compile-remove(PeoplePaneDropdown) */
     setTextFieldInput('');
     onDismissDialpad();

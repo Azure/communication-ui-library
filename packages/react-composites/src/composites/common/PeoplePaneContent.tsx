@@ -118,7 +118,7 @@ export const PeoplePaneContent = (props: {
 
   const copyLinkButtonStylesThemed = useMemo(
     (): IButtonStyles => concatStyleSets(copyLinkButtonStyles, themedCopyLinkButtonStyles(props.mobileView, theme)),
-    [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
+    [props.mobileView, theme]
   );
 
   /* @conditional-compile-remove(PeoplePaneDropdown) */
