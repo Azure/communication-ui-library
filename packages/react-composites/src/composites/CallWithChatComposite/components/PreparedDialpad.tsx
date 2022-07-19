@@ -7,13 +7,13 @@ import { useMemo } from 'react';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
 import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
-import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
+import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, IButtonStyles } from '@fluentui/react';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
 import { PrimaryButton } from '@fluentui/react';
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
 import { themedDialpadModelStyle } from './PreparedDialpad.styles';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
-import { callButtonStyle, themedDialpadStyle } from './PreparedDialpad.styles';
+import { themedCallButtonStyle, themedDialpadStyle } from './PreparedDialpad.styles';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
 import { CallWithChatCompositeIcon } from '../../common/icons';
 
@@ -57,6 +57,9 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
 
   /* @conditional-compile-remove(PeoplePaneDropdown) */
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
+
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  const callButtonStyle: Partial<IButtonStyles> = useMemo(() => themedCallButtonStyle(theme), [theme]);
 
   const dialpadComponent = (): JSX.Element => {
     /* @conditional-compile-remove(PeoplePaneDropdown) */

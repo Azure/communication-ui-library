@@ -85,15 +85,5 @@ export const themedCopyLinkButtonStyles = (mobileView: boolean | undefined, them
 export const themedMenuStyle = (theme: Theme): Partial<IContextualMenuStyles> => ({
   root: {
     borderRadius: theme.effects.roundedCorner6
-  },
-
-  title: {
-    paddingLeft: '.5rem',
-    fontWeight: 600,
-    fontSize: '0.875rem'
-  },
-  list: {
-    fontWeight: 600,
-    fontSize: '0.875rem'
   }
 });

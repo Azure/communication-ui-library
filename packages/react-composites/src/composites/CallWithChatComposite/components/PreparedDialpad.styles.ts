@@ -32,7 +32,7 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
     },
     field: {
       backgroundColor: 'white',
-      fontSize: '1.125rem',
+      fontSize: theme.fonts.large.fontSize,
       padding: '1.063rem 0.5rem',
       textAlign: isMobile ? 'center' : 'left',
       paddingTop: 0
@@ -46,10 +46,10 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
 /**
  * @private
  */
-export const callButtonStyle: IButtonStyles = {
+export const themedCallButtonStyle = (theme: Theme): Partial<IButtonStyles> => ({
   root: {
     fontWeight: 600,
-    fontSize: '0.875rem', // 14px
+    fontSize: theme.fonts.medium.fontSize,
     width: '100%',
     height: '2.5rem',
     borderRadius: 3,
@@ -58,4 +58,4 @@ export const callButtonStyle: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }
-};
+});
