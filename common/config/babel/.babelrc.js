@@ -34,7 +34,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // dialpad
         'dialpad',
         // rooms
-        'rooms'
+        'rooms',
+        // Participant pane in the `CallComposite`.
+        'call-composite-participant-pane'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

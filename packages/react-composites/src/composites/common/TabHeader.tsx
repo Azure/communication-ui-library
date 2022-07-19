@@ -3,6 +3,8 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(call-composite-participant-pane) */
+import { CallCompositeStrings } from '../CallComposite';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
@@ -22,7 +24,10 @@ type TabHeaderProps = {
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
-  strings: CallWithChatCompositeStrings;
+  strings:
+    | CallWithChatCompositeStrings
+    /* @conditional-compile-remove(call-composite-participant-pane) */
+    | CallCompositeStrings;
 };
 
 /**

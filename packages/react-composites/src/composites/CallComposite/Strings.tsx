@@ -173,4 +173,49 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Side pane People section Title.
+   */
+  peoplePaneTitle: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Aria label string for return to call back button
+   */
+  returnToCallButtonAriaLabel?: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Aria Description string for return to call button
+   */
+  returnToCallButtonAriaDescription?: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * control bar People button label
+   */
+  peopleButtonLabel: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * control bar Chat button label.
+   */
+  chatButtonLabel: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Label for SidePaneHeader dismiss button
+   */
+  dismissSidePaneButtonLabel?: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Side pane People section subheader.
+   */
+  peoplePaneSubTitle: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Label for button to copy invite link
+   */
+  copyInviteLinkButtonLabel: string;
+  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /**
+   * Label for menu item to remove participant
+   */
+  removeMenuLabel: string;
 }

@@ -24,6 +24,8 @@ import {
   participantListContainerStyles,
   peoplePaneContainerStyle
 } from './styles/PeoplePaneContent.styles';
+/* @conditional-compile-remove(call-composite-participant-pane) */
+import { CallCompositeStrings } from '../CallComposite';
 
 /**
  * @private
@@ -33,7 +35,10 @@ export const PeoplePaneContent = (props: {
   onRemoveParticipant: (participantId: string) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  strings: CallWithChatCompositeStrings;
+  strings:
+    | CallWithChatCompositeStrings
+    /* @conditional-compile-remove(call-composite-participant-pane) */
+    | CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
@@ -144,14 +149,17 @@ export const PeoplePaneContent = (props: {
 /**
  * Create default contextual menu items for particant
  * @param participant - participant to create contextual menu items for
- * @param callWithChatStrings - localized strings for menu item text
+ * @param strings - localized strings for menu item text
  * @param onRemoveParticipant - callback to remove participant
  * @param localParticipantUserId - Local participant user id
  * @returns - IContextualMenuItem[]
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  strings: CallWithChatCompositeStrings,
+  strings:
+    | CallWithChatCompositeStrings
+    /* @conditional-compile-remove(call-composite-participant-pane) */
+    | CallCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {

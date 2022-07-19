@@ -37,7 +37,16 @@
     "removedFromCallTitle": "You were removed",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
-    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
+    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby.",
+    "peoplePaneTitle": "People",
+    "returnToCallButtonAriaLabel": "Back",
+    "returnToCallButtonAriaDescription": "Return to Call",
+    "peopleButtonLabel": "People",
+    "chatButtonLabel": "Chat",
+    "dismissSidePaneButtonLabel": "Close",
+    "peoplePaneSubTitle": "In this call",
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "removeMenuLabel": "Remove"
   },
   "chat": {
     "chatListHeader": "In this chat",
