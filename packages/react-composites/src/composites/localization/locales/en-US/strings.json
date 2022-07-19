@@ -67,10 +67,10 @@
     "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
-    "addPeopleButtonLabel": "Add People",
-    "callButtonLabel": "Call",
-    "DialpadModalTitle": "Dial Phone Number",
+    "peoplePaneAddPeopleButtonLabel": "Add People",
+    "dialpadStartCallButtonLabel": "Call",
+    "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "closeModalButtonAriaLabel": "Close Dialpad"
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
   }
 }

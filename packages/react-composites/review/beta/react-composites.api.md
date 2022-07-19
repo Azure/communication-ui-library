@@ -270,7 +270,9 @@ export type CallCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
-    AddPerson?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    Dialpad?: JSX.Element;
+    Call?: JSX.Element;
 };
 
 // @public
@@ -575,7 +577,9 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
-    AddPerson?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    Dialpad?: JSX.Element;
+    Call?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -609,18 +613,17 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 
 // @public
 export interface CallWithChatCompositeStrings {
-    addPeopleButtonLabel: string;
-    callButtonLabel: string;
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
-    closeModalButtonAriaLabel: string;
     copyInviteLinkButtonLabel: string;
+    dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
-    DialpadModalTitle: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
@@ -631,6 +634,7 @@ export interface CallWithChatCompositeStrings {
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -929,7 +933,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
-    AddPerson?: JSX.Element | undefined;
+    PeoplePaneAddPerson?: JSX.Element | undefined;
+    Dialpad?: JSX.Element | undefined;
+    Call?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;

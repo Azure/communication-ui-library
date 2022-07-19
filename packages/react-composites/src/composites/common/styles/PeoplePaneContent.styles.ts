@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStackItemStyles, IStackStyles, IStackTokens } from '@fluentui/react';
+import {
+  IButtonStyles,
+  IContextualMenuStyles,
+  IStackItemStyles,
+  IStackStyles,
+  IStackTokens,
+  Theme
+} from '@fluentui/react';
 
 /**
  * @private
@@ -61,3 +68,32 @@ export const linkIconStyles = {
  * @private
  */
 export const localAndRemotePIPStyles: IStackStyles = { root: { marginRight: '1rem' } };
+
+/**
+ * @private
+ */
+export const themedCopyLinkButtonStyles = (mobileView: boolean | undefined, theme: Theme): Partial<IButtonStyles> => ({
+  root: {
+    minHeight: mobileView ? '3rem' : '2.5rem',
+    borderRadius: mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
+  }
+});
+
+/**
+ * @private
+ */
+export const themedMenuStyle = (theme: Theme): Partial<IContextualMenuStyles> => ({
+  root: {
+    borderRadius: theme.effects.roundedCorner6
+  },
+
+  title: {
+    paddingLeft: '.5rem',
+    fontWeight: 600,
+    fontSize: '0.875rem'
+  },
+  list: {
+    fontWeight: 600,
+    fontSize: '0.875rem'
+  }
+});
