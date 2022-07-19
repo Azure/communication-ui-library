@@ -93,39 +93,39 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
     return this.callWithChatAdapter.registerActiveFileUploads(files);
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
     return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public clearFileUploads(): void {
+  public clearFileUploads = (): void => {
     this.callWithChatAdapter.clearFileUploads();
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public cancelFileUpload(id: string): void {
+  public cancelFileUpload = (id: string): void => {
     this.callWithChatAdapter.cancelFileUpload(id);
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadProgress(id: string, progress: number): void {
+  public updateFileUploadProgress = (id: string, progress: number): void => {
     this.callWithChatAdapter.updateFileUploadProgress(id, progress);
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
     this.callWithChatAdapter.updateFileUploadErrorMessage(id, errorMessage);
-  }
+  };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
-  }
+  };
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(

@@ -10,10 +10,8 @@ import {
 } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
-import { CallWithChatCompositeStrings } from '.';
-import { CallAdapter } from '../CallComposite';
+import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
-import { ChatAdapter } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
@@ -32,15 +30,14 @@ import {
  */
 export const PeoplePaneContent = (props: {
   inviteLink?: string;
-  callAdapter: CallAdapter;
-  chatAdapter: ChatAdapter;
+  onRemoveParticipant: (participantId: string) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
-  const { callAdapter, chatAdapter, inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings } = props;
+  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -75,16 +72,15 @@ export const PeoplePaneContent = (props: {
   ]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
-    const onRemoveParticipant = async (participantId: string): Promise<void> =>
-      removeParticipantFromCallWithChat(callAdapter, chatAdapter, participantId);
+    const onRemoveAParticipant = async (participantId: string): Promise<void> => onRemoveParticipant(participantId);
     return {
       ...participantListDefaultProps,
       // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
-      onRemoveParticipant: props.mobileView ? undefined : onRemoveParticipant,
+      onRemoveParticipant: props.mobileView ? undefined : onRemoveAParticipant,
       // We want the drawer menu items to appear when participants in ParticipantList are clicked
       onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
-  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, callAdapter, chatAdapter]);
+  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, onRemoveParticipant]);
 
   const participantList = (
     <ParticipantListWithHeading
@@ -146,19 +142,6 @@ export const PeoplePaneContent = (props: {
 };
 
 /**
- * In a CallWithChat when a participant is removed, we must remove them from both
- * the call and the chat thread.
- */
-const removeParticipantFromCallWithChat = async (
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter,
-  participantId: string
-): Promise<void> => {
-  await callAdapter.removeParticipant(participantId);
-  await chatAdapter.removeParticipant(participantId);
-};
-
-/**
  * Create default contextual menu items for particant
  * @param participant - participant to create contextual menu items for
  * @param callWithChatStrings - localized strings for menu item text
@@ -168,7 +151,7 @@ const removeParticipantFromCallWithChat = async (
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  callWithChatStrings: CallWithChatCompositeStrings,
+  strings: CallWithChatCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
@@ -176,7 +159,7 @@ const createDefaultContextualMenuItems = (
   if (participant?.userId !== localParticipantUserId) {
     menuItems.push({
       key: 'remove',
-      text: callWithChatStrings.removeMenuLabel,
+      text: strings.removeMenuLabel,
       onClick: () => {
         if (participant?.userId) {
           onRemoveParticipant?.(participant?.userId);
