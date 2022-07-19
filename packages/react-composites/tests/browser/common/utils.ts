@@ -427,3 +427,20 @@ const awaitFileTypeIcon = async (page: Page): Promise<void> => {
     }
   );
 };
+
+/**
+ * Block for given number of seconds in an async test.
+ *
+ * This is useful for making a test hang while you're debugging. To stop a test at
+ * some point for 5 minutes, simply add:
+ *
+ * ```
+ *   await blockForMinutes(5);
+ * ```
+ * DO NOT USE in production code because artificial delays like this slow down CI.
+ */
+export async function blockForMinutes(m: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000 * 60 * m);
+  });
+}

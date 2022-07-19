@@ -29,7 +29,7 @@
     "test:e2e:update": "rushx _by-flavor \"node ./scripts/runBrowserTests.mjs -u\"",
     "test:e2e:call:update": "rushx _by-flavor \"node ./scripts/runBrowserTests.mjs -u -c call\"",
     "test:e2e:chat:update": "rushx _by-flavor \"node ./scripts/runBrowserTests.mjs -u -c chat\"",
-    "test:e2e:callwithchat:update": "node ./scripts/runBrowserTests.mjs -u -c callWithChat\"",
+    "test:e2e:callwithchat:update": "rushx _by-flavor \"node ./scripts/runBrowserTests.mjs -u -c callWithChat\"",
     "snapshot:update": "rushx test -- --update-snapshot",
     "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",
