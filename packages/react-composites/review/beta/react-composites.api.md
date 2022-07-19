@@ -86,6 +86,7 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
+    alternativeCallerId?: string;
 };
 
 // @public
@@ -160,6 +161,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
+    alternativeCallerId?: string;
 };
 
 // @public
@@ -174,7 +176,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -814,7 +816,7 @@ export interface CompositeStrings {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternativeCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
@@ -946,6 +948,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;
+    BackSpace: JSX.Element;
 };
 
 // @public

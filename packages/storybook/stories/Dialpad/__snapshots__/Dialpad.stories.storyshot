@@ -38,6 +38,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
               >
                 <input
                   aria-invalid={false}
+                  aria-labelledby="TextFieldSuffix5"
                   className="ms-TextField-field stub-classname"
                   data-test-id="dialpad-input"
                   id="TextField1"
@@ -48,6 +49,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                   placeholder="Enter a number"
                   type="text"
                   value=""
+                />
+                <div
+                  className="ms-TextField-suffix stub-classname"
+                  id="TextFieldSuffix5"
                 />
               </div>
             </div>

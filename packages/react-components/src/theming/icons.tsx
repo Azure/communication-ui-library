@@ -41,6 +41,9 @@ import {
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(dialpad) */
+import { Backspace20Regular } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -133,5 +136,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ResumeCall: <Play20Filled />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
-  VideoTileMicOff: <MicOff16Filled />
+  VideoTileMicOff: <MicOff16Filled />,
+  /* @conditional-compile-remove(dialpad) */
+  BackSpace: <Backspace20Regular />
 };
