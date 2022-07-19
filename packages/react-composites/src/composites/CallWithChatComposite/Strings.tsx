@@ -117,17 +117,17 @@ export interface CallWithChatCompositeStrings {
   /**
    * Label for add people dropdown
    */
-  addPeopleButtonLabel: string;
+  peoplePaneAddPeopleButtonLabel: string;
   /* @conditional-compile-remove(PeoplePaneDropdown) */
   /**
    * Label for button to start a call
    */
-  callButtonLabel: string;
+  dialpadStartCallButtonLabel: string;
   /* @conditional-compile-remove(PeoplePaneDropdown) */
   /**
    * Title for dialpad Modal
    */
-  DialpadModalTitle: string;
+  dialpadModalTitle: string;
   /* @conditional-compile-remove(PeoplePaneDropdown) */
   /**
    * Aria Label for dialpad Modal
@@ -137,5 +137,5 @@ export interface CallWithChatCompositeStrings {
   /**
    * Aria Label for dialpad Modal close button
    */
-  closeModalButtonAriaLabel: string;
+  dialpadCloseModalButtonAriaLabel: string;
 }

@@ -20,7 +20,7 @@ import {
   WifiWarning20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PeoplePaneDropdown) */
-import { PersonAdd20Regular } from '@fluentui/react-icons';
+import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
@@ -73,7 +73,11 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PeoplePaneDropdown) */
-  AddPerson: <PersonAdd20Regular />
+  PeoplePaneAddPerson: <PersonAdd20Regular />,
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Dialpad: <Dialpad20Regular />,
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Call: <Call20Regular />
 };
 
 /**
@@ -173,7 +177,11 @@ export type CallCompositeIcons = {
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
   /* @conditional-compile-remove(PeoplePaneDropdown) */
-  AddPerson?: JSX.Element;
+  PeoplePaneAddPerson?: JSX.Element;
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Dialpad?: JSX.Element;
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Call?: JSX.Element;
 };
 
 /**
@@ -248,7 +256,11 @@ export type CallWithChatCompositeIcons = {
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
   /* @conditional-compile-remove(PeoplePaneDropdown) */
-  AddPerson?: JSX.Element;
+  PeoplePaneAddPerson?: JSX.Element;
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Dialpad?: JSX.Element;
+  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  Call?: JSX.Element;
 
   // Chat icons
   EditBoxCancel?: JSX.Element;
