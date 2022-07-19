@@ -570,7 +570,6 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
-  console.log(alternateCallerId);
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
