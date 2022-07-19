@@ -551,6 +551,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 };
 
 /**
@@ -564,14 +566,16 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   displayName,
   credential,
   endpoint,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callAdapterLocator
+    locator: callAdapterLocator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)

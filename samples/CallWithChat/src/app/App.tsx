@@ -46,6 +46,7 @@ interface CallWithChatArgs {
   endpointUrl: string;
   displayName: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 type AppPages = 'home' | 'call' | 'error';
 
@@ -111,6 +112,8 @@ const App = (): JSX.Element => {
           displayName={callWithChatArgs.displayName}
           locator={callWithChatArgs.locator}
           endpoint={callWithChatArgs.endpointUrl}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={callWithChatArgs.alternateCallerId}
         />
       );
     }
@@ -158,7 +161,8 @@ const generateCallWithChatArgs = async (
     displayName,
     endpointUrl,
     credentials,
-    locator
+    locator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   };
 };
 
