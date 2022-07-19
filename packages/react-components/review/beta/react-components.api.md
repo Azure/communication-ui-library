@@ -396,6 +396,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    BackSpace: JSX.Element;
 };
 
 // @public
@@ -464,6 +465,8 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
+    deleteButtonAriaLabel: string;
+    // (undocumented)
     placeholderText: string;
 }
 
@@ -471,6 +474,8 @@ export interface DialpadStrings {
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
+    // (undocumented)
+    deleteIcon?: IButtonStyles;
     // (undocumented)
     primaryContent?: IStyle;
     // (undocumented)

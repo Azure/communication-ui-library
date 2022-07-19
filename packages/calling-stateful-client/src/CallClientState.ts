@@ -411,6 +411,11 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Stores an ACS aquired phone number for making PSTN calls.
+   */
+  alternativeCallerId?: string;
 }
 
 /**

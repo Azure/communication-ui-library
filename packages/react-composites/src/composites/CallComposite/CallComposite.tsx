@@ -92,7 +92,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
-  // const role = useSelector(roleSelector);
 
   let pageElement: JSX.Element;
 
