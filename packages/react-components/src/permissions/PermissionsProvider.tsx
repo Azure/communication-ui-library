@@ -7,7 +7,7 @@ import React, { createContext, useContext } from 'react';
  * @internal
  */
 export type _Permissions = {
-  cameraButton: boolean; // or 'disabled'/'hide'?
+  cameraButton: boolean;
   microphoneButton: boolean;
   screenShare: boolean;
   participantList: boolean;
