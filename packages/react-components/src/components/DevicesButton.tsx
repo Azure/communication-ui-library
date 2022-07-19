@@ -9,7 +9,7 @@ import {
   IContextualMenuStyles,
   merge
 } from '@fluentui/react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';

@@ -22,7 +22,6 @@ import {
   menuItemIncreasedSizeStyles,
   menuSubIconStyleSet
 } from '../styles/ChatMessageComponent.styles';
-import { preventDismissOnEvent } from '../utils/common';
 
 /** @private */
 export interface ChatMessageActionFlyoutProps {
