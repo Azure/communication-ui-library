@@ -275,7 +275,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 }
 
 // @public
-export interface CallCompositeStrings {
+export interface CallCompositeStrings extends CommonCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
@@ -562,29 +562,20 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 }
 
 // @public
-export interface CallWithChatCompositeStrings {
-    chatButtonLabel: string;
+export interface CallWithChatCompositeStrings extends CommonCompositeStrings {
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
-    copyInviteLinkButtonLabel: string;
-    dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
-    peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
-    peoplePaneSubTitle: string;
-    peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
-    removeMenuLabel: string;
-    returnToCallButtonAriaDescription?: string;
-    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -690,6 +681,19 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+}
+
+// @public
+export interface CommonCompositeStrings {
+    chatButtonLabel: string;
+    copyInviteLinkButtonLabel: string;
+    dismissSidePaneButtonLabel?: string;
+    peopleButtonLabel: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
+    removeMenuLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
 }
 
 // @public

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommonCompositeStrings } from '../common/Strings';
+
 /**
  * Strings used by the {@link CallWithChatComposite} directly.
  *
@@ -8,11 +10,7 @@
  *
  * @public
  */
-export interface CallWithChatCompositeStrings {
-  /**
-   * {@link CallWithChatComposite} control bar People button label
-   */
-  peopleButtonLabel: string;
+export interface CallWithChatCompositeStrings extends CommonCompositeStrings {
   /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
@@ -21,10 +19,6 @@ export interface CallWithChatCompositeStrings {
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
-  /**
-   * {@link CallWithChatComposite} control bar Chat button label.
-   */
-  chatButtonLabel: string;
   /**
    * {@Link CallWithChatComposite} control bar Chat button ToolTipContent.
    */
@@ -64,14 +58,6 @@ export interface CallWithChatCompositeStrings {
    */
   moreDrawerButtonTooltip: string;
   /**
-   * Side pane People section Title.
-   */
-  peoplePaneTitle: string;
-  /**
-   * Side pane People section subheader.
-   */
-  peoplePaneSubTitle: string;
-  /**
    * Side pane Chat screen title.
    */
   chatPaneTitle: string;
@@ -87,24 +73,4 @@ export interface CallWithChatCompositeStrings {
    * returns the user to the call screen.
    */
   pictureInPictureTileAriaLabel: string;
-  /**
-   * Label for menu item to remove participant
-   */
-  removeMenuLabel: string;
-  /**
-   * Label for button to copy invite link
-   */
-  copyInviteLinkButtonLabel: string;
-  /**
-   * Label for SidePaneHeader dismiss button
-   */
-  dismissSidePaneButtonLabel?: string;
-  /**
-   * Aria Description string for return to call button
-   */
-  returnToCallButtonAriaDescription?: string;
-  /**
-   * Aria label string for return to call back button
-   */
-  returnToCallButtonAriaLabel?: string;
 }

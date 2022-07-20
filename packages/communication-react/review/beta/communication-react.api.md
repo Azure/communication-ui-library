@@ -396,11 +396,10 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 }
 
 // @public
-export interface CallCompositeStrings {
+export interface CallCompositeStrings extends CommonCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
     complianceBannerNowOnlyTranscription: string;
@@ -416,9 +415,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
-    copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
-    dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -435,16 +432,10 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
-    peopleButtonLabel: string;
-    peoplePaneSubTitle: string;
-    peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    removeMenuLabel: string;
-    returnToCallButtonAriaDescription?: string;
-    returnToCallButtonAriaLabel?: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -828,29 +819,20 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 }
 
 // @public
-export interface CallWithChatCompositeStrings {
-    chatButtonLabel: string;
+export interface CallWithChatCompositeStrings extends CommonCompositeStrings {
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
-    copyInviteLinkButtonLabel: string;
-    dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
-    peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
-    peoplePaneSubTitle: string;
-    peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
-    removeMenuLabel: string;
-    returnToCallButtonAriaDescription?: string;
-    returnToCallButtonAriaLabel?: string;
 }
 
 // @public
@@ -1155,6 +1137,19 @@ export type ClientState = CallClientState & ChatClientState;
 
 // @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+
+// @public
+export interface CommonCompositeStrings {
+    chatButtonLabel: string;
+    copyInviteLinkButtonLabel: string;
+    dismissSidePaneButtonLabel?: string;
+    peopleButtonLabel: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
+    removeMenuLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
+}
 
 // @public
 export type CommonProperties<A, B> = {

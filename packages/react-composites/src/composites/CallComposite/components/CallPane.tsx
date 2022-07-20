@@ -25,10 +25,12 @@ import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { TabHeader } from '../../common/TabHeader';
 import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../../common/styles/Pane.styles';
+import { CommonCompositeStrings } from '../../common/Strings';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -51,14 +53,14 @@ export const CallPane = (props: {
 
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
+  /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale();
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const getStrings = () => {
+  const getStrings = (): CommonCompositeStrings => {
     /* @conditional-compile-remove(one-to-n-calling) */
     return localeStrings.strings.call;
 
-    return localeStrings.strings.callWithChat;
+    return {} as CommonCompositeStrings;
   };
 
   const strings = getStrings();
