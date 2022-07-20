@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Forcing chat message bubble background color in high contrast mode",
+  "comment": "Chat message bubble retains background color in high contrast modes making each message distinguishable.",
   "packageName": "@internal/react-components",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
