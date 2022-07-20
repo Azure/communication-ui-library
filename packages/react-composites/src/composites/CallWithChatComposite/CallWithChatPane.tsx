@@ -19,12 +19,12 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
-import { SidePaneHeader } from './SidePaneHeader';
+import { SidePaneHeader } from '../common/SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from './ModalLocalAndRemotePIP';
-import { PeoplePaneContent } from './PeoplePaneContent';
+import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from '../common/ModalLocalAndRemotePIP';
+import { PeoplePaneContent } from '../common/PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
-import { TabHeader } from './TabHeader';
+import { TabHeader } from '../common/TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { _ICoordinates } from '@internal/react-components';
@@ -61,10 +61,11 @@ export const CallWithChatPane = (props: {
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
-      <TabHeader {...props} activeTab={props.activePane} />
+      <TabHeader {...props} strings={callWithChatStrings} activeTab={props.activePane} />
     ) : (
       <SidePaneHeader
         {...props}
+        strings={callWithChatStrings}
         headingText={
           props.activePane === 'chat'
             ? callWithChatStrings.chatPaneTitle
@@ -91,9 +92,23 @@ export const CallWithChatPane = (props: {
     />
   );
 
+  /**
+   * In a CallWithChat when a participant is removed, we must remove them from both
+   * the call and the chat thread.
+   */
+  const removeParticipantFromCallWithChat = async (participantId: string): Promise<void> => {
+    await props.callAdapter.removeParticipant(participantId);
+    await props.chatAdapter.removeParticipant(participantId);
+  };
+
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
-      <PeoplePaneContent {...props} setDrawerMenuItems={setDrawerMenuItems} strings={callWithChatStrings} />
+      <PeoplePaneContent
+        {...props}
+        onRemoveParticipant={removeParticipantFromCallWithChat}
+        setDrawerMenuItems={setDrawerMenuItems}
+        strings={callWithChatStrings}
+      />
     </CallAdapterProvider>
   );
 

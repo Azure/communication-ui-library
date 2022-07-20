@@ -233,7 +233,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -392,6 +392,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
+    role?: Role;
 }
 
 // @public
@@ -1504,6 +1505,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    BackSpace: JSX.Element;
 };
 
 // @public
@@ -1581,6 +1583,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageResend: JSX.Element;
     HoldCall: JSX.Element;
     ResumeCall: JSX.Element;
+    BackSpace: JSX.Element;
 };
 
 // @public
@@ -1681,6 +1684,8 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
+    deleteButtonAriaLabel: string;
+    // (undocumented)
     placeholderText: string;
 }
 
@@ -1688,6 +1693,8 @@ export interface DialpadStrings {
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
+    // (undocumented)
+    deleteIcon?: IButtonStyles;
     // (undocumented)
     primaryContent?: IStyle;
     // (undocumented)
@@ -2447,6 +2454,9 @@ export interface RemoteVideoStreamState {
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
 }
+
+// @beta (undocumented)
+export type Role = 'Presenter' | 'Attendee' | 'Consumer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

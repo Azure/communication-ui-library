@@ -4,14 +4,11 @@
 /**
  * @private
  */
-export const formatPhoneNumber = (value: string): string => {
+export const formatPhoneNumber = (phoneNumber: string): string => {
   // if input value is falsy eg if the user deletes the input, then just return
-  if (!value) {
-    return value;
+  if (!phoneNumber) {
+    return phoneNumber;
   }
-
-  // clean the input for any non-digit values.
-  let phoneNumber = value.replace(/[^\d*#+]/g, '');
 
   // if phone number starts with 1, format like 1 (xxx)xxx-xxxx.
   // if phone number starts with +, we format like +x (xxx)xxx-xxxx.
