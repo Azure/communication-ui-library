@@ -23,6 +23,7 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { Dialpad } from '@azure/communication-react';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -56,6 +57,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
+  const [dialPadParticipant, setDialpadParticipant] = useState<string>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   /* @conditional-compile-remove(PSTN-calls) */
@@ -100,18 +102,31 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {
               /* @conditional-compile-remove(PSTN-calls) */ outBoundCallChosen && (
                 <Stack>
-                  <TextField
-                    className={outboundtextField}
-                    label={'Participants'}
-                    placeholder={"Comma seperated phone numbers or ACS ID's"}
-                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
-                  />
-                  <TextField
-                    className={outboundtextField}
-                    label={'ACS phone number for Caller ID'}
-                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
-                    onChange={(_, newValue) => newValue && setAlternateCallerId(newValue)}
-                  />
+                  <Stack>
+                    <Dialpad onChange={(newValue) => newValue && setDialpadParticipant(newValue)} />
+                    <PrimaryButton
+                      text={'Add PSTN participant'}
+                      className={buttonStyle}
+                      onClick={() => {
+                        setOutboundParticipants(outboundParticipants + ',' + dialPadParticipant);
+                        setDialpadParticipant('');
+                      }}
+                    />
+                  </Stack>
+                  <Stack>
+                    <TextField
+                      className={outboundtextField}
+                      label={'Participants'}
+                      placeholder={"Comma seperated phone numbers or ACS ID's"}
+                      onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                    />
+                    <TextField
+                      className={outboundtextField}
+                      label={'ACS phone number for Caller ID'}
+                      placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                      onChange={(_, newValue) => newValue && setAlternateCallerId(newValue)}
+                    />
+                  </Stack>
                 </Stack>
               )
             }
