@@ -60,8 +60,7 @@ export const copyLinkButtonStyles: IButtonStyles = {
  * @private
  */
 export const linkIconStyles = {
-  marginRight: '0.5rem',
-  /* @conditional-compile-remove(PeoplePaneDropdown) */ lineHeight: '0'
+  marginRight: '0.5rem'
 };
 
 /**
@@ -76,14 +75,5 @@ export const themedCopyLinkButtonStyles = (mobileView: boolean | undefined, them
   root: {
     minHeight: mobileView ? '3rem' : '2.5rem',
     borderRadius: mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
-  }
-});
-
-/**
- * @private
- */
-export const themedMenuStyle = (theme: Theme): Partial<IContextualMenuStyles> => ({
-  root: {
-    borderRadius: theme.effects.roundedCorner6
   }
 });
