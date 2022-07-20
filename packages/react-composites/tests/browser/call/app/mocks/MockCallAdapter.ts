@@ -1,12 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
-import { merge } from '@fluentui/react';
-import type {
-  LocalVideoStreamState,
-  RemoteParticipantState,
-  VideoStreamRendererViewState
-} from '@internal/calling-stateful-client';
 import type { CallAdapter, CallAdapterState } from '../../../../../src';
 import type { MockCallAdapterState } from '../../MockCallAdapterState';
 
