@@ -1,6 +1,6 @@
 # Automated tests
 
-While we rely on manual bug bashes to keep up release quality, automated tests that run as part of our CI are the primary mechanism to maintain a high quality bar on `main` and in our releases.
+While we rely on [manual bug bashes](../releases/release-checklist.md) to keep up release quality, automated tests that run as part of our CI are the primary mechanism to maintain a high quality bar on the `main` branch and in our releases.
 
 ## Tests of many colors
 
