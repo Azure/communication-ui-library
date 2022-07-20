@@ -12,7 +12,7 @@ import {
   mobilePaneButtonStyles,
   mobilePaneControlBarStyle,
   mobilePaneHiddenIconStyles
-} from './styles/MobilePane.styles';
+} from './styles/Pane.styles';
 
 /**
  * Props for {@link TabHeader} component

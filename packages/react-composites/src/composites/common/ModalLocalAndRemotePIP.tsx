@@ -1,15 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  concatStyleSets,
-  ContextualMenu,
-  IDragOptions,
-  IModalStyleProps,
-  IModalStyles,
-  IStackStyles,
-  IStyleFunctionOrObject,
-  Stack
-} from '@fluentui/react';
+import { concatStyleSets, ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -18,6 +9,12 @@ import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { _ModalClone, _ICoordinates } from '@internal/react-components';
+import {
+  hiddenStyle,
+  ModalLocalAndRemotePIPStyles,
+  modalStyle,
+  PIPContainerStyle
+} from './styles/ModalLocalAndRemotePIP.styles';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -28,11 +25,6 @@ const DRAG_OPTIONS: IDragOptions = {
   menu: ContextualMenu,
   keepInBounds: true
 };
-
-/**
- * Styles for {@link ModalLocalAndRemotePIP} component
- */
-export type ModalLocalAndRemotePIPStyles = { modal?: Partial<IModalStyles> };
 
 const _ModalLocalAndRemotePIP = (props: {
   hidden: boolean;
@@ -91,28 +83,4 @@ export const ModalLocalAndRemotePIP = (props: {
       <_ModalLocalAndRemotePIP {...props}>{props.children}</_ModalLocalAndRemotePIP>
     </CallAdapterProvider>
   );
-};
-
-const PIPContainerStyle: IStackStyles = {
-  root: { position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }
-};
-
-const hiddenStyle: IStackStyles = concatStyleSets(PIPContainerStyle, { root: { display: 'none' } });
-
-const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
-  main: {
-    minWidth: 'min-content',
-    minHeight: 'min-content',
-    position: 'absolute',
-    overflow: 'hidden',
-    // pointer events for root Modal div set to auto to make LocalAndRemotePIP interactive
-    pointerEvents: 'auto',
-    touchAction: 'none'
-  },
-  root: {
-    width: '100%',
-    height: '100%',
-    // pointer events for root Modal div set to none to make descendants interactive
-    pointerEvents: 'none'
-  }
 };

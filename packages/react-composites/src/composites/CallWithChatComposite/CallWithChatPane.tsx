@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IStackStyles, IStackTokens, ITheme, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   _DrawerMenu,
   _DrawerMenuItemProps,
@@ -9,7 +9,7 @@ import {
   ParticipantMenuItemsCallback,
   useTheme
 } from '@internal/react-components';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CallAdapter } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
@@ -21,7 +21,7 @@ import {
 } from '../common/styles/ParticipantContainer.styles';
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ModalLocalAndRemotePIP, ModalLocalAndRemotePIPStyles } from '../common/ModalLocalAndRemotePIP';
+import { ModalLocalAndRemotePIP } from '../common/ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from '../common/PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from '../common/TabHeader';
@@ -29,6 +29,9 @@ import { TabHeader } from '../common/TabHeader';
 import { FileSharingOptions } from '../ChatComposite';
 import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
+import { useMinMaxDragPosition } from '../common/utils';
+import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -112,31 +115,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
-  // Use document.getElementById until Fluent's Stack supports componentRef property: https://github.com/microsoft/fluentui/issues/20410
-  const modalLayerHostElement = document.getElementById(props.modalLayerHostId);
-  const modalHostRef = useRef<HTMLElement>(modalLayerHostElement);
-  const modalHostWidth = _useContainerWidth(modalHostRef);
-  const modalHostHeight = _useContainerHeight(modalHostRef);
-  const minDragPosition: _ICoordinates | undefined = useMemo(
-    () =>
-      modalHostWidth === undefined
-        ? undefined
-        : {
-            x: props.rtl ? -1 * modalPipRightPositionPx : modalPipRightPositionPx - modalHostWidth + modalPipWidthPx,
-            y: -1 * modalPipTopPositionPx
-          },
-    [modalHostWidth, props.rtl]
-  );
-  const maxDragPosition: _ICoordinates | undefined = useMemo(
-    () =>
-      modalHostWidth === undefined || modalHostHeight === undefined
-        ? undefined
-        : {
-            x: props.rtl ? modalHostWidth - modalPipRightPositionPx - modalPipWidthPx : modalPipRightPositionPx,
-            y: modalHostHeight - modalPipTopPositionPx - modalPipHeightPx
-          },
-    [modalHostHeight, modalHostWidth, props.rtl]
-  );
+  const minMaxDragPosition = useMinMaxDragPosition(props.rtl, document.getElementById(props.modalLayerHostId));
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
@@ -164,8 +143,8 @@ export const CallWithChatPane = (props: {
           modalLayerHostId={props.modalLayerHostId}
           hidden={hidden}
           styles={pipStyles}
-          minDragPosition={minDragPosition}
-          maxDragPosition={maxDragPosition}
+          minDragPosition={minMaxDragPosition.minDragPosition}
+          maxDragPosition={minMaxDragPosition.maxDragPosition}
         />
       )}
       {drawerMenuItems.length > 0 && (
@@ -182,41 +161,3 @@ export const CallWithChatPane = (props: {
  * @private
  */
 export type CallWithChatPaneOption = 'none' | 'chat' | 'people';
-
-const hiddenStyles: IStackStyles = {
-  root: {
-    display: 'none'
-  }
-};
-
-const sidePaneStyles: IStackStyles = {
-  root: {
-    height: '100%',
-    padding: '0.5rem 0.25rem',
-    maxWidth: '21.5rem'
-  }
-};
-
-const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
-
-const sidePaneTokens: IStackTokens = {
-  childrenGap: '0.5rem'
-};
-
-const modalPipRightPositionPx = 16;
-const modalPipTopPositionPx = 52;
-const modalPipWidthPx = 88;
-const modalPipHeightPx = 128;
-
-const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
-  modal: {
-    main: {
-      borderRadius: theme.effects.roundedCorner4,
-      boxShadow: theme.effects.elevation8,
-      // Above the message thread / people pane.
-      zIndex: 2,
-      ...(theme.rtl ? { left: _pxToRem(modalPipRightPositionPx) } : { right: _pxToRem(modalPipRightPositionPx) }),
-      top: _pxToRem(modalPipTopPositionPx)
-    }
-  }
-});
