@@ -83,6 +83,7 @@ type MainScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
+  /* @conditional-compile-remove(rooms) */
   role?: Role;
 };
 
@@ -164,9 +165,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     default:
       throw new Error('Invalid call composite page');
   }
+  /* @conditional-compile-remove(rooms) */
   const permissions = _getPermissions(props.role);
 
-  return <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
+  // default retElement for stable version
+  let retElement = pageElement;
+  /* @conditional-compile-remove(rooms) */
+  retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
+
+  return retElement;
 };
 
 /**
@@ -186,6 +193,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems,
     options,
     formFactor = 'desktop',
+    /* @conditional-compile-remove(rooms) */
     role
   } = props;
   useEffect(() => {
@@ -213,6 +221,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
             options={options}
+            /* @conditional-compile-remove(rooms) */
             role={role}
           />
         </CallAdapterProvider>
