@@ -15,14 +15,16 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle,
-  outboundtextField
+  buttonStyle
 } from '../styles/HomeScreen.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { outboundtextField, addDialparticipantStyles } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 
 export interface HomeScreenProps {
@@ -55,8 +57,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
@@ -103,13 +108,28 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ outBoundCallChosen && (
                 <Stack>
                   <Stack>
-                    <Dialpad onChange={(newValue) => newValue && setDialpadParticipant(newValue)} />
+                    <Dialpad
+                      onChange={(newValue) => {
+                        if (!dialPadParticipant) {
+                          newValue && setDialpadParticipant('+' + newValue);
+                        } else {
+                          newValue && setDialpadParticipant(newValue);
+                        }
+                      }}
+                    />
                     <PrimaryButton
-                      text={'Add PSTN participant'}
-                      className={buttonStyle}
+                      text={'Add Phone Number'}
+                      className={addDialparticipantStyles}
                       onClick={() => {
-                        setOutboundParticipants(outboundParticipants + ',' + dialPadParticipant);
-                        setDialpadParticipant('');
+                        const participantToAdd = parseDialPadParticipant(dialPadParticipant);
+                        if (!outboundParticipants) {
+                          setOutboundParticipants('+' + participantToAdd);
+                        } else {
+                          setOutboundParticipants(outboundParticipants + ', +' + participantToAdd);
+                        }
+
+                        // reset dialpad participant so we can keep adding participants with dialpad
+                        setDialpadParticipant(undefined);
                       }}
                     />
                   </Stack>
@@ -117,8 +137,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     <TextField
                       className={outboundtextField}
                       label={'Participants'}
+                      value={outboundParticipants ? outboundParticipants : undefined}
                       placeholder={"Comma seperated phone numbers or ACS ID's"}
-                      onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
                     />
                     <TextField
                       className={outboundtextField}
@@ -163,7 +184,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
- *
  */
 const parseParticipants = (participantsString?: string): string[] | undefined => {
   if (participantsString) {
@@ -171,4 +191,16 @@ const parseParticipants = (participantsString?: string): string[] | undefined =>
   } else {
     return undefined;
   }
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Parse the unformatted string that is given from the dialpad to something that the
+ * Calling adapter will accept as a PSTN participant.
+ *
+ * @param participant - string stored from dialpad inputs.
+ * @returns formatted phone number to be added to call locator.
+ */
+const parseDialPadParticipant = (participant?: string): string | undefined => {
+  return participant?.replace('-', '').replace(') ', '').replace(' (', '');
 };
