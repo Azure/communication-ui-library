@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  concatStyleSets,
-  DefaultButton,
-  IButtonStyles,
-  IContextualMenuItem,
-  PrimaryButton,
-  Stack,
-  useTheme
-} from '@fluentui/react';
+import { IContextualMenuItem, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -17,26 +9,15 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
-import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
-import {
-  copyLinkButtonStackStyles,
-  copyLinkButtonContainerStyles,
-  copyLinkButtonStyles,
-  linkIconStyles,
-  participantListContainerStyles,
-  peoplePaneContainerStyle
-} from './styles/PeoplePaneContent.styles';
-import { themedCopyLinkButtonStyles } from './styles/PeoplePaneContent.styles';
-/* @conditional-compile-remove(people-pane-dropdown) */
-import { AddPeopleDropdown } from '../CallWithChatComposite/components/AddPeopleDropdown';
+import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+import { AddPeopleButton } from '../CallWithChatComposite/components/AddPeopleButton';
 
 /**
  * @private
@@ -105,59 +86,6 @@ export const PeoplePaneContent = (props: {
     />
   );
 
-  const theme = useTheme();
-
-  const copyLinkButtonStylesThemed = useMemo(
-    (): IButtonStyles => concatStyleSets(copyLinkButtonStyles, themedCopyLinkButtonStyles(props.mobileView, theme)),
-    [props.mobileView, theme]
-  );
-
-  // for conditional compile
-  const mobileViewAddPeopleButton = (inviteLink?: string): JSX.Element => {
-    /* @conditional-compile-remove(people-pane-dropdown) */
-    return <AddPeopleDropdown strings={strings} mobileView={props.mobileView} inviteLink={inviteLink} />;
-
-    return (
-      <Stack>
-        {inviteLink && (
-          <Stack.Item styles={copyLinkButtonContainerStyles}>
-            <PrimaryButton
-              onClick={() => copy(inviteLink ?? '')}
-              styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              text={strings.copyInviteLinkButtonLabel}
-            />
-          </Stack.Item>
-        )}
-      </Stack>
-    );
-  };
-
-  const desktopViewAddPeopleButton = (inviteLink?: string): JSX.Element => {
-    /* @conditional-compile-remove(people-pane-dropdown) */
-    return (
-      <Stack tokens={peoplePaneContainerTokens}>
-        <AddPeopleDropdown strings={strings} mobileView={props.mobileView} inviteLink={inviteLink} />
-        {participantList}
-      </Stack>
-    );
-
-    return (
-      <Stack tokens={peoplePaneContainerTokens}>
-        {inviteLink && (
-          <Stack styles={copyLinkButtonStackStyles}>
-            <DefaultButton
-              text={strings.copyInviteLinkButtonLabel}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              onClick={() => copy(inviteLink ?? '')}
-              styles={copyLinkButtonStylesThemed}
-            />
-          </Stack>
-        )}
-        {participantList}
-      </Stack>
-    );
-  };
   if (props.mobileView) {
     return (
       <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
@@ -165,12 +93,24 @@ export const PeoplePaneContent = (props: {
           {participantList}
         </Stack.Item>
 
-        {mobileViewAddPeopleButton(inviteLink)}
+        <AddPeopleButton
+          inviteLink={inviteLink}
+          mobileView={props.mobileView}
+          participantList={participantList}
+          strings={strings}
+        />
       </Stack>
     );
   }
 
-  return desktopViewAddPeopleButton(inviteLink);
+  return (
+    <AddPeopleButton
+      inviteLink={inviteLink}
+      mobileView={props.mobileView}
+      participantList={participantList}
+      strings={strings}
+    />
+  );
 };
 
 /**
