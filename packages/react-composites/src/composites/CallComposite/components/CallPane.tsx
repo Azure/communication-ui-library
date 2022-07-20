@@ -54,14 +54,14 @@ export const CallPane = (props: {
   const localeStrings = useLocale();
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const useStrings = () => {
+  const getStrings = () => {
     /* @conditional-compile-remove(one-to-n-calling) */
     return localeStrings.strings.call;
 
     return localeStrings.strings.callWithChat;
   };
 
-  const strings = useStrings();
+  const strings = getStrings();
   const theme = useTheme();
 
   const header =
@@ -82,7 +82,7 @@ export const CallPane = (props: {
     await props.callAdapter.removeParticipant(participantId);
   };
 
-  const minMaxDragPosition = useMinMaxDragPosition(props.rtl, document.getElementById(props.modalLayerHostId));
+  const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 

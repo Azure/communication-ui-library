@@ -17,11 +17,8 @@ interface MinMaxDragPosition {
  * @private
  */
 // Use document.getElementById until Fluent's Stack supports componentRef property: https://github.com/microsoft/fluentui/issues/20410
-export const useMinMaxDragPosition = (
-  rtl: boolean | undefined,
-  modalLayerHostElement: HTMLElement | null
-): MinMaxDragPosition => {
-  const modalHostRef = useRef<HTMLElement>(modalLayerHostElement);
+export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): MinMaxDragPosition => {
+  const modalHostRef = useRef<HTMLElement>(document.getElementById(modalLayerHostId));
   const modalHostWidth = _useContainerWidth(modalHostRef);
   const modalHostHeight = _useContainerHeight(modalHostRef);
   const minDragPosition: _ICoordinates | undefined = useMemo(

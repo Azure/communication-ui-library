@@ -115,7 +115,7 @@ export const CallWithChatPane = (props: {
     </CallAdapterProvider>
   );
 
-  const minMaxDragPosition = useMinMaxDragPosition(props.rtl, document.getElementById(props.modalLayerHostId));
+  const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
