@@ -41,16 +41,71 @@ Update the connection string in [./browser/.env](./browser/.env) file (set `CONN
 
 ## Run tests
 
+For local development, the preferred way to run browser tests is via [../scripts/runBrowswerTests.mjs](../scripts/runBrowswerTests.mjs).
+
+In `packages/react-composites`, run
+
+```sh
+node scripts/runBrowserTests.mjs --help
+```
+
+for a full description of available options. The CLI documentation includes examples that are particularly applicable to local test development.
+
+[package.json](../package.json) contains several scripts that invoke this helper. Those scripts are used by GitHub workflows to run the tests, but you can use the helper script directly.
+
 ### Stress testing
+
+Browser tests are inherently more flakey than unit-tests, and this flakiness has an outsized impact on CI reliability and latency.
+It is very important to ensure browser tests are not flakey, particularly when adding new tests, modifying tests non-trivially, or when we detect flakey tests in the CI.
+
+For this, the helper script includes an option to run tests multiple times and report number of failures.
+
+For example, to stress test a particular `CallComposite` test, select just that test to run via [`test.only`](https://playwright.dev/docs/api/class-test#test-only), and then stress test the `CallComposite` tests
+```sh
+node scripts/runBrowserTests.mjs -c call -s 10
+```
 
 ## Update snapshots
 
+Snapshots for each sample are updated via a separate script. Note that snapshot updates are somewhat dependent on the machine environment. We use a GitHub workflow to update snapshots consistently. You should not need to run these scripts in most cases.
+
+`scripts/runBrowswerTests.mjs` provides a flag `-u` to update tests snapshots for the various groups of tests. [package.json](../package.json) also provides scripts that invoke the helper script to update snapshots. If you are updating snapshots locally, directly invoke the helper.
+
 ## Test development
 
-When to write live vs hermetic tests
+**❗Live-test are costly to run and maintain**
 
-Note about building the app in your edit-compile-run cycle.
+Live tests should include smoke tests that verify basic functionality of top-level API. For detailed tests, choose a more appropriate [testing strategy](../../docs/references/automated-tests.md).
 
-### Conditional compilation
+When developing (hermetic or live) browswer tests, use the following workflow:
 
-### Desktop-only tests
+* If making changes to the UI library code (`packages/react-composites/src/*` or its dependencies) or the test application, recompile the app before rerunning the browswer tests.
+  * You can recompile just the application you're testing by running `rushx build:e2e:chat`, `rushx build:e2e:call` or `rushx build:e2e:callwithchat` as needed.
+* Run the tests with `node scripts/runBrowserTests.mjs`.
+* Once all tests pass, make sure to [stress test](#stress-testing) the affected test to avoid introducing flakiness into the CI.
+
+### Conditional Compilation
+
+For a primer on conditional compilation in this repository, see the [top-level docs](../../../docs/references/beta-only-features.md).
+
+Just like the rest of the UI library code, the test applications for browser tests use conditional compilation. By contrast, the browser tests themselves are not conditionally compiled (yet!).
+
+For now, you must explicitly skip tests that are not relevant to stable flavored builds via [`isTestProfileStableFlavor()`](./browser/common/utils.ts)
+
+```TypeScript
+test.skip(isTestProfileStableFlavor());
+```
+
+### Mobile Only tests
+
+If you are writing a test for only on Mobile make sure to add it to a test suite that is just for mobile. They will be marked with `[Mobile Only]` in the suite title. If there is not a suite for the page you are testing add one for that page with the `[Mobile only]` in the title.
+
+Once you have added your test to the appropriate suite use the following call to make sure it is not run on the desktop project:
+
+```Typescript
+test.only('Your test name here', async ({ pages }, testInfo) => {
+    // Mobile check
+    test.skip(skipTestIfDesktop(testInfo));
+    '...'
+```
+
