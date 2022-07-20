@@ -395,6 +395,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
+    role?: Role;
 }
 
 // @public
@@ -402,6 +403,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
     complianceBannerNowOnlyTranscription: string;
@@ -417,7 +419,9 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -434,10 +438,16 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    peopleButtonLabel: string;
+    peoplePaneSubTitle: string;
+    peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
+    removeMenuLabel: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -2468,6 +2478,9 @@ export interface RemoteVideoStreamState {
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
 }
+
+// @beta (undocumented)
+export type Role = 'Presenter' | 'Attendee' | 'Consumer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
