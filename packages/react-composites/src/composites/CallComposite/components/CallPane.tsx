@@ -59,7 +59,7 @@ export const CallPane = (props: {
   const getStrings = (): CommonCompositeStrings => {
     /* @conditional-compile-remove(one-to-n-calling) */
     return localeStrings.strings.call;
-
+    // To be removed when feature goes from beta to stable
     return {} as CommonCompositeStrings;
   };
 
