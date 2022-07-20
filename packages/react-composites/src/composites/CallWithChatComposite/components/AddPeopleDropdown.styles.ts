@@ -6,7 +6,7 @@ import { IButtonStyles, IContextualMenuStyles, Theme } from '@fluentui/react';
 /**
  * @private
  */
-export const themedCopyLinkButtonStyles = (mobileView: boolean | undefined, theme: Theme): Partial<IButtonStyles> => ({
+export const themedCopyLinkButtonStyles = (theme: Theme, mobileView?: boolean): Partial<IButtonStyles> => ({
   root: {
     minHeight: mobileView ? '3rem' : '2.5rem',
     borderRadius: mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4,
@@ -30,6 +30,7 @@ export const themedMenuStyle = (theme: Theme): Partial<IContextualMenuStyles> =>
  * @private
  */
 export const iconStyles = {
+  // overwrite default line height which results in icons having different size
   lineHeight: '0',
   width: '1.125rem'
 };
