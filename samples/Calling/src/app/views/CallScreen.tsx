@@ -31,7 +31,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
-  console.log(alternateCallerId);
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
