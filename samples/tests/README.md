@@ -1,6 +1,6 @@
 # Live tests based on sample applications
 
-This packlet contains some live tests (end-to-end tests that depend on Azure Communication Services backend services) based on sample applications included in this git repo. See the [top-level testing documentation](../../docs/references/automated-tests.md) to understand how these tests fit into our overall testing strategy.
+This packlet contains some live browser tests (end-to-end tests that depend on Azure Communication Services backend services) based on sample applications included in this git repo. See the [top-level testing documentation](../../docs/references/automated-tests.md) to understand how these tests fit into our overall testing strategy.
 
 
 ## Setup
