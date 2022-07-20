@@ -19,7 +19,7 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(PeoplePaneDropdown) */
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -72,12 +72,12 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRemovedFromCall: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />,
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  /* @conditional-compile-remove(people-pane-dropdown) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Dialpad: <Dialpad20Regular />,
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Call: <Call20Regular />
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  PeoplePaneOpenDialpad: <Dialpad20Regular />,
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  DialpadStartCall: <Call20Regular />
 };
 
 /**
@@ -176,12 +176,12 @@ export type CallCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  /* @conditional-compile-remove(people-pane-dropdown) */
   PeoplePaneAddPerson?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Dialpad?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Call?: JSX.Element;
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  PeoplePaneOpenDialpad?: JSX.Element;
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  DialpadStartCall?: JSX.Element;
 };
 
 /**
@@ -255,12 +255,12 @@ export type CallWithChatCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
+  /* @conditional-compile-remove(people-pane-dropdown) */
   PeoplePaneAddPerson?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Dialpad?: JSX.Element;
-  /* @conditional-compile-remove(PeoplePaneDropdown) */
-  Call?: JSX.Element;
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  PeoplePaneOpenDialpad?: JSX.Element;
+  /* @conditional-compile-remove(people-pane-dropdown) */
+  DialpadStartCall?: JSX.Element;
 
   // Chat icons
   EditBoxCancel?: JSX.Element;
