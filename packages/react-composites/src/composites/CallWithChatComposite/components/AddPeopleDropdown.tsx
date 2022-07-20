@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import React from 'react';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import {
   DefaultButton,
   IButtonStyles,
@@ -10,15 +12,25 @@ import {
   Stack,
   useTheme
 } from '@fluentui/react';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import copy from 'copy-to-clipboard';
-import React, { useMemo, useState } from 'react';
+/* @conditional-compile-remove(people-pane-dropdown) */
+import { useMemo, useState } from 'react';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { CallWithChatCompositeIcon } from '../../common/icons';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from '../../common/styles/PeoplePaneContent.styles';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { convertContextualMenuItemToDrawerMenuItem } from '../ConvertContextualMenuItemToDrawerMenuItem';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
-import { PreparedDialpad, PreparedDialpadStrings } from './PreparedDialpad';
+/* @conditional-compile-remove(people-pane-dropdown) */
+import { PreparedDialpad } from './PreparedDialpad';
+import { PreparedDialpadStrings } from './PreparedDialpad';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends PreparedDialpadStrings {
@@ -36,18 +48,20 @@ export interface AddPeopleDropdownProps {
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const theme = useTheme();
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const { inviteLink, strings, mobileView } = props;
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const [showDialpad, setShowDialpad] = useState(false);
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const menuStyleThemed: Partial<IContextualMenuStyles> = useMemo(() => themedMenuStyle(theme), [theme]);
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const copyLinkButtonStylesThemed = useMemo(
     (): IButtonStyles => themedCopyLinkButtonStyles(mobileView, theme),
     [mobileView, theme]
   );
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       styles: menuStyleThemed,
@@ -96,13 +110,13 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     inviteLink,
     menuStyleThemed
   ]);
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
   };
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const [addPeopleDrawerMenuItems, setAddPeopleDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   const setDrawerMenuItemsForAddPeople: () => void = useMemo(() => {
     return () => {
       const drawerMenuItems = defaultMenuProps.items.map((contextualMenu: IContextualMenuItem) =>
@@ -111,7 +125,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       setAddPeopleDrawerMenuItems(drawerMenuItems);
     };
   }, [defaultMenuProps, setAddPeopleDrawerMenuItems]);
-
+  /* @conditional-compile-remove(people-pane-dropdown) */
   if (mobileView) {
     return (
       <Stack>
@@ -137,23 +151,28 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   }
 
   return (
-    <Stack>
-      <PreparedDialpad
-        isMobile={false}
-        strings={strings}
-        showDialpad={showDialpad}
-        onDismissDialpad={onDismissDialpad}
-      />
+    <>
+      {
+        /* @conditional-compile-remove(people-pane-dropdown) */
+        <Stack>
+          <PreparedDialpad
+            isMobile={false}
+            strings={strings}
+            showDialpad={showDialpad}
+            onDismissDialpad={onDismissDialpad}
+          />
 
-      <Stack styles={copyLinkButtonStackStyles}>
-        <DefaultButton
-          onRenderIcon={() => <CallWithChatCompositeIcon iconName="PeoplePaneAddPerson" />}
-          text={strings.peoplePaneAddPeopleButtonLabel}
-          menuProps={defaultMenuProps}
-          styles={copyLinkButtonStylesThemed}
-          data-ui-id="call-with-chat-composite-add-people-button"
-        />
-      </Stack>
-    </Stack>
+          <Stack styles={copyLinkButtonStackStyles}>
+            <DefaultButton
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="PeoplePaneAddPerson" />}
+              text={strings.peoplePaneAddPeopleButtonLabel}
+              menuProps={defaultMenuProps}
+              styles={copyLinkButtonStylesThemed}
+              data-ui-id="call-with-chat-composite-add-people-button"
+            />
+          </Stack>
+        </Stack>
+      }
+    </>
   );
 };

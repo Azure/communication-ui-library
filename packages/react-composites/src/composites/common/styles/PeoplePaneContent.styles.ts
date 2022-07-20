@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  IButtonStyles,
-  IContextualMenuStyles,
-  IStackItemStyles,
-  IStackStyles,
-  IStackTokens,
-  Theme
-} from '@fluentui/react';
+import { IButtonStyles, IStackItemStyles, IStackStyles, IStackTokens, Theme } from '@fluentui/react';
 
 /**
  * @private
