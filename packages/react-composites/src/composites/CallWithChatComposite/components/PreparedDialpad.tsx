@@ -81,7 +81,7 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
 
   if (isMobile) {
     return (
-      <Stack data-ui-id="call-with-chat-composite-dialpad">
+      <Stack>
         {showDialpad && (
           <Stack styles={drawerContainerStyles}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
@@ -102,7 +102,6 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
           onDismiss={onDismissTriggered}
           isBlocking={true}
           styles={dialpadModelStyle}
-          data-ui-id="call-with-chat-composite-dialpad"
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
             <Text style={{ fontWeight: 600 }}>{strings.dialpadModalTitle}</Text>
