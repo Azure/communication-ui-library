@@ -173,47 +173,47 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for SidePaneHeader dismiss button
    */
   dismissSidePaneButtonLabel?: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Side pane People section subheader.
    */
   peoplePaneSubTitle: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
-  /* @conditional-compile-remove(call-composite-participant-pane) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for menu item to remove participant
    */
