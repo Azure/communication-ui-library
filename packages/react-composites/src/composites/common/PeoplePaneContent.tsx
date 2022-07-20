@@ -37,8 +37,7 @@ export const PeoplePaneContent = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings:
     | CallWithChatCompositeStrings
-    /* @conditional-compile-remove(call-composite-participant-pane) */
-    | CallCompositeStrings;
+    | /* @conditional-compile-remove(call-composite-participant-pane) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
 }): JSX.Element => {
@@ -158,8 +157,7 @@ const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
   strings:
     | CallWithChatCompositeStrings
-    /* @conditional-compile-remove(call-composite-participant-pane) */
-    | CallCompositeStrings,
+    | /* @conditional-compile-remove(call-composite-participant-pane) */ CallCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {

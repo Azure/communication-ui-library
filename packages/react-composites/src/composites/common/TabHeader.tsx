@@ -26,8 +26,7 @@ type TabHeaderProps = {
   activeTab: TabHeaderTab;
   strings:
     | CallWithChatCompositeStrings
-    /* @conditional-compile-remove(call-composite-participant-pane) */
-    | CallCompositeStrings;
+    | /* @conditional-compile-remove(call-composite-participant-pane) */ CallCompositeStrings;
 };
 
 /**

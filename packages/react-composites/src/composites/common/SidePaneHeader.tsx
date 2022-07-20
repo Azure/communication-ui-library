@@ -16,8 +16,7 @@ export const SidePaneHeader = (props: {
   onClose: () => void;
   strings:
     | CallWithChatCompositeStrings
-    /* @conditional-compile-remove(call-composite-participant-pane) */
-    | CallCompositeStrings;
+    | /* @conditional-compile-remove(call-composite-participant-pane) */ CallCompositeStrings;
 }): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
