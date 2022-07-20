@@ -376,8 +376,8 @@ export type CallCompositeIcons = {
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
     PeoplePaneAddPerson?: JSX.Element;
-    Dialpad?: JSX.Element;
-    Call?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
 };
 
 // @public
@@ -790,8 +790,8 @@ export type CallWithChatCompositeIcons = {
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
     PeoplePaneAddPerson?: JSX.Element;
-    Dialpad?: JSX.Element;
-    Call?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -1577,8 +1577,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     PeoplePaneAddPerson?: JSX.Element | undefined;
-    Dialpad?: JSX.Element | undefined;
-    Call?: JSX.Element | undefined;
+    PeoplePaneOpenDialpad?: JSX.Element | undefined;
+    DialpadStartCall?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;

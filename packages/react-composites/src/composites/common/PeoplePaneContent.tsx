@@ -34,6 +34,7 @@ import {
   peoplePaneContainerStyle
 } from './styles/PeoplePaneContent.styles';
 import { themedCopyLinkButtonStyles } from './styles/PeoplePaneContent.styles';
+/* @conditional-compile-remove(people-pane-dropdown) */
 import { AddPeopleDropdown } from '../CallWithChatComposite/components/AddPeopleDropdown';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 
