@@ -4,9 +4,9 @@
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
 import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
-import { DiagnosticQuality } from '../TestCallingState';
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
+import { DiagnosticQuality } from './constants';
 
 test.describe('User Facing Diagnostics tests', async () => {
   test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
