@@ -12,32 +12,9 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../MockCallAdapterState';
-import type { TestCallingState } from '../TestCallingState';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../app');
-
-/**
- * Create the test URL.
- *
- * @deprecated For new tests, use {@link buildUrlWithMockAdapterNext} instead.
- *
- * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
- * @param testCallingState - {@link TestCallingState} to initialize the test app.
- * @param qArgs - Optional args to add to the query search parameters of the URL.
- * @returns URL string
- */
-export const buildUrlWithMockAdapter = (
-  serverUrl: string,
-  testCallingState?: TestCallingState,
-  qArgs?: { [key: string]: string }
-): string => {
-  const state: TestCallingState = testCallingState ?? {};
-  return `${serverUrl}?${encodeQueryData({
-    mockCallState: JSON.stringify(state),
-    ...qArgs
-  })}`;
-};
 
 /**
  * Create the test URL.

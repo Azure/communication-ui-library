@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, IModalStyles, Theme } from '@fluentui/react';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStyles } from '@internal/react-components';
 
 /**
@@ -15,7 +15,7 @@ export const themedDialpadModelStyle = (theme: Theme): Partial<IModalStyles> => 
   }
 });
 
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * @private
  */

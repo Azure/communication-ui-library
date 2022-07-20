@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { useState } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
 import { themedDialpadModelStyle } from './PreparedDialpad.styles';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { themedCallButtonStyle, themedDialpadStyle } from './PreparedDialpad.styles';
-/* @conditional-compile-remove(people-pane-dropdown) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from '../../common/icons';
 
 /** @private */
@@ -36,18 +36,18 @@ export interface PreparedDialpadProps {
 /** @private */
 export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
   const { strings, isMobile, showDialpad, onDismissDialpad } = props;
-  /* @conditional-compile-remove(people-pane-dropdown) */
+  /* @conditional-compile-remove(PSTN-calls) */
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
 
   const onDismissTriggered = (): void => {
-    /* @conditional-compile-remove(people-pane-dropdown) */
+    /* @conditional-compile-remove(PSTN-calls) */
     setTextFieldInput('');
     onDismissDialpad();
   };
 
-  /* @conditional-compile-remove(people-pane-dropdown) */
+  /* @conditional-compile-remove(PSTN-calls) */
   const onClickCall = (): void => {
     //place holder for adding calling functionality
     console.log(textFieldInput);
@@ -55,14 +55,14 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
 
   const dialpadModelStyle: Partial<IModalStyles> = useMemo(() => themedDialpadModelStyle(theme), [theme]);
 
-  /* @conditional-compile-remove(people-pane-dropdown) */
+  /* @conditional-compile-remove(PSTN-calls) */
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
 
-  /* @conditional-compile-remove(people-pane-dropdown) */
+  /* @conditional-compile-remove(PSTN-calls) */
   const callButtonStyle: Partial<IButtonStyles> = useMemo(() => themedCallButtonStyle(theme), [theme]);
 
   const dialpadComponent = (): JSX.Element => {
-    /* @conditional-compile-remove(people-pane-dropdown) */
+    /* @conditional-compile-remove(PSTN-calls) */
     return (
       <>
         <Dialpad onChange={setTextFieldInput} styles={dialpadStyle} />
