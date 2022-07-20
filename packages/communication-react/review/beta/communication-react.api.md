@@ -395,6 +395,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
+    role?: Role;
 }
 
 // @public
@@ -2468,6 +2469,9 @@ export interface RemoteVideoStreamState {
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
 }
+
+// @beta (undocumented)
+export type Role = 'Presenter' | 'Attendee' | 'Consumer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
