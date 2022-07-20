@@ -12,6 +12,9 @@ This packlet contains some live browser tests (end-to-end tests that depend on A
   ```
 * Set connection string in [`./.env`](./.env) file (replace [REPLACE_WITH_CONNECTION_STRING]).
 
+See setup instructions in the [composite browswer test README](../../packages/react-composites/tests/README.md) for troubleshooting guidance.
+
+
 ## Run tests
 
 Tests for each sample are run via a separate script:
