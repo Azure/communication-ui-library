@@ -54,7 +54,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [alternativeCallerId, setAlternativeCallerId] = useState<string>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
