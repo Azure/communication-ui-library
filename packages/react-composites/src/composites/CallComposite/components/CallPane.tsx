@@ -48,12 +48,14 @@ export const CallPane = (props: {
 
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
+  const localeStrings = useLocale();
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const useStrings = () => {
     /* @conditional-compile-remove(call-composite-participant-pane) */
-    return useLocale().strings.call;
+    return localeStrings.strings.call;
 
-    return useLocale().strings.callWithChat;
+    return localeStrings.strings.callWithChat;
   };
 
   const strings = useStrings();
