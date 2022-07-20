@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Forcing chat message bubble background color in high contrast mode",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
