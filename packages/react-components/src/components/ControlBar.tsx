@@ -68,7 +68,10 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
     const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
     // if theme is dark and layout is floating then use palette.neutralQuaternaryAlt as background, otherwise use it's parents background color
     const backgroundStyle = {
-      background: isDarkThemed(theme) && layout?.startsWith('floating') ? theme.palette.neutralQuaternaryAlt : 'none'
+      background:
+        isDarkThemed(theme) && layout?.startsWith('floating')
+          ? theme.palette.neutralQuaternaryAlt
+          : theme.semanticColors.bodyBackground
     };
     const borderAndBoxShadowStyle = layout?.startsWith('floating')
       ? {
