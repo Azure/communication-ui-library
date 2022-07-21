@@ -4,6 +4,8 @@ import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, us
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../../../index-public';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CallCompositeStrings } from '../../../index-public';
 import { CallWithChatCompositeIcon } from '../../common/icons';
 import { peoplePaneContainerTokens } from '../../common/styles/ParticipantContainer.styles';
 import {
@@ -21,7 +23,7 @@ export interface AddPeopleButtonProps {
   inviteLink?: string;
   mobileView?: boolean;
   participantList?: JSX.Element;
-  strings: CallWithChatCompositeStrings;
+  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
 }
 
 /** @private */
