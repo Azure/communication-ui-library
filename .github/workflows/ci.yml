@@ -34,6 +34,14 @@ jobs:
       - id: get-matrix
         run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
 
+  print_output:
+    needs: get_matrix
+    name: Just for Funz
+    runs-on: ubuntu-latest
+    steps:
+      - name: How wasteful
+      - run: echo ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+
   build_packages:
     needs: get_matrix
     name: Build Packages
