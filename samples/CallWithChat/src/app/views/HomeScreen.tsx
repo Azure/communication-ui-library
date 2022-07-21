@@ -49,10 +49,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
     { key: 'TeamsMeeting', text: 'Join a Teams Meeting' },
-    /* @conditional-compile-remove(PSTN-calls) */
-    { key: 'PSTN', text: 'Start a PSTN Call' },
     /* @conditional-compile-remove(1-n-calling) */
-    { key: '1:N', text: 'Start a 1:N ACS Call' }
+    { key: '1:N', text: 'Start a 1:N ACS Call' },
+    /* @conditional-compile-remove(PSTN-calls) */
+    { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
 
   // Get display name from local storage if available

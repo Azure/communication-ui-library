@@ -47,10 +47,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
-    /* @conditional-compile-remove(PSTN-calls) */
-    { key: 'PSTN', text: 'Start a PSTN Call' },
     /* @conditional-compile-remove(1-n-calling) */
-    { key: '1:N', text: 'Start a 1:N ACS Call' }
+    { key: '1:N', text: 'Start a 1:N ACS Call' },
+    /* @conditional-compile-remove(PSTN-calls) */
+    { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
 
   // Get display name from local storage if available
@@ -108,6 +108,20 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
+              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
+                <Stack>
+                  <Stack>
+                    <TextField
+                      className={outboundtextField}
+                      label={'Participants'}
+                      placeholder={"Comma seperated ACS user ID's"}
+                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
+                    />
+                  </Stack>
+                </Stack>
+              )
+            }
+            {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
@@ -121,20 +135,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       label={'ACS phone number for Caller ID'}
                       placeholder={'Enter your ACS aquired phone number for PSTN call'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
-                    />
-                  </Stack>
-                </Stack>
-              )
-            }
-            {
-              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
-                <Stack>
-                  <Stack>
-                    <TextField
-                      className={outboundtextField}
-                      label={'Participants'}
-                      placeholder={"Comma seperated ACS user ID's"}
-                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
                     />
                   </Stack>
                 </Stack>
