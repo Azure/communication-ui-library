@@ -289,9 +289,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
 
     /* @conditional-compile-remove(teams-adhoc-call) */
-    // Check if we should be starting a new call or joining an existing call
-    if (isAdhocCall(this.locator)) {
-      return this.startCall(this.locator.participantIDs);
+    /* @conditional-compile-remove(PSTN-calls) */
+    if (isOutboundCall(this.locator)) {
+      const phoneNumber = this.getState().alternativeCallerId;
+      return this.startCall(this.locator.participantIDs, {
+        alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
+      });
     }
 
     return this.teeErrorToEventEmitter(() => {
@@ -635,6 +638,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 /* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -661,7 +665,7 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -833,6 +837,7 @@ const isCallError = (e: Error): e is CallError => {
 };
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-const isAdhocCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
+/* @conditional-compile-remove(PSTN-calls) */
+const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
   return 'participantIDs' in callLocator;
 };
