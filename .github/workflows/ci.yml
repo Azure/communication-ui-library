@@ -39,8 +39,10 @@ jobs:
     name: Just for Funz
     runs-on: ubuntu-latest
     steps:
-      - name: How wasteful
-        run: echo ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      - name: First just the string
+        run: echo "${{ needs.get_matrix.outputs.matrix }}"
+      - name: But can you parse
+        run: echo "${{ fromJSON(needs.get_matrix.outputs.matrix) }}""
 
   build_packages:
     needs: get_matrix
