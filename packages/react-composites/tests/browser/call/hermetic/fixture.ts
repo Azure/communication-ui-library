@@ -19,14 +19,12 @@ const APP_DIR = path.join(__dirname, '../app');
 /**
  * Create the test URL.
  *
- * TODO: Rename to buildUrlWithMockAdapter once all tests are ported over.
- *
  * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
  * @param mockCallAdapterState - Initial state for the {@link MockCallAdapter} constructed by the test app.
  * @param qArgs - Optional args to add to the query search parameters of the URL.
  * @returns URL string
  */
-export const buildUrlWithMockAdapterNext = (
+export const buildUrlWithMockAdapter = (
   serverUrl: string,
   mockCallAdapterState?: MockCallAdapterState,
   qArgs?: { [key: string]: string }
