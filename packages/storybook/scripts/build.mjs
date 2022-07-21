@@ -3,13 +3,14 @@
 // Licensed under the MIT license.
 
 import { getBuildFlavor, exec } from './common.mjs';
+import { quote } from 'shell-quote';
 
 function main() {
   if (getBuildFlavor() === 'stable') {
     console.warn('Skipping storybook build for stable build');
     return;
   }
-  exec('npx build-storybook  --quiet --loglevel warn');
+  exec(quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]));
 }
 
 main();
