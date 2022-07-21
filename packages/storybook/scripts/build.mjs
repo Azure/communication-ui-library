@@ -7,7 +7,7 @@ import { quote } from 'shell-quote';
 
 function main() {
   if (getBuildFlavor() === 'stable') {
-    console.warn('Skipping storybook build for stable build');
+    console.log('Skipping storybook build for stable build');
     return;
   }
   exec(quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]));

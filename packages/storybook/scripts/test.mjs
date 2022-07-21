@@ -7,7 +7,7 @@ import { quote } from 'shell-quote';
 
 function main() {
   if (getBuildFlavor() === 'stable') {
-    console.warn('Skipping storybook test for stable build');
+    console.log('Skipping storybook test for stable build');
     return;
   }
   exec('rushx test:snippets');
