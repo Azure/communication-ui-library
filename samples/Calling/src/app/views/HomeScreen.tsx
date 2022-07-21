@@ -69,6 +69,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   /* @conditional-compile-remove(PSTN-calls) */
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
+  /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
@@ -171,7 +172,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(1-n-calling)  */
 /**
  * splits the participant Id's so we can call multiple people.
  */
