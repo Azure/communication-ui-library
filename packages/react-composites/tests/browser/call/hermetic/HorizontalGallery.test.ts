@@ -3,7 +3,7 @@
 
 import {
   addVideoStream,
-  buildUrlWithMockAdapterNext,
+  buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
   test
@@ -22,7 +22,7 @@ test.describe('HorizontalGallery tests', async () => {
 
     const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -56,7 +56,7 @@ test.describe('HorizontalGallery tests', async () => {
       defaultMockRemoteParticipant('Gerald Ho')
     ];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(

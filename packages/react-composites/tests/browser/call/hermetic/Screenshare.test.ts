@@ -4,7 +4,7 @@
 import {
   addScreenshareStream,
   addVideoStream,
-  buildUrlWithMockAdapterNext,
+  buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
   test
@@ -42,7 +42,7 @@ test.describe('Screenshare tests', async () => {
     ];
     const initialState = defaultMockCallAdapterState(participants);
     (initialState.call as MockCallState).isScreenSharingOn = true;
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('local-screenshare.png');
@@ -74,7 +74,7 @@ test.describe('Screenshare tests', async () => {
       fiona
     ];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
