@@ -42,7 +42,7 @@ jobs:
       - name: First just the string
         run: echo "${{ needs.get_matrix.outputs.matrix }}"
       - name: But can you parse
-        run: echo "${{ fromJSON(needs.get_matrix.outputs.matrix) }}""
+        run: echo "${{ fromJSON(needs.get_matrix.outputs.matrix) }}"
 
   build_packages:
     needs: get_matrix
