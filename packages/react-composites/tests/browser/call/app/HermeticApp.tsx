@@ -23,15 +23,15 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
 
   useEffect(() => {
     (async (): Promise<void> => {
-      console.log('Creating mock adapter with args', queryArgs.mockCallState, queryArgs.mockCallAdapterState);
-      setCallAdapter(new MockCallAdapter(queryArgs.mockCallState, queryArgs.mockCallAdapterState));
+      console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
+      setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
     })();
-  }, [queryArgs.mockCallState, queryArgs.mockCallAdapterState]);
+  }, [queryArgs.mockCallAdapterState]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }
 
 /** @internal */
 export function shouldLoadHermeticApp(queryArgs: QueryArgs): boolean {
-  return !!queryArgs.mockCallState || !!queryArgs.mockCallAdapterState;
+  return !!queryArgs.mockCallAdapterState;
 }

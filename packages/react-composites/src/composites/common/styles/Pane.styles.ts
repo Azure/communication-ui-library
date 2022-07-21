@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, IButtonStyles, IStackStyles } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, IStackStyles, IStackTokens } from '@fluentui/react';
 
 /**
  * @private
@@ -58,4 +58,36 @@ export const mobilePaneButtonStyles: IButtonStyles = {
     whiteSpace: 'nowrap'
   },
   labelChecked: { fontWeight: 600 }
+};
+
+/**
+ * @private
+ */
+export const hiddenStyles: IStackStyles = {
+  root: {
+    display: 'none'
+  }
+};
+
+/**
+ * @private
+ */
+export const sidePaneStyles: IStackStyles = {
+  root: {
+    height: '100%',
+    padding: '0.5rem 0.25rem',
+    maxWidth: '21.5rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const availableSpaceStyles: IStackStyles = { root: { width: '100%', height: '100%' } };
+
+/**
+ * @private
+ */
+export const sidePaneTokens: IStackTokens = {
+  childrenGap: '0.5rem'
 };
