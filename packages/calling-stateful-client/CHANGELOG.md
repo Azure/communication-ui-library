@@ -1,8 +1,23 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Wed, 29 Jun 2022 17:31:07 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 11:17:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.4.0)
+
+Thu, 21 Jul 2022 11:17:50 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.3.1-beta.1...@internal/calling-stateful-client_v1.4.0)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+
+### Changes
+
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext. ([PR #2070](https://github.com/azure/communication-ui-library/pull/2070) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.3.1-beta.1)
 

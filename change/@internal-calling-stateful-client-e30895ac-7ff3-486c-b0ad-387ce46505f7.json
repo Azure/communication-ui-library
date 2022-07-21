@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add unit test for DeclarativeCallAgent.incomingCalls ",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

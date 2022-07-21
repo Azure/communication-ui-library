@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext.",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Autofocus on back button when initially opening People and Chat pane",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,79 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Thu, 21 Jul 2022 11:17:48 GMT",
+      "tag": "@internal/storybook_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5385325789cec3940927c22019063131f18ac581",
+            "comment": "Skip build, test, lint on stable builds"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "7162b4f5d3e8dcfb4fbdbf5270eedc5fd7c2ea07",
+            "comment": "Added parsing of room id locator in Call composite story"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "Added tsconfig path to fake-backends package"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "89be1097ace40ecb7590a2cb880537d14738395b",
+            "comment": "Add installation of uuid package in composite quickstart guide"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Storybook updated for dialpad"
+          }
+        ],
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "8b38abb8fd7a4f5be074e08b600ad96a86fcaf32",
+            "comment": "Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.4.0",
+            "commit": "417d182fcf38c3c1efb1968f13f97035216bf0a7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:07 GMT",
       "tag": "@internal/storybook_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

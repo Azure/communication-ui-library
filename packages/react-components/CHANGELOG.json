@@ -2,6 +2,91 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Thu, 21 Jul 2022 11:17:51 GMT",
+      "tag": "@internal/react-components_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "aabb14e24435c10cecef624e81e04bfaa989bb79",
+            "comment": "Add permissions provider for different roles"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Delete button added to the Dialpad"
+          }
+        ],
+        "patch": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6ffed9be50767938f162f9570c9365ff097563d6",
+            "comment": "changed z-index so new message button shows ontop of chat bubble"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d387570f3f45888ba7e23be09dd2eec0842654f0",
+            "comment": "Fix invalid scrollbars when gif images are shared in chat"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "aa3f5a06f3b7d6c2333c3b2025760c2bb22725e3",
+            "comment": "Make participant items tab navigable"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6933bb7c7960f040c5294b468c859637283afa9f",
+            "comment": "Fix bug of dismissed menu when scrolling"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "50a936e241fb96869a8fa57be0bfdc5f04151345",
+            "comment": "Fix voiceover tab navigation of messages including system messages. Hide message action flyout when focus blurs."
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "078d47cbd83fa8deff22755d11a6cd06a537321a",
+            "comment": "correctly setting maxHeight for people context menu"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0bb0843e1bfac3d512cfb08ae61c816513ef070c",
+            "comment": "Fixed flaky file sharing tests for upload cards by awaiting file type icons"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "644bc5788ef7c187331f1be5addb0c1814d715eb",
+            "comment": "Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.4.0",
+            "commit": "417d182fcf38c3c1efb1968f13f97035216bf0a7"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:05 GMT",
       "tag": "@internal/react-components_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

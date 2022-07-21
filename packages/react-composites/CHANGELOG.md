@@ -1,8 +1,45 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Wed, 29 Jun 2022 17:31:06 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 11:17:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.4.0)
+
+Thu, 21 Jul 2022 11:17:48 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.3.1-beta.1...@internal/react-composites_v1.4.0)
+
+### Minor changes
+
+- Convert PeoplePaneContent to a common file ([PR #2083](https://github.com/azure/communication-ui-library/pull/2083) by edwardlee@microsoft.com)
+- Call adapter can join a room ([PR #2063](https://github.com/azure/communication-ui-library/pull/2063) by miguelgamis@microsoft.com)
+
+### Patches
+
+- Update documentation for onFetchAvatarPersonaData property on BaseComposite to drive clarity to what it does and does not do. ([PR #2027](https://github.com/azure/communication-ui-library/pull/2027) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix scrollbar showing incorrectly in landscape mobile view due to absolutely positioned participant pane in Chat Composite ([PR #2038](https://github.com/azure/communication-ui-library/pull/2038) by anjulgarg@live.com)
+- Fixes issue where you can start a call if you unplug it on the configuration screen. ([PR #2061](https://github.com/azure/communication-ui-library/pull/2061) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Autofocus on back button when initially opening People and Chat pane ([PR #2045](https://github.com/azure/communication-ui-library/pull/2045) by edwardlee@microsoft.com)
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/calling-component-bindings to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/calling-stateful-client to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/chat-component-bindings to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/chat-stateful-client to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/react-components to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/fake-backends to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+
+### Changes
+
+- Introduce the alternativeCallerId property to the CallAdapter and AzureCommunicationsCallAdapter ([PR #2070](https://github.com/azure/communication-ui-library/pull/2070) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update Icons usage in Custom Buttons to use iconNames from registered Icons ([PR #2017](https://github.com/azure/communication-ui-library/pull/2017) by edwardlee@microsoft.com)
+- Update screenshare button logic to utilize new screenshare button selector properties. ([PR #2059](https://github.com/azure/communication-ui-library/pull/2059) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Add new icon backspace ([PR #2085](https://github.com/azure/communication-ui-library/pull/2085) by carolinecao@microsoft.com)
+- Update adhoc call work for making PSTN and 1:N calls. ([PR #2073](https://github.com/azure/communication-ui-library/pull/2073) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add permissions provider for different roles ([PR #2079](https://github.com/azure/communication-ui-library/pull/2079) by jiangnanhello@live.com)
+- Switched file sharing methods in callWithChat adapter to Arrow functions ([PR #2081](https://github.com/azure/communication-ui-library/pull/2081) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add strings used in CallPane for Call Composite ([PR #2103](https://github.com/azure/communication-ui-library/pull/2103) by edwardlee@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.3.1-beta.1)
 

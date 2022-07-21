@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add installation of uuid package in composite quickstart guide",
-  "packageName": "@internal/storybook",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

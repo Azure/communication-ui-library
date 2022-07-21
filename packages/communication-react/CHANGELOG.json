@@ -2,6 +2,381 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Thu, 21 Jul 2022 11:17:48 GMT",
+      "tag": "@azure/communication-react_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "5385325789cec3940927c22019063131f18ac581",
+            "comment": "Colorize output from e2e runner script"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "17a424695821672d57a4c76b06f749ef208e505a",
+            "comment": "Increase workers to 3 for UI tests using fake adapter"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "move fake chat adapter code to new package"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "5d531b4a742220d989838fd92638ce06d3d805af",
+            "comment": "Convert ModalLocalAndRemotePip to a common file"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "69b32d11115adfb381c95f6ef59026999eea061a",
+            "comment": "Fix typo in pakcage.json script to run e2e tests"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "fbd605d3312940b58ea7ff0704e903706e06e31b",
+            "comment": "Convert TabHeader and SidePaneHeader to common files"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "72d82a933dc2d22a4703065dca5016cd61ff1c04",
+            "comment": "Update webpack-cli dev dep"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d5040b5b88f6dca4c791391e1919fbe709c0f52e",
+            "comment": "Run hermetic e2e tests for CallComposite in parallel"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "68cc13ba8cc306440ab8d0ffac6e8230f048070f",
+            "comment": "Add CLI tool to run e2e tests"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "25ead618d9cd0bd6301fa3c2db1a5dd7b09f5278",
+            "comment": "Split playwright config for live vs hermetic e2e tests"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5385325789cec3940927c22019063131f18ac581",
+            "comment": "Skip build, test, lint on stable builds"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "7162b4f5d3e8dcfb4fbdbf5270eedc5fd7c2ea07",
+            "comment": "Added parsing of room id locator in Call composite story"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "Added tsconfig path to fake-backends package"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "89be1097ace40ecb7590a2cb880537d14738395b",
+            "comment": "Add installation of uuid package in composite quickstart guide"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "8c0f848a7d5a2b49df5c8d3843bc9e63d8d6345d",
+            "comment": "Add unit test for DeclarativeCallAgent.incomingCalls "
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/fake-backends",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "move fake chat adapter code to new package"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "023ca9f8bfca85c016661f5ec7cba0c3c76f4474",
+            "comment": "Introduce the alternativeCallerId property to the CallAdapter and AzureCommunicationsCallAdapter"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "04bd78b3356ef9b4319283f2b41abfe32ba7c722",
+            "comment": "Update Icons usage in Custom Buttons to use iconNames from registered Icons"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "6a2c4ec019b23d6a83dec58da2f94ee01cfc97a8",
+            "comment": "Update screenshare button logic to utilize new screenshare button selector properties."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Add new icon backspace"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "680f5ff36e77ed024186f47375e8954d5753f79f",
+            "comment": "Update adhoc call work for making PSTN and 1:N calls."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "aabb14e24435c10cecef624e81e04bfaa989bb79",
+            "comment": "Add permissions provider for different roles"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "bf54a230e736f8c7549b8222bd0cd26f8ecac3c4",
+            "comment": "Switched file sharing methods in callWithChat adapter to Arrow functions"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "721af3cb6f36ddb6341d73a71112ccc5e3fac96d",
+            "comment": "Add strings used in CallPane for Call Composite"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Storybook updated for dialpad"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "023ca9f8bfca85c016661f5ec7cba0c3c76f4474",
+            "comment": "Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "aabb14e24435c10cecef624e81e04bfaa989bb79",
+            "comment": "Add permissions provider for different roles"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Delete button added to the Dialpad"
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "cd53f9918755efc26cc81c901fbafad977cfd5f9",
+            "comment": "Update documentation for onFetchAvatarPersonaData property on BaseComposite to drive clarity to what it does and does not do."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "e9f888849a93ea985b3a36de0df173e0f82b6751",
+            "comment": "Fix scrollbar showing incorrectly in landscape mobile view due to absolutely positioned participant pane in Chat Composite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "b9c0bed68ec1135f30c0cd817caf2e42e401fbd5",
+            "comment": "Fixes issue where you can start a call if you unplug it on the configuration screen."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "aa3f5a06f3b7d6c2333c3b2025760c2bb22725e3",
+            "comment": "Autofocus on back button when initially opening People and Chat pane"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "8b38abb8fd7a4f5be074e08b600ad96a86fcaf32",
+            "comment": "Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6a2c4ec019b23d6a83dec58da2f94ee01cfc97a8",
+            "comment": "Fix screenshare button selector to disable button when call is InLobby or Connecting state."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6ffed9be50767938f162f9570c9365ff097563d6",
+            "comment": "changed z-index so new message button shows ontop of chat bubble"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d387570f3f45888ba7e23be09dd2eec0842654f0",
+            "comment": "Fix invalid scrollbars when gif images are shared in chat"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "aa3f5a06f3b7d6c2333c3b2025760c2bb22725e3",
+            "comment": "Make participant items tab navigable"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6933bb7c7960f040c5294b468c859637283afa9f",
+            "comment": "Fix bug of dismissed menu when scrolling"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "50a936e241fb96869a8fa57be0bfdc5f04151345",
+            "comment": "Fix voiceover tab navigation of messages including system messages. Hide message action flyout when focus blurs."
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "078d47cbd83fa8deff22755d11a6cd06a537321a",
+            "comment": "correctly setting maxHeight for people context menu"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0bb0843e1bfac3d512cfb08ae61c816513ef070c",
+            "comment": "Fixed flaky file sharing tests for upload cards by awaiting file type icons"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "644bc5788ef7c187331f1be5addb0c1814d715eb",
+            "comment": "Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat"
+          }
+        ],
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d168cd251698e0c4587822a01efa66eb7496ef5d",
+            "comment": "Convert PeoplePaneContent to a common file"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7162b4f5d3e8dcfb4fbdbf5270eedc5fd7c2ea07",
+            "comment": "Call adapter can join a room"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:05 GMT",
       "tag": "@azure/communication-react_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

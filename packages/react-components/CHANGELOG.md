@@ -1,8 +1,30 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 11:17:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.4.0)
+
+Thu, 21 Jul 2022 11:17:51 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.3.1-beta.1...@internal/react-components_v1.4.0)
+
+### Patches
+
+- changed z-index so new message button shows ontop of chat bubble ([PR #2046](https://github.com/azure/communication-ui-library/pull/2046) by carolinecao@microsoft.com)
+- Fix invalid scrollbars when gif images are shared in chat ([PR #2037](https://github.com/azure/communication-ui-library/pull/2037) by anjulgarg@live.com)
+- Make participant items tab navigable ([PR #2045](https://github.com/azure/communication-ui-library/pull/2045) by edwardlee@microsoft.com)
+- Fix bug of dismissed menu when scrolling ([PR #2069](https://github.com/azure/communication-ui-library/pull/2069) by jinan@microsoft.com)
+- Fix voiceover tab navigation of messages including system messages. Hide message action flyout when focus blurs. ([PR #2042](https://github.com/azure/communication-ui-library/pull/2042) by miguelgamis@microsoft.com)
+- correctly setting maxHeight for people context menu ([PR #2034](https://github.com/azure/communication-ui-library/pull/2034) by 79329532+alkwa-msft@users.noreply.github.com)
+- Fixed flaky file sharing tests for upload cards by awaiting file type icons ([PR #2023](https://github.com/azure/communication-ui-library/pull/2023) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat ([PR #2060](https://github.com/azure/communication-ui-library/pull/2060) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+
+### Changes
+
+- Add permissions provider for different roles ([PR #2079](https://github.com/azure/communication-ui-library/pull/2079) by jiangnanhello@live.com)
+- Delete button added to the Dialpad ([PR #2085](https://github.com/azure/communication-ui-library/pull/2085) by carolinecao@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.1-beta.1)
 

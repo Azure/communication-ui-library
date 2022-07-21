@@ -1,0 +1,28 @@
+{
+  "name": "@internal/fake-backends",
+  "entries": [
+    {
+      "date": "Thu, 21 Jul 2022 11:17:51 GMT",
+      "tag": "@internal/fake-backends_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/fake-backends",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "move fake chat adapter code to new package"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/fake-backends",
+            "comment": "Bump @internal/acs-ui-common to v1.4.0",
+            "commit": "417d182fcf38c3c1efb1968f13f97035216bf0a7"
+          }
+        ]
+      }
+    }
+  ]
+}

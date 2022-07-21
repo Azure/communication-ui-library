@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Storybook updated for dialpad",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

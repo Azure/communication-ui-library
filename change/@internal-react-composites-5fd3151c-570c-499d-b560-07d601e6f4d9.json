@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "bump calling beta to 1.6.0-beta.1",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

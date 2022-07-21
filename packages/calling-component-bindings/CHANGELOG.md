@@ -1,8 +1,25 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Wed, 29 Jun 2022 17:31:07 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 11:17:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.4.0)
+
+Thu, 21 Jul 2022 11:17:50 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.3.1-beta.1...@internal/calling-component-bindings_v1.4.0)
+
+### Patches
+
+- Fix screenshare button selector to disable button when call is InLobby or Connecting state. ([PR #2059](https://github.com/azure/communication-ui-library/pull/2059) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/calling-stateful-client to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+- Bump @internal/react-components to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/417d182fcf38c3c1efb1968f13f97035216bf0a7) by beachball)
+
+### Changes
+
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.3.1-beta.1)
 

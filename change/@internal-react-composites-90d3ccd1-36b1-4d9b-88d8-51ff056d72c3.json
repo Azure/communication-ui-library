@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix scrollbar showing incorrectly in landscape mobile view due to absolutely positioned participant pane in Chat Composite",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
