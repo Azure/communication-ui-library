@@ -2130,7 +2130,7 @@ packages:
       '@fluentui/style-utilities': 8.7.2_0593675b4d5fe572998fa3e4bddd25f7
       '@fluentui/theme': 2.6.7_0593675b4d5fe572998fa3e4bddd25f7
       '@fluentui/utilities': 8.9.0_0593675b4d5fe572998fa3e4bddd25f7
-      '@microsoft/load-themed-styles': 1.10.281
+      '@microsoft/load-themed-styles': 1.10.282
       '@types/react': 16.14.28
       '@types/react-dom': 16.9.16
       react: 16.14.0
@@ -2173,7 +2173,7 @@ packages:
       '@fluentui/set-version': 8.2.1
       '@fluentui/theme': 2.6.7_0593675b4d5fe572998fa3e4bddd25f7
       '@fluentui/utilities': 8.9.0_0593675b4d5fe572998fa3e4bddd25f7
-      '@microsoft/load-themed-styles': 1.10.281
+      '@microsoft/load-themed-styles': 1.10.282
       tslib: 2.4.0
     dev: false
     peerDependencies:
@@ -2752,10 +2752,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-D1Oivw1A4bIXhzBIy3/BBPn3p2On+kpO2NiYt9shICDK7L/w+cR6FFBUsBZ05l6iqzTeL+Jm8lAYn0g6G7DmDg==
-  /@microsoft/load-themed-styles/1.10.281:
+  /@microsoft/load-themed-styles/1.10.282:
     dev: false
     resolution:
-      integrity: sha512-91uZ4u6p5ZClHQE2RpJKTZALeCl1G9cZB47SPivfPrRtjrhqCfS3gC3zNoikUhpwccWjfSN50zjm289Wxkf/8Q==
+      integrity: sha512-9ipD+XiyiHhKHVjyprnEXv3Lsz+7O6evkasrjQUjuYw1Hxxvx16PYH56YytVp75llelTmdyDldOYH/ELiRe9Ew==
   /@microsoft/tsdoc-config/0.15.2:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -6558,7 +6558,7 @@ packages:
   /browserslist/4.20.4:
     dependencies:
       caniuse-lite: 1.0.30001367
-      electron-to-chromium: 1.4.195
+      electron-to-chromium: 1.4.196
       escalade: 3.1.1
       node-releases: 2.0.6
       picocolors: 1.0.0
@@ -6571,7 +6571,7 @@ packages:
   /browserslist/4.21.2:
     dependencies:
       caniuse-lite: 1.0.30001367
-      electron-to-chromium: 1.4.195
+      electron-to-chromium: 1.4.196
       node-releases: 2.0.6
       update-browserslist-db: 1.0.5_browserslist@4.21.2
     dev: false
@@ -8282,10 +8282,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-/sXZeMlhS0ArkfX2Aw780gJzXSMPnKjtspYZv+f3NiKLlubezAHDU5+9xz6gd3/NhG3txQCo6xlglmTS+oTGEQ==
-  /electron-to-chromium/1.4.195:
+  /electron-to-chromium/1.4.196:
     dev: false
     resolution:
-      integrity: sha512-vefjEh0sk871xNmR5whJf9TEngX+KTKS3hOHpjoMpauKkwlGwtMz1H8IaIjAT/GNnX0TbGwAdmVoXCAzXf+PPg==
+      integrity: sha512-uxMa/Dt7PQsLBVXwH+t6JvpHJnrsYBaxWKi/J6HE+/nBtoHENhwBoNkgkm226/Kfxeg0z1eMQLBRPPKcDH8xWA==
   /elliptic/6.5.4:
     dependencies:
       bn.js: 4.12.0
