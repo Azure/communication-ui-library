@@ -107,6 +107,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectSpeaker(selected as AudioDeviceInfo);
       }
+      props.onLightDismiss();
     },
     [speakers, onSelectSpeaker]
   );
@@ -142,6 +143,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectMicrophone(selected as AudioDeviceInfo);
       }
+      props.onLightDismiss();
     },
     [microphones, onSelectMicrophone]
   );
