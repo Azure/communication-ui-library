@@ -14,6 +14,8 @@ const MATRIX_JSON = path.join(REPO_ROOT, 'common', 'config', 'workflows', 'matri
  *
  * The script is used by release automation -- release branches only build a specific build flavor
  * based on the type of the release.
+ *
+ * See also `common/scripts/workflow-read-matrix.mjs`.
  */
 function main(args) {
   const target = args[2]
