@@ -60,6 +60,6 @@ export const buttonStyle = mergeStyles({
   padding: '0.625rem'
 });
 /* @conditional-compile-remove(PSTN-calls) */
-export const outboundtextField = mergeStyles({
+export const outboundTextField = mergeStyles({
   paddingTop: '0.5rem'
 });
