@@ -126,7 +126,7 @@ const useBase = (): boolean => useContext(BaseContext);
  * @private
  * Provides a wrapper with a background color to ensure that composites always have a background color.
  * This is necessary to ensure that composites are not transparent,
- * and the background color of it's parent elements don't show through the composite.
+ * and the background color of it's parent elements doesn't show through the composite.
  */
 const WithBackgroundColor = (props: { children: React.ReactNode }): JSX.Element => {
   const { children } = props;
