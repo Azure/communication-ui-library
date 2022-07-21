@@ -3,9 +3,8 @@
 
 import React from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
+
 import { IconButton } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
   DefaultButton,
@@ -16,13 +15,9 @@ import {
   TextField,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(dialpad) */
 import { useState } from 'react';
-/* @conditional-compile-remove(dialpad) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(dialpad) */
 import {
   buttonStyles,
   containerStyles,
@@ -31,7 +26,6 @@ import {
   secondaryContentStyles,
   textFieldStyles
 } from '../styles/Dialpad.styles';
-/* @conditional-compile-remove(dialpad) */
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 
 /**
@@ -113,7 +107,6 @@ export interface DialpadProps {
   styles?: DialpadStyles;
 }
 
-/* @conditional-compile-remove(dialpad) */
 const DialpadButton = (props: {
   primaryContent: string;
   secondaryContent?: string;
@@ -143,7 +136,6 @@ const DialpadButton = (props: {
   );
 };
 
-/* @conditional-compile-remove(dialpad) */
 const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [
     { primaryContent: '1' },
@@ -163,7 +155,6 @@ const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
 ];
 
-/* @conditional-compile-remove(dialpad) */
 const DtmfTones: DtmfTone[] = [
   'Num1',
   'Num2',
@@ -179,7 +170,6 @@ const DtmfTones: DtmfTone[] = [
   'Pound'
 ];
 
-/* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
   strings: DialpadStrings;
   // dialpadButtons?: DialpadButtonProps[][];
@@ -311,17 +301,8 @@ const DialpadContainer = (props: {
  * @beta
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
-  /* @conditional-compile-remove(dialpad) */
   const localeStrings = useLocale().strings.dialpad;
-  /* @conditional-compile-remove(dialpad) */
   const strings = { ...localeStrings, ...props.strings };
 
-  return (
-    <>
-      {
-        /* @conditional-compile-remove(dialpad) */
-        <DialpadContainer strings={strings} {...props} />
-      }
-    </>
-  );
+  return <DialpadContainer strings={strings} {...props} />;
 };

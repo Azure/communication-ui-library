@@ -3,7 +3,7 @@
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
-import { CallWithChatCompositeStrings } from '../../../index-public';
+import { CallCompositeStrings, CallWithChatCompositeStrings } from '../../../index-public';
 import { CallWithChatCompositeIcon } from '../../common/icons';
 import { peoplePaneContainerTokens } from '../../common/styles/ParticipantContainer.styles';
 import {
@@ -14,14 +14,14 @@ import {
   themedCopyLinkButtonStyles
 } from '../../common/styles/PeoplePaneContent.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPeopleDropdown } from './AddPeopleDropdown';
+import { AddPeopleDropdown, AddPeopleDropdownStrings } from './AddPeopleDropdown';
 
 /** @private */
 export interface AddPeopleButtonProps {
   inviteLink?: string;
   mobileView?: boolean;
   participantList?: JSX.Element;
-  strings: CallWithChatCompositeStrings;
+  strings: CallWithChatCompositeStrings | CallCompositeStrings;
 }
 
 /** @private */
@@ -37,7 +37,13 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
 
   if (mobileView) {
     /* @conditional-compile-remove(PSTN-calls) */
-    return <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />;
+    return (
+      <AddPeopleDropdown
+        strings={addPeopleDropdownStringsTrampoline(strings)}
+        mobileView={mobileView}
+        inviteLink={inviteLink}
+      />
+    );
 
     return (
       <Stack>
@@ -58,7 +64,11 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   return (
     <Stack tokens={peoplePaneContainerTokens}>
-      <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />
+      <AddPeopleDropdown
+        strings={addPeopleDropdownStringsTrampoline(strings)}
+        mobileView={mobileView}
+        inviteLink={inviteLink}
+      />
       {participantList}
     </Stack>
   );
@@ -79,3 +89,11 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     </Stack>
   );
 };
+
+function addPeopleDropdownStringsTrampoline(
+  strings: CallWithChatCompositeStrings | CallCompositeStrings
+): AddPeopleDropdownStrings {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return strings;
+  return strings as unknown as AddPeopleDropdownStrings;
+}

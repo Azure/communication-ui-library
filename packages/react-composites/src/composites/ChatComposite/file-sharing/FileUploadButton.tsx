@@ -2,6 +2,9 @@
 // Licensed under the MIT license.
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
+import { CallCompositeStrings } from '../../CallComposite';
+import { CallWithChatCompositeStrings } from '../../CallWithChatComposite';
+import { PreparedDialpadStrings } from '../../CallWithChatComposite/components/PreparedDialpad';
 import { ChatCompositeIcon } from '../../common/icons';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../../localization';

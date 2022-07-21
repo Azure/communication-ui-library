@@ -10,26 +10,17 @@ import {
   Stack,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */
+
 import { _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */
 import copy from 'copy-to-clipboard';
-/* @conditional-compile-remove(PSTN-calls) */
 import { useMemo, useState } from 'react';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(PSTN-calls) */
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from '../../common/styles/PeoplePaneContent.styles';
-/* @conditional-compile-remove(PSTN-calls) */
 import { convertContextualMenuItemToDrawerMenuItem } from '../ConvertContextualMenuItemToDrawerMenuItem';
-/* @conditional-compile-remove(PSTN-calls) */
 import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
-/* @conditional-compile-remove(PSTN-calls) */
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
-/* @conditional-compile-remove(PSTN-calls) */
 import { PreparedDialpad } from './PreparedDialpad';
 import { PreparedDialpadStrings } from './PreparedDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
 import { preventDismissOnEvent } from '../PreventDismissOnEvent';
 
 /** @private */
@@ -48,18 +39,16 @@ export interface AddPeopleDropdownProps {
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
-  /* @conditional-compile-remove(PSTN-calls) */
   const theme = useTheme();
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const { inviteLink, strings, mobileView } = props;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const [showDialpad, setShowDialpad] = useState(false);
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const menuStyleThemed = useMemo(() => themedMenuStyle(theme), [theme]);
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const copyLinkButtonStylesThemed = useMemo(() => themedCopyLinkButtonStyles(theme, mobileView), [mobileView, theme]);
 
-  /* @conditional-compile-remove(PSTN-calls) */
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       styles: menuStyleThemed,
@@ -97,13 +86,13 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     inviteLink,
     menuStyleThemed
   ]);
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
   };
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const [addPeopleDrawerMenuItems, setAddPeopleDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
-  /* @conditional-compile-remove(PSTN-calls) */
+
   const setDrawerMenuItemsForAddPeople: () => void = useMemo(() => {
     return () => {
       const drawerMenuItems = defaultMenuProps.items.map((contextualMenu: IContextualMenuItem) =>
@@ -112,7 +101,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       setAddPeopleDrawerMenuItems(drawerMenuItems);
     };
   }, [defaultMenuProps, setAddPeopleDrawerMenuItems]);
-  /* @conditional-compile-remove(PSTN-calls) */
+
   if (mobileView) {
     return (
       <Stack>
@@ -140,7 +129,6 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   return (
     <>
       {
-        /* @conditional-compile-remove(PSTN-calls) */
         <Stack>
           <PreparedDialpad
             isMobile={false}

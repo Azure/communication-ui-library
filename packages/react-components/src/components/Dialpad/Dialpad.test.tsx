@@ -1,20 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(dialpad) */
 import React from 'react';
-/* @conditional-compile-remove(dialpad) */
 import Enzyme, { mount } from 'enzyme';
-/* @conditional-compile-remove(dialpad) */
 import Adapter from 'enzyme-adapter-react-16';
-/* @conditional-compile-remove(dialpad) */
 import { DtmfTone, Dialpad, DialpadStrings } from './Dialpad';
-/* @conditional-compile-remove(dialpad) */
 import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
-/* @conditional-compile-remove(dialpad) */
 Enzyme.configure({ adapter: new Adapter() });
 
-/* @conditional-compile-remove(dialpad) */
 const customDialpadStrings = {
   placeholderText: Math.random().toString(),
   deleteButtonAriaLabel: Math.random().toString()
@@ -24,22 +17,18 @@ test('workaround for conditional compilation. Test suite must contain at least o
   expect(true).toBeTruthy();
 });
 
-/* @conditional-compile-remove(dialpad) */
 const mockSendDTMF = jest.fn();
 
-/* @conditional-compile-remove(dialpad) */
 const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
   mockSendDTMF(dtmfTone);
   return Promise.resolve();
 };
 
-/* @conditional-compile-remove(dialpad) */
 const dialpadStrings: DialpadStrings = {
   placeholderText: Math.random().toString(),
   deleteButtonAriaLabel: Math.random().toString()
 };
 
-/* @conditional-compile-remove(dialpad) */
 describe('Dialpad tests', () => {
   test('Should localize default text ', async () => {
     const testLocale = createTestLocale({
