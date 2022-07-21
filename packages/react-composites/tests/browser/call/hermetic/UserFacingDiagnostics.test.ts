@@ -3,10 +3,10 @@
 
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
-import { buildUrlWithMockAdapterNext, defaultMockCallAdapterState, test } from './fixture';
-import { DiagnosticQuality } from '../TestCallingState';
+import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
+import { DiagnosticQuality } from './constants';
 
 test.describe('User Facing Diagnostics tests', async () => {
   test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
@@ -14,7 +14,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       speakingWhileMicrophoneIsMuted: { value: true, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -27,7 +27,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setNetworkDiagnostic(initialState, {
       networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -40,7 +40,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       cameraFreeze: { value: true, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -53,7 +53,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       cameraStoppedUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -66,7 +66,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       cameraStoppedUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('error-bar-camera-recovered.png');
@@ -77,7 +77,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       microphoneMuteUnexpectedly: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
@@ -90,7 +90,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     setMediaDiagnostic(initialState, {
       microphoneMuteUnexpectedly: { value: DiagnosticQuality.Good, valueType: 'DiagnosticFlag' }
     });
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
