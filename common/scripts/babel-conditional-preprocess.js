@@ -201,6 +201,7 @@ function shouldRemoveNode(instructions) {
   return instructions.includes('remove');
 }
 
+// comment the living crap out of me
 function formatComments(node){
   node.trailingComments.forEach((comment) => {
     // check end of current node line === trailing comments line 
