@@ -9,6 +9,12 @@ import path from 'path';
 
 const MATRIX_JSON = path.join(REPO_ROOT, 'common', 'config', 'workflows', 'matrix.json');
 
+/**
+ * This script forces the build target and dependencies to be restricted to the provided flavor.
+ *
+ * The script is used by release automation -- release branches only build a specific build flavor
+ * based on the type of the release.
+ */
 function main(args) {
   const target = args[2]
   if (target !== 'stable' && target !== 'beta') {
