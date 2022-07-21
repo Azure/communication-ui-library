@@ -57,19 +57,3 @@ export const ChatButtonContainerStyles: IStackStyles = {
     position: 'relative'
   }
 };
-
-/**
- * Styles for layer host to bound the modal wrapping PiPiP in the mobile pane.
- * @private
- */
-export const modalLayerHostStyle: IStyle = {
-  display: 'flex',
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-  // pointer events for layerHost set to none to make descendants interactive
-  pointerEvents: 'none'
-};

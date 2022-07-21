@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useId } from '@fluentui/react-hooks';
 import {
@@ -19,6 +19,7 @@ import { useCallback, useState } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
+import { modalLayerHostStyle } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
@@ -183,6 +184,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
           )}
       </Stack>
+      {
+        // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
+        // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+        // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+        /* @conditional-compile-remove(one-to-n-calling) */
+        props.mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+      }
     </div>
   );
 };
