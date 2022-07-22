@@ -155,7 +155,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
+                /* @conditional-compile-remove(1-n-calling)  */
                 const acsParticipantsToCall = parseAcsParticipants(outboundParticipants);
+                /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseDialPadParticipant(dialPadParticipant);
                 startCallHandler({
                   displayName,
