@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CSSProperties } from 'react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
+import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
@@ -91,10 +91,7 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
     marginRight: '0rem',
     marginLeft: `${messageAvatarGap}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-    zIndex: CHAT_MESSAGE_ZINDEX,
-    '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
-    }
+    zIndex: CHAT_MESSAGE_ZINDEX
   };
 };
 
@@ -104,7 +101,9 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
 export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginLeft: '0rem'
+  marginLeft: '0rem',
+  // This makes message bubble show border in high contrast mode making each message distinguishable
+  border: '1px solid transparent'
 };
 
 /**
@@ -130,7 +129,9 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
     // Deal with awkward padding seen in messages from Teams.
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
     marginBlock: '0.125rem'
-  }
+  },
+  // This makes message bubble show border in high contrast mode making each message distinguishable
+  border: '1px solid transparent'
 };
 
 /**
