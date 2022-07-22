@@ -17,6 +17,7 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { useState } from 'react';
+/* @conditional-compile-remove(dialpad) */
 import { useLocale } from '../../localization';
 import {
   buttonStyles,
