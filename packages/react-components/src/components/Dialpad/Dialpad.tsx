@@ -301,16 +301,17 @@ const DialpadContainer = (props: {
  * @beta
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
-  const localeStrings = dialpadLocaleStringsTrampoline();
-  const strings = { ...localeStrings, ...props.strings };
+  /* @conditional-compile-remove(dialpad) */
+  const localeStrings = useLocale().strings.dialpad;
+
+  const dialpadLocaleStringsTrampoline = (): DialpadStrings => {
+    /* @conditional-compile-remove(dialpad) */
+    return localeStrings;
+    // Even though the component strings type doesn't have `DialpadStrings` in stable build,
+    // the string values exist. So unsafe cast for stable build.
+    return '' as unknown as DialpadStrings;
+  };
+  const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
 
   return <DialpadContainer strings={strings} {...props} />;
 };
-
-function dialpadLocaleStringsTrampoline(): DialpadStrings {
-  /* @conditional-compile-remove(dialpad) */
-  return useLocale().strings.dialpad;
-  // Even though the component strings type doesn't have `DialpadStrings` in stable build,
-  // the string values exist. So unsafe cast for stable build.
-  return (useLocale().strings as any).dialpad as DialpadStrings;
-}
