@@ -120,6 +120,7 @@ function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
   if (!node.leadingComments) {
     return;
   }
+
   const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
   if (!shouldRemoveNode(removalInstructions)) {
     return;
@@ -148,9 +149,6 @@ function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
   } else {
     path.remove();
   }
-
-  // fix trailing comment issues with babel
-  formatComments(node);
 }
 
 function HandleConditionalType(path, featureSet, stabilizedFeatureSet) {
@@ -199,12 +197,4 @@ function shouldRemoveNode(instructions) {
     return false;
   }
   return instructions.includes('remove');
-}
-
-// comment the living crap out of me
-function formatComments(node){
-  node.trailingComments.forEach((comment) => {
-    // check end of current node line === trailing comments line 
-    // if not the same remove trailing comment
-  })
 }

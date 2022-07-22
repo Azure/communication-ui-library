@@ -12,10 +12,13 @@
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",
+    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "prettier": "",
     "prettier:check": "",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
+    "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
+    "_preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\""
   },
   "license": "MIT",
   "dependencies": {

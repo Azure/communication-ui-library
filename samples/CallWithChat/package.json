@@ -13,6 +13,7 @@
     "start:prod": "node dist/server.js",
     "test": "",
     "test:stable": "echo skip",
+    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 */**/*.{ts,tsx}",
@@ -21,7 +22,9 @@
     "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
-    "_typecheck": "rushx _by-flavor \"if-env COMMUNICATION_REACT_FLAVOR=stable && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
+    "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
+    "_typecheck": "rushx _by-flavor \"if-env COMMUNICATION_REACT_FLAVOR=stable && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\"",
+    "_preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\""
   },
   "dependencies": {
     "@azure/communication-identity": "1.0.0",

@@ -77,10 +77,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
     /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen);
 
-  /**
-   * when do we not want the button to be activated
-   * - when start PSTN is selected AND dialpadParticipant AND
-   */
   return (
     <Stack
       horizontal
@@ -116,7 +112,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
+              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
                   <Stack>
                     <TextField
@@ -180,7 +176,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(1-n-calling)  */
+/* @conditional-compile-remove(one-to-n-calling)  */
 /**
  * splits the participant Id's so we can call multiple people.
  */
