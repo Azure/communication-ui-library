@@ -47,10 +47,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
-    /* @conditional-compile-remove(PSTN-calls) */
-    { key: 'PSTN', text: 'Start a PSTN Call' },
     /* @conditional-compile-remove(one-to-n-calling) */
-    { key: '1:N', text: 'Start a 1:N ACS Call' }
+    { key: '1:N', text: 'Start a 1:N ACS Call' },
+    /* @conditional-compile-remove(PSTN-calls) */
+    { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
 
   // Get display name from local storage if available
@@ -66,12 +66,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
 
+  const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   /* @conditional-compile-remove(PSTN-calls) */
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
+  /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
-  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
+  const buttonEnabled =
+    (displayName && (startGroupCall || (teamsCallChosen && teamsLink))) ||
+    /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
+    /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen);
 
+  /**
+   * when do we not want the button to be activated
+   * - when start PSTN is selected AND dialpadParticipant AND
+   */
   return (
     <Stack
       horizontal
@@ -107,6 +116,20 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
+              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
+                <Stack>
+                  <Stack>
+                    <TextField
+                      className={outboundtextField}
+                      label={'Participants'}
+                      placeholder={"Comma seperated ACS user ID's"}
+                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
+                    />
+                  </Stack>
+                </Stack>
+              )
+            }
+            {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
@@ -120,20 +143,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       label={'ACS phone number for Caller ID'}
                       placeholder={'Enter your ACS aquired phone number for PSTN call'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
-                    />
-                  </Stack>
-                </Stack>
-              )
-            }
-            {
-              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
-                <Stack>
-                  <Stack>
-                    <TextField
-                      className={outboundtextField}
-                      label={'Participants'}
-                      placeholder={"Comma seperated ACS user ID's"}
-                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
                     />
                   </Stack>
                 </Stack>
@@ -171,7 +180,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(1-n-calling)  */
 /**
  * splits the participant Id's so we can call multiple people.
  */
