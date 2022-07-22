@@ -26,7 +26,7 @@ import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-import { preventDismissOnEvent } from './utils/common';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.

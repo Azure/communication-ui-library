@@ -21,7 +21,7 @@ import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
 import { PreparedDialpad } from './PreparedDialpad';
 import { PreparedDialpadStrings } from './PreparedDialpad';
-import { preventDismissOnEvent } from '../PreventDismissOnEvent';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends PreparedDialpadStrings {
