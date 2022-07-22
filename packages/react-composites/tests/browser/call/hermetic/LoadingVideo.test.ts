@@ -7,7 +7,7 @@ import { stableScreenshot, waitForSelector, dataUiId } from '../../common/utils'
 import {
   addScreenshareStream,
   addVideoStream,
-  buildUrlWithMockAdapterNext,
+  buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
   test
@@ -24,7 +24,7 @@ test.describe('Loading Video Spinner tests', async () => {
       return participant;
     });
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true, hideVideoLoadingSpinner: false })).toMatchSnapshot(
@@ -38,7 +38,7 @@ test.describe('Loading Video Spinner tests', async () => {
     const horizontalGalleryParticipant = defaultMockRemoteParticipant('Horizontal Gallery User');
     addVideoStream(horizontalGalleryParticipant, false);
     const initialState = defaultMockCallAdapterState([screenSharingParticipant, horizontalGalleryParticipant]);
-    await page.goto(buildUrlWithMockAdapterNext(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true, hideVideoLoadingSpinner: false })).toMatchSnapshot(
