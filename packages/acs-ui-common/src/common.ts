@@ -13,7 +13,6 @@ export const _convertRemToPx = (rem: number): number => {
 
 /**
  * @internal
- * Converts units of rem to units of pixels
  * Disable dismiss on resize to work around a couple Fluent UI bugs
  * - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
  * happens when we change the VideoGallery layout, or even when the video stream element is internally resized

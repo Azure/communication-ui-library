@@ -43,7 +43,7 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
     lineHeight: '2.3125rem'
   },
   label: {
-    fontWeight: 600,
+    fontWeight: theme.fonts.medium.fontWeight,
     fontSize: '0.875rem'
   },
   errorMessage: {

@@ -59,7 +59,9 @@ export interface DialpadStyles {
  * @beta
  */
 export interface DialpadButtonProps {
+  /** Number displayed on each dialpad button */
   primaryContent: string;
+  /** Letters displayed on each dialpad button */
   secondaryContent?: string;
 }
 

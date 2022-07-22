@@ -3,18 +3,18 @@
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
-import { CallWithChatCompositeStrings } from '../../../index-public';
+import { CallWithChatCompositeStrings } from '../../index-public';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallCompositeStrings } from '../../../index-public';
-import { CallWithChatCompositeIcon } from '../../common/icons';
-import { peoplePaneContainerTokens } from '../../common/styles/ParticipantContainer.styles';
+import { CallCompositeStrings } from '../../index-public';
+import { CallWithChatCompositeIcon } from './icons';
+import { peoplePaneContainerTokens } from './styles/ParticipantContainer.styles';
 import {
   copyLinkButtonContainerStyles,
   copyLinkButtonStackStyles,
   copyLinkButtonStyles,
   linkIconStyles,
   themedCopyLinkButtonStyles
-} from '../../common/styles/PeoplePaneContent.styles';
+} from './styles/PeoplePaneContent.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPeopleDropdown } from './AddPeopleDropdown';
 

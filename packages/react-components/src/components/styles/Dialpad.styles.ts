@@ -40,7 +40,7 @@ export const buttonStyles = (theme: Theme): IButtonStyles => ({
 export const primaryContentStyles = (theme: Theme): IStyle => {
   return {
     fontSize: '1.25rem',
-    fontWeight: 600,
+    fontWeight: theme.fonts.medium.fontWeight,
     color: `${theme.palette.neutralPrimary}`
   };
 };

@@ -14,14 +14,14 @@ import { _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CallWithChatCompositeIcon } from '../../common/icons';
-import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from '../../common/styles/PeoplePaneContent.styles';
-import { convertContextualMenuItemToDrawerMenuItem } from '../ConvertContextualMenuItemToDrawerMenuItem';
-import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
+import { CallWithChatCompositeIcon } from './icons';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
 import { PreparedDialpad } from './PreparedDialpad';
 import { PreparedDialpadStrings } from './PreparedDialpad';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
+import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends PreparedDialpadStrings {
