@@ -109,7 +109,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
       props.onLightDismiss();
     },
-    [speakers, onSelectSpeaker]
+    [speakers, onSelectSpeaker, props]
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
@@ -145,7 +145,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
       props.onLightDismiss();
     },
-    [microphones, onSelectMicrophone]
+    [microphones, onSelectMicrophone, props]
   );
 
   if (props.microphones && props.microphones.length > 0) {
