@@ -1694,9 +1694,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadButtonProps {
-    // (undocumented)
     primaryContent: string;
-    // (undocumented)
     secondaryContent?: string;
 }
 

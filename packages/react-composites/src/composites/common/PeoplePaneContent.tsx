@@ -17,7 +17,9 @@ import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
-import { AddPeopleButton } from '../CallWithChatComposite/components/AddPeopleButton';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CallCompositeStrings } from '../CallComposite';
+import { AddPeopleButton } from './AddPeopleButton';
 
 /**
  * @private

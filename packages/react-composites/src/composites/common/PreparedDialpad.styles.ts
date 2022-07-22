@@ -27,10 +27,10 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
   },
   textField: {
     root: {
-      borderBottom: '1px solid lightgrey'
+      borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`
     },
     field: {
-      backgroundColor: 'white',
+      backgroundColor: theme.palette.white,
       fontSize: theme.fonts.large.fontSize,
       padding: '1.063rem 0.5rem',
       textAlign: isMobile ? 'center' : 'left',
@@ -47,7 +47,7 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
  */
 export const themedCallButtonStyle = (theme: Theme): Partial<IButtonStyles> => ({
   root: {
-    fontWeight: 600,
+    fontWeight: theme.fonts.medium.fontWeight,
     fontSize: theme.fonts.medium.fontSize,
     width: '100%',
     height: '2.5rem',

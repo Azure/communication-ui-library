@@ -7,11 +7,12 @@ import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
 import { IButtonStyles, PrimaryButton } from '@fluentui/react';
-import { drawerContainerStyles } from '../styles/CallWithChatCompositeStyles';
+
 import { themedDialpadModelStyle } from './PreparedDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './PreparedDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CallWithChatCompositeIcon } from '../../common/icons';
+import { CallWithChatCompositeIcon } from './icons';
+import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
 
 /** @private */
 export interface PreparedDialpadStrings {
@@ -95,7 +96,7 @@ export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
           data-ui-id="call-with-chat-composite-dialpad"
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            <Text style={{ fontWeight: 600 }}>{strings.dialpadModalTitle}</Text>
+            <Text style={{ fontWeight: theme.fonts.medium.fontWeight }}>{strings.dialpadModalTitle}</Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings.dialpadCloseModalButtonAriaLabel}
