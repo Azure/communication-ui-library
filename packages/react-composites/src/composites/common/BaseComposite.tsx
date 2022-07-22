@@ -131,15 +131,11 @@ const useBase = (): boolean => useContext(BaseContext);
 const WithBackgroundColor = (props: { children: React.ReactNode }): JSX.Element => {
   const { children } = props;
   const theme = useTheme();
-  const className = React.useMemo(
-    () =>
-      mergeStyles({
-        background: theme.semanticColors.bodyBackground,
-        height: '100%',
-        width: '100%',
-        position: 'relative'
-      }),
-    [theme.semanticColors.bodyBackground]
-  );
+  const className = mergeStyles({
+    background: theme.semanticColors.bodyBackground,
+    height: '100%',
+    width: '100%',
+    position: 'relative'
+  });
   return <Stack className={className}>{children}</Stack>;
 };
