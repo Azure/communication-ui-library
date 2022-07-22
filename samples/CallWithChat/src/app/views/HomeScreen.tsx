@@ -132,7 +132,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <Stack>
                     <Dialpad
                       onChange={(newValue) => {
-                        newValue && setDialpadParticipant(newValue);
+                        /**
+                         * We need to pass in the formatting for the phone number string in the onChange handler
+                         * to make sure the phone number is in E.164 format.
+                         *
+                         * write regexp to flatten this
+                         */
+                        const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
+                        setDialpadParticipant(phoneNumber);
                       }}
                     />
                     <TextField
@@ -156,9 +163,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(1-n-calling)  */
-                const acsParticipantsToCall = parseAcsParticipants(outboundParticipants);
+                const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 /* @conditional-compile-remove(PSTN-calls) */
-                const dialpadParticipantToCall = parseDialPadParticipant(dialPadParticipant);
+                const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
+                console.log(dialpadParticipantToCall);
                 startCallHandler({
                   displayName,
                   teamsLink,
@@ -177,29 +185,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     </Stack>
   );
 };
-/* @conditional-compile-remove(1-n-calling)  */
+
+/* @conditional-compile-remove(1-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  */
-const parseAcsParticipants = (participantsString?: string): string[] | undefined => {
+const parseParticipants = (participantsString?: string): string[] | undefined => {
   if (participantsString) {
-    return participantsString.replace(' ', '').split(',');
+    return participantsString.replaceAll(' ', '').split(',');
   } else {
     return undefined;
   }
-};
-
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * Parse the unformatted string that is given from the dialpad to something that the
- * Calling adapter will accept as a PSTN participant.
- *
- * @param participant - string stored from dialpad inputs.
- * @returns formatted phone number to be added to call locator.
- */
-const parseDialPadParticipant = (participant?: string): string[] | undefined => {
-  const participants = participant?.replace('-', '').replace(') ', '').replace(' (', '').split(',');
-  return participants?.map((p) => {
-    return '+' + p;
-  });
 };
