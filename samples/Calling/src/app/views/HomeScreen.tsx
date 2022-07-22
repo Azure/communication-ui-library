@@ -66,13 +66,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
 
+  const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   /* @conditional-compile-remove(PSTN-calls) */
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
-  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
+  const buttonEnabled =
+    (displayName && (startGroupCall || (teamsCallChosen && teamsLink))) ||
+    /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
+    /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen);
 
+  /**
+   * when do we not want the button to be activated
+   * - when start PSTN is selected AND dialpadParticipant AND
+   */
   return (
     <Stack
       horizontal
