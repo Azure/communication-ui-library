@@ -8,14 +8,14 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
 import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 
-import { themedDialpadModelStyle } from './PreparedDialpad.styles';
-import { themedCallButtonStyle, themedDialpadStyle } from './PreparedDialpad.styles';
+import { themedDialpadModelStyle } from './CallingDialpad.styles';
+import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
 
 /** @private */
-export interface PreparedDialpadStrings {
+export interface CallingDialpadStrings {
   dialpadModalAriaLabel: string;
   dialpadModalTitle: string;
   dialpadCloseModalButtonAriaLabel: string;
@@ -23,15 +23,15 @@ export interface PreparedDialpadStrings {
 }
 
 /** @private */
-export interface PreparedDialpadProps {
+export interface CallingDialpadProps {
   isMobile: boolean;
   showDialpad: boolean;
-  strings: PreparedDialpadStrings;
+  strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
 }
 
 /** @private */
-export const PreparedDialpad = (props: PreparedDialpadProps): JSX.Element => {
+export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const { strings, isMobile, showDialpad, onDismissDialpad } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 

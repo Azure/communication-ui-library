@@ -16,15 +16,15 @@ import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
-import { PreparedDialpad } from './PreparedDialpad';
-import { PreparedDialpadStrings } from './PreparedDialpad';
+import { CallingDialpad } from './CallingDialpad';
+import { CallingDialpadStrings } from './CallingDialpad';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 
 /** @private */
-export interface AddPeopleDropdownStrings extends PreparedDialpadStrings {
+export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
   copyInviteLinkButtonLabel: string;
   openDialpadButtonLabel: string;
   peoplePaneAddPeopleButtonLabel: string;
@@ -121,7 +121,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
           </Stack>
         )}
 
-        <PreparedDialpad isMobile strings={strings} showDialpad={showDialpad} onDismissDialpad={onDismissDialpad} />
+        <CallingDialpad isMobile strings={strings} showDialpad={showDialpad} onDismissDialpad={onDismissDialpad} />
       </Stack>
     );
   }
@@ -130,7 +130,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     <>
       {
         <Stack>
-          <PreparedDialpad
+          <CallingDialpad
             isMobile={false}
             strings={strings}
             showDialpad={showDialpad}
