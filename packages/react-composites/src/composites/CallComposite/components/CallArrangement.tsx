@@ -183,14 +183,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               />
             </Stack.Item>
           )}
+        {
+          // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
+          // because when the CallPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+          // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+          /* @conditional-compile-remove(one-to-n-calling) */
+          props.mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+        }
       </Stack>
-      {
-        // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
-        // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-        // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
-        /* @conditional-compile-remove(one-to-n-calling) */
-        props.mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
-      }
     </div>
   );
 };

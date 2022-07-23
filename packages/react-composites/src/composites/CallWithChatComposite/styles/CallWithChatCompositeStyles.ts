@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStyle } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 
 /**
  * @private
