@@ -12,8 +12,8 @@ Tests for each composite are contained in their own folder. Further, hermetic an
   * [./browser/call/live](./browser/call/live) - Live tests for `CallComposite`
 * [./browser/chat](./browser/chat) - Tests for `ChatComposite`
   * [./browser/chat/app](./browser/chat/app) - Test application used for all `ChatComposite` tests
-  * [./browser/chat/fake-adapter](./browser/chat/fake-adapter) - Hermetic tests for `ChatComposite`
-  * [./browser/chat/live-tests](./browser/chat/live-tests) - Live tests for `ChatComposite`
+  * [./browser/chat/hermetic](./browser/chat/hermetic) - Hermetic tests for `ChatComposite`
+  * [./browser/chat/live](./browser/chat/live) - Live tests for `ChatComposite`
 * [./browser/callwithchat](./browser/callwithchat) - Tests for `CallWithChatComposite`
   * [./browser/callwithchat/app](./browser/callwithchat/app) - Test application used for all `CallWithChatComposite` tests
   * [./browser/callwithchat/*](./browser/callwithchat/*) - Live tests for `CallWithChatComposite`
