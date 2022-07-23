@@ -70,16 +70,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
+  const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
   /* @conditional-compile-remove(PSTN-calls) */
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   /* @conditional-compile-remove(1-n-calling)  */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const buttonEnabled =
-    (displayName && (startGroupCall || (teamsCallChosen && teamsLink))) ||
-    /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
-    /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen);
-
+    displayName &&
+    (startGroupCall ||
+      teamsLink ||
+      (teamsCallChosen && teamsLink) ||
+      /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
+      /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
   return (
     <Stack
       horizontal
