@@ -128,3 +128,20 @@ test.only('Your test name here', async ({ pages }, testInfo) => {
     '...'
 ```
 
+### Local debugging
+
+Use `node scripts/runBrowswerTests.mjs -d` to debug a test locally. In debug mode the script runs the test under [Playwright Inspector](https://playwright.dev/docs/debug). Additionally, some internal test timeouts are relaxed to allow you to single-step through the tests via the inspector.
+
+This mode requires a display device because the tests need to run in a browser with a display. In particular, this means that you can not use this mode on GitHub Codespaces.
+
+To debug a particular test,
+
+* Select the test to run via [`test.only`](https://playwright.dev/docs/api/class-test#test-only)
+  ```typescript
+  test.describe('Chat Composite E2E Tests', () => {
+    test.only('participant can receive message', async ({ serverUrl, page }) => {
+      const messageReader = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
+      ...
+  ```
+* Run the relevant test suite, usually selecting a single project: `node ./scripts/runBrowserTests.mjs -c chat -p desktop -d`
+* Single-step through the test, record a video etc through the Inspector.

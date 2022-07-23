@@ -91,6 +91,10 @@ async function runOne(args, composite, hermeticity) {
       cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
     }
   }
+  if (args.debug) {
+    cmdArgs.push('--debug');
+    env['LOCAL_DEBUG'] = true;
+  }
   cmdArgs.push(...args['_']);
 
   const cmd = quote(cmdArgs);
@@ -140,6 +144,14 @@ function parseArgs(argv) {
         type: 'array',
         choices: ['call', 'chat', 'callWithChat'],
         describe: 'One or more composites to test. By default, all composites will be tested.\n'
+      },
+      debug: {
+        alias: 'd',
+        type: 'boolean',
+        describe:
+          'Run in debug mode.\n' +
+          'Launches playwright inspector and relaxes timeouts to allow single stepping through the test.\n' +
+          'This mode must be used on a machine with display support.'
       },
       dryRun: {
         alias: 'n',
