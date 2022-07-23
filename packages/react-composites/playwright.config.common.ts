@@ -36,16 +36,21 @@ const chromeLaunchOptions = {
 const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+
 const config: PlaywrightTestConfig = {
   outputDir: OUTPUT_DIR,
-  timeout: 60000,
+  // Extend per-test timeout for local debugging so that developers can single-step through
+  // the test in playwright inspector.
+  timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 1 * MINUTE,
 
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
   forbidOnly: !!process.env.CI,
 
   // Applies to all projects
   use: {
-    headless: true,
+    headless: !process.env.LOCAL_DEBUG,
     video: 'retain-on-failure'
   },
 
@@ -80,7 +85,7 @@ const config: PlaywrightTestConfig = {
       }
     }
   ],
-  reporter: !!process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
+  reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
   snapshotDir: `${TEST_ROOT}/snapshots/${buildFlavor}`
 };
 
