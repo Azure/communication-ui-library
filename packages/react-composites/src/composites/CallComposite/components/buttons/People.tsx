@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
 import { concatStyleSets } from '@fluentui/react';
 import { CallCompositeIcon } from '../../../common/icons';
+import { controlButtonBaseStyle } from '../../styles/Buttons.styles';
 
 const icon = (): JSX.Element => <CallCompositeIcon iconName={'ControlButtonParticipants'} />;
 
@@ -23,7 +24,8 @@ export const People = (props: ControlBarButtonProps): JSX.Element => {
             background: theme.palette.neutralLight
           }
         },
-        props.styles ?? {}
+        props.styles ?? {},
+        controlButtonBaseStyle
       ),
     [props.styles, theme.palette.neutralLight]
   );
