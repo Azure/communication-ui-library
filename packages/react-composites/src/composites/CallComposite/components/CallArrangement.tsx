@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { LayerHost } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useId } from '@fluentui/react-hooks';
 import {
@@ -19,6 +21,7 @@ import { useCallback, useState } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { modalLayerHostStyle } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
