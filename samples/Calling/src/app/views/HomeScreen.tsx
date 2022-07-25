@@ -16,7 +16,7 @@ import {
   headerStyle,
   teamsItemStyle,
   buttonStyle,
-  outboundtextField
+  outboundTextField
 } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
@@ -54,7 +54,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
+  /* @conditional-compile-remove(PSTN-calls) */
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
@@ -101,13 +103,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ outBoundCallChosen && (
                 <Stack>
                   <TextField
-                    className={outboundtextField}
+                    className={outboundTextField}
                     label={'Participants'}
                     placeholder={"Comma seperated phone numbers or ACS ID's"}
                     onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                   />
                   <TextField
-                    className={outboundtextField}
+                    className={outboundTextField}
                     label={'ACS phone number for Caller ID'}
                     placeholder={'Enter your ACS aquired phone number for PSTN call'}
                     onChange={(_, newValue) => newValue && setAlternateCallerId(newValue)}

@@ -214,6 +214,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(rooms) */
+export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */
 export type {
   DialpadProps,
