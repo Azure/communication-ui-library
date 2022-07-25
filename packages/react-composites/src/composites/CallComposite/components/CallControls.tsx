@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -31,11 +31,15 @@ export type CallControlsProps = {
   isMobile?: boolean;
 };
 
+// Enforce a background color on control bar to ensure it matches the composite background color.
+const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
+
 /**
  * @private
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+  const theme = useTheme();
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
@@ -58,7 +62,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal">
+        <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
           {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
           {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
           {isEnabled(options?.screenShareButton) && (
