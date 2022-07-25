@@ -63,13 +63,3 @@ export const buttonStyle = mergeStyles({
 export const outboundTextField = mergeStyles({
   paddingTop: '0.5rem'
 });
-/* @conditional-compile-remove(PSTN-calls) */
-export const addDialparticipantStyles = mergeStyles({
-  fontWeight: 600,
-  fontSize: '0.875rem', // 14px
-  height: '1.75rem',
-  width: '13.5rem',
-  maxWidth: '18.75rem',
-  minWidth: '12.5rem',
-  margin: 'auto'
-});
