@@ -228,9 +228,9 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
 
     await pageClick(page0, dataUiId('call-composite-participants-button')); // open participant flyout
     if (flavor === 'beta') {
-      await pageClick(page0, dataUiId('participant-item-menu-button'));
-      await waitForSelector(page0, 'ms-ContextualMenu-itemText');
-      await pageClick(page0, 'ms-ContextualMenu-itemText');
+      await pageClick(page0, dataUiId(IDS.participantItemMenuButton));
+      await waitForSelector(page0, '.ms-ContextualMenu-itemText');
+      await pageClick(page0, '.ms-ContextualMenu-itemText');
     } else {
       await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
       await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
