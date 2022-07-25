@@ -51,7 +51,7 @@ const App = (): JSX.Element => {
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
 
-  const [alternativeCallerId, setAlternativeCallerId] = useState<string | undefined>();
+  const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -96,7 +96,7 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
-            setAlternativeCallerId(callDetails.alternativeCallerId);
+            setAlternateCallerId(callDetails.alternateCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
             const makeLocator = (
               teamsLink?: TeamsMeetingLinkLocator | undefined,
@@ -160,7 +160,7 @@ const App = (): JSX.Element => {
           displayName={displayName}
           callLocator={callLocator}
           /* @conditional-compile-remove(PSTN-calls) */
-          alternativeCallerId={alternativeCallerId}
+          alternateCallerId={alternateCallerId}
           onCallEnded={() => setPage('endCall')}
         />
       );
