@@ -121,38 +121,34 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {
               /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
                 <Stack>
-                  <Stack>
-                    <TextField
-                      className={outboundTextField}
-                      label={'Participants'}
-                      placeholder={"Comma seperated ACS user ID's"}
-                      onChange={(_, newValue) => setOutboundParticipants(newValue)}
-                    />
-                  </Stack>
+                  <TextField
+                    className={outboundTextField}
+                    label={'Participants'}
+                    placeholder={"Comma seperated ACS user ID's"}
+                    onChange={(_, newValue) => setOutboundParticipants(newValue)}
+                  />
                 </Stack>
               )
             }
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
-                  <Stack>
-                    <Dialpad
-                      onChange={(newValue) => {
-                        /**
-                         * We need to pass in the formatting for the phone number string in the onChange handler
-                         * to make sure the phone number is in E.164 format.
-                         */
-                        const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
-                        setDialpadParticipant(phoneNumber);
-                      }}
-                    />
-                    <TextField
-                      className={outboundTextField}
-                      label={'ACS phone number for Caller ID'}
-                      placeholder={'Enter your ACS aquired phone number for PSTN call'}
-                      onChange={(_, newValue) => setAlternateCallerId(newValue)}
-                    />
-                  </Stack>
+                  <Dialpad
+                    onChange={(newValue) => {
+                      /**
+                       * We need to pass in the formatting for the phone number string in the onChange handler
+                       * to make sure the phone number is in E.164 format.
+                       */
+                      const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
+                      setDialpadParticipant(phoneNumber);
+                    }}
+                  />
+                  <TextField
+                    className={outboundTextField}
+                    label={'ACS phone number for Caller ID'}
+                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                    onChange={(_, newValue) => setAlternateCallerId(newValue)}
+                  />
                 </Stack>
               )
             }
