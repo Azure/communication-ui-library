@@ -59,3 +59,6 @@ export const buttonStyle = mergeStyles({
   borderRadius: 3,
   padding: '0.625rem'
 });
+export const outboundTextField = mergeStyles({
+  paddingTop: '0.5rem'
+});
