@@ -24,15 +24,15 @@ export type ContainerProps = {
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 const uuidRegexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
-const isGroupLink = (link: string): boolean => uuidRegexExp.test(link);
+const isGroupID = (locator: string): boolean => uuidRegexExp.test(locator);
 
-const createLocator = (link: string): CallAdapterLocator => {
-  if (isTeamsMeetingLink(link)) {
-    return { meetingLink: link };
-  } else if (isGroupLink(link)) {
-    return { groupId: link };
+const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
+  if (isTeamsMeetingLink(locator)) {
+    return { meetingLink: locator };
+  } else if (isGroupID(locator)) {
+    return { groupId: locator };
   }
-  return { roomId: link };
+  return { roomId: locator };
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -44,7 +44,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       return undefined;
     }
   }, [props.token]);
-  const locator = useMemo(() => createLocator(props.locator), [props.locator]);
+  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
