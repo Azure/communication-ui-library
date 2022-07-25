@@ -15,11 +15,10 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle,
-  outboundTextField
+  buttonStyle
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { outboundtextField } from '../styles/HomeScreen.styles';
+import { outboundTextField } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
@@ -124,7 +123,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <Stack>
                   <Stack>
                     <TextField
-                      className={outboundtextField}
+                      className={outboundTextField}
                       label={'Participants'}
                       placeholder={"Comma seperated ACS user ID's"}
                       onChange={(_, newValue) => setOutboundParticipants(newValue)}
@@ -148,7 +147,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       }}
                     />
                     <TextField
-                      className={outboundtextField}
+                      className={outboundTextField}
                       label={'ACS phone number for Caller ID'}
                       placeholder={'Enter your ACS aquired phone number for PSTN call'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
