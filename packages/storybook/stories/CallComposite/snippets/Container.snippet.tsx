@@ -1,6 +1,7 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
+  CallAdapterLocator,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
@@ -24,7 +25,7 @@ export type ContainerProps = {
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 const isGroupLink = (link: string): boolean => link.indexOf('-') !== -1;
 
-const createLocator = (link: string) => {
+const createLocator = (link: string): CallAdapterLocator => {
   if (isTeamsMeetingLink(link)) {
     return { meetingLink: link };
   } else if (isGroupLink(link)) {
