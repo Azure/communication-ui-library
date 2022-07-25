@@ -148,6 +148,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -1357,7 +1358,7 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
