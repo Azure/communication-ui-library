@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Due to bug alternateCallerId is introduced in this PR: https://github.com/Azure/communication-ui-library/pull/2095",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
