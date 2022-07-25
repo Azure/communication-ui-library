@@ -23,7 +23,8 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const isGroupLink = (link: string): boolean => link.indexOf('-') !== -1;
+const uuidRegexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+const isGroupLink = (link: string): boolean => uuidRegexExp.test(link);
 
 const createLocator = (link: string): CallAdapterLocator => {
   if (isTeamsMeetingLink(link)) {
