@@ -15,7 +15,8 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle
+  buttonStyle,
+  outboundTextField
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { outboundtextField } from '../styles/HomeScreen.styles';

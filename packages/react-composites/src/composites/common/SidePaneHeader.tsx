@@ -3,13 +3,19 @@
 import { CommandBarButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CallCompositeStrings } from '../CallComposite';
+import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 
 /**
  * @private
  */
-export const SidePaneHeader = (props: { headingText: string; onClose: () => void }): JSX.Element => {
+export const SidePaneHeader = (props: {
+  headingText: string;
+  onClose: () => void;
+  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+}): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
     () => ({
@@ -21,13 +27,11 @@ export const SidePaneHeader = (props: { headingText: string; onClose: () => void
     [theme.palette.neutralSecondary]
   );
 
-  const callWithChatStrings = useCallWithChatCompositeStrings();
-
   return (
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles}>
       <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
       <CommandBarButton
-        ariaLabel={callWithChatStrings.dismissSidePaneButtonLabel}
+        ariaLabel={props.strings.dismissSidePaneButtonLabel}
         styles={sidePaneCloseButtonStyles}
         iconProps={{ iconName: 'cancel' }}
         onClick={props.onClose}

@@ -18,8 +18,7 @@ import {
   buttonStyle
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-/* @conditional-compile-remove(1-n-calling)  */
-import { outboundtextField } from '../styles/HomeScreen.styles';
+import { outboundTextField } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
@@ -120,7 +119,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
                 <Stack>
                   <TextField
-                    className={outboundtextField}
+                    className={outboundTextField}
                     label={'Participants'}
                     placeholder={"Comma seperated phone numbers or ACS ID's"}
                     onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
@@ -145,7 +144,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       }}
                     />
                     <TextField
-                      className={outboundtextField}
+                      className={outboundTextField}
                       label={'ACS phone number for Caller ID'}
                       placeholder={'Enter your ACS aquired phone number for PSTN call'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
@@ -168,7 +167,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
-                console.log(dialpadParticipantToCall);
                 startCallHandler({
                   displayName,
                   teamsLink,

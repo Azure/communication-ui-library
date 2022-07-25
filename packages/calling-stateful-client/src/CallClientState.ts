@@ -413,7 +413,9 @@ export interface CallClientState {
   latestErrors: CallErrors;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * Stores an ACS aquired phone number for making PSTN calls.
+   * A phone number in E.164 format that will be used to represent callers identity.
+   * For example, using the alternateCallerId to add a participant using PSTN, this number will
+   * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
 }
