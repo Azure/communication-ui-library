@@ -551,6 +551,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 };
 
 /**
@@ -564,14 +566,16 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   displayName,
   credential,
   endpoint,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callAdapterLocator
+    locator: callAdapterLocator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -624,7 +628,14 @@ export const useAzureCommunicationCallWithChatAdapter = (
    */
   beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>
 ): CallWithChatAdapter | undefined => {
-  const { credential, displayName, endpoint, locator, userId } = args;
+  const {
+    credential,
+    displayName,
+    endpoint,
+    locator,
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
@@ -666,7 +677,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
           displayName,
           endpoint,
           locator,
-          userId
+          userId,
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -676,7 +688,17 @@ export const useAzureCommunicationCallWithChatAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      beforeDisposeRef,
+      credential,
+      displayName,
+      endpoint,
+      locator,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.
