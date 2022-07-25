@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Update composite automation snapshots",
+  "comment": "Message thread background color in composites matches composite background color",
   "packageName": "@internal/react-composites",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
