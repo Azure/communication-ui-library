@@ -17,6 +17,8 @@ import {
   teamsItemStyle,
   buttonStyle
 } from '../styles/HomeScreen.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { outboundTextField } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
@@ -24,7 +26,13 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: {
+    displayName: string;
+    teamsLink?: TeamsMeetingLinkLocator /* @conditional-compile-remove(PSTN-calls) */;
+    outboundParticipants?: string[];
+    /* @conditional-compile-remove(PSTN-calls) */
+    alternateCallerId?: string;
+  }): void;
   joiningExistingCall: boolean;
 }
 
@@ -36,7 +44,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
-    { key: 'TeamsMeeting', text: 'Join a Teams Meeting' }
+    { key: 'TeamsMeeting', text: 'Join a Teams Meeting' },
+    /* @conditional-compile-remove(PSTN-calls) */
+    { key: 'outboundCall', text: 'Start a PSTN or 1:N call' }
   ];
 
   // Get display name from local storage if available
@@ -46,7 +56,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [alternateCallerId, setAlternateCallerId] = useState<string>();
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [outboundParticipants, setOutboundParticipants] = useState<string>();
+
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const outboundCallChosen: boolean = chosenCallOption.key === 'outboundCall';
   const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
   return (
@@ -83,6 +101,24 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
               />
             )}
+            {
+              /* @conditional-compile-remove(PSTN-calls) */ outboundCallChosen && (
+                <Stack>
+                  <TextField
+                    className={outboundTextField}
+                    label={'Participants'}
+                    placeholder={'Comma seperated phone numbers or ACS IDs'}
+                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                  />
+                  <TextField
+                    className={outboundTextField}
+                    label={'ACS phone number for Caller ID'}
+                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                    onChange={(_, newValue) => newValue && setAlternateCallerId(newValue)}
+                  />
+                </Stack>
+              )
+            }
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
 
@@ -93,7 +129,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                startCallHandler({ displayName, teamsLink });
+                startCallHandler({
+                  displayName,
+                  teamsLink,
+                  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+                  /* @conditional-compile-remove(PSTN-calls) */ outboundParticipants:
+                    parseParticipants(outboundParticipants)
+                });
               }
             }}
           />
@@ -104,4 +146,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * splits the participant Ids so we can call multiple people.
+ *
+ */
+const parseParticipants = (participantsString?: string): string[] | undefined => {
+  if (participantsString) {
+    return participantsString.replaceAll(' ', '').split(',');
+  } else {
+    return undefined;
+  }
 };
