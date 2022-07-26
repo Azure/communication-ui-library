@@ -51,7 +51,7 @@ export class CallContext {
   constructor(
     userId: CommunicationIdentifierKind,
     maxListeners = 50,
-    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId?: string
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
   ) {
     this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
@@ -68,7 +68,7 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
-      /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId: alternativeCallerId,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
       latestErrors: {} as CallErrors
     };
     this._emitter = new EventEmitter();
