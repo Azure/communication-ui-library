@@ -221,16 +221,22 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`left-call-page.png`);
   });
 
-  test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
+  test('Removed from call page should show when you are removed by another user', async ({ pages }, testInfo) => {
     // page[0] user will remove page[1] user
     const page0 = pages[0];
     const page1 = pages[1];
 
     await pageClick(page0, dataUiId('call-composite-participants-button')); // open participant flyout
     if (flavor === 'beta') {
-      await pageClick(page0, dataUiId(IDS.participantItemMenuButton));
-      await waitForSelector(page0, '.ms-ContextualMenu-itemText');
-      await pageClick(page0, '.ms-ContextualMenu-itemText');
+      // check if mobile
+      if (!isTestProfileDesktop(testInfo)) {
+        await pageClick(page0, '[role="menuitem"]');
+        await pageClick(page0, 'span:text("Remove")');
+      } else {
+        await pageClick(page0, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page0, '.ms-ContextualMenu-itemText');
+        await pageClick(page0, '.ms-ContextualMenu-itemText');
+      }
     } else {
       await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
       await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
@@ -264,14 +270,19 @@ test.describe('Call composite participant menu items injection tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('injected menu items appear', async ({ pages }) => {
+  test('injected menu items appear', async ({ pages }, testInfo) => {
     const page = pages[0];
 
     // Open participants flyout.
     await pageClick(page, dataUiId('call-composite-participants-button'));
     if (flavor === 'beta') {
-      await pageClick(page, dataUiId(IDS.participantItemMenuButton));
-      await waitForSelector(page, '.ms-ContextualMenu-itemText');
+      if (!isTestProfileDesktop(testInfo)) {
+        await pageClick(page, '[role="menuitem"]');
+        await pageClick(page, 'span:text("Remove")');
+      } else {
+        await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page, '.ms-ContextualMenu-itemText');
+      }
     } else {
       // Open participant list flyout
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
