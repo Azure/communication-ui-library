@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { exec } from './common.mjs';
 import child_process from 'child_process';
 import path from 'path';
 import { quote } from 'shell-quote';
@@ -16,11 +17,11 @@ const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
     call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'fake-adapter')
+    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
   },
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
-    chat: path.join(TEST_ROOT, 'chat', 'live-tests'),
+    chat: path.join(TEST_ROOT, 'chat', 'live'),
     callWithChat: path.join(TEST_ROOT, 'callWithChat')
   }
 };
@@ -90,34 +91,18 @@ async function runOne(args, composite, hermeticity) {
       cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
     }
   }
+  if (args.debug) {
+    cmdArgs.push('--debug');
+    env['LOCAL_DEBUG'] = true;
+  }
   cmdArgs.push(...args['_']);
 
   const cmd = quote(cmdArgs);
-  console.log(`Running: ${cmd}`);
-  if (!args.dryRun) {
-    await exec(cmd, env, 'playwright');
+  if (args.dryRun) {
+    console.log(`DRYRUN: Would have run ${cmd}`);
+  } else {
+    await exec(cmd, env);
   }
-}
-
-async function exec(cmd, env) {
-  const ls = child_process.exec(cmd, { env: env });
-  ls.stdout.on('data', (data) => {
-    console.log(`${data}`);
-  });
-  ls.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
-  return new Promise((resolve, reject) => {
-    ls.on('exit', (code) => {
-      if (code != 0) {
-        reject(`Child exited with non-zero code: ${code}`);
-      }
-      resolve();
-    });
-    ls.on('error', (err) => {
-      reject(`Child failed to start: ${err}`);
-    });
-  });
 }
 
 function parseArgs(argv) {
@@ -159,6 +144,14 @@ function parseArgs(argv) {
         type: 'array',
         choices: ['call', 'chat', 'callWithChat'],
         describe: 'One or more composites to test. By default, all composites will be tested.\n'
+      },
+      debug: {
+        alias: 'd',
+        type: 'boolean',
+        describe:
+          'Run in debug mode.\n' +
+          'Launches playwright inspector and relaxes timeouts to allow single stepping through the test.\n' +
+          'This mode must be used on a machine with display support.'
       },
       dryRun: {
         alias: 'n',
