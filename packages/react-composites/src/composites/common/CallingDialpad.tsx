@@ -96,7 +96,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
           data-ui-id="call-with-chat-composite-dialpad"
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            <Text style={{ fontWeight: theme.fonts.medium.fontWeight }}>{strings.dialpadModalTitle}</Text>
+            <Text>{strings.dialpadModalTitle}</Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings.dialpadCloseModalButtonAriaLabel}
