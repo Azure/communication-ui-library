@@ -270,8 +270,8 @@ test.describe('Call composite participant menu items injection tests', () => {
     // Open participants flyout.
     await pageClick(page, dataUiId('call-composite-participants-button'));
     if (flavor === 'beta') {
-      await pageClick(page, dataUiId('participant-item-menu-button'));
-      await waitForSelector(page, 'ms-ContextualMenu-itemText');
+      await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+      await waitForSelector(page, '.ms-ContextualMenu-itemText');
     } else {
       // Open participant list flyout
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
