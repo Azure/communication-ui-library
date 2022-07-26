@@ -47,7 +47,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
-    /* @conditional-compile-remove(1-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' }
@@ -119,7 +119,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
+              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
                   <TextField
                     className={outboundTextField}
@@ -161,14 +161,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                /* @conditional-compile-remove(1-n-calling)  */
+                /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
                   displayName,
                   teamsLink,
-                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-n-calling)  */
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(PSTN-calls) */
                   alternateCallerId
@@ -185,7 +185,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(1-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  */

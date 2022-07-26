@@ -31,7 +31,7 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     teamsLink?: TeamsMeetingLinkLocator;
-    /* @conditional-compile-remove(1-n-calling)  */
+    /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId?: string;
@@ -48,7 +48,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
     { key: 'TeamsMeeting', text: 'Join a Teams Meeting' },
-    /* @conditional-compile-remove(1-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' }
@@ -63,7 +63,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
-  /* @conditional-compile-remove(1-n-calling)  */
+  /* @conditional-compile-remove(one-to-n-calling)  */
   const [outboundParticipants, setOutboundParticipants] = useState<string>();
   /* @conditional-compile-remove(PSTN-calls) */
   const [dialpadParticipant, setDialpadParticipant] = useState<string>();
@@ -72,7 +72,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
   /* @conditional-compile-remove(PSTN-calls) */
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
-  /* @conditional-compile-remove(1-n-calling)  */
+  /* @conditional-compile-remove(one-to-n-calling)  */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const buttonEnabled =
     displayName &&
@@ -116,7 +116,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(1-n-calling) */ acsCallChosen && (
+              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
                   <TextField
                     className={outboundTextField}
@@ -163,7 +163,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                /* @conditional-compile-remove(1-n-calling)  */
+                /* @conditional-compile-remove(one-to-n-calling)  */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialpadParticipant);
@@ -171,7 +171,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   displayName,
                   teamsLink,
                   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-n-calling)  */
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall
                 });
               }
@@ -186,7 +186,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(1-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  */
