@@ -54,21 +54,15 @@ const actionIconStyle = { height: '1rem' };
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
 
-  /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.sendBox;
+  const localeStrings = useLocaleStringsTrampoline();
 
   const removeFileButtonString = useMemo(
     () => () => {
-      /* @conditional-compile-remove(file-sharing) */
       return props.strings?.removeFile ?? localeStrings.removeFile;
       // Return download button without aria label
       return props.strings?.removeFile ?? '';
     },
-    [
-      props.strings?.removeFile,
-      /* @conditional-compile-remove(file-sharing) */
-      localeStrings.removeFile
-    ]
+    [props.strings?.removeFile, localeStrings.removeFile]
   );
 
   if (!files || files.length === 0) {
@@ -99,4 +93,14 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
           ))}
     </_FileCardGroup>
   );
+};
+
+const useLocaleStringsTrampoline = (): _FileUploadCardsStrings => {
+  /* @conditional-compile-remove(file-sharing) */
+  return useLocale().strings.sendBox;
+  return {
+    removeFile: '',
+    uploadCompleted: '',
+    uploading: ''
+  };
 };
