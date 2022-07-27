@@ -1,5 +1,6 @@
 import React from 'react';
 import { Stack, useTheme, mergeStyles, IStyle, Theme, PrimaryButton } from '@fluentui/react';
+import { GLOBAL } from '../dataStore';
 
 export type Choices =
   | 'GALLERY_WITH_HORIZONTAL_OVERFLOW'
@@ -9,6 +10,10 @@ export type Choices =
 export const VideoGalleryLayout = (props: { onContinue: () => void }) => {
   const theme = useTheme();
   const [choice, setChoice] = React.useState<Choices>('GALLERY_WITH_HORIZONTAL_OVERFLOW');
+
+  React.useEffect(() => {
+    GLOBAL.videoGalleryLayout = choice;
+  }, [choice]);
 
   const isActive = (value: Choices) => value === choice;
 
@@ -21,7 +26,8 @@ export const VideoGalleryLayout = (props: { onContinue: () => void }) => {
     cursor: 'pointer',
     fontWeight: isActive(choice) ? '600' : '400',
     ':hover': {
-      background: theme.palette.neutralLighter
+      background: theme.palette.neutralLighter,
+      overflow: 'hidden'
     }
   });
 

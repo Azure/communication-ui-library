@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@azure/communication-react": "file:azure-communication-react-1.3.1-beta.1.tgz",
+    "@azure/communication-calling": "^1.5.4",
+    "@azure/communication-chat": "^1.2.1",
+    "@azure/communication-react": "file:../packages/communication-react/azure-communication-react-1.3.1-beta.1.tgz",
     "@fluentui/react": "^8.84.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
