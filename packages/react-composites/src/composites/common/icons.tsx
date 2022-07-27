@@ -19,6 +19,8 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
@@ -69,7 +71,13 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
-  SendBoxAttachFile: <Attach20Regular />
+  SendBoxAttachFile: <Attach20Regular />,
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneAddPerson: <PersonAdd20Regular />,
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneOpenDialpad: <Dialpad20Regular />,
+  /* @conditional-compile-remove(PSTN-calls) */
+  DialpadStartCall: <Call20Regular />
 };
 
 /**
@@ -168,6 +176,12 @@ export type CallCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneAddPerson?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneOpenDialpad?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  DialpadStartCall?: JSX.Element;
 };
 
 /**
@@ -241,6 +255,12 @@ export type CallWithChatCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneAddPerson?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  PeoplePaneOpenDialpad?: JSX.Element;
+  /* @conditional-compile-remove(PSTN-calls) */
+  DialpadStartCall?: JSX.Element;
 
   // Chat icons
   EditBoxCancel?: JSX.Element;
