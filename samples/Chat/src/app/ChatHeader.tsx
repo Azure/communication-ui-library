@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { DefaultButton, Icon, IconButton, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(chat-composite-participant-pane) */
 import { People20Filled, People20Regular } from '@fluentui/react-icons';
 import {
   buttonWithIconStyles,
@@ -18,8 +19,10 @@ import {
 import { useTheme } from '@azure/communication-react';
 
 export type ChatHeaderProps = {
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
   isParticipantsDisplayed: boolean;
   onEndChat(): void;
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
   setHideParticipants(hideParticipants: boolean): void;
 };
 
