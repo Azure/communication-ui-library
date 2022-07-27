@@ -54,7 +54,7 @@ export const listIconStyle = mergeStyles({
 });
 
 export const headerStyle = mergeStyles({
-  fontWeight: 400,
+  fontWeight: 600,
   fontSize: '2.25rem', // 36px
   width: 'inherit'
 });
