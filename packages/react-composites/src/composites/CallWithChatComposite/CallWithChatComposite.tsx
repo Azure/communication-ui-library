@@ -11,8 +11,7 @@ import {
   callCompositeContainerStyles,
   compositeOuterContainerStyles,
   controlBarContainerStyles,
-  drawerContainerStyles,
-  modalLayerHostStyle
+  drawerContainerStyles
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -33,6 +32,7 @@ import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CustomCallWithChatControlButtonCallback } from './CustomButton';
+import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 
 /**
  * Props required for the {@link CallWithChatComposite}
