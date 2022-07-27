@@ -119,7 +119,8 @@ export const FileUploadButtonWrapper = (
 };
 
 const uploadFileButtonStringTrampoline = (): string => {
-  // @conditional-compile-remove(file-sharing)
+  //@conditional-compile-remove(file-sharing)
+  //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadFile;
   return '';
 };
