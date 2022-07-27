@@ -1,17 +1,17 @@
 import { Meta } from '@storybook/addon-docs';
 
 <Meta
-  id="use-composite-in-non-react-environment"
-  title="Composites/Cross-Framework Support"
+  id="try-from-cdn"
+  title="Composites/Try composites via CDN"
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Use composites directly on your website
+# Try composites via CDN
 
 Investing in a full react application to try out the UI Library can be challenging. To help out some of our developers we have bundled the UI Library
 as a set of javascript bundles. This will allow developers to try out the UI Library with just a `<script>` tag and few lines of code.
 
-Why you want to use our bundled script experience:
+Why you want to try out the composites via CDN experience:
 
 - Great for early prototyping
 - Ability to jump into a call/chat thread with minimal engineering investment
@@ -25,9 +25,9 @@ Why you want to use our React offerings for production workloads:
 
 _We suggest if you would like to continue to use this method of using the UI Library to host the bundled script experience in your own CDN (Content Delivery Networks)_
 
-## Using Composites in html
+## Using Composites in your index.html
 
-The first step is to import the correct bundle(s) onto your website
+The first step is to add a script tag
 
 ### Calling
 
@@ -39,11 +39,11 @@ The first step is to import the correct bundle(s) onto your website
 
 _If you want to use both calling and chat, add both to your website_
 
-After importing chat/calling composite bundle, you are able to load composites using `chatComposite.loadChatComposite` and `callComposite.loadCallComposite`.
+You will be able to load load composites using `chatComposite.loadChatComposite` and `callComposite.loadCallComposite`.
 
 We use a pattern where we specify important arguments to launch the experience, followed by the DOM element to apply the UI into, followed by any additional properties.
 
-### Snippet to load the chat composite
+### Code to load the chat composite
 
 We start with our necessary arguments (displayName, threadId, endpoint, userId, token) followed by the html element that will contain our chat composite, and the
 any additional properties for the composite.
@@ -66,7 +66,7 @@ const chatAdapter = await chatComposite.loadChatComposite(
 
 _Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) for details on what additional properties you can apply to the chat composite_
 
-### Snippet to load the call composite
+### Code to load the call composite
 
 We start with our necessary arguments (displayName, groupId, userId, token) followed by the html element that will contain our chat composite, and the
 any additional properties for the composite.
@@ -88,11 +88,11 @@ const callAdapter = await callComposite.loadCallComposite(
 
 _Check [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) for details on what additional properties you can apply to the call composite_
 
-## Complete examples
+## Examples
 
 Now we can take a look at how this all comes together
 
-### Chat html example
+### Chat (index.html) example
 
 ```html
 <meta charset="utf-8" />
@@ -115,7 +115,7 @@ Now we can take a look at how this all comes together
 </script>
 ```
 
-### Calling html example
+### Calling (index.html) example
 
 ```html
 <meta charset="utf-8" />
