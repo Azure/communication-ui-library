@@ -252,7 +252,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
-            // This modal needs to be called before a call gets connected.
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available before the call to `document.getElementById(modalLayerHostId)` is made.
             /* @conditional-compile-remove(one-to-n-calling) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
