@@ -51,6 +51,7 @@ const App = (): JSX.Element => {
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
 
+  /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
@@ -96,10 +97,12 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
+            /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
             const makeLocator = (
               teamsLink?: TeamsMeetingLinkLocator | undefined,
+              /* @conditional-compile-remove(PSTN-calls) */
               outboundParticipants?: string[]
             ): CallAdapterLocator => {
               /* @conditional-compile-remove(PSTN-calls) */
@@ -109,12 +112,11 @@ const App = (): JSX.Element => {
               }
               return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
             };
-            setCallLocator(
-              makeLocator(
-                callDetails.teamsLink,
-                /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
-              )
+            const locator = makeLocator(
+              callDetails.teamsLink,
+              /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
             );
+            setCallLocator(locator);
 
             // Update window URL to have a joinable link
             if (
@@ -122,8 +124,8 @@ const App = (): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ !callDetails.outboundParticipants
             ) {
               const joinParam = isTeamsCall
-                ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (callLocator as GroupCallLocator).groupId;
+                ? '?teamsLink=' + encodeURIComponent((locator as TeamsMeetingLinkLocator).meetingLink)
+                : '?groupId=' + (locator as GroupCallLocator).groupId;
               window.history.pushState({}, document.title, window.location.origin + joinParam);
             }
 
