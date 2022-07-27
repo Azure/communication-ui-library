@@ -8,9 +8,8 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
-/* @conditional-compile-remove(file-sharing) */
-import { useLocale } from '../localization';
 import { useMemo } from 'react';
+import { useLocaleFileCardStringsTrampoline } from './utils/common';
 
 /**
  * Strings of _FileUploadCards that can be overridden.
@@ -54,7 +53,7 @@ const actionIconStyle = { height: '1rem' };
 export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
 
-  const localeStrings = useLocaleStringsTrampoline();
+  const localeStrings = useLocaleFileCardStringsTrampoline();
 
   const removeFileButtonString = useMemo(
     () => () => {
@@ -93,14 +92,4 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
           ))}
     </_FileCardGroup>
   );
-};
-
-const useLocaleStringsTrampoline = (): _FileUploadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
-  return useLocale().strings.sendBox;
-  return {
-    removeFile: '',
-    uploadCompleted: '',
-    uploading: ''
-  };
 };

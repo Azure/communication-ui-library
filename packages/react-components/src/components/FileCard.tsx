@@ -18,8 +18,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
 import { useEffect, useState } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
-import { useLocale } from '../localization';
+import { useLocaleFileCardStringsTrampoline } from './utils/common';
 
 /**
  * @internal
@@ -61,7 +60,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
-  const localeStrings = useLocaleStringsTrampoline();
+  const localeStrings = useLocaleFileCardStringsTrampoline();
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
   const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
@@ -155,13 +154,3 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     </>
   );
 };
-
-function useLocaleStringsTrampoline(): _FileUploadCardsStrings {
-  /* @conditional-compile-remove(file-sharing) */
-  return useLocale().strings.sendBox;
-  return {
-    removeFile: '',
-    uploadCompleted: '',
-    uploading: ''
-  };
-}

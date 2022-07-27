@@ -69,7 +69,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={UploadFileButtonStringTrampoline()}>
+        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonStringTrampoline()}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>
@@ -118,9 +118,8 @@ export const FileUploadButtonWrapper = (
   );
 };
 
-const UploadFileButtonStringTrampoline = (): string => {
+const uploadFileButtonStringTrampoline = (): string => {
   // @conditional-compile-remove(file-sharing)
   return useLocale().strings.chat.uploadFile;
-  // Return _some_ available icon, as the real icon is beta-only.
   return '';
 };

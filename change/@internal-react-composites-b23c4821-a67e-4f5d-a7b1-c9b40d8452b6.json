@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "none",
   "comment": "Refactored File sharing code to improve the use of conditional compilation",
   "packageName": "@internal/react-composites",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
