@@ -16,12 +16,9 @@ import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
-import { CallingDialpad } from './CallingDialpad';
-import { CallingDialpadStrings } from './CallingDialpad';
-import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
-import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
-import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+import { PreparedDialpad } from './PreparedDialpad';
+import { PreparedDialpadStrings } from './PreparedDialpad';
+import { preventDismissOnEvent } from '../PreventDismissOnEvent';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {

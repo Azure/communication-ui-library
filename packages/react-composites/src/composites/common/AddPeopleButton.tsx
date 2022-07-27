@@ -37,19 +37,10 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     [mobileView, theme]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
+    /* @conditional-compile-remove(PSTN-calls) */
     return <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />;
-  } else {
-    return (
-      <Stack tokens={peoplePaneContainerTokens}>
-        <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />
-        {participantList}
-      </Stack>
-    );
-  }
 
-  if (mobileView) {
     return (
       <Stack>
         {inviteLink && (
@@ -64,21 +55,29 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
         )}
       </Stack>
     );
-  } else {
-    return (
-      <Stack tokens={peoplePaneContainerTokens}>
-        {inviteLink && (
-          <Stack styles={copyLinkButtonStackStyles}>
-            <DefaultButton
-              text={strings.copyInviteLinkButtonLabel}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              onClick={() => copy(inviteLink ?? '')}
-              styles={copyLinkButtonStylesThemed}
-            />
-          </Stack>
-        )}
-        {participantList}
-      </Stack>
-    );
   }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  return (
+    <Stack tokens={peoplePaneContainerTokens}>
+      <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />
+      {participantList}
+    </Stack>
+  );
+
+  return (
+    <Stack tokens={peoplePaneContainerTokens}>
+      {inviteLink && (
+        <Stack styles={copyLinkButtonStackStyles}>
+          <DefaultButton
+            text={strings.copyInviteLinkButtonLabel}
+            onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
+            onClick={() => copy(inviteLink ?? '')}
+            styles={copyLinkButtonStylesThemed}
+          />
+        </Stack>
+      )}
+      {participantList}
+    </Stack>
+  );
 };

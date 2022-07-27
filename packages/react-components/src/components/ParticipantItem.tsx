@@ -26,7 +26,7 @@ import {
   menuButtonContainerStyle,
   participantItemContainerStyle
 } from './styles/ParticipantItem.styles';
-import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+import { preventDismissOnEvent } from './utils/common';
 
 /**
  * Fluent styles for {@link ParticipantItem}.

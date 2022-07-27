@@ -31,9 +31,6 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @internal
-export const _convertRemToPx: (rem: number) => number;
-
-// @internal
 export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
 // @public
@@ -62,9 +59,6 @@ export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT ext
 
 // @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
-
-// @internal
-export const _preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent) => boolean;
 
 // @internal
 export const _pxToRem: (px: number) => string;

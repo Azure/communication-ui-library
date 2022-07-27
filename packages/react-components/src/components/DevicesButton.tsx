@@ -14,7 +14,7 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
-import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+import { preventDismissOnEvent } from './utils/common';
 
 /**
  * Styles for the {@link DevicesButton} menu.
