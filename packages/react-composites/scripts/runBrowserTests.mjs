@@ -17,11 +17,11 @@ const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
     call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'fake-adapter')
+    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
   },
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
-    chat: path.join(TEST_ROOT, 'chat', 'live-tests'),
+    chat: path.join(TEST_ROOT, 'chat', 'live'),
     callWithChat: path.join(TEST_ROOT, 'callWithChat')
   }
 };
@@ -91,6 +91,10 @@ async function runOne(args, composite, hermeticity) {
       cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
     }
   }
+  if (args.debug) {
+    cmdArgs.push('--debug');
+    env['LOCAL_DEBUG'] = true;
+  }
   cmdArgs.push(...args['_']);
 
   const cmd = quote(cmdArgs);
@@ -140,6 +144,14 @@ function parseArgs(argv) {
         type: 'array',
         choices: ['call', 'chat', 'callWithChat'],
         describe: 'One or more composites to test. By default, all composites will be tested.\n'
+      },
+      debug: {
+        alias: 'd',
+        type: 'boolean',
+        describe:
+          'Run in debug mode.\n' +
+          'Launches playwright inspector and relaxes timeouts to allow single stepping through the test.\n' +
+          'This mode must be used on a machine with display support.'
       },
       dryRun: {
         alias: 'n',

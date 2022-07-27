@@ -40,7 +40,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -205,7 +205,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
