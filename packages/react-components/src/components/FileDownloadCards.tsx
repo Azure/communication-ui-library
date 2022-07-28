@@ -122,21 +122,15 @@ const actionIconStyle = { height: '1rem' };
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
-  /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.messageThread;
+  const localeStrings = useLocaleStringsTrampoline();
 
   const downloadFileButtonString = useMemo(
     () => () => {
-      /* @conditional-compile-remove(file-sharing) */
       return props.strings?.downloadFile ?? localeStrings.downloadFile;
       // Return download button without aria label
       return props.strings?.downloadFile ?? '';
     },
-    [
-      props.strings?.downloadFile,
-      /* @conditional-compile-remove(file-sharing) */
-      localeStrings.downloadFile
-    ]
+    [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
   const fileDownloadHandler = useCallback(
@@ -199,4 +193,10 @@ const DownloadIconTrampoline = (): JSX.Element => {
   return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
+};
+
+const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+  /* @conditional-compile-remove(file-sharing) */
+  return useLocale().strings.messageThread;
+  return { downloadFile: '' };
 };
