@@ -100,18 +100,6 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
-            const makeLocator = (
-              teamsLink?: TeamsMeetingLinkLocator | undefined,
-              /* @conditional-compile-remove(PSTN-calls) */
-              outboundParticipants?: string[]
-            ): CallAdapterLocator => {
-              /* @conditional-compile-remove(PSTN-calls) */
-              if (outboundParticipants) {
-                // set call participants and do not update the window URL since there is not a joinable link
-                return { participantIDs: outboundParticipants };
-              }
-              return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-            };
             const locator = makeLocator(
               callDetails.teamsLink,
               /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
@@ -172,5 +160,18 @@ const App = (): JSX.Element => {
       return <>Invalid page</>;
   }
 };
+
+function makeLocator(
+  teamsLink?: TeamsMeetingLinkLocator | undefined,
+  /* @conditional-compile-remove(PSTN-calls) */
+  outboundParticipants?: string[]
+): CallAdapterLocator {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (outboundParticipants) {
+    // set call participants and do not update the window URL since there is not a joinable link
+    return { participantIDs: outboundParticipants };
+  }
+  return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+}
 
 export default App;
