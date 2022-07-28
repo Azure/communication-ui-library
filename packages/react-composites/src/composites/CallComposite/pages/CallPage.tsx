@@ -25,6 +25,8 @@ import { reduceCallControlsForMobile } from '../utils';
  */
 export interface CallPageProps {
   mobileView: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -74,6 +76,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
+      /* @conditional-compile-remove(one-to-n-calling) */
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
