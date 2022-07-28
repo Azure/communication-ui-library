@@ -21,6 +21,8 @@ import { CallCompositeIcon } from '../../common/icons';
  */
 export interface LobbyPageProps {
   mobileView: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  modalLayerHostId: string;
   options?: CallCompositeOptions;
 }
 
@@ -53,6 +55,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         increaseFlyoutItemSize: props.mobileView
       }}
       mobileView={props.mobileView}
+      /* @conditional-compile-remove(one-to-n-calling) */
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}
     />

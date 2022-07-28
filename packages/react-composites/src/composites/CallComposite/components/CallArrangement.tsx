@@ -2,10 +2,6 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { LayerHost } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { useId } from '@fluentui/react-hooks';
 import {
   _ComplianceBanner,
   _ComplianceBannerProps,
@@ -21,8 +17,6 @@ import { useCallback, useState } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { modalLayerHostStyle } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
@@ -57,6 +51,8 @@ export interface CallArrangementProps {
   dataUiId: string;
   mobileView: boolean;
   /* @conditional-compile-remove(one-to-n-calling) */
+  modalLayerHostId: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
@@ -90,8 +86,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setActivePane('none');
   }, [setActivePane]);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const modalLayerHostId = useId('modalLayerhost');
   /* @conditional-compile-remove(one-to-n-calling) */
   const isMobileWithActivePane = props.mobileView && activePane !== 'none';
 
@@ -135,7 +129,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           onPeopleButtonClicked={
             showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
           }
-          modalLayerHostId={modalLayerHostId}
+          modalLayerHostId={props.modalLayerHostId}
           activePane={activePane}
           mobileView={props.mobileView}
           inviteLink={props.callControlProps.callInvitationURL}
@@ -186,13 +180,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               />
             </Stack.Item>
           )}
-        {
-          // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
-          // because when the CallPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-          // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
-          /* @conditional-compile-remove(one-to-n-calling) */
-          props.mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
-        }
       </Stack>
     </div>
   );
