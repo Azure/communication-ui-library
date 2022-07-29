@@ -1,6 +1,4 @@
-# Updating hero samples
-
-## The hero samples
+# Hero samples
 
 We maintain several hero sample GitHub repositories. These samples serve both as an easy example for folks to get started with the Azure Communication Services UI library and as a blueprint to integrate the library into their applications.
 
@@ -9,7 +7,7 @@ The hero samples are closely based on the sample applications in this repository
 | Hero sample               | monorepo sample                    |
 | --                        | --                                 |
 | [Chat][hero-chat]         | [samples/Chat][samples-chat]       |
-| [Callling][hero-calling] | [samples/Calling][samples-calling] |
+| [Callling][hero-calling]  | [samples/Calling][samples-calling] |
 
 We refer to the samples in this monorepository as _upstream_ of the hero samples.
 
@@ -17,7 +15,7 @@ While the hero samples are based on the samples in this repository, there are so
 
 - The samples in this repository use the tooling required to work in a monorepository (`rush` etc.) whereas the hero samples use vanilla `npm`.
 - The samples in this repository are intended to aid development of the library. Thus, they often use `beta` features of `@azure/communication-react` that are still under active development. In contrast, the hero samples only use `stable` features.
-  - As a corollary, the upstream samples use [conditional compilation](../references/beta-only-features.md) to manage the the use of `beta` features. Conditional compilation is unnecessary, and not available, in the hero samples.
+  - As a corollary, the samples here use [conditional compilation](../references/beta-only-features.md) to manage the the use of `beta` features. Conditional compilation is unnecessary, and not available, in the hero samples.
 
 [hero-chat]: https://github.com/Azure-Samples/communication-services-web-chat-hero
 [hero-calling]: https://github.com/Azure-Samples/communication-services-web-calling-hero
@@ -27,13 +25,13 @@ While the hero samples are based on the samples in this repository, there are so
 
 ## When to update the hero samples
 
-We typically update hero samples for two distinct reasons:
+You should typically update hero samples for two distinct reasons:
 
 - To address any critical bugs in the hero sample.
   - The most common example of this are security issues discovered by [depandabot](https://github.com/dependabot) filed as GitHub issues on the hero sample repositories.
 - To update the hero samples from the corresponding upstream samples.
   - Hero samples showcase the latest [stable release of `@azure/communication-react`](https://www.npmjs.com/package/@azure/communication-react).
-  - We should update the hero samples from upstream every time we release a new stable version for `@azure/communication-react`, to showcase new features being shipped.
+  - You should update the hero samples from upstream every time we release a new stable version for `@azure/communication-react`, to showcase new features being shipped.
 
 
 ## How To: Fix critical issues
@@ -42,50 +40,55 @@ To fix any critical issues in the hero samples, including depandabot alerts in t
 
 - First, fix the issue in the upstream sample.
 - Then, port over just the fix to the hero sample.
-  - Porting over the fix is a manual process. In most cases, this simply involves bumping version of package.json `dependencies`.
+  - Porting over the fix is a manual process. In most cases, this simply involves updating the version of a package.json `dependencies` entry.
+  - The GitHub PR template for hero samples includes a section to add upstream PR references. Link to the upstream PR in this section.
 
 
 ## How To: Update from upstream
 
-Updating hero samples from upstream samples is a manual process. A combination of tooling in this monorepo and the suggested process below can minimize the toil from this manual process.
+Updating hero samples from upstream samples is a manual process. You can minimize the toil by following the process recommended in this section.
 
-The description below uses [an example update](https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69) to the chat hero sample. Follow similar steps when updating the other hero samples.
+This section uses [an update to the chat hero sample](https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69) as an example. Follow similar steps when updating the other hero samples.
 
 - Pick the git commit in this monorepository to update from.
-  - The default choice is to pick the git tag for the latest stable release. This ensures that the upstream sample is consistent with the released `@azure/communication-react` version.
-  - Sometimes, you may want to pick a later commit to pull in some useful updates to the sample. If doing so, make sure that the intervening commits do not introduce changes that use features or API unavailable in the latest stable release of `@azure/communication-react`.
-  - For this example, we synced from [a541b2](https://github.com/Azure/communication-ui-library/tree/a541b2294943cdd4f885fdfc0ae60511f95c960a/samples/Chat). This was not the latest stable release, but the log of changes since the stable release showed only one very useful change:
+  - By default, pick the git tag for the latest stable release. This ensures that the upstream sample is consistent with the released `@azure/communication-react` version.
+  - You may want to pick a later commit to pull in some useful updates to the sample.
+    - If you do, make sure that the intervening commits do not introduce changes that use features or API unavailable in the latest stable release of `@azure/communication-react`.
+  - For this example, I synced from [a541b2](https://github.com/Azure/communication-ui-library/tree/a541b2294943cdd4f885fdfc0ae60511f95c960a/samples/Chat). This was not the latest stable release, but the log of changes since the stable release showed only one very useful change:
   ```sh
   $ git log --oneline 1.3.0..a541b2 -- samples/Chat/src
   3c2b5410b Dispose of adapters in the `beforeUnload` in our Sample apps (#1966)
   ```
 
 - Generate a new source directory from the upstream sample.
-  - In the current repo,
+  - In this monorepository,
     ```
     cd samples/Chat
     rushx preprocess:stable-flavor
     ```
   - This will generate a `samples/Chat/preprocessed` directory which contains the sources from `samples/Chat/src`, but conditionally compiled for the `stable` build flavor and prettified.
 
-- Replace the hero sample source.
+- Replace the hero sample sources.
   - Create a new branch in the chat hero sample repo.
   - Replace `Chat/src` with the generated `samples/Chat/preprocessed` from the last step.
   - Create a draft Pull Request against `main`.
+    - Link to the source git commit in upstream that you generated the sources from. [Example PR description](https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69).
 
-- Manual fix the generated source.
-  - The draft Pull Request created in the last step is very useful to quickly scan over the diff introduced by copying the sources from upstream. I recommend reviewing the draft PR yourself to point out all issues at once. See the [comments in the example PR]((https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69)) for inspiration.
-  - Some issues you discover should be fixed both in the hero sample and upstream, to prevent the problems from arising in the next sync. For example, I discovered and fixed some [missing conditional compilation directives](https://github.com/Azure/communication-ui-library/pull/2132) and some [references to `@internal/*` packlets](https://github.com/Azure/communication-ui-library/pull/2133) while reviewing the example PR.
-  - There are a small set of manual fixes that are unavoidable and must be done each time we update hero sample from upstream. [A later section](#list-of-manual-fixes) lists these fixes for each hero sample. Keep that section up to date for future reference.
+- Manually fix the generated source.
+  - Use the draft Pull Request created in the last step to scan over the diff introduced by copying the sources from upstream. Review the draft PR yourself to point out all issues at once.
+    - See the [comments in the example PR]((https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69)) for inspiration.
+  - Some issues you discover should be fixed both in the hero sample and upstream to prevent the problems from arising in the next sync.
+    - For example, I discovered and fixed some [missing conditional compilation directives](https://github.com/Azure/communication-ui-library/pull/2132) and some [references to `@internal/*` packlets](https://github.com/Azure/communication-ui-library/pull/2133) while reviewing the example PR.
+  - There are a small set of manual fixes that are unavoidable and must be done each time you update the hero sample from upstream. [A later section](#list-of-manual-fixes) lists these fixes for each hero sample. Keep that section up to date for future reference.
 
 - Reconcile `Chat/package.json`. This step is also manual and somewhat non-obvius.
   - The `dependencies` should mostly match between upstream and hero samples. A recommended approach to update `dependencies` is:
     - Add all `dependencies` from upstream to the hero sample, under the exising `dependencies`.
-    - Sort alphabetically, thus bringing identical keys together.
+    - Sort alphabetically. This will bring identical keys together.
     - Pick the more recent version of the matching keys.
-      - For `@azure/communication-react` and its peer dependencies `@azure/communication-chat` and `@azure/communication-calling`, pick the stable versions.
+      - Exception: for `@azure/communication-react` and its peer dependencies `@azure/communication-chat` and `@azure/communication-calling`, pick the stable versions.
     - Remove all references to `@internal/*` packlets.
-  - `devDependencies` should stay mostly unchanged. upstream has a lot more entries here to support the monorepository tooling that are unnecessary in the hero sample. Check if any unit-testing related depenedencies should be updated.
+  - `devDependencies` should stay mostly unchanged. Upstream has a lot more entries here to support the monorepository tooling that are unnecessary in the hero sample. Check if any unit-testing related depenedencies should be updated.
   - Run `npm run setup` and commit the updated NPM lockfiles.
 
 - Test the hero sample.
