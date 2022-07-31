@@ -47,7 +47,11 @@ test.describe('Filesharing SendBox', async () => {
       })
     );
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-sendbox-filecards.png');
   });
 });
@@ -186,7 +190,11 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     );
     await sendMessage(page, 'Hi');
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
   });
 });
@@ -216,7 +224,11 @@ test.describe('Filesharing Global Errorbar', async () => {
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-download-error.png');
   });
 });
@@ -245,7 +257,11 @@ test.describe('Filesharing Message Thread', async () => {
     await page.waitForSelector(dataUiId('file-download-card-group'));
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
   });
 
@@ -262,7 +278,11 @@ test.describe('Filesharing Message Thread', async () => {
     await waitForTypingIndicatorHidden(page);
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
@@ -300,7 +320,11 @@ test.describe('Filesharing Edit Message', async () => {
     await page.waitForSelector('[id="editbox"]');
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });
