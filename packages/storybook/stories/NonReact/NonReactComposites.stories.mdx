@@ -2,11 +2,11 @@ import { Meta } from '@storybook/addon-docs';
 
 <Meta
   id="try-from-cdn"
-  title="Composites/Try composites via CDN"
+  title="Composites/External javascript"
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Try composites via CDN
+# Try Call and Chat Composites as external javascript
 
 Investing in a full react application to try out the UI Library can be challenging. To help out some of our developers we have bundled the UI Library
 as a set of javascript bundles. This will allow developers to try out the UI Library with just a `<script>` tag and few lines of code.
@@ -141,6 +141,9 @@ These examples are also available on [Github](https://github.com/Azure/communica
 
 ❗ If you are getting a syntax error at runtime. Don't forget to add the **`<meta charset="utf-8">`** tag in the header of your html code.
 To learn more about the [meta tag](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#specifying_your_documents_character_encoding)
+
+❗ If you having issues running the Call Composite on your index.html. It is because the underlying Calling SDK is checking to see if its from localhost or https traffic.
+We recommend deploying the index.html with your CallComposite changes onto a local server or to deploy it to an Azure App Service which will serve up the content as https.
 
 # Build your own composite js bundle files:
 
