@@ -112,7 +112,7 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * The call connection state of the participant.
-   * For example, `ringing`, `onHold` etc.
+   * For example, `RemoteHold` means the remote participant is on hold.
    */
   callState?: VideoTileCallState;
 }
