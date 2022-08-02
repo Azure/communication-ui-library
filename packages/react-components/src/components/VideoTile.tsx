@@ -16,7 +16,8 @@ import {
   rootStyles,
   videoContainerStyles,
   videoHint,
-  tileInfoContainerStyle
+  tileInfoContainerStyle,
+  callStateStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -33,6 +34,13 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
   /** Styles for displayName on the video container. */
   displayNameContainer?: IStyle;
 }
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * The call connection state of the participant.
+ * For example, `RemoteHold` means the remote participant is on hold.
+ */
+export type VideoTileCallState = 'Connecting' | 'Ringing' | 'RemoteHold' | 'Disconnecting';
 
 /**
  * Props for {@link VideoTile}.
@@ -100,6 +108,13 @@ export interface VideoTileProps {
   noVideoAvailableAriaLabel?: string;
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * The call connection state of the participant.
+   * For example, `ringing`, `onHold` etc.
+   */
+  callState?: VideoTileCallState;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -107,20 +122,26 @@ const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 // Coin min size is set PersonaSize.size32
 const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
-const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
-  const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
+type DefaultPlaceholderProps = CustomAvatarOptions & {
+  callState?: string;
+};
+
+const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
+  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails, callState } = props;
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Persona
-        styles={styles}
-        coinSize={coinSize}
-        hidePersonaDetails={hidePersonaDetails}
-        text={text ?? ''}
-        initialsTextColor="white"
-        aria-label={noVideoAvailableAriaLabel ?? ''}
-        showOverflowTooltip={false}
-      />
+      <Stack styles={defaultPersonaStyles}>
+        <Persona
+          coinSize={coinSize}
+          hidePersonaDetails={hidePersonaDetails}
+          text={text ?? ''}
+          initialsTextColor="white"
+          aria-label={noVideoAvailableAriaLabel ?? ''}
+          showOverflowTooltip={false}
+        />
+        {callState && <Text className={mergeStyles(callStateStyle)}>{callState}</Text>}
+      </Stack>
     </Stack>
   );
 };
@@ -150,7 +171,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     isSpeaking,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
-    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
+    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
+    /* @conditional-compile-remove(PSTN-calls) */
+    callState
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -182,7 +205,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     coinSize: personaSize,
     styles: defaultPersonaStyles,
-    hidePersonaDetails: true
+    hidePersonaDetails: true,
+    /* @conditional-compile-remove(PSTN-calls) */
+    callState: callState
   };
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
