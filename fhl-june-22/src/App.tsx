@@ -1,6 +1,7 @@
 import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider } from '@azure/communication-react';
 import { initializeIcons, registerIcons, Stack } from '@fluentui/react';
 import React from 'react';
+import { GLOBAL } from './dataStore';
 import { ControlBarButtons } from './screens/ControlBarButtons';
 import { ControlBarLayout } from './screens/ControlBarLayout';
 import { VideoGalleryLayout } from './screens/VideoGalleryLayout';
@@ -9,7 +10,7 @@ initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App() {
-  const [screen, setScreen] = React.useState('ControlBarLayout');
+  const [screen, setScreen] = React.useState('VideoGalleryLayout');
 
   const getScreen = () => {
     switch (screen) {
@@ -54,6 +55,7 @@ function App() {
         }}
       >
         {getScreen()}
+        <Stack>{JSON.stringify(GLOBAL)}</Stack>
       </Stack>
     </FluentThemeProvider>
   );

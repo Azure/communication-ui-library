@@ -109,7 +109,8 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile
+  VideoTile,
+  VideoGalleryCustomizable
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -205,6 +206,7 @@ export type {
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
   VideoGalleryProps,
+  VideoGalleryCustomizableProps,
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
   VideoGalleryStrings,

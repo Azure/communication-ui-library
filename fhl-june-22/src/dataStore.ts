@@ -3,7 +3,7 @@ import { ControlBarLayout } from '@azure/communication-react';
 export const GLOBAL: {
   videoGalleryLayout: string;
   controlBarLayout: ControlBarLayout;
-  controlBarButtons: [];
+  controlBarButtons: Array<string>;
   controlBarButtonsLarge: boolean;
   controlBarButtonsLabeled: boolean;
 } = {

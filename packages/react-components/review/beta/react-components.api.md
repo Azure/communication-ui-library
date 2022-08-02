@@ -1353,6 +1353,40 @@ export const useTheme: () => Theme;
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
+// @public
+export const VideoGalleryCustomizable: (props: VideoGalleryCustomizableProps) => JSX.Element;
+
+// @public
+export interface VideoGalleryCustomizableProps {
+    dominantSpeakers?: string[];
+    layout?: VideoGalleryLayout;
+    localParticipant: VideoGalleryLocalParticipant;
+    localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoViewOptions?: VideoStreamOptions;
+    maxRemoteVideoStreams?: number;
+    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onDisposeLocalStreamView?: () => void;
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    onRenderGallery: (data: {
+        localVideoTile: JSX.Element;
+        localScreenShareStreamComponent: JSX.Element;
+        gridTiles: JSX.Element[];
+        horizontalGalleryTiles: JSX.Element[];
+        remoteScreenShareComponent?: JSX.Element;
+    }) => JSX.Element;
+    onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
+    onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoViewOptions?: VideoStreamOptions;
+    showCameraSwitcherInLocalPreview?: boolean;
+    showMuteIndicator?: boolean;
+    strings?: Partial<VideoGalleryStrings>;
+    styles?: VideoGalleryStyles;
+}
+
 // @public (undocumented)
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 

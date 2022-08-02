@@ -45,7 +45,9 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
+export { VideoGalleryCustomizable } from './VideoGalleryCustomizable';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
+export type { VideoGalleryCustomizableProps } from './VideoGalleryCustomizable';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';

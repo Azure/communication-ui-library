@@ -28,12 +28,12 @@ export const ControlBarButtons = (props: { onContinue: () => void }) => {
 
   React.useEffect(() => {
     GLOBAL.controlBarButtonsLabeled = isLabeled;
+    GLOBAL.controlBarButtons = Object.keys(choice).filter((key) => choice[key as ChoiceOptions]);
   }, [choice, isLabeled]);
 
   const isActive = (value: ChoiceOptions) => choice[value];
 
   const optionTabStyles = (choice: ChoiceOptions) => {
-    console.log('CHOICE', choice);
     return {
       border: `1px solid ${isActive(choice) ? theme.palette.themePrimary : theme.palette.neutralLight}`,
       borderRadius: theme.effects.roundedCorner6,
