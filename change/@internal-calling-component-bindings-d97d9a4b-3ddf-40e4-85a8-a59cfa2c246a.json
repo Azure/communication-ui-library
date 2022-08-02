@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Return participant state from videoGallerySelector and wire it in gallery",
+  "comment": "videoGallerySelector returned remote participants contain a state attribute reflecting their call connection state",
   "packageName": "@internal/calling-component-bindings",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
