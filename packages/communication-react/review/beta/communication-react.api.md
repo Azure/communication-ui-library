@@ -2811,8 +2811,12 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// @beta
+export type VideoTileCallState = 'Connecting' | 'Ringing' | 'RemoteHold' | 'Disconnecting';
+
 // @public
 export interface VideoTileProps {
+    callState?: VideoTileCallState;
     children?: React_2.ReactNode;
     displayName?: string;
     initialsName?: string;
