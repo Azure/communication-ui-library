@@ -2816,8 +2816,8 @@ export type VideoTileConnectionState = 'Connecting' | 'Ringing' | 'Hold';
 
 // @public
 export interface VideoTileProps {
-    connectionState?: VideoTileConnectionState;
     children?: React_2.ReactNode;
+    connectionState?: VideoTileConnectionState;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
