@@ -37,6 +37,12 @@ describe('CallComposite device permission test for different roles', () => {
     videoDevicePermissionRequests = 0;
   });
 
+  test('Audio and video device permission should be requested when no role is assigned', async () => {
+    mount(<CallComposite adapter={adapter} />);
+    expect(audioDevicePermissionRequests).toBe(1);
+    expect(videoDevicePermissionRequests).toBe(1);
+  });
+
   test('Audio and video device permission should be requested for Presenter role', async () => {
     mount(<CallComposite adapter={adapter} role={'Presenter'} />);
     expect(audioDevicePermissionRequests).toBe(1);
