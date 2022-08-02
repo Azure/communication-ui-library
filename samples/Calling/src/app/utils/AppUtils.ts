@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { Role } from '@internal/react-components';
 import { v1 as generateGUID } from 'uuid';
 
 /**
@@ -59,7 +60,7 @@ export const createRoomId = async (): Promise<string> => {
  * Joins an ACS room with a given roomId and role
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const joinRoom = async (userId: string, roomId: string, role): Promise<void> => {
+export const joinRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
   const requestOptions = {
     method: 'POST',
     headers: {
