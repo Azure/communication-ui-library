@@ -2,7 +2,12 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import {
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  VideoGalleryRemoteParticipantState,
+  VideoStreamOptions
+} from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -37,6 +42,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
+    state?: VideoGalleryRemoteParticipantState;
   }) => {
     const {
       isAvailable,
@@ -51,7 +57,8 @@ export const _RemoteVideoTile = React.memo(
       userId,
       displayName,
       onRenderAvatar,
-      showMuteIndicator
+      showMuteIndicator,
+      state
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -105,6 +112,7 @@ export const _RemoteVideoTile = React.memo(
         showMuteIndicator={showMuteIndicator}
         showLabel={props.showLabel}
         personaMinSize={props.personaMinSize}
+        participantState={state}
       />
     );
   }

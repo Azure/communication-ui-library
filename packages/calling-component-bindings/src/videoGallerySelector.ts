@@ -81,6 +81,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),
             screenShareRemoteParticipant.videoStreams,
+            screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName
           )
         : undefined,

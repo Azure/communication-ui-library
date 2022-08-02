@@ -1202,6 +1202,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    state?: VideoGalleryRemoteParticipantState | undefined;
 }) => JSX.Element>;
 
 // @beta (undocumented)
