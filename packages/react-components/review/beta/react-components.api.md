@@ -1438,7 +1438,7 @@ export type VideoTileConnectionState = 'Connecting' | 'Ringing' | 'Hold';
 
 // @public
 export interface VideoTileProps {
-    callState?: VideoTileConnectionState;
+    connectionState?: VideoTileConnectionState;
     children?: React_2.ReactNode;
     displayName?: string;
     initialsName?: string;
