@@ -37,6 +37,7 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
+ * @beta
  * The call connection state of the participant.
  * For example, `RemoteHold` means the remote participant is on hold.
  */
