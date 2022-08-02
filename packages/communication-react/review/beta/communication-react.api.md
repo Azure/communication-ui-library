@@ -2812,7 +2812,7 @@ export interface VideoStreamRendererViewState {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @beta
-export type VideoTileCallState = 'Connecting' | 'Ringing' | 'RemoteHold' | 'Disconnecting';
+export type VideoTileCallState = 'Connecting' | 'Ringing' | 'Hold';
 
 // @public
 export interface VideoTileProps {

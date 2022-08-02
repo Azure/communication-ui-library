@@ -39,9 +39,9 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 /**
  * @beta
  * The call connection state of the participant.
- * For example, `RemoteHold` means the remote participant is on hold.
+ * For example, `Hold` means the participant is on hold.
  */
-export type VideoTileCallState = 'Connecting' | 'Ringing' | 'RemoteHold' | 'Disconnecting';
+export type VideoTileCallState = 'Connecting' | 'Ringing' | 'Hold';
 
 /**
  * Props for {@link VideoTile}.
@@ -113,7 +113,7 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * The call connection state of the participant.
-   * For example, `RemoteHold` means the remote participant is on hold.
+   * For example, `Hold` means the participant is on hold.
    */
   callState?: VideoTileCallState;
 }
