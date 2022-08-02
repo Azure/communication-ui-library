@@ -1395,7 +1395,11 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    state?: VideoGalleryRemoteParticipantState;
 }
+
+// @beta
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Hold';
 
 // @public
 export interface VideoGalleryStream {
@@ -1433,13 +1437,9 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
-export type VideoTileConnectionState = 'Connecting' | 'Ringing' | 'Hold';
-
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
-    connectionState?: VideoTileConnectionState;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
@@ -1447,6 +1447,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    participantState?: VideoGalleryRemoteParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;

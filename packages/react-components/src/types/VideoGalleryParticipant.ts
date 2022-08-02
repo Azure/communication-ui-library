@@ -92,4 +92,16 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   isSpeaking?: boolean;
   /** Video stream of shared screen */
   screenShareStream?: VideoGalleryStream;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * @beta
+   * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
+   */
+  state?: VideoGalleryRemoteParticipantState;
 }
+
+/**
+ * @beta
+ * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
+ */
+export declare type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Hold';

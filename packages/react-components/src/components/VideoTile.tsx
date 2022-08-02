@@ -6,7 +6,12 @@ import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
-import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import {
+  BaseCustomStyles,
+  CustomAvatarOptions,
+  OnRenderAvatarCallback,
+  VideoGalleryRemoteParticipantState
+} from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -17,7 +22,7 @@ import {
   videoContainerStyles,
   videoHint,
   tileInfoContainerStyle,
-  connectionStateStyle
+  participantStateStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -34,14 +39,6 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
   /** Styles for displayName on the video container. */
   displayNameContainer?: IStyle;
 }
-
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * @beta
- * The call connection state of the participant.
- * For example, `Hold` means the participant is on hold.
- */
-export type VideoTileConnectionState = 'Connecting' | 'Ringing' | 'Hold';
 
 /**
  * Props for {@link VideoTile}.
@@ -115,7 +112,7 @@ export interface VideoTileProps {
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
    */
-  connectionState?: VideoTileConnectionState;
+  participantState?: VideoGalleryRemoteParticipantState;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -124,11 +121,11 @@ const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 type DefaultPlaceholderProps = CustomAvatarOptions & {
-  connectionState?: string;
+  participantState?: VideoGalleryRemoteParticipantState;
 };
 
 const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
-  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails, connectionState } = props;
+  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails, participantState } = props;
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
@@ -141,7 +138,7 @@ const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
           aria-label={noVideoAvailableAriaLabel ?? ''}
           showOverflowTooltip={false}
         />
-        {connectionState && <Text className={mergeStyles(connectionStateStyle)}>{connectionState}</Text>}
+        {participantState && <Text className={mergeStyles(participantStateStyle)}>{participantState}</Text>}
       </Stack>
     </Stack>
   );
@@ -174,7 +171,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(PSTN-calls) */
-    connectionState
+    participantState
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -208,7 +205,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     styles: defaultPersonaStyles,
     hidePersonaDetails: true,
     /* @conditional-compile-remove(PSTN-calls) */
-    connectionState: connectionState
+    participantState: participantState
   };
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
