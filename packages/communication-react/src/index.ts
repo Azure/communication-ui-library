@@ -214,7 +214,7 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode,
   /* @conditional-compile-remove(PSTN-calls) */
-  VideoTileCallState
+  VideoTileConnectionState
 } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';

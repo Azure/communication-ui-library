@@ -1434,11 +1434,11 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @beta
-export type VideoTileCallState = 'Connecting' | 'Ringing' | 'Hold';
+export type VideoTileConnectionState = 'Connecting' | 'Ringing' | 'Hold';
 
 // @public
 export interface VideoTileProps {
-    callState?: VideoTileCallState;
+    callState?: VideoTileConnectionState;
     children?: React_2.ReactNode;
     displayName?: string;
     initialsName?: string;

@@ -100,7 +100,7 @@ export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 
 /* @conditional-compile-remove(PSTN-calls) */
-export type { VideoTileCallState } from './VideoTile';
+export type { VideoTileConnectionState } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {

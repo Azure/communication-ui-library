@@ -86,7 +86,7 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const callStateStyle: IStyle = {
+export const connectionStateStyle: IStyle = {
   textAlign: 'center',
   paddingTop: '0.5rem',
   fontWeight: 600,
