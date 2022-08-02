@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add a new prop VideoTile.callState for tracking a call connection state",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
