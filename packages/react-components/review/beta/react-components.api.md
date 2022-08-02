@@ -1395,6 +1395,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    // @beta
     state?: VideoGalleryRemoteParticipantState;
 }
 
