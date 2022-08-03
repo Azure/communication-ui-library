@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Delay consecutive messages in _ComplianceBanner to give user time to read the message",
-  "packageName": "@internal/react-components",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

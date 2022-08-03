@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, memoizeFunction, mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
@@ -50,7 +50,8 @@ export const chatContainer = mergeStyles({
 export const chatArea = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'auto'
+  overflow: 'auto',
+  position: 'relative' // Ensure that the absolute children components are positioned relative to the chat area
 });
 
 /**
@@ -92,7 +93,12 @@ export const topicNameLabelStyle = mergeStyles({
 /**
  * @private
  */
-export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: MESSAGE_THREAD_WIDTH } };
+export const messageThreadChatCompositeStyles = memoizeFunction(
+  (background: string): MessageThreadStyles => ({
+    root: { maxWidth: MESSAGE_THREAD_WIDTH },
+    chatContainer: { background: background }
+  })
+);
 
 /**
  * @private

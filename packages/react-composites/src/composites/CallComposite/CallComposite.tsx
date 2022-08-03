@@ -19,6 +19,15 @@ import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
+/* @conditional-compile-remove(rooms) */
+import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { LayerHost, mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { useId } from '@fluentui/react-hooks';
+
 /**
  * Props for {@link CallComposite}.
  *
@@ -45,6 +54,12 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
+
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Set this to enable/disable capacities for different roles
+   */
+  role?: Role;
 }
 
 /**
@@ -69,11 +84,15 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
+  /* @conditional-compile-remove(rooms) */
+  role?: Role;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -83,9 +102,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
+  let pageElement: JSX.Element;
+
   switch (page) {
     case 'configuration':
-      return (
+      pageElement = (
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
@@ -93,8 +114,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }}
         />
       );
+      break;
     case 'accessDeniedTeamsMeeting':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
@@ -102,8 +124,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'access-denied-teams-meeting-page'}
         />
       );
+      break;
     case 'removedFromCall':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
@@ -111,8 +134,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'removed-from-call-page'}
         />
       );
+      break;
     case 'joinCallFailedDueToNoNetwork':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageJoinCallFailedDueToNoNetwork"
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
@@ -120,8 +144,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
+      break;
     case 'leftCall':
-      return (
+      pageElement = (
         <NoticePage
           iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
@@ -129,22 +154,43 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'left-call-page'}
         />
       );
+      break;
     case 'lobby':
-      return <LobbyPage mobileView={props.mobileView} options={props.options} />;
+      pageElement = (
+        <LobbyPage
+          mobileView={props.mobileView}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+        />
+      );
+      break;
     case 'call':
-      return (
+      pageElement = (
         <CallPage
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
       );
+      break;
     default:
       throw new Error('Invalid call composite page');
   }
+  /* @conditional-compile-remove(rooms) */
+  const permissions = _getPermissions(props.role);
+
+  // default retElement for stable version
+  let retElement = pageElement;
+  /* @conditional-compile-remove(rooms) */
+  retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
+
+  return retElement;
 };
 
 /**
@@ -163,7 +209,9 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop'
+    formFactor = 'desktop',
+    /* @conditional-compile-remove(rooms) */
+    role
   } = props;
   useEffect(() => {
     (async () => {
@@ -175,6 +223,9 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   }, [adapter]);
 
   const mobileView = formFactor === 'mobile';
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
@@ -189,8 +240,22 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
+            /* @conditional-compile-remove(one-to-n-calling) */
+            modalLayerHostId={modalLayerHostId}
             options={options}
+            /* @conditional-compile-remove(rooms) */
+            role={role}
           />
+          {
+            // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
+            // because when the CallPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+            // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+            // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
+            // common/utils useRef is called.
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available before the call to `document.getElementById(modalLayerHostId)` is made.
+            /* @conditional-compile-remove(one-to-n-calling) */
+            mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+          }
         </CallAdapterProvider>
       </BaseProvider>
     </div>

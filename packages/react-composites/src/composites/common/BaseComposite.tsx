@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Customizer, LayerHost, mergeStyles, PartialTheme, registerIcons, Theme } from '@fluentui/react';
+import {
+  Customizer,
+  LayerHost,
+  mergeStyles,
+  PartialTheme,
+  registerIcons,
+  Stack,
+  Theme,
+  useTheme
+} from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
@@ -42,6 +51,10 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
   /**
    * A callback function that can be used to provide custom data to Avatars rendered
    * in Composite.
+   *
+   * This will not affect the displayName shown in the composite.
+   * The displayName throughout the composite will be what is provided to the adapter when the adapter is created.
+   * will be what is provided to the adapter when the adapter is created.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 
@@ -89,7 +102,9 @@ export const BaseProvider = (
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>{props.children}</Customizer>
+      <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>
+        <WithBackgroundColor>{props.children}</WithBackgroundColor>
+      </Customizer>
       <LayerHost id={globalLayerHostId} className={mergeStyles(globalLayerHostStyle)} />
     </FluentThemeProvider>
   );
@@ -106,3 +121,21 @@ const BaseContext = createContext<boolean>(false);
  * @private
  */
 const useBase = (): boolean => useContext(BaseContext);
+
+/**
+ * @private
+ * Provides a wrapper with a background color to ensure that composites always have a background color.
+ * This is necessary to ensure that composites are not transparent,
+ * and the background color of it's parent elements doesn't show through the composite.
+ */
+const WithBackgroundColor = (props: { children: React.ReactNode }): JSX.Element => {
+  const { children } = props;
+  const theme = useTheme();
+  const className = mergeStyles({
+    background: theme.semanticColors.bodyBackground,
+    height: '100%',
+    width: '100%',
+    position: 'relative'
+  });
+  return <Stack className={className}>{children}</Stack>;
+};

@@ -113,6 +113,7 @@
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
+    "messageContentAriaText": "{author} said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -165,7 +166,8 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number"
+    "placeholderText": "Enter a number",
+    "deleteButtonAriaLabel": "Delete"
   },
   "HoldButton": {
     "onLabel": "Resume",

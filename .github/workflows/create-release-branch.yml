@@ -72,14 +72,13 @@ jobs:
           git checkout -b release/${{ steps.version.outputs.version }}
           echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
 
-      # Choose stable dependency for sdk
-      - name: Choose stable dependency for sdk if stable
+      - name: Force build flavor to `stable`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
-        run: node common/scripts/choose-stable-sdk-deps.js
+        run: node ./common/scripts/force-build-flavor.mjs stable
 
-      - name: Choose beta dependency for sdk if beta
+      - name: Force build flavor to `beta`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
-        run: node common/scripts/choose-beta-sdk-deps.js
+        run: node ./common/scripts/force-build-flavor.mjs beta
 
       # Synchronize the telemetry package versions.
       - name: Synchronize package version reported to telemetry
@@ -108,3 +107,13 @@ jobs:
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"${{ steps.version.outputs.version }} pre-release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
+
+      # if a stable release bump the package versions to beta.0 numbers for next beta release
+      - name: Bump versions for pre-release branch if stable release
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
+        run: |
+          node common/scripts/bump-beta-version.js
+          rush update
+          git add .
+          git commit -m "Bump package versions to beta.0 for next release"
+          git push

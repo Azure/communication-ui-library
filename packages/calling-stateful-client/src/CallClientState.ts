@@ -411,6 +411,13 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format that will be used to represent callers identity.
+   * For example, using the alternateCallerId to add a participant using PSTN, this number will
+   * be used as the caller id in the PSTN call.
+   */
+  alternateCallerId?: string;
 }
 
 /**
@@ -471,16 +478,20 @@ export type CallErrorTarget =
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio'
   | 'Call.off'
   | 'Call.on'
   | 'Call.removeParticipant'
   | 'Call.resume'
   | 'Call.sendDtmf'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio'
   | 'Call.startScreenSharing'
   | 'Call.startVideo'
   | 'Call.stopScreenSharing'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
   | 'CallAgent.join'

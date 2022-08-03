@@ -2,6 +2,88 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Wed, 29 Jun 2022 17:31:07 GMT",
+      "tag": "@internal/acs-ui-common_v1.3.1-beta.1",
+      "version": "1.3.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Jun 2022 18:29:29 GMT",
+      "tag": "@internal/acs-ui-common_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "none": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "1e7d62b64428b47269acd258087bee3e65423396",
+            "comment": "Use structure event for better parse"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "4d202fa62dc3f90002ccec181f0f2509286e773f",
+            "comment": "Reorganize generated API file paths"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "33564869fafec0c1dd2e31eb319f070502db55db",
+            "comment": "Add conditional compile for function type params"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "5f0c4c7145ed08da3ce79f36aa003b5646bb75b8",
+            "comment": "bump package versions for release"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "f3e42618998e52b3f27e10e592d993be12702f5b",
+            "comment": "Support adding method conditionally to interfaces"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "b7666daf66fdb29053a89ee516a839ece5a7d9b1",
+            "comment": "Support conditional compilation of ternary type"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "6af9d22c8c15c36f2d44401cd18b499e3138269f",
+            "comment": "Use rushx to enable error report for rush build"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "934ba677f4ae65954fc63f2be529e5a4adc35371",
+            "comment": "Updating @azure/communication-chat to 1.2.0"
+          }
+        ],
+        "patch": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "97843a75138907b74bff106b9270bc2abe85b1cc",
+            "comment": "Add default replacer to do safe stringify"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Apr 2022 20:46:15 GMT",
       "tag": "@internal/acs-ui-common_v1.2.2-beta.1",
       "version": "1.2.2-beta.1",

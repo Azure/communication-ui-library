@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support `isReceiving` flag for video streams",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "chwhilar@microsoft.com",
-  "dependentChangeType": "patch"
-}

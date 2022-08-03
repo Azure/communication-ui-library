@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update ErrorBar to accept strings and icons for the cameraStoppedUnexpectedly call diagnostic",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

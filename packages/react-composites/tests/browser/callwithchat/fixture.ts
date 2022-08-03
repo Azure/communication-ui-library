@@ -8,7 +8,7 @@ import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, 'app');
 
 type CallWithChatWorkerFixture = WorkerFixture<CallWithChatUserType>;
@@ -18,7 +18,7 @@ type CallWithChatWorkerFixture = WorkerFixture<CallWithChatUserType>;
  *
  * The @returns values are available to reference in tests.
  */
-export const test = base.extend<unknown, CallWithChatWorkerFixture>({
+export const test = base.extend<Record<string, unknown>, CallWithChatWorkerFixture>({
   /** @returns string URL for the server. */
   serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
 

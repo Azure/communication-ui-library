@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CSSProperties } from 'react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
+import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
@@ -21,6 +21,8 @@ const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
 const CHAT_MESSAGE_ZINDEX = 1;
 const AVATAR_ZINDEX = 2;
+// new message button should be on top of chat message
+const NEW_MESSAGE_BUTTON_ZINDEX = 2;
 
 /**
  * @private
@@ -50,7 +52,10 @@ export const chatStyle: ComponentSlotStyle = {
   paddingBottom: '0.5rem',
   paddingTop: '0.8rem',
   border: 'none',
-  overflow: 'auto'
+  overflow: 'auto',
+  // `height: 100%` ensures that the Chat component covers 100% of it's parents height
+  // to prevent intermittent scrollbars when gifs are present in the chat.
+  height: '100%'
 };
 
 /**
@@ -58,7 +63,7 @@ export const chatStyle: ComponentSlotStyle = {
  */
 export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
-  zIndex: 1,
+  zIndex: NEW_MESSAGE_BUTTON_ZINDEX,
   bottom: 0,
   right: '1.5rem'
 });
@@ -96,7 +101,9 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
 export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginLeft: '0rem'
+  marginLeft: '0rem',
+  // This makes message bubble show border in high contrast mode making each message distinguishable
+  border: '1px solid transparent'
 };
 
 /**
@@ -122,7 +129,9 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
     // Deal with awkward padding seen in messages from Teams.
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
     marginBlock: '0.125rem'
-  }
+  },
+  // This makes message bubble show border in high contrast mode making each message distinguishable
+  border: '1px solid transparent'
 };
 
 /**

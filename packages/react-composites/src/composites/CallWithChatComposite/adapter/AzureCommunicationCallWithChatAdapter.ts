@@ -10,6 +10,7 @@ import {
   CallAgent,
   GroupCallLocator,
   PermissionConstraints,
+  PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
   VideoDeviceInfo
@@ -332,33 +333,33 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.deleteMessage(messageId);
   }
   /* @conditional-compile-remove(file-sharing) */
-  public registerActiveFileUploads(files: File[]): FileUploadManager[] {
+  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
     return this.chatAdapter.registerActiveFileUploads(files);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
     return this.chatAdapter.registerCompletedFileUploads(metadata);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public clearFileUploads(): void {
+  public clearFileUploads = (): void => {
     this.chatAdapter.clearFileUploads();
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public cancelFileUpload(id: string): void {
+  public cancelFileUpload = (id: string): void => {
     this.chatAdapter.cancelFileUpload(id);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadProgress(id: string, progress: number): void {
+  public updateFileUploadProgress = (id: string, progress: number): void => {
     this.chatAdapter.updateFileUploadProgress(id, progress);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadErrorMessage(id: string, errorMessage: string): void {
+  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
     this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
-  }
+  };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
-  }
+  };
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     return await this.callAdapter.holdCall();
@@ -386,6 +387,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -414,6 +417,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.on('isSpeakingChanged', listener);
+        break;
+      case 'selectedMicrophoneChanged':
+        this.callAdapter.on('selectedMicrophoneChanged', listener);
+        break;
+      case 'selectedSpeakerChanged':
+        this.callAdapter.on('selectedSpeakerChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
@@ -450,6 +459,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
@@ -483,6 +494,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'isSpeakingChanged':
         this.callAdapter.off('isSpeakingChanged', listener);
+        break;
+      case 'selectedMicrophoneChanged':
+        this.callAdapter.off('selectedMicrophoneChanged', listener);
+        break;
+      case 'selectedSpeakerChanged':
+        this.callAdapter.off('selectedSpeakerChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);
@@ -534,6 +551,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 };
 
 /**
@@ -547,14 +566,16 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   displayName,
   credential,
   endpoint,
-  locator
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
     userId,
     displayName,
     credential,
-    locator: callAdapterLocator
+    locator: callAdapterLocator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -607,7 +628,14 @@ export const useAzureCommunicationCallWithChatAdapter = (
    */
   beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>
 ): CallWithChatAdapter | undefined => {
-  const { credential, displayName, endpoint, locator, userId } = args;
+  const {
+    credential,
+    displayName,
+    endpoint,
+    locator,
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
@@ -649,7 +677,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
           displayName,
           endpoint,
           locator,
-          userId
+          userId,
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -659,7 +688,17 @@ export const useAzureCommunicationCallWithChatAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, locator, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      beforeDisposeRef,
+      credential,
+      displayName,
+      endpoint,
+      locator,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.

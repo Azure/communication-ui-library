@@ -44,11 +44,13 @@
   },
   "callWithChat": {
     "peopleButtonLabel": "Люди",
-    "peopleButtonTooltipContentOpen": "Показать участников",
-    "peopleButtonTooltipContentClose": "Скрыть участников",
+    "peopleButtonTooltipOpen": "Показать участников",
+    "peopleButtonTooltipClose": "Скрыть участников",
     "chatButtonLabel": "Чат",
-    "chatButtonTooltipContentOpen": "Показать чат",
-    "chatButtonTooltipContentClose": "Скрыть чат",
+    "chatButtonTooltipClosedWithMessageCount": "Показать чат (непрочитано: {unreadMessagesCount})",
+    "chatButtonTooltipOpen": "Показать чат",
+    "chatButtonTooltipClose": "Скрыть чат",
+    "moreDrawerAudioDeviceMenuTitle": "Звуковое устройство",
     "moreDrawerMicrophoneMenuTitle": "Микрофон",
     "moreDrawerSpeakerMenuTitle": "Динамик",
     "moreDrawerButtonLabel": "Дополнительные параметры",
@@ -59,6 +61,9 @@
     "chatButtonNewMessageNotificationLabel": "Новое сообщение",
     "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова.",
     "removeMenuLabel": "Удалить",
-    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
+    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "dismissSidePaneButton": "Закрыть",
+    "returnToCallButtonAriaDescription": "Вернуться к звонку",
+    "returnToCallButtonAriaLabel": "Назад"
   }
 }

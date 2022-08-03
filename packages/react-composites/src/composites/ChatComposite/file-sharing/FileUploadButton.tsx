@@ -58,14 +58,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       background: 'transparent'
     }
   });
-  /* @conditional-compile-remove(file-sharing) */
-  const uploadFileButtonString = useLocale().strings.chat.uploadFile;
-  const uploadFileButtonStringTrampoline = (): string => {
-    // @conditional-compile-remove(file-sharing)
-    return uploadFileButtonString;
-    // Return _some_ available icon, as the real icon is beta-only.
-    return '';
-  };
+
   return (
     <>
       <Stack
@@ -123,4 +116,11 @@ export const FileUploadButtonWrapper = (
       }
     </>
   );
+};
+
+const uploadFileButtonStringTrampoline = (): string => {
+  //@conditional-compile-remove(file-sharing)
+  //eslint-disable-next-line react-hooks/rules-of-hooks
+  return useLocale().strings.chat.uploadFile;
+  return '';
 };

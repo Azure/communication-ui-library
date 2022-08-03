@@ -181,7 +181,9 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             // callAgent if the createCallAgent succeeds.
             const callAgent = await target.createCallAgent(...args);
             this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
-            this._context.setCallAgent({ displayName: this._callAgent.displayName });
+            this._context.setCallAgent({
+              displayName: this._callAgent.displayName
+            });
             return this._callAgent;
           },
           'CallClient.createCallAgent'
@@ -226,6 +228,16 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId: CommunicationUserIdentifier;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format that will be used to represent the callers identity. This number is required
+   * to start a PSTN call.
+   *
+   * example: +11234567
+   *
+   * This is not a cached value from the headless calling client.
+   */
+  alternateCallerId?: string;
 };
 
 /**
@@ -266,7 +278,11 @@ export const createStatefulCallClient = (
   callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
-    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
+    new CallContext(
+      getIdentifierKind(args.userId),
+      options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(PSTN-calls) */ args.alternateCallerId
+    ),
     new InternalCallContext()
   );
 };

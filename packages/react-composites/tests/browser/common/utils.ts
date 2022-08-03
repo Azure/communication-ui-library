@@ -7,7 +7,17 @@ import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
-export const PER_STEP_TIMEOUT_MS = 5000;
+const PER_STEP_TIMEOUT_MS = 5000;
+
+function perStepLocalTimeout(): number {
+  if (process.env.LOCAL_DEBUG) {
+    // Disable per-step timeouts for local debugging
+    // so that developers can use the playwright inspector
+    // to single step through the playwright test.
+    return 0;
+  }
+  return PER_STEP_TIMEOUT_MS;
+}
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
@@ -50,7 +60,7 @@ export const waitForSelector = async (
   await page.bringToFront();
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS, ...options })
+    async () => await page.waitForSelector(selector, { timeout: perStepLocalTimeout(), ...options })
   );
 };
 
@@ -65,7 +75,7 @@ export async function waitForFunction<R>(
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout() })
   );
 }
 
@@ -337,6 +347,8 @@ export interface StubOptions {
   dismissTooltips?: boolean;
   /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
+  /** wait for file type icon to render. */
+  awaitFileTypeIcon?: boolean;
   /**
    * The loading spinner for video tiles can show during live service tests (likely due to network flakiness).
    * This should be removed when tests use a serviceless environment.
@@ -367,6 +379,9 @@ export async function stableScreenshot(
   }
   if (stubOptions?.hideVideoLoadingSpinner !== false) {
     await hideVideoLoadingSpinner(page);
+  }
+  if (stubOptions?.awaitFileTypeIcon) {
+    await awaitFileTypeIcon(page);
   }
   try {
     return await page.screenshot(screenshotOptions);
@@ -402,3 +417,40 @@ const enableTooltips = async (page: Page): Promise<void> => {
 const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
   await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
 };
+
+/**
+ * Helper function for waiting for file type icons. File type icons
+ * cannot be registered as they are loaded dynamically based on the
+ * type of file being loaded (e.g.- .pdf, .docx, .png, .txt)
+ */
+const awaitFileTypeIcon = async (page: Page): Promise<void> => {
+  const fileTypeIconId: string = dataUiId(IDS.fileTypeIcon);
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const iconNodes = Array.from(document.querySelectorAll(args.fileTypeIconId));
+      return iconNodes.every((node) => node?.querySelector('img').complete);
+    },
+    {
+      fileTypeIconId: fileTypeIconId
+    }
+  );
+};
+
+/**
+ * Block for given number of seconds in an async test.
+ *
+ * This is useful for making a test hang while you're debugging. To stop a test at
+ * some point for 5 minutes, simply add:
+ *
+ * ```
+ *   await blockForMinutes(5);
+ * ```
+ * DO NOT USE in production code because artificial delays like this slow down CI.
+ */
+export async function blockForMinutes(m: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000 * 60 * m);
+  });
+}

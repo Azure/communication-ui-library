@@ -8,7 +8,7 @@ import Enzyme, { mount } from 'enzyme';
 /* @conditional-compile-remove(dialpad) */
 import Adapter from 'enzyme-adapter-react-16';
 /* @conditional-compile-remove(dialpad) */
-import { DtmfTone, Dialpad } from './Dialpad';
+import { DtmfTone, Dialpad, DialpadStrings } from './Dialpad';
 /* @conditional-compile-remove(dialpad) */
 import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
 /* @conditional-compile-remove(dialpad) */
@@ -16,7 +16,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 /* @conditional-compile-remove(dialpad) */
 const customDialpadStrings = {
-  placeholderText: Math.random().toString()
+  placeholderText: Math.random().toString(),
+  deleteButtonAriaLabel: Math.random().toString()
 };
 
 test('workaround for conditional compilation. Test suite must contain at least one test', () => {
@@ -33,10 +34,16 @@ const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
 };
 
 /* @conditional-compile-remove(dialpad) */
+const dialpadStrings: DialpadStrings = {
+  placeholderText: Math.random().toString(),
+  deleteButtonAriaLabel: Math.random().toString()
+};
+
+/* @conditional-compile-remove(dialpad) */
 describe('Dialpad tests', () => {
   test('Should localize default text ', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     expect(component.find('[data-test-id="dialpad-input"]').first().props().placeholder).toBe(
@@ -46,7 +53,7 @@ describe('Dialpad tests', () => {
 
   test('Clicking on dialpad button 1 should show 1 in input box', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     const button = component.find('[data-test-id="dialpad-button-0"]').first();
@@ -59,7 +66,7 @@ describe('Dialpad tests', () => {
 
   test('Clicking on dialpad button 6 should send the corresponding dtmf tone Num6', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad onSendDtmfTone={onSendDtmfTone} />, testLocale);
 
@@ -72,7 +79,7 @@ describe('Dialpad tests', () => {
 
   test('Clicking on dialpad button 9 should not send other dtmf tones', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad onSendDtmfTone={onSendDtmfTone} />, testLocale);
 
@@ -94,7 +101,7 @@ describe('Dialpad tests', () => {
 
   test('Dialpad input box should be editable by keyboard', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     component
@@ -106,7 +113,7 @@ describe('Dialpad tests', () => {
 
   test('Dialpad input box should filter out non-valid input', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     component
@@ -118,7 +125,7 @@ describe('Dialpad tests', () => {
 
   test('Typing in 12345678900 should show 1 (234) 567-8900 in input box', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     component
@@ -130,7 +137,7 @@ describe('Dialpad tests', () => {
 
   test('Typing in 2345678900 should show (234) 567-8900 in input box', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     component
@@ -142,7 +149,7 @@ describe('Dialpad tests', () => {
 
   test('Typing in 23456789000 should show  23456789000 in input box', async () => {
     const testLocale = createTestLocale({
-      dialpad: { placeholderText: Math.random().toString() }
+      dialpad: dialpadStrings
     });
     const component = mountWithLocalization(<Dialpad />, testLocale);
     component

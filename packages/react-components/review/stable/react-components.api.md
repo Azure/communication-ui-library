@@ -350,6 +350,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallNetworkQualityLow: JSX.Element;
     ErrorBarCallNoMicrophoneFound: JSX.Element;
     ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
@@ -814,6 +815,7 @@ export interface MessageThreadStrings {
     failToSendTag?: string;
     friday: string;
     liveAuthorIntro: string;
+    messageContentAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;

@@ -57,20 +57,21 @@ export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdenti
     // The prefix is preserved for this variant of the identifier.
     return { communicationUserId: id };
   }
-  if (id.startsWith(PHONE_NUMBER_PREFIX)) {
-    return { phoneNumber: id.substr(PHONE_NUMBER_PREFIX.length) };
+  if (id.startsWith(PHONE_NUMBER_PREFIX) || id.startsWith('+')) {
+    const isPhoneNumber = id.startsWith(PHONE_NUMBER_PREFIX) ? id.replace(PHONE_NUMBER_PREFIX, '') : id;
+    return { phoneNumber: isPhoneNumber };
   }
   if (id.startsWith(TEAMS_USER_PREFIX)) {
-    return { microsoftTeamsUserId: id.substr(TEAMS_USER_PREFIX.length) };
+    return { microsoftTeamsUserId: id.replace(TEAMS_USER_PREFIX, '') };
   }
   if (id.startsWith(TEAMS_DOD_PREFIX)) {
-    return { microsoftTeamsUserId: id.substr(TEAMS_DOD_PREFIX.length), cloud: 'dod' };
+    return { microsoftTeamsUserId: id.replace(TEAMS_DOD_PREFIX, ''), cloud: 'dod' };
   }
   if (id.startsWith(TEAMS_GCCH_PREFIX)) {
-    return { microsoftTeamsUserId: id.substr(TEAMS_GCCH_PREFIX.length), cloud: 'gcch' };
+    return { microsoftTeamsUserId: id.replace(TEAMS_GCCH_PREFIX, ''), cloud: 'gcch' };
   }
   if (id.startsWith(TEAMS_VISITOR_PREFIX)) {
-    return { microsoftTeamsUserId: id.substr(TEAMS_VISITOR_PREFIX.length), isAnonymous: true };
+    return { microsoftTeamsUserId: id.replace(TEAMS_VISITOR_PREFIX, ''), isAnonymous: true };
   }
   return { id };
 };
