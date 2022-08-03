@@ -13,6 +13,8 @@
     "start:prod": "node dist/server.js",
     "test": "",
     "test:stable": "echo skip",
+    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 */**/*.{ts,tsx}",
@@ -21,6 +23,7 @@
     "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
+    "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
     "_typecheck": "rushx _by-flavor \"if-env COMMUNICATION_REACT_FLAVOR=stable && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
@@ -47,8 +50,7 @@
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.4.1",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0",
-    "webpack-bundle-analyzer": "~4.5.0"
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
@@ -96,6 +98,9 @@
     "url-loader": "~4.1.1",
     "webpack": "5.38.1",
     "webpack-cli": "~4.10.0",
-    "webpack-dev-server": "4.8.1"
+    "webpack-dev-server": "4.8.1",
+    "webpack-bundle-analyzer": "~4.5.0",
+    "cpx": "~1.5.0",
+    "@babel/cli": "~7.16.0"
   }
 }
