@@ -93,15 +93,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     }
   }
 
-  /**
-   * Since VideoTile only cares about the following states,
-   * we don't observe the other states like 'EarlyMedia'.
-   */
-  let participantState: VideoGalleryRemoteParticipantState | undefined;
-  if (state === 'Connecting' || state === 'Ringing' || state === 'Hold') {
-    participantState = state;
-  }
-
   return {
     userId,
     displayName,
@@ -110,7 +101,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
-    state: participantState
+    state: convertRemoteParticipantStateToVideoGalleryRemoteParticipantState(state)
   };
 };
 
@@ -123,4 +114,19 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target
   };
+};
+
+const convertRemoteParticipantStateToVideoGalleryRemoteParticipantState = (
+  state: RemoteParticipantConnectionState
+): VideoGalleryRemoteParticipantState | undefined => {
+  if (state === 'Idle' || state === 'Connecting') {
+    return 'Connecting';
+  }
+  if (state === 'EarlyMedia' || state === 'Ringing') {
+    return 'Ringing';
+  }
+  if (state === 'Hold') {
+    return 'Hold';
+  }
+  return;
 };
