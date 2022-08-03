@@ -418,7 +418,7 @@ function disposeViewRemoteVideo(
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_STREAM_STOPPING,
-      level: 'warning',
+      level: 'info',
       message: 'Remote stream is still rendering. Changing status to stopping.',
       data: streamLogInfo
     });
@@ -438,7 +438,7 @@ function disposeViewRemoteVideo(
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_RENDERER_NOT_FOUND,
-      level: 'warning',
+      level: 'error',
       message: 'Cannot find remote view renderer.',
       data: streamLogInfo
     });
@@ -474,7 +474,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
-      level: 'warning',
+      level: 'info',
       message: 'Local stream is still rendering. Changing status to stopping.',
       data: streamLogInfo
     });
@@ -494,7 +494,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_RENDERER_NOT_FOUND,
-      level: 'warning',
+      level: 'error',
       message: 'Cannot find renderer when disposing local stream.',
       data: streamLogInfo
     });
@@ -527,7 +527,7 @@ function disposeViewUnparentedVideo(
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
-      level: 'warning',
+      level: 'info',
       message: 'Unparented local stream is still rendering. Changing status to stopping.'
     });
     internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
@@ -545,7 +545,7 @@ function disposeViewUnparentedVideo(
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_RENDERER_NOT_FOUND,
-      level: 'warning',
+      level: 'error',
       message: 'Cannot find renderer when disposing unparented local stream.'
     });
   }
