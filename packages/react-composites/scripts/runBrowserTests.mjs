@@ -68,6 +68,9 @@ async function runAll(args) {
     try {
       await runOne(args, composite, 'hermetic');
     } catch (e) {
+      if (args.failFast) {
+        throw e;
+      }
       console.error(`Hermetic tests failed for ${composite} composite: `, e);
       success = false;
     }
@@ -77,6 +80,9 @@ async function runAll(args) {
       try {
         await runOne(args, composite, 'live');
       } catch (e) {
+        if (args.failFast) {
+          throw e;
+        }
         console.error(`Live tests failed for ${composite} composite: `, e);
         success = false;
       }
@@ -111,6 +117,9 @@ async function runOne(args, composite, hermeticity) {
   if (args.debug) {
     cmdArgs.push('--debug');
     env['LOCAL_DEBUG'] = true;
+  }
+  if (args.failFast) {
+    cmdArgs.push('-x');
   }
   cmdArgs.push(...args['_']);
 
@@ -179,6 +188,11 @@ function parseArgs(argv) {
         alias: 'n',
         type: 'boolean',
         describe: 'Print what tests would be run without invoking test harness.'
+      },
+      failFast: {
+        alias: 'x',
+        type: 'boolean',
+        describe: 'Stop execution on first failure. Preferred over passing `-x` directly to playwright.'
       },
       hermeticOnly: {
         alias: 'l',
