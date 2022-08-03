@@ -156,7 +156,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
@@ -223,7 +223,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
@@ -290,7 +290,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
