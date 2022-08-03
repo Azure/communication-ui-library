@@ -3,8 +3,8 @@
 // Licensed under the MIT license.
 
 import { exec } from './common.mjs';
-import child_process from 'child_process';
 import path from 'path';
+import { rmdirSync } from 'fs';
 import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
@@ -13,6 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PACKLET_ROOT = path.join(__dirname, '..');
+const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
@@ -37,6 +38,7 @@ const PLAYWRIGHT_PROJECT = {
 
 async function main(argv) {
   const args = parseArgs(argv);
+  setup();
   if (args.stress) {
     await runStress(args);
   } else {
@@ -65,8 +67,8 @@ async function runAll(args) {
   for (const composite of args.composites) {
     try {
       await runOne(args, composite, 'hermetic');
-    } catch(e) {
-      console.error('Hermetic tests failed for {} composite: '.format(composite,), e)
+    } catch (e) {
+      console.error(`Hermetic tests failed for ${composite} composite: `, e);
       success = false;
     }
   }
@@ -74,14 +76,14 @@ async function runAll(args) {
     for (const composite of args.composites) {
       try {
         await runOne(args, composite, 'live');
-      } catch(e) {
-        console.error('Live tests failed for {} composite: '.format(composite,), e)
+      } catch (e) {
+        console.error(`Live tests failed for ${composite} composite: `, e);
         success = false;
       }
     }
   }
   if (!success) {
-    throw new Error('Some tests failed!')
+    throw new Error('Some tests failed!');
   }
 }
 
@@ -93,7 +95,8 @@ async function runOne(args, composite, hermeticity) {
 
   const env = {
     ...process.env,
-    COMMUNICATION_REACT_FLAVOR: args.buildFlavor
+    COMMUNICATION_REACT_FLAVOR: args.buildFlavor,
+    PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
   const cmdArgs = ['npx', 'playwright', 'test', '-c', PLAYWRIGHT_CONFIG[hermeticity], test];
@@ -117,6 +120,11 @@ async function runOne(args, composite, hermeticity) {
   } else {
     await exec(cmd, env);
   }
+}
+
+function setup() {
+  console.log('Cleaning up output directory...');
+  rmdirSync(BASE_OUTPUT_DIR, { recursive: true });
 }
 
 function parseArgs(argv) {

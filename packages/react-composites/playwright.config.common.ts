@@ -10,7 +10,11 @@ const DESKTOP_VIEWPORT = {
 };
 
 const TEST_ROOT = './tests/browser';
-const OUTPUT_DIR = './test-results';
+
+const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR;
+if (!outputDir) {
+  throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
+}
 
 const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
 
@@ -33,14 +37,14 @@ const chromeLaunchOptions = {
   ]
 };
 
-const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
+const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
 const config: PlaywrightTestConfig = {
-  outputDir: OUTPUT_DIR,
+  outputDir: outputDir,
   // Extend per-test timeout for local debugging so that developers can single-step through
   // the test in playwright inspector.
   timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 1 * MINUTE,
