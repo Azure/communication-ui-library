@@ -66,7 +66,7 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const theme = useTheme();
   const controlBarClassName = useMemo(() => {
     const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
-    // if theme is dark and layout is floating then use palette.neutralQuaternaryAlt as background, otherwise use palette.white
+    // if theme is dark and layout is floating then use palette.neutralQuaternaryAlt as background, otherwise use theme.palette.white
     const backgroundStyle = {
       background:
         isDarkThemed(theme) && layout?.startsWith('floating') ? theme.palette.neutralQuaternaryAlt : theme.palette.white

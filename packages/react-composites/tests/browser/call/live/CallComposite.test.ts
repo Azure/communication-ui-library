@@ -11,7 +11,8 @@ import {
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector,
-  stableScreenshot
+  stableScreenshot,
+  waitForPiPiPToHaveLoaded
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -32,6 +33,8 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
     }
   });
 };
+
+const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }) => {
@@ -127,13 +130,20 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
-  test('participant list loads correctly', async ({ pages }) => {
+  test('participant list loads correctly', async ({ pages }, testInfo) => {
     for (const idx in pages) {
       const page = pages[idx];
       await pageClick(page, dataUiId('call-composite-participants-button'));
-      const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-      // This will ensure no animation is happening for the callout
-      await buttonCallOut.waitForElementState('stable');
+      if (flavor === 'stable') {
+        const buttonCallOut = await waitForSelector(page, '.ms-Callout');
+        // This will ensure no animation is happening for the callout
+        await buttonCallOut.waitForElementState('stable');
+      } else {
+        await waitForSelector(page, dataUiId('call-composite-people-pane'));
+        if (!isTestProfileDesktop(testInfo)) {
+          await waitForPiPiPToHaveLoaded(page, 2);
+        }
+      }
       expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
@@ -211,15 +221,27 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`left-call-page.png`);
   });
 
-  test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
+  test('Removed from call page should show when you are removed by another user', async ({ pages }, testInfo) => {
     // page[0] user will remove page[1] user
     const page0 = pages[0];
     const page1 = pages[1];
 
     await pageClick(page0, dataUiId('call-composite-participants-button')); // open participant flyout
-    await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
-    await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
-    await pageClick(page0, dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
+    if (flavor === 'beta') {
+      // check if mobile
+      if (!isTestProfileDesktop(testInfo)) {
+        await pageClick(page0, '[role="menuitem"]');
+        await pageClick(page0, 'span:text("Remove")');
+      } else {
+        await pageClick(page0, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page0, '.ms-ContextualMenu-itemText');
+        await pageClick(page0, '.ms-ContextualMenu-itemText');
+      }
+    } else {
+      await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
+      await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
+      await pageClick(page0, dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
+    }
 
     await waitForSelector(page1, dataUiId('removed-from-call-page'));
     expect(await stableScreenshot(page1)).toMatchSnapshot(`remove-from-call-page.png`);
@@ -248,19 +270,28 @@ test.describe('Call composite participant menu items injection tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('injected menu items appear', async ({ pages }) => {
+  test('injected menu items appear', async ({ pages }, testInfo) => {
     const page = pages[0];
 
     // Open participants flyout.
     await pageClick(page, dataUiId('call-composite-participants-button'));
-    // Open participant list flyout
-    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-    // There shouldbe at least one participant. Just click on the first.
-    await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
+    if (flavor === 'beta') {
+      if (!isTestProfileDesktop(testInfo)) {
+        await pageClick(page, '[role="menuitem"]');
+        await pageClick(page, 'span:text("Remove")');
+      } else {
+        await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page, '.ms-ContextualMenu-itemText');
+      }
+    } else {
+      // Open participant list flyout
+      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+      // There shouldbe at least one participant. Just click on the first.
+      await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
 
-    const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
-    await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
-
+      const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
+      await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 });

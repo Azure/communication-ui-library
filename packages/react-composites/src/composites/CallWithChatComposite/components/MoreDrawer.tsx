@@ -98,7 +98,7 @@ const inferCallWithChatControlOptions = (
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
-  const { speakers, onSelectSpeaker } = props;
+  const { speakers, onSelectSpeaker, onLightDismiss } = props;
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
@@ -107,8 +107,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectSpeaker(selected as AudioDeviceInfo);
       }
+      onLightDismiss();
     },
-    [speakers, onSelectSpeaker]
+    [speakers, onSelectSpeaker, onLightDismiss]
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
@@ -142,8 +143,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectMicrophone(selected as AudioDeviceInfo);
       }
+      onLightDismiss();
     },
-    [microphones, onSelectMicrophone]
+    [microphones, onSelectMicrophone, onLightDismiss]
   );
 
   if (props.microphones && props.microphones.length > 0) {

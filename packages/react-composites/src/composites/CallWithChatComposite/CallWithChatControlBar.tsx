@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
@@ -95,10 +95,15 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     [callWithChatStrings]
   );
 
-  const centerContainerStyles = useMemo(
-    () => (!props.mobileView ? desktopControlBarStyles : undefined),
-    [props.mobileView]
-  );
+  const centerContainerStyles = useMemo(() => {
+    const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
+    return mergeStyleSets(styles, {
+      root: {
+        // Enforce a background color on control bar to ensure it matches the composite background color.
+        background: theme.semanticColors.bodyBackground
+      }
+    });
+  }, [props.mobileView, theme.semanticColors.bodyBackground]);
   const screenShareButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopScreenShareButtonStyles(theme) : undefined),
     [props.mobileView, theme]

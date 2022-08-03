@@ -24,10 +24,18 @@ export interface CallScreenProps {
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, displayName, endpoint, locator } = props;
+  const {
+    token,
+    userId,
+    displayName,
+    endpoint,
+    locator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
@@ -64,7 +72,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   );
 
   const adapter = useAzureCommunicationCallWithChatAdapter(
-    { userId, displayName, credential, endpoint, locator },
+    {
+      userId,
+      displayName,
+      credential,
+      endpoint,
+      locator,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    },
     afterAdapterCreate
   );
 
