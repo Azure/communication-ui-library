@@ -61,13 +61,27 @@ async function runStress(args) {
 }
 
 async function runAll(args) {
+  let success = true;
   for (const composite of args.composites) {
-    await runOne(args, composite, 'hermetic');
+    try {
+      await runOne(args, composite, 'hermetic');
+    } catch(e) {
+      console.error('Hermetic tests failed for {} composite: '.format(composite,), e)
+      success = false;
+    }
   }
   if (!args.hermeticOnly) {
     for (const composite of args.composites) {
-      await runOne(args, composite, 'live');
+      try {
+        await runOne(args, composite, 'live');
+      } catch(e) {
+        console.error('Live tests failed for {} composite: '.format(composite,), e)
+        success = false;
+      }
     }
+  }
+  if (!success) {
+    throw new Error('Some tests failed!')
   }
 }
 
