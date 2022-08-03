@@ -259,6 +259,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
@@ -1455,8 +1456,20 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public
