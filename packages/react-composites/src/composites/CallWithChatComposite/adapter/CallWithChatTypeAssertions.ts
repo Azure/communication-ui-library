@@ -88,7 +88,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'endedCall'
   | 'latestErrors'
   | 'userId'
-  | /* @conditional-compile-remove(PSTN-calls) */ 'alternativeCallerId'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

@@ -22,15 +22,22 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
+  alternateCallerId?: string;
   onCallEnded: () => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded } = props;
+  const {
+    token,
+    userId,
+    callLocator,
+    displayName,
+    onCallEnded,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
-
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
@@ -64,7 +71,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       userId,
       displayName,
       credential,
-      locator: callLocator
+      locator: callLocator,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId
     },
     afterCreate
   );

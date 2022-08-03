@@ -13,7 +13,8 @@ import {
   SendBox,
   SendBoxStylesProps,
   TypingIndicator,
-  TypingIndicatorStylesProps
+  TypingIndicatorStylesProps,
+  useTheme
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -122,6 +123,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
 
   const adapter = useAdapter();
+  const theme = useTheme();
+
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     adapter.fetchInitialData();
@@ -147,7 +150,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
+  const messageThreadStyles = Object.assign(
+    {},
+    messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
+    styles?.messageThread
+  );
   const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
   const sendBoxStyles = Object.assign({}, styles?.sendBox);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);

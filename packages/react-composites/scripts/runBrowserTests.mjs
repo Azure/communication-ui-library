@@ -3,8 +3,8 @@
 // Licensed under the MIT license.
 
 import { exec } from './common.mjs';
-import child_process from 'child_process';
 import path from 'path';
+import { rmdirSync } from 'fs';
 import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
@@ -13,15 +13,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PACKLET_ROOT = path.join(__dirname, '..');
+const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
     call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'fake-adapter')
+    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
   },
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
-    chat: path.join(TEST_ROOT, 'chat', 'live-tests'),
+    chat: path.join(TEST_ROOT, 'chat', 'live'),
     callWithChat: path.join(TEST_ROOT, 'callWithChat')
   }
 };
@@ -37,6 +38,7 @@ const PLAYWRIGHT_PROJECT = {
 
 async function main(argv) {
   const args = parseArgs(argv);
+  setup();
   if (args.stress) {
     await runStress(args);
   } else {
@@ -61,13 +63,33 @@ async function runStress(args) {
 }
 
 async function runAll(args) {
+  let success = true;
   for (const composite of args.composites) {
-    await runOne(args, composite, 'hermetic');
+    try {
+      await runOne(args, composite, 'hermetic');
+    } catch (e) {
+      if (args.failFast) {
+        throw e;
+      }
+      console.error(`Hermetic tests failed for ${composite} composite: `, e);
+      success = false;
+    }
   }
   if (!args.hermeticOnly) {
     for (const composite of args.composites) {
-      await runOne(args, composite, 'live');
+      try {
+        await runOne(args, composite, 'live');
+      } catch (e) {
+        if (args.failFast) {
+          throw e;
+        }
+        console.error(`Live tests failed for ${composite} composite: `, e);
+        success = false;
+      }
     }
+  }
+  if (!success) {
+    throw new Error('Some tests failed!');
   }
 }
 
@@ -79,7 +101,8 @@ async function runOne(args, composite, hermeticity) {
 
   const env = {
     ...process.env,
-    COMMUNICATION_REACT_FLAVOR: args.buildFlavor
+    COMMUNICATION_REACT_FLAVOR: args.buildFlavor,
+    PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
   const cmdArgs = ['npx', 'playwright', 'test', '-c', PLAYWRIGHT_CONFIG[hermeticity], test];
@@ -91,6 +114,13 @@ async function runOne(args, composite, hermeticity) {
       cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
     }
   }
+  if (args.debug) {
+    cmdArgs.push('--debug');
+    env['LOCAL_DEBUG'] = true;
+  }
+  if (args.failFast) {
+    cmdArgs.push('-x');
+  }
   cmdArgs.push(...args['_']);
 
   const cmd = quote(cmdArgs);
@@ -99,6 +129,11 @@ async function runOne(args, composite, hermeticity) {
   } else {
     await exec(cmd, env);
   }
+}
+
+function setup() {
+  console.log('Cleaning up output directory...');
+  rmdirSync(BASE_OUTPUT_DIR, { recursive: true });
 }
 
 function parseArgs(argv) {
@@ -141,10 +176,23 @@ function parseArgs(argv) {
         choices: ['call', 'chat', 'callWithChat'],
         describe: 'One or more composites to test. By default, all composites will be tested.\n'
       },
+      debug: {
+        alias: 'd',
+        type: 'boolean',
+        describe:
+          'Run in debug mode.\n' +
+          'Launches playwright inspector and relaxes timeouts to allow single stepping through the test.\n' +
+          'This mode must be used on a machine with display support.'
+      },
       dryRun: {
         alias: 'n',
         type: 'boolean',
         describe: 'Print what tests would be run without invoking test harness.'
+      },
+      failFast: {
+        alias: 'x',
+        type: 'boolean',
+        describe: 'Stop execution on first failure. Preferred over passing `-x` directly to playwright.'
       },
       hermeticOnly: {
         alias: 'l',
