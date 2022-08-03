@@ -31,12 +31,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger touchdown build pipeline. Commit changes if current branch is not 'main'.
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1
         with:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build'
