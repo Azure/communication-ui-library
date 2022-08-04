@@ -7,7 +7,17 @@ import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
-export const PER_STEP_TIMEOUT_MS = 5000;
+const PER_STEP_TIMEOUT_MS = 5000;
+
+function perStepLocalTimeout(): number {
+  if (process.env.LOCAL_DEBUG) {
+    // Disable per-step timeouts for local debugging
+    // so that developers can use the playwright inspector
+    // to single step through the playwright test.
+    return 0;
+  }
+  return PER_STEP_TIMEOUT_MS;
+}
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
@@ -50,7 +60,7 @@ export const waitForSelector = async (
   await page.bringToFront();
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS, ...options })
+    async () => await page.waitForSelector(selector, { timeout: perStepLocalTimeout(), ...options })
   );
 };
 
@@ -65,7 +75,7 @@ export async function waitForFunction<R>(
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout() })
   );
 }
 
@@ -427,3 +437,20 @@ const awaitFileTypeIcon = async (page: Page): Promise<void> => {
     }
   );
 };
+
+/**
+ * Block for given number of seconds in an async test.
+ *
+ * This is useful for making a test hang while you're debugging. To stop a test at
+ * some point for 5 minutes, simply add:
+ *
+ * ```
+ *   await blockForMinutes(5);
+ * ```
+ * DO NOT USE in production code because artificial delays like this slow down CI.
+ */
+export async function blockForMinutes(m: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000 * 60 * m);
+  });
+}

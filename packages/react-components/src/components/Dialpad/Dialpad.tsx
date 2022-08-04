@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 import React from 'react';
+import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
+/* @conditional-compile-remove(dialpad) */
+import { IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
@@ -24,6 +26,7 @@ import { useLocale } from '../../localization';
 import {
   buttonStyles,
   containerStyles,
+  iconButtonStyles,
   primaryContentStyles,
   secondaryContentStyles,
   textFieldStyles
@@ -38,6 +41,7 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
  */
 export interface DialpadStrings {
   placeholderText: string;
+  deleteButtonAriaLabel: string;
 }
 
 /**
@@ -51,6 +55,7 @@ export interface DialpadStyles {
   textField?: Partial<ITextFieldStyles>;
   primaryContent?: IStyle;
   secondaryContent?: IStyle;
+  deleteIcon?: IButtonStyles;
 }
 
 /**
@@ -94,6 +99,7 @@ export type DtmfTone =
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
+  // Potential Improvement:
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: DialpadButtonProps[][];
   /**  function to send dtmf tones on button click */
@@ -175,7 +181,7 @@ const DtmfTones: DtmfTone[] = [
 
 /* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
-  placeholderText: string;
+  strings: DialpadStrings;
   // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior */
@@ -191,8 +197,15 @@ const DialpadContainer = (props: {
 
   const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange } = props;
 
+  const sanitizeInput = (input: string): string => {
+    // remove non-valid characters from input: letters,special characters excluding +, *,#
+    return input.replace(/[^\d*#+]/g, '');
+  };
+
   const onClickDialpad = (input: string, index: number): void => {
-    setTextValue(textValue + input);
+    // remove non-valid characters from input: letters,special characters excluding +, *,#
+    const value = sanitizeInput(textValue + input);
+    setTextValue(value);
     if (onSendDtmfTone) {
       onSendDtmfTone(DtmfTones[index]);
     }
@@ -200,17 +213,28 @@ const DialpadContainer = (props: {
       onClickDialpadButton(input, index);
     }
     if (onChange) {
-      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(textValue + input) : formatPhoneNumber(textValue + input));
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
     }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setText = (e: any): void => {
-    setTextValue(e.target.value);
+    // remove non-valid characters from input: letters,special characters excluding +, *,#
+    const input = sanitizeInput(e.target.value);
+    setTextValue(input);
   };
 
+  // Potential Improvement:
   // comment out the following line for now to disable customization for dialpad content
   // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
+
+  const deleteNumbers = (): void => {
+    const modifiedInput = textValue.substring(0, textValue.length - 1);
+    setTextValue(modifiedInput);
+    if (onChange) {
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(modifiedInput) : formatPhoneNumber(modifiedInput));
+    }
+  };
 
   return (
     <div className={mergeStyles(containerStyles(theme), props.styles?.root)} data-test-id="dialpadContainer">
@@ -220,12 +244,26 @@ const DialpadContainer = (props: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
           setText(e);
+          // remove non-valid characters from input: letters,special characters excluding +, *,#
+          const input = sanitizeInput(e.target.value);
           if (onChange) {
-            onChange(onDisplayDialpadInput ? onDisplayDialpadInput(e.target.value) : formatPhoneNumber(e.target.value));
+            onChange(onDisplayDialpadInput ? onDisplayDialpadInput(input) : formatPhoneNumber(input));
           }
         }}
-        placeholder={props.placeholderText}
+        placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"
+        onRenderSuffix={(): JSX.Element => (
+          <>
+            {textValue.length !== 0 && (
+              <IconButton
+                ariaLabel={props.strings.deleteButtonAriaLabel}
+                onClick={deleteNumbers}
+                styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
+                iconProps={{ iconName: 'BackSpace' }}
+              />
+            )}
+          </>
+        )}
       />
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
@@ -282,7 +320,7 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
     <>
       {
         /* @conditional-compile-remove(dialpad) */
-        <DialpadContainer placeholderText={strings.placeholderText} {...props} />
+        <DialpadContainer strings={strings} {...props} />
       }
     </>
   );

@@ -27,8 +27,11 @@ import {
   RemoteParticipant,
   PermissionConstraints,
   PropertyChangedEvent,
-  StartCallOptions
+  StartCallOptions,
+  VideoOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -78,7 +81,8 @@ class CallContext {
       call: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
-      isTeamsCall
+      isTeamsCall,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
     };
   }
 
@@ -288,30 +292,45 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(teams-adhoc-call) */
     /* @conditional-compile-remove(PSTN-calls) */
     if (isOutboundCall(this.locator)) {
-      const phoneNumber = this.getState().alternativeCallerId;
+      const phoneNumber = this.getState().alternateCallerId;
       return this.startCall(this.locator.participantIDs, {
         alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
       });
     }
 
     return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
+      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = !('groupId' in this.locator);
-      const call = isTeamsMeeting
-        ? this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-            audioOptions,
-            videoOptions
-          })
-        : this.callAgent.join(this.locator as GroupCallLocator, {
-            audioOptions,
-            videoOptions
-          });
+      const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
       return call;
+    });
+  }
+
+  private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
+    const isTeamsMeeting = !('groupId' in this.locator);
+    /* @conditional-compile-remove(rooms) */
+    const isRoomsCall = !('roomId' in this.locator);
+
+    if (isTeamsMeeting) {
+      return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+    /* @conditional-compile-remove(rooms) */
+    if (isRoomsCall) {
+      return this.callAgent.join(this.locator as RoomCallLocator, {
+        audioOptions,
+        videoOptions
+      });
+    }
+    return this.callAgent.join(this.locator as GroupCallLocator, {
+      audioOptions,
+      videoOptions
     });
   }
 
@@ -427,7 +446,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       const backendId = fromFlatCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
-          throw new Error('unable to start call, PSTN user present with no alternativeCallerID.');
+          throw new Error('unable to start call, PSTN user present with no alternateCallerId.');
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
@@ -646,6 +665,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
+  | /* @conditional-compile-remove(rooms) */ RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
@@ -661,7 +681,7 @@ export type AzureCommunicationCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
-  alternativeCallerId?: string;
+  alternateCallerId?: string;
 };
 
 /**
@@ -678,14 +698,14 @@ export const createAzureCommunicationCallAdapter = async ({
   displayName,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({
-    userId
+    userId,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   });
   const callAgent = await callClient.createCallAgent(credential, {
-    displayName,
-    /* @conditional-compile-remove(PSTN-calls) */ alternativeCallerId
+    displayName
   });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
@@ -726,7 +746,8 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  const { credential, displayName, locator, userId } = args;
+  const { credential, displayName, locator, userId, /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId } =
+    args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -765,7 +786,8 @@ export const useAzureCommunicationCallAdapter = (
           credential,
           displayName,
           locator,
-          userId
+          userId,
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -775,7 +797,16 @@ export const useAzureCommunicationCallAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, locator, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      beforeDisposeRef,
+      credential,
+      displayName,
+      locator,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.

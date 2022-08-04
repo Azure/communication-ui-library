@@ -34,5 +34,6 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 ## References
 
 - [Package releases](./releases/README.md) - Process for releasing new versions of packages developed in this repo
-- [UI Tests and how to run them locally](./references/ui-tests.md)
+- [Automated tests help us move fast](./references/automated-tests.md)
 - [Reviewer notes](./reviewer-notes/README.md) - Common guidelines gleaned through code reviews
+- [Hero sample maintenance](./releases/hero-samples.md) - When and how to update hero samples

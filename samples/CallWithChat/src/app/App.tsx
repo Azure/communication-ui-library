@@ -32,6 +32,7 @@ import { WEB_APP_TITLE } from './utils/constants';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { useIsMobile } from './utils/useIsMobile';
+import { CallParticipantsLocator } from '@azure/communication-react';
 
 setLogLevel('warning');
 initializeIcons();
@@ -45,6 +46,7 @@ interface CallWithChatArgs {
   endpointUrl: string;
   displayName: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 type AppPages = 'home' | 'call' | 'error';
 
@@ -81,7 +83,9 @@ const App = (): JSX.Element => {
             try {
               const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
-                homeScreenDetails?.teamsLink
+                homeScreenDetails?.teamsLink,
+                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
+                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants
               );
               setCallWithChatArgs(callWithChatArgs);
             } catch (e) {
@@ -110,6 +114,8 @@ const App = (): JSX.Element => {
           displayName={callWithChatArgs.displayName}
           locator={callWithChatArgs.locator}
           endpoint={callWithChatArgs.endpointUrl}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={callWithChatArgs.alternateCallerId}
         />
       );
     }
@@ -123,7 +129,11 @@ export default App;
 
 const generateCallWithChatArgs = async (
   displayName: string,
-  teamsLink?: TeamsMeetingLinkLocator
+  teamsLink?: TeamsMeetingLinkLocator,
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string,
+  /* @conditional-compile-remove(PSTN-calls) */
+  outboundParticipants?: string[]
 ): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
@@ -137,8 +147,7 @@ const generateCallWithChatArgs = async (
     locator = teamsLink;
     ensureJoinableTeamsLinkPushedToUrl(teamsLink);
   } else {
-    const callLocator: GroupCallLocator = getGroupIdFromUrl() || createGroupId();
-    ensureJoinableCallLocatorPushedToUrl(callLocator);
+    const callLocator = callLocatorGen(outboundParticipants);
 
     const chatThreadId = await getThread();
     await joinThread(chatThreadId, credentials.userId.communicationUserId, displayName);
@@ -154,6 +163,19 @@ const generateCallWithChatArgs = async (
     displayName,
     endpointUrl,
     credentials,
-    locator
+    locator,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   };
+};
+
+const callLocatorGen = (
+  /* @conditional-compilation-remove(PSTN-calls) */ outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (outBoundParticipants) {
+    return { participantIDs: outBoundParticipants };
+  }
+  const callLocator = getGroupIdFromUrl() || createGroupId();
+  ensureJoinableCallLocatorPushedToUrl(callLocator);
+  return callLocator;
 };
