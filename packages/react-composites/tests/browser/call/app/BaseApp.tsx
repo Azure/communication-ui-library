@@ -67,7 +67,6 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 }
 
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {
-  console.log('xkcd: Injecting menu items');
   return [
     {
       'data-ui-id': 'test-app-participant-menu-item',

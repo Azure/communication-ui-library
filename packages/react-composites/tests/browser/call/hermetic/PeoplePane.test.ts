@@ -24,7 +24,7 @@ const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 test.describe('Call composite participant menu items injection tests', async () => {
   // TODO: Split this test into multiple tests: one for beta/desktop, beta/mobile, stable each.
   // Do this after the test has been stabilized. Keep the same name for flakiness analysis.
-  test.only('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
