@@ -60,21 +60,21 @@ const config: PlaywrightTestConfig = {
 
   projects: [
     {
-      name: 'Desktop Chrome',
+      name: 'desktop-chrome',
       use: {
         viewport: DESKTOP_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions }
       }
     },
     {
-      name: 'Mobile Android Portrait',
+      name: 'mobile-android-portrait',
       use: {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions }
       }
     },
     {
-      name: 'Mobile Android Landscape',
+      name: 'mobile-android-landscape',
       use: {
         // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
         userAgent:
