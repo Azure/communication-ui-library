@@ -51,14 +51,7 @@ Updating hero samples from upstream samples is a manual process. You can minimiz
 This section uses [an update to the chat hero sample](https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69) as an example. Follow similar steps when updating the other hero samples.
 
 - Pick the git commit in this monorepository to update from.
-  - By default, pick the git tag for the latest stable release. This ensures that the upstream sample is consistent with the released `@azure/communication-react` version.
-  - You may want to pick a later commit to pull in some useful updates to the sample.
-    - If you do, make sure that the intervening commits do not introduce changes that use features or API unavailable in the latest stable release of `@azure/communication-react`.
-  - For this example, I synced from [a541b2](https://github.com/Azure/communication-ui-library/tree/a541b2294943cdd4f885fdfc0ae60511f95c960a/samples/Chat). This was not the latest stable release, but the log of changes since the stable release showed only one very useful change:
-  ```sh
-  $ git log --oneline 1.3.0..a541b2 -- samples/Chat/src
-  3c2b5410b Dispose of adapters in the `beforeUnload` in our Sample apps (#1966)
-  ```
+  - Pick the git tag for the latest stable release. This ensures that the upstream sample is consistent with the released `@azure/communication-react` version.
 
 - Generate a new source directory from the upstream sample.
   - In this monorepository,
