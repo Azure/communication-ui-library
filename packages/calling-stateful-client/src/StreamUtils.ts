@@ -393,7 +393,7 @@ function disposeViewRemoteVideo(
   const streamLogInfo = { callId, participantKey, streamId };
 
   _logEvent(callingStatefulLogger, {
-    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    name: EventNames.START_DISPOSE_REMOTE_STREAM,
     level: 'info',
     message: 'Start disposing remote stream.',
     data: streamLogInfo
@@ -418,7 +418,7 @@ function disposeViewRemoteVideo(
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_STREAM_STOPPING,
-      level: 'warning',
+      level: 'info',
       message: 'Remote stream is still rendering. Changing status to stopping.',
       data: streamLogInfo
     });
@@ -438,7 +438,7 @@ function disposeViewRemoteVideo(
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_RENDERER_NOT_FOUND,
-      level: 'warning',
+      level: 'error',
       message: 'Cannot find remote view renderer.',
       data: streamLogInfo
     });
@@ -446,10 +446,25 @@ function disposeViewRemoteVideo(
 }
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
+  const streamLogInfo = { callId };
+
+  _logEvent(callingStatefulLogger, {
+    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    level: 'info',
+    message: 'Start disposing local stream.',
+    data: streamLogInfo
+  });
+
   context.setLocalVideoStreamRendererView(callId, undefined);
 
   const renderInfo = internalContext.getLocalRenderInfo(callId);
   if (!renderInfo) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find render info when disposing local stream.',
+      data: streamLogInfo
+    });
     return;
   }
 
@@ -457,13 +472,32 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
   // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
   // be cleaned up below so we can set it to undefined here.
   if (renderInfo.status === 'Rendering') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_STOPPING,
+      level: 'info',
+      message: 'Local stream is still rendering. Changing status to stopping.',
+      data: streamLogInfo
+    });
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', undefined);
   } else {
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
   }
 
   if (renderInfo.renderer) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSING_LOCAL_RENDERER,
+      level: 'info',
+      message: 'Disposing local view renderer.',
+      data: streamLogInfo
+    });
     renderInfo.renderer.dispose();
+  } else {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_RENDERER_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find renderer when disposing local stream.',
+      data: streamLogInfo
+    });
   }
 }
 
@@ -472,21 +506,48 @@ function disposeViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: LocalVideoStreamState
 ): void {
+  _logEvent(callingStatefulLogger, {
+    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    level: 'info',
+    message: 'Start disposing unparented local stream.'
+  });
+
   context.deleteDeviceManagerUnparentedView(stream);
 
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
   if (!renderInfo) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find render info when disposing unparented local stream.'
+    });
     return;
   }
 
   if (renderInfo.status === 'Rendering') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_STOPPING,
+      level: 'info',
+      message: 'Unparented local stream is still rendering. Changing status to stopping.'
+    });
     internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
   } else {
     internalContext.deleteUnparentedRenderInfo(stream);
   }
 
   if (renderInfo.renderer) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSING_LOCAL_RENDERER,
+      level: 'info',
+      message: 'Disposing unparented local view renderer.'
+    });
     renderInfo.renderer.dispose();
+  } else {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_RENDERER_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find renderer when disposing unparented local stream.'
+    });
   }
 }
 
@@ -511,7 +572,11 @@ export function createView(
     // Render LocalVideoStream that is not part of a Call
     return createViewUnparentedVideo(context, internalContext, stream, options);
   } else {
-    console.warn('Invalid combination of parameters');
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.CREATE_STREAM_INVALID_PARAMS,
+      level: 'warning',
+      message: 'Create View invalid combination of parameters.'
+    });
     return Promise.resolve(undefined);
   }
 }
@@ -536,7 +601,11 @@ export function disposeView(
     // Stop rendering LocalVideoStream that is not part of a Call
     disposeViewUnparentedVideo(context, internalContext, stream);
   } else {
-    console.warn('Invalid combination of parameters');
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSE_STREAM_INVALID_PARAMS,
+      level: 'warning',
+      message: 'Dispose View invalid combination of parameters.'
+    });
     return;
   }
 }

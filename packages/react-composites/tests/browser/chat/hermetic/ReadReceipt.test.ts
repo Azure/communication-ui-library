@@ -6,7 +6,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ElementHandle, expect, Page } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, stableScreenshot, stubReadReceiptsToolTip, waitForSelector } from '../../common/utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -30,7 +30,6 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page.locator(dataUiId('chat-composite-message-status-icon')).click();
     await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
-    await stubReadReceiptsToolTip(page);
     expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
