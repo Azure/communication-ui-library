@@ -192,7 +192,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const chatMessage = (
     <>
-      <div ref={messageRef} tabIndex={0}>
+      <div ref={messageRef}>
         <Chat.Message
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
