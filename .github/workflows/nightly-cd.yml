@@ -147,4 +147,4 @@ jobs:
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
 
       - name: Check if npm package published successfully
-        run: node common/scripts/poll-npm-package-published.mjs 'https://registry.npmjs.org/@azure/communication-react/${{ steps.version.outputs.version }}'
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}

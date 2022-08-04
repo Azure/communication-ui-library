@@ -2,44 +2,52 @@ import { get } from "https";
 import process from "process";
 
 /**
- * Script that polls the npm registry to see if a package is published.
+ * Script that polls the npm registry to see if a @azure/communication-react package version published.
  * By default, it polls on short intervals (5 seconds) and timesout after a longer interval (5 minutes).
  *
- * @example node ./poll-npm-package-published.js 'https://registry.npmjs.org/@azure/communication-react/1.3.0'
+ * @params {string} version - the version to check for
+ *
+ * @example node ./poll-npm-package-published.js 1.3.0
  */
 
-const POLL_INTERVAL_MS = 5 * 1000; // 5 seconds in millis
-const TOTAL_TIME_TO_POLL_MS = 5 * 60 * 1000; // 5 minutes in millis
-const MAX_RETRIES = TOTAL_TIME_TO_POLL_MS / POLL_INTERVAL_MS;
+const POLL_INTERVAL_MS = 5000; // 5 seconds in millis
+const TIMEOUT_TIME_MS = 12 * 1000; // 5 minutes in millis
+const GET_REQUEST_TIMEOUT_MS = 5000;
 
-const makeRequest = (url) => {
+const GET_REQUEST_OPTIONS = {
+  hostname: 'registry.npmjs.org',
+  timeout: GET_REQUEST_TIMEOUT_MS
+}
+
+const checkNpm = (packageName, packageVersion) => {
   return new Promise((resolve, reject) => {
-    get(url, (response) => {
+    const request = get({...GET_REQUEST_OPTIONS, path: `/${packageName}/${packageVersion}`}, (response) => {
       resolve(response);
-    }).end();
+    });
+    console.log(`Pinging: https://${GET_REQUEST_OPTIONS.hostname}/${packageName}/${packageVersion}`);
+    request.end();
   });
 }
 
 const sleep = (ms) => new Promise( res => setTimeout(res, ms));
 
 const main = async () => {
-  const url = process.argv[2];
-  let retries = 0;
+  const packageVersion = process.argv[2];
+  const packageName = `@azure/communication-react`
+  const startTime = new Date();
   while(true) {
-    console.log('Pinging: ', url);
-    const response = await makeRequest(url);
+    const response = await checkNpm(packageName, packageVersion);
     console.log('responseCode: ', response.statusCode);
 
     if (response.statusCode === 200) {
       console.log("Successfully found npm package")
       process.exitCode = 0;
       return;
-    } else if (retries > MAX_RETRIES) {
+    } else if ((new Date() - startTime) > TIMEOUT_TIME_MS) {
       console.log('Failed to find package on the npm registry');
       process.exitCode = 1;
       return;
     } else {
-      retries++;
       console.log('sleeping for 5 seconds...');
       await sleep(POLL_INTERVAL_MS);
     }
