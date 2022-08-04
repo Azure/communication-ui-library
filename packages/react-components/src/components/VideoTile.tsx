@@ -162,7 +162,7 @@ const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
           aria-label={noVideoAvailableAriaLabel ?? ''}
           showOverflowTooltip={false}
         />
-        {participantState && <Text className={mergeStyles(participantStateStyle)}>{participantStateString}</Text>}
+        {participantStateString && <Text className={mergeStyles(participantStateStyle)}>{participantStateString}</Text>}
       </Stack>
     </Stack>
   );
