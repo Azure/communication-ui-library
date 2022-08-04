@@ -29,7 +29,7 @@ const checkNpm = (packageName, packageVersion) => {
   });
 }
 
-const sleep = (ms) => new Promise( res => setTimeout(res, ms));
+const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 
 const main = async () => {
   const packageVersion = process.argv[2];
@@ -44,11 +44,9 @@ const main = async () => {
       process.exitCode = 0;
       return;
     } else if ((new Date() - startTime) > TIMEOUT_TIME_MS) {
-      console.log('Failed to find package on the npm registry');
-      process.exitCode = 1;
-      return;
+      throw new Error('Failed to find package on the npm registry');
     } else {
-      console.log('sleeping for 5 seconds...');
+      console.log('Sleeping for a bit...');
       await sleep(POLL_INTERVAL_MS);
     }
   }
