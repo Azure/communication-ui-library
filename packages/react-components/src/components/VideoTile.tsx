@@ -29,8 +29,6 @@ import {
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Strings of {@link VideoTile} that can be overridden.
  * @beta
@@ -141,22 +139,25 @@ const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 type DefaultPlaceholderProps = CustomAvatarOptions & {
   participantState?: VideoGalleryRemoteParticipantState;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  // @conditional-compile-remove(PSTN-calls)
   strings?: Pick<VideoTileStrings, 'participantStateConnecting' | 'participantStateHold' | 'participantStateRinging'>;
 };
 
 const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails, participantState, strings } = props;
 
-  let participantStateString: string | undefined;
-  if (participantState === 'Connecting') {
-    participantStateString = strings?.participantStateConnecting;
-  } else if (participantState === 'Ringing') {
-    participantStateString = strings?.participantStateRinging;
-  } else if (participantState === 'Hold') {
-    participantStateString = strings?.participantStateHold;
-  }
+  const participantStateString = React.useMemo(() => {
+    if (!strings) {
+      return;
+    }
+    if (participantState === 'Connecting') {
+      return strings?.participantStateConnecting;
+    } else if (participantState === 'Ringing') {
+      return strings?.participantStateRinging;
+    } else if (participantState === 'Hold') {
+      return strings?.participantStateHold;
+    }
+    return;
+  }, [participantState, strings]);
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
