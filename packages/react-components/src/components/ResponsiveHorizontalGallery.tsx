@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { HorizontalGallery, HorizontalGalleryStyles } from './HorizontalGallery';
-import { convertRemToPx } from './utils/common';
+import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
 import { _useContainerWidth } from './utils/responsive';
 
 /**
