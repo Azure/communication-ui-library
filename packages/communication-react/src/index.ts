@@ -233,7 +233,11 @@ export type {
   FileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
-export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
+export type {
+  HoldButtonProps,
+  HoldButtonStrings,
+  VideoGalleryRemoteParticipantState
+} from '../../react-components/src';
 
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
