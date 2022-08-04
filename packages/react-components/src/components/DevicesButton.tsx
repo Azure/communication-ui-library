@@ -11,6 +11,8 @@ import {
 } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions/PermissionsProvider';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
@@ -232,7 +234,9 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
  */
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
-  strings: DeviceMenuStrings
+  strings: DeviceMenuStrings,
+  isSelectCamAllowed = true,
+  isSelectMicAllowed = true
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -264,7 +268,7 @@ export const generateDefaultDeviceMenuProps = (
 
   const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuItemStyles ?? {});
 
-  if (cameras && selectedCamera && onSelectCamera) {
+  if (cameras && selectedCamera && onSelectCamera && isSelectCamAllowed) {
     defaultMenuProps.items.push({
       key: 'sectionCamera',
       title: strings.cameraMenuTooltip,
@@ -291,7 +295,7 @@ export const generateDefaultDeviceMenuProps = (
     });
   }
 
-  if (microphones && selectedMicrophone && onSelectMicrophone) {
+  if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed) {
     // Set props as Microphone if speakers can be enumerated else set as Audio Device
     const speakersAvailable = speakers && speakers.length > 0;
     const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
@@ -372,8 +376,21 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
+  /* @conditional-compile-remove(rooms) */
+  const isSelectMicAllowed = _usePermissions().microphoneButton;
+  /* @conditional-compile-remove(rooms) */
+  const isSelectCamAllowed = _usePermissions().cameraButton;
+
   const devicesButtonMenu =
-    props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
+    props.menuProps ??
+    generateDefaultDeviceMenuProps(
+      { ...props, styles: props.styles?.menuStyles },
+      strings,
+      /* @conditional-compile-remove(rooms) */
+      isSelectCamAllowed,
+      /* @conditional-compile-remove(rooms) */
+      isSelectMicAllowed
+    );
 
   const onRenderOptionsIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
