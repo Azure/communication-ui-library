@@ -1257,6 +1257,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // @public
@@ -2851,8 +2852,20 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public

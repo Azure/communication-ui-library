@@ -174,5 +174,10 @@
     "offLabel": "Hold",
     "toolTipOnContent": "Resume call",
     "toolTipOffContent": "Hold call"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Connecting...",
+    "participantStateRinging": "Ringing...",
+    "participantStateHold": "On Hold"
   }
 }
