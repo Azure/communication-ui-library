@@ -13,6 +13,8 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -88,6 +90,13 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
 
+  let isSelectCamEnabled = props.cameraPermissionGranted;
+  let isSelectMicEnabled = props.microphonePermissionGranted;
+  /* @conditional-compile-remove(rooms) */
+  isSelectCamEnabled = isSelectCamEnabled && _usePermissions().cameraButton;
+  /* @conditional-compile-remove(rooms) */
+  isSelectMicEnabled = isSelectMicEnabled && _usePermissions().microphoneButton;
+
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
@@ -98,7 +107,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         <Label
           id={'call-composite-local-camera-settings-label'}
           className={mergeStyles(dropDownStyles(theme).label)}
-          disabled={!props.cameraPermissionGranted} // follows dropdown disabled state
+          disabled={!isSelectCamEnabled} // follows dropdown disabled state
         >
           {cameraLabel}
         </Label>
@@ -106,18 +115,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           data-ui-id="call-composite-local-camera-settings"
           aria-labelledby={'call-composite-local-camera-settings-label'}
           placeholder={defaultPlaceHolder}
-          options={
-            props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]
-          }
+          options={isSelectCamEnabled ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
           styles={dropDownStyles(theme)}
-          disabled={!props.cameraPermissionGranted}
+          disabled={!isSelectCamEnabled}
           errorMessage={
             props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
               ? undefined
               : locale.strings.call.cameraPermissionDenied
           }
           defaultSelectedKey={
-            props.cameraPermissionGranted
+            isSelectMicEnabled
               ? props.selectedCamera
                 ? props.selectedCamera.id
                 : props.cameras
@@ -135,7 +142,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         <Label
           id={'call-composite-local-sound-settings-label'}
           className={mergeStyles(dropDownStyles(theme).label)}
-          disabled={!props.microphonePermissionGranted} // follows Start button disabled state in ConfigurationPage
+          disabled={!isSelectMicEnabled} // follows Start button disabled state in ConfigurationPage
         >
           {soundLabel}
         </Label>
@@ -144,19 +151,15 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             aria-labelledby={'call-composite-local-sound-settings-label'}
             placeholder={defaultPlaceHolder}
             styles={dropDownStyles(theme)}
-            disabled={!props.microphonePermissionGranted}
+            disabled={!isSelectMicEnabled}
             errorMessage={
               props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
                 ? undefined
                 : locale.strings.call.microphonePermissionDenied
             }
-            options={
-              props.microphonePermissionGranted
-                ? getDropDownList(props.microphones)
-                : [{ key: 'deniedOrUnknown', text: '' }]
-            }
+            options={isSelectMicEnabled ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]}
             defaultSelectedKey={
-              props.microphonePermissionGranted
+              isSelectMicEnabled
                 ? props.selectedMicrophone
                   ? props.selectedMicrophone.id
                   : defaultDeviceId(props.microphones)

@@ -1081,6 +1081,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    state?: VideoGalleryRemoteParticipantState | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1253,7 +1254,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 }
 
 // @beta
-export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Hold';
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export interface VideoGalleryStream {
