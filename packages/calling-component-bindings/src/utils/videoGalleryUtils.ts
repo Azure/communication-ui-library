@@ -116,17 +116,26 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
+/**
+ * We convert the Communication Participant states to simpler states that can be used with VideoTiles/VideoGallery.
+ */
 const convertRemoteParticipantStateToVideoGalleryRemoteParticipantState = (
   state: RemoteParticipantConnectionState
 ): VideoGalleryRemoteParticipantState | undefined => {
+  // `Idle` is the first state of the participant.
   if (state === 'Idle' || state === 'Connecting') {
     return 'Connecting';
   }
+  // `EarlyMedia` is a state when the media is played before a participant connects to the call.
+  // It occurs immediately after the `Connecting` state.
   if (state === 'EarlyMedia' || state === 'Ringing') {
     return 'Ringing';
   }
   if (state === 'Hold') {
     return 'Hold';
+  }
+  if (state === 'Connected') {
+    return 'Connected';
   }
   return;
 };
