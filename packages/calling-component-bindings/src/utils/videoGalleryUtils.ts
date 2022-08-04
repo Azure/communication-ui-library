@@ -101,6 +101,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
     state: convertRemoteParticipantStateToVideoGalleryRemoteParticipantState(state)
   };
 };
@@ -116,6 +118,8 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * We convert the Communication Participant states to simpler states that can be used with VideoTiles/VideoGallery.
  */
