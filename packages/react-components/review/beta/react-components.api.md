@@ -1396,7 +1396,12 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    // @beta
+    state?: VideoGalleryRemoteParticipantState;
 }
+
+// @beta
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export interface VideoGalleryStream {
@@ -1444,6 +1449,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    participantState?: VideoGalleryRemoteParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;
