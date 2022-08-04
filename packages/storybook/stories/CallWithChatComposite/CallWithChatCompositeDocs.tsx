@@ -36,7 +36,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
         Inside the experience users can configure their devices, participate in the call with video and see other
-        participants, including those with video turn on. The experience includes chat capabilities like sending and
+        participants, including those with video turned on. The experience includes chat capabilities like sending and
         receiving messages, and notifications for message thread events such as typing indicators, message receipts,
         participants entering and leaving the chat.
       </Description>

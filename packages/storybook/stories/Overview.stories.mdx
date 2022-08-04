@@ -1,6 +1,6 @@
-import { Stack } from '@fluentui/react';
+import { Image, Stack, Text } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
-import { overviewPageImagesStackStyle } from './constants';
+import { overviewPageImagesStackStyle, overviewPageUIArtifactsStackStyle } from './constants';
 
 <Meta id="overview" title="Overview" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
@@ -70,37 +70,47 @@ npm i @azure/communication-react
 
 ## UI Artifacts
 
-<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center" style={{ width: '100%', textAlign: 'center' }}>
-    <a href="/docs/composites-call-with-chat-basicexample--basic-example">
-      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
-        <p style={{ fontSize: '20px' }}>Call with Chat Composite</p>
-        Turn-key experience that combines calling and chat.
-      </div>
+<Stack horizontal tokens={{ childrenGap: '1rem' }} wrap>
+  <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
+    <a style={overviewPageUIArtifactsStackStyle} href="/docs/quickstarts-composites--page">
+      <Stack tokens={{ childrenGap: '1rem' }}>
+        <Stack.Item>
+          <Text block variant="mediumPlus" style={{ color: '#004578' }}>
+            Composites →
+          </Text>
+          <Text block variant="medium">
+            End-to-end solutions ready to integrate into your existing experience.
+          </Text>
+        </Stack.Item>
+        <Stack.Item>
+          <Image
+            style={{ maxWidth: '22.5rem', width: '100%' }}
+            src="images/composites-teaser.png"
+            alt="Learn more about UI Composites"
+          />
+        </Stack.Item>
+      </Stack>
     </a>
   </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
-    <a href="/docs/composites-call-basicexample--basic-example">
-      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
-        <p style={{ fontSize: '20px' }}>Call Composite</p>
-        Turn-key experience for calling.
-      </div>
-    </a>
-  </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
-    <a href="/docs/composites-chat-basicexample--basic-example">
-      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
-        <p style={{ fontSize: '20px' }}>Chat Composite</p>
-        Turn-key experience for chat.
-      </div>
-    </a>
-  </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }} style={{ width: '100%', textAlign: 'center' }}>
-    <a href="/docs/overview-uicomponents--page">
-      <div style={{ background: 'white', borderRadius: '10px', padding: '10px', height: '150px' }}>
-        <p style={{ fontSize: '20px' }}>UI Components</p>
-        Composable components for calling and chat experiences.
-      </div>
+  <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
+    <a style={overviewPageUIArtifactsStackStyle} href="/docs/overview-uicomponents--page">
+      <Stack tokens={{ childrenGap: '1rem' }}>
+        <Stack.Item>
+          <Text block variant="mediumPlus" style={{ color: '#004578' }}>
+            Components →
+          </Text>
+          <Text block variant="medium">
+            Flexible UI building blocks for custom voice, video calling, and chat solutions.
+          </Text>
+        </Stack.Item>
+        <Stack.Item>
+          <Image
+            style={{ maxWidth: '22.5rem', width: '100%' }}
+            src="images/components-teaser.png"
+            alt="Learn more about UI Components"
+          />
+        </Stack.Item>
+      </Stack>
     </a>
   </Stack.Item>
 </Stack>

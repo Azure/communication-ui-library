@@ -47,6 +47,12 @@ export const compositeExperienceContainerStyle: IStackStyles = {
 };
 
 export const overviewPageImagesStackStyle = { backgroundColor: '#EFF6FC', padding: '2.25rem' };
+export const overviewPageUIArtifactsStackStyle = {
+  backgroundColor: '#FAF9F8',
+  padding: '2rem',
+  maxWidth: '22.5rem',
+  display: 'block'
+};
 
 export const COMPONENT_FOLDER_PREFIX = 'UI Components';
 export const COMPOSITE_FOLDER_PREFIX = 'Composites';

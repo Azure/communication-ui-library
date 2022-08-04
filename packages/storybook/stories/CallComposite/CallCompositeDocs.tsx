@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallComposite } from '@azure/communication-react';
-import { Stack, MessageBar } from '@fluentui/react';
+import { MessageBar, Stack, Text } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -31,26 +31,27 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience
         users can configure their devices, participate in the call with video and see other participants, including
-        those with video turn on. Here are visual examples of Call composite where participants have their camera turned
-        off, then some ahve them turned on. People speaking with microphone unmuted will have their tile appearing with
-        a blue border.
+        those with video turned on. Here are visual examples of Call composite where participants have their camera
+        turned off, then some have them turned on. People speaking with microphone unmuted will have their tile
+        appearing with a blue border.
       </Description>
       <Stack
         horizontal
         horizontalAlign="space-between"
         tokens={{ childrenGap: '2rem' }}
         style={overviewPageImagesStackStyle}
+        wrap
       >
-        <Stack.Item grow={3} align="center">
+        <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
           <img
-            style={{ width: '100%' }}
+            style={{ width: '100%', maxWidth: '25rem' }}
             src="images/callComposite_CamerasOff.png"
             alt="Call composite where all participants have their camera turned off"
           />
         </Stack.Item>
-        <Stack.Item grow={3} align="center">
+        <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
           <img
-            style={{ width: '100%' }}
+            style={{ width: '100%', maxWidth: '25rem' }}
             src="images/callComposite_CamerasOn.png"
             alt="Call composite where some participants have their camera turned on"
           />
@@ -66,21 +67,24 @@ export const getDocs: () => JSX.Element = () => {
         horizontalAlign="space-between"
         tokens={{ childrenGap: '3rem' }}
         style={overviewPageImagesStackStyle}
+        wrap
       >
-        <Stack.Item grow={3} align="center">
+        <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
           <img
-            style={{ width: '100%' }}
+            style={{ width: '100%', maxWidth: '30rem' }}
             src="images/callComposite_TeamsInterop_WaitingLobby.png"
             alt="Call composite waiting to be admitted in a Teams meeting"
           />
         </Stack.Item>
-        <Stack.Item grow={3} align="center" tokens={{ childrenGap: '2rem' }}>
-          <p style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant'}</p>
-          <img
-            style={{ width: '100%' }}
-            src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
-            alt="Popup in Teams to admit ACS participants"
-          />
+        <Stack.Item grow align="center">
+          <Stack horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
+            <img
+              style={{ width: '100%', maxWidth: '20rem' }}
+              src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
+              alt="Popup in Teams to admit ACS participants"
+            />
+            <Text style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant.'}</Text>
+          </Stack>
         </Stack.Item>
       </Stack>
       <Description>Note that CallComposite has the following min width and height:</Description>
