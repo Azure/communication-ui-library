@@ -1,6 +1,13 @@
 import { get } from "https";
 import process from "process";
 
+/**
+ * Script that polls the npm registry to see if a package is published.
+ * By default, it polls on short intervals (5 seconds) and timesout after a longer interval (5 minutes).
+ *
+ * @example node ./poll-npm-package-published.js 'https://registry.npmjs.org/@azure/communication-react/1.3.0'
+ */
+
 const POLL_INTERVAL_MS = 5 * 1000; // 5 seconds in millis
 const TOTAL_TIME_TO_POLL_MS = 5 * 60 * 1000; // 5 minutes in millis
 const MAX_RETRIES = TOTAL_TIME_TO_POLL_MS / POLL_INTERVAL_MS;
