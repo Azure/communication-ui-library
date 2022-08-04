@@ -35,6 +35,16 @@ export interface VideoTileStrings {
 }
 
 /**
+ * Strings of {@link VideoTile} that can be overridden.
+ * @beta
+ */
+export interface VideoTileStrings {
+  participantStateConnecting: string;
+  participantStateRinging: string;
+  participantStateHold: string;
+}
+
+/**
  * Fluent styles for {@link VideoTile}.
  *
  * @public
