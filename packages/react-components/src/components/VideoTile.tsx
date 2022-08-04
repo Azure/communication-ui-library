@@ -27,6 +27,7 @@ import {
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
+/* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -119,12 +120,14 @@ export interface VideoTileProps {
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
    */
   participantState?: VideoGalleryRemoteParticipantState;
+  /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
 }
@@ -194,10 +197,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isSpeaking,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
+    /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     participantState
   } = props;
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   // @conditional-compile-remove(PSTN-calls)
   const strings = { ...useLocale().strings.videoTile, ...props.strings };
 
@@ -231,6 +236,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     coinSize: personaSize,
     styles: defaultPersonaStyles,
     hidePersonaDetails: true,
+    /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     participantState: participantState
   };
@@ -286,6 +292,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             ) : (
               <DefaultPlaceholder
                 {...placeholderOptions}
+                /* @conditional-compile-remove(one-to-n-calling) */
                 // @conditional-compile-remove(PSTN-calls)
                 strings={strings}
               />
