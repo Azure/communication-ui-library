@@ -9,9 +9,6 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import { checkIsSpeaking } from './SelectorUtils';
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
-import { VideoGalleryRemoteParticipantState } from '@internal/react-components';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -102,7 +99,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
-    state: convertRemoteParticipantStateToVideoGalleryRemoteParticipantState(state)
+    state
   };
 };
 
@@ -115,30 +112,4 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target
   };
-};
-
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * We convert the Communication Participant states to simpler states that can be used with VideoTiles/VideoGallery.
- */
-const convertRemoteParticipantStateToVideoGalleryRemoteParticipantState = (
-  state: RemoteParticipantConnectionState
-): VideoGalleryRemoteParticipantState | undefined => {
-  // `Idle` is the first state of the participant.
-  if (state === 'Idle' || state === 'Connecting') {
-    return 'Connecting';
-  }
-  // `EarlyMedia` is a state when the media is played before a participant connects to the call.
-  // It occurs immediately after the `Connecting` state.
-  if (state === 'EarlyMedia' || state === 'Ringing') {
-    return 'Ringing';
-  }
-  if (state === 'Hold') {
-    return 'Hold';
-  }
-  if (state === 'Connected') {
-    return 'Connected';
-  }
-  return;
 };

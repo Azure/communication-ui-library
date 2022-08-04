@@ -183,6 +183,7 @@ export type {
   ParticipantListStyles,
   ParticipantMenuItemsCallback,
   ParticipantRemovedSystemMessage,
+  ParticipantState,
   ParticipantsButtonContextualMenuStyles,
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
