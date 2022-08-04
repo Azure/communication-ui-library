@@ -50,7 +50,7 @@ export const overviewPageImagesStackStyle = { backgroundColor: '#EFF6FC', paddin
 export const overviewPageUIArtifactsStackStyle = {
   backgroundColor: '#FAF9F8',
   padding: '2rem',
-  maxWidth: '22.5rem',
+  maxWidth: '15.5rem',
   display: 'block'
 };
 
