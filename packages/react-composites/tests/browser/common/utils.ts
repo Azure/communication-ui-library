@@ -55,7 +55,7 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
 export const waitForSelector = async (
   page: Page,
   selector: string,
-  options?: { state?: 'visible' | 'attached' }
+  options?: { state?: 'visible' | 'attached'; timeout?: number }
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
   await page.bringToFront();
   return await screenshotOnFailure(
@@ -114,7 +114,13 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
   await waitForPageFontsLoaded(page);
-  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+
+  // Tests often timeout at this point because call agent creation and call connection can take > 5 seconds.
+  // Extend the timeout here to trade flakiness for potentially longer test runtime.
+  // Test flake has a much larger impact on overall CI time than individual test runtime.
+  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'), {
+    timeout: 3 * perStepLocalTimeout()
+  });
   await startCallButton.waitForElementState('enabled');
 };
 
@@ -165,7 +171,11 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await pageClick(page, dataUiId('call-composite-start-call-button'));
 
     // Wait for call page to load (i.e. wait for connecting screen to have passed)
-    await waitForSelector(page, dataUiId('call-page'));
+    //
+    // Tests often timeout at this point because call agent creation and call connection can take > 5 seconds.
+    // Extend the timeout here to trade flakiness for potentially longer test runtime.
+    // Test flake has a much larger impact on overall CI time than individual test runtime.
+    await waitForSelector(page, dataUiId('call-page'), { timeout: 3 * perStepLocalTimeout() });
   }
 
   // Wait for all participants cameras to have loaded
