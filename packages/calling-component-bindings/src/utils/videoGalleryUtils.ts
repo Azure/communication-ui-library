@@ -7,11 +7,7 @@ import {
 } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryRemoteParticipantState,
-  VideoGalleryStream
-} from '@internal/react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import { checkIsSpeaking } from './SelectorUtils';
 
 /** @internal */
@@ -101,7 +97,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
-    state: convertRemoteParticipantStateToVideoGalleryRemoteParticipantState(state)
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    state
   };
 };
 
@@ -114,28 +112,4 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target
   };
-};
-
-/**
- * We convert the Communication Participant states to simpler states that can be used with VideoTiles/VideoGallery.
- */
-const convertRemoteParticipantStateToVideoGalleryRemoteParticipantState = (
-  state: RemoteParticipantConnectionState
-): VideoGalleryRemoteParticipantState | undefined => {
-  // `Idle` is the first state of the participant.
-  if (state === 'Idle' || state === 'Connecting') {
-    return 'Connecting';
-  }
-  // `EarlyMedia` is a state when the media is played before a participant connects to the call.
-  // It occurs immediately after the `Connecting` state.
-  if (state === 'EarlyMedia' || state === 'Ringing') {
-    return 'Ringing';
-  }
-  if (state === 'Hold') {
-    return 'Hold';
-  }
-  if (state === 'Connected') {
-    return 'Connected';
-  }
-  return;
 };

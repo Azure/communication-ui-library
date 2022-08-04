@@ -27,6 +27,9 @@ import {
   participantItemContainerStyle
 } from './styles/ParticipantItem.styles';
 import { preventDismissOnEvent } from './utils/common';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantState } from '../types';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -62,6 +65,18 @@ export interface ParticipantItemStrings {
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder?: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Connecting` */
+  participantStateConnecting: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Ringing` */
+  participantStateRinging: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Hold` */
+  participantStateHold: string;
 }
 
 /**
@@ -102,6 +117,16 @@ export interface ParticipantItemProps {
   onClick?: (props?: ParticipantItemProps) => void;
   /** prop to determine if we should show tooltip for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Optional string to determine and display a participants connection status.
+   * For example, `Connecting`, `Ringing` etc.
+   * The actual text that is displayed is determined by the localized string
+   * corresponding to the provided participant state.
+   * For example, `strings.participantStateConnecting` will be used if `participantState` is `Connecting`.
+   */
+  participantState?: ParticipantState;
 }
 
 /**
@@ -122,7 +147,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     styles,
     me,
     onClick,
-    showParticipantOverflowTooltip
+    showParticipantOverflowTooltip,
+    /* @conditional-compile-remove(PSTN-calls) */
+    participantState
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
@@ -131,8 +158,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
 
-  const isMeText = props.strings?.isMeText ?? localeStrings.isMeText;
-  const menuTitle = props.strings?.menuTitle ?? localeStrings.menuTitle;
+  const strings = { ...localeStrings, ...props.strings };
 
   const avatarOptions = {
     text: displayName,
@@ -176,7 +202,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontal={true}
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle)}
-        title={menuTitle}
+        title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
@@ -185,13 +211,46 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [itemHovered, menuTitle, ids.participantItemMenuButton]
+    [itemHovered, strings.menuTitle, ids.participantItemMenuButton]
   );
 
   const onDismissMenu = (): void => {
     setItemHovered(false);
     setMenuHidden(true);
   };
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  const participantStateString = React.useMemo((): string | undefined => {
+    if (participantState === 'Idle' || participantState === 'Connecting') {
+      return strings?.participantStateConnecting;
+    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
+      return strings?.participantStateRinging;
+    } else if (participantState === 'Hold') {
+      return strings?.participantStateHold;
+    }
+    return;
+  }, [
+    participantState,
+    strings?.participantStateConnecting,
+    strings?.participantStateHold,
+    strings?.participantStateRinging
+  ]);
+
+  const menuItemsWrapperStyle = useMemo(() => {
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    return {
+      /* If participant state is being displayed, hide the menu icon until it is hovered. */
+      display: itemHovered ? 'block' : participantState ? 'none' : 'block'
+    };
+    return {};
+  }, [
+    itemHovered,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    participantState
+  ]);
 
   return (
     <div
@@ -216,28 +275,41 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
       >
         {avatar}
-        {me && <Text className={meTextStyle}>{isMeText}</Text>}
+        {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-      {menuItems && menuItems.length > 0 && (
-        <>
-          {menuButton}
-          <ContextualMenu
-            items={menuItems}
-            hidden={menuHidden}
-            target={containerRef}
-            onItemClick={onDismissMenu}
-            onDismiss={onDismissMenu}
-            directionalHint={DirectionalHint.bottomRightEdge}
-            className={contextualMenuStyle}
-            calloutProps={{
-              preventDismissOnEvent
-            }}
-          />
-        </>
-      )}
+      {/* Show the participant state for a remote participant only. Hide it on hover. */}
+      {
+        /* @conditional-compile-remove(one-to-n-calling) */
+        /* @conditional-compile-remove(PSTN-calls) */
+        !me && participantStateString && (
+          <div onMouseEnter={() => setItemHovered(true)} style={{ display: itemHovered ? 'none' : 'block' }}>
+            {participantStateString}
+          </div>
+        )
+      }
+      {/* If participant state is being displayed, hide the menu icon until it is hovered. */}
+      <div style={menuItemsWrapperStyle}>
+        {menuItems && menuItems.length > 0 && (
+          <>
+            {menuButton}
+            <ContextualMenu
+              items={menuItems}
+              hidden={menuHidden}
+              target={containerRef}
+              onItemClick={onDismissMenu}
+              onDismiss={onDismissMenu}
+              directionalHint={DirectionalHint.bottomRightEdge}
+              className={contextualMenuStyle}
+              calloutProps={{
+                preventDismissOnEvent
+              }}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };

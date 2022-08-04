@@ -5,7 +5,10 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
-    "displayNamePlaceholder": "Unnamed Participant"
+    "displayNamePlaceholder": "Unnamed Participant",
+    "participantStateConnecting": "Connecting...",
+    "participantStateRinging": "Ringing...",
+    "participantStateHold": "On Hold"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -166,7 +169,7 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number",
+    "placeholderText": "Enter phone number",
     "deleteButtonAriaLabel": "Delete"
   },
   "HoldButton": {
