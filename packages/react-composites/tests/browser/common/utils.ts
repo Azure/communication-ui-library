@@ -115,7 +115,7 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
   await waitForPageFontsLoaded(page);
 
-  // Tests often timeout at this point because call agent creation and call connection can take > 5 seconds.
+  // Tests often timeout at this point because device enumeration can take > 5 seconds.
   // Extend the timeout here to trade flakiness for potentially longer test runtime.
   // Test flake has a much larger impact on overall CI time than individual test runtime.
   const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'), {
