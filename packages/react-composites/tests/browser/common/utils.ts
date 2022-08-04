@@ -76,7 +76,7 @@ export async function waitForFunction<R>(
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout() })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout(), ...options })
   );
 }
 
