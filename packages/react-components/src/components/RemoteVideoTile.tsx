@@ -58,6 +58,7 @@ export const _RemoteVideoTile = React.memo(
       displayName,
       onRenderAvatar,
       showMuteIndicator,
+      /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
       state
     } = props;
@@ -113,6 +114,7 @@ export const _RemoteVideoTile = React.memo(
         showMuteIndicator={showMuteIndicator}
         showLabel={props.showLabel}
         personaMinSize={props.personaMinSize}
+        /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={state}
       />
