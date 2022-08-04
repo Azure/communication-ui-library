@@ -5,6 +5,7 @@ import { CallComposite } from '@azure/communication-react';
 import { MessageBar } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
@@ -121,6 +122,22 @@ export const getDocs: () => JSX.Element = () => {
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
+      </Description>
+
+      <Heading>PSTN and 1:N Calling</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a mix between Azure Communication Users
+        and PSTN users. To make these out bound calls you need to provide a `locator` that contains participantID's that
+        you are looking to call to the [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these ID's are
+        the phone numbers that you are looking to call. For Azure Communication Users you will need to provide their
+        unique ACS aquired `userId`.
+      </Description>
+      <Description>
+        As well as these participantID's you are required to provide a [phone
+        number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
+        from a Azure Communications resource to the constructor for the adapter for PSTN. This phone number serves as
+        your caller ID when calling PSTN This phone number is not required for calling other Azure Communications Users.
       </Description>
 
       <Heading>Call Composite Props</Heading>
