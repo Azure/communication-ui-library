@@ -74,7 +74,7 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('disposeStreamView not implemented');
   }
   askDevicePermission(): Promise<void> {
-    throw Error('askDevicePermission not implemented');
+    return Promise.resolve();
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
     return [];
