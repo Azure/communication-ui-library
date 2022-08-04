@@ -116,7 +116,7 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
   await waitForPageFontsLoaded(page);
 
-  // Tests often timeout at this point because device enumeration can take > 5 seconds.
+  // Tests often timeout at this point because call agent creation and device enumeration can take > 5 seconds.
   // Extend the timeout here to trade flakiness for potentially longer test runtime.
   // Test flake has a much larger impact on overall CI time than individual test runtime.
   const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'), {
@@ -156,11 +156,7 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
         const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
         return correctNoOfTiles;
       },
-      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length },
-      // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
-      // Extend the timeout here to trade flakiness for potentially longer test runtime.
-      // Test flake has a much larger impact on overall CI time than individual test runtime.
-      { timeout: 2 * perStepLocalTimeout() }
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
   }
 };
@@ -174,12 +170,6 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await pageClick(page, dataUiId('call-composite-start-call-button'));
-
-    // Wait for call page to load (i.e. wait for connecting screen to have passed)
-    //
-    // Tests often timeout at this point because call agent creation and call connection can take > 5 seconds.
-    // Extend the timeout here to trade flakiness for potentially longer test runtime.
-    // Test flake has a much larger impact on overall CI time than individual test runtime.
     await waitForSelector(page, dataUiId('call-page'), { timeout: 2 * perStepLocalTimeout() });
   }
 
@@ -199,7 +189,11 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       },
       {
         expectedVideoCount: pages.length
-      }
+      },
+      // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
+      // Extend the timeout here to trade flakiness for potentially longer test runtime.
+      // Test flake has a much larger impact on overall CI time than individual test runtime.
+      { timeout: 2 * perStepLocalTimeout() }
     );
   }
 };
