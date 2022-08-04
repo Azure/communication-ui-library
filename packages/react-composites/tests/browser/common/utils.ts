@@ -71,7 +71,8 @@ export const waitForSelector = async (
 export async function waitForFunction<R>(
   page: Page,
   pageFunction: PageFunction<R>,
-  arg?: unknown
+  arg?: unknown,
+  options?: { timeout?: number }
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
@@ -155,7 +156,11 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
         const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
         return correctNoOfTiles;
       },
-      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length },
+      // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
+      // Extend the timeout here to trade flakiness for potentially longer test runtime.
+      // Test flake has a much larger impact on overall CI time than individual test runtime.
+      { timeout: 3 * perStepLocalTimeout() }
     );
   }
 };
