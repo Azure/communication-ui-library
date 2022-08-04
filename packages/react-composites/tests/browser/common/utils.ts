@@ -170,7 +170,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await pageClick(page, dataUiId('call-composite-start-call-button'));
-    await waitForSelector(page, dataUiId('call-page'), { timeout: 2 * perStepLocalTimeout() });
+    await waitForSelector(page, dataUiId('call-page'));
   }
 
   // Wait for all participants cameras to have loaded
