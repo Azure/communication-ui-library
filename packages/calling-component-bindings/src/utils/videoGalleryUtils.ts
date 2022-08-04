@@ -7,12 +7,11 @@ import {
 } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryRemoteParticipantState,
-  VideoGalleryStream
-} from '@internal/react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import { checkIsSpeaking } from './SelectorUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { VideoGalleryRemoteParticipantState } from '@internal/react-components';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
