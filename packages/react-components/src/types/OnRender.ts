@@ -32,6 +32,8 @@ export type CustomAvatarOptions = {
   styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
   /** Display name to be used in Persona  */
   text?: string;
+
+  // use the new type for participant list from participantListParticipant file
 };
 
 /**
