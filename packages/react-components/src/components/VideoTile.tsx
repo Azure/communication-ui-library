@@ -5,6 +5,8 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
+/* @conditional-compile-remove(one-to-n-calling) */
+// @conditional-compile-remove(PSTN-calls)
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
@@ -139,6 +141,8 @@ const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 type DefaultPlaceholderProps = CustomAvatarOptions & {
   participantState?: VideoGalleryRemoteParticipantState;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  // @conditional-compile-remove(PSTN-calls)
   strings?: Pick<VideoTileStrings, 'participantStateConnecting' | 'participantStateHold' | 'participantStateRinging'>;
 };
 
