@@ -2287,6 +2287,7 @@ export interface ParticipantItemProps {
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    participantState?: VideoGalleryRemoteParticipantState;
     presence?: PersonaPresence;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
@@ -2300,6 +2301,9 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantStateConnecting: string;
+    participantStateHold: string;
+    participantStateRinging: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
