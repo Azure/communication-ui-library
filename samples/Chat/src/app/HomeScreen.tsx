@@ -32,7 +32,7 @@ import {
   infoContainerStackTokens,
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
-import { useTheme } from '@internal/react-components';
+import { useTheme } from '@azure/communication-react';
 
 import { Chat20Filled } from '@fluentui/react-icons';
 import heroSVG from '../assets/hero.svg';

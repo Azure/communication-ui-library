@@ -36,7 +36,18 @@ module.exports = {
     'react/display-name': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
-    curly: 'error'
+    curly: 'error',
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          {
+            group: ['@internal/*'],
+            message: 'Use @azure/communication-react instead.'
+          }
+        ]
+      }
+    ]
   },
   settings: {
     react: {
