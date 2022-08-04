@@ -376,6 +376,9 @@ export type CallCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
 };
 
 // @public
@@ -419,6 +422,10 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    dialpadCloseModalButtonAriaLabel: string;
+    dialpadModalAriaLabel: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -436,7 +443,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    openDialpadButtonLabel: string;
     peopleButtonLabel: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
@@ -797,6 +806,9 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -837,15 +849,21 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dialpadCloseModalButtonAriaLabel: string;
+    dialpadModalAriaLabel: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
+    openDialpadButtonLabel: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -1239,6 +1257,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // @public
@@ -1575,6 +1594,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
+    PeoplePaneAddPerson?: JSX.Element | undefined;
+    PeoplePaneOpenDialpad?: JSX.Element | undefined;
+    DialpadStartCall?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1673,9 +1695,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadButtonProps {
-    // (undocumented)
     primaryContent: string;
-    // (undocumented)
     secondaryContent?: string;
 }
 
@@ -2758,7 +2778,12 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    // @beta
+    state?: VideoGalleryRemoteParticipantState;
 }
+
+// @beta
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -2821,13 +2846,26 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    participantState?: VideoGalleryRemoteParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public

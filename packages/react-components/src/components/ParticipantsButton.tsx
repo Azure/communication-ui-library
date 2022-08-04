@@ -26,7 +26,9 @@ import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-import { preventDismissOnEvent } from './utils/common';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -174,8 +176,12 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     showParticipantOverflowTooltip
   } = props;
 
+  let disabled = props.disabled;
+  /* @conditional-compile-remove(rooms) */
+  disabled = disabled || !_usePermissions().participantList;
+
   const onRenderPeopleIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonParticipants" />
+    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />
   );
 
   const ids = useIdentifiers();
@@ -331,6 +337,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   return (
     <ControlBarButton
       {...props}
+      disabled={disabled}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
