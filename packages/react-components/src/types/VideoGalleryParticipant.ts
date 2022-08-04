@@ -104,4 +104,4 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
  * @beta
  * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
  */
-export declare type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Hold';
+export declare type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';

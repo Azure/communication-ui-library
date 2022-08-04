@@ -2763,7 +2763,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 }
 
 // @beta
-export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Hold';
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

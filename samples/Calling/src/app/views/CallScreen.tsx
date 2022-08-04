@@ -22,6 +22,7 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
+  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   onCallEnded: () => void;
 }
