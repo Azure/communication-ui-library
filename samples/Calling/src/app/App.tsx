@@ -5,7 +5,7 @@ import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
-import { CallAdapterLocator } from '@internal/react-composites';
+import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useState } from 'react';
 import {
   buildTime,
