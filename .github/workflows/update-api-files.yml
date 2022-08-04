@@ -3,6 +3,11 @@ name: Update API files
 on:
   workflow_dispatch:
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update_composite_snapshot:
     name: Update all API files
@@ -55,7 +60,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build NPM Package
-        run: rush build -v -t @azure/communication-react
+        run: rush build -t @azure/communication-react
         id: buildapifiles
       - name: Check for API file changes
         # If API files changed, they cause the build step to "fail" due to warnings

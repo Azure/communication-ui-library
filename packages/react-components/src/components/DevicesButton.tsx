@@ -11,9 +11,12 @@ import {
 } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions/PermissionsProvider';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
+import { preventDismissOnEvent } from './utils/common';
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -172,11 +175,45 @@ export interface DeviceMenuProps {
  * @private
  */
 export interface DeviceMenuStrings {
+  /**
+   * Title for Camera section in the contextual menu
+   */
   cameraMenuTitle?: string;
+  /**
+   * Title for Audio Device section in the contextual menu
+   *
+   * @remark Used in place of microphoneMenuTitle when speakers can be enumerated
+   */
+  audioDeviceMenuTitle?: string;
+  /**
+   * Title for Microphone section in the contextual menu
+   *
+   * @remark Used when speakers can be enumerated
+   */
   microphoneMenuTitle?: string;
+  /**
+   * Title for Speaker section in the contextual menu
+   */
   speakerMenuTitle?: string;
+  /**
+   * Tooltip label for Camera section in the contextual menu
+   */
   cameraMenuTooltip?: string;
+  /**
+   * Tooltip label for Audio Device section in the contextual menu
+   *
+   * @remark Used in place of microphoneMenuTooltip when speakers can be enumerated
+   */
+  audioDeviceMenuTooltip?: string;
+  /**
+   * Tooltip label for Microphone section in the contextual menu
+   *
+   * @remark Used when speakers can be enumerated
+   */
   microphoneMenuTooltip?: string;
+  /**
+   * Tooltip label for Speaker section in the contextual menu
+   */
   speakerMenuTooltip?: string;
 }
 
@@ -197,7 +234,9 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
  */
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
-  strings: DeviceMenuStrings
+  strings: DeviceMenuStrings,
+  isSelectCamAllowed = true,
+  isSelectMicAllowed = true
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -223,24 +262,13 @@ export const generateDefaultDeviceMenuProps = (
           maxWidth: '95%'
         }
       },
-      // Disable dismiss on resize to work around a couple Fluent UI bugs
-      // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
-      //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
-      //   by the headless SDK.
-      // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
-      //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
-      //   deterministically avoid dismissal.
-      //
-      // A side effect of this workaround is that the context menu stays open when window is resized, and may
-      // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-      // The Callout (frequently) gets dismissed automatically.
-      preventDismissOnResize: true
+      preventDismissOnEvent
     }
   };
 
   const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuItemStyles ?? {});
 
-  if (cameras && selectedCamera && onSelectCamera) {
+  if (cameras && selectedCamera && onSelectCamera && isSelectCamAllowed) {
     defaultMenuProps.items.push({
       key: 'sectionCamera',
       title: strings.cameraMenuTooltip,
@@ -255,7 +283,6 @@ export const generateDefaultDeviceMenuProps = (
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -268,22 +295,28 @@ export const generateDefaultDeviceMenuProps = (
     });
   }
 
-  if (microphones && selectedMicrophone && onSelectMicrophone) {
+  if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed) {
+    // Set props as Microphone if speakers can be enumerated else set as Audio Device
+    const speakersAvailable = speakers && speakers.length > 0;
+    const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
+    const title = speakersAvailable ? strings.microphoneMenuTooltip : strings.audioDeviceMenuTooltip;
+    const sectionPropsTitle = speakersAvailable ? strings.microphoneMenuTitle : strings.audioDeviceMenuTitle;
+    const iconName = speakersAvailable ? 'OptionsMic' : 'OptionsSpeaker';
+
     defaultMenuProps.items.push({
-      key: 'sectionMicrophone',
-      title: strings.microphoneMenuTooltip,
+      key: key,
+      title: title,
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: strings.microphoneMenuTitle,
+        title: sectionPropsTitle,
         items: microphones.map((microphone) => ({
           key: microphone.id,
           text: microphone.name,
           title: microphone.name,
-          iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
+          iconProps: { iconName: iconName, styles: { root: { lineHeight: 0 } } },
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -311,7 +344,6 @@ export const generateDefaultDeviceMenuProps = (
           itemProps: {
             styles: menuItemStyles
           },
-          role: 'menuitem',
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
@@ -344,8 +376,21 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
+  /* @conditional-compile-remove(rooms) */
+  const isSelectMicAllowed = _usePermissions().microphoneButton;
+  /* @conditional-compile-remove(rooms) */
+  const isSelectCamAllowed = _usePermissions().cameraButton;
+
   const devicesButtonMenu =
-    props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
+    props.menuProps ??
+    generateDefaultDeviceMenuProps(
+      { ...props, styles: props.styles?.menuStyles },
+      strings,
+      /* @conditional-compile-remove(rooms) */
+      isSelectCamAllowed,
+      /* @conditional-compile-remove(rooms) */
+      isSelectMicAllowed
+    );
 
   const onRenderOptionsIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />

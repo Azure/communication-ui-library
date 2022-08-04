@@ -10,12 +10,14 @@ import {
   Circle16Regular,
   Delete20Regular,
   Dismiss20Regular,
+  Dismiss16Regular,
   Edit20Regular,
   ErrorCircle16Regular,
   EyeShow16Regular,
   MicOff16Filled,
   MicOff16Regular,
   MicOff20Filled,
+  MicOn16Filled,
   MicOn20Filled,
   MicOn20Regular,
   MoreHorizontal20Filled,
@@ -27,6 +29,7 @@ import {
   ShareScreenStart20Filled,
   ShareScreenStop20Filled,
   Speaker220Regular,
+  Video16Filled,
   Video20Filled,
   Video20Regular,
   VideoOff20Filled,
@@ -38,8 +41,13 @@ import {
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(dialpad) */
+import { Backspace20Regular } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(file-sharing) */
-import { ArrowDownload16Regular, Dismiss16Regular } from '@fluentui/react-icons';
+import { ArrowDownload16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Pause20Filled, Play20Filled } from '@fluentui/react-icons';
 
 import React from 'react';
 
@@ -99,9 +107,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallMicrophoneUnmutedBySystem: <MicOn16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
   ErrorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
+  ErrorBarClear: <Dismiss16Regular />,
+  ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
+  ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
   MessageDelivered: <CheckmarkCircle16Regular />,
@@ -118,7 +130,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptions: <MoreHorizontal20Regular />,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
+  /* @conditional-compile-remove(PSTN-calls) */
+  HoldCall: <Pause20Filled />,
+  /* @conditional-compile-remove(PSTN-calls) */
+  ResumeCall: <Play20Filled />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
-  VideoTileMicOff: <MicOff16Filled />
+  VideoTileMicOff: <MicOff16Filled />,
+  /* @conditional-compile-remove(dialpad) */
+  BackSpace: <Backspace20Regular />
 };

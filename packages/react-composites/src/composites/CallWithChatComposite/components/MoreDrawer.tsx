@@ -2,18 +2,49 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { useMemo } from 'react';
 import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
-  _DrawerMenuItemProps as DrawerMenuItemProps
+  _DrawerMenuItemProps as DrawerMenuItemProps,
+  _DrawerMenuItemProps
 } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatDrawerButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../CustomButton';
 
 /** @private */
 export interface MoreDrawerStrings {
+  /**
+   * Label for people drawerMenuItem.
+   */
   peopleButtonLabel: string;
+  /**
+   * Label for audio device drawerMenuItem.
+   *
+   * @remarks This replaces the microphoneMenuTitle speakers can not be enumerated
+   *
+   */
+  audioDeviceMenuTitle?: string;
+  /**
+   * Label for microphone drawerMenuItem.
+   *
+   * @remarks Only displayed when speakers can be enumerated otherwise audioDeviceMenuTitle is used
+   *
+   */
   microphoneMenuTitle: string;
+  /**
+   * Label for speaker drawerMenuItem.
+   *
+   * @remarks Only displayed when speakers can be enumerated
+   *
+   */
   speakerMenuTitle: string;
 }
 
@@ -67,7 +98,7 @@ const inferCallWithChatControlOptions = (
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
-  const { speakers, onSelectSpeaker } = props;
+  const { speakers, onSelectSpeaker, onLightDismiss } = props;
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
@@ -76,8 +107,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectSpeaker(selected as AudioDeviceInfo);
       }
+      onLightDismiss();
     },
-    [speakers, onSelectSpeaker]
+    [speakers, onSelectSpeaker, onLightDismiss]
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
@@ -111,21 +143,27 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         // But this is a known issue in our state.
         onSelectMicrophone(selected as AudioDeviceInfo);
       }
+      onLightDismiss();
     },
-    [microphones, onSelectMicrophone]
+    [microphones, onSelectMicrophone, onLightDismiss]
   );
 
   if (props.microphones && props.microphones.length > 0) {
+    // Set props as Microphone if speakers can be enumerated else set as Audio Device
+    const speakersAvailable = props.speakers && props.speakers.length > 0;
+    const itemKey = speakersAvailable ? 'microphones' : 'audioDevices';
+    const text = speakersAvailable ? props.strings.microphoneMenuTitle : props.strings.audioDeviceMenuTitle;
+    const iconName = speakersAvailable ? 'MoreDrawerMicrophones' : 'MoreDrawerSpeakers';
+    const selectedIconName = speakersAvailable ? 'MoreDrawerSelectedMicrophone' : 'MoreDrawerSelectedSpeaker';
+
     drawerMenuItems.push({
-      itemKey: 'microphones',
-      text: props.strings.microphoneMenuTitle,
-      iconProps: { iconName: 'MoreDrawerMicrophones' },
+      itemKey: itemKey,
+      text: text,
+      iconProps: { iconName: iconName },
       subMenuProps: props.microphones.map((mic) => ({
         itemKey: mic.id,
         iconProps: {
-          iconName: isDeviceSelected(mic, props.selectedMicrophone)
-            ? 'MoreDrawerSelectedMicrophone'
-            : 'MoreDrawerMicrophones'
+          iconName: isDeviceSelected(mic, props.selectedMicrophone) ? selectedIconName : iconName
         },
         text: mic.name,
         onItemClick: onMicrophoneItemClick,
@@ -143,6 +181,30 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: props.onPeopleButtonClicked
     });
   }
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomCallWithChatDrawerButtons(
+        onFetchCustomButtonPropsTrampoline(drawerSelectionOptions !== false ? drawerSelectionOptions : undefined),
+        drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
+      ),
+    [drawerSelectionOptions]
+  );
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['overflow']?.props.children.forEach((element) => {
+    drawerMenuItems.push(element);
+  });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['primary']?.props.children
+    .slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS)
+    .forEach((element) => {
+      drawerMenuItems.push(element);
+    });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['secondary']?.props.children.forEach((element) => {
+    drawerMenuItems.push(element);
+  });
 
   return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };

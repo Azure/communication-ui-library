@@ -23,13 +23,21 @@ export const useHandlers = <PropsT>(
 const createCompositeHandlers = memoizeOne(
   (adapter: CallAdapter): CallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
-      await adapter.createStreamView(undefined, options);
+      return await adapter.createStreamView(undefined, options);
     },
     onCreateRemoteStreamView: async (userId, options) => {
-      await adapter.createStreamView(userId, options);
+      return await adapter.createStreamView(userId, options);
     },
     onHangUp: async () => {
       await adapter.leaveCall();
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onToggleHold: async () => {
+      return adapter.getState().call?.state === 'LocalHold' ? await adapter.resumeCall() : await adapter.holdCall();
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onAddParticipant: async (participant, options?) => {
+      return await adapter.addParticipant(participant, options);
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
@@ -43,9 +51,9 @@ const createCompositeHandlers = memoizeOne(
     onSelectSpeaker: async (deviceInfo) => {
       await adapter.setSpeaker(deviceInfo);
     },
-    onStartCall: (participants) => {
+    onStartCall: (participants, options?) => {
       const rawIds = participants.map((participant) => toFlatCommunicationIdentifier(participant));
-      return adapter.startCall(rawIds);
+      return adapter.startCall(rawIds, options);
     },
     onStartScreenShare: async () => {
       await adapter.startScreenShare();

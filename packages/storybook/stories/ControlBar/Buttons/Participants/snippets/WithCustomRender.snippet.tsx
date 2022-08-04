@@ -1,4 +1,9 @@
-import { CallParticipantListParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
+import {
+  CallParticipantListParticipant,
+  ControlBarButtonStyles,
+  FluentThemeProvider,
+  ParticipantsButton
+} from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
 
@@ -57,13 +62,31 @@ const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
     );
   }
 
-  return <Persona text={options.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
+  return (
+    <Persona
+      text={options.displayName}
+      hidePersonaDetails={true}
+      size={PersonaSize.size32}
+      showOverflowTooltip={false}
+    />
+  );
 };
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 const onMuteAll = (): void => {
   // your implementation to mute all participants
+};
+
+// Remove default height constraints to accomodate
+// our more elaborate content.
+const buttonStyles: ControlBarButtonStyles = {
+  root: {
+    height: 'none'
+  },
+  rootChecked: {
+    height: 'none'
+  }
 };
 
 export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () => {
@@ -89,6 +112,7 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
         onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
+        styles={buttonStyles}
       />
     </FluentThemeProvider>
   );

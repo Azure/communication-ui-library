@@ -19,6 +19,11 @@ on:
           - stable
           - beta
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     environment:
@@ -83,12 +88,8 @@ jobs:
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger package release pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'

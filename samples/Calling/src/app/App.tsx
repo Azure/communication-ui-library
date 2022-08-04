@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
+import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useState } from 'react';
 import {
   buildTime,
@@ -15,15 +16,17 @@ import {
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
   isLandscape,
-  isMobileSession,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
+import { useIsMobile } from './utils/useIsMobile';
+import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
+import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
 setLogLevel('warning');
@@ -45,8 +48,11 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -62,13 +68,23 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
+  const isMobileSession = useIsMobile();
+  const isLandscapeSession = isLandscape();
+  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
+
+  useEffect(() => {
+    if (isMobileSession && isLandscapeSession) {
+      console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
+    }
+  }, [isMobileSession, isLandscapeSession]);
+
+  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
+    return <PageOpenInAnotherTab />;
+  }
+
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
     return <UnsupportedBrowserPage />;
-  }
-
-  if (isMobileSession() && isLandscape()) {
-    console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
   }
 
   switch (page) {
@@ -81,16 +97,23 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startCallHandler={(callDetails) => {
             setDisplayName(callDetails.displayName);
+            /* @conditional-compile-remove(PSTN-calls) */
+            setAlternateCallerId(callDetails.alternateCallerId);
             const isTeamsCall = !!callDetails.teamsLink;
-            const callLocator =
-              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-            setCallLocator(callLocator);
+            const locator = makeLocator(
+              callDetails.teamsLink,
+              /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
+            );
+            setCallLocator(locator);
 
             // Update window URL to have a joinable link
-            if (!joiningExistingCall) {
+            if (
+              !joiningExistingCall &&
+              /* @conditional-compile-remove(PSTN-calls) */ !callDetails.outboundParticipants
+            ) {
               const joinParam = isTeamsCall
-                ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (callLocator as GroupCallLocator).groupId;
+                ? '?teamsLink=' + encodeURIComponent((locator as TeamsMeetingLinkLocator).meetingLink)
+                : '?groupId=' + (locator as GroupCallLocator).groupId;
               window.history.pushState({}, document.title, window.location.origin + joinParam);
             }
 
@@ -126,6 +149,8 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
           onCallEnded={() => setPage('endCall')}
         />
       );
@@ -135,5 +160,18 @@ const App = (): JSX.Element => {
       return <>Invalid page</>;
   }
 };
+
+function makeLocator(
+  teamsLink?: TeamsMeetingLinkLocator | undefined,
+  /* @conditional-compile-remove(PSTN-calls) */
+  outboundParticipants?: string[]
+): CallAdapterLocator {
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (outboundParticipants) {
+    // set call participants and do not update the window URL since there is not a joinable link
+    return { participantIDs: outboundParticipants };
+  }
+  return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+}
 
 export default App;

@@ -23,13 +23,24 @@ import {
 } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
-import { AudioDeviceInfo, Call, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoStreamOptions } from '@internal/react-components';
+import {
+  AudioDeviceInfo,
+  Call,
+  PermissionConstraints,
+  PropertyChangedEvent,
+  StartCallOptions,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * Functionality for managing the current call with chat.
@@ -100,7 +111,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  startCall(participants: string[]): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -124,7 +135,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
   /**
    * Dispose the html view for a stream.
    *
@@ -276,6 +287,27 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Puts the Call in a Localhold.
+   *
+   * @beta
+   */
+  holdCall: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Resumes the call from a LocalHold state.
+   *
+   * @beta
+   */
+  resumeCall: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Adds a new Participant to the call.
+   *
+   * @beta
+   */
+  addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
 }
 
 /**
@@ -292,6 +324,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
@@ -302,6 +336,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
 
   // Chat subscriptions
@@ -347,6 +383,8 @@ export type CallWithChatEvent =
   | 'isSpeakingChanged'
   | 'callParticipantsJoined'
   | 'callParticipantsLeft'
+  | 'selectedMicrophoneChanged'
+  | 'selectedSpeakerChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'

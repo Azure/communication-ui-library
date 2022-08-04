@@ -1,8 +1,46 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Fri, 11 Mar 2022 19:20:04 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:05 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.3.0...@internal/chat-stateful-client_v1.3.1-beta.1)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.3.0)
+
+Mon, 13 Jun 2022 18:29:31 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.2.2-beta.1...@internal/chat-stateful-client_v1.3.0)
+
+### Patches
+
+- Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat ([PR #1895](https://github.com/azure/communication-ui-library/pull/1895) by 2684369+JamesBurnside@users.noreply.github.com)
+- Only emit stateChanged events where there is an actual change ([PR #1449](https://github.com/azure/communication-ui-library/pull/1449) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
+
+## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.2-beta.1)
+
+Tue, 19 Apr 2022 20:46:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.2.0...@internal/chat-stateful-client_v1.2.2-beta.1)
+
+### Patches
+
+- added new type readreceiptbysenderid ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
+
+### Changes
+
+- Log the function called from stateful client ([PR #1793](https://github.com/azure/communication-ui-library/pull/1793) by jiangnanhello@live.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.2.0)
 

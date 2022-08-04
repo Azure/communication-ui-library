@@ -1,22 +1,32 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
+import React, { useMemo } from 'react';
+import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
+import {
+  useRemoteVideoStreamLifecycleMaintainer,
+  RemoteVideoStreamLifecycleMaintainerProps
+} from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile } from './VideoTile';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering a VideoTile when its position in the
  * array changes causing a rerender in the parent component. https://reactjs.org/docs/react-api.html#reactmemo
+ *
+ * @internal
  */
-export const RemoteVideoTile = React.memo(
+export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (
+      userId: string,
+      options?: VideoStreamOptions
+    ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
@@ -25,9 +35,12 @@ export const RemoteVideoTile = React.memo(
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
+    showLabel?: boolean;
+    personaMinSize?: number;
   }) => {
     const {
       isAvailable,
+      isReceiving = true, // default to true to prevent any breaking change
       isMuted,
       isSpeaking,
       isScreenSharingOn,
@@ -41,39 +54,33 @@ export const RemoteVideoTile = React.memo(
       showMuteIndicator
     } = props;
 
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOptions);
-      }
-      // Always clean up element to make tile up to date and be able to dispose correctly
-      // TODO: Add an extra param to onDisposeRemoteStreamView(userId, flavor(optional)) after GA
-      // and isolate dispose behavior between screen share and video
-      return () => {
-        if (renderElement && !isScreenSharingOn) {
-          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-        }
-      };
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOptions,
-      renderElement,
-      userId,
-      isScreenSharingOn
-    ]);
+    const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
+      () => ({
+        isMirrored: remoteVideoViewOptions?.isMirrored,
+        isScreenSharingOn,
+        isStreamAvailable: isAvailable,
+        isStreamReceiving: isReceiving,
+        onCreateRemoteStreamView,
+        onDisposeRemoteStreamView,
+        remoteParticipantId: userId,
+        renderElementExists: !!renderElement,
+        scalingMode: remoteVideoViewOptions?.scalingMode
+      }),
+      [
+        isAvailable,
+        isReceiving,
+        isScreenSharingOn,
+        onCreateRemoteStreamView,
+        onDisposeRemoteStreamView,
+        remoteVideoViewOptions?.isMirrored,
+        remoteVideoViewOptions?.scalingMode,
+        renderElement,
+        userId
+      ]
+    );
 
-    // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
-    // Element disposed could happen during async time gap, which still cause leaks for unused renderElement.
-    // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
-    useEffect(() => {
-      return () => {
-        // TODO: Remove if condition when we isolate dispose behavior for screen share
-        if (!isScreenSharingOn) {
-          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-        }
-      };
-    }, [onDisposeRemoteStreamView, userId, isScreenSharingOn]);
+    // Handle creating, destroying and updating the video stream as necessary
+    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -83,8 +90,8 @@ export const RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} />;
-    }, [renderElement]);
+      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
+    }, [renderElement, isReceiving]);
 
     return (
       <VideoTile
@@ -96,6 +103,8 @@ export const RemoteVideoTile = React.memo(
         isMuted={isMuted}
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
+        showLabel={props.showLabel}
+        personaMinSize={props.personaMinSize}
       />
     );
   }

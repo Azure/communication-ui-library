@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Icon, Spinner, SpinnerSize } from '@fluentui/react';
+import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+import { useMemo } from 'react';
+/* @conditional-compile-remove(file-sharing) */
+import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
-import { extension } from './utils';
+import { iconButtonClassName } from './styles/IconButton.styles';
 
 /**
  * Meta Data containing information about the uploaded file.
@@ -25,6 +28,16 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+}
+
+/**
+ * Strings of _FileDownloadCards that can be overridden.
+ *
+ * @internal
+ */
+export interface _FileDownloadCardsStrings {
+  /** Aria label to notify user when focus is on file download button. */
+  downloadFile: string;
 }
 
 /**
@@ -91,6 +104,10 @@ export interface _FileDownloadCards {
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
+  /**
+   * Optional arialabel strings for file download cards
+   */
+  strings?: _FileDownloadCardsStrings;
 }
 
 const fileDownloadCardsStyle = {
@@ -105,6 +122,17 @@ const actionIconStyle = { height: '1rem' };
 export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
+  const localeStrings = useLocaleStringsTrampoline();
+
+  const downloadFileButtonString = useMemo(
+    () => () => {
+      return props.strings?.downloadFile ?? localeStrings.downloadFile;
+      // Return download button without aria label
+      return props.strings?.downloadFile ?? '';
+    },
+    [props.strings?.downloadFile, localeStrings.downloadFile]
+  );
+
   const fileDownloadHandler = useCallback(
     async (userId, file) => {
       if (!props.downloadHandler) {
@@ -139,9 +167,15 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
             <_FileCard
               fileName={file.name}
               key={file.name}
-              fileExtension={extension(file.name)}
+              fileExtension={file.extension}
               actionIcon={
-                showSpinner ? <Spinner size={SpinnerSize.medium} aria-live={'assertive'} /> : <DownloadIconTrampoline />
+                showSpinner ? (
+                  <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                ) : (
+                  <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                    <DownloadIconTrampoline />
+                  </IconButton>
+                )
               }
               actionHandler={() => fileDownloadHandler(userId, file)}
             />
@@ -159,4 +193,10 @@ const DownloadIconTrampoline = (): JSX.Element => {
   return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
+};
+
+const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+  /* @conditional-compile-remove(file-sharing) */
+  return useLocale().strings.messageThread;
+  return { downloadFile: '' };
 };

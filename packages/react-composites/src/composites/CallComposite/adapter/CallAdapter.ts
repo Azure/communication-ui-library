@@ -8,12 +8,18 @@ import type {
   Call,
   PermissionConstraints,
   RemoteParticipant,
+  StartCallOptions,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  PropertyChangedEvent
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
-import { VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -56,6 +62,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Azure communications Phone number to make PSTN calls with.
+   */
+  alternateCallerId?: string;
 };
 
 /**
@@ -211,7 +222,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[]): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -243,7 +254,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
   /**
    * Dispose the html view for a stream.
    *
@@ -256,6 +267,27 @@ export interface CallAdapterCallManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Holds the call.
+   *
+   * @beta
+   */
+  holdCall(): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Resumes the call from a `LocalHold` state.
+   *
+   * @beta
+   */
+  resumeCall(): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Add a participant to the call.
+   *
+   * @beta
+   */
+  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
 }
 
 /**
@@ -388,6 +420,18 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   /**
+   * Subscribe function for 'selectedMicrophoneChanged' event.
+   *
+   * This event fires whenever the user selects a new microphone device.
+   */
+  on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Subscribe function for 'selectedSpeakerChanged' event.
+   *
+   * This event fires whenever the user selects a new speaker device.
+   */
+  on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
+  /**
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
@@ -428,6 +472,14 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'diagnosticChanged' event.
    */
   off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  /**
+   * Unsubscribe function for 'selectedMicrophoneChanged' event.
+   */
+  off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Unsubscribe function for 'selectedSpeakerChanged' event.
+   */
+  off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'error' event.
    */

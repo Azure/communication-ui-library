@@ -10,6 +10,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checkForChanges:
     name: Check for new changes
@@ -98,7 +103,7 @@ jobs:
 
       # Build packages
       - name: Build @azure/communication-react package
-        run: rush build -v -t @azure/communication-react
+        run: rush build -t @azure/communication-react
 
       # Test Packages
       - name: Test @azure/communication-react package
@@ -133,12 +138,8 @@ jobs:
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger alpha package release pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'

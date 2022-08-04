@@ -109,11 +109,14 @@ const errorOptions: ErrorType[] = [
   'callNoMicrophoneFound',
   'callMicrophoneAccessDenied',
   'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
   'callMacOsMicrophoneAccessDenied',
   'callLocalVideoFreeze',
   'callCameraAlreadyInUse',
   'callMacOsCameraAccessDenied',
-  'callMacOsScreenShareAccessDenied'
+  'callMacOsScreenShareAccessDenied',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -153,7 +156,11 @@ export const controlsToAdd = {
     defaultValue: '',
     name: 'Optional URL to invite other participants to the call'
   },
-  callLocator: { control: 'text', defaultValue: '', name: 'Call locator (ACS group ID or Teams meeting link)' },
+  callLocator: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
+  },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
   callStateText: { control: 'text', defaultValue: "You're in the lobby", name: 'Call State Text' },

@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
+import {
+  Chat,
+  ChatItemProps,
+  Flex,
+  Ref,
+  ShorthandValue,
+  mergeStyles as mergeNorthstarThemes
+} from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -19,7 +26,17 @@ import {
   gutterWithHiddenAvatar,
   FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
+import {
+  Icon,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaSize,
+  PrimaryButton,
+  Stack,
+  IPersona,
+  Theme
+} from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
@@ -43,7 +60,8 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -180,6 +198,8 @@ export interface MessageThreadStrings {
   failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
+  /** String for aria text of message content */
+  messageContentAriaText: string;
   /** String for warning on text limit exceeded in EditBox*/
   editBoxTextLimit: string;
   /** String for placeholder text in EditBox when there is no user input*/
@@ -195,7 +215,10 @@ export interface MessageThreadStrings {
   /** String for Submit in EditBox when there is no user input*/
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
-  actionMenuMoreOptions: string;
+  actionMenuMoreOptions?: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /** String for download file button in file card */
+  downloadFile: string;
 }
 
 /**
@@ -318,7 +341,7 @@ const memoizeAllMessages = memoizeFnAll(
     participantCount?: number,
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
-    onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
+    onUpdateMessage?: UpdateMessageCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
@@ -348,7 +371,8 @@ const memoizeAllMessages = memoizeFnAll(
         const personaOptions: IPersona = {
           hidePersonaDetails: true,
           size: PersonaSize.size32,
-          text: message.senderDisplayName
+          text: message.senderDisplayName,
+          showOverflowTooltip: false
         };
 
         const chatItemMessageStyle =
@@ -436,6 +460,21 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 };
 
 /**
+ * @public
+ * Callback function run when a message is updated.
+ */
+export type UpdateMessageCallback = (
+  messageId: string,
+  content: string,
+  /* @conditional-compile-remove(file-sharing) */
+  metadata?: Record<string, string>,
+  /* @conditional-compile-remove(file-sharing) */
+  options?: {
+    attachedFilesMetadata?: FileMetadata[];
+  }
+) => Promise<void>;
+
+/**
  * Props for {@link MessageThread}.
  *
  * @public
@@ -473,6 +512,7 @@ export type MessageThreadProps = {
   disableJumpToNewMessageButton?: boolean;
   /**
    * Whether the date of each message is displayed or not.
+   * It is ignored when onDisplayDateTimeString is supplied.
    *
    * @defaultValue `false`
    */
@@ -542,7 +582,7 @@ export type MessageThreadProps = {
    * @param content - new content of the message
    *
    */
-  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
 
   /**
    * Optional callback to delete a message.
@@ -583,6 +623,13 @@ export type MessageThreadProps = {
    * this function will be called with the data inside `fileSharingMetadata` key.
    */
   fileDownloadHandler?: FileDownloadHandler;
+
+  /* @conditional-compile-remove(date-time-customization) */
+  /**
+   * Optional function to provide customized date format.
+   * @beta
+   */
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
 /**
@@ -624,9 +671,8 @@ export type MessageProps = {
    *
    * @param messageId - message id from chatClient
    * @param content - new content of the message
-   *
    */
-  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
 
   /**
    * Optional callback to delete a message.
@@ -675,7 +721,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderMessage,
     onUpdateMessage,
     onDeleteMessage,
-    onSendMessage
+    onSendMessage,
+    /* @conditional-compile-remove(date-time-customization) */
+    onDisplayDateTimeString
   } = props;
 
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -932,6 +980,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     []
   );
 
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -940,6 +990,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           <ChatMessageComponent
             {...messageProps}
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(file-sharing) */
+            strings={strings}
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
@@ -948,26 +1000,27 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
+            /* @conditional-compile-remove(date-time-customization) */
+            onDisplayDateTimeString={onDisplayDateTimeString}
           />
         );
       }
       return <></>;
     },
     [
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString(),
-      isNarrow,
-      participantCount,
-      onRenderAvatar,
-      onActionButtonClickMemo,
       onRenderFileDownloads,
+      /* @conditional-compile-remove(file-sharing) */
+      strings,
       props.userId,
-      showMessageStatus
+      participantCount,
+      isNarrow,
+      onRenderAvatar,
+      showMessageStatus,
+      onActionButtonClickMemo,
+      /* @conditional-compile-remove(date-time-customization) */
+      onDisplayDateTimeString
     ]
   );
-
-  const localeStrings = useLocale().strings.messageThread;
-  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const defaultStatusRenderer = useCallback(
     (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
@@ -1073,18 +1126,25 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     ]
   );
 
+  const theme = useTheme();
+
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <Chat styles={styles?.chatContainer ?? chatStyle} items={messagesToDisplay} />
+        <Chat
+          styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
+          items={messagesToDisplay}
+        />
       </LiveAnnouncer>
     );
-  }, [styles?.chatContainer, messagesToDisplay]);
+  }, [theme, styles?.chatContainer, messagesToDisplay]);
 
   return (
     <Ref innerRef={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
+        {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
+            tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
+            thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
         {existsNewChatMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderJumpToNewMessageButton ? (
@@ -1094,6 +1154,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             )}
           </div>
         )}
+
+        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
       </Stack>
     </Ref>
   );
@@ -1105,4 +1167,21 @@ const onRenderFileDownloadsTrampoline = (
   /* @conditional-compile-remove(file-sharing) */
   return props.onRenderFileDownloads;
   return undefined;
+};
+
+const linkStyles = (theme: Theme): ComponentSlotStyle => {
+  return {
+    '& a:link': {
+      color: theme.palette.themePrimary
+    },
+    '& a:visited': {
+      color: theme.palette.themeDarker
+    },
+    '& a:hover': {
+      color: theme.palette.themeDarker
+    },
+    '& a:selected': {
+      color: theme.palette.themeDarker
+    }
+  };
 };

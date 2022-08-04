@@ -81,6 +81,8 @@ export type ParticipantListProps = {
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
+  /** prop to determine if we should show tooltip for participants or not */
+  showParticipantOverflowTooltip?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -90,7 +92,8 @@ const onRenderParticipantDefault = (
   onRenderAvatar?: OnRenderAvatarCallback,
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
-  onParticipantClick?: (participant?: ParticipantListParticipant) => void
+  onParticipantClick?: (participant?: ParticipantListParticipant) => void,
+  showParticipantOverflowTooltip?: boolean
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -123,23 +126,23 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  if (participant.displayName) {
-    return (
-      <ParticipantItem
-        styles={styles}
-        key={participant.userId}
-        userId={participant.userId}
-        displayName={participant.displayName}
-        me={myUserId ? participant.userId === myUserId : false}
-        menuItems={menuItems}
-        presence={presence}
-        onRenderIcon={onRenderIcon}
-        onRenderAvatar={onRenderAvatar}
-        onClick={() => onParticipantClick?.(participant)}
-      />
-    );
-  }
-  return null;
+  const displayName = !participant.displayName ? strings.displayNamePlaceholder : participant.displayName;
+
+  return (
+    <ParticipantItem
+      styles={styles}
+      key={participant.userId}
+      userId={participant.userId}
+      displayName={displayName}
+      me={myUserId ? participant.userId === myUserId : false}
+      menuItems={menuItems}
+      presence={presence}
+      onRenderIcon={onRenderIcon}
+      onRenderAvatar={onRenderAvatar}
+      onClick={() => onParticipantClick?.(participant)}
+      showParticipantOverflowTooltip={showParticipantOverflowTooltip}
+    />
+  );
 };
 
 const getParticipantsForDefaultRender = (
@@ -178,7 +181,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRemoveParticipant,
     onRenderAvatar,
     onRenderParticipant,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    showParticipantOverflowTooltip
   } = props;
 
   const ids = useIdentifiers();
@@ -223,7 +227,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               onRenderAvatar,
               createParticipantMenuItems,
               participantItemStyles,
-              props.onParticipantClick
+              props.onParticipantClick,
+              showParticipantOverflowTooltip
             )
       )}
     </Stack>

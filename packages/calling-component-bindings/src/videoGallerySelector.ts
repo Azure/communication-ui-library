@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallClientState } from '@internal/calling-stateful-client';
+import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
@@ -16,12 +16,13 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-import { checkIsSpeaking } from './SelectorUtils';
+import { _updateUserDisplayNames } from './utils/callUtils';
+import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant
-} from './videoGalleryUtils';
+} from './utils/videoGalleryUtils';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -72,7 +73,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
-
+    const noRemoteParticipants = [];
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -94,8 +95,16 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: _videoGalleryRemoteParticipantsMemo(remoteParticipants),
+      remoteParticipants: _videoGalleryRemoteParticipantsMemo(
+        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
+      ),
       dominantSpeakers: dominantSpeakerIds
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};

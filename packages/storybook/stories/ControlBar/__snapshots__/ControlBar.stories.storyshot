@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control Bar 1`] = `
 <div
-  className="css-117 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -33,22 +33,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
         }
       >
         <div
-          className="css-2"
+          className="stub-classname"
         >
           <div
-            className="ms-Stack css-3"
+            className="ms-Stack stub-classname"
           >
             <div
-              className="ms-TooltipHost root-4"
+              aria-live="polite"
+              className="ms-Stack stub-classname"
+            />
+            <div
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Turn on camera"
-                className="ms-Button ms-Button--default root-5"
+                className="ms-Button ms-Button--default stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -59,12 +64,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-14"
+                    className="stub-classname"
                     data-icon-name="ControlButtonCameraOff"
                   >
                     <span
@@ -93,7 +98,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-15 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -108,16 +113,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-4"
+              aria-live="polite"
+              className="ms-Stack stub-classname"
+            />
+            <div
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Unmute microphone"
-                className="ms-Button ms-Button--default root-5"
+                className="ms-Button ms-Button--default stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -128,12 +138,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-14"
+                    className="stub-classname"
                     data-icon-name="ControlButtonMicOff"
                   >
                     <span
@@ -162,7 +172,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-15 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -177,16 +187,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-4"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Present your screen"
-                className="ms-Button ms-Button--default root-17"
+                className="ms-Button ms-Button--default stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -197,12 +208,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-14"
+                    className="stub-classname"
                     data-icon-name="ControlButtonScreenShareStart"
                   >
                     <span
@@ -227,19 +238,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-4"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-label="Show Participants"
-                className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
+                className="ms-Button ms-Button--default ms-Button--hasMenu stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -250,12 +262,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-14"
+                    className="stub-classname"
                     data-icon-name="ControlButtonParticipants"
                   >
                     <span
@@ -278,7 +290,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-15 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -293,19 +305,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-4"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-label="Manage devices"
-                className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
+                className="ms-Button ms-Button--default ms-Button--hasMenu stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -316,12 +329,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 root-14"
+                    className="stub-classname"
                     data-icon-name="ControlButtonOptions"
                   >
                     <span
@@ -344,7 +357,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-105 css-15 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -359,16 +372,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               </button>
             </div>
             <div
-              className="ms-TooltipHost root-4"
+              className="ms-TooltipHost root-105"
               onBlurCapture={[Function]}
               onFocusCapture={[Function]}
               onKeyDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              role="none"
             >
               <button
                 aria-label="Leave Call"
-                className="ms-Button ms-Button--default root-18"
+                className="ms-Button ms-Button--default stub-classname"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -379,7 +393,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-6"
+                  className="ms-Button-flexContainer stub-classname"
                   data-automationid="splitbuttonprimary"
                 >
                   <i

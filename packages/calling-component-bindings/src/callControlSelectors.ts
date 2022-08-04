@@ -12,7 +12,9 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
-import { _isPreviewOn } from './callUtils';
+/* @conditional-compile-remove(PSTN-calls) */
+import { getCallState } from './baseSelectors';
+import { _isPreviewOn } from './utils/callUtils';
 
 /**
  * Selector type for {@link MicrophoneButton} component.
@@ -25,13 +27,9 @@ export type MicrophoneButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   microphones: AudioDeviceInfo[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   speakers: AudioDeviceInfo[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   selectedMicrophone?: AudioDeviceInfo;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   selectedSpeaker?: AudioDeviceInfo;
 };
 
@@ -47,13 +45,9 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     return {
       disabled: !callExists || !permission,
       checked: callExists ? !isMuted : false,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       microphones: deviceManager.microphones,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       speakers: deviceManager.speakers,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       selectedMicrophone: deviceManager.selectedMicrophone,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       selectedSpeaker: deviceManager.selectedSpeaker
     };
   }
@@ -70,9 +64,7 @@ export type CameraButtonSelector = (
 ) => {
   disabled: boolean;
   checked: boolean;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   cameras: VideoDeviceInfo[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   selectedCamera?: VideoDeviceInfo;
 };
 
@@ -89,11 +81,9 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
 
     return {
-      disabled: !deviceManager.selectedCamera || !permission,
+      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       cameras: deviceManager.cameras,
-      /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
       selectedCamera: deviceManager.selectedCamera
     };
   }
@@ -109,6 +99,8 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  disabled?: boolean;
 };
 
 /**
@@ -117,10 +109,12 @@ export type ScreenShareButtonSelector = (
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn],
-  (isScreenSharingOn) => {
+  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
+  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
     return {
-      checked: isScreenSharingOn
+      checked: isScreenSharingOn,
+      /* @conditional-compile-remove(PSTN-calls) */
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
     };
   }
 );
@@ -160,3 +154,26 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
     };
   }
 );
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Selector type for the {@link HoldButton} component.
+ * @public
+ */
+export type HoldButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  checked: boolean;
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Selector for the {@link HoldButton} component.
+ * @public
+ */
+export const holdButtonSelector: HoldButtonSelector = reselect.createSelector([getCallState], (callState) => {
+  return {
+    checked: callState === 'LocalHold'
+  };
+});

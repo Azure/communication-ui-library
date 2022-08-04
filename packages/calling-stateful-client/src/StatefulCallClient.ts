@@ -2,18 +2,12 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallAgent,
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager
-} from '@azure/communication-calling';
+import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
-import { callAgentDeclaratify } from './CallAgentDeclarative';
+import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { createView, disposeView } from './StreamUtils';
+import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
@@ -103,7 +97,7 @@ export interface StatefulCallClient extends CallClient {
     participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
-  ): Promise<void>;
+  ): Promise<CreateViewResult | undefined>;
   /**
    * Stops rendering a {@link RemoteVideoStreamState} or {@link LocalVideoStreamState} and removes the
    * {@link VideoStreamRendererView} from the relevant {@link RemoteVideoStreamState} in {@link CallClientState} or
@@ -133,6 +127,19 @@ export interface StatefulCallClient extends CallClient {
     participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
+
+  /**
+   * The CallAgent is used to handle calls.
+   * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.
+   * - The CallClient can only have one active CallAgent instance at a time.
+   * - You can create a new CallClient instance to create a new CallAgent.
+   * - You can dispose of a CallClient's current active CallAgent, and call the CallClient's
+   *   createCallAgent() method again to create a new CallAgent.
+   * @param tokenCredential - The token credential. Use AzureCommunicationTokenCredential from `@azure/communication-common` to create a credential.
+   * @param options - The CallAgentOptions for additional options like display name.
+   * @public
+   */
+  createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
 }
 
 /**
@@ -155,7 +162,7 @@ export type CallStateModifier = (state: CallClientState) => void;
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _callAgent: CallAgent | undefined;
+  private _callAgent: DeclarativeCallAgent | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
@@ -167,15 +174,20 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
-        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<CallClient['createCallAgent']>) => {
-          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
-          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
-          // callAgent if the createCallAgent succeeds.
-          const callAgent = await target.createCallAgent(...args);
-          this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
-          this._context.setCallAgent({ displayName: this._callAgent.displayName });
-          return this._callAgent;
-        }, 'CallClient.createCallAgent');
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent> => {
+            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+            // callAgent if the createCallAgent succeeds.
+            const callAgent = await target.createCallAgent(...args);
+            this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
+            this._context.setCallAgent({
+              displayName: this._callAgent.displayName
+            });
+            return this._callAgent;
+          },
+          'CallClient.createCallAgent'
+        );
       }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {
@@ -216,6 +228,16 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId: CommunicationUserIdentifier;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format that will be used to represent the callers identity. This number is required
+   * to start a PSTN call.
+   *
+   * example: +11234567
+   *
+   * This is not a cached value from the headless calling client.
+   */
+  alternateCallerId?: string;
 };
 
 /**
@@ -256,7 +278,11 @@ export const createStatefulCallClient = (
   callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
-    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
+    new CallContext(
+      getIdentifierKind(args.userId),
+      options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(PSTN-calls) */ args.alternateCallerId
+    ),
     new InternalCallContext()
   );
 };
@@ -290,7 +316,7 @@ export const createStatefulCallClientWithDeps = (
       participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
-    ): Promise<void> => {
+    ): Promise<CreateViewResult | undefined> => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       return createView(context, internalContext, callId, participantIdKind, stream, options);
     }

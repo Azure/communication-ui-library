@@ -1,8 +1,131 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Fri, 11 Mar 2022 19:20:02 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.1-beta.1)
+
+Wed, 29 Jun 2022 17:31:05 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.3.0...@internal/react-components_v1.3.1-beta.1)
+
+### Minor changes
+
+- Add strings for new UFDs for microphone stopped unexpectedly and microphone recovered ([PR #1994](https://github.com/azure/communication-ui-library/pull/1994) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update string types and names per comments from ARB ([PR #2009](https://github.com/azure/communication-ui-library/pull/2009) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Fixes spacing for text in errorbar component ([PR #2003](https://github.com/azure/communication-ui-library/pull/2003) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix SendBox button when using VoiceOver on iOS ([PR #2004](https://github.com/azure/communication-ui-library/pull/2004) by miguelgamis@microsoft.com)
+- Update microphone button to be disabled when there are no microphones present ([PR #1993](https://github.com/azure/communication-ui-library/pull/1993) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update ErrorBar to accept strings and icons for the cameraStoppedUnexpectedly call diagnostic ([PR #1991](https://github.com/azure/communication-ui-library/pull/1991) by 2684369+JamesBurnside@users.noreply.github.com)
+- disable tooltip for persona ([PR #1990](https://github.com/azure/communication-ui-library/pull/1990) by carolinecao@microsoft.com)
+- Making tooltips inline-block to prevent sizing and positioning issues in read receipts ([PR #2005](https://github.com/azure/communication-ui-library/pull/2005) by anjulgarg@live.com)
+- Bump @internal/acs-ui-common to v1.3.1-beta.1 ([PR #2030](https://github.com/azure/communication-ui-library/pull/2030) by beachball)
+
+### Changes
+
+- Add new prop onChange to dialpad to grab textfield values and modified onClickDialpadButton type to (buttonValue: string, buttonIndex: number) => void so we can grab info regarding which button is clicked ([PR #1989](https://github.com/azure/communication-ui-library/pull/1989) by carolinecao@microsoft.com)
+- Fix loading spinner size in small containers ([PR #1995](https://github.com/azure/communication-ui-library/pull/1995) by 2684369+JamesBurnside@users.noreply.github.com)
+- Make file sharing narrator compliant. Components contain aria labels and announcer ([PR #1960](https://github.com/azure/communication-ui-library/pull/1960) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
+
+## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.0)
+
+Mon, 13 Jun 2022 18:29:26 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.2.2-beta.1...@internal/react-components_v1.3.0)
+
+### Minor changes
+
+- Show a loading spinner when remote video stream is loading ([PR #1954](https://github.com/azure/communication-ui-library/pull/1954) by chwhilar@microsoft.com)
+- Support updateScalingMode in the VideoGallery to avoid having to destroy and recreate the stream when the localVideoViewOption scaling mode is changed ([PR #1890](https://github.com/azure/communication-ui-library/pull/1890) by 2684369+JamesBurnside@users.noreply.github.com)
+- Announce when microphone is turned on/off and video is turned on/off to screen readers and narrator tools ([PR #1772](https://github.com/azure/communication-ui-library/pull/1772) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Fix support for onDisposeLocalStreamView in `VideoGallery` ([PR #1866](https://github.com/azure/communication-ui-library/pull/1866) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixed theming of links for html and richtext/html messages in MessageThread. ([PR #1824](https://github.com/azure/communication-ui-library/pull/1824) by miguelgamis@microsoft.com)
+- Added error text color in light and dark themes in semanticColors property. ([PR #1861](https://github.com/azure/communication-ui-library/pull/1861) by 79475487+mgamis-msft@users.noreply.github.com)
+- Revert directly calling updateScalingMode in the VideoGallery VideoTiles ([PR #1957](https://github.com/azure/communication-ui-library/pull/1957) by 2684369+JamesBurnside@users.noreply.github.com)
+- Change Microphone Contextual Menu header text to Audio Device when no speakers are detected ([PR #1883](https://github.com/azure/communication-ui-library/pull/1883) by edwardlee@microsoft.com)
+- when there is no menu items, participant item should not be clickable ([PR #1844](https://github.com/azure/communication-ui-library/pull/1844) by carolinecao@microsoft.com)
+- Fix inverted host element when local video plays in picture-in-picture window ([PR #1933](https://github.com/azure/communication-ui-library/pull/1933) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Support updateScalingMode with remote video tiles ([PR #1907](https://github.com/azure/communication-ui-library/pull/1907) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add split button aria labels to the microphone and camera buttons. Remove the aria-role of menu from the split buttons. ([PR #1829](https://github.com/azure/communication-ui-library/pull/1829) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fixed chat status not annoucing on voice over on iphone bug ([PR #1939](https://github.com/azure/communication-ui-library/pull/1939) by 96077406+carocao-msft@users.noreply.github.com)
+- Delay consecutive messages in _ComplianceBanner to give user time to read the message ([PR #1878](https://github.com/azure/communication-ui-library/pull/1878) by 82062616+prprabhu-ms@users.noreply.github.com)
+- filecard should be clickable, also in mobile view when waiting in lobby, make more button disabled ([PR #1886](https://github.com/azure/communication-ui-library/pull/1886) by carolinecao@microsoft.com)
+- Disable hover behavior when no content in sendBox ([PR #1534](https://github.com/azure/communication-ui-library/pull/1534) by jiangnanhello@live.com)
+- add placeholder participant name for unnamed participants ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by carolinecao@microsoft.com)
+- Code refactor: Update remote video tile to use the useVideoStreamLifecycleMaintainer ([PR #1906](https://github.com/azure/communication-ui-library/pull/1906) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix local preview in the VideoGallery not re-rendering when localVideoViewOptions property changed ([PR #1841](https://github.com/azure/communication-ui-library/pull/1841) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix tab ordering of the New Messages button in the Chat Composite ([PR #1961](https://github.com/azure/communication-ui-library/pull/1961) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.0 ([PR #1978](https://github.com/azure/communication-ui-library/pull/1978) by beachball)
+
+### Changes
+
+- Added unit test for dialpad, disabled customization for dialpad content, allowed format customization ([PR #1937](https://github.com/azure/communication-ui-library/pull/1937) by carolinecao@microsoft.com)
+- Allow sending message without text if the sendbox contains an error free active file upload. ([PR #1814](https://github.com/azure/communication-ui-library/pull/1814) by anjulgarg@live.com)
+- Allow removal of files when editing a message  ([PR #1872](https://github.com/azure/communication-ui-library/pull/1872) by anjulgarg@live.com)
+- File download cards to use fileMetadata extension instead of parsing it from filename ([PR #1850](https://github.com/azure/communication-ui-library/pull/1850) by anjulgarg@live.com)
+- Added max height and scroll to file uploads as it was covering entire screen ([PR #1918](https://github.com/azure/communication-ui-library/pull/1918) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Created dialpad component ([PR #1870](https://github.com/azure/communication-ui-library/pull/1870) by carolinecao@microsoft.com)
+- Added new prop onDisplayDateTimeString to both messagethread and locale to allow custom date/time format on component and composite level ([PR #1863](https://github.com/azure/communication-ui-library/pull/1863) by carolinecao@microsoft.com)
+- Added Icon button for upload button, cancel file upload icon and download icon to make it tab navigable ([PR #1881](https://github.com/azure/communication-ui-library/pull/1881) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Attached files are shown while editing a message. ([PR #1864](https://github.com/azure/communication-ui-library/pull/1864) by anjulgarg@live.com)
+- Add hold button with strings and icons ([PR #1919](https://github.com/azure/communication-ui-library/pull/1919) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.2.2-beta.1)
+
+Tue, 19 Apr 2022 20:46:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.2.0...@internal/react-components_v1.2.2-beta.1)
+
+### Minor changes
+
+- Introduce strings for the new modal controls. ([PR #1718](https://github.com/azure/communication-ui-library/pull/1718) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies ([PR #1632](https://github.com/azure/communication-ui-library/pull/1632) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add aria-label for ChatMessageActionMenu button ([PR #1760](https://github.com/azure/communication-ui-library/pull/1760) by edwardlee@microsoft.com)
+- Add aria description to indicate selected camera in LocalVideoCameraButton ([PR #1794](https://github.com/azure/communication-ui-library/pull/1794) by edwardlee@microsoft.com)
+- Fixes styles to remove undesired scroll bar in context menus on messages. ([PR #1675](https://github.com/azure/communication-ui-library/pull/1675) by 94866715+dmceachernmsft@users.noreply.github.com)
+- add data-ui-id to message tooltips and contextual menu for ui tests, also sort read receipt list for contextual menu ([PR #1759](https://github.com/azure/communication-ui-library/pull/1759) by carolinecao@microsoft.com)
+- Use fela style selector ([PR #1655](https://github.com/azure/communication-ui-library/pull/1655) by jiangnanhello@live.com)
+- Memoize chat bubble to avoid unnecessary re-render ([PR #1698](https://github.com/azure/communication-ui-library/pull/1698) by jiangnanhello@live.com)
+- Left align participant pane elements in mobile and desktop ([PR #1671](https://github.com/azure/communication-ui-library/pull/1671) by edwardlee@microsoft.com)
+- Prevent prevent picture in picture from going out of screen when window is resized ([PR #1781](https://github.com/azure/communication-ui-library/pull/1781) by 2684369+JamesBurnside@users.noreply.github.com)
+- Set menu role for Split Buttons in controlBar ([PR #1782](https://github.com/azure/communication-ui-library/pull/1782) by edwardlee@microsoft.com)
+- Add tab index to local video tile through a wrapper to allow keyboard navigation of the modal controls. ([PR #1716](https://github.com/azure/communication-ui-library/pull/1716) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fixes styles for local camera switcher for better visibility on white backdrops. ([PR #1767](https://github.com/azure/communication-ui-library/pull/1767) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix A11y bug where user cannot keyboard outside of local video preview ([PR #1623](https://github.com/azure/communication-ui-library/pull/1623) by 2684369+JamesBurnside@users.noreply.github.com)
+- bugfix: Update readBy count for messages when `mobileView` is set ([PR #1746](https://github.com/azure/communication-ui-library/pull/1746) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix chevron alignment issues on message read receipt flyout. ([PR #1701](https://github.com/azure/communication-ui-library/pull/1701) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix floating local video tile going offscreen in the VideoGallery Component ([PR #1725](https://github.com/azure/communication-ui-library/pull/1725) by 2684369+JamesBurnside@users.noreply.github.com)
+- New Aria-labels added for screen reader accessibility on ErrorBar and MessageThread ([PR #1735](https://github.com/azure/communication-ui-library/pull/1735) by edwardlee@microsoft.com)
+- Changed the participant item container styles to check if participant is the user and prevent cursor change. ([PR #1690](https://github.com/azure/communication-ui-library/pull/1690) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Set overflow to hidden in PiPiP (only currently impacting end to end tests) ([PR #1761](https://github.com/azure/communication-ui-library/pull/1761) by 2684369+JamesBurnside@users.noreply.github.com)
+- fixed bug when deleting failed to send messages ([PR #1780](https://github.com/azure/communication-ui-library/pull/1780) by carolinecao@microsoft.com)
+- Add joincall failure strings to ErrorBar component ([PR #1788](https://github.com/azure/communication-ui-library/pull/1788) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update styles on new modal to use rem not px for border thickness. ([PR #1738](https://github.com/azure/communication-ui-library/pull/1738) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update chat message action button icon styles: increase contrast in dark mode for MessageThread and Chat Composites. Make icon customizable. ([PR #1798](https://github.com/azure/communication-ui-library/pull/1798) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.2.2-beta.1 ([PR #1631](https://github.com/azure/communication-ui-library/pull/1631) by beachball)
+
+### Changes
+
+- Added resend button to contextual menu ([PR #1676](https://github.com/azure/communication-ui-library/pull/1676) by carolinecao@microsoft.com)
+- change color for chat bubbles : blue when successfully sent and red when failed, added failed tag ([PR #1681](https://github.com/azure/communication-ui-library/pull/1681) by carolinecao@microsoft.com)
+- fetch read receipt when participant join the chat, also not show read receipt info when having more than 20 participant ([PR #1639](https://github.com/azure/communication-ui-library/pull/1639) by carolinecao@microsoft.com)
+- Bugfix for inconsistent fileupload sendbox errors ([PR #1673](https://github.com/azure/communication-ui-library/pull/1673) by anjulgarg@live.com)
+- Add default file download renderers to MessageThread ([PR #1790](https://github.com/azure/communication-ui-library/pull/1790) by anjulgarg@live.com)
+- Preventing text wrapping in file card due to long file names ([PR #1651](https://github.com/azure/communication-ui-library/pull/1651) by anjulgarg@live.com)
+- Bugfix for text wrapping onto next line in file card ([PR #1684](https://github.com/azure/communication-ui-library/pull/1684) by anjulgarg@live.com)
+- API fix: Hide FileSharing API from stable build ([PR #1744](https://github.com/azure/communication-ui-library/pull/1744) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Making File Card consistent with Figma Designs ([PR #1765](https://github.com/azure/communication-ui-library/pull/1765) by anjulgarg@live.com)
+- calculate read number and who has read the message on hover tooltip or on click action menu ([PR #1691](https://github.com/azure/communication-ui-library/pull/1691) by carolinecao@microsoft.com)
+- FileCard: Do not show progress bar when progress is 0 ([PR #1622](https://github.com/azure/communication-ui-library/pull/1622) by anjulgarg@live.com)
+- Introduces A11y strings for aria-roles for control bar buttons. ([PR #1628](https://github.com/azure/communication-ui-library/pull/1628) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.2.0](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.2.0)
 

@@ -2,6 +2,13 @@
 // Licensed under the MIT license.
 
 /**
+ * Scaling mode of a {@link VideoGalleryStream}.
+ *
+ * @public
+ */
+export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+/**
  * Options to control how video streams are rendered.
  *
  * @public
@@ -10,7 +17,7 @@ export declare interface VideoStreamOptions {
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
   /** Scaling mode. It can be `Stretch`, `Crop` or `Fit` */
-  scalingMode?: 'Stretch' | 'Crop' | 'Fit';
+  scalingMode?: ViewScalingMode;
 }
 
 /**
@@ -41,10 +48,29 @@ export interface VideoGalleryStream {
   id?: number;
   /** Whether the video stream is available or not */
   isAvailable?: boolean;
+  /** Whether the video stream is receiving data or not */
+  isReceiving?: boolean;
   /** Whether the video stream is mirrored or not */
   isMirrored?: boolean;
   /** Render element of the video stream */
   renderElement?: HTMLElement;
+}
+
+/**
+ * Object returned after creating a local or remote VideoStream.
+ * This contains helper functions to manipulate the render of the stream.
+ *
+ * @public
+ */
+export interface CreateVideoStreamViewResult {
+  /** View handle of the rendered video stream */
+  view: {
+    /**
+     * Update the scale mode for this view.
+     * @param scalingMode - The new scale mode.
+     */
+    updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void>;
+  };
 }
 
 // set the required attribs in selector. (Further simplifying our component logic) For example
@@ -66,4 +92,16 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   isSpeaking?: boolean;
   /** Video stream of shared screen */
   screenShareStream?: VideoGalleryStream;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * @beta
+   * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
+   */
+  state?: VideoGalleryRemoteParticipantState;
 }
+
+/**
+ * @beta
+ * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
+ */
+export declare type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';

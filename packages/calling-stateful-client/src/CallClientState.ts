@@ -106,6 +106,12 @@ export interface RemoteVideoStreamState {
    */
   isAvailable: boolean;
   /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
+   * @beta
+   */
+  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
+  isReceiving: boolean;
+  /**
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
@@ -113,11 +119,8 @@ export interface RemoteVideoStreamState {
 }
 
 /**
- * State only version of {@link @azure/communication-calling#VideoStreamRendererView}. Currently no API is provided to
- * modify scalingMode after the stream as been rendered by {@link StatefulCallClient}. In order to change scalingMode
- * stop rendering the stream and re-start it using the desired scalingMode. This property is added to the state exposed
- * by {@link StatefulCallClient} by {@link StatefulCallClient.createView} and removed by
- * {@link StatefulCallClient.disposeView}.
+ * State only version of {@link @azure/communication-calling#VideoStreamRendererView}. This property is added to the state exposed
+ * by {@link StatefulCallClient} by {@link StatefulCallClient.createView} and removed by {@link StatefulCallClient.disposeView}.
  *
  * @public
  */
@@ -408,6 +411,13 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format that will be used to represent callers identity.
+   * For example, using the alternateCallerId to add a participant using PSTN, this number will
+   * be used as the caller id in the PSTN call.
+   */
+  alternateCallerId?: string;
 }
 
 /**
@@ -468,16 +478,20 @@ export type CallErrorTarget =
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio'
   | 'Call.off'
   | 'Call.on'
   | 'Call.removeParticipant'
   | 'Call.resume'
   | 'Call.sendDtmf'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio'
   | 'Call.startScreenSharing'
   | 'Call.startVideo'
   | 'Call.stopScreenSharing'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
   | 'CallAgent.join'
@@ -487,6 +501,7 @@ export type CallErrorTarget =
   | 'CallClient.createCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -494,7 +509,9 @@ export type CallErrorTarget =
   | 'DeviceManager.off'
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
-  | 'DeviceManager.selectSpeaker';
+  | 'DeviceManager.selectSpeaker'
+  | 'IncomingCall.accept'
+  | 'IncomingCall.reject';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

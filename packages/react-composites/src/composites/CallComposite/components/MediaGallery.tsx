@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -9,9 +9,7 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 
 const VideoGalleryStyles = {
@@ -48,17 +46,23 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
       ...cameraSwitcherCameras
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
+
+  const onRenderAvatar = useCallback(
+    (userId, options) => (
+      <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+      </Stack>
+    ),
+    [props.onFetchAvatarPersonaData]
+  );
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
@@ -69,24 +73,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
-        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         showCameraSwitcherInLocalPreview={props.isMobile}
-        /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={(userId, options) => (
-          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          </Stack>
-        )}
+        onRenderAvatar={onRenderAvatar}
       />
     );
-  }, [
-    videoGalleryProps,
-    props.isMobile,
-    props.onFetchAvatarPersonaData,
-    /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(local-camera-switcher) */
-    cameraSwitcherProps
-  ]);
+  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 
   return VideoGalleryMemoized;
 };

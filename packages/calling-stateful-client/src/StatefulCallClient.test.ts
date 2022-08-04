@@ -89,6 +89,18 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  test('should update CallClient state and have alternateCallerId set when callAgent is created', async () => {
+    const phoneNumber = '+15555555';
+    const userId: CommunicationUserKind = { kind: 'communicationUser', communicationUserId: 'someUser' };
+    const client = createStatefulCallClientWithDeps(
+      createMockCallClient(),
+      new CallContext(userId, undefined, phoneNumber),
+      new InternalCallContext()
+    );
+    expect(client.getState().alternateCallerId).toEqual(phoneNumber);
+  });
+
   test('should update call in state when new call is added and removed', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
@@ -153,8 +165,7 @@ describe('Stateful call client', () => {
           () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length !== 0
         )
       ).toBe(true);
-      // FIXME: There should be only one event triggered here.
-      expect(listener.onChangeCalledCount).toBe(2);
+      expect(listener.onChangeCalledCount).toBe(1);
     }
     {
       expect(Object.keys(client.getState().calls[callId]?.remoteParticipantsEnded ?? {}).length).toBe(0);
@@ -166,7 +177,6 @@ describe('Stateful call client', () => {
         )
       ).toBe(true);
       expect(Object.keys(client.getState().calls[callId]?.remoteParticipantsEnded ?? {}).length).toBe(1);
-      // FIXME: There should be only one event triggered here.
       expect(listener.onChangeCalledCount).toBe(2);
     }
   });
@@ -239,8 +249,7 @@ describe('Stateful call client', () => {
       expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length === 0)).toBe(
         true
       );
-      // FIXME: Should generate only one event.
-      expect(listener.onChangeCalledCount).toBe(2);
+      expect(listener.onChangeCalledCount).toBe(1);
     }
   });
 
@@ -284,8 +293,7 @@ describe('Stateful call client', () => {
               .length === 0
         )
       ).toBe(true);
-      // FIXME: This should generate only one event.
-      expect(listener.onChangeCalledCount).toBe(2);
+      expect(listener.onChangeCalledCount).toBe(1);
     }
   });
 

@@ -70,6 +70,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       hidePersonaDetails: true,
       size: PersonaSize.size24,
       text: person.displayName,
+      showOverflowTooltip: false,
       styles: {
         root: {
           margin: '0.25rem'
@@ -93,8 +94,11 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     const items: IContextualMenuItem[] = [
       {
         key: 'Edit',
+        'data-ui-id': 'chat-composite-message-contextual-menu-edit-action',
         text: props.strings.editMessage,
-        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
+        itemProps: {
+          styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
+        },
         iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
         onClick: props.onEditClick
       },
@@ -223,21 +227,16 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       onDismiss={props.onDismiss}
       directionalHint={DirectionalHint.topRightEdge}
       className={chatMessageMenuStyle}
+      calloutProps={preventUnwantedDismissProps}
     />
   );
 };
 
+/**
+ * Similar to {@link preventDismissOnEvent}, but not prevent dismissing from scrolling, since it is causing bugs in chat thread.
+ */
 const preventUnwantedDismissProps = {
-  // Disable dismiss on resize to work around a couple Fluent UI bugs
-  // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
-  //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
-  //   by the headless SDK.
-  // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
-  //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
-  //   deterministically avoid dismissal.
-  //
-  // A side effect of this workaround is that the context menu stays open when window is resized, and may
-  // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-  // The Callout (frequently) gets dismissed automatically.
-  preventDismissOnResize: true
+  preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent): boolean => {
+    return ev.type === 'resize';
+  }
 };

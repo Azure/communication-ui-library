@@ -6,7 +6,8 @@ import {
   participantListMobileStyle,
   participantListStack,
   participantListStyle,
-  participantListWrapper
+  participantListWrapper,
+  displayNameStyles
 } from './styles/ParticipantContainer.styles';
 import {
   OnRenderAvatarCallback,
@@ -14,7 +15,7 @@ import {
   ParticipantListProps,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import { FocusZone, Stack, useTheme } from '@fluentui/react';
+import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 type ParticipantContainerProps = {
@@ -30,8 +31,10 @@ type ParticipantContainerProps = {
  * @private
  */
 export const ParticipantContainer = (props: ParticipantContainerProps): JSX.Element => {
+  const theme = useTheme();
+  const participantListWrapperClassName = useMemo(() => participantListWrapper(theme), [theme]);
   return (
-    <Stack className={participantListWrapper}>
+    <Stack className={participantListWrapperClassName}>
       <ParticipantListWithHeading {...props} />
     </Stack>
   );
@@ -68,14 +71,23 @@ export const ParticipantListWithHeading = (props: {
           {...participantListProps}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
           onRenderAvatar={(userId, options) => (
-            <AvatarPersona
-              data-ui-id="chat-composite-participant-custom-avatar"
-              userId={userId}
-              {...options}
-              dataProvider={onFetchAvatarPersonaData}
-            />
+            <>
+              <AvatarPersona
+                data-ui-id="chat-composite-participant-custom-avatar"
+                userId={userId}
+                {...options}
+                {...{ hidePersonaDetails: !!options?.text }}
+                dataProvider={onFetchAvatarPersonaData}
+              />
+              {options?.text && (
+                <Text nowrap={true} styles={displayNameStyles}>
+                  {options?.text}
+                </Text>
+              )}
+            </>
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          showParticipantOverflowTooltip={!props.isMobile}
         />
       </FocusZone>
     </Stack>

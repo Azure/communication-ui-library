@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-117 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,17 +21,17 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
       }
     >
       <div
-        className="ms-Stack css-7"
+        className="ms-Stack stub-classname"
         data-ui-id="video-tile"
       >
         <div
-          className="css-4"
+          className="stub-classname"
         />
         <div
-          className="ms-Stack css-8"
+          className="ms-Stack stub-classname"
         />
         <div
-          className="ms-Stack css-9"
+          className="ms-Stack stub-classname"
         >
           <div
             style={
@@ -86,22 +86,27 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             </p>
           </div>
           <div
-            className="css-11"
+            className="stub-classname"
           >
             <div
-              className="ms-Stack css-12"
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-TooltipHost root-13"
+                aria-live="polite"
+                className="ms-Stack stub-classname"
+              />
+              <div
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Turn off camera"
-                  className="ms-Button ms-Button--default is-checked root-14"
+                  className="ms-Button ms-Button--default is-checked stub-classname"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -112,12 +117,12 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   type="button"
                 >
                   <span
-                    className="ms-Button-flexContainer flexContainer-15"
+                    className="ms-Button-flexContainer stub-classname"
                     data-automationid="splitbuttonprimary"
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-23"
+                      className="stub-classname"
                       data-icon-name="ControlButtonCameraOn"
                     >
                       <span
@@ -142,10 +147,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="ms-Button-textContainer textContainer-16"
+                      className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label label-18"
+                        className="ms-Button-label stub-classname"
                         id="id__2"
                       >
                         Turn off
@@ -153,7 +158,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-24 ms-Button-menuIcon menuIcon-19"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -168,16 +173,21 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </button>
               </div>
               <div
-                className="ms-TooltipHost root-13"
+                aria-live="polite"
+                className="ms-Stack stub-classname"
+              />
+              <div
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Mute microphone"
-                  className="ms-Button ms-Button--default is-checked root-14"
+                  className="ms-Button ms-Button--default is-checked stub-classname"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -188,12 +198,12 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   type="button"
                 >
                   <span
-                    className="ms-Button-flexContainer flexContainer-15"
+                    className="ms-Button-flexContainer stub-classname"
                     data-automationid="splitbuttonprimary"
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-23"
+                      className="stub-classname"
                       data-icon-name="ControlButtonMicOn"
                     >
                       <span
@@ -218,10 +228,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="ms-Button-textContainer textContainer-16"
+                      className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label label-18"
+                        className="ms-Button-label stub-classname"
                         id="id__6"
                       >
                         Mute
@@ -229,7 +239,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-24 ms-Button-menuIcon menuIcon-19"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -244,16 +254,17 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </button>
               </div>
               <div
-                className="ms-TooltipHost root-13"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Manage devices"
-                  className="ms-Button ms-Button--default root-25"
+                  className="ms-Button ms-Button--default stub-classname"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -264,12 +275,12 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   type="button"
                 >
                   <span
-                    className="ms-Button-flexContainer flexContainer-15"
+                    className="ms-Button-flexContainer stub-classname"
                     data-automationid="splitbuttonprimary"
                   >
                     <i
                       aria-hidden={true}
-                      className="root-105 root-23"
+                      className="stub-classname"
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -291,10 +302,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="ms-Button-textContainer textContainer-16"
+                      className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label label-18"
+                        className="ms-Button-label stub-classname"
                         id="id__10"
                       >
                         Devices
@@ -302,7 +313,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-105 css-24 ms-Button-menuIcon menuIcon-26"
+                      className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -317,16 +328,17 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </button>
               </div>
               <div
-                className="ms-TooltipHost root-13"
+                className="ms-TooltipHost root-105"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
                 onKeyDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="none"
               >
                 <button
                   aria-label="Leave Call"
-                  className="ms-Button ms-Button--default root-27"
+                  className="ms-Button ms-Button--default stub-classname"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -343,7 +355,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   type="button"
                 >
                   <span
-                    className="ms-Button-flexContainer flexContainer-15"
+                    className="ms-Button-flexContainer stub-classname"
                     data-automationid="splitbuttonprimary"
                   >
                     <i
@@ -370,10 +382,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="ms-Button-textContainer textContainer-16"
+                      className="ms-Button-textContainer stub-classname"
                     >
                       <span
-                        className="ms-Button-label label-28"
+                        className="ms-Button-label stub-classname"
                         id="id__14"
                       >
                         Leave

@@ -7,7 +7,6 @@ import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
-  ChatParticipant,
   ChatThreadCreatedEvent,
   ChatThreadDeletedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -15,8 +14,9 @@ import {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
-} from '@azure/communication-signaling';
-import { createStatefulChatClientWithDeps } from './StatefulChatClient';
+} from '@azure/communication-chat';
+import { ChatParticipant as SignalingChatParticipant } from '@azure/communication-signaling';
+import { _createStatefulChatClientWithDeps } from './StatefulChatClient';
 import { ChatClientState, ChatError } from './ChatClientState';
 import { Constants } from './Constants';
 import {
@@ -31,7 +31,7 @@ import {
 
 jest.useFakeTimers();
 
-const mockParticipants: ChatParticipant[] = [
+const mockParticipants: SignalingChatParticipant[] = [
   { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: 'user1' },
   { id: { kind: 'communicationUser', communicationUserId: 'user2' }, displayName: 'user1' }
 ];
@@ -349,7 +349,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     expect(client.listChatThreads).toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
   });
 
@@ -358,7 +358,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
       return failingPagedAsyncIterator(new Error('injected error'));
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     const iter = client.listChatThreads();
     await expect(iter.next()).rejects.toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
     await expect(iter.byPage().next()).rejects.toThrow(
@@ -371,7 +371,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.createChatThread = async () => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     await expect(client.createChatThread({ topic: '' })).rejects.toThrow(
       new ChatError('ChatClient.createChatThread', new Error('injected error'))
     );
@@ -382,7 +382,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.deleteChatThread = async () => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     await expect(client.deleteChatThread('')).rejects.toThrow(
       new ChatError('ChatClient.deleteChatThread', new Error('injected error'))
     );
@@ -393,7 +393,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.startRealtimeNotifications = async () => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     await expect(client.startRealtimeNotifications()).rejects.toThrow(
       new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
     );
@@ -404,7 +404,7 @@ describe('stateful wraps thrown error', () => {
     baseClient.stopRealtimeNotifications = async () => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     await expect(client.stopRealtimeNotifications()).rejects.toThrow(
       new ChatError('ChatClient.stopRealtimeNotifications', new Error('injected error'))
     );
@@ -417,7 +417,7 @@ describe('stateful chatClient tees errors to state', () => {
     baseClient.startRealtimeNotifications = async () => {
       throw Error('injected error');
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     const listener = new StateChangeListener(client);
     await expect(client.startRealtimeNotifications()).rejects.toThrow();
     expect(listener.onChangeCalledCount).toBe(1);
@@ -434,7 +434,7 @@ describe('complex error handling for startRealtimeNotifications', () => {
       errorCount++;
       throw Error(`injected error #${errorCount}`);
     };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const client = _createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     const listener = new StateChangeListener(client);
 
     // Generate two errors.

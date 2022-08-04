@@ -1,23 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-import { generateCustomButtons } from './buttons/Custom';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
+import { ContainerRectProps } from '../../common/ContainerRectProps';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { People } from './buttons/People';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { useLocale } from '../../localization';
 
 /**
  * @private
  */
 export type CallControlsProps = {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  peopleButtonChecked?: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
@@ -26,15 +36,36 @@ export type CallControlsProps = {
    * Recommended for mobile devices.
    */
   increaseFlyoutItemSize?: boolean;
+  isMobile?: boolean;
 };
+
+// Enforce a background color on control bar to ensure it matches the composite background color.
+const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
 
 /**
  * @private
  */
-export const CallControls = (props: CallControlsProps): JSX.Element => {
+export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const localeStrings = useLocale();
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const peopleButtonStrings = useMemo(
+    () => ({
+      label: localeStrings.strings.callWithChat.peopleButtonLabel,
+      tooltipOffContent: localeStrings.strings.callWithChat.peopleButtonTooltipOpen,
+      tooltipOnContent: localeStrings.strings.callWithChat.peopleButtonTooltipClose
+    }),
+    [localeStrings]
+  );
+
+  const theme = useTheme();
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
-    () => generateCustomButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
 
@@ -53,33 +84,37 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal">
-          {customButtons['first']}
+        <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
           {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
-          {customButtons['afterMicrophoneButton']}
           {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
-          {customButtons['afterCameraButton']}
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {customButtons['afterScreenShareButton']}
           {isEnabled(options?.participantsButton) && (
-            <Participants
-              option={options?.participantsButton}
-              callInvitationURL={props.callInvitationURL}
-              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              displayType={options?.displayType}
-              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-            />
-          )}
-          {customButtons['afterParticipantsButton']}
+              <Participants
+                option={options?.participantsButton}
+                callInvitationURL={props.callInvitationURL}
+                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+                displayType={options?.displayType}
+                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+                isMobile={props.isMobile}
+              />
+            ) && (
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+              <People
+                checked={props.peopleButtonChecked}
+                showLabel={options?.displayType !== 'compact'}
+                onClick={props.onPeopleButtonClicked}
+                data-ui-id="call-with-chat-composite-people-button"
+                disabled={isDisabled(options?.participantsButton)}
+                strings={peopleButtonStrings}
+              />
+            )}
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
-          {customButtons['afterDevicesButton']}
+          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
-          {customButtons['afterEndCallButton']}
-          {customButtons['last']}
         </ControlBar>
       </Stack.Item>
     </Stack>
@@ -87,12 +122,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  /* @conditional-compile-remove(control-bar-button-injection) */
-  response = options?.onFetchCustomButtonProps;
-  return response;
+/* @conditional-compile-remove(one-to-n-calling) */
+const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
+  if (option === undefined || option === true || option === false) {
+    return false;
+  }
+  return option.disabled;
 };

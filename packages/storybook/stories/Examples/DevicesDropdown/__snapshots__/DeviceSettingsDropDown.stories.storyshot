@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-117 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,14 +21,14 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       }
     >
       <div
-        className="ms-Stack css-1"
+        className="ms-Stack stub-classname"
       >
         <div
-          className="css-117 body-0"
+          className="stub-classname stub-classname"
           dir="ltr"
         >
           <div
-            className="css-117"
+            className="stub-classname"
             data-uses-unhanded-props={true}
           >
             <div
@@ -37,7 +37,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                className="ms-Dropdown dropdown-2"
+                className="ms-Dropdown stub-classname"
                 data-is-focusable={true}
                 data-ktp-target={true}
                 id="Dropdown2"
@@ -58,20 +58,18 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 tabIndex={0}
               >
                 <span
-                  aria-atomic={true}
                   aria-invalid={false}
-                  aria-live="polite"
-                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
+                  className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder stub-classname"
                   id="Dropdown2-option"
                 >
                   Select an option
                 </span>
                 <span
-                  className="ms-Dropdown-caretDownWrapper caretDownWrapper-4"
+                  className="ms-Dropdown-caretDownWrapper stub-classname"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-105 ms-Dropdown-caretDown caretDown-19"
+                    className="ms-Dropdown-caretDown stub-classname"
                     data-icon-name="ChevronDown"
                   >
                     

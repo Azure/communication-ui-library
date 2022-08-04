@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
@@ -19,6 +19,13 @@ import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
 import { MoreButton } from './MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { ContainerRectProps } from '../common/ContainerRectProps';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatControlBarButton,
+  onFetchCustomButtonPropsTrampoline
+} from './CustomButton';
 
 /**
  * @private
@@ -60,7 +67,7 @@ const inferCallWithChatControlOptions = (
 /**
  * @private
  */
-export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.Element => {
+export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
@@ -88,10 +95,15 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
     [callWithChatStrings]
   );
 
-  const centerContainerStyles = useMemo(
-    () => (!props.mobileView ? desktopControlBarStyles : undefined),
-    [props.mobileView]
-  );
+  const centerContainerStyles = useMemo(() => {
+    const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
+    return mergeStyleSets(styles, {
+      root: {
+        // Enforce a background color on control bar to ensure it matches the composite background color.
+        background: theme.semanticColors.bodyBackground
+      }
+    });
+  }, [props.mobileView, theme.semanticColors.bodyBackground]);
   const screenShareButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopScreenShareButtonStyles(theme) : undefined),
     [props.mobileView, theme]
@@ -103,6 +115,15 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
   const endCallButtonStyles = useMemo(
     () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
     [props.mobileView, theme]
+  );
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  const customButtons = useMemo(
+    () =>
+      generateCustomCallWithChatControlBarButton(
+        onFetchCustomButtonPropsTrampoline(options !== false ? options : undefined),
+        options !== false ? options?.displayType : undefined
+      ),
+    [options]
   );
 
   // when options is false then we want to hide the whole control bar.
@@ -160,11 +181,33 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
                     styles={screenShareButtonStyles}
                   />
                 )}
+                {
+                  /* @conditional-compile-remove(control-bar-button-injection) */
+                  customButtons['primary']?.props.children
+                    .slice(
+                      0,
+                      props.mobileView
+                        ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                        : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+                    )
+                    .map((element) => {
+                      return (
+                        <element.type
+                          {...element.props}
+                          key={element.props.strings.label}
+                          styles={commonButtonStyles}
+                          displayType={options.displayType}
+                          showLabel={options.displayType !== 'compact'}
+                        />
+                      );
+                    })
+                }
                 {props.mobileView && (
                   <MoreButton
                     data-ui-id="call-with-chat-composite-more-button"
                     strings={moreButtonStrings}
                     onClick={props.onMoreButtonClicked}
+                    disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
@@ -175,10 +218,26 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps): JSX.
       </Stack.Item>
       {!props.mobileView && (
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+          {
+            /* @conditional-compile-remove(control-bar-button-injection) */
+            customButtons['secondary']?.props.children
+              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+              .map((element) => {
+                return (
+                  <element.type
+                    {...element.props}
+                    key={element.props.key}
+                    styles={commonButtonStyles}
+                    displayType={options.displayType}
+                    showLabel={options.displayType !== 'compact'}
+                  />
+                );
+              })
+          }
           {isEnabled(options?.peopleButton) && (
             <PeopleButton
               checked={props.peopleButtonChecked}
-              showLabel={true}
+              showLabel={options.displayType !== 'compact'}
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}

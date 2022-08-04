@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { ControlBarButtonStyles } from './ControlBarButton';
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
+import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -30,34 +29,44 @@ export interface MicrophoneButtonStrings {
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
   tooltipOffContent?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of microphone menu
    */
   microphoneMenuTitle?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Title of speaker menu
    */
   speakerMenuTitle?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of microphone menu
    */
   microphoneMenuTooltip?: string;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Tooltip of speaker menu
    */
   speakerMenuTooltip?: string;
-  /* @conditional-compile-remove(control-bar-split-buttons) */
   /**
-   * description of microphone button split button role
+   * Description of microphone button split button role
    */
   microphoneButtonSplitRoleDescription?: string;
+  /**
+   * Microphone split button aria label when mic is enabled.
+   */
+  onSplitButtonAriaLabel?: string;
+  /**
+   * Microphone split button aria label when mic is disabled.
+   */
+  offSplitButtonAriaLabel?: string;
+  /**
+   * Microphone action turned on string for announcer
+   */
+  microphoneActionTurnedOnAnnouncement?: string;
+  /**
+   * Microphone action turned off string for announcer
+   */
+  microphoneActionTurnedOffAnnouncement?: string;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for {@link MicrophoneButton}
  *
@@ -70,7 +79,6 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
   menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
-/* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
 /**
  * Styles for the {@link MicrophoneButton} menu.
  *
@@ -94,37 +102,30 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available microphones for selection
    */
   microphones?: OptionsDevice[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Available speakers for selection
    */
   speakers?: OptionsDevice[];
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Microphone that is shown as currently selected
    */
   selectedMicrophone?: OptionsDevice;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker that is shown as currently selected
    */
   selectedSpeaker?: OptionsDevice;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Callback when a microphone is selected
    */
   onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Speaker when a speaker is selected
    */
   onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Whether to use a {@link SplitButton} with a {@link IContextualMenu} for device selection.
    *
@@ -135,7 +136,6 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<MicrophoneButtonStrings>;
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
   /**
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
@@ -150,49 +150,82 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
  * @public
  */
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
+  const { onToggleMicrophone } = props;
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
 
-  const onRenderMicOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />
+  const isSplit = props.split ?? props.enableDeviceSelectionMenu;
+
+  // The button should be disabled when there are no mics. However if the button is a split button, if there are
+  // no mics but there are speakers, then only the primary part of the button should be disabled to allow for
+  // speaker change.
+  const primaryDisabled = props.primaryDisabled || (isSplit && !props.microphones?.length ? true : undefined);
+  let disabled =
+    props.disabled ||
+    (isSplit && !props.microphones?.length && !props.speakers?.length) ||
+    (!isSplit && props.microphones && props.microphones?.length === 0);
+
+  /* @conditional-compile-remove(rooms) */
+  disabled = !_usePermissions().microphoneButton || disabled;
+
+  const onRenderMicOnIcon = (): JSX.Element => {
+    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;
+  };
+  const onRenderMicOffIcon = (): JSX.Element => {
+    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
+  };
+
+  const isMicOn = props.checked;
+
+  const splitButtonAriaString = isMicOn ? strings.onSplitButtonAriaLabel : strings.offSplitButtonAriaLabel;
+
+  const toggleAnnouncerString = useCallback(
+    (isMicOn: boolean) => {
+      setAnnouncerString(
+        !isMicOn ? strings.microphoneActionTurnedOffAnnouncement : strings.microphoneActionTurnedOnAnnouncement
+      );
+    },
+    [strings.microphoneActionTurnedOffAnnouncement, strings.microphoneActionTurnedOnAnnouncement]
   );
-  const onRenderMicOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />
-  );
+
+  const onToggleClick = useCallback(async () => {
+    if (onToggleMicrophone) {
+      try {
+        await onToggleMicrophone();
+        // allows for the setting of narrator strings triggering the announcer when microphone is turned on or off.
+        toggleAnnouncerString(!isMicOn);
+        // eslint-disable-next-line no-empty
+      } finally {
+      }
+    }
+  }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
   return (
-    <ControlBarButton
-      {...props}
-      onClick={props.onToggleMicrophone ?? props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'microphoneButtonLabel'}
-      menuProps={props.menuProps ?? generateDefaultDeviceMenuPropsTrampoline(props, strings)}
-      menuIconProps={props.menuIconProps ?? !enableDeviceSelectionMenuTrampoline(props) ? { hidden: true } : undefined}
-      split={props.split ?? enableDeviceSelectionMenuTrampoline(props)}
-      ariaDescription={
-        enableDeviceSelectionMenuTrampoline(props) ? strings.microphoneButtonSplitRoleDescription : undefined
-      }
-    />
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <ControlBarButton
+        {...props}
+        onClick={props.onToggleMicrophone ? onToggleClick : props.onClick}
+        onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
+        onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'microphoneButtonLabel'}
+        menuProps={
+          props.menuProps ??
+          (props.enableDeviceSelectionMenu
+            ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
+            : undefined)
+        }
+        menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
+        split={props.split ?? props.enableDeviceSelectionMenu}
+        aria-roledescription={
+          props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
+        }
+        splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
+        disabled={disabled}
+        primaryDisabled={primaryDisabled}
+      />
+    </>
   );
-};
-
-const generateDefaultDeviceMenuPropsTrampoline = (
-  props: MicrophoneButtonProps,
-  strings: MicrophoneButtonStrings
-): IContextualMenuProps | undefined => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
-  }
-  return undefined;
-};
-
-const enableDeviceSelectionMenuTrampoline = (props: MicrophoneButtonProps): boolean => {
-  /* @conditional-compile-remove(call-with-chat-composite) @conditional-compile-remove(control-bar-split-buttons) */
-  if (props.enableDeviceSelectionMenu) {
-    return true;
-  }
-  return false;
 };

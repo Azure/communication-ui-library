@@ -67,6 +67,7 @@ const PictureInPictureInPictureContainer = (props: {
 }): JSX.Element => {
   const onKeyPress = (e: React.KeyboardEvent<HTMLElement>): void =>
     props.onClick && submitWithKeyboard(e, props.onClick);
+
   return (
     <aside
       style={tileContainerStyles}

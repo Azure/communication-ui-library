@@ -120,6 +120,12 @@ export interface ErrorBarStrings {
   callMicrophoneMutedBySystem: string;
 
   /**
+   * Message shown when microphone is unmuted by the system (not by local or remote participants).
+   * This typically occurs if the system recovers from an unexpected mute.
+   */
+  callMicrophoneUnmutedBySystem: string;
+
+  /**
    * Mac OS specific message shown when microphone can be enumerated but access is
    * blocked by the system.
    */
@@ -142,6 +148,16 @@ export interface ErrorBarStrings {
   callCameraAlreadyInUse: string;
 
   /**
+   * Message shown when local video is stopped by the system (not by local or remote participants)
+   */
+  callVideoStoppedBySystem: string;
+
+  /**
+   * Message shown when local video was recovered by the system (not by the local participant)
+   */
+  callVideoRecoveredBySystem: string;
+
+  /**
    * Mac OS specific message shown when system denies access to camera.
    */
   callMacOsCameraAccessDenied: string;
@@ -153,17 +169,17 @@ export interface ErrorBarStrings {
   /**
    * Dimiss errorbar button aria label read by screen reader accessibility tools
    */
-  dismissButtonAriaLabel: string;
+  dismissButtonAriaLabel?: string;
 
   /**
    * An error message when joining a call fails.
    */
-  failedToJoinCallGeneric: string;
+  failedToJoinCallGeneric?: string;
 
   /**
    * An error message when joining a call fails specifically due to an invalid meeting link.
    */
-  failedToJoinCallInvalidMeetingLink: string;
+  failedToJoinCallInvalidMeetingLink?: string;
 }
 
 /**
@@ -226,11 +242,28 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
       {toShow.map((error) => (
         <MessageBar
           {...props}
+          styles={{
+            innerText: {
+              paddingTop: messageBarType(error.type) === 5 ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
+              lineHeight: 'none'
+            },
+            icon: {
+              height: 0
+            },
+            content: {
+              lineHeight: 'inherit'
+            },
+            dismissal: {
+              height: 0,
+              paddingTop: '0.8rem'
+            }
+          }}
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
           dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}
         </MessageBar>
@@ -324,10 +357,13 @@ const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callNoMicrophoneFound':
     case 'callMicrophoneAccessDenied':
     case 'callMicrophoneMutedBySystem':
+    case 'callMicrophoneUnmutedBySystem':
     case 'callMacOsMicrophoneAccessDenied':
     case 'callLocalVideoFreeze':
     case 'callCameraAccessDenied':
     case 'callCameraAlreadyInUse':
+    case 'callVideoStoppedBySystem':
+    case 'callVideoRecoveredBySystem':
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
       return MessageBarType.warning;
@@ -347,9 +383,12 @@ const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
   callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
+  callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
   callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
   callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
   callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
+  callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
+  callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };

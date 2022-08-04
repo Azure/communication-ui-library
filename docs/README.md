@@ -33,9 +33,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 
 ## References
 
-- [Creating a new npm package release](./references/creating-a-release.md) - Instructions on creating new npm releases
-- [Release checklist](./references/release-checklist.md)
-- [Tips for writing a change file](./references/tips-for-writing-changelog-entries.md)
-- [Pruning a changelog before release](./references/pruning-a-changelog.md)
-- [Updating npm publishing credentials](./references/updating-npm-publishing-credentials.md)
-- [UI Tests and how to run them locally](./references/ui-tests.md)
+- [Package releases](./releases/README.md) - Process for releasing new versions of packages developed in this repo
+- [Automated tests help us move fast](./references/automated-tests.md)
+- [Reviewer notes](./reviewer-notes/README.md) - Common guidelines gleaned through code reviews
+- [Hero sample maintenance](./releases/hero-samples.md) - When and how to update hero samples

@@ -10,7 +10,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
       features: [
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
-        'calling-1.4.3-beta.1',
+        'calling-beta-sdk',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
         // API for injecting custom buttons in he control bar for
@@ -23,21 +23,26 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'file-sharing',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
+        // PSTN calls 
+        'PSTN-calls',
+        // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
+        'date-time-customization',
+        // 1 to N Calling feature.
+        'one-to-n-calling',
+        // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
+        'video-stream-is-receiving-flag',
+        // dialpad
+        'dialpad',
+        // rooms
+        'rooms'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
       // causing a build failure, but they are ignored by the preprocessing step.
       stabilizedFeatures: [
-        'call-with-chat-composite',
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
-        // Split buttons in control bar. These are used by `call-with-chat-composite` feature.
-        // Perhaps we should merge this into the `call-with-chat-composite` feature?
-        'control-bar-split-buttons',
-        // Camera switcher in the local video preview tile. These are used by `call-with-chat-composite` feature.
-        // Perhaps we should merge this into the `call-with-chat-composite` feature?
-        'local-camera-switcher',
       ]
      }
   ]);

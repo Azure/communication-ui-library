@@ -23,7 +23,6 @@ console.info(`Build Date : ${getBuildTime()}`);
 initializeIcons();
 initializeFileTypeIcons();
 
-const ERROR_PAGE_TITLE_ERROR = 'Oops! You are no longer a participant for the chat thread.';
 const ERROR_PAGE_TITLE_REMOVED = 'You have been removed from the chat.';
 
 const webAppTitle = document.title;
@@ -36,7 +35,7 @@ export default (): JSX.Element => {
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
 
-  const getComponent = (): JSX.Element => {
+  const renderPage = (): JSX.Element => {
     switch (page) {
       case 'home': {
         document.title = `home - ${webAppTitle}`;
@@ -74,9 +73,6 @@ export default (): JSX.Element => {
                   setPage('end');
                 }
               }}
-              errorHandler={() => {
-                setPage('error');
-              }}
             />
           );
         }
@@ -109,17 +105,6 @@ export default (): JSX.Element => {
           />
         );
       }
-      case 'error': {
-        document.title = `error - ${webAppTitle}`;
-        return (
-          <ErrorScreen
-            title={ERROR_PAGE_TITLE_ERROR}
-            homeHandler={() => {
-              window.location.href = window.location.origin;
-            }}
-          />
-        );
-      }
       default:
         document.title = `error - ${webAppTitle}`;
         throw new Error('Page type not recognized');
@@ -130,5 +115,5 @@ export default (): JSX.Element => {
     setPage('configuration');
   }
 
-  return getComponent();
+  return renderPage();
 };

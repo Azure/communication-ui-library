@@ -1,11 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
-import React, { useEffect, useRef } from 'react';
-import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
+import { mergeStyles, Spinner } from '@fluentui/react';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  invertedVideoInPipStyle,
+  mediaContainer,
+  container,
+  loadingSpinnerContainer,
+  loadSpinnerStyles
+} from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
+
+/**
+ * Whether the stream is loading or not.
+ * @public
+ */
+export type LoadingState = 'loading' | 'none';
 
 /**
  * Props for {@link StreamMedia}.
@@ -17,6 +29,8 @@ export interface StreamMediaProps {
   videoStreamElement: HTMLElement | null;
   /** Decides whether to mirror the video or not. */
   isMirrored?: boolean;
+  /** Whether the stream is loading data */
+  loadingState?: LoadingState;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -38,7 +52,8 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
 
-  const { isMirrored, videoStreamElement, styles } = props;
+  const { isMirrored, videoStreamElement, styles, loadingState = 'none' } = props;
+  const [pipEnabled, setPipEnabled] = useState(false);
 
   useEffect(() => {
     const container = containerEl.current;
@@ -50,19 +65,37 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
     // the new videoStreamElement. If videoStreamElement is undefined nothing is appended and container should be empty
     // and we don't render anyting.
     container.innerHTML = '';
+    setPipEnabled(false);
     if (videoStreamElement) {
+      videoStreamElement.addEventListener('enterpictureinpicture', () => {
+        setPipEnabled(true);
+      });
+      videoStreamElement.addEventListener('leavepictureinpicture', () => {
+        setPipEnabled(false);
+      });
       container.appendChild(videoStreamElement);
     }
 
     return () => {
       container.innerHTML = '';
+      setPipEnabled(false);
     };
   }, [videoStreamElement]);
 
   return (
-    <div
-      className={mergeStyles(isMirrored ? invertedVideoStyle(theme) : mediaContainer(theme), styles?.root)}
-      ref={containerEl}
-    />
+    <div className={container()}>
+      <div
+        className={mergeStyles(
+          isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
+          styles?.root
+        )}
+        ref={containerEl}
+      />
+      {loadingState === 'loading' && (
+        <div className={loadingSpinnerContainer()}>
+          <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
+        </div>
+      )}
+    </div>
   );
 };

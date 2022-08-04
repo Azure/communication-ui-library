@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ICalloutContentStyles, Icon, mergeStyles, TooltipHost } from '@fluentui/react';
+import { ICalloutContentStyles, Icon, ITooltipHostStyles, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
+import { LiveMessage } from 'react-aria-live';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { isDarkThemed } from '../theming/themeUtils';
@@ -95,7 +96,12 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           content={strings.failedToSendTooltipText}
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
+          styles={hostStyles}
         >
+          {strings.failedToSendAriaLabel && (
+            // live message is used here and in the following tooltips so that aria labels are announced on mobile
+            <LiveMessage message={strings.failedToSendAriaLabel} aria-live="polite" />
+          )}
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -115,7 +121,10 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           content={strings.sendingTooltipText}
           data-ui-id="chat-composite-message-tooltip"
           calloutProps={{ ...calloutProps }}
+          styles={hostStyles}
         >
+          {strings.sendingAriaLabel && <LiveMessage message={strings.sendingAriaLabel} aria-live="polite" />}
+
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -134,6 +143,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost
           calloutProps={{ ...calloutProps }}
           data-ui-id="chat-composite-message-tooltip"
+          styles={hostStyles}
           content={
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
@@ -156,6 +166,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             }
           }}
         >
+          {strings.seenAriaLabel && <LiveMessage message={strings.seenAriaLabel} aria-live="polite" />}
+
           <Icon
             data-ui-id="chat-composite-message-status-icon"
             role="status"
@@ -171,7 +183,9 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           calloutProps={{ ...calloutProps }}
           content={strings.deliveredTooltipText}
           data-ui-id="chat-composite-message-tooltip"
+          styles={hostStyles}
         >
+          {strings.deliveredAriaLabel && <LiveMessage message={strings.deliveredAriaLabel} aria-live="polite" />}
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -189,3 +203,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return <></>;
   }
 };
+
+// The TooltipHost root uses display: inline by default.
+// To prevent sizing issues or tooltip positioning issues, we override to inline-block.
+// For more details see "Icon Button with Tooltip" on https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };

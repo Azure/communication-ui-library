@@ -23,3 +23,7 @@ export type {
   TranscriptionCallFeatureState as TranscriptionCallFeature,
   VideoStreamRendererViewState
 } from './CallClientState';
+export type { CreateViewResult } from './StreamUtils';
+export type { DeclarativeCallAgent } from './CallAgentDeclarative';
+/* @conditional-compile-remove(one-to-n-calling) */
+export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';

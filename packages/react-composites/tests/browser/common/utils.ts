@@ -2,12 +2,22 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
-export const PER_STEP_TIMEOUT_MS = 5000;
+const PER_STEP_TIMEOUT_MS = 5000;
+
+function perStepLocalTimeout(): number {
+  if (process.env.LOCAL_DEBUG) {
+    // Disable per-step timeouts for local debugging
+    // so that developers can use the playwright inspector
+    // to single step through the playwright test.
+    return 0;
+  }
+  return PER_STEP_TIMEOUT_MS;
+}
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
@@ -34,7 +44,6 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
   await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
-
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -45,12 +54,13 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
  */
 export const waitForSelector = async (
   page: Page,
-  selector: string
+  selector: string,
+  options?: { state?: 'visible' | 'attached' }
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
   await page.bringToFront();
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForSelector(selector, { timeout: perStepLocalTimeout(), ...options })
   );
 };
 
@@ -65,7 +75,7 @@ export async function waitForFunction<R>(
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout() })
   );
 }
 
@@ -142,18 +152,6 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
     );
   }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
-  }
-};
-
-/**
- * Click outside of the Composite page
- */
-export const clickOutsideOfPage = async (page: Page): Promise<void> => {
-  await page.mouse.click(-1, -1);
 };
 
 /**
@@ -188,11 +186,6 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         expectedVideoCount: pages.length
       }
     );
-  }
-
-  // Dismiss any tooltips (such as the microphone tooltip as we autofocus the microphone button on page load)
-  for (const page of pages) {
-    await clickOutsideOfPage(page);
   }
 };
 
@@ -254,6 +247,50 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   );
 };
 
+/**
+ * Stub out ReadReceipts tooltip content to avoid spurious diffs in snapshot tests.
+ */
+export const stubReadReceiptsToolTip = async (page: Page): Promise<void> => {
+  const readReceiptsToolTipId: string = dataUiId(IDS.readReceiptTooltip) + ' > div > div > p';
+
+  await page.evaluate((readReceiptsToolTipId) => {
+    Array.from(document.querySelectorAll(readReceiptsToolTipId)).forEach((i) => (i.textContent = 'Read by stub/stub'));
+  }, readReceiptsToolTipId);
+
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const readReceiptsTooltipNodes = Array.from(document.querySelectorAll(args.readReceiptsToolTipId));
+      return readReceiptsTooltipNodes.every((node) => node.textContent === 'Read by stub/stub');
+    },
+    {
+      readReceiptsToolTipId: readReceiptsToolTipId
+    }
+  );
+};
+
+/**
+ * Helper to wait for a number of participants in partipants in page
+ * @param page - the page where the participant list element will be queried
+ * @param numParticipants - number of participants to wait for
+ */
+export const waitForParticipants = async (page: Page, numParticipants: number): Promise<void> => {
+  const participantListSelector = dataUiId(IDS.participantList);
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const participantList = document.querySelector(args.participantListSelector) as Element;
+      return participantList.children.length === args.numParticipants;
+    },
+    {
+      participantListSelector: participantListSelector,
+      numParticipants: numParticipants
+    }
+  );
+};
+
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {
@@ -302,3 +339,118 @@ export const isTestProfileStableFlavor = (): boolean => {
     throw 'Faled to find Communication React Flavor env variable';
   }
 };
+
+export interface StubOptions {
+  /** Stub out all timestamps in the chat message thread. */
+  stubMessageTimestamps?: boolean;
+  /** Disable tooltips on all buttons in the call control bar. */
+  dismissTooltips?: boolean;
+  /** Hide chat message actions icon button. */
+  dismissChatMessageActions?: boolean;
+  /** wait for file type icon to render. */
+  awaitFileTypeIcon?: boolean;
+  /**
+   * The loading spinner for video tiles can show during live service tests (likely due to network flakiness).
+   * This should be removed when tests use a serviceless environment.
+   * @defaultValue true
+   */
+  hideVideoLoadingSpinner?: boolean;
+}
+
+/**
+ * A helper to take stable screenshots.
+ *
+ * USE THIS INSTEAD OF page.screenshot()
+ */
+export async function stableScreenshot(
+  page: Page,
+  stubOptions?: StubOptions,
+  screenshotOptions?: PageScreenshotOptions
+): Promise<Buffer> {
+  await waitForPageFontsLoaded(page);
+  if (stubOptions?.stubMessageTimestamps) {
+    await stubMessageTimestamps(page);
+  }
+  if (stubOptions?.dismissTooltips) {
+    await disableTooltips(page);
+  }
+  if (stubOptions?.dismissChatMessageActions) {
+    await hideChatMessageActionsButton(page);
+  }
+  if (stubOptions?.hideVideoLoadingSpinner !== false) {
+    await hideVideoLoadingSpinner(page);
+  }
+  if (stubOptions?.awaitFileTypeIcon) {
+    await awaitFileTypeIcon(page);
+  }
+  try {
+    return await page.screenshot(screenshotOptions);
+  } finally {
+    if (stubOptions?.dismissTooltips) {
+      await enableTooltips(page);
+    }
+  }
+}
+
+/**
+ * Helper function for hiding chat message actions icon button.
+ */
+const hideChatMessageActionsButton = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ui-chat__message__actions {display: none}' });
+};
+
+/**
+ * Helper function for disabling all the tooltips on the page.
+ * Note: For tooltips to work again, please call `enableTooltips(page)` after the test.
+ */
+const disableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: none}' });
+};
+
+/**
+ * Helper function for enabling all the tooltips on the page.
+ */
+const enableTooltips = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '.ms-Tooltip {display: block}' });
+};
+
+const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
+  await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
+};
+
+/**
+ * Helper function for waiting for file type icons. File type icons
+ * cannot be registered as they are loaded dynamically based on the
+ * type of file being loaded (e.g.- .pdf, .docx, .png, .txt)
+ */
+const awaitFileTypeIcon = async (page: Page): Promise<void> => {
+  const fileTypeIconId: string = dataUiId(IDS.fileTypeIcon);
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const iconNodes = Array.from(document.querySelectorAll(args.fileTypeIconId));
+      return iconNodes.every((node) => node?.querySelector('img').complete);
+    },
+    {
+      fileTypeIconId: fileTypeIconId
+    }
+  );
+};
+
+/**
+ * Block for given number of seconds in an async test.
+ *
+ * This is useful for making a test hang while you're debugging. To stop a test at
+ * some point for 5 minutes, simply add:
+ *
+ * ```
+ *   await blockForMinutes(5);
+ * ```
+ * DO NOT USE in production code because artificial delays like this slow down CI.
+ */
+export async function blockForMinutes(m: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000 * 60 * m);
+  });
+}

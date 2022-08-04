@@ -11,14 +11,30 @@ import { overviewPageImagesStackStyle } from '../constants';
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
+const customDateTimeFormatExampleText = require('!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
-
 const hideTopicStatement = `
 <ChatComposite options={{ topic: false}}>
 `;
 const showParticipantStatement = `
 // Caution: the Participant Pane is a beta feature
 <ChatComposite options={{ participantPane: true}}>
+`;
+
+const addFileSharingSnippet = `
+<ChatComposite
+adapter={chatAdapter}
+options={{
+  fileSharing: {
+    uploadHandler: fileUploadHandler,
+    /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
+    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
+    https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
+    downloadHandler: fileDownloadHandler,
+    accept: 'image/png, image/jpeg, text/plain, .docx',
+    multiple: true
+  }
+}} />
 `;
 
 export const getDocs: () => JSX.Element = () => {
@@ -140,6 +156,23 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
         the composite with multiple users.
       </Description>
+
+      <Heading>Custom DateTime Format using Locale</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        You can pass in a function that formats the datetime displayed in chat messages through Locale
+      </Description>
+      <Source code={customDateTimeFormatExampleText} />
+
+      <Heading>Adding file sharing</Heading>
+      <Description>
+        The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
+        Using the provided APIs, you can enable the composite to support uploading files and displaying them on the send
+        box before sending, and the message thread once they have been sent or received. For an end to end tutorial on
+        enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our tutorial.
+        https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
+      </Description>
+      <Source code={addFileSharingSnippet} />
 
       <Heading>Chat Composite Props</Heading>
       <Props of={ChatComposite} />

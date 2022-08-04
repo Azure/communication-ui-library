@@ -4,6 +4,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
@@ -58,6 +59,9 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __COMMUNICATIONREACTVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-react']),
         __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'json',
+      })
     ],
     devServer: {
       port: 3000,

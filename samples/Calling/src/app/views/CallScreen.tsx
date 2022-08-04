@@ -11,40 +11,34 @@ import {
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
-import MobileDetect from 'mobile-detect';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
-
-const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
+import { useIsMobile } from '../utils/useIsMobile';
 
 export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
   onCallEnded: () => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded } = props;
+  const {
+    token,
+    userId,
+    callLocator,
+    displayName,
+    onCallEnded,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
-  const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
-
-  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
-  useEffect(() => {
-    const updateIsMobile = (): void => {
-      // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
-      setTimeout(() => {
-        setIsMobileSession(detectMobileSession());
-      });
-    };
-    window.addEventListener('resize', updateIsMobile);
-    return () => window.removeEventListener('resize', updateIsMobile);
-  }, []);
-
+  const isMobileSession = useIsMobile();
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
@@ -78,10 +72,21 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       userId,
       displayName,
       credential,
-      locator: callLocator
+      locator: callLocator,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId
     },
     afterCreate
   );
+
+  // Dispose of the adapter in the window's before unload event.
+  // This ensures the service knows the user intentionally left the call if the user
+  // closed the browser tab during an active call.
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;

@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
-import { VideoStreamOptions } from '../../types';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -19,14 +19,26 @@ export const RemoteScreenShare = React.memo(
   (props: {
     userId: string;
     displayName?: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView?: (
+      userId: string,
+      options?: VideoStreamOptions
+    ) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
+    isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
   }) => {
-    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
+    const {
+      userId,
+      displayName,
+      isMuted,
+      renderElement,
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      isReceiving
+    } = props;
     const locale = useLocale();
 
     if (!renderElement) {
@@ -50,7 +62,11 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={displayName}
         isMuted={isMuted}
-        renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
+        renderElement={
+          renderElement ? (
+            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />
+          ) : undefined
+        }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
       />
     );

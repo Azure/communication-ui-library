@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Microphone Microphone 1`] = `
 <div
-  className="css-117 body-0"
+  className="stub-classname stub-classname"
   dir="ltr"
 >
   <div
-    className="css-117"
+    className="stub-classname"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,16 +21,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        aria-live="polite"
+        className="ms-Stack stub-classname"
+      />
+      <div
+        className="ms-TooltipHost root-105"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="none"
       >
         <button
           aria-label="Unmute microphone"
-          className="ms-Button ms-Button--default root-2"
+          className="ms-Button ms-Button--default stub-classname"
           data-is-focusable={true}
           onClick={[Function]}
           onKeyDown={[Function]}
@@ -41,12 +46,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
           type="button"
         >
           <span
-            className="ms-Button-flexContainer flexContainer-3"
+            className="ms-Button-flexContainer stub-classname"
             data-automationid="splitbuttonprimary"
           >
             <i
               aria-hidden={true}
-              className="root-105 root-11"
+              className="stub-classname"
               data-icon-name="ControlButtonMicOff"
             >
               <span
@@ -75,7 +80,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-105 css-12 ms-Button-menuIcon menuIcon-7"
+              className="ms-Icon root-105 stub-classname ms-Button-menuIcon stub-classname"
               data-icon-name="ChevronDown"
               hidden={true}
               style={

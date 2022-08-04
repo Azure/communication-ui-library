@@ -123,7 +123,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={formFactorSnippet} />
       <MessageBar>
-        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+        Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
       </MessageBar>
       <Description>
         You can try out the form factor property in the [CallComposite Basic

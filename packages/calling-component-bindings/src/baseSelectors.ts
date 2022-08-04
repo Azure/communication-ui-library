@@ -46,10 +46,12 @@ export const getRemoteParticipants = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ):
-  | undefined
   | {
       [keys: string]: RemoteParticipantState;
-    } => state.calls[props.callId]?.remoteParticipants;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.remoteParticipants;
+};
 
 /**
  * @private
@@ -101,3 +103,10 @@ export const getDiagnostics = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * @private
+ */
+export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
+  state.calls[props.callId]?.state;

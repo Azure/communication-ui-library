@@ -18,7 +18,7 @@ import {
   ParticipantListStyles,
   ParticipantMenuItemsCallback
 } from './ParticipantList';
-import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
+import { participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { useIdentifiers } from '../identifiers';
@@ -26,6 +26,9 @@ import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { preventDismissOnEvent } from './utils/common';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -141,6 +144,8 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantsButtonStrings>;
+  /** prop to determine if we should show tooltip for participants or not */
+  showParticipantOverflowTooltip?: boolean;
 }
 
 /**
@@ -167,11 +172,16 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderParticipant,
     onRenderAvatar,
     onRemoveParticipant,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    showParticipantOverflowTooltip
   } = props;
 
+  let disabled = props.disabled;
+  /* @conditional-compile-remove(rooms) */
+  disabled = disabled || !_usePermissions().participantList;
+
   const onRenderPeopleIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonParticipants" />
+    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />
   );
 
   const ids = useIdentifiers();
@@ -192,7 +202,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         onRenderAvatar={onRenderAvatar}
         onRemoveParticipant={onRemoveParticipant}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
+        styles={styles?.menuStyles?.participantListStyles}
+        showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       />
     );
   }, [
@@ -203,7 +214,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderParticipant,
     participants,
     styles?.menuStyles?.participantListStyles,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    showParticipantOverflowTooltip
   ]);
 
   const onCopyCallback = useCallback(() => {
@@ -257,18 +269,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       styles: merge(participantsButtonMenuPropsStyle, styles?.menuStyles),
       items: [],
       calloutProps: {
-        // Disable dismiss on resize to work around a couple Fluent UI bugs
-        // - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
-        //   happens when we change the VideoGallery layout, or even when the video stream element is internally resized
-        //   by the headless SDK.
-        // - There is a `preventDismissOnEvent` prop that we could theoretically use to only dismiss when the target of
-        //   of the 'resize' event is the window itself. But experimentation shows that setting that prop doesn't
-        //   deterministically avoid dismissal.
-        //
-        // A side effect of this workaround is that the context menu stays open when window is resized, and may
-        // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-        // The Callout (frequently) gets dismissed automatically.
-        preventDismissOnResize: true
+        preventDismissOnEvent
       }
     };
 
@@ -295,9 +296,12 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
                 maxWidth: '100%'
               }
             },
+            style: {
+              maxHeight: '20rem'
+            },
             // Disable dismiss on resize to work around a couple Fluent UI bugs
             // See reasoning in the props for the parent menu.
-            preventDismissOnResize: true
+            preventDismissOnEvent
           }
         },
         'data-ui-id': ids.participantButtonPeopleMenuItem
@@ -333,6 +337,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   return (
     <ControlBarButton
       {...props}
+      disabled={disabled}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}

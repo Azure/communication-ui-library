@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add version to azure log(telemetry)",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}

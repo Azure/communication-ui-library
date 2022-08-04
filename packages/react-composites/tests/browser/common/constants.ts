@@ -20,5 +20,7 @@ export const IDS = {
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
-  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button'
+  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
+  readReceiptTooltip: 'chat-composite-message-tooltip',
+  fileTypeIcon: 'filetype-icon'
 };

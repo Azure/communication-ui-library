@@ -81,6 +81,10 @@ exports.default = babelHelper.declare((_api, opts) => {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
 
+      TSMethodSignature(path) {
+        Handle(path, featureSet, stabilizedFeatureSet);
+      },
+
       Expression(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
@@ -92,16 +96,31 @@ exports.default = babelHelper.declare((_api, opts) => {
       ClassProperty(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
+
+      TSFunctionType(path) {
+        path.traverse({
+          Identifier(identifier_path) {
+            if(path.node.parameters.includes(identifier_path.node)) {
+            	Handle(identifier_path, featureSet, stabilizedFeatureSet);
+            }
+        }});
+      },
+
+      TSConditionalType(path) {
+        HandleConditionalType(path, featureSet, stabilizedFeatureSet);
+      }
     }
   };
 });
 
-function Handle(path, featureSet, stabilizedFeatureSet) {
+
+function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
   let { node } = path;
 
   if (!node.leadingComments) {
     return;
   }
+
   const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
   if (!shouldRemoveNode(removalInstructions)) {
     return;
@@ -121,6 +140,7 @@ function Handle(path, featureSet, stabilizedFeatureSet) {
     // next line.
     comment.value = '';
   })
+
   // We cannot remove Expression in JSXExpressionContainer cause it is not correct for AST
   // Replacing it with jSXEmptyExpression will get us the same result
   // There will always be only one expression under JSXExpressionContainer
@@ -128,6 +148,24 @@ function Handle(path, featureSet, stabilizedFeatureSet) {
     path.replaceWith(t.jSXEmptyExpression());
   } else {
     path.remove();
+  }
+}
+
+function HandleConditionalType(path, featureSet, stabilizedFeatureSet) {
+  let { node } = path;
+  let { trueType, falseType } = node;
+
+  if (trueType.leadingComments) {
+    const removalInstructions = trueType.leadingComments.map((comment) => nodeRemovalInstruction(trueType, comment, featureSet, stabilizedFeatureSet));
+    if (shouldRemoveNode(removalInstructions)) {
+      path.replaceWith(falseType);
+    }
+  }
+  if (falseType.leadingComments) {
+    const removalInstructions = falseType.leadingComments.map((comment) => nodeRemovalInstruction(falseType, comment, featureSet, stabilizedFeatureSet));
+    if (shouldRemoveNode(removalInstructions)) {
+      path.replaceWith(trueType);
+    }
   }
 }
 

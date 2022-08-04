@@ -17,6 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(dialpad) */
+import { DialpadStrings } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -27,6 +29,12 @@ import { COMPONENT_LOCALE_EN_US } from './locales';
 export interface ComponentLocale {
   /** Strings for components */
   strings: ComponentStrings;
+  /* @conditional-compile-remove(date-time-customization) */
+  /**
+   * Optional function to provide customized date format.
+   * @beta
+   */
+  onDisplayDateTimeString?: (messageDate: Date) => string;
 }
 
 /**
@@ -61,6 +69,9 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
+  /* @conditional-compile-remove(dialpad) */
+  /** Strings for Dialpad */
+  dialpad: DialpadStrings;
 }
 
 /**

@@ -4,7 +4,8 @@
     "menuTitle": "More Options",
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
-    "mutedIconLabel": "Muted"
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed Participant"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -17,7 +18,10 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait."
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -43,7 +47,11 @@
     "tooltipVideoLoadingContent": "Video is loading",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
-    "cameraButtonSplitRoleDescription": "Split button"
+    "cameraButtonSplitRoleDescription": "Split button",
+    "onSplitButtonAriaLabel": "Turn off camera and camera options",
+    "offSplitButtonAriaLabel": "Turn on camera and camera options",
+    "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -55,13 +63,19 @@
     "microphoneMenuTooltip": "Choose Microphone",
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose Speaker",
-    "microphoneButtonSplitRoleDescription": "Split button"
+    "microphoneButtonSplitRoleDescription": "Split button",
+    "onSplitButtonAriaLabel": "Mute microphone and audio options",
+    "offSplitButtonAriaLabel": "Unmute microphone and audio options",
+    "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
+    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off"
   },
   "devicesButton": {
     "label": "Devices",
     "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
+    "audioDeviceMenuTitle": "Audio Device",
+    "audioDeviceMenuTooltip": "Choose Audio Device",
     "microphoneMenuTitle": "Microphone",
     "microphoneMenuTooltip": "Choose Microphone",
     "speakerMenuTitle": "Speaker",
@@ -99,6 +113,7 @@
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
+    "messageContentAriaText": "{author} said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -106,7 +121,8 @@
     "editBoxCancelButton": "Cancel",
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "More Options"
+    "actionMenuMoreOptions": "More Options",
+    "downloadFile": "Download file"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -127,10 +143,13 @@
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
     "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
     "callMicrophoneMutedBySystem": "You are muted by your system.",
+    "callMicrophoneUnmutedBySystem": "Your microphone recovered and you were unmuted by your system.",
     "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
     "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
+    "callVideoStoppedBySystem": "Your video has been stopped by your system.",
+    "callVideoRecoveredBySystem": "Your video has resumed.",
     "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
     "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
     "dismissButtonAriaLabel": "Close",
@@ -143,6 +162,17 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
-    "localVideoSelectedDescription": "{cameraName} selected"
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed Participant"
+  },
+  "dialpad": {
+    "placeholderText": "Enter a number",
+    "deleteButtonAriaLabel": "Delete"
+  },
+  "HoldButton": {
+    "onLabel": "Resume",
+    "offLabel": "Hold",
+    "toolTipOnContent": "Resume call",
+    "toolTipOffContent": "Hold call"
   }
 }

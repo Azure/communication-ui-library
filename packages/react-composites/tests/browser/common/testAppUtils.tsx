@@ -8,8 +8,9 @@ import {
   ChevronDown20Regular,
   ChevronRight20Regular,
   Dismiss16Regular,
-  Dismiss20Regular,
-  DismissCircle20Regular,
+  DismissCircle16Regular,
+  DocumentError20Regular,
+  DrinkCoffee20Filled,
   Link16Regular,
   People16Regular,
   PeopleAdd16Regular,
@@ -30,14 +31,18 @@ export function initializeIconsForUITests(): void {
     icons: {
       Accept: <Checkmark16Regular />,
       Cancel: <Dismiss16Regular />,
-      Clear: <Dismiss20Regular />,
       CheckMark: <Checkmark16Regular />,
       ChevronDown: <ChevronDown20Regular />,
       ChevronRight: <ChevronRight20Regular />,
-      ErrorBadge: <DismissCircle20Regular />,
+      ErrorBadge: <DismissCircle16Regular />,
       Link: <Link16Regular />,
+      // The composite uses a unicode icon by default that is rendered differently
+      // in different fonts. Remove this source of flakiness by overriding with
+      // an SVG icon.
+      LobbyScreenWaitingToBeAdmitted: <DrinkCoffee20Filled />,
       People: <People16Regular />,
       PeopleAdd: <PeopleAdd16Regular />,
+      ProtectedDocument: <DocumentError20Regular />,
       Warning: <Warning16Regular />
     }
   });

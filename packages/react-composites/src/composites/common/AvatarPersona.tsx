@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -64,17 +64,21 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor } = props;
-  const [data, setData] = React.useState<AvatarPersonaData | undefined>();
+  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
+    props;
+
+  const [data, setData] = useState<AvatarPersonaData | undefined>();
 
   useEffect(() => {
     (async () => {
       if (dataProvider && userId) {
-        const data = await dataProvider(userId);
-        setData(data);
+        const newData = await dataProvider(userId);
+        if (avatarDeepDifferenceCheck(data, newData)) {
+          setData(newData);
+        }
       }
     })();
-  }, [dataProvider, userId]);
+  }, [data, dataProvider, userId]);
 
   return (
     <Persona
@@ -84,6 +88,18 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageInitials={data?.imageInitials ?? imageInitials}
       initialsColor={data?.initialsColor ?? initialsColor}
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
+      // default disable tooltip unless specified
+      showOverflowTooltip={showOverflowTooltip ?? false}
     />
+  );
+};
+
+const avatarDeepDifferenceCheck = (currentData?: AvatarPersonaData, newData?: AvatarPersonaData): boolean => {
+  return (
+    currentData?.text !== newData?.text ||
+    currentData?.imageUrl !== newData?.imageUrl ||
+    currentData?.initialsColor !== newData?.initialsColor ||
+    currentData?.imageInitials !== newData?.imageInitials ||
+    currentData?.initialsTextColor !== newData?.initialsTextColor
   );
 };

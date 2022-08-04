@@ -2,6 +2,331 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 29 Jun 2022 17:31:07 GMT",
+      "tag": "@internal/storybook_v1.3.1-beta.1",
+      "version": "1.3.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "47e2b7872a1dd8fcd4edb7a42abcaeba89e0694c",
+            "comment": "Add cameraStoppedUnexpectedly strings to error bar story"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "22c31f5b69585a8d0509151a184412a49eb1889a",
+            "comment": "adding file sharing snippet to composite documentation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ad6decf11884d8904622209a60e6b8163a5c99ef",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a9c65fa900ee6997db828718fcdae91263e68dad",
+            "comment": "Add new UFDs for microphone stopped unexpectedly and microphone recovered"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0843cd23931ed0b27bf9666d8ee8330a77f9eac0",
+            "comment": "storybook to show how to use dialpad props"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c233329a92200a3dcf4f689c9333a084483beee6",
+            "comment": "Add best practice around only allowing one instance of the sample to be open at a time on mobile"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "bcc8af9443eb04138155b45182c570ce05fdb7c7",
+            "comment": "disable tooltip for persona"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.3.1-beta.1",
+            "commit": "ca7646cfad4f55c21d80355235d29b35ca2c40c1"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Jun 2022 18:29:28 GMT",
+      "tag": "@internal/storybook_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "bc91818a4ce729d3d86fdc462c9941a3e4d104e1",
+            "comment": "updating beta @azure/communication-calling to 1.5.4-beta.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "39482f28fbe174701e1ca8cd2eedd447bd99f7c4",
+            "comment": "update storybook to v6.5.7"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d60d02fa8c029b80c44e82d7e8d4b4290d53abf8",
+            "comment": "Fix video freeze in LocalPreview story"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c274ec63b5360028603331e7f9b320793053fc5c",
+            "comment": "Resolve icon centering on SendBox storybook examples"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c73fe25f56ea01318b5d51acefa8d5aa7782f0f5",
+            "comment": "patched error on storybook participant item not showing name"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8f7a57457b95779f0fc2ff4b0e6e06a005807276",
+            "comment": "Add Best Practices documentation to Storybook"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.3.0",
+            "commit": "de87d04e8d99bc266b4d44bdea7608a78a52008e"
+          }
+        ],
+        "none": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "438069441d62592fdaabb96e12bc359e62e9d887",
+            "comment": "Adding stories for message thread and sendbox file sharing ui"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "aa382cee7eac5cd5cc5de26b8f8b6a316e22cab4",
+            "comment": "Fix docs around calling statefulcallclient.createview"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b5a36d4be6c07b8e1abeb2ba4496f85ca7acf7fd",
+            "comment": "Fix styling in custom button stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f515aee5b3217b46f7967a244adcd718f5691641",
+            "comment": "Remove dependency on azure/communication-signalling, instead use types from azure/communication-chat"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "958862a59a2fefe707c269f067b18cc5d938eee2",
+            "comment": "Add ComplianceBanner story"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/storybook",
+            "commit": "6af9d22c8c15c36f2d44401cd18b499e3138269f",
+            "comment": "Use rushx to enable error report for rush build"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5f0c4c7145ed08da3ce79f36aa003b5646bb75b8",
+            "comment": "bump package versions for release"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b5911e8fa833b718d619b999cddf63c0a9618ce7",
+            "comment": "Fixes type mismatch that is causing storybook tests to crash."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "11cd4c0887836cc0d0e849dc32ff3169378e2ff8",
+            "comment": "Update story to match new interface"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "374d642712a454d472c9c792267ee66ef7b55036",
+            "comment": "Fixed SendBox in stateful chat quickstart."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "934ba677f4ae65954fc63f2be529e5a4adc35371",
+            "comment": "Updating @azure/communication-chat to 1.2.0"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5bb63d6ad8cd029151737ba63a749150519943a3",
+            "comment": "Changed stateful quickstart file name for call components."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "ce365d9d64f0123d81bd89ca128134f788d336cd",
+            "comment": "Composite quickstarts: Create groupId and threadId in the quickstart instead of requiring inputs"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "99d652cae63ee15ff5d9e8d16bb94f4da456a9ef",
+            "comment": "Update Chat adapter docs to reflect the type of userId and how to turn it from a string to a CommunicationUserIdentifier."
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "f5a4ff658a1c3ab3246ac1c3d55014ebda73ba55",
+            "comment": "Added examples in message thread stories to show how to customize date time format"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "6de3de26e06cab476f0a961f0d400c0045b8bc4c",
+            "comment": "changed storybook text for custom dialpad"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "009be2dc2b14b92a77e7b8035c6af615c1185abc",
+            "comment": "created storybook preview for dialpad component"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 Apr 2022 20:46:14 GMT",
+      "tag": "@internal/storybook_v1.2.2-beta.1",
+      "version": "1.2.2-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "76bf7e327fbfe373388cda257ff72054e59bb228",
+            "comment": "storybook: Give user feedback when call ends in stateful example"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c3a2600aaab6e778ed0f6dcb0444f9fff849b738",
+            "comment": "Update references to headless calling version"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a4de3dc6eb0764134a0162145e6646a4f14a5a2e",
+            "comment": "Update fluent-northstar dependency to 0.61.0 to fix conflict on react peer dependencies"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "088fde06ec7629b949f1f6176e565b2e4f18d890",
+            "comment": "updating snippet code to include how to add a react key"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.2.2-beta.1",
+            "commit": "124893bcd653ceab6c1fd7461e14ee978c8a7ac9"
+          }
+        ],
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a92c49984340bce7274a7c5cd58591a39dd6a12b",
+            "comment": "Use useAzureCommunicationChatAdapter hook in ChatComposite samples"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "19b769c3ce685c802c35ece123f21392c8a979a2",
+            "comment": "Update docs to note change on new min height and min width"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "924823d2e13514c2134c2992aeaf6f9b570be5f6",
+            "comment": "Updating story for filecard"
+          },
+          {
+            "author": "dademath@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "68876367f8e78f9cc01bea06e11735f57e06d28f",
+            "comment": "[CallWithChat][A11y] Add aria-label for ChatMessageActionMenu button (#1760)"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b5de40d14719d6f96bb4e15d510b952e719aa156",
+            "comment": "Update output in the calling stateful client snippet to have correct output."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "340c7f5b35404a2c0408f7eeb897925aec9e2103",
+            "comment": "Add required tslib to update packages"
+          },
+          {
+            "author": "dademath@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "fdb76d99f9bf4b961039799dd71e3e0986cb2cf7",
+            "comment": "UI Library Desing Kit"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "9f89b36eecd7c7bba9edbb66f1b495056124871c",
+            "comment": "Setup package versions after prerelease"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "a6b840a923d78c7dc4bf32e0a67c6aedfb4cdf1e",
+            "comment": "Add FileCard story as internal story to storybook"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1ed7e6f723e83027c7ae97c0f6ea1d1efd09b1ef",
+            "comment": "Fix platform support documentation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Mar 2022 19:20:02 GMT",
       "tag": "@internal/storybook_v1.2.0",
       "version": "1.2.0",

@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { DefaultButton, Icon, IconButton, mergeStyles, Stack } from '@fluentui/react';
-import { People20Filled, People20Regular } from '@fluentui/react-icons';
 import {
   buttonWithIconStyles,
   chatHeaderContainerStyle,
@@ -16,28 +15,23 @@ import {
   smallLeaveButtonContainerStyle
 } from './styles/ChatHeader.styles';
 import { useTheme } from '@azure/communication-react';
+/* @conditional-compile-remove(chat-composite-participant-pane) */
+import { PeopleButton, PeopleButtonProps } from './PeopleButton';
 
-export type ChatHeaderProps = {
-  isParticipantsDisplayed: boolean;
+export interface ChatHeaderProps extends PeopleButtonProps {
   onEndChat(): void;
-  setHideParticipants(hideParticipants: boolean): void;
-};
+}
 
 export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const theme = useTheme();
 
   const leaveString = 'Leave';
-
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
       <div className={paneButtonContainerStyle}>
         {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
-          <IconButton
-            onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
-            className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
-            onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
-          />
+          <PeopleButton {...props} />
         }
       </div>
       <DefaultButton

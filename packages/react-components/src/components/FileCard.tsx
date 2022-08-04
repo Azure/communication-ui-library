@@ -15,6 +15,10 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { Announcer } from './Announcer';
+import { useEffect, useState } from 'react';
+import { _FileUploadCardsStrings } from './FileUploadCards';
+import { useLocaleFileCardStringsTrampoline } from './utils/common';
 
 /**
  * @internal
@@ -42,6 +46,10 @@ export interface _FileCardProps {
    * Function that runs when actionIcon is clicked
    */
   actionHandler?: () => void;
+  /**
+   * Optional arialabel strings for file cards
+   */
+  strings?: _FileUploadCardsStrings;
 }
 
 /**
@@ -51,15 +59,31 @@ export interface _FileCardProps {
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+  const localeStrings = useLocaleFileCardStringsTrampoline();
+  const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
+  const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
+
+  useEffect(() => {
+    if (showProgressIndicator) {
+      setAnnouncerString(`${uploadStartedString} ${fileName}`);
+    } else if (progress === 1) {
+      setAnnouncerString(`${fileName} ${uploadCompletedString}`);
+    } else {
+      setAnnouncerString(undefined);
+    }
+  }, [progress, showProgressIndicator, fileName, uploadStartedString, uploadCompletedString]);
+
   const progressBarThicknessPx = 4;
 
   const containerClassName = mergeStyles({
     width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
+    cursor: 'pointer'
   });
 
   const fileInfoWrapperClassName = mergeStyles({
@@ -98,32 +122,35 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   };
 
   return (
-    <Stack className={containerClassName}>
-      <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <Stack>
-          {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-          <Icon
-            {...getFileTypeIconProps({
-              extension: fileExtension,
-              size: 24,
-              imageFileType: 'svg'
-            })}
-          />
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      <Stack
+        className={containerClassName}
+        onClick={() => {
+          props.actionHandler && props.actionHandler();
+        }}
+      >
+        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
+          <Stack>
+            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+            <Icon
+              data-ui-id={'filetype-icon'}
+              {...getFileTypeIconProps({
+                extension: fileExtension,
+                size: 24,
+                imageFileType: 'svg'
+              })}
+            />
+          </Stack>
+          <Stack className={fileNameContainerClassName}>
+            <Text className={fileNameTextClassName}>{fileName}</Text>
+          </Stack>
+          <Stack verticalAlign="center" className={actionIconClassName}>
+            {actionIcon && actionIcon}
+          </Stack>
         </Stack>
-        <Stack className={fileNameContainerClassName}>
-          <Text className={fileNameTextClassName}>{fileName}</Text>
-        </Stack>
-        <Stack
-          verticalAlign="center"
-          className={actionIconClassName}
-          onClick={() => {
-            props.actionHandler && props.actionHandler();
-          }}
-        >
-          {actionIcon && actionIcon}
-        </Stack>
+        {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
-      {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
-    </Stack>
+    </>
   );
 };

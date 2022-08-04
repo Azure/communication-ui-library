@@ -3,9 +3,19 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-import { VideoStreamOptions } from '@internal/react-components';
-import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  Call,
+  PermissionConstraints,
+  StartCallOptions
+} from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -67,8 +77,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
   public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
-  public startCall = (participants: string[]): Call | undefined => {
-    return this.callWithChatAdapter.startCall(participants);
+  public startCall = (participants: string[], options: StartCallOptions): Call | undefined => {
+    return this.callWithChatAdapter.startCall(participants, options);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);
@@ -90,10 +100,28 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public removeParticipant = async (userId: string): Promise<void> =>
     await this.callWithChatAdapter.removeParticipant(userId);
-  public createStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
+  public createStreamView = async (
+    remoteUserId?: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
+  /* @conditional-compile-remove(PSTN-calls) */
+  public holdCall = async (): Promise<void> => {
+    await this.callWithChatAdapter.holdCall();
+  };
+  /* @conditional-compile-remove(PSTN-calls) */
+  public resumeCall = async (): Promise<void> => {
+    await this.callWithChatAdapter.resumeCall();
+  };
+  /* @conditional-compile-remove(PSTN-calls) */
+  public addParticipant = async (
+    participant: CommunicationIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> => {
+    await this.callWithChatAdapter.addParticipant(participant, options);
+  };
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

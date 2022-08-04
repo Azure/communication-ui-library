@@ -30,6 +30,7 @@ import {
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -49,7 +50,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
-
+  const adapter = useAdapter();
+  const deviceState = adapter.getState().devices;
   const locale = useLocale();
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
@@ -100,8 +102,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
             <StartCallButton
               className={mobileView ? startCallButtonStyleMobile : undefined}
-              onClickHandler={startCallHandler}
-              isDisabled={!microphonePermissionGranted}
+              onClick={startCallHandler}
+              disabled={!microphonePermissionGranted || deviceState.microphones?.length === 0}
             />
           </Stack>
         </Stack>

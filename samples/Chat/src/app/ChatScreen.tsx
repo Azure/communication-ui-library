@@ -7,10 +7,11 @@ import {
   ChatAdapter,
   ChatComposite,
   fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
 import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
@@ -27,35 +28,31 @@ interface ChatScreenProps {
   endpointUrl: string;
   threadId: string;
   endChatHandler(isParticipantRemoved: boolean): void;
-  errorHandler(): void;
 }
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler } = props;
+  const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
 
+  /* @conditional-compile-remove(chat-composite-participant-pane) */
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
+
   const { currentTheme } = useSwitchableFluentTheme();
 
   const adapterAfterCreate = useCallback(
     async (adapter: ChatAdapter): Promise<ChatAdapter> => {
       adapter.on('participantsRemoved', (listener) => {
-        // Note: We are receiving ChatParticipant.id from communication-signaling, so of type 'CommunicationIdentifierKind'
-        // while it's supposed to be of type 'CommunicationIdentifier' as defined in communication-chat
-        const removedParticipantIds = listener.participantsRemoved.map(
-          (p) => (p.id as CommunicationUserIdentifier).communicationUserId
-        );
+        const removedParticipantIds = listener.participantsRemoved.map((p) => toFlatCommunicationIdentifier(p.id));
         if (removedParticipantIds.includes(userId)) {
-          const removedBy = (listener.removedBy.id as CommunicationUserIdentifier).communicationUserId;
+          const removedBy = toFlatCommunicationIdentifier(listener.removedBy.id);
           endChatHandler(removedBy !== userId);
         }
       });
       adapter.on('error', (e) => {
         console.error(e);
-        errorHandler();
       });
       return adapter;
     },
-    [endChatHandler, errorHandler, userId]
+    [endChatHandler, userId]
   );
 
   const adapterArgs = useMemo(
@@ -69,6 +66,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [endpointUrl, userId, displayName, token, threadId]
   );
   const adapter = useAzureCommunicationChatAdapter(adapterArgs, adapterAfterCreate);
+
+  // Dispose of the adapter in the window's before unload event
+  useEffect(() => {
+    const disposeAdapter = (): void => adapter?.dispose();
+    window.addEventListener('beforeunload', disposeAdapter);
+    return () => window.removeEventListener('beforeunload', disposeAdapter);
+  }, [adapter]);
 
   if (adapter) {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
@@ -87,13 +91,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
-            options={{ autoFocus: 'sendBoxTextField', participantPane: !hideParticipants }}
+            options={{
+              autoFocus: 'sendBoxTextField',
+              /* @conditional-compile-remove(chat-composite-participant-pane) */
+              participantPane: !hideParticipants
+            }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </Stack.Item>
         <ChatHeader
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           isParticipantsDisplayed={hideParticipants !== true}
           onEndChat={() => adapter.removeParticipant(userId)}
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
           setHideParticipants={setHideParticipants}
         />
       </Stack>
