@@ -19,6 +19,9 @@ import {
 } from '../components';
 /* @conditional-compile-remove(dialpad) */
 import { DialpadStrings } from '../components';
+/* @conditional-compile-remove(one-to-n-calling) */
+// @conditional-compile-remove(PSTN-calls)
+import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -72,6 +75,10 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(dialpad) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  // @conditional-compile-remove(PSTN-calls)
+  /** Strings for VideoTile */
+  videoTile: VideoTileStrings;
 }
 
 /**

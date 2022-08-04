@@ -236,7 +236,8 @@ export type {
 export type {
   HoldButtonProps,
   HoldButtonStrings,
-  VideoGalleryRemoteParticipantState
+  VideoGalleryRemoteParticipantState,
+  VideoTileStrings
 } from '../../react-components/src';
 
 export * from '../../react-components/src/localization/locales';
