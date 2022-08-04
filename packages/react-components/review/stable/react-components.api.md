@@ -1301,6 +1301,9 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     screenShareStream?: VideoGalleryStream;
 }
 
+// @beta
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
+
 // @public
 export interface VideoGalleryStream {
     id?: number;
