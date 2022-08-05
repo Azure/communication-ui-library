@@ -70,7 +70,7 @@ describe('PermissionProvider tests for different roles', () => {
   test('Test permissions object for attendee', async () => {
     expect(_getPermissions('Attendee')).toEqual(mockAttendeePermissions);
   });
-  test('Test permissions object for presenter', async () => {
+  test('Test permissions object for consumer', async () => {
     expect(_getPermissions('Consumer')).toEqual(mockConsumerPermissions);
   });
 });
