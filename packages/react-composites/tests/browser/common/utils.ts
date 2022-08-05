@@ -193,7 +193,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
       // Extend the timeout here to trade flakiness for potentially longer test runtime.
       // Test flake has a much larger impact on overall CI time than individual test runtime.
-      { timeout: 2 * perStepLocalTimeout() }
+      //
+      // The extended timeout was determined by stress testing on CI.
+      { timeout: 4 * perStepLocalTimeout() }
     );
   }
 };
