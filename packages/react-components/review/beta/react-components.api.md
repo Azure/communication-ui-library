@@ -259,6 +259,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
@@ -444,9 +445,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadButtonProps {
-    // (undocumented)
     primaryContent: string;
-    // (undocumented)
     secondaryContent?: string;
 }
 
@@ -1203,6 +1202,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    state?: VideoGalleryRemoteParticipantState | undefined;
 }) => JSX.Element>;
 
 // @beta (undocumented)
@@ -1455,8 +1455,20 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public
