@@ -72,25 +72,31 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-          <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
-              options?.participantState === ('Connecting' || 'Ringing') && (
-                <Text className={mergeStyles(participantStateStyle)}>
-                  {videoTileStrings.participantStateConnecting}
-                </Text>
-              )
-          }
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
-              options?.participantState === 'OnHold' && (
-                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
-              )
-          }
+          <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
+            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
+                options?.participantState === ('Connecting' || 'Ringing') && (
+                  <Text className={mergeStyles(participantStateStyle)}>
+                    {videoTileStrings.participantStateConnecting}
+                  </Text>
+                )
+            }
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
+                options?.participantState === 'OnHold' && (
+                  <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
+                )
+            }
+          </Stack>
         </Stack>
       );
     },
-    [props.onFetchAvatarPersonaData]
+    [
+      props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateConnecting,
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateHold
+    ]
   );
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);

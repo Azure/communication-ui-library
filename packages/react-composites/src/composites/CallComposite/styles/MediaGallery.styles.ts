@@ -67,6 +67,6 @@ export const stackContainerParticipantVideoStyles = {
 export const participantStateStyle: IStyle = {
   textAlign: 'center',
   paddingTop: '0.5rem',
-  fontWeight: 600,
+  fontWeight: 400,
   fontSize: '0.75rem'
 };
