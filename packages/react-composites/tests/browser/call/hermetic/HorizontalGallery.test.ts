@@ -73,4 +73,66 @@ test.describe('HorizontalGallery tests', async () => {
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
   });
+
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  test.only('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+    vasily.state = 'Connecting';
+    const participants = [paul, fiona, reina, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-joining-participant.png'
+    );
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  test.only('HorizontalGallery should have multiple audio participants and 1 calling participant on second page', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+    vasily.state = 'Connecting';
+    const participants = [
+      paul,
+      fiona,
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho'),
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      defaultMockRemoteParticipant('Eryka Klein')
+    ];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-joining-participant.png'
+    );
+  });
 });
