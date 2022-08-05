@@ -96,9 +96,21 @@ export const getCallCompositePage = (
   // Must check for ongoing call *before* looking at any previous calls.
   // If the composite completes one call and joins another, the previous calls
   // will be populated, but not relevant for determining the page.
+  call?.remoteParticipants;
   if (call) {
+    // For PSTN/ACS Calls, the composite should display the call screen immediately.
+    // Currently there is no way to determine the type of a call (group, 1:1, PSTN etc)
+    // For PSTN and ACS calls, when you call a single user, the call state differs from when you call multiple users.
+    // For example, When you call a single PSTN user, the call state will be `Connecting | Ringing` until user picks up.
+    // When you call multiple users, the call state will be `Connected` and individual participant states will be `Connecting | Ringing`.
+    if (
+      (call?.state === 'Connecting' || call?.state === 'Ringing') &&
+      Object.keys(call?.remoteParticipants).length > 0
+    ) {
+      return 'call';
+    }
     // `_isInLobbyOrConnecting` needs to be checked first because `_isInCall` also returns true when call is in lobby.
-    if (_isInLobbyOrConnecting(call?.state)) {
+    else if (_isInLobbyOrConnecting(call?.state)) {
       return 'lobby';
     } else if (_isInCall(call?.state)) {
       return 'call';
