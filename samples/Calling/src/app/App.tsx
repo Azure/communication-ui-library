@@ -120,7 +120,7 @@ const App = (): JSX.Element => {
             if ('roomId' in callLocator) {
               if (userId) {
                 setRole(callDetails.role as Role);
-                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role ?? '');
+                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
               } else {
                 throw 'Invalid userId!';
               }
