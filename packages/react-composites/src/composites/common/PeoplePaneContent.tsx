@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+
+import { IContextualMenuItem, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -8,24 +9,17 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
-import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
-import {
-  copyLinkButtonStackStyles,
-  copyLinkButtonContainerStyles,
-  copyLinkButtonStyles,
-  linkIconStyles,
-  participantListContainerStyles,
-  peoplePaneContainerStyle
-} from './styles/PeoplePaneContent.styles';
+import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
+import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallCompositeStrings } from '../CallComposite';
+import { AddPeopleButton } from './AddPeopleButton';
 
 /**
  * @private
@@ -94,52 +88,30 @@ export const PeoplePaneContent = (props: {
     />
   );
 
-  const theme = useTheme();
-
-  const copyLinkButtonStylesThemed = useMemo(
-    () =>
-      concatStyleSets(copyLinkButtonStyles, {
-        root: {
-          minHeight: props.mobileView ? '3rem' : '2.5rem',
-          borderRadius: props.mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
-        }
-      }),
-    [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
-  );
-
   if (props.mobileView) {
     return (
       <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
         <Stack.Item grow styles={participantListContainerStyles}>
           {participantList}
         </Stack.Item>
-        {inviteLink && (
-          <Stack.Item styles={copyLinkButtonContainerStyles}>
-            <PrimaryButton
-              onClick={() => copy(inviteLink)}
-              styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              text={strings.copyInviteLinkButtonLabel}
-            />
-          </Stack.Item>
-        )}
+
+        <AddPeopleButton
+          inviteLink={inviteLink}
+          mobileView={props.mobileView}
+          participantList={participantList}
+          strings={strings}
+        />
       </Stack>
     );
   }
+
   return (
-    <Stack tokens={peoplePaneContainerTokens}>
-      {inviteLink && (
-        <Stack styles={copyLinkButtonStackStyles}>
-          <DefaultButton
-            text={strings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-            onClick={() => copy(inviteLink)}
-            styles={copyLinkButtonStylesThemed}
-          />
-        </Stack>
-      )}
-      {participantList}
-    </Stack>
+    <AddPeopleButton
+      inviteLink={inviteLink}
+      mobileView={props.mobileView}
+      participantList={participantList}
+      strings={strings}
+    />
   );
 };
 
@@ -174,26 +146,4 @@ const createDefaultContextualMenuItems = (
     });
   }
   return menuItems;
-};
-
-/**
- * Convert IContextualMenuItem to _DrawerMenuItemProps
- * @param contextualMenu - IContextualMenuItem to convert
- * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
- * @returns DrawerMenuItem
- */
-const convertContextualMenuItemToDrawerMenuItem = (
-  contextualMenu: IContextualMenuItem,
-  onDrawerMenuItemClick: () => void
-): _DrawerMenuItemProps => {
-  return {
-    itemKey: contextualMenu.key,
-    onItemClick: () => {
-      contextualMenu.onClick?.();
-      onDrawerMenuItemClick();
-    },
-    iconProps: contextualMenu.iconProps,
-    text: contextualMenu.text,
-    disabled: contextualMenu.disabled
-  };
 };
