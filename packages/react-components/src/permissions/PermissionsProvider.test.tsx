@@ -3,11 +3,9 @@
 
 import React from 'react';
 import Enzyme from 'enzyme';
+import { renderHook } from '@testing-library/react-hooks';
 import Adapter from 'enzyme-adapter-react-16';
-import { mountWithPermissions } from '../components/utils/testUtils';
-import { CameraButton, ControlBarButton } from '../components';
-import { _getPermissions, _Permissions } from './PermissionsProvider';
-import { registerIcons } from '@fluentui/react';
+import { PermissionsProvider, _getPermissions, _Permissions, _usePermissions } from './PermissionsProvider';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -35,31 +33,27 @@ const mockAttendeePermissions: _Permissions = {
   removeParticipantButton: false
 };
 
-describe('PermissionProvider tests for camera by passing mock permissions', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        controlbuttoncameraoff: <></>,
-        chevrondown: <></>,
-        controlbuttoncameraon: <></>
-      }
-    });
+describe('Tests for permission provider hook by passing mock permissions', () => {
+  test('Test _usepermissions for presenter', async () => {
+    const wrapper = ({ children }): React.ReactElement => (
+      <PermissionsProvider permissions={mockPresenterPermissions}>{children}</PermissionsProvider>
+    );
+    const { result } = renderHook(() => _usePermissions(), { wrapper });
+    expect(result.current).toEqual(mockPresenterPermissions);
   });
-  test('Camera button is enabled for prsenter role', async () => {
-    const wrapper = mountWithPermissions(<CameraButton showLabel={true} />, mockPresenterPermissions);
-    const cameraButton = wrapper.find(ControlBarButton).first();
-    expect(cameraButton.prop('disabled')).toBe(false);
+  test('Test _usepermissions for attendee', async () => {
+    const wrapper = ({ children }): React.ReactElement => (
+      <PermissionsProvider permissions={mockAttendeePermissions}>{children}</PermissionsProvider>
+    );
+    const { result } = renderHook(() => _usePermissions(), { wrapper });
+    expect(result.current).toEqual(mockAttendeePermissions);
   });
-  test('Camera button is enabled for Attendee role', async () => {
-    const wrapper = mountWithPermissions(<CameraButton showLabel={true} />, mockAttendeePermissions);
-    const cameraButton = wrapper.find(ControlBarButton).first();
-    expect(cameraButton.prop('disabled')).toBe(false);
-  });
-
-  test('Camera button is disabled for Consumer role', async () => {
-    const wrapper = mountWithPermissions(<CameraButton showLabel={true} />, mockConsumerPermissions);
-    const cameraButton = wrapper.find(ControlBarButton).first();
-    expect(cameraButton.prop('disabled')).toBe(true);
+  test('Test _usepermissions for consumer', async () => {
+    const wrapper = ({ children }): React.ReactElement => (
+      <PermissionsProvider permissions={mockConsumerPermissions}>{children}</PermissionsProvider>
+    );
+    const { result } = renderHook(() => _usePermissions(), { wrapper });
+    expect(result.current).toEqual(mockConsumerPermissions);
   });
 });
 
