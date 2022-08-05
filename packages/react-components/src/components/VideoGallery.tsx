@@ -372,18 +372,28 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
   const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
 
-  let gridTiles: JSX.Element[] = [];
-  let horizontalGalleryTiles: JSX.Element[] = [];
+  const createGridTiles = (): JSX.Element[] => {
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    return videoTiles.length > 0 ? videoTiles : audioTiles.concat(callingTiles);
+    return videoTiles.length > 0 ? videoTiles : audioTiles;
+  };
+  const gridTiles = createGridTiles();
 
-  if (screenShareActive) {
-    // If screen sharing is active, assign video and audio participants as horizontal gallery participants
-    horizontalGalleryTiles = videoTiles.concat(audioTiles);
-  } else {
-    // If screen sharing is not active, then assign all video tiles as grid tiles.
-    // If there are no video tiles, then assign audio tiles as grid tiles.
-    gridTiles = videoTiles.length > 0 ? videoTiles : audioTiles.concat(callingTiles);
-    horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles.concat(callingTiles) : [];
-  }
+  const createHorizontalGalleryTiles = (): JSX.Element[] => {
+    if (screenShareActive) {
+      // If screen sharing is active, assign video and audio participants as horizontal gallery participants
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      return videoTiles.concat(audioTiles.concat(callingTiles));
+      return videoTiles.concat(audioTiles);
+    } else {
+      // If screen sharing is not active, then assign all video tiles as grid tiles.
+      // If there are no video tiles, then assign audio tiles as grid tiles.
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      return videoTiles.length > 0 ? audioTiles.concat(callingTiles) : [];
+      return videoTiles.length > 0 ? audioTiles : [];
+    }
+  };
+  const horizontalGalleryTiles = createHorizontalGalleryTiles();
 
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(localVideoTile);
