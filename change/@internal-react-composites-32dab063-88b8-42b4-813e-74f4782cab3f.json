@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bypass lobby screen for pstn/acs calls",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
