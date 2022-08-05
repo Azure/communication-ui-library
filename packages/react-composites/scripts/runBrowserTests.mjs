@@ -30,6 +30,11 @@ const PLAYWRIGHT_CONFIG = {
   hermetic: path.join(PACKLET_ROOT, 'playwright.config.hermetic.ts'),
   live: path.join(PACKLET_ROOT, 'playwright.config.live.ts')
 };
+const PLAYWRIGHT_PROJECT = {
+  desktop: 'Desktop Chrome',
+  'mobile-portrait': 'Mobile Android Portrait',
+  'mobile-landscape': 'Mobile Android Landscape'
+};
 
 async function main(argv) {
   const args = parseArgs(argv);
@@ -106,7 +111,7 @@ async function runOne(args, composite, hermeticity) {
   }
   if (args.projects) {
     for (const project of args.projects) {
-      cmdArgs.push('--project', project);
+      cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
     }
   }
   if (args.debug) {
@@ -198,7 +203,7 @@ function parseArgs(argv) {
       projects: {
         alias: 'p',
         type: 'array',
-        choices: ['desktop-chrome', 'mobile-android-portrait', 'mobile-android-landscape'],
+        choices: ['desktop', 'mobile-portrait', 'mobile-landscape'],
         description: 'Choose playwright projects to run. By default, all projects will be run.\n'
       },
       stress: {
