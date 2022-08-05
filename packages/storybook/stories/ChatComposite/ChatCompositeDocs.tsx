@@ -155,8 +155,9 @@ export const getDocs: () => JSX.Element = () => {
         The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
         Using the provided APIs, you can enable the composite to support uploading files and displaying them on the send
         box before sending, and the message thread once they have been sent or received. For an end to end tutorial on
-        enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our tutorial.
-        https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
+        enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our
+        [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial). File
+        sharing is not supported for Teams interop scenarios.
       </Description>
       <Source code={addFileSharingSnippet} />
 
