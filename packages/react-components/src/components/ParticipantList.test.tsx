@@ -18,7 +18,7 @@ const dummyOnRemoveParticipantCallback = () => {
 };
 
 describe('ParticipantList tests for different roles', () => {
-  test('ParticipantList should have disabled remove menu item for Presenter role', async () => {
+  test('ParticipantList should have enabled remove menu item for Presenter role', async () => {
     const wrapper = mountWithPermissions(
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
