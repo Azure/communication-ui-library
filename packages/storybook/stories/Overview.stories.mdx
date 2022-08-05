@@ -1,6 +1,11 @@
 import { Image, Stack, Text } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
-import { overviewPageImagesStackStyle, overviewPageUIArtifactsStackStyle } from './constants';
+import {
+  overviewPageImagesStackStyle,
+  overviewPageUIArtifactTextStyle,
+  overviewPageUIArtifactImageStyle,
+  overviewPageUIArtifactsStackStyle
+} from './constants';
 
 <Meta id="overview" title="Overview" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
@@ -33,7 +38,12 @@ import { overviewPageImagesStackStyle, overviewPageUIArtifactsStackStyle } from 
     </h1>
   </Stack.Item>
   <Stack.Item align="center">
-    <img src="images/hero.svg" alt="UI Library Hero Image" style={{ maxHeight: '18.75rem' }} />
+    <Image
+      src="images/hero.svg"
+      alt="UI Library Hero Image"
+      style={{ maxHeight: '18.75rem', height: 'auto' }}
+      height="18.75rem" /* set an approximate default height to avoid reflow when the image loads */
+    />
   </Stack.Item>
 </Stack>
 
@@ -50,11 +60,11 @@ These components can be composed together to build calling and chat experiences.
 If you just want an out of the box communications experiences that you can drop into your application, we offer **Composites**.
 It takes only a couple lines of code to add and configure.
 
-<Stack horizontal tokens={{ childrenGap: '1rem' }} wrap>
+<Stack horizontal tokens={{ childrenGap: '1rem' }} wrap style={{ margin: '2rem 0rem 2rem 0rem' }}>
   <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
     <a style={overviewPageUIArtifactsStackStyle} href="/docs/quickstarts-composites--page">
       <Stack tokens={{ childrenGap: '1rem' }}>
-        <Stack.Item>
+        <Stack.Item style={overviewPageUIArtifactTextStyle}>
           <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
             Composites →
           </Text>
@@ -62,16 +72,25 @@ It takes only a couple lines of code to add and configure.
             End-to-end solutions ready to integrate into your existing experience.
           </Text>
         </Stack.Item>
-        <Stack.Item>
-          <Image style={{ width: '100%' }} src="images/composites-teaser.png" alt="Learn more about UI Composites" />
+        <Stack.Item style={overviewPageUIArtifactImageStyle}>
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            height="10.5rem"
+            /* set an approximate default height to avoid reflow when the image loads */ src="images/composites-teaser.png"
+            alt="Learn more about UI Composites"
+          />
         </Stack.Item>
       </Stack>
     </a>
   </Stack.Item>
-  <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
+  <Stack.Item
+    styles={{
+      root: { ':hover': { textDecoration: 'underline !important', textDecorationColor: '#004578 !important' } }
+    }}
+  >
     <a style={overviewPageUIArtifactsStackStyle} href="/docs/overview-uicomponents--page">
       <Stack tokens={{ childrenGap: '1rem' }}>
-        <Stack.Item>
+        <Stack.Item style={overviewPageUIArtifactTextStyle}>
           <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
             Components →
           </Text>
@@ -79,8 +98,13 @@ It takes only a couple lines of code to add and configure.
             Flexible UI building blocks for custom voice, video calling, and chat solutions.
           </Text>
         </Stack.Item>
-        <Stack.Item>
-          <Image style={{ width: '100%' }} src="images/components-teaser.png" alt="Learn more about UI Components" />
+        <Stack.Item style={overviewPageUIArtifactImageStyle}>
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            height="10.5rem"
+            /* set an approximate default height to avoid reflow when the image loads */ src="images/components-teaser.png"
+            alt="Learn more about UI Components"
+          />
         </Stack.Item>
       </Stack>
     </a>
