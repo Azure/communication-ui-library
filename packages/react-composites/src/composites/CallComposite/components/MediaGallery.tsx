@@ -17,6 +17,8 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { participantStateStyle } from '../styles/MediaGallery.styles';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { useLocale } from '../../localization';
 
 const VideoGalleryStyles = {
   root: {
@@ -61,14 +63,30 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  const locale = useLocale().component;
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  const videoTileStrings = locale.strings.videoTile;
+
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          {options?.participantState && options?.participantState === ('Connecting' || 'Ringing' || 'OnHold') && (
-            <Text className={mergeStyles(participantStateStyle)}>{options?.participantState}</Text> // we could do this but it isn't localized
-          )}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
+              options?.participantState === ('Connecting' || 'Ringing') && (
+                <Text className={mergeStyles(participantStateStyle)}>
+                  {videoTileStrings.participantStateConnecting}
+                </Text>
+              )
+          }
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
+              options?.participantState === 'OnHold' && (
+                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
+              )
+          }
         </Stack>
       );
     },

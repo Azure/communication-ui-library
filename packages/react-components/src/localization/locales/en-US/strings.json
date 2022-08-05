@@ -179,8 +179,8 @@
     "toolTipOffContent": "Hold call"
   },
   "videoTile": {
-    "participantStateConnecting": "Connecting...",
-    "participantStateRinging": "Ringing...",
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
     "participantStateHold": "On Hold"
   }
 }
