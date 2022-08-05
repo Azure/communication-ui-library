@@ -133,6 +133,7 @@ function setup() {
 
 function parseArgs(argv) {
   const args = yargs(argv.slice(2))
+    .strict()
     .usage(
       '$0 [options]',
       'Use this script to run end-to-end tests for this packlet.' +
