@@ -10,12 +10,15 @@ import {
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { Text } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { participantStateStyle } from '../styles/MediaGallery.styles';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { useLocale } from '../../localization';
@@ -75,16 +78,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
             {
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
-                options?.participantState === ('Connecting' || 'Ringing') && (
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
+                options?.state === ('Connecting' || 'Ringing') && (
                   <Text className={mergeStyles(participantStateStyle)}>
                     {videoTileStrings.participantStateConnecting}
                   </Text>
                 )
             }
             {
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.participantState &&
-                options?.participantState === 'OnHold' && (
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
+                options?.state === 'Hold' && (
                   <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
                 )
             }
