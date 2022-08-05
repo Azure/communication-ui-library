@@ -8,6 +8,7 @@ import {
   PersonaPresence,
   PersonaSize
 } from '@fluentui/react';
+import { ParticipantState } from '.';
 
 /**
  * Options that can be injected into the `onRender` function for customizing an
@@ -32,8 +33,9 @@ export type CustomAvatarOptions = {
   styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
   /** Display name to be used in Persona  */
   text?: string;
-
-  // use the new type for participant list from participantListParticipant file
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** State for the participant to be displayed in the defaultPlaceHolder */
+  state?: ParticipantState;
 };
 
 /**

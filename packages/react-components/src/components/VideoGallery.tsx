@@ -239,6 +239,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: maxRemoteVideoStreams
   }).slice(0, maxRemoteVideoStreams);
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   visibleCallingParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => p.state === ('Connecting' || 'ringing')) ?? [],
     dominantSpeakers,
@@ -247,11 +248,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   });
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const visibleCallingParticipantsSet = new Set(visibleCallingParticipants.current.map((p) => p.userId));
+
   visibleAudioParticipants.current = smartDominantSpeakerParticipants({
     participants:
       remoteParticipants?.filter(
-        (p) => !visibleVideoParticipantsSet.has(p.userId) && !visibleCallingParticipantsSet.has(p.userId)
+        (p) =>
+          !visibleVideoParticipantsSet.has(p.userId) &&
+          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !visibleCallingParticipantsSet.has(
+            p.userId
+          )
       ) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleAudioParticipants.current,
@@ -355,6 +363,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         return defaultOnRenderVideoTile(participant, false);
       });
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingTiles = onRenderRemoteVideoTile
     ? visibleCallingParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
     : visibleCallingParticipants.current.map((participant): JSX.Element => {
