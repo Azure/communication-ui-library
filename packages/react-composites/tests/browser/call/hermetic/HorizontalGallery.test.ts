@@ -75,10 +75,7 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-  test.only('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({
-    page,
-    serverUrl
-  }) => {
+  test('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
@@ -96,7 +93,7 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-  test.only('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
+  test('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
     page,
     serverUrl
   }) => {
@@ -121,7 +118,7 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-  test.only('HorizontalGallery should have multiple audio participants and 1 calling participant on second page', async ({
+  test('HorizontalGallery should have multiple audio participants and 1 calling participant on second page', async ({
     page,
     serverUrl
   }) => {
