@@ -26,7 +26,7 @@ import {
   menuButtonContainerStyle,
   participantItemContainerStyle
 } from './styles/ParticipantItem.styles';
-import { preventDismissOnEvent } from './utils/common';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
