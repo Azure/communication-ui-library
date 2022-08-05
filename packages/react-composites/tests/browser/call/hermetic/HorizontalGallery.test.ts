@@ -75,6 +75,27 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  test.only('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.state = 'Connecting';
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-joining-participant.png'
+    );
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   test.only('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
     page,
     serverUrl
@@ -95,7 +116,7 @@ test.describe('HorizontalGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant.png'
+      'horizontal-gallery-with-joining-participant-with-audio-participants.png'
     );
   });
 
@@ -132,7 +153,7 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant.png'
+      'horizontal-gallery-with-joining-participant-with-multi-page.png'
     );
   });
 });

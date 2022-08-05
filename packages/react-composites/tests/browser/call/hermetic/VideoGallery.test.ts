@@ -3,7 +3,7 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, waitForSelector, stableScreenshot } from '../../common/utils';
+import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
