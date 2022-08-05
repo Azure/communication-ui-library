@@ -195,7 +195,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       // Test flake has a much larger impact on overall CI time than individual test runtime.
       //
       // The extended timeout was determined by stress testing on CI.
-      { timeout: 4 * perStepLocalTimeout() }
+      { timeout: 10 * perStepLocalTimeout() }
     );
   }
 };
