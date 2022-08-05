@@ -138,7 +138,7 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -148,6 +148,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -218,7 +219,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -307,7 +308,7 @@ export interface CallClientProviderProps {
 
 // @public
 export interface CallClientState {
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -421,6 +422,10 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    dialpadCloseModalButtonAriaLabel: string;
+    dialpadModalAriaLabel: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -438,7 +443,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    openDialpadButtonLabel: string;
     peopleButtonLabel: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
@@ -1250,6 +1257,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // @public
@@ -1363,13 +1371,13 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternativeCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
@@ -1687,9 +1695,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadButtonProps {
-    // (undocumented)
     primaryContent: string;
-    // (undocumented)
     secondaryContent?: string;
 }
 
@@ -2577,7 +2583,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier;
-    alternativeCallerId?: string;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -2772,7 +2778,12 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    // @beta
+    state?: VideoGalleryRemoteParticipantState;
 }
+
+// @beta
+export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -2835,13 +2846,26 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    participantState?: VideoGalleryRemoteParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public

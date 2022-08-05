@@ -213,6 +213,11 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await moreDrawerSpeakerDiv?.click();
       const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Output 1"');
       await submenuNewAudioDeviceDiv?.click();
+      //need to open again because submenu is dismissed automatically after selection
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerSpeakerDiv_copy = await page.$('div[role="menu"] >> text=Speaker');
+      await moreDrawerSpeakerDiv_copy?.click();
+      await page.$('div[role="menu"] >> text="Fake Audio Output 1"');
       expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
     }
   });
@@ -230,7 +235,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await submenuNewAudioDeviceDiv?.click();
 
       // Display MoreDrawer to view newly selected audio device
-      await page.mouse.click(100, 100);
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
         `call-with-chat-more-drawer-new-selected-speaker-screen.png`
@@ -256,6 +260,12 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await moreDrawerMicrophoneDiv?.click();
       const submenuNewAudioDeviceDiv = await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
       await submenuNewAudioDeviceDiv?.click();
+
+      //need to open again because submenu is dismissed automatically after selection
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const moreDrawerMicrophoneDiv_copy = await page.$('div[role="menu"] >> text=Microphone');
+      await moreDrawerMicrophoneDiv_copy?.click();
+      await page.$('div[role="menu"] >> text="Fake Audio Input 1"');
       expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
     }
   });
@@ -273,7 +283,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await submenuNewAudioDeviceDiv?.click();
 
       // Display MoreDrawer to view newly selected audio device
-      await page.mouse.click(100, 100);
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
         `call-with-chat-more-drawer-new-selected-microphone-screen.png`

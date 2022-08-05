@@ -46,7 +46,13 @@
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "soundLabel": "Sound",
-    "startCallButtonLabel": "Start call"
+    "startCallButtonLabel": "Start call",
+    "openDialpadButtonLabel": "Dial phone number",
+    "peoplePaneAddPeopleButtonLabel": "Add People",
+    "dialpadStartCallButtonLabel": "Call",
+    "dialpadModalTitle": "Dial Phone Number",
+    "dialpadModalAriaLabel": "Dialpad",
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
   },
   "chat": {
     "chatListHeader": "In this chat",

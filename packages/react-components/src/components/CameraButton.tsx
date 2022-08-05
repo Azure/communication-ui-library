@@ -11,6 +11,8 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -145,11 +147,16 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
+  let disabled = props.disabled || waitForCamera;
+  /* @conditional-compile-remove(rooms) */
+  disabled = disabled || !_usePermissions().cameraButton;
+
   const onRenderCameraOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
+    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
   );
   const onRenderCameraOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
+    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
   );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
@@ -186,7 +193,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <ControlBarButton
         {...props}
-        disabled={props.disabled || waitForCamera}
+        disabled={disabled}
         onClick={onToggleCamera ? onToggleClick : props.onClick}
         onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}

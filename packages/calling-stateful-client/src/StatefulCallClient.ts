@@ -237,7 +237,7 @@ export type StatefulCallClientArgs = {
    *
    * This is not a cached value from the headless calling client.
    */
-  alternativeCallerId?: string;
+  alternateCallerId?: string;
 };
 
 /**
@@ -281,7 +281,7 @@ export const createStatefulCallClient = (
     new CallContext(
       getIdentifierKind(args.userId),
       options?.maxStateChangeListeners,
-      /* @conditional-compile-remove(PSTN-calls) */ args.alternativeCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ args.alternateCallerId
     ),
     new InternalCallContext()
   );

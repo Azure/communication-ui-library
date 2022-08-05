@@ -7,7 +7,17 @@ import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
-export const PER_STEP_TIMEOUT_MS = 5000;
+const PER_STEP_TIMEOUT_MS = 5000;
+
+function perStepLocalTimeout(): number {
+  if (process.env.LOCAL_DEBUG) {
+    // Disable per-step timeouts for local debugging
+    // so that developers can use the playwright inspector
+    // to single step through the playwright test.
+    return 0;
+  }
+  return PER_STEP_TIMEOUT_MS;
+}
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
@@ -45,12 +55,12 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
 export const waitForSelector = async (
   page: Page,
   selector: string,
-  options?: { state?: 'visible' | 'attached' }
+  options?: { state?: 'visible' | 'attached'; timeout?: number }
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
   await page.bringToFront();
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS, ...options })
+    async () => await page.waitForSelector(selector, { timeout: perStepLocalTimeout(), ...options })
   );
 };
 
@@ -61,11 +71,12 @@ export const waitForSelector = async (
 export async function waitForFunction<R>(
   page: Page,
   pageFunction: PageFunction<R>,
-  arg?: unknown
+  arg?: unknown,
+  options?: { timeout?: number }
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout(), ...options })
   );
 }
 
@@ -104,7 +115,13 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
   await waitForPageFontsLoaded(page);
-  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+
+  // Tests often timeout at this point because call agent creation and device enumeration can take > 5 seconds.
+  // Extend the timeout here to trade flakiness for potentially longer test runtime.
+  // Test flake has a much larger impact on overall CI time than individual test runtime.
+  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'), {
+    timeout: 2 * perStepLocalTimeout()
+  });
   await startCallButton.waitForElementState('enabled');
 };
 
@@ -153,8 +170,6 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await pageClick(page, dataUiId('call-composite-start-call-button'));
-
-    // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await waitForSelector(page, dataUiId('call-page'));
   }
 
@@ -174,7 +189,13 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
       },
       {
         expectedVideoCount: pages.length
-      }
+      },
+      // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
+      // Extend the timeout here to trade flakiness for potentially longer test runtime.
+      // Test flake has a much larger impact on overall CI time than individual test runtime.
+      //
+      // The extended timeout was determined by stress testing on CI.
+      { timeout: 10 * perStepLocalTimeout() }
     );
   }
 };
