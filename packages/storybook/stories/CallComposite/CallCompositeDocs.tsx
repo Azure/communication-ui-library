@@ -123,21 +123,22 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
       </Description>
-
+      
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner />
       <Description>
-        The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a mix between Azure Communication Users
-        and PSTN users. To make these out bound calls you need to provide a `locator` that contains participantID's that
-        you are looking to call to the [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these ID's are
-        the phone numbers that you are looking to call. For Azure Communication Users you will need to provide their
-        unique ACS aquired `userId`.
+        The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
+        Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
+        `locator` that contains participantIDs that you are looking to call to the
+        [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
+        looking to call. For Azure Communication Users you will need to provide their unique ACS aquired `userId`.
       </Description>
       <Description>
-        As well as these participantID's you are required to provide a [phone
+        As well as these participantIDs you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
-        from a Azure Communications resource to the constructor for the adapter for PSTN. This phone number serves as
-        your caller ID when calling PSTN This phone number is not required for calling other Azure Communications Users.
+        from a Azure Communications resource to the composite's adapter for PSTN. This phone number serves as your
+        caller ID when calling PSTN. This phone number is not required for calling other Azure Communications users,
+        however, will be required if you are looking to call a ACS user and a PSTN user in the same call.
       </Description>
 
       <Heading>Call Composite Props</Heading>
