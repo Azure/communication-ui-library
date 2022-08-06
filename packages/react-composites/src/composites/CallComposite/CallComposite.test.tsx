@@ -5,7 +5,7 @@ import { registerIcons } from '@fluentui/react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
-import { MockCallAdapter } from '../../../tests/browser/call/app/mocks/MockCallAdapter';
+import { MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 
 Enzyme.configure({ adapter: new Adapter() });
