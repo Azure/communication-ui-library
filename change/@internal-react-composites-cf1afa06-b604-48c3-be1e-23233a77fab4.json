@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Created dropdown in people pane to open dialpad modal",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

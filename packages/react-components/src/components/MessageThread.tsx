@@ -198,8 +198,10 @@ export interface MessageThreadStrings {
   failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
-  /** String for aria text of message content */
+  /** String for aria text of remote user's message content */
   messageContentAriaText: string;
+  /** String for aria text of local user's message content */
+  messageContentMineAriaText: string;
   /** String for warning on text limit exceeded in EditBox*/
   editBoxTextLimit: string;
   /** String for placeholder text in EditBox when there is no user input*/

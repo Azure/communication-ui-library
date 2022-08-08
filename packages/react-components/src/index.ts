@@ -46,5 +46,7 @@ export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
   VideoStreamOptions,
-  ViewScalingMode
+  ViewScalingMode,
+  /* @conditional-compile-remove(PSTN-calls) */
+  VideoGalleryRemoteParticipantState
 } from './types';

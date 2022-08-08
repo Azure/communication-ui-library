@@ -127,7 +127,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
       <Stack
         className={containerClassName}
         onClick={() => {
-          props.actionHandler && props.actionHandler();
+          props.actionHandler?.();
         }}
       >
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
