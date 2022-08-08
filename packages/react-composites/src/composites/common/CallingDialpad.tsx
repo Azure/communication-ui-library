@@ -31,11 +31,12 @@ export interface CallingDialpadProps {
   strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId: string;
 }
 
 /** @private */
 export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
-  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant } = props;
+  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant, alternateCallerId } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
@@ -56,7 +57,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
       } else {
         phoneNumber = { phoneNumber: '+' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
       }
-      onAddParticipant(phoneNumber, { alternateCallerId: phoneNumber });
+      onAddParticipant(phoneNumber, { alternateCallerId: { phoneNumber: alternateCallerId } });
       onDismissTriggered();
     }
   };
