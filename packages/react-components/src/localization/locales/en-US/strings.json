@@ -114,6 +114,7 @@
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "messageContentAriaText": "{author} said {message}",
+    "messageContentMineAriaText": "You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -166,7 +167,7 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number",
+    "placeholderText": "Enter phone number",
     "deleteButtonAriaLabel": "Delete"
   },
   "HoldButton": {
@@ -174,5 +175,10 @@
     "offLabel": "Hold",
     "toolTipOnContent": "Resume call",
     "toolTipOffContent": "Hold call"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Connecting...",
+    "participantStateRinging": "Ringing...",
+    "participantStateHold": "On Hold"
   }
 }
