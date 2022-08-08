@@ -9,7 +9,7 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, waitForSelector, stableScreenshot } from '../../common/utils';
+import { dataUiId, pageClick, waitForSelector, stableScreenshot, isTestProfileStableFlavor } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('HorizontalGallery tests', async () => {
@@ -74,8 +74,8 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   test('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
@@ -85,18 +85,16 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant.png'
     );
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   test('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
     page,
     serverUrl
   }) => {
+    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -117,11 +115,11 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   test('HorizontalGallery should have multiple audio participants and 1 calling participant on second page', async ({
     page,
     serverUrl
   }) => {
+    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
