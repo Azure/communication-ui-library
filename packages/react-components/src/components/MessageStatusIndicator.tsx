@@ -92,16 +92,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
   switch (status) {
     case 'failed':
       return (
-        <TooltipHost
-          content={strings.failedToSendTooltipText}
-          data-ui-id="chat-composite-message-tooltip"
-          calloutProps={{ ...calloutProps }}
-          styles={hostStyles}
-        >
-          {strings.failedToSendAriaLabel && (
-            // live message is used here and in the following tooltips so that aria labels are announced on mobile
-            <LiveMessage message={strings.failedToSendAriaLabel} aria-live="polite" />
-          )}
+        <TooltipHost content={strings.failedToSendTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -117,14 +108,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'sending':
       return (
-        <TooltipHost
-          content={strings.sendingTooltipText}
-          data-ui-id="chat-composite-message-tooltip"
-          calloutProps={{ ...calloutProps }}
-          styles={hostStyles}
-        >
-          {strings.sendingAriaLabel && <LiveMessage message={strings.sendingAriaLabel} aria-live="polite" />}
-
+        <TooltipHost content={strings.sendingTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
@@ -141,9 +125,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost
-          calloutProps={{ ...calloutProps }}
           data-ui-id="chat-composite-message-tooltip"
-          styles={hostStyles}
           content={
             // when it's just 1 to 1 texting, we don't need to know who has read the message, just show message as 'seen'
             // when readcount is 0, we have a bug, show 'seen' to cover up as a fall back
@@ -179,13 +161,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'delivered':
       return (
-        <TooltipHost
-          calloutProps={{ ...calloutProps }}
-          content={strings.deliveredTooltipText}
-          data-ui-id="chat-composite-message-tooltip"
-          styles={hostStyles}
-        >
-          {strings.deliveredAriaLabel && <LiveMessage message={strings.deliveredAriaLabel} aria-live="polite" />}
+        <TooltipHost content={strings.deliveredTooltipText} data-ui-id="chat-composite-message-tooltip">
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"

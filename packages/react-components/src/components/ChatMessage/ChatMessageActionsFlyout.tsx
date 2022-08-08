@@ -159,7 +159,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         submenuIconProps: {
           iconName: 'HorizontalGalleryRightButton',
-          styles: menuSubIconStyleSet
+          styles: menuIconStyleSet,
+          id: 'chat-composite-message-contextual-menu-read-info'
         },
         disabled: messageReadByCount <= 0
       });
