@@ -135,58 +135,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
-  test('click on add people button will open dropdown', async ({ pages }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
-    const page = pages[1];
-    if (isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
-      await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
-      await pageClick(page, dataUiId('call-with-chat-composite-add-people-button'));
-      await waitForSelector(page, dataUiId('call-with-chat-composite-dial-phone-number-button'));
-    } else {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
-      await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
-      await pageClick(page, dataUiId('call-with-chat-composite-add-people-button'));
-
-      await waitForSelector(page, 'div[role="menu"] >> text=Dial phone number');
-    }
-
-    if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(page, 2);
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-add-people-dropdown.png`);
-  });
-
-  test('click on dial phone number will open dialpad', async ({ pages }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
-    const page = pages[1];
-    if (isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
-      await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
-      await pageClick(page, dataUiId('call-with-chat-composite-add-people-button'));
-      await waitForSelector(page, dataUiId('call-with-chat-composite-dial-phone-number-button'));
-      await pageClick(page, dataUiId('call-with-chat-composite-dial-phone-number-button'));
-    } else {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
-      await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
-      await pageClick(page, dataUiId('call-with-chat-composite-add-people-button'));
-
-      const drawerDialPhoneNumberDiv = await page.$('div[role="menu"] >> text=Dial phone number');
-      await drawerDialPhoneNumberDiv?.click();
-    }
-
-    await waitForSelector(page, dataUiId('dialpadContainer'));
-    if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(page, 2);
-    }
-
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-dialpad.png`);
-  });
-
   test('More Drawer menu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
     const page = pages[1];
     if (!isTestProfileDesktop(testInfo)) {
