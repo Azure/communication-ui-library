@@ -44,9 +44,7 @@ const main = async () => {
       process.exitCode = 0;
       return;
     } else if ((new Date() - startTime) > TIMEOUT_TIME_MS) {
-      console.error("Failed to find package on the npm registry");
-      process.exitCode = 1;
-      return;
+      throw new Error('Failed to find package on the npm registry');
     } else {
       console.log('Sleeping for a bit...');
       await sleep(POLL_INTERVAL_MS);
@@ -54,4 +52,4 @@ const main = async () => {
   }
 };
 
-main();
+await main();
