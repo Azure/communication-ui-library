@@ -13,6 +13,8 @@ import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styl
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
 export interface CallingDialpadStrings {
@@ -28,11 +30,13 @@ export interface CallingDialpadProps {
   showDialpad: boolean;
   strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId: string;
 }
 
 /** @private */
 export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
-  const { strings, isMobile, showDialpad, onDismissDialpad } = props;
+  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant, alternateCallerId } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
@@ -43,8 +47,22 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   };
 
   const onClickCall = (): void => {
-    //place holder for adding calling functionality
-    console.log(textFieldInput);
+    if (onAddParticipant) {
+      let phoneNumber;
+      /**
+       * Format the phone number in dialpad textfield to make sure the phone number is in E.164 format.
+       * PSTN is only for North America and no area code in NA start with 1
+       * Check if the phone number input start with 1, if yes, the input phone number already contains country code, add + on top
+       * If not, add +1 country code
+       */
+      if (textFieldInput.replace(/\D/g, '')[0] !== '1') {
+        phoneNumber = { phoneNumber: '+1' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
+      } else {
+        phoneNumber = { phoneNumber: '+' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
+      }
+      onAddParticipant(phoneNumber, { alternateCallerId: { phoneNumber: alternateCallerId } });
+      onDismissTriggered();
+    }
   };
 
   const dialpadModelStyle: Partial<IModalStyles> = useMemo(() => themedDialpadModelStyle(theme), [theme]);
@@ -56,7 +74,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad onChange={setTextFieldInput} styles={dialpadStyle} />
+        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}
