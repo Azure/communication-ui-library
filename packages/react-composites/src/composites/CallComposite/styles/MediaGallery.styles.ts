@@ -70,3 +70,13 @@ export const participantStateStyle: IStyle = {
   fontWeight: 400,
   fontSize: '0.75rem'
 };
+
+/**
+ * @private
+ */
+export const participantStateStyleMobile: IStyle = {
+  textAlign: 'center',
+  // paddingTop: '0.3rem',
+  fontWeight: 400,
+  fontSize: '0.5rem'
+};

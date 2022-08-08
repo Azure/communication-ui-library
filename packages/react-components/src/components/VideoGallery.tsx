@@ -344,7 +344,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           /* @conditional-compile-remove(PSTN-calls) */
-          state={participant.state}
+          participantState={participant.state}
         />
       );
     },

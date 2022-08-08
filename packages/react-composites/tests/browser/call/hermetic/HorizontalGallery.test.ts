@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  addScreenshareStream,
   addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
@@ -76,12 +77,15 @@ test.describe('HorizontalGallery tests', async () => {
 
   test('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
+
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     vasily.state = 'Connecting';
+
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
+
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -95,6 +99,7 @@ test.describe('HorizontalGallery tests', async () => {
     serverUrl
   }) => {
     test.skip(isTestProfileStableFlavor());
+
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -105,8 +110,10 @@ test.describe('HorizontalGallery tests', async () => {
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     vasily.isMuted = true;
     vasily.state = 'Connecting';
+
     const participants = [paul, fiona, reina, vasily];
     const initialState = defaultMockCallAdapterState(participants);
+
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -149,6 +156,35 @@ test.describe('HorizontalGallery tests', async () => {
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-multi-page.png'
+    );
+  });
+
+  test('HorizontalGallery should have 2 video participants during screenshare and 1 calling participant', async ({
+    page,
+    serverUrl
+  }) => {
+    test.skip(isTestProfileStableFlavor());
+
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    addScreenshareStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+    vasily.state = 'Connecting';
+
+    const participants = [paul, fiona, reina, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-joining-participant-with-screen-share-and-video.png'
     );
   });
 });
