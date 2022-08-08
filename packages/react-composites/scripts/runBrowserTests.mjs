@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { exec } from './common.mjs';
+import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';
 import { rmdirSync } from 'fs';
 import { quote } from 'shell-quote';
@@ -101,7 +101,7 @@ async function runOne(args, composite, hermeticity) {
 
   const env = {
     ...process.env,
-    COMMUNICATION_REACT_FLAVOR: args.buildFlavor,
+    COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
@@ -148,8 +148,8 @@ function parseArgs(argv) {
       ['$0 -l', 'Run only hermetic tests. Most useful for local development cycle.'],
       ['$0 -c call', 'Run only CallComposite tests. Used by CI to shard out tests by composite.'],
       [
-        '$0 -b stable',
-        'Run tests for stable flavor build. You can also set the COMMUNICATION_REACT_FLAVOR as is done by package.json invocations.'
+        'rush switch-flavor:stable && $0',
+        'Run tests for stable flavor build. This tool respects the build flavor set via `rush`.'
       ],
       [
         '$0 -- --debug',
@@ -161,15 +161,6 @@ function parseArgs(argv) {
       ]
     ])
     .options({
-      buildFlavor: {
-        alias: 'b',
-        type: 'string',
-        choices: ['beta', 'stable'],
-        describe:
-          'Run tests against the specified build flavor.' +
-          ' Default: `beta`' +
-          ' Overrides the COMMUNICATION_REACT_FLAVOR environment variable.\n'
-      },
       composites: {
         alias: 'c',
         type: 'array',
@@ -222,9 +213,6 @@ function parseArgs(argv) {
     })
     .parseSync();
 
-  if (!args.buildFlavor) {
-    args.buildFlavor = process.env['COMMUNICATION_REACT_FLAVOR'] || 'beta';
-  }
   if (!args.composites) {
     args.composites = ['call', 'chat', 'callWithChat'];
   }

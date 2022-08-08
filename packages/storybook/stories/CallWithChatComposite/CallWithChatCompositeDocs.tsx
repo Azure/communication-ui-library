@@ -4,6 +4,7 @@
 import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
+import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
@@ -34,8 +35,12 @@ export const getDocs: () => JSX.Element = () => {
       <Title>CallWithChatComposite</Title>
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
+        Inside the experience users can configure their devices, participate in the call with video and see other
+        participants, including those with video turned on. The experience includes chat capabilities like sending and
+        receiving messages, and notifications for message thread events such as typing indicators, message receipts,
+        participants entering and leaving the chat.
       </Description>
-      <Stack horizontalAlign="center">
+      <Stack horizontalAlign="center" style={overviewPageImagesStackStyle}>
         <Image
           src="images/call-with-chat-composite-hero.png"
           alt="Call with chat composite preview image"
