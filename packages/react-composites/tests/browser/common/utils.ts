@@ -9,7 +9,7 @@ import { v1 as generateGUID } from 'uuid';
 // This timeout must be less than the global timeout
 const PER_STEP_TIMEOUT_MS = 5000;
 
-function perStepLocalTimeout(): number {
+export function perStepLocalTimeout(): number {
   if (process.env.LOCAL_DEBUG) {
     // Disable per-step timeouts for local debugging
     // so that developers can use the playwright inspector
