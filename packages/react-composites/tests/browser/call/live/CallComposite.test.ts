@@ -7,7 +7,6 @@ import {
   pageClick,
   PER_STEP_TIMEOUT_MS,
   isTestProfileDesktop,
-  isTestProfileStableFlavor,
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector,
