@@ -91,7 +91,8 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     strings.openDialpadButtonLabel,
     copyLinkButtonStylesThemed,
     inviteLink,
-    menuStyleThemed
+    menuStyleThemed,
+    alternateCallerId
   ]);
 
   const onDismissDialpad = (): void => {

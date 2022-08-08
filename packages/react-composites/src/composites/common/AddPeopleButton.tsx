@@ -36,10 +36,6 @@ export interface AddPeopleButtonProps {
 /** @private */
 export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
   const { inviteLink, mobileView, strings, participantList } = props;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const { alternateCallerId } = props;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const { onAddParticipant } = props;
 
   const theme = useTheme();
 
@@ -55,8 +51,8 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
         strings={strings}
         mobileView={mobileView}
         inviteLink={inviteLink}
-        onAddParticipant={onAddParticipant}
-        alternateCallerId={alternateCallerId}
+        onAddParticipant={props.onAddParticipant}
+        alternateCallerId={props.alternateCallerId}
       />
     );
   } else {
@@ -66,8 +62,8 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           strings={strings}
           mobileView={mobileView}
           inviteLink={inviteLink}
-          onAddParticipant={onAddParticipant}
-          alternateCallerId={alternateCallerId}
+          onAddParticipant={props.onAddParticipant}
+          alternateCallerId={props.alternateCallerId}
         />
         {participantList}
       </Stack>

@@ -103,9 +103,7 @@ export const CallPane = (props: {
   const dataUiId = props.activePane === 'people' ? 'call-composite-people-pane' : '';
 
   /* @conditional-compile-remove(PSTN-calls) */
-  const adapterState = useAdapter().getState();
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = adapterState.alternateCallerId;
+  const alternateCallerId = useAdapter().getState().alternateCallerId;
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
