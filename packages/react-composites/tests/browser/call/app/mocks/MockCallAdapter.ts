@@ -117,7 +117,7 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
     if (s.dummyView) {
       s.view = {
         ...s.dummyView,
-        target: createMockHTMLElement()
+        target: createMockHTMLElement('z')
       };
     }
   });

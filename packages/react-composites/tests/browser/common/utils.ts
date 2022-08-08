@@ -202,8 +202,14 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 
 /**
  * Wait for PiPiP it's videos to have loaded.
+ *
+ * Set `skipVideoCheck` for hermetic tests because the <HermeticApp /> fakes the video node with a <div/>.
  */
-export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
+export const waitForPiPiPToHaveLoaded = async (
+  page: Page,
+  videosEnabledCount: number,
+  skipVideoCheck: boolean = false
+): Promise<void> => {
   await page.bringToFront();
   await waitForFunction(
     page,
@@ -221,6 +227,10 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
         return false;
       }
 
+      if (args.skipVideoCheck) {
+        return true;
+      }
+
       // Check the videos are ready in each tile
       const allVideosLoaded = Array.from(tileNodes).every((tileNode) => {
         const videoNode = tileNode?.querySelector('video');
@@ -231,7 +241,8 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
     {
       pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
       participantTileSelector: dataUiId('video-tile'),
-      expectedTileCount: videosEnabledCount
+      expectedTileCount: videosEnabledCount,
+      skipVideoCheck: skipVideoCheck
     }
   );
 };

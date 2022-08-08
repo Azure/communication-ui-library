@@ -9,6 +9,7 @@ import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
 import type {
   MockCallAdapterState,
+  MockLocalVideoStreamState,
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../MockCallAdapterState';
@@ -125,6 +126,28 @@ export function defaultMockRemoteParticipant(displayName: string): MockRemotePar
     isSpeaking: false,
     displayName: displayName
   };
+}
+
+/**
+ * Add the default {@link MockLocalVideoStreamState} for hermetic e2e tests.
+ *
+ * Use this to add outgoing video to state created via {@link defaultCallAdapterState}.
+ */
+export function addDefaultMockLocalVideoStreamState(state: MockCallAdapterState): void {
+  if (!state.call) {
+    throw new Error('state.call must be defined');
+  }
+  state.call.localVideoStreams = [
+    {
+      source: {
+        deviceType: 'UsbCamera',
+        id: 'FakeLocalCamera',
+        name: 'FakeLocalCamera'
+      },
+      mediaStreamType: 'Video',
+      dummyView: { scalingMode: 'Crop', isMirrored: false }
+    }
+  ];
 }
 
 /**

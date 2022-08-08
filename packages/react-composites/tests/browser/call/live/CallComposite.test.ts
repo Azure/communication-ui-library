@@ -10,8 +10,7 @@ import {
   waitForCallCompositeToLoad,
   waitForFunction,
   waitForSelector,
-  stableScreenshot,
-  waitForPiPiPToHaveLoaded
+  stableScreenshot
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -126,24 +125,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const page = pages[idx];
       await page.bringToFront();
       expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`video-gallery-page-${idx}.png`);
-    }
-  });
-
-  test('participant list loads correctly', async ({ pages }, testInfo) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      await pageClick(page, dataUiId('call-composite-participants-button'));
-      if (flavor === 'stable') {
-        const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-        // This will ensure no animation is happening for the callout
-        await buttonCallOut.waitForElementState('stable');
-      } else {
-        await waitForSelector(page, dataUiId('call-composite-people-pane'));
-        if (!isTestProfileDesktop(testInfo)) {
-          await waitForPiPiPToHaveLoaded(page, 2);
-        }
-      }
-      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
 
