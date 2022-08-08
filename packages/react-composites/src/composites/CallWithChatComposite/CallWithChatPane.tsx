@@ -67,9 +67,7 @@ export const CallWithChatPane = (props: {
   const theme = useTheme();
 
   /* @conditional-compile-remove(PSTN-calls) */
-  const adapterState = props.callAdapter.getState();
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = adapterState.alternateCallerId;
+  const alternateCallerId = props.callAdapter.getState().alternateCallerId;
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (

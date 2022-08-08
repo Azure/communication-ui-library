@@ -21,7 +21,7 @@ import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatCompos
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
+import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
@@ -42,10 +42,6 @@ export const PeoplePaneContent = (props: {
   alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const { alternateCallerId } = props;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const { onAddParticipant } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -113,9 +109,9 @@ export const PeoplePaneContent = (props: {
           participantList={participantList}
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
-          onAddParticipant={onAddParticipant}
+          onAddParticipant={props.onAddParticipant}
           /* @conditional-compile-remove(PSTN-calls) */
-          alternateCallerId={alternateCallerId}
+          alternateCallerId={props.alternateCallerId}
         />
       </Stack>
     );
@@ -128,9 +124,9 @@ export const PeoplePaneContent = (props: {
       participantList={participantList}
       strings={strings}
       /* @conditional-compile-remove(PSTN-calls) */
-      onAddParticipant={onAddParticipant}
+      onAddParticipant={props.onAddParticipant}
       /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId={alternateCallerId}
+      alternateCallerId={props.alternateCallerId}
     />
   );
 };
