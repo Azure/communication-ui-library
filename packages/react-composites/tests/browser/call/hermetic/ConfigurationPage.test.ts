@@ -6,7 +6,7 @@ import { expect } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
 
-test.describe.only('Call Composite E2E Configuration Screen Tests', () => {
+test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ page, serverUrl }) => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
     await waitForCallCompositeToLoad(page);
