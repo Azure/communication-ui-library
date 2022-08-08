@@ -19,7 +19,7 @@ test.describe('Localization tests', async () => {
     );
   });
 
-  test.only('Participant button in call should be localized', async ({ page, serverUrl }) => {
+  test('Participant button in call should be localized', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { useFrLocale: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
