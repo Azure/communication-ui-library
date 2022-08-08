@@ -189,6 +189,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         return;
       }
 
+      // State is going from connected -> disconnected, emit the callEnded event.
+      const activeCall = this._call;
+      if (activeCall && activeCall.state === 'Connected' && clientState.calls[activeCall.id].state === 'Disconnected') {
+        this.emitter.emit('callEnded');
+      }
+
       // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
       // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
       // calling `updateClientState` so that we find the correct state object for the call even when `call.id`
