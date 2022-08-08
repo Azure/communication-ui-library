@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "added data-ui-id for hermantic tests",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
