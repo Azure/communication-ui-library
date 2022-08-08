@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   stress_test_ui_tests:
-    name: Run UI tests 7 times
+    name: Stress test UI tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,46 +37,10 @@ jobs:
         run: |
           cd packages/react-composites
           rush build -t .
-      - name: Test 1
+      - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 2
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 3
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 4
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 5
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 6
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 7
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
+          rushx test:e2e -s 7
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff

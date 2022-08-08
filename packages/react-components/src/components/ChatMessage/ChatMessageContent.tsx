@@ -12,7 +12,7 @@ import { Link } from '@fluentui/react';
 type ChatMessageContentProps = {
   message: ChatMessage;
   liveAuthorIntro: string;
-  messageContentAriaText: string;
+  messageContentAriaText?: string;
 };
 
 /** @private */
@@ -33,14 +33,8 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  const messageAriaText = props.message.content
-    ? _formatString(props.messageContentAriaText, {
-        author: `${props.message.senderDisplayName}`,
-        message: props.message.content
-      })
-    : undefined;
   return (
-    <div data-ui-status={props.message.status} role="text" aria-text={messageAriaText}>
+    <div data-ui-status={props.message.status} role="text" aria-text={props.messageContentAriaText}>
       <LiveMessage
         message={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
         aria-live="polite"
@@ -52,14 +46,8 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
   const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  const messageAriaText = props.message.content
-    ? _formatString(props.messageContentAriaText, {
-        author: `${props.message.senderDisplayName}`,
-        message: props.message.content
-      })
-    : undefined;
   return (
-    <div data-ui-status={props.message.status} role="text" aria-label={messageAriaText}>
+    <div data-ui-status={props.message.status} role="text" aria-label={props.messageContentAriaText}>
       <LiveMessage message={`${props.message.mine ? '' : liveAuthor} ${props.message.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
