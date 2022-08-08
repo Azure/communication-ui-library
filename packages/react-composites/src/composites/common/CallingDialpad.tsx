@@ -13,6 +13,8 @@ import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styl
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
 export interface CallingDialpadStrings {
@@ -28,11 +30,12 @@ export interface CallingDialpadProps {
   showDialpad: boolean;
   strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
 }
 
 /** @private */
 export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
-  const { strings, isMobile, showDialpad, onDismissDialpad } = props;
+  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
@@ -43,8 +46,19 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   };
 
   const onClickCall = (): void => {
-    //place holder for adding calling functionality
-    console.log(textFieldInput);
+    if (onAddParticipant) {
+      let phoneNumber;
+      /**
+       * Format the phone number in dialpad textfield to make sure the phone number is in E.164 format.
+       */
+      if (textFieldInput.replace(/\D/g, '')[0] !== '1') {
+        phoneNumber = { phoneNumber: '+1' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
+      } else {
+        phoneNumber = { phoneNumber: '+' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
+      }
+      onAddParticipant(phoneNumber, { alternateCallerId: phoneNumber });
+      onDismissTriggered();
+    }
   };
 
   const dialpadModelStyle: Partial<IModalStyles> = useMemo(() => themedDialpadModelStyle(theme), [theme]);
@@ -56,7 +70,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad onChange={setTextFieldInput} styles={dialpadStyle} />
+        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}
@@ -117,3 +131,14 @@ function DialpadStartCallIconTrampoline(): JSX.Element {
   return <CallWithChatCompositeIcon iconName="DialpadStartCall" />;
   return <></>;
 }
+
+/**
+ * splits the participant Id's so we can call multiple people.
+ */
+const parseParticipants = (participantsString?: string): string[] | undefined => {
+  if (participantsString) {
+    return participantsString.replaceAll(' ', '').split(',');
+  } else {
+    return undefined;
+  }
+};

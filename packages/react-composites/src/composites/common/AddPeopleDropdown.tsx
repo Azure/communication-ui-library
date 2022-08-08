@@ -22,6 +22,8 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
@@ -35,13 +37,14 @@ export interface AddPeopleDropdownProps {
   inviteLink?: string;
   mobileView?: boolean;
   strings: AddPeopleDropdownStrings;
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView } = props;
+  const { inviteLink, strings, mobileView, onAddParticipant } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
 
@@ -121,7 +124,13 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
           </Stack>
         )}
 
-        <CallingDialpad isMobile strings={strings} showDialpad={showDialpad} onDismissDialpad={onDismissDialpad} />
+        <CallingDialpad
+          isMobile
+          strings={strings}
+          showDialpad={showDialpad}
+          onDismissDialpad={onDismissDialpad}
+          onAddParticipant={onAddParticipant}
+        />
       </Stack>
     );
   }
@@ -135,6 +144,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             strings={strings}
             showDialpad={showDialpad}
             onDismissDialpad={onDismissDialpad}
+            onAddParticipant={onAddParticipant}
           />
 
           <Stack styles={copyLinkButtonStackStyles}>

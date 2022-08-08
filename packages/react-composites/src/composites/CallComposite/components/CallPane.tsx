@@ -29,6 +29,10 @@ import { useLocale } from '../../localization';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../../common/styles/Pane.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -82,6 +86,14 @@ export const CallPane = (props: {
     await props.callAdapter.removeParticipant(participantId);
   };
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const addParticipantToCall = async (
+    participant: CommunicationIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> => {
+    await props.callAdapter.addParticipant(participant, options);
+  };
+
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
@@ -99,6 +111,8 @@ export const CallPane = (props: {
                 <PeoplePaneContent
                   {...props}
                   onRemoveParticipant={removeParticipantFromCall}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onAddParticipant={addParticipantToCall}
                   setDrawerMenuItems={setDrawerMenuItems}
                   strings={strings}
                 />

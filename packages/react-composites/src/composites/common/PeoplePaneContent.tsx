@@ -20,6 +20,10 @@ import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatCompos
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '../../../../../common/temp/node_modules/.pnpm/@azure/communication-signaling@1.0.0-beta.13/node_modules/@azure/communication-signaling/types/src';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * @private
@@ -27,6 +31,8 @@ import { AddPeopleButton } from './AddPeopleButton';
 export const PeoplePaneContent = (props: {
   inviteLink?: string;
   onRemoveParticipant: (participantId: string) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
@@ -34,6 +40,8 @@ export const PeoplePaneContent = (props: {
   mobileView?: boolean;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const { onAddParticipant } = props;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
@@ -100,6 +108,8 @@ export const PeoplePaneContent = (props: {
           mobileView={props.mobileView}
           participantList={participantList}
           strings={strings}
+          /* @conditional-compile-remove(PSTN-calls) */
+          onAddParticipant={onAddParticipant}
         />
       </Stack>
     );
@@ -111,6 +121,8 @@ export const PeoplePaneContent = (props: {
       mobileView={props.mobileView}
       participantList={participantList}
       strings={strings}
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant={onAddParticipant}
     />
   );
 };

@@ -32,6 +32,10 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -104,6 +108,14 @@ export const CallWithChatPane = (props: {
     await props.chatAdapter.removeParticipant(participantId);
   };
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const addParticipantToCall = async (
+    participant: CommunicationIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> => {
+    await props.callAdapter.addParticipant(participant, options);
+  };
+
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
       <PeoplePaneContent
@@ -111,6 +123,8 @@ export const CallWithChatPane = (props: {
         onRemoveParticipant={removeParticipantFromCallWithChat}
         setDrawerMenuItems={setDrawerMenuItems}
         strings={callWithChatStrings}
+        /* @conditional-compile-remove(PSTN-calls) */
+        onAddParticipant={addParticipantToCall}
       />
     </CallAdapterProvider>
   );
