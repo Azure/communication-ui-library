@@ -51,6 +51,9 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
       let phoneNumber;
       /**
        * Format the phone number in dialpad textfield to make sure the phone number is in E.164 format.
+       * PSTN is only for North America and no area code in NA start with 1
+       * Check if the phone number input start with 1, if yes, the input phone number already contains country code, add + on top
+       * If not, add +1 country code
        */
       if (textFieldInput.replace(/\D/g, '')[0] !== '1') {
         phoneNumber = { phoneNumber: '+1' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
