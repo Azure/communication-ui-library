@@ -36,7 +36,7 @@ export type CustomAvatarOptions = {
   text?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /** State for the participant to be displayed in the defaultPlaceHolder */
-  state?: ParticipantState;
+  participantState?: ParticipantState;
 };
 
 /**
