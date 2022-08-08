@@ -33,6 +33,8 @@ import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } fr
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -100,6 +102,11 @@ export const CallPane = (props: {
 
   const dataUiId = props.activePane === 'people' ? 'call-composite-people-pane' : '';
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const adapterState = useAdapter().getState();
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapterState.alternateCallerId;
+
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
       {header}
@@ -115,6 +122,8 @@ export const CallPane = (props: {
                   onAddParticipant={addParticipantToCall}
                   setDrawerMenuItems={setDrawerMenuItems}
                   strings={strings}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  alternateCallerId={alternateCallerId}
                 />
               </CallAdapterProvider>
             </Stack>

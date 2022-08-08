@@ -30,11 +30,14 @@ export interface AddPeopleButtonProps {
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId?: string;
 }
 
 /** @private */
 export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
   const { inviteLink, mobileView, strings, participantList } = props;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const { alternateCallerId } = props;
   /* @conditional-compile-remove(PSTN-calls) */
   const { onAddParticipant } = props;
 
@@ -53,6 +56,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
         mobileView={mobileView}
         inviteLink={inviteLink}
         onAddParticipant={onAddParticipant}
+        alternateCallerId={alternateCallerId}
       />
     );
   } else {
@@ -63,6 +67,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           mobileView={mobileView}
           inviteLink={inviteLink}
           onAddParticipant={onAddParticipant}
+          alternateCallerId={alternateCallerId}
         />
         {participantList}
       </Stack>

@@ -24,7 +24,6 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
@@ -39,23 +38,20 @@ export interface AddPeopleDropdownProps {
   mobileView?: boolean;
   strings: AddPeopleDropdownStrings;
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId?: string;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView, onAddParticipant } = props;
+  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
 
   const menuStyleThemed = useMemo(() => themedMenuStyle(theme), [theme]);
 
   const copyLinkButtonStylesThemed = useMemo(() => themedCopyLinkButtonStyles(theme, mobileView), [mobileView, theme]);
-
-  const adapterState = useAdapter().getState();
-
-  const alternateCallerId = adapterState.alternateCallerId;
 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {

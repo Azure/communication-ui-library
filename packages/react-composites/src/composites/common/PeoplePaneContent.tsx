@@ -38,8 +38,12 @@ export const PeoplePaneContent = (props: {
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const { alternateCallerId } = props;
   /* @conditional-compile-remove(PSTN-calls) */
   const { onAddParticipant } = props;
 
@@ -110,6 +114,8 @@ export const PeoplePaneContent = (props: {
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
           onAddParticipant={onAddParticipant}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
         />
       </Stack>
     );
@@ -123,6 +129,8 @@ export const PeoplePaneContent = (props: {
       strings={strings}
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant={onAddParticipant}
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId={alternateCallerId}
     />
   );
 };

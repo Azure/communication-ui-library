@@ -66,6 +66,11 @@ export const CallWithChatPane = (props: {
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const adapterState = props.callAdapter.getState();
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapterState.alternateCallerId;
+
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
       <TabHeader {...props} strings={callWithChatStrings} activeTab={props.activePane} />
@@ -125,6 +130,8 @@ export const CallWithChatPane = (props: {
         strings={callWithChatStrings}
         /* @conditional-compile-remove(PSTN-calls) */
         onAddParticipant={addParticipantToCall}
+        /* @conditional-compile-remove(PSTN-calls) */
+        alternateCallerId={alternateCallerId}
       />
     </CallAdapterProvider>
   );
