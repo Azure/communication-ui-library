@@ -34,7 +34,9 @@ export interface AddPeopleButtonProps {
 
 /** @private */
 export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
-  const { inviteLink, mobileView, strings, participantList, onAddParticipant } = props;
+  const { inviteLink, mobileView, strings, participantList } = props;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const { onAddParticipant } = props;
 
   const theme = useTheme();
 

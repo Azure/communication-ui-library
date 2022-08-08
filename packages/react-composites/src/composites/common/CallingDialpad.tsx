@@ -131,14 +131,3 @@ function DialpadStartCallIconTrampoline(): JSX.Element {
   return <CallWithChatCompositeIcon iconName="DialpadStartCall" />;
   return <></>;
 }
-
-/**
- * splits the participant Id's so we can call multiple people.
- */
-const parseParticipants = (participantsString?: string): string[] | undefined => {
-  if (participantsString) {
-    return participantsString.replaceAll(' ', '').split(',');
-  } else {
-    return undefined;
-  }
-};
