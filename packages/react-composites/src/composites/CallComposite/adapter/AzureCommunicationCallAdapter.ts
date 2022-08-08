@@ -355,6 +355,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async leaveCall(): Promise<void> {
     const callId = this.call?.id;
+    this.emitter.emit('callEnded', { callId });
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
     this.call = undefined;
@@ -364,7 +365,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
     this.mute();
-    this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
