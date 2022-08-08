@@ -11,7 +11,7 @@ import process from "process";
  */
 
 const POLL_INTERVAL_MS = 5000; // 5 seconds in millis
-const TIMEOUT_TIME_MS = 12 * 1000; // 5 minutes in millis
+const TIMEOUT_TIME_MS = 5 * 60 * 1000; // 5 minutes in millis
 const GET_REQUEST_TIMEOUT_MS = 5000;
 
 const GET_REQUEST_OPTIONS = {
@@ -44,7 +44,9 @@ const main = async () => {
       process.exitCode = 0;
       return;
     } else if ((new Date() - startTime) > TIMEOUT_TIME_MS) {
-      throw new Error('Failed to find package on the npm registry');
+      console.error("Failed to find package on the npm registry");
+      process.exitCode = 1;
+      return;
     } else {
       console.log('Sleeping for a bit...');
       await sleep(POLL_INTERVAL_MS);
