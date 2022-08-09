@@ -79,10 +79,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
             {
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
-                options?.state === ('Connecting' || 'Ringing') && (
+                options?.state === 'Ringing' && (
                   <Text className={mergeStyles(participantStateStyle)}>
                     {videoTileStrings.participantStateConnecting}
                   </Text>
+                )
+            }
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
+                options?.state === 'Connecting' && (
+                  <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateRinging}</Text>
                 )
             }
             {
