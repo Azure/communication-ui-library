@@ -25,7 +25,7 @@ export const ConfigJoinCallHintBanner = (): JSX.Element => {
       <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
         access token, userId
       </a>
-      , display name, and a group call Id (or a teams meeting link).
+      , display name, and a call locator.
     </p>
   );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
