@@ -48,7 +48,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     } else {
       await waitForSelector(page, dataUiId('call-composite-people-pane'));
       if (!isTestProfileDesktop(testInfo)) {
-        await waitForPiPiPToHaveLoaded(page, 2);
+        await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
       }
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);

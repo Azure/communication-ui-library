@@ -203,13 +203,18 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 /**
  * Wait for PiPiP it's videos to have loaded.
  *
+ * By default checks for 2 video tiles in the PiPiP.
  * Set `skipVideoCheck` for hermetic tests because the <HermeticApp /> fakes the video node with a <div/>.
  */
 export const waitForPiPiPToHaveLoaded = async (
   page: Page,
-  videosEnabledCount: number,
-  skipVideoCheck: boolean = false
+  options?: {
+    videosEnabledCount?: number;
+    skipVideoCheck?: boolean;
+  }
 ): Promise<void> => {
+  const { videosEnabledCount = 2, skipVideoCheck = false } = options ?? {};
+
   await page.bringToFront();
   await waitForFunction(
     page,
