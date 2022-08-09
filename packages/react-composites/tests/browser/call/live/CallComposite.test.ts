@@ -53,12 +53,10 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     }
   });
 
-  test('composite pages load completely', async ({ pages }) => {
-    const page = pages[0];
-    await stubLocalCameraName(page);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`call-configuration-page.png`);
-  });
-
+  // This is a smoke live test for configuration screen.
+  //
+  // Updating local video streams before joinging a call is a non-trivial operation.
+  // TODO(prprabhu) Rename this test once metrics show that it has been stabilized.
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
@@ -70,36 +68,6 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await stubLocalCameraName(page);
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       `call-configuration-page-camera-enabled.png`
-    );
-  });
-
-  test('local device buttons should show tooltips on hover', async ({ pages }) => {
-    const page = pages[0];
-
-    await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
-    await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
-    await stubLocalCameraName(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
-  });
-
-  test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
-    // Each test *must* join a new call to prevent test flakiness.
-    // We hit a Calling SDK service 500 error if we do not.
-    // An issue has been filed with the calling team.
-    const newTestGuid = generateGUID();
-    const user = users[0];
-    user.groupId = newTestGuid;
-
-    // Set description to be shown
-    const page = pages[0];
-    await page.goto(
-      buildUrl(serverUrl, user, {
-        showCallDescription: 'true'
-      })
-    );
-    await waitForCallCompositeToLoad(page);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'call-configuration-page-with-call-details.png'
     );
   });
 });
