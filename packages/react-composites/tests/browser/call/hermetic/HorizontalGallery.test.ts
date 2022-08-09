@@ -183,7 +183,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  test.only('Horizontal gallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
+  test('Horizontal gallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
