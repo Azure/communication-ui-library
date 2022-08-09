@@ -16,6 +16,8 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@internal/react-components';
 
 export interface CallScreenProps {
   token: string;
@@ -25,6 +27,8 @@ export interface CallScreenProps {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   onCallEnded: () => void;
+  /* @conditional-compile-remove(rooms) */
+  role?: Role;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,7 +38,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callLocator,
     displayName,
     onCallEnded,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rooms) */ role
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -99,6 +104,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(rooms) */
+      role={role}
     />
   );
 };
