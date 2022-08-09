@@ -1,18 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import {
+  OnRenderAvatarCallback,
+  VideoGallery,
+  VideoGalleryParticipant,
+  VideoGalleryRemoteParticipant
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
-const MockLocalParticipant = {
+const MockLocalParticipant: VideoGalleryParticipant = {
   userId: 'user1',
   displayName: 'You',
-  state: 'Connected',
   isMuted: true
 };
 
-const MockRemoteParticipants = [
+const MockRemoteParticipants: VideoGalleryRemoteParticipant[] = [
   {
     userId: 'user2',
     displayName: 'Peter Parker',
@@ -28,7 +32,6 @@ const MockRemoteParticipants = [
   {
     userId: 'user4',
     displayName: 'Matthew Murdock',
-    state: 'Idle',
     isMuted: false
   },
   {
@@ -36,13 +39,13 @@ const MockRemoteParticipants = [
     displayName: 'Bruce Wayne',
     state: 'Connecting',
     isMuted: false,
-    isScreenSharing: false
+    isScreenSharingOn: false
   }
 ];
 
 export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
-  const onRenderAvatar = (userId, options, defaultOnRender): JSX.Element => {
-    switch (options.text) {
+  const onRenderAvatar: OnRenderAvatarCallback = (userId, options, defaultOnRender): JSX.Element => {
+    switch (options?.text) {
       case 'You':
         return (
           <Stack>
@@ -79,7 +82,7 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
           </Stack>
         );
       default:
-        return defaultOnRender(options);
+        return (options && defaultOnRender?.(options)) ?? <></>;
     }
   };
 
