@@ -34,7 +34,7 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Join Exist
             >
               access token, userId
             </a>
-            , display name, and a group call Id (or a teams meeting link).
+            , display name, and a call locator.
           </p>
         </span>
       </div>
