@@ -13,7 +13,6 @@ import {
   waitForSelector,
   stableScreenshot,
   waitForPiPiPToHaveLoaded,
-  perStepLocalTimeout,
   waitForCallPageParticipantVideos
 } from '../../common/utils';
 import { test } from './fixture';
@@ -133,7 +132,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     await pageClick(page, dataUiId('call-composite-camera-button'));
 
     // We turned off 1 video.
-    waitForCallPageParticipantVideos(pages, pages.length - 1);
+    await waitForCallPageParticipantVideos(pages, pages.length - 1);
 
     for (const idx in pages) {
       const page = pages[idx];
