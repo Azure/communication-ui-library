@@ -1,8 +1,4 @@
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
   CallAdapterLocator,
@@ -13,7 +9,7 @@ import {
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import uuid from 'uuid';
+import { validate } from 'uuid';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -28,7 +24,7 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const isGroupID = (id: string): boolean => uuid.validate(id);
+const isGroupID = (id: string): boolean => validate(id);
 const isRoomID = (id: string): boolean => Number.isInteger(id);
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
