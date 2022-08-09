@@ -75,7 +75,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  test('HorizontalGallery should have 1 joining participant in the horizontal gallery', async ({ page, serverUrl }) => {
+  test('HorizontalGallery should have 1 PSTN participant in the horizontal gallery', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -94,7 +94,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  test('HorizontalGallery should have multiple audio participants and 1 calling participant', async ({
+  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant', async ({
     page,
     serverUrl
   }) => {
@@ -122,7 +122,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  test('HorizontalGallery should have multiple audio participants and 1 calling participant on second page', async ({
+  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
   }) => {
@@ -159,7 +159,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  test('HorizontalGallery should have 2 video participants during screenshare and 1 calling participant', async ({
+  test('HorizontalGallery should have 2 video participants during screenshare and 1 PSTN participant', async ({
     page,
     serverUrl
   }) => {

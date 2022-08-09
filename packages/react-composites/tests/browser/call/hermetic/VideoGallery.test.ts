@@ -7,7 +7,7 @@ import { dataUiId, waitForSelector, stableScreenshot, isTestProfileStableFlavor 
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
-  test('VideoGallery Should have 1 Audio participant and one joining participant', async ({ page, serverUrl }) => {
+  test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -27,7 +27,7 @@ test.describe('VideoGallery tests', async () => {
     );
   });
 
-  test.only('VideoGallery Should have 2 joining participants', async ({ page, serverUrl }) => {
+  test.only('VideoGallery Should have 2 inbound participants', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
