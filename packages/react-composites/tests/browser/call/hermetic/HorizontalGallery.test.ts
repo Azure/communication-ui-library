@@ -6,7 +6,6 @@ import {
   addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
-  defaultMockRemoteOneToNParicipant,
   defaultMockRemoteParticipant,
   defaultMockRemotePSTNParticipant,
   test
@@ -109,6 +108,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
 
     const participants = [paul, fiona, reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
@@ -133,7 +133,9 @@ test.describe('HorizontalGallery tests', async () => {
     addVideoStream(fiona, true);
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
-    const phoneUser = defaultMockRemoteParticipant('+15555555555');
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
+
     const participants = [
       paul,
       fiona,
@@ -170,9 +172,10 @@ test.describe('HorizontalGallery tests', async () => {
     addVideoStream(fiona, true);
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
-    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
 
-    const participants = [paul, fiona, reina, vasily];
+    const participants = [paul, fiona, reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -188,10 +191,12 @@ test.describe('HorizontalGallery tests', async () => {
 
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     addVideoStream(reina, true);
-    const paul = defaultMockRemoteOneToNParicipant('Paul Bridges');
-    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.state = 'Ringing';
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
 
-    const participants = [reina, paul, vasily];
+    const participants = [reina, paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));

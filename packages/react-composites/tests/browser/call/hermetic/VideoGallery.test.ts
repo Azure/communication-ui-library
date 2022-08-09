@@ -4,7 +4,6 @@
 import {
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
-  defaultMockRemoteOneToNParicipant,
   defaultMockRemoteParticipant,
   defaultMockRemotePSTNParticipant,
   test
@@ -37,10 +36,12 @@ test.describe('VideoGallery tests', async () => {
   test('VideoGallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
-    const paul = defaultMockRemoteOneToNParicipant('Paul Bridges');
-    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.state = 'Ringing';
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
 
-    const participants = [paul, vasily];
+    const participants = [paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
