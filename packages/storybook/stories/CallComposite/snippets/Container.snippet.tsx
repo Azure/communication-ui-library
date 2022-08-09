@@ -1,4 +1,8 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import {
   CallAdapter,
   CallAdapterLocator,
@@ -25,14 +29,17 @@ export type ContainerProps = {
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 const isGroupID = (id: string): boolean => uuid.validate(id);
+const isRoomID = (id: string): boolean => Number.isInteger(id);
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
   if (isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
     return { groupId: locator };
+  } else if (isRoomID(locator)) {
+    return { roomId: locator };
   }
-  return { roomId: locator };
+  throw new Error(`Unrecognized locator: ${locator}`);
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
