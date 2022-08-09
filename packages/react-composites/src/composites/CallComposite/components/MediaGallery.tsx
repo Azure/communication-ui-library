@@ -78,24 +78,24 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
             {
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
-                options?.state === 'Ringing' && (
-                  <Text className={mergeStyles(participantStateStyle)}>
-                    {videoTileStrings.participantStateConnecting}
-                  </Text>
-                )
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+              options?.participantState === 'Ringing' && (
+                <Text className={mergeStyles(participantStateStyle)}>
+                  {videoTileStrings.participantStateConnecting}
+                </Text>
+              )
             }
             {
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
-                options?.state === 'Connecting' && (
-                  <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateRinging}</Text>
-                )
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+              options?.participantState === 'Connecting' && (
+                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateRinging}</Text>
+              )
             }
             {
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ options?.state &&
-                options?.state === 'Hold' && (
-                  <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
-                )
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+              options?.participantState === 'Hold' && (
+                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateHold}</Text>
+              )
             }
           </Stack>
         </Stack>
