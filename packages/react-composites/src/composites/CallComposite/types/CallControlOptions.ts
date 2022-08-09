@@ -56,6 +56,11 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /**
+   * Show, Hide or disable the more button during a call.
+   * @defaultValue true
+   */
+  moreButton?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.

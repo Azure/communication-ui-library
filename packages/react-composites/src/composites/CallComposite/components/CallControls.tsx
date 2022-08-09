@@ -19,6 +19,7 @@ import { ContainerRectProps } from '../../common/ContainerRectProps';
 import { People } from './buttons/People';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
+import { MoreButton } from './buttons/MoreButton';
 
 /**
  * @private
@@ -113,6 +114,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.devicesButton) && (
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+              options?.moreButton
+            ) && <MoreButton />
+          }
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
