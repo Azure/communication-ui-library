@@ -4,6 +4,7 @@
 import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
@@ -113,6 +114,17 @@ export const getDocs: () => JSX.Element = () => {
         tutorial. https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
       </Description>
       <Source code={addFileSharingSnippet} />
+
+      <Heading>PSTN and 1:N Calling</Heading>
+      <SingleLineBetaBanner />
+      <MessageBar>Note: see CallComposite for detailed implementation description</MessageBar>
+      <Description>
+        The CallWithChatComposite supports the PSTN Calling modality as well. With CallWithChat you will need to still
+        provide a chat thread Id for instances where you will add a Azure Communications user to the call. If you are
+        looking to use the CallWithChatComposite and are looking to hide the chat because you are only calling PSTN
+        users please see our documentation on how to hide the [control bar
+        buttons](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
     </>
   );
 };
