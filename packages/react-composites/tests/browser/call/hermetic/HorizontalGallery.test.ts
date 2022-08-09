@@ -6,7 +6,9 @@ import {
   addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
+  defaultMockRemoteOneToNParicipant,
   defaultMockRemoteParticipant,
+  defaultMockRemotePSTNParticipant,
   test
 } from './fixture';
 import { expect } from '@playwright/test';
@@ -104,14 +106,11 @@ test.describe('HorizontalGallery tests', async () => {
     addVideoStream(paul, true);
     paul.isSpeaking = true;
     const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.isMuted = true;
-    vasily.state = 'Connecting';
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
 
-    const participants = [paul, fiona, reina, vasily];
+    const participants = [paul, fiona, reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -134,14 +133,12 @@ test.describe('HorizontalGallery tests', async () => {
     addVideoStream(fiona, true);
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.isMuted = true;
-    vasily.state = 'Connecting';
+    const phoneUser = defaultMockRemoteParticipant('+15555555555');
     const participants = [
       paul,
       fiona,
       reina,
-      vasily,
+      phoneUser,
       defaultMockRemoteParticipant('Luciana Rodriguez'),
       defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
       defaultMockRemoteParticipant('Gerald Ho'),
@@ -173,9 +170,7 @@ test.describe('HorizontalGallery tests', async () => {
     addVideoStream(fiona, true);
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.isMuted = true;
-    vasily.state = 'Connecting';
+    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
 
     const participants = [paul, fiona, reina, vasily];
     const initialState = defaultMockCallAdapterState(participants);
@@ -185,6 +180,25 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-screen-share-and-video.png'
+    );
+  });
+
+  test.only('Horizontal gallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
+
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    addVideoStream(reina, true);
+    const paul = defaultMockRemoteOneToNParicipant('Paul Bridges');
+    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
+
+    const participants = [reina, paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-2-joining-participants.png'
     );
   });
 });

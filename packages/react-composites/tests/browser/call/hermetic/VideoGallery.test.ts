@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
+import {
+  buildUrlWithMockAdapter,
+  defaultMockCallAdapterState,
+  defaultMockRemoteOneToNParicipant,
+  defaultMockRemoteParticipant,
+  defaultMockRemotePSTNParticipant,
+  test
+} from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot, isTestProfileStableFlavor } from '../../common/utils';
 import { IDS } from '../../common/constants';
@@ -27,13 +34,11 @@ test.describe('VideoGallery tests', async () => {
     );
   });
 
-  test.only('VideoGallery Should have 2 inbound participants', async ({ page, serverUrl }) => {
+  test('VideoGallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    paul.state = 'Connecting';
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.state = 'Ringing';
+    const paul = defaultMockRemoteOneToNParicipant('Paul Bridges');
+    const vasily = defaultMockRemotePSTNParticipant('+15555555555');
 
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
