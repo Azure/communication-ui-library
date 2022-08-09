@@ -9,6 +9,7 @@ import {
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
+import uuid from 'uuid';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -23,8 +24,7 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const uuidRegexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
-const isGroupID = (locator: string): boolean => uuidRegexExp.test(locator);
+const isGroupID = (id: string): boolean => uuid.validate(id);
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
   if (isTeamsMeetingLink(locator)) {
