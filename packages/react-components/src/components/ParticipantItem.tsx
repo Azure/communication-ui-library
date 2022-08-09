@@ -219,13 +219,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const participantStateString = participantStateStringTrampoline(props, strings);
 
-  const menuItemsWrapperStyle = useMemo(() => {
-    return {
-      /* If participant state string is being displayed, hide the menu icon until it is hovered. */
-      display: participantStateString && !itemHovered ? 'none' : 'block'
-    };
-  }, [itemHovered, participantStateString]);
-
   return (
     <div
       ref={containerRef}
@@ -238,9 +231,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
-        setItemHovered(true);
-        setMenuHidden(false);
-        onClick?.(props);
+        if (!participantStateString) {
+          setItemHovered(true);
+          setMenuHidden(false);
+          onClick?.(props);
+        }
       }}
       tabIndex={0}
     >
@@ -254,32 +249,31 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-      {/* Show the participant state for a remote participant only. Hide it on hover. */}
-      {!me && participantStateString && (
-        <div onMouseEnter={() => setItemHovered(true)} style={{ display: itemHovered ? 'none' : 'block' }}>
-          {participantStateString}
+
+      {/* When the participantStateString has a value, we don't show the menu  */}
+      {!me && participantStateString ? (
+        <Text>{participantStateString}</Text>
+      ) : (
+        <div>
+          {menuItems && menuItems.length > 0 && (
+            <>
+              {menuButton}
+              <ContextualMenu
+                items={menuItems}
+                hidden={menuHidden}
+                target={containerRef}
+                onItemClick={onDismissMenu}
+                onDismiss={onDismissMenu}
+                directionalHint={DirectionalHint.bottomRightEdge}
+                className={contextualMenuStyle}
+                calloutProps={{
+                  preventDismissOnEvent
+                }}
+              />
+            </>
+          )}
         </div>
       )}
-      {/* If participant state is being displayed, hide the menu icon until it is hovered. */}
-      <div style={menuItemsWrapperStyle}>
-        {menuItems && menuItems.length > 0 && (
-          <>
-            {menuButton}
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={onDismissMenu}
-              onDismiss={onDismissMenu}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-              calloutProps={{
-                preventDismissOnEvent
-              }}
-            />
-          </>
-        )}
-      </div>
     </div>
   );
 };
