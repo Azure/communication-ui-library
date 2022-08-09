@@ -180,7 +180,7 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
       </Description>
-      
+
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner />
       <Description>
