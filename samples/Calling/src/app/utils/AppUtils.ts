@@ -41,6 +41,7 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
+/* @conditional-compile-remove(rooms) */
 export const ROOMS_API_BASE_URL = 'http://localhost:7071';
 
 /* @conditional-compile-remove(rooms) */
