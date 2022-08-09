@@ -9,12 +9,7 @@ import { useIdentifiers } from '../identifiers';
 // @conditional-compile-remove(PSTN-calls)
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
-import {
-  BaseCustomStyles,
-  CustomAvatarOptions,
-  OnRenderAvatarCallback,
-  VideoGalleryRemoteParticipantState
-} from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback, ParticipantState } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -126,7 +121,7 @@ export interface VideoTileProps {
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
    */
-  participantState?: VideoGalleryRemoteParticipantState;
+  participantState?: ParticipantState;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
@@ -138,7 +133,7 @@ const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 type DefaultPlaceholderProps = CustomAvatarOptions & {
-  participantState?: VideoGalleryRemoteParticipantState;
+  participantState?: ParticipantState;
   strings?: Pick<VideoTileStrings, 'participantStateConnecting' | 'participantStateHold' | 'participantStateRinging'>;
 };
 
@@ -149,9 +144,9 @@ const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
     if (!strings) {
       return;
     }
-    if (participantState === 'Connecting') {
+    if (participantState === 'Idle' || participantState === 'Connecting') {
       return strings?.participantStateConnecting;
-    } else if (participantState === 'Ringing') {
+    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
       return strings?.participantStateRinging;
     } else if (participantState === 'Hold') {
       return strings?.participantStateHold;
