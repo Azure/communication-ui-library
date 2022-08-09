@@ -80,7 +80,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             {
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               options?.participantState === 'Ringing' && (
-                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateRinging}</Text>
+                <Text className={mergeStyles(participantStateStyle)}>
+                  {videoTileStrings.participantStateConnecting}
+                </Text>
               )
             }
             {
