@@ -25,7 +25,7 @@ test.describe('CallControls tests', async () => {
 });
 
 test.describe('Call composite custom button injection tests', () => {
-  test.only('injected buttons appear', async ({ page, serverUrl }) => {
+  test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { injectCustomButtons: 'true' }));
     expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
