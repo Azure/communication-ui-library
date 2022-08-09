@@ -5,7 +5,7 @@ import { GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/commu
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
+import { Role } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
 
 /**

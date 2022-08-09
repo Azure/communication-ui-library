@@ -10,14 +10,14 @@ import {
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 
 export interface CallScreenProps {
   token: string;
