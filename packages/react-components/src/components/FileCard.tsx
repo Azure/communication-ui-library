@@ -15,13 +15,10 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(file-sharing) */
 import { Announcer } from './Announcer';
-/* @conditional-compile-remove(file-sharing) */
 import { useEffect, useState } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
-import { useLocale } from '../localization';
+import { useLocaleFileCardStringsTrampoline } from './utils/common';
 
 /**
  * @internal
@@ -62,18 +59,13 @@ export interface _FileCardProps {
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
-  /* @conditional-compile-remove(file-sharing) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
-  /* @conditional-compile-remove(file-sharing) */
-  const localeStrings = useLocale().strings.sendBox;
-  /* @conditional-compile-remove(file-sharing) */
+  const localeStrings = useLocaleFileCardStringsTrampoline();
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
-  /* @conditional-compile-remove(file-sharing) */
   const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
   const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
 
-  /* @conditional-compile-remove(file-sharing) */
   useEffect(() => {
     if (showProgressIndicator) {
       setAnnouncerString(`${uploadStartedString} ${fileName}`);
@@ -131,14 +123,11 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   return (
     <>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      }
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Stack
         className={containerClassName}
         onClick={() => {
-          props.actionHandler && props.actionHandler();
+          props.actionHandler?.();
         }}
       >
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>

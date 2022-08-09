@@ -179,27 +179,30 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ]
   );
 
-  const messageContentRef = useRef<HTMLDivElement | null>(null);
+  const messageContentAriaText = props.message.content
+    ? props.message.mine
+      ? _formatString(strings.messageContentMineAriaText, {
+          message: props.message.content
+        })
+      : _formatString(strings.messageContentAriaText, {
+          author: `${props.message.senderDisplayName}`,
+          message: props.message.content
+        })
+    : undefined;
 
   const chatMessage = (
     <>
-      <div
-        ref={messageRef}
-        tabIndex={0}
-        onFocus={() => {
-          messageContentRef.current?.focus();
-        }}
-      >
+      <div ref={messageRef}>
         <Chat.Message
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
           content={
-            <div ref={messageContentRef} tabIndex={0}>
+            <div tabIndex={0}>
               <ChatMessageContent
                 message={message}
                 liveAuthorIntro={strings.liveAuthorIntro}
-                messageContentAriaText={strings.messageContentAriaText}
+                messageContentAriaText={messageContentAriaText}
               />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)

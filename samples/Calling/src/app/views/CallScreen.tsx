@@ -22,12 +22,20 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
+  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   onCallEnded: () => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded, alternateCallerId } = props;
+  const {
+    token,
+    userId,
+    callLocator,
+    displayName,
+    onCallEnded,
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
