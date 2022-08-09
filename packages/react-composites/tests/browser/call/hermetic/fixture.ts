@@ -9,7 +9,6 @@ import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
 import type {
   MockCallAdapterState,
-  MockLocalVideoStreamState,
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../MockCallAdapterState';
