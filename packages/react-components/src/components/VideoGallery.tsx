@@ -241,7 +241,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   visibleCallingParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants?.filter((p) => p.state === ('Connecting' || 'ringing')) ?? [],
+    participants: remoteParticipants?.filter((p) => p.state === ('Connecting' || 'Ringing')) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleCallingParticipants.current,
     maxDominantSpeakers: 0
