@@ -13,7 +13,8 @@ import {
   waitForSelector,
   stableScreenshot,
   waitForPiPiPToHaveLoaded,
-  perStepLocalTimeout
+  perStepLocalTimeout,
+  waitForCallPageParticipantVideos
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -130,16 +131,10 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     // Then turn off video and check again.
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-camera-button'));
-    // Starting / stopping video streams is known to take up to 15 seconds.
-    // Bump this timeout to trade potential longer runtimes for less flakiness.
-    await waitForFunction(
-      page,
-      () => {
-        return document.querySelectorAll('video').length === 1;
-      },
-      undefined,
-      { timeout: 4 * perStepLocalTimeout() }
-    );
+
+    // We turned off 1 video.
+    waitForCallPageParticipantVideos(pages, pages.length - 1);
+
     for (const idx in pages) {
       const page = pages[idx];
       await page.bringToFront();
