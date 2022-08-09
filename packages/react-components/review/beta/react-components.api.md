@@ -333,7 +333,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
-    state?: ParticipantState;
+    participantState?: ParticipantState;
 };
 
 // @public

@@ -27,14 +27,13 @@ test.describe('VideoGallery tests', async () => {
     );
   });
 
-  test('VideoGallery Should have 2 joining participants', async ({ page, serverUrl }) => {
+  test.only('VideoGallery Should have 2 joining participants', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Connecting';
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.isMuted = true;
-    vasily.state = 'Connecting';
+    vasily.state = 'Ringing';
 
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
