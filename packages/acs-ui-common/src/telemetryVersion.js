@@ -3,4 +3,4 @@
 
 // GENERATED FILE. DO NOT EDIT MANUALLY.
 
-module.exports = '1.3.0';
+module.exports = '1.3.1';
