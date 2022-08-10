@@ -150,6 +150,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     me,
     onClick,
     showParticipantOverflowTooltip
+    /* @conditional-compile-remove(PSTN-calls) */
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
