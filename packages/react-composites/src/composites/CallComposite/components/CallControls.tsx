@@ -147,7 +147,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
               isEnabled(options?.moreButton)
-            ) && <MoreButton strings={moreButtonStrings} menuProps={{ items: moreButtonContextualMenuItems() }} />
+            ) && (
+              <MoreButton
+                strings={moreButtonStrings}
+                menuIconProps={{ hidden: true }}
+                menuProps={{ items: moreButtonContextualMenuItems() }}
+              />
+            )
           }
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
