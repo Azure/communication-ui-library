@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Locator, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
@@ -43,7 +43,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
-  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
+  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: perStepLocalTimeout() }));
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -63,6 +63,25 @@ export const waitForSelector = async (
     async () => await page.waitForSelector(selector, { timeout: perStepLocalTimeout(), ...options })
   );
 };
+
+/**
+ * Obtain a {@link Locator} for a given selector string and wait for the target element to enter given state.
+ *
+ * Use this instead of {@link page.locator} because this function takes a screenshot on time.
+ * Use this instead of {@link waitForSelector} because locators are the recommended way to obtain element handles:
+ *
+ * See https://playwright.dev/docs/locators
+ */
+export async function waitForLocator(
+  page: Page,
+  selector: string,
+  options?: { state?: 'visible' | 'attached'; timeout?: number }
+): Promise<Locator> {
+  await page.bringToFront();
+  const locator = page.locator(selector);
+  await screenshotOnFailure(page, async () => await locator.waitFor(options));
+  return locator;
+}
 
 /**
  * Page wait for function helper function - USE INSTEAD OF PAGE.WAITFORFUNCTION
@@ -374,6 +393,14 @@ export interface StubOptions {
    * @defaultValue true
    */
   hideVideoLoadingSpinner?: boolean;
+  /**
+   * In live tests, video stream quality can vary leading to video quality artifacts in the UI snapshots.
+   *
+   * Set this flag to mask out the video elements.
+   *
+   * @defaultValue true
+   */
+  maskVideos?: boolean;
 }
 
 /**
@@ -401,6 +428,9 @@ export async function stableScreenshot(
   }
   if (stubOptions?.awaitFileTypeIcon) {
     await awaitFileTypeIcon(page);
+  }
+  if (stubOptions?.maskVideos !== false) {
+    await maskVideos(page);
   }
   try {
     return await page.screenshot(screenshotOptions);
@@ -436,6 +466,68 @@ const enableTooltips = async (page: Page): Promise<void> => {
 const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
   await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
 };
+
+const MASK_ATTRIB_KEY = 'data-ui-id';
+const MASK_ATTRIB_VALUE = 'stream-media-video-mask';
+const MASK_SELECTOR = `[${MASK_ATTRIB_KEY}="${MASK_ATTRIB_VALUE}"]`;
+
+/**
+ * Masks the video element in {@link VideoTile} by overlaying an opaque <div/>.
+ *
+ * Pixel-perfect UI snapshots of video frames are impossible -- there are many factors
+ * beyond our control (e.g. network bandwidth) that affect the video frames being rendered.
+ * This leads to trivial differences in the UI snapshots.
+ * As we aren't trying to validate the calling infrastructures ability to render the video, we
+ * mask it to get robust UI snapshots.
+ *
+ * This function is destructive: It changes the video tile's DOM irreversibly.
+ * This function is idempotent: It is safe to call this function multiple times.
+ */
+async function maskVideos(page: Page): Promise<void> {
+  await page.bringToFront();
+  await page.addStyleTag({ content: `${dataUiId('stream-media-container')} {position: relative}` });
+
+  // Can't use `waitForLocator` because we expect multiple video tiles.
+  // Also, it is assumed that the videos have already loaded by the time snapshot is taken.
+  const videos = page.locator(dataUiId('stream-media-container'));
+  await videos.evaluateAll(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (nodes: HTMLElement[], args: any) => {
+      const { mask_key, mask_value } = args;
+      nodes.forEach((node) => {
+        const children = Array.from(node.children ?? []) as HTMLElement[];
+        const masks = children.filter((child) => child.getAttribute(mask_key) === mask_value);
+        if (masks.length > 0) {
+          // Already have a mask. Nothing to do.
+          return;
+        }
+
+        const mask = document.createElement('div');
+        mask.setAttribute(mask_key, mask_value);
+        mask.setAttribute('style', 'position: absolute; height: 100%; width: 100%; background: green;');
+        node.appendChild(mask);
+      });
+    },
+    {
+      mask_key: MASK_ATTRIB_KEY,
+      mask_value: MASK_ATTRIB_VALUE
+    }
+  );
+
+  // Wait for all masks to have been added to the DOM.
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const { selector, maskCount } = args;
+      return document.querySelectorAll(selector).length === maskCount;
+    },
+    {
+      selector: MASK_SELECTOR,
+      maskCount: await videos.evaluateAll((nodes: HTMLElement[]) => nodes.length)
+    }
+  );
+}
 
 /**
  * Helper function for waiting for file type icons. File type icons

@@ -256,7 +256,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-
       {/* When the participantStateString has a value, we don't show the menu  */}
       {!me && participantStateString ? (
         <Text className={mergeStyles(participantStateStringStyles)}>{participantStateString}</Text>

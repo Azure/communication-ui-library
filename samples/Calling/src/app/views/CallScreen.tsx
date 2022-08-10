@@ -10,6 +10,8 @@ import {
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -25,6 +27,8 @@ export interface CallScreenProps {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   onCallEnded: () => void;
+  /* @conditional-compile-remove(rooms) */
+  role?: Role;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,7 +38,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callLocator,
     displayName,
     onCallEnded,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rooms) */ role
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -99,6 +104,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(rooms) */
+      role={role}
     />
   );
 };
