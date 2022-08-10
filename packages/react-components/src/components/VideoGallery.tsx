@@ -212,6 +212,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const visibleCallingParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
   const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
   const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
@@ -237,10 +239,28 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: maxRemoteVideoStreams
   }).slice(0, maxRemoteVideoStreams);
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  visibleCallingParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.state === ('Connecting' || 'Ringing')) ?? [],
+    dominantSpeakers,
+    lastVisibleParticipants: visibleCallingParticipants.current,
+    maxDominantSpeakers: 0
+  });
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const visibleCallingParticipantsSet = new Set(visibleCallingParticipants.current.map((p) => p.userId));
+
   visibleAudioParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsSet.has(p.userId)) ?? [],
+    participants:
+      remoteParticipants?.filter(
+        (p) =>
+          !visibleVideoParticipantsSet.has(p.userId) &&
+          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !visibleCallingParticipantsSet.has(
+            p.userId
+          )
+      ) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleAudioParticipants.current,
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
@@ -323,6 +343,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
+          /* @conditional-compile-remove(PSTN-calls) */
+          state={participant.state}
         />
       );
     },
@@ -341,21 +363,37 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         return defaultOnRenderVideoTile(participant, false);
       });
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const callingTiles = onRenderRemoteVideoTile
+    ? visibleCallingParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
+    : visibleCallingParticipants.current.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant, false);
+      });
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
   const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
 
-  let gridTiles: JSX.Element[] = [];
-  let horizontalGalleryTiles: JSX.Element[] = [];
+  const createGridTiles = (): JSX.Element[] => {
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    return videoTiles.length > 0 ? videoTiles : audioTiles.concat(callingTiles);
+    return videoTiles.length > 0 ? videoTiles : audioTiles;
+  };
+  const gridTiles = createGridTiles();
 
-  if (screenShareActive) {
-    // If screen sharing is active, assign video and audio participants as horizontal gallery participants
-    horizontalGalleryTiles = videoTiles.concat(audioTiles);
-  } else {
-    // If screen sharing is not active, then assign all video tiles as grid tiles.
-    // If there are no video tiles, then assign audio tiles as grid tiles.
-    gridTiles = videoTiles.length > 0 ? videoTiles : audioTiles;
-    horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
-  }
+  const createHorizontalGalleryTiles = (): JSX.Element[] => {
+    if (screenShareActive) {
+      // If screen sharing is active, assign video and audio participants as horizontal gallery participants
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      return videoTiles.concat(audioTiles.concat(callingTiles));
+      return videoTiles.concat(audioTiles);
+    } else {
+      // If screen sharing is not active, then assign all video tiles as grid tiles.
+      // If there are no video tiles, then assign audio tiles as grid tiles.
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      return videoTiles.length > 0 ? audioTiles.concat(callingTiles) : [];
+      return videoTiles.length > 0 ? audioTiles : [];
+    }
+  };
+  const horizontalGalleryTiles = createHorizontalGalleryTiles();
 
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(localVideoTile);
