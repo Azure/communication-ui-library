@@ -20,6 +20,10 @@ import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatCompos
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * @private
@@ -27,11 +31,15 @@ import { AddPeopleButton } from './AddPeopleButton';
 export const PeoplePaneContent = (props: {
   inviteLink?: string;
   onRemoveParticipant: (participantId: string) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
 
@@ -100,6 +108,10 @@ export const PeoplePaneContent = (props: {
           mobileView={props.mobileView}
           participantList={participantList}
           strings={strings}
+          /* @conditional-compile-remove(PSTN-calls) */
+          onAddParticipant={props.onAddParticipant}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={props.alternateCallerId}
         />
       </Stack>
     );
@@ -111,6 +123,10 @@ export const PeoplePaneContent = (props: {
       mobileView={props.mobileView}
       participantList={participantList}
       strings={strings}
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant={props.onAddParticipant}
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId={props.alternateCallerId}
     />
   );
 };
