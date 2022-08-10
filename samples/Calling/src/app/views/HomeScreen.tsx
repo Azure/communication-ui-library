@@ -24,13 +24,22 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { getRoomIdFromUrl } from '../utils/AppUtils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    teamsLink?: TeamsMeetingLinkLocator;
+    /* @conditional-compile-remove(rooms) */
+    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    /* @conditional-compile-remove(rooms) */
+    option?: string;
+    /* @conditional-compile-remove(rooms) */
+    role?: string;
     /* @conditional-compile-remove(PSTN-calls) */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
@@ -46,11 +55,25 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
+    /* @conditional-compile-remove(rooms) */
+    { key: 'StartRooms', text: 'Start a Rooms call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
+    /* @conditional-compile-remove(rooms) */
+    { key: 'Rooms', text: 'Join a Rooms Call' },
     /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' }
+  ];
+  /* @conditional-compile-remove(rooms) */
+  const roomIdLabel = 'Room ID';
+  /* @conditional-compile-remove(rooms) */
+  const roomsRoleGroupLabel = 'Rooms Role';
+  /* @conditional-compile-remove(rooms) */
+  const roomRoleOptions: IChoiceGroupOption[] = [
+    { key: 'Consumer', text: 'Consumer' },
+    { key: 'Presenter', text: 'Presenter' },
+    { key: 'Attendee', text: 'Attendee' }
   ];
 
   // Get display name from local storage if available
@@ -58,7 +81,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [callLocator, setCallLocator] = useState<
+    TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator
+  >();
+  /* @conditional-compile-remove(rooms) */
+  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   /* @conditional-compile-remove(PSTN-calls) */
@@ -76,8 +103,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonEnabled =
     displayName &&
     (startGroupCall ||
-      teamsLink ||
-      (teamsCallChosen && teamsLink) ||
+      (teamsCallChosen && callLocator) ||
+      /* @conditional-compile-remove(rooms) */
+      (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
+        chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
 
@@ -112,9 +141,34 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
                 placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
               />
             )}
+            {
+              /* @conditional-compile-remove(rooms) */ chosenCallOption.key === 'Rooms' && (
+                <Stack>
+                  <TextField
+                    className={teamsItemStyle}
+                    label={roomIdLabel}
+                    placeholder={'Enter a room ID'}
+                    onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
+                  />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(rooms) */
+              (chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
+                <ChoiceGroup
+                  styles={callOptionsGroupStyles}
+                  label={roomsRoleGroupLabel}
+                  defaultSelectedKey="Presenter"
+                  options={roomRoleOptions}
+                  required={true}
+                  onChange={(_, option) => option && setRoomsRoleOption(option)}
+                />
+              )
+            }
             {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
@@ -164,7 +218,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
                   displayName,
-                  teamsLink,
+                  callLocator: callLocator,
+                  /* @conditional-compile-remove(rooms) */
+                  option: chosenCallOption.key,
+                  /* @conditional-compile-remove(rooms) */
+                  role: chosenRoomsRoleOption.key,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(PSTN-calls) */

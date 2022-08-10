@@ -117,6 +117,7 @@
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "messageContentAriaText": "{author} said {message}",
+    "messageContentMineAriaText": "You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",

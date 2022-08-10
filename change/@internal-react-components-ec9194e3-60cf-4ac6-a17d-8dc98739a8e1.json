@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Remove onFocus callback that focuses directly on content in Chat Message. Added string for aria label of local user's message content. ",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

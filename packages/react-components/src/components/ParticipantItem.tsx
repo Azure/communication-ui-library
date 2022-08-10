@@ -68,15 +68,15 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Connecting` */
-  participantStateConnecting: string;
+  participantStateConnecting?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Ringing` */
-  participantStateRinging: string;
+  participantStateRinging?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Hold` */
-  participantStateHold: string;
+  participantStateHold?: string;
 }
 
 /**
@@ -120,7 +120,7 @@ export interface ParticipantItemProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * Optional string to determine and display a participants connection status.
+   * Optional value to determine and display a participants connection status.
    * For example, `Connecting`, `Ringing` etc.
    * The actual text that is displayed is determined by the localized string
    * corresponding to the provided participant state.
@@ -147,9 +147,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     styles,
     me,
     onClick,
-    showParticipantOverflowTooltip,
+    showParticipantOverflowTooltip
     /* @conditional-compile-remove(PSTN-calls) */
-    participantState
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
@@ -219,38 +218,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     setMenuHidden(true);
   };
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
-  const participantStateString = React.useMemo((): string | undefined => {
-    if (participantState === 'Idle' || participantState === 'Connecting') {
-      return strings?.participantStateConnecting;
-    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
-      return strings?.participantStateRinging;
-    } else if (participantState === 'Hold') {
-      return strings?.participantStateHold;
-    }
-    return;
-  }, [
-    participantState,
-    strings?.participantStateConnecting,
-    strings?.participantStateHold,
-    strings?.participantStateRinging
-  ]);
-
-  const menuItemsWrapperStyle = useMemo(() => {
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    return {
-      /* If participant state is being displayed, hide the menu icon until it is hovered. */
-      display: itemHovered ? 'block' : participantState ? 'none' : 'block'
-    };
-    return {};
-  }, [
-    itemHovered,
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    participantState
-  ]);
+  const participantStateString = participantStateStringTrampoline(props, strings);
 
   return (
     <div
@@ -264,9 +232,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
-        setItemHovered(true);
-        setMenuHidden(false);
-        onClick?.(props);
+        if (!participantStateString) {
+          setItemHovered(true);
+          setMenuHidden(false);
+          onClick?.(props);
+        }
       }}
       tabIndex={0}
     >
@@ -280,36 +250,47 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-      {/* Show the participant state for a remote participant only. Hide it on hover. */}
-      {
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        !me && participantStateString && (
-          <div onMouseEnter={() => setItemHovered(true)} style={{ display: itemHovered ? 'none' : 'block' }}>
-            {participantStateString}
-          </div>
-        )
-      }
-      {/* If participant state is being displayed, hide the menu icon until it is hovered. */}
-      <div style={menuItemsWrapperStyle}>
-        {menuItems && menuItems.length > 0 && (
-          <>
-            {menuButton}
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={onDismissMenu}
-              onDismiss={onDismissMenu}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-              calloutProps={{
-                preventDismissOnEvent
-              }}
-            />
-          </>
-        )}
-      </div>
+      {/* When the participantStateString has a value, we don't show the menu  */}
+      {!me && participantStateString ? (
+        <Text>{participantStateString}</Text>
+      ) : (
+        <div>
+          {menuItems && menuItems.length > 0 && (
+            <>
+              {menuButton}
+              <ContextualMenu
+                items={menuItems}
+                hidden={menuHidden}
+                target={containerRef}
+                onItemClick={onDismissMenu}
+                onDismiss={onDismissMenu}
+                directionalHint={DirectionalHint.bottomRightEdge}
+                className={contextualMenuStyle}
+                calloutProps={{
+                  preventDismissOnEvent
+                }}
+              />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
+};
+
+const participantStateStringTrampoline = (
+  props: ParticipantItemProps,
+  strings: ParticipantItemStrings
+): string | undefined => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+    ? strings?.participantStateConnecting
+    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+    ? strings?.participantStateRinging
+    : props.participantState === 'Hold'
+    ? strings?.participantStateHold
+    : undefined;
+
+  return undefined;
 };
