@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
+import { IContextualMenuItem, memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import { ControlBar, HoldButton, ParticipantMenuItemsCallback } from '@internal/react-components';
+import React, { useCallback, useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -20,6 +20,7 @@ import { People } from './buttons/People';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
+import { usePropsFor } from '../hooks/usePropsFor';
 
 /**
  * @private
@@ -61,6 +62,35 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }),
     [localeStrings]
   );
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove() */
+  const moreButtonStrings = useMemo(
+    () => ({
+      label: localeStrings.strings.callWithChat.moreDrawerButtonLabel,
+      tooltipOffContent: localeStrings.strings.callWithChat.moreDrawerButtonTooltip
+    }),
+    [localeStrings]
+  );
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const holdButtonProps = usePropsFor(HoldButton);
+
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const onRenderHoldButton = useCallback(() => {
+    return <HoldButton {...holdButtonProps} />;
+  }, [holdButtonProps]);
+
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
+    const items: IContextualMenuItem[] = [];
+
+    items.push({
+      key: 'holdButtonKey',
+      onRender: onRenderHoldButton
+    });
+
+    return items;
+  };
 
   const theme = useTheme();
 
@@ -117,7 +147,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
               isEnabled(options?.moreButton)
-            ) && <MoreButton />
+            ) && <MoreButton strings={moreButtonStrings} menuProps={{ items: moreButtonContextualMenuItems() }} />
           }
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
