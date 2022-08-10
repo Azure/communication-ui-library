@@ -230,7 +230,11 @@ const DialpadContainer = (props: {
   };
 
   return (
-    <div className={mergeStyles(containerStyles(theme), props.styles?.root)} data-test-id="dialpadContainer">
+    <div
+      className={mergeStyles(containerStyles(theme), props.styles?.root)}
+      data-test-id="dialpadContainer"
+      data-ui-id="dialpadContainer"
+    >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
         value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}

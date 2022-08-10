@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update MediaGallery to provide a default rendered tile to the VideoGallery when a participant is 'Ringing' or 'Connecting'",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

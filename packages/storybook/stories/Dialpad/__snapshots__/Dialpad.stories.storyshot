@@ -26,6 +26,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
         <div
           className="stub-classname"
           data-test-id="dialpadContainer"
+          data-ui-id="dialpadContainer"
         >
           <div
             className="ms-TextField stub-classname"
