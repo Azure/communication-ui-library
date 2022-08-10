@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Hotfix: infinite spinner for screenShare in stable",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
