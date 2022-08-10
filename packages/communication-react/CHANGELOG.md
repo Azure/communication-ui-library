@@ -6,7 +6,8 @@ This log was last generated on Wed, 10 Aug 2022 18:29:31 GMT and should not be m
 
 ## [1.3.1](https://github.com/azure/communication-ui-library/tree/1.3.1)
 
-This is a patch release addressing issue [#2186](https://github.com/Azure/communication-ui-library/issues/2186).
+This is a patch release for issue [#2186](https://github.com/Azure/communication-ui-library/issues/2186):
+- Fix the loading spinner showing on remote screenshare streams.
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.0)
 
