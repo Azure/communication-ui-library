@@ -85,6 +85,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   return (
     <div className={container()}>
       <div
+        data-ui-id="stream-media-container"
         className={mergeStyles(
           isMirrored && pipEnabled ? invertedVideoInPipStyle(theme) : mediaContainer(theme),
           styles?.root
