@@ -9,7 +9,7 @@ import { v1 as generateGUID } from 'uuid';
 // This timeout must be less than the global timeout
 const PER_STEP_TIMEOUT_MS = 5000;
 
-function perStepLocalTimeout(): number {
+export function perStepLocalTimeout(): number {
   if (process.env.LOCAL_DEBUG) {
     // Disable per-step timeouts for local debugging
     // so that developers can use the playwright inspector
@@ -43,7 +43,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
-  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
+  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: perStepLocalTimeout() }));
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -181,7 +181,7 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 };
 
 /**
- * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
+ * Load composite call page with participant video feeds fully rendered.
  */
 export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<void> => {
   // Start local camera and start the call
@@ -192,7 +192,15 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await waitForSelector(page, dataUiId('call-page'));
   }
 
-  // Wait for all participants cameras to have loaded
+  await waitForCallPageParticipantVideos(pages);
+};
+
+/**
+ * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
+ *
+ * @param expectedVideoCount If set, the number of video tiles to expect. Default is `pages.length`.
+ */
+export const waitForCallPageParticipantVideos = async (pages: Page[], expectedVideoCount?: number): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
     await waitForFunction(
@@ -207,7 +215,7 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         return correctNoOfVideos && allVideosLoaded;
       },
       {
-        expectedVideoCount: pages.length
+        expectedVideoCount: expectedVideoCount ?? pages.length
       },
       // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
       // Extend the timeout here to trade flakiness for potentially longer test runtime.
