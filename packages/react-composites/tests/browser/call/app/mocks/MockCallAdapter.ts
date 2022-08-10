@@ -117,7 +117,8 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
     if (s.dummyView) {
       s.view = {
         ...s.dummyView,
-        target: createMockHTMLElement('z')
+        // Set some name to get a non-black color for the mock video.
+        target: createMockHTMLElement('local')
       };
     }
   });
