@@ -148,6 +148,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     me,
     onClick,
     showParticipantOverflowTooltip
+    /* @conditional-compile-remove(PSTN-calls) */
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
@@ -249,7 +250,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-
       {/* When the participantStateString has a value, we don't show the menu  */}
       {!me && participantStateString ? (
         <Text>{participantStateString}</Text>
