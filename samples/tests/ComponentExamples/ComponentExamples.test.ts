@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { encodeQueryData, createChatThreadAndUsers } from '../common/utils';
 import * as path from 'path';
 import dotenv from 'dotenv';
@@ -33,9 +33,7 @@ test.describe('Component Examples Test', () => {
 
     await page.waitForSelector(dataUiStatus('delivered'));
 
-    await page.addScriptTag({
-      content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
-    });
+    await stubMessageTimestamps(page);
 
     // Don't start calling test until the call is connected
     await page.waitForSelector(dataUiId('call-connected'));
@@ -63,3 +61,21 @@ test.describe('Component Examples Test', () => {
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStopped.png');
   });
 });
+
+/**
+ * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
+ */
+export const stubMessageTimestamps = async (page: Page): Promise<void> => {
+  await page.addScriptTag({
+    content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
+  });
+  // Wait for timestamps to have been updated in the DOM
+  await page.waitForFunction(
+    (args: unknown) => {
+      const { selector } = args as any;
+      const timestampNodes = Array.from(document.querySelectorAll(selector));
+      return timestampNodes.every((node) => node.textContent === 'timestamp');
+    },
+    { selector: '[data-ui-id=message-timestamp]' }
+  );
+};
