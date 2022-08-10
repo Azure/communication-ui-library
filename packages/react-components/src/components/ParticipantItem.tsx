@@ -24,7 +24,9 @@ import {
   iconStyles,
   meContainerStyle,
   menuButtonContainerStyle,
-  participantItemContainerStyle
+  participantItemContainerStyle,
+  participantStateMaxWidth,
+  participantStateStringStyles
 } from './styles/ParticipantItem.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(one-to-n-calling) */
@@ -241,7 +243,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     >
       <Stack
         horizontal
-        className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
+        className={mergeStyles({
+          width: `calc(100% - ${
+            !me && participantStateString ? participantStateMaxWidth : menuButtonContainerStyle.width
+          })`,
+          alignItems: 'center'
+        })}
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
@@ -252,7 +259,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
       {/* When the participantStateString has a value, we don't show the menu  */}
       {!me && participantStateString ? (
-        <Text>{participantStateString}</Text>
+        <Text className={mergeStyles(participantStateStringStyles)}>{participantStateString}</Text>
       ) : (
         <div>
           {menuItems && menuItems.length > 0 && (
