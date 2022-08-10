@@ -128,6 +128,22 @@ export function defaultMockRemoteParticipant(displayName: string): MockRemotePar
 }
 
 /**
+ * Create the default {@link MockRemoteParticipantState} for a PSTN participant in a hermetic e2e test
+ *
+ * use to add PSTN participants to the {@link defaultCallAdapterState}
+ */
+export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'phoneNumber', phoneNumber: `${phoneNumber}` },
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: true,
+    isSpeaking: false,
+    displayName: phoneNumber
+  };
+}
+
+/**
  * Add a video stream to {@link MockRemoteParticipantState}.
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.

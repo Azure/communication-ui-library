@@ -311,9 +311,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
-    const isTeamsMeeting = !('groupId' in this.locator);
+    const isTeamsMeeting = 'teamsLink' in this.locator;
     /* @conditional-compile-remove(rooms) */
-    const isRoomsCall = !('roomId' in this.locator);
+    const isRoomsCall = 'roomId' in this.locator;
 
     if (isTeamsMeeting) {
       return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
