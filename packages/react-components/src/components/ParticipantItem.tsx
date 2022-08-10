@@ -27,6 +27,9 @@ import {
   participantItemContainerStyle
 } from './styles/ParticipantItem.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantState } from '../types';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -62,6 +65,18 @@ export interface ParticipantItemStrings {
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder?: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Connecting` */
+  participantStateConnecting?: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Ringing` */
+  participantStateRinging?: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** String shown when `participantState` is `Hold` */
+  participantStateHold?: string;
 }
 
 /**
@@ -102,6 +117,16 @@ export interface ParticipantItemProps {
   onClick?: (props?: ParticipantItemProps) => void;
   /** prop to determine if we should show tooltip for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Optional value to determine and display a participants connection status.
+   * For example, `Connecting`, `Ringing` etc.
+   * The actual text that is displayed is determined by the localized string
+   * corresponding to the provided participant state.
+   * For example, `strings.participantStateConnecting` will be used if `participantState` is `Connecting`.
+   */
+  participantState?: ParticipantState;
 }
 
 /**
@@ -131,8 +156,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
 
-  const isMeText = props.strings?.isMeText ?? localeStrings.isMeText;
-  const menuTitle = props.strings?.menuTitle ?? localeStrings.menuTitle;
+  const strings = { ...localeStrings, ...props.strings };
 
   const avatarOptions = {
     text: displayName,
@@ -176,7 +200,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontal={true}
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle)}
-        title={menuTitle}
+        title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
@@ -185,13 +209,15 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [itemHovered, menuTitle, ids.participantItemMenuButton]
+    [itemHovered, strings.menuTitle, ids.participantItemMenuButton]
   );
 
   const onDismissMenu = (): void => {
     setItemHovered(false);
     setMenuHidden(true);
   };
+
+  const participantStateString = participantStateStringTrampoline(props, strings);
 
   return (
     <div
@@ -205,9 +231,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
-        setItemHovered(true);
-        setMenuHidden(false);
-        onClick?.(props);
+        if (!participantStateString) {
+          setItemHovered(true);
+          setMenuHidden(false);
+          onClick?.(props);
+        }
       }}
       tabIndex={0}
     >
@@ -216,28 +244,53 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
       >
         {avatar}
-        {me && <Text className={meTextStyle}>{isMeText}</Text>}
+        {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
           {onRenderIcon && onRenderIcon(props)}
         </Stack>
       </Stack>
-      {menuItems && menuItems.length > 0 && (
-        <>
-          {menuButton}
-          <ContextualMenu
-            items={menuItems}
-            hidden={menuHidden}
-            target={containerRef}
-            onItemClick={onDismissMenu}
-            onDismiss={onDismissMenu}
-            directionalHint={DirectionalHint.bottomRightEdge}
-            className={contextualMenuStyle}
-            calloutProps={{
-              preventDismissOnEvent
-            }}
-          />
-        </>
+
+      {/* When the participantStateString has a value, we don't show the menu  */}
+      {!me && participantStateString ? (
+        <Text>{participantStateString}</Text>
+      ) : (
+        <div>
+          {menuItems && menuItems.length > 0 && (
+            <>
+              {menuButton}
+              <ContextualMenu
+                items={menuItems}
+                hidden={menuHidden}
+                target={containerRef}
+                onItemClick={onDismissMenu}
+                onDismiss={onDismissMenu}
+                directionalHint={DirectionalHint.bottomRightEdge}
+                className={contextualMenuStyle}
+                calloutProps={{
+                  preventDismissOnEvent
+                }}
+              />
+            </>
+          )}
+        </div>
       )}
     </div>
   );
+};
+
+const participantStateStringTrampoline = (
+  props: ParticipantItemProps,
+  strings: ParticipantItemStrings
+): string | undefined => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+    ? strings?.participantStateConnecting
+    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+    ? strings?.participantStateRinging
+    : props.participantState === 'Hold'
+    ? strings?.participantStateHold
+    : undefined;
+
+  return undefined;
 };
