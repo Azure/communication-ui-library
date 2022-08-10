@@ -104,6 +104,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     [
       props.onFetchAvatarPersonaData,
       /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateConnecting,
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateRinging,
       /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateHold
     ]
   );
