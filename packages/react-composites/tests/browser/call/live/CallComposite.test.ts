@@ -29,8 +29,6 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
   });
 };
 
-const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
-
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }) => {
     // Each test *must* join a new call to prevent test flakiness.
