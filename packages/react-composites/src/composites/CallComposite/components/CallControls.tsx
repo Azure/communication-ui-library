@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItem, memoizeFunction, merge, Stack, useTheme } from '@fluentui/react';
+import { IContextualMenuItem, memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, HoldButton, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -21,6 +21,7 @@ import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 
 /**
@@ -148,9 +149,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
           )}
           {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-              isEnabled(options?.moreButton)
-            ) && (
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            isEnabled(options?.moreButton) && (
               <MoreButton
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
