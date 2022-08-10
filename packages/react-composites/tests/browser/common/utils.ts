@@ -470,8 +470,15 @@ const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
 const MASK_ATTRIB_KEY = 'data-ui-id';
 const MASK_ATTRIB_VALUE = 'stream-media-video-mask';
 const MASK_SELECTOR = `[${MASK_ATTRIB_KEY}="${MASK_ATTRIB_VALUE}"]`;
+
 /**
  * Masks the video element in {@link VideoTile} by overlaying an opaque <div/>.
+ *
+ * Pixel-perfect UI snapshots of video frames are impossible -- there are many factors
+ * beyond our control (e.g. network bandwidth) that affect the video frames being rendered.
+ * This leads to trivial differences in the UI snapshots.
+ * As we aren't trying to validate the calling infrastructures ability to render the video, we
+ * mask it to get robust UI snapshots.
  *
  * This function is destructive: It changes the video tile's DOM irreversibly.
  * This function is idempotent: It is safe to call this function multiple times.
