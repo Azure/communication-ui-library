@@ -58,6 +58,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     >
                       <div
                         className="stub-classname"
+                        data-ui-id="stream-media-container"
                       />
                     </div>
                   </div>
