@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  HoldButtonStrings
 } from '../components';
 /* @conditional-compile-remove(dialpad) */
 import { DialpadStrings } from '../components';
@@ -79,6 +80,9 @@ export interface ComponentStrings {
   // @conditional-compile-remove(PSTN-calls)
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
+  /** Strings for HoldButton */
+  holdButton: HoldButtonStrings;
 }
 
 /**

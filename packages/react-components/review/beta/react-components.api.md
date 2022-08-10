@@ -250,6 +250,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -709,7 +710,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
-    toolTipOffContent: string;
+    tooltipOffContent: string;
     tooltipOnContent: string;
 }
 

@@ -77,8 +77,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   const onRenderHoldButton = useCallback(() => {
-    return <HoldButton {...holdButtonProps} />;
-  }, [holdButtonProps]);
+    return <HoldButton {...holdButtonProps} showLabel={true} strings={localeStrings.component.strings.holdButton} />;
+  }, [holdButtonProps, localeStrings]);
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
@@ -86,6 +86,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
     items.push({
       key: 'holdButtonKey',
+      text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onRender: onRenderHoldButton
     });
 
@@ -152,6 +153,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
+                showLabel={props.isMobile}
               />
             )
           }
