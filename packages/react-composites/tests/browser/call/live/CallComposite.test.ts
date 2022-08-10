@@ -5,7 +5,6 @@ import {
   dataUiId,
   loadCallPageWithParticipantVideos,
   pageClick,
-  PER_STEP_TIMEOUT_MS,
   isTestProfileDesktop,
   waitForCallCompositeToLoad,
   waitForFunction,
@@ -17,7 +16,6 @@ import {
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
-import { IDS } from '../../common/constants';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -140,54 +138,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
         `video-gallery-camera-off-page-${idx}.png`
       );
     }
-  });
-});
-
-test.describe('Call composite participant menu items injection tests', () => {
-  // Make sure tests can still run well after retries
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
-    // Each test *must* join a new call to prevent test flakiness.
-    // We hit a Calling SDK service 500 error if we do not.
-    // An issue has been filed with the calling team.
-    const newTestGuid = generateGUID();
-    for (let i = 0; i < pages.length; i++) {
-      const page = pages[i];
-      const user = users[i];
-      user.groupId = newTestGuid;
-
-      await page.goto(
-        buildUrl(serverUrl, user, {
-          injectParticipantMenuItems: 'true'
-        })
-      );
-      await waitForCallCompositeToLoad(page);
-    }
-    await loadCallPageWithParticipantVideos(pages);
-  });
-
-  test('injected menu items appear', async ({ pages }, testInfo) => {
-    const page = pages[0];
-
-    // Open participants flyout.
-    await pageClick(page, dataUiId('call-composite-participants-button'));
-    if (flavor === 'beta') {
-      if (!isTestProfileDesktop(testInfo)) {
-        await pageClick(page, '[role="menuitem"]');
-        await pageClick(page, 'span:text("Remove")');
-      } else {
-        await pageClick(page, dataUiId(IDS.participantItemMenuButton));
-        await waitForSelector(page, '.ms-ContextualMenu-itemText');
-      }
-    } else {
-      // Open participant list flyout
-      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-      // There shouldbe at least one participant. Just click on the first.
-      await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
-
-      const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
-      await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 });
 
