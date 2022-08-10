@@ -37,7 +37,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    state?: ParticipantState;
+    participantState?: ParticipantState;
   }) => {
     const {
       isAvailable,
@@ -55,7 +55,7 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
-      state
+      participantState
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -113,7 +113,7 @@ export const _RemoteVideoTile = React.memo(
         personaMinSize={props.personaMinSize}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={state}
+        participantState={participantState}
       />
     );
   }
