@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use addparticipant handler to call a PSTN user",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

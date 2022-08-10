@@ -4,6 +4,8 @@
 import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/CallWithChat.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
@@ -34,8 +36,12 @@ export const getDocs: () => JSX.Element = () => {
       <Title>CallWithChatComposite</Title>
       <Description>
         CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
+        Inside the experience users can configure their devices, participate in the call with video and see other
+        participants, including those with video turned on. The experience includes chat capabilities like sending and
+        receiving messages, and notifications for message thread events such as typing indicators, message receipts,
+        participants entering and leaving the chat.
       </Description>
-      <Stack horizontalAlign="center">
+      <Stack horizontalAlign="center" style={overviewPageImagesStackStyle}>
         <Image
           src="images/call-with-chat-composite-hero.png"
           alt="Call with chat composite preview image"
@@ -108,6 +114,17 @@ export const getDocs: () => JSX.Element = () => {
         tutorial. https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial
       </Description>
       <Source code={addFileSharingSnippet} />
+
+      <Heading>PSTN and 1:N Calling</Heading>
+      <SingleLineBetaBanner />
+      <MessageBar>Note: see CallComposite for detailed implementation description</MessageBar>
+      <Description>
+        The CallWithChatComposite supports the PSTN Calling modality as well. With CallWithChat you will need to still
+        provide a chat thread Id for instances where you will add a Azure Communications user to the call. If you are
+        looking to use the CallWithChatComposite and are looking to hide the chat because you are only calling PSTN
+        users please see our documentation on how to hide the [control bar
+        buttons](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
     </>
   );
 };

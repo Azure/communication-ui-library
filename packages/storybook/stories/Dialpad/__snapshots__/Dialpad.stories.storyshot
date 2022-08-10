@@ -26,6 +26,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
         <div
           className="stub-classname"
           data-test-id="dialpadContainer"
+          data-ui-id="dialpadContainer"
         >
           <div
             className="ms-TextField stub-classname"
@@ -46,7 +47,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                   onChange={[Function]}
                   onFocus={[Function]}
                   onInput={[Function]}
-                  placeholder="Enter a number"
+                  placeholder="Enter phone number"
                   type="text"
                   value=""
                 />

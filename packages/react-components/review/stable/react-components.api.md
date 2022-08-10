@@ -55,7 +55,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -865,6 +865,7 @@ export interface MessageThreadStrings {
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
+    messageContentMineAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -1081,6 +1082,9 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1130,7 +1134,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    state?: VideoGalleryRemoteParticipantState | undefined;
+    state?: ParticipantState | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1301,9 +1305,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
 }
-
-// @beta
-export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export interface VideoGalleryStream {
