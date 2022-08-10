@@ -5,12 +5,10 @@ import {
   dataUiId,
   loadCallPageWithParticipantVideos,
   pageClick,
-  isTestProfileDesktop,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector,
   stableScreenshot,
-  waitForPiPiPToHaveLoaded
+  waitForCallPageParticipantVideos
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
