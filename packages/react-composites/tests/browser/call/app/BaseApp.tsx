@@ -40,6 +40,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
             <CallComposite
               adapter={callAdapter}
               locale={locale}
+              role={queryArgs.role}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
