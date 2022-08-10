@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "created handler to send dtmf tone",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
