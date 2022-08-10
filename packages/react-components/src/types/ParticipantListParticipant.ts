@@ -10,7 +10,7 @@ import { CommunicationParticipant } from './CommunicationParticipant';
  */
 export type CallParticipantListParticipant = ParticipantListParticipant & {
   /** State of calling participant */
-  state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+  state: ParticipantState;
   /** Whether calling participant is screen sharing */
   isScreenSharing?: boolean;
   /** Whether calling participant is muted */
@@ -30,3 +30,17 @@ export type ParticipantListParticipant = CommunicationParticipant & {
    */
   isRemovable: boolean;
 };
+
+/**
+ * @public
+ * The connection state of a call participant.
+ */
+export type ParticipantState =
+  | 'Idle'
+  | 'Connecting'
+  | 'Ringing'
+  | 'Connected'
+  | 'Hold'
+  | 'InLobby'
+  | 'EarlyMedia'
+  | 'Disconnected';

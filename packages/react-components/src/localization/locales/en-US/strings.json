@@ -5,7 +5,10 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
-    "displayNamePlaceholder": "Unnamed Participant"
+    "displayNamePlaceholder": "Unnamed Participant",
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
+    "participantStateHold": "On Hold"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
