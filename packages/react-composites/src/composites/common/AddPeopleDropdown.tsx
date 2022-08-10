@@ -81,7 +81,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         itemProps: { styles: copyLinkButtonStylesThemed },
         iconProps: { iconName: PeoplePaneOpenDialpadIconNameTrampoline(), style: iconStyles },
         onClick: () => setShowDialpad(true),
-        'data-ui-id': 'call-with-chat-composite-dial-phone-number-button'
+        'data-ui-id': 'call-dial-phone-number-button'
       });
     }
 
@@ -119,12 +119,12 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             styles={copyLinkButtonStylesThemed}
             onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
             text={strings.peoplePaneAddPeopleButtonLabel}
-            data-ui-id="call-with-chat-composite-add-people-button"
+            data-ui-id="call-add-people-button"
           />
         </Stack.Item>
 
         {addPeopleDrawerMenuItems.length > 0 && (
-          <Stack styles={drawerContainerStyles} data-ui-id="call-with-chat-composite-add-people-dropdown">
+          <Stack styles={drawerContainerStyles} data-ui-id="call-add-people-dropdown">
             <_DrawerMenu onLightDismiss={() => setAddPeopleDrawerMenuItems([])} items={addPeopleDrawerMenuItems} />
           </Stack>
         )}
@@ -163,7 +163,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
               text={strings.peoplePaneAddPeopleButtonLabel}
               menuProps={defaultMenuProps}
               styles={copyLinkButtonStylesThemed}
-              data-ui-id="call-with-chat-composite-add-people-button"
+              data-ui-id="call-add-people-button"
             />
           </Stack>
         </Stack>
