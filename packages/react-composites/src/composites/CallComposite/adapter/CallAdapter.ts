@@ -14,7 +14,7 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -288,6 +288,13 @@ export interface CallAdapterCallManagement {
    * @beta
    */
   addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * send dtmf tone to another participant in 1:1 call
+   *
+   * @beta
+   */
+  sendDtmf(dtmfTone: DtmfTone): Promise<void>;
 }
 
 /**
