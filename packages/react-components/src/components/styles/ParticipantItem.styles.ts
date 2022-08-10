@@ -39,6 +39,7 @@ export const participantStateStringStyles: IStyle = {
   maxWidth: participantStateMaxWidth,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
   lineHeight: 'normal',
   paddingLeft: '1rem',
   marginLeft: 'auto',
