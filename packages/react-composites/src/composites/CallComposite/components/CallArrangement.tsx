@@ -126,6 +126,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           callAdapter={adapter}
           onClose={closePane}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={props.callControlProps?.onFetchParticipantMenuItems}
           onPeopleButtonClicked={
             showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
           }

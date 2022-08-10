@@ -553,7 +553,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -740,6 +740,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
+    alternateCallerId?: string | undefined;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
@@ -1423,6 +1424,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
+    participantState?: ParticipantState;
 };
 
 // @beta
@@ -2307,6 +2309,7 @@ export interface ParticipantItemProps {
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    participantState?: ParticipantState;
     presence?: PersonaPresence;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
@@ -2320,6 +2323,9 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantStateConnecting?: string;
+    participantStateHold?: string;
+    participantStateRinging?: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -2449,6 +2455,9 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2780,11 +2789,8 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
     // @beta
-    state?: VideoGalleryRemoteParticipantState;
+    state?: ParticipantState;
 }
-
-// @beta
-export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -2847,7 +2853,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
-    participantState?: VideoGalleryRemoteParticipantState;
+    participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;
