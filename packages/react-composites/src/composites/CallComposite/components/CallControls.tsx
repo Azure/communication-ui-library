@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItem, memoizeFunction, Stack, useTheme } from '@fluentui/react';
+import { IContextualMenuItem, memoizeFunction, merge, Stack, useTheme } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, HoldButton, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useCallback, useMemo } from 'react';
@@ -21,6 +21,7 @@ import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
+import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 
 /**
  * @private
@@ -66,7 +67,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove() */
   const moreButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.callWithChat.moreDrawerButtonLabel,
+      label: localeStrings.strings.call.moreButtonCallingLabel,
       tooltipOffContent: localeStrings.strings.callWithChat.moreDrawerButtonTooltip
     }),
     [localeStrings]
@@ -76,18 +77,19 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const holdButtonProps = usePropsFor(HoldButton);
 
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const onRenderHoldButton = useCallback(() => {
-    return <HoldButton {...holdButtonProps} showLabel={true} strings={localeStrings.component.strings.holdButton} />;
-  }, [holdButtonProps, localeStrings]);
-
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
     items.push({
       key: 'holdButtonKey',
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
-      onRender: onRenderHoldButton
+      onClick: () => {
+        holdButtonProps.onToggleHold();
+      },
+      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      }
     });
 
     return items;
@@ -153,7 +155,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
-                showLabel={props.isMobile}
+                showLabel={!props.isMobile}
               />
             )
           }

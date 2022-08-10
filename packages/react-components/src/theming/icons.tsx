@@ -47,7 +47,7 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { Pause20Filled, Play20Filled } from '@fluentui/react-icons';
+import { Pause20Regular, Play20Regular } from '@fluentui/react-icons';
 
 import React from 'react';
 
@@ -131,9 +131,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
-  HoldCall: <Pause20Filled />,
+  HoldCall: <Pause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
-  ResumeCall: <Play20Filled />,
+  ResumeCall: <Play20Regular />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
