@@ -46,7 +46,9 @@ import {
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  DiagnosticChangedEventListner
+  DiagnosticChangedEventListner,
+  CallCompositePage,
+  OnEndCallPayload
 } from './CallAdapter';
 import { getCallCompositePage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -65,6 +67,13 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+
+const endCallPages: CallCompositePage[] = [
+  'accessDeniedTeamsMeeting',
+  'joinCallFailedDueToNoNetwork',
+  'leftCall',
+  'removedFromCall'
+];
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -112,19 +121,39 @@ class CallContext {
     this.callId = callId;
   }
 
+  public onCallEnded(handler: (callEndedData: OnEndCallPayload) => void): void {
+    this.emitter.on('callEnded', handler);
+  }
+
+  public offCallEnded(handler: (callEndedData: OnEndCallPayload) => void): void {
+    this.emitter.off('callEnded', handler);
+  }
+
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
-    this.setState({
-      ...this.state,
-      userId: clientState.userId,
-      displayName: clientState.callAgent?.displayName,
-      call,
-      page: getCallCompositePage(call, latestEndedCall),
-      endedCall: latestEndedCall,
-      devices: clientState.deviceManager,
-      latestErrors: clientState.latestErrors
-    });
+
+    const newPage = getCallCompositePage(call, latestEndedCall);
+    if (!endCallPages.includes(this.state.page) && endCallPages.includes(newPage)) {
+      this.emitter.emit('callEnded', {
+        callId: this.callId,
+        callEndedCode: latestEndedCall?.callEndReason?.code,
+        callEndedSubCode: latestEndedCall?.callEndReason?.subCode
+      });
+    }
+
+    if (this.state.page) {
+      this.setState({
+        ...this.state,
+        userId: clientState.userId,
+        displayName: clientState.callAgent?.displayName,
+        call,
+        page: getCallCompositePage(call, latestEndedCall),
+        endedCall: latestEndedCall,
+        devices: clientState.deviceManager,
+        latestErrors: clientState.latestErrors
+      });
+    }
   }
 }
 
@@ -182,6 +211,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
     this.context = new CallContext(callClient.getState(), isTeamsMeeting);
+
+    this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
+
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -354,7 +386,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async leaveCall(): Promise<void> {
-    const callId = this.call?.id;
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
     this.call = undefined;
@@ -364,7 +395,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.updateClientState(this.callClient.getState());
     this.stopCamera();
     this.mute();
-    this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {

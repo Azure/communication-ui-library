@@ -131,12 +131,15 @@ export type DisplayNameChangedListener = (event: {
   displayName: string;
 }) => void;
 
+/** @public */
+export type OnEndCallPayload = { callId?: string; callEndedCode?: number; callEndedSubCode?: number };
+
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
  *
  * @public
  */
-export type CallEndedListener = (event: { callId: string }) => void;
+export type CallEndedListener = (event: OnEndCallPayload) => void;
 
 /**
  * Payload for {@link DiagnosticChangedEventListner} where there is a change in a media diagnostic.
