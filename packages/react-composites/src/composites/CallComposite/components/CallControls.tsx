@@ -19,7 +19,7 @@ import { ContainerRectProps } from '../../common/ContainerRectProps';
 import { People } from './buttons/People';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
-import { MoreButton } from './buttons/MoreButton';
+import { MoreButton } from '../../common/MoreButton';
 
 /**
  * @private
@@ -116,7 +116,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-              options?.moreButton
+              isEnabled(options?.moreButton)
             ) && <MoreButton />
           }
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
