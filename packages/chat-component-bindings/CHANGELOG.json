@@ -2,6 +2,41 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Wed, 10 Aug 2022 18:29:32 GMT",
+      "tag": "@internal/chat-component-bindings_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "d2b698a9360a27cb058880e871bfa7e79eba70bd",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:31 GMT",
       "tag": "@internal/chat-component-bindings_v1.3.0",
       "version": "1.3.0",

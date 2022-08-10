@@ -1,8 +1,35 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 13 Jun 2022 18:29:25 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Aug 2022 18:29:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.1)
+
+Wed, 10 Aug 2022 18:29:31 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.3.0...@azure/communication-react_v1.3.1)
+
+### Minor changes
+
+- `@internal/react-components`
+  - Update string types and names per comments from ARB ([PR #2015](https://github.com/azure/communication-ui-library/pull/2015) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Patches
+
+- `@internal/calling-component-bindings`
+  - Memoizes the return from the participant list selector for better optimization. ([PR #1980](https://github.com/azure/communication-ui-library/pull/1980) by 94866715+dmceachernmsft@users.noreply.github.com)
+- `@internal/react-composites`
+  - Update DismissSidePaneButtonLabel to have correct naming. ([PR #2015](https://github.com/azure/communication-ui-library/pull/2015) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix displayName disparity in different parts of the composites to match expected behavior from documentation. ([PR #2018](https://github.com/azure/communication-ui-library/pull/2018) by 94866715+dmceachernmsft@users.noreply.github.com)
+
+### Changes
+
+- `@internal/react-components`
+  - Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
+- `@internal/react-composites`
+  - Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
+- `@internal/storybook`
+  - Update fluentui/react version ([PR #1979](https://github.com/azure/communication-ui-library/pull/1979) by carolinecao@microsoft.com)
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.0)
 

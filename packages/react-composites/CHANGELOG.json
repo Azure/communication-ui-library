@@ -2,6 +2,79 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Wed, 10 Aug 2022 18:29:32 GMT",
+      "tag": "@internal/react-composites_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "286188b2c54dbd90d81801019bbf38d8926cb7c8",
+            "comment": "Update DismissSidePaneButtonLabel to have correct naming."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "b9af4cdde2f61c48912ddf8dc9625380f584a4dc",
+            "comment": "Fix displayName disparity in different parts of the composites to match expected behavior from documentation."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d2b698a9360a27cb058880e871bfa7e79eba70bd",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:27 GMT",
       "tag": "@internal/react-composites_v1.3.0",
       "version": "1.3.0",

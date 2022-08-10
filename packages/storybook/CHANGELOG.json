@@ -2,6 +2,37 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 10 Aug 2022 18:29:32 GMT",
+      "tag": "@internal/storybook_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d2b698a9360a27cb058880e871bfa7e79eba70bd",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:28 GMT",
       "tag": "@internal/storybook_v1.3.0",
       "version": "1.3.0",

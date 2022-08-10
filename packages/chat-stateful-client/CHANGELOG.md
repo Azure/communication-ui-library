@@ -1,8 +1,17 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Mon, 13 Jun 2022 18:29:31 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Aug 2022 18:29:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.3.1)
+
+Wed, 10 Aug 2022 18:29:32 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.3.0...@internal/chat-stateful-client_v1.3.1)
+
+### Patches
+
+- Bump @internal/acs-ui-common to v1.3.1 ([PR #2026](https://github.com/azure/communication-ui-library/pull/2026) by beachball)
 
 ## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.3.0)
 

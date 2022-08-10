@@ -2,6 +2,45 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 10 Aug 2022 18:29:32 GMT",
+      "tag": "@internal/react-components_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "286188b2c54dbd90d81801019bbf38d8926cb7c8",
+            "comment": "Update string types and names per comments from ARB"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d2b698a9360a27cb058880e871bfa7e79eba70bd",
+            "comment": "Bumped"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "365cf4903b327ca03af762f70d0670cab02aaeae",
+            "comment": "Update fluentui/react version"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.3.1",
+            "commit": "7941e331802089c442e324fbc5de2afa866c0635"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 18:29:26 GMT",
       "tag": "@internal/react-components_v1.3.0",
       "version": "1.3.0",
