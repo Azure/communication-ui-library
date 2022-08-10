@@ -14,7 +14,7 @@ import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styl
 import { CallWithChatCompositeIcon } from './icons';
 import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 /** @private */
 export interface CallingDialpadStrings {
@@ -32,11 +32,12 @@ export interface CallingDialpadProps {
   onDismissDialpad: () => void;
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId: string;
+  sendDtmf?: (dtmfTone: DtmfTone) => void;
 }
 
 /** @private */
 export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
-  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant, alternateCallerId } = props;
+  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant, alternateCallerId, sendDtmf } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
@@ -69,7 +70,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} />
+        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} onSendDtmfTone={sendDtmf} />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}

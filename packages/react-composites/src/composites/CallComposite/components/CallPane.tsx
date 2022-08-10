@@ -32,7 +32,7 @@ import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } fr
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
@@ -96,6 +96,11 @@ export const CallPane = (props: {
     await props.callAdapter.addParticipant(participant, options);
   };
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => {
+    await props.callAdapter.sendDtmf(dtmfTone);
+  };
+
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
@@ -122,6 +127,8 @@ export const CallPane = (props: {
                   strings={strings}
                   /* @conditional-compile-remove(PSTN-calls) */
                   alternateCallerId={alternateCallerId}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  sendDtmf={sendDtmf}
                 />
               </CallAdapterProvider>
             </Stack>

@@ -8,6 +8,8 @@ import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
+/* @conditional-compile-remove(PSTN-calls) */
+import { DtmfTone } from '@internal/react-components';
 
 /**
  * @private
@@ -38,6 +40,10 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(PSTN-calls) */
     onAddParticipant: async (participant, options?) => {
       return await adapter.addParticipant(participant, options);
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onSendDtmfTone: async (dtmfTone: DtmfTone) => {
+      return await adapter.sendDtmf(dtmfTone);
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);

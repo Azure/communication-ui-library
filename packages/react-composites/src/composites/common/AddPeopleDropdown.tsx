@@ -23,7 +23,7 @@ import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styl
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
@@ -39,13 +39,14 @@ export interface AddPeopleDropdownProps {
   strings: AddPeopleDropdownStrings;
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
+  sendDtmf?: (dtmfTone: DtmfTone) => void;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
+  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId, sendDtmf } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
 
@@ -136,6 +137,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             onDismissDialpad={onDismissDialpad}
             onAddParticipant={onAddParticipant}
             alternateCallerId={alternateCallerId}
+            sendDtmf={sendDtmf}
           />
         )}
       </Stack>
@@ -154,6 +156,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
               onDismissDialpad={onDismissDialpad}
               onAddParticipant={onAddParticipant}
               alternateCallerId={alternateCallerId}
+              sendDtmf={sendDtmf}
             />
           )}
 

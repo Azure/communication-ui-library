@@ -35,7 +35,7 @@ import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } fr
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -119,6 +119,10 @@ export const CallWithChatPane = (props: {
     await props.callAdapter.addParticipant(participant, options);
   };
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => {
+    await props.callAdapter.sendDtmf(dtmfTone);
+  };
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
       <PeoplePaneContent
@@ -130,6 +134,8 @@ export const CallWithChatPane = (props: {
         onAddParticipant={addParticipantToCall}
         /* @conditional-compile-remove(PSTN-calls) */
         alternateCallerId={alternateCallerId}
+        /* @conditional-compile-remove(PSTN-calls) */
+        sendDtmf={sendDtmf}
       />
     </CallAdapterProvider>
   );

@@ -23,7 +23,7 @@ import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 /**
  * @private
@@ -40,6 +40,8 @@ export const PeoplePaneContent = (props: {
   mobileView?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  sendDtmf?: (dtmfTone: DtmfTone) => void;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
 
@@ -112,6 +114,8 @@ export const PeoplePaneContent = (props: {
           onAddParticipant={props.onAddParticipant}
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={props.alternateCallerId}
+          /* @conditional-compile-remove(PSTN-calls) */
+          sendDtmf={props.sendDtmf}
         />
       </Stack>
     );
@@ -127,6 +131,8 @@ export const PeoplePaneContent = (props: {
       onAddParticipant={props.onAddParticipant}
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId={props.alternateCallerId}
+      /* @conditional-compile-remove(PSTN-calls) */
+      sendDtmf={props.sendDtmf}
     />
   );
 };

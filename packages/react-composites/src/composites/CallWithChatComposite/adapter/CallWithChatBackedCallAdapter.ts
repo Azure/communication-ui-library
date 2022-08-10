@@ -12,7 +12,7 @@ import {
   StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -121,6 +121,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await this.callWithChatAdapter.addParticipant(participant, options);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => {
+    await this.callWithChatAdapter.sendDtmf(dtmfTone);
   };
 }
 

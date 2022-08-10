@@ -33,7 +33,7 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -252,6 +252,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.sendDtmf.bind(this);
   }
 
   public dispose(): void {
@@ -494,6 +496,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async resumeCall(): Promise<void> {
     if (this.call?.state === 'LocalHold') {
       this.handlers.onToggleHold();
+    }
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async sendDtmf(dtmfTone: DtmfTone): Promise<void> {
+    if (this.handlers.onSendDtmfTone) {
+      this.handlers.onSendDtmfTone(dtmfTone);
     }
   }
 

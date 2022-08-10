@@ -20,7 +20,7 @@ import { AddPeopleDropdown } from './AddPeopleDropdown';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 
 /** @private */
 export interface AddPeopleButtonProps {
@@ -31,6 +31,8 @@ export interface AddPeopleButtonProps {
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  sendDtmf?: (dtmfTone: DtmfTone) => void;
 }
 
 /** @private */
@@ -53,6 +55,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
         inviteLink={inviteLink}
         onAddParticipant={props.onAddParticipant}
         alternateCallerId={props.alternateCallerId}
+        sendDtmf={props.sendDtmf}
       />
     );
   } else {
@@ -64,6 +67,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           inviteLink={inviteLink}
           onAddParticipant={props.onAddParticipant}
           alternateCallerId={props.alternateCallerId}
+          sendDtmf={props.sendDtmf}
         />
         {participantList}
       </Stack>

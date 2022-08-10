@@ -100,7 +100,7 @@ export interface DialpadProps {
   // comment out the following prop for now to disable customization for dialpad content
   // dialpadButtons?: DialpadButtonProps[][];
   /**  function to send dtmf tones on button click */
-  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+  onSendDtmfTone?: (dtmfTone: DtmfTone) => void;
   /**  Callback for dialpad button behavior*/
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /**  customize dialpad input formatting */
@@ -176,7 +176,7 @@ const DtmfTones: DtmfTone[] = [
 const DialpadContainer = (props: {
   strings: DialpadStrings;
   // dialpadButtons?: DialpadButtonProps[][];
-  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+  onSendDtmfTone?: (dtmfTone: DtmfTone) => void;
   /**  Callback for dialpad button behavior */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /**  customize dialpad input formatting */
