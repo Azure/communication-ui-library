@@ -88,9 +88,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             {
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               options?.participantState === 'Connecting' && (
-                <Text className={mergeStyles(participantStateStyle)}>
-                  {videoTileStrings.participantStateConnecting}
-                </Text>
+                <Text className={mergeStyles(participantStateStyle)}>{videoTileStrings.participantStateRinging}</Text>
               )
             }
             {
@@ -106,8 +104,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     [
       props.onFetchAvatarPersonaData,
       /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateConnecting,
-      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateHold,
-      props.isMobile
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateRinging,
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */ videoTileStrings.participantStateHold
     ]
   );
 
