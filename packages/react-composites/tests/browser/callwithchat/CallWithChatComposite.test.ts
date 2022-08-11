@@ -74,7 +74,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(pages[0], 2);
+      await waitForPiPiPToHaveLoaded(pages[0]);
     }
 
     await stubMessageTimestamps(pages[0]);
@@ -128,7 +128,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(page, 2);
+      await waitForPiPiPToHaveLoaded(page);
     }
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
