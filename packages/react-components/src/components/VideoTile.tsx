@@ -5,8 +5,6 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
-/* @conditional-compile-remove(one-to-n-calling) */
-// @conditional-compile-remove(PSTN-calls)
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback, ParticipantState } from '../types';
@@ -19,7 +17,8 @@ import {
   rootStyles,
   videoContainerStyles,
   videoHint,
-  tileInfoContainerStyle
+  tileInfoContainerStyle,
+  participantStateStringStyles
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -124,10 +123,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
-  /**
-   * If set to true and participantState also has a value, the display name will not be rendered.
-   */
-  isMobile?: boolean;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -179,15 +174,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     isSpeaking,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
-    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    participantState,
-    isMobile
+    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
   } = props;
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  // @conditional-compile-remove(PSTN-calls)
   const strings = { ...useLocale().strings.videoTile, ...props.strings };
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -219,10 +208,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     coinSize: personaSize,
     styles: defaultPersonaStyles,
-    hidePersonaDetails: true,
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    participantState: participantState
+    hidePersonaDetails: true
   };
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
@@ -239,19 +225,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const participantStateString = React.useMemo(() => {
-    if (!strings) {
-      return;
-    }
-    if (participantState === 'Idle' || participantState === 'Connecting') {
-      return strings?.participantStateConnecting;
-    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
-      return strings?.participantStateRinging;
-    } else if (participantState === 'Hold') {
-      return strings?.participantStateHold;
-    }
-    return;
-  }, [participantState, strings]);
+  const participantStateString = participantStateStringTrampoline(props, strings);
 
   return (
     <Ref innerRef={videoTileRef}>
@@ -296,11 +270,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         <Stack horizontal className={tileInfoContainerStyle}>
           {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
             <Stack horizontal className={tileInfoStyle}>
-              {displayName && !isMobile && !participantStateString && (
-                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
-                  {displayName}
-                </Text>
-              )}
+              <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                {displayName}
+              </Text>
               {showMuteIndicator && isMuted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTileMicOff" />
@@ -308,24 +280,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
             </Stack>
           )}
-          <Text
-            style={{
-              textAlign: 'center',
-              maxWidth: '3rem',
-              color: 'inherit',
-              width: isMobile ? 'auto' : '100%',
-              marginRight: isMobile ? 0 : 'none',
-              marginLeft: isMobile ? 'auto' : 'none',
-              fontSize: '0.75rem',
-              lineHeight: 'normal',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              padding: '0.25rem'
-            }}
-          >
-            Calling...
-          </Text>
+          {participantStateString && (
+            <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
+          )}
         </Stack>
 
         {children && (
@@ -334,4 +291,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       </Stack>
     </Ref>
   );
+};
+
+const participantStateStringTrampoline = (props: VideoTileProps, strings: VideoTileStrings): string | undefined => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+    ? strings?.participantStateConnecting
+    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+    ? strings?.participantStateRinging
+    : props.participantState === 'Hold'
+    ? strings?.participantStateHold
+    : undefined;
+
+  return undefined;
 };

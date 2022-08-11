@@ -107,13 +107,16 @@ export const _RemoteVideoTile = React.memo(
         userId={userId}
         renderElement={renderVideoStreamElement}
         displayName={displayName}
-        isMobile={isNarrow}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={isMuted}
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
-        showLabel={props.showLabel}
         personaMinSize={props.personaMinSize}
+        /* @conditional-compile-remove(one-to-n-calling) */
+        /* @conditional-compile-remove(PSTN-calls) */
+        // When the remote video tile is rendered as a small tile in horizontal gallery,
+        // we hide the participants name if they are in hold/connecting states.
+        showLabel={isNarrow && participantState ? false : props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
