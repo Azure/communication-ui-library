@@ -203,7 +203,7 @@ export interface CallAdapterCallManagement {
     // @beta
     resumeCall(): Promise<void>;
     // @beta
-    sendDtmf(dtmfTone: DtmfTone_2): Promise<void>;
+    sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -636,7 +636,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
-    sendDtmf: (dtmfTone: DtmfTone_2) => Promise<void>;
+    sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
