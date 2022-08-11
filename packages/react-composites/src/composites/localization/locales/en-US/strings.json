@@ -53,7 +53,10 @@
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
-    "moreButtonCallingLabel": "More"
+    "moreButtonCallingLabel": "More",
+    "resumeCallButtonLabel": "Resume",
+    "resumeCallButtonAriaLabel": "Resume call",
+    "holdScreenLabel": "You're on hold"
   },
   "chat": {
     "chatListHeader": "In this chat",
