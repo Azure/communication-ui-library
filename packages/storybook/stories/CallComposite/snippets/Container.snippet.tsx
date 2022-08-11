@@ -56,7 +56,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const locator = createCallAdapterLocator(props.locator);
+  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
   if (!locator) {
     return <>Provided call locator '{props.locator}' is not recognized.</>;
   }
