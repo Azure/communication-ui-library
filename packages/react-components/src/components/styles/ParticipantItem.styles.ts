@@ -31,6 +31,24 @@ export const menuButtonContainerStyle = {
 /**
  * @private
  */
+export const participantStateMaxWidth = '5rem';
+/**
+ * @private
+ */
+export const participantStateStringStyles: IStyle = {
+  maxWidth: participantStateMaxWidth,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  lineHeight: 'normal',
+  paddingLeft: '1rem',
+  marginLeft: 'auto',
+  marginRight: 0
+};
+
+/**
+ * @private
+ */
 export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
