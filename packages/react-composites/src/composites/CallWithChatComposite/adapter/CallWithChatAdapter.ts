@@ -315,7 +315,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  sendDtmf: (dtmfTone: DtmfTone) => Promise<void>;
+  sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
 }
 
 /**

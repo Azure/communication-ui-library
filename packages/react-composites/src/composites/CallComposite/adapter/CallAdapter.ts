@@ -290,11 +290,11 @@ export interface CallAdapterCallManagement {
   addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * send dtmf tone to another participant in 1:1 call
+   * send dtmf tone to another participant in a 1:1 PSTN call
    *
    * @beta
    */
-  sendDtmf(dtmfTone: DtmfTone): Promise<void>;
+  sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
 }
 
 /**

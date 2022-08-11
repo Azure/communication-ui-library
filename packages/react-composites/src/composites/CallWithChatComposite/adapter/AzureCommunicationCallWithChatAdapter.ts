@@ -198,7 +198,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.sendDtmf.bind(this);
+    this.sendDtmfTone.bind(this);
   }
 
   /** Join existing Call. */
@@ -376,8 +376,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async sendDtmf(dtmfTone: DtmfTone): Promise<void> {
-    return await this.callAdapter.sendDtmf(dtmfTone);
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
+    return await this.callAdapter.sendDtmfTone(dtmfTone);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

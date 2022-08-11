@@ -107,7 +107,7 @@ export interface DialpadProps {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
-  /**  boolean input to determine show/hide delete button, default true */
+  /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }
@@ -185,7 +185,7 @@ const DialpadContainer = (props: {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
-  /**  boolean input to determine show/hide delete button, default true */
+  /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {

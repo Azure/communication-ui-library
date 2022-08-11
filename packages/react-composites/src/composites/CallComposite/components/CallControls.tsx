@@ -4,8 +4,6 @@
 import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useState } from 'react';
-// uncomment this to test dialpad dtmf
-// import { DefaultButton } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -102,7 +100,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       {
         /* @conditional-compile-remove(PSTN-calls) */
         <SendDtmfDialpad
-          isMobile={props.isMobile ?? false}
+          isMobile={!!props.isMobile}
           strings={dialpadStrings}
           showDialpad={showDialpad}
           onDismissDialpad={onDismissDialpad}
@@ -147,10 +145,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
-          {
-            // uncomment this to test dialpad dtmf
-            // <DefaultButton onClick={() => setShowDialpad(true)}>Ugly button to open dialpad</DefaultButton>
-          }
         </ControlBar>
       </Stack.Item>
     </Stack>

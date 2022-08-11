@@ -124,8 +124,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   };
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public sendDtmf = async (dtmfTone: DtmfTone): Promise<void> => {
-    await this.callWithChatAdapter.sendDtmf(dtmfTone);
+  public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
+    await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
 }
 

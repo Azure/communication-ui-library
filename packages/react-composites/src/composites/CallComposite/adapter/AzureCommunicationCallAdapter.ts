@@ -253,7 +253,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
-    this.sendDtmf.bind(this);
+    this.sendDtmfTone.bind(this);
   }
 
   public dispose(): void {
@@ -500,7 +500,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async sendDtmf(dtmfTone: DtmfTone): Promise<void> {
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 

@@ -43,7 +43,7 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(PSTN-calls) */
     onSendDtmfTone: async (dtmfTone: DtmfTone) => {
-      await adapter.sendDtmf(dtmfTone);
+      await adapter.sendDtmfTone(dtmfTone);
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);

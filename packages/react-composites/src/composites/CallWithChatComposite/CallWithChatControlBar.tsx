@@ -7,8 +7,6 @@ import { useState } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
-// uncomment this to test dialpad dtmf
-// import { DefaultButton } from '@fluentui/react';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
@@ -191,10 +189,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                   occluding some of its content.
                 */}
               <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                {
-                  // uncomment this to test dialpad dtmf
-                  // <DefaultButton onClick={() => setShowDialpad(true)}>Ugly button to open dialpad</DefaultButton>
-                }
                 {isEnabled(options.microphoneButton) && (
                   <Microphone
                     displayType={options.displayType}

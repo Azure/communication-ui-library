@@ -8,7 +8,7 @@ import { DialpadStyles } from '@internal/react-components';
 /**
  * @private
  */
-export const themedDialpadModelStyle = (theme: Theme): Partial<IModalStyles> => ({
+export const themeddialpadModalStyle = (theme: Theme): Partial<IModalStyles> => ({
   main: {
     borderRadius: theme.effects.roundedCorner6,
     padding: '1rem'
