@@ -9,6 +9,7 @@ import {
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
+import { validate as validateUUID } from 'uuid';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -23,8 +24,7 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
-const isGroupID = (id: string): boolean => uuidRegex.test(id);
+const isGroupID = (id: string): boolean => validateUUID(id);
 const isRoomID = (id: string): boolean => {
   const num = Number(id);
 
@@ -35,7 +35,7 @@ const isRoomID = (id: string): boolean => {
   return false;
 };
 
-const createLocator = (locator: string): CallAdapterLocator | undefined => {
+const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
   if (isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
@@ -43,7 +43,7 @@ const createLocator = (locator: string): CallAdapterLocator | undefined => {
   } else if (isRoomID(locator)) {
     return { roomId: locator };
   }
-  return undefined;
+  throw `Unrecognized locator: ${locator}`;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -56,7 +56,12 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const locator = createLocator(props.locator);
+  let locator;
+  try {
+    locator = createCallAdapterLocator(props.locator);
+  } catch (e) {
+    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  }
 
   const adapter = useAzureCommunicationCallAdapter(
     {
