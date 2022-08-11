@@ -102,7 +102,7 @@ export default {
   argTypes: {
     displayName: controlsToAdd.displayName,
     showMuteIndicator: controlsToAdd.showMuteIndicator,
-    showLabel: controlsToAdd.showLabel,
+    showLabel: controlsToAdd.showVideoTileLabel,
     isVideoReady: controlsToAdd.isVideoReady,
     isMirrored: controlsToAdd.isVideoMirrored,
     isMuted: controlsToAdd.isMuted,
