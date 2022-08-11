@@ -88,7 +88,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad.png`);
   });
 
-  test.only('callee participant is displayed with connection state', async ({ page, serverUrl }) => {
+  test('callee participant is displayed with connection state', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Connecting';
@@ -99,11 +99,10 @@ test.describe('Participant pane tests', async () => {
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     await hidePiPiP(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-callee-name.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
   });
 
-  test.only('callee participant name and connection state are truncated', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
+  test('callee participant name and connection state are truncated', async ({ page, serverUrl }) => {
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
     );
