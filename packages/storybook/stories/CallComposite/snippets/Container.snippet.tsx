@@ -23,15 +23,27 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const isGroupLink = (link: string): boolean => link.indexOf('-') !== -1;
+const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+const isGroupID = (id: string): boolean => uuidRegex.test(id);
+const isRoomID = (id: string): boolean => {
+  const num = Number(id);
 
-const createLocator = (link: string): CallAdapterLocator => {
-  if (isTeamsMeetingLink(link)) {
-    return { meetingLink: link };
-  } else if (isGroupLink(link)) {
-    return { groupId: link };
+  if (Number.isInteger(num) && num > 0) {
+    return true;
   }
-  return { roomId: link };
+
+  return false;
+};
+
+const createLocator = (locator: string): CallAdapterLocator | undefined => {
+  if (isTeamsMeetingLink(locator)) {
+    return { meetingLink: locator };
+  } else if (isGroupID(locator)) {
+    return { groupId: locator };
+  } else if (isRoomID(locator)) {
+    return { roomId: locator };
+  }
+  return undefined;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -43,7 +55,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       return undefined;
     }
   }, [props.token]);
-  const locator = useMemo(() => createLocator(props.locator), [props.locator]);
+
+  const locator = createLocator(props.locator);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -73,7 +86,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   if (credential === undefined) {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
-  return <>Initializing....</>;
+  return <>Initializing...</>;
 };
 
 const leaveCall = async (adapter: CallAdapter): Promise<void> => {
