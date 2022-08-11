@@ -103,6 +103,7 @@ test.describe('Participant pane tests', async () => {
   });
 
   test('callee participant name and connection state are truncated', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
     );
