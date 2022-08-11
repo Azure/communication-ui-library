@@ -144,6 +144,28 @@ export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemot
 }
 
 /**
+ * Add the default {@link MockLocalVideoStreamState} for hermetic e2e tests.
+ *
+ * Use this to add outgoing video to state created via {@link defaultCallAdapterState}.
+ */
+export function addDefaultMockLocalVideoStreamState(state: MockCallAdapterState): void {
+  if (!state.call) {
+    throw new Error('state.call must be defined');
+  }
+  state.call.localVideoStreams = [
+    {
+      source: {
+        deviceType: 'UsbCamera',
+        id: 'FakeLocalCamera',
+        name: 'FakeLocalCamera'
+      },
+      mediaStreamType: 'Video',
+      dummyView: { scalingMode: 'Crop', isMirrored: false }
+    }
+  ];
+}
+
+/**
  * Add a video stream to {@link MockRemoteParticipantState}.
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
