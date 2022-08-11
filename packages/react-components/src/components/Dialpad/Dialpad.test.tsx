@@ -5,7 +5,7 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Dialpad, DtmfTone, DialpadStrings } from './Dialpad';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { createTestLocale, mountWithLocalization } from '../utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
