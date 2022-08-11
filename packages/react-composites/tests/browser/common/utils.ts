@@ -581,3 +581,15 @@ export async function blockForMinutes(m: number): Promise<void> {
     setTimeout(() => resolve(), 1000 * 60 * m);
   });
 }
+
+/**
+ * Hides the PiPiP video tile.
+ * Useful when testing participant list on mobile devices
+ * where the content being tested is hidden behind the PiPiP video tile.
+ */
+export const hidePiPiP = async (page: Page): Promise<void> => {
+  const pipipId = dataUiId('picture-in-picture-in-picture-root');
+  await page.evaluate((pipipId) => {
+    document.querySelector(pipipId)?.remove();
+  }, pipipId);
+};
