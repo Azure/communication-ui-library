@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Truncate participant state inside participant item if it is too long",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
