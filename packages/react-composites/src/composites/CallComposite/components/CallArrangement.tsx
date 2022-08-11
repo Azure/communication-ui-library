@@ -11,8 +11,6 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { HoldButton } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useCallback, useState } from 'react';
@@ -22,8 +20,6 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove(one-to-n-calling) */
@@ -41,8 +37,6 @@ import {
 import { CallControlOptions } from '../types/CallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallPane, CallPaneOption } from './CallPane';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { HoldPane } from './HoldPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
 /**
@@ -86,9 +80,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const [activePane, setActivePane] = useState<CallPaneOption>('none');
   /* @conditional-compile-remove(one-to-n-calling) */
   const { callStatus } = useSelector(callStatusSelector);
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const holdButtonProps = usePropsFor(HoldButton);
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const closePane = useCallback(() => {
@@ -145,8 +136,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           inviteLink={props.callControlProps.callInvitationURL}
         />
       );
-    } else if (adapter && callStatus === 'LocalHold') {
-      return <HoldPane onToggleHold={holdButtonProps.onToggleHold} />;
     }
     return <></>;
   };

@@ -27,6 +27,7 @@ import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useId } from '@fluentui/react-hooks';
+import { HoldPage } from './pages/HoldPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -103,7 +104,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
 
   let pageElement: JSX.Element;
-
+  console.log(page);
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -177,6 +178,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
+      );
+      break;
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    case 'hold':
+      pageElement = (
+        <HoldPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />
       );
       break;
     default:
