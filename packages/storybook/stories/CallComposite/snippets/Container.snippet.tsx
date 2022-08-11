@@ -69,6 +69,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     leaveCall
   );
 
+  if (!locator) {
+    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  }
+
   if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
