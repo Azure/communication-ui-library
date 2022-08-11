@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStackStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IStackStyles, ITextStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -9,14 +9,13 @@ import { _pxToRem } from '@internal/acs-ui-common';
  *
  * @private
  */
-export const resumeButtonStyles = (theme: Theme): IButtonStyles => {
+export const resumeButtonStyles = (): IButtonStyles => {
   return {
     root: {
       borderRadius: _pxToRem(4),
       padding: `${_pxToRem(6)} ${_pxToRem(20)} `
     },
     label: {
-      color: theme.palette.white,
       fontWeight: 400,
       display: 'flex',
       fontSize: _pxToRem(14)
@@ -29,13 +28,16 @@ export const resumeButtonStyles = (theme: Theme): IButtonStyles => {
  *
  * @private
  */
-export const holdPaneLabelStyles = {
-  fontWeight: 600,
-  fontHeight: _pxToRem(22),
-  fontSize: _pxToRem(16),
-  fontFamily: 'Segoe UI',
-  fontStyle: 'normal',
-  margin: '1rem auto 0.5rem'
+export const holdPaneLabelStyles = (): ITextStyles => {
+  return {
+    root: {
+      color: '#FFFFFF',
+      fontWeight: 600,
+      fontHeight: _pxToRem(22),
+      fontSize: _pxToRem(16),
+      margin: '1rem auto 0.5rem'
+    }
+  };
 };
 
 /**
@@ -43,13 +45,16 @@ export const holdPaneLabelStyles = {
  *
  * @private
  */
-export const holdPaneTimerStyles = {
-  fontWeight: 600,
-  fontHeight: _pxToRem(22),
-  fontSize: _pxToRem(16),
-  fontFamily: 'Segoe UI',
-  fontStyle: 'normal',
-  margin: '1rem auto 0.5rem'
+export const holdPaneTimerStyles = (): ITextStyles => {
+  return {
+    root: {
+      color: '#FFFFFF',
+      fontWeight: 600,
+      fontSize: _pxToRem(20),
+      lineHeight: _pxToRem(28),
+      margin: 'auto'
+    }
+  };
 };
 
 /**
@@ -60,7 +65,8 @@ export const holdPaneTimerStyles = {
 export const paneStyles: IStackStyles = {
   root: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    background: 'rgba(0, 0, 0, 0.5)'
   }
 };
 

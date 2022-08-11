@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton, Stack, Text, useTheme } from '@fluentui/react';
+import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useLocale } from '../../localization';
 import {
   holdPaneContentStyles,
@@ -28,26 +28,16 @@ export interface HoldPaneProps {
 export const HoldPane = (props: HoldPaneProps): JSX.Element => {
   const { onToggleHold } = props;
   const locale = useLocale();
-  const theme = useTheme();
 
-  const [rawTime, setRawTime] = useState<number>(0);
-  const [time, setTime] = useState<string>('00:00');
+  const [time, setTime] = useState<number>(0);
+
+  const elapsedTime = getReadableTime(getHours(getMinutes(time)), getMinutes(time), getSeconds(time));
+
+  const startTime = useRef(performance.now());
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setRawTime((time) => time + 10);
-
-      const mins: string =
-        Math.floor((rawTime / 60000) % 60) < 10
-          ? '0' + Math.floor((rawTime / 60000) % 60)
-          : `${Math.floor((rawTime / 60000) % 60)}`;
-
-      const seconds: string =
-        Math.floor((rawTime / 1000) % 60) < 10
-          ? '0' + Math.floor((rawTime / 1000) % 60)
-          : `${Math.floor((rawTime / 1000) % 60)}`;
-
-      setTime(mins + ':' + seconds);
+      setTime(performance.now() - startTime.current);
     }, 10);
     return () => {
       clearInterval(interval);
@@ -57,12 +47,12 @@ export const HoldPane = (props: HoldPaneProps): JSX.Element => {
   return (
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
-        <Text style={holdPaneTimerStyles}>{time}</Text>
-        <Text style={holdPaneLabelStyles}>{locale.strings.call.holdScreenLabel}</Text>
+        <Text styles={holdPaneTimerStyles()}>{elapsedTime}</Text>
+        <Text styles={holdPaneLabelStyles()}>{locale.strings.call.holdScreenLabel}</Text>
         <PrimaryButton
           text={locale.strings.call.resumeCallButtonLabel}
           ariaLabel={locale.strings.call.resumeCallButtonAriaLabel}
-          styles={resumeButtonStyles(theme)}
+          styles={resumeButtonStyles()}
           onClick={() => {
             onToggleHold();
           }}
@@ -70,4 +60,22 @@ export const HoldPane = (props: HoldPaneProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+
+const getMinutes = (time: number): number => {
+  return Math.floor((time / 60000) % 60);
+};
+
+const getSeconds = (time: number): number => {
+  return Math.floor((time / 1000) % 60);
+};
+
+const getHours = (minutes: number): number => {
+  return (minutes / 60) % 60;
+};
+
+const getReadableTime = (hours: number, minutes: number, seconds: number): string => {
+  const readableMinutes = ('0' + minutes).slice(-2);
+  const readableSeconds = ('0' + seconds).slice(-2);
+  return hours >= 1 ? hours + ':' + readableMinutes + ':' + readableSeconds : readableMinutes + ':' + readableSeconds;
 };
