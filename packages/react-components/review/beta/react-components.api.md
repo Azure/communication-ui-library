@@ -456,6 +456,7 @@ export interface DialpadProps {
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
@@ -465,7 +466,7 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
-    deleteButtonAriaLabel: string;
+    deleteButtonAriaLabel?: string;
     // (undocumented)
     placeholderText: string;
 }

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "expose conditionally compiled  dialpad code for PSTN call",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

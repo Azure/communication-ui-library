@@ -17,7 +17,7 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(one-to-n-calling) */
 // @conditional-compile-remove(PSTN-calls)
@@ -72,7 +72,7 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
   /* @conditional-compile-remove(one-to-n-calling) */
