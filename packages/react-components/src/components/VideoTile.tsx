@@ -19,8 +19,7 @@ import {
   rootStyles,
   videoContainerStyles,
   videoHint,
-  tileInfoContainerStyle,
-  participantStateStyle
+  tileInfoContainerStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -125,6 +124,10 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
+  /**
+   * If set to true and participantState also has a value, the display name will not be rendered.
+   */
+  isMobile?: boolean;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -132,27 +135,8 @@ const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 // Coin min size is set PersonaSize.size32
 const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
-type DefaultPlaceholderProps = CustomAvatarOptions & {
-  participantState?: ParticipantState;
-  strings?: Pick<VideoTileStrings, 'participantStateConnecting' | 'participantStateHold' | 'participantStateRinging'>;
-};
-
-const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
-  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails, participantState, strings } = props;
-
-  const participantStateString = React.useMemo(() => {
-    if (!strings) {
-      return;
-    }
-    if (participantState === 'Idle' || participantState === 'Connecting') {
-      return strings?.participantStateConnecting;
-    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
-      return strings?.participantStateRinging;
-    } else if (participantState === 'Hold') {
-      return strings?.participantStateHold;
-    }
-    return;
-  }, [participantState, strings]);
+const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
+  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails } = props;
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
@@ -165,7 +149,6 @@ const DefaultPlaceholder = (props: DefaultPlaceholderProps): JSX.Element => {
           aria-label={noVideoAvailableAriaLabel ?? ''}
           showOverflowTooltip={false}
         />
-        {participantStateString && <Text className={mergeStyles(participantStateStyle)}>{participantStateString}</Text>}
       </Stack>
     </Stack>
   );
@@ -199,7 +182,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
-    participantState
+    participantState,
+    isMobile
   } = props;
 
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -255,6 +239,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
+  const participantStateString = React.useMemo(() => {
+    if (!strings) {
+      return;
+    }
+    if (participantState === 'Idle' || participantState === 'Connecting') {
+      return strings?.participantStateConnecting;
+    } else if (participantState === 'EarlyMedia' || participantState === 'Ringing') {
+      return strings?.participantStateRinging;
+    } else if (participantState === 'Hold') {
+      return strings?.participantStateHold;
+    }
+    return;
+  }, [participantState, strings]);
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -290,20 +288,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
-              <DefaultPlaceholder
-                {...placeholderOptions}
-                /* @conditional-compile-remove(one-to-n-calling) */
-                // @conditional-compile-remove(PSTN-calls)
-                strings={strings}
-              />
+              <DefaultPlaceholder {...placeholderOptions} />
             )}
           </Stack>
         )}
 
-        {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
-          <Stack horizontal className={tileInfoContainerStyle}>
+        <Stack horizontal className={tileInfoContainerStyle}>
+          {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
             <Stack horizontal className={tileInfoStyle}>
-              {displayName && (
+              {displayName && !isMobile && !participantStateString && (
                 <Text className={mergeStyles(displayNameStyle)} title={displayName}>
                   {displayName}
                 </Text>
@@ -314,8 +307,26 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 </Stack>
               )}
             </Stack>
-          </Stack>
-        )}
+          )}
+          <Text
+            style={{
+              textAlign: 'center',
+              maxWidth: '3rem',
+              color: 'inherit',
+              width: isMobile ? 'auto' : '100%',
+              marginRight: isMobile ? 0 : 'none',
+              marginLeft: isMobile ? 'auto' : 'none',
+              fontSize: '0.75rem',
+              lineHeight: 'normal',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              padding: '0.25rem'
+            }}
+          >
+            Calling...
+          </Text>
+        </Stack>
 
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>

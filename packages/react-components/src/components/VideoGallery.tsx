@@ -345,10 +345,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showMuteIndicator={showMuteIndicator}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
+          isNarrow={isNarrow}
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator,
+      isNarrow
+    ]
   );
 
   const videoTiles = onRenderRemoteVideoTile

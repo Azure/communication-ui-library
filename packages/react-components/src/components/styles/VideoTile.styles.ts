@@ -86,16 +86,6 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const participantStateStyle: IStyle = {
-  textAlign: 'center',
-  paddingTop: '0.5rem',
-  fontWeight: 600,
-  fontSize: '0.75rem'
-};
-
-/**
- * @private
- */
 export const iconContainerStyle: IStyle = {
   height: '100%',
   alignItems: 'center',
