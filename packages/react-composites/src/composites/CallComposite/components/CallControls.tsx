@@ -1,9 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItem, memoizeFunction, Stack, useTheme } from '@fluentui/react';
+import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { IContextualMenuItem } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { ControlBar, HoldButton, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -19,7 +23,9 @@ import { ContainerRectProps } from '../../common/ContainerRectProps';
 import { People } from './buttons/People';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { MoreButton } from '../../common/MoreButton';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
@@ -65,7 +71,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove() */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.moreButtonCallingLabel,
@@ -80,6 +86,22 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
+
+    if (props.isMobile && props.onPeopleButtonClicked) {
+      items.push({
+        key: 'peopleButtonKey',
+        text: localeStrings.component.strings.participantsButton.label,
+        onClick: () => {
+          if (props.onPeopleButtonClicked) {
+            props.onPeopleButtonClicked();
+          }
+        },
+        iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
 
     items.push({
       key: 'holdButtonKey',
@@ -125,7 +147,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {isEnabled(options?.participantsButton) && (
+          {isEnabled(options?.participantsButton) &&
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ !props.isMobile && (
               <Participants
                 option={options?.participantsButton}
                 callInvitationURL={props.callInvitationURL}
