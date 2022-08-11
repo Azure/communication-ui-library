@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Check if call locator is a valid UUID for group call or is a positive integer for room call in CallComposite storybook preview.",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
