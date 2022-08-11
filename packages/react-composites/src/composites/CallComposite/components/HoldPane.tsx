@@ -1,10 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStackStyles, PrimaryButton, Stack, Text, Theme, useTheme } from '@fluentui/react';
+import { PrimaryButton, Stack, Text, useTheme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
 import { useLocale } from '../../localization';
+import {
+  holdPaneContentStyles,
+  holdPaneLabelStyles,
+  holdPaneTimerStyles,
+  paneStyles,
+  resumeButtonStyles
+} from '../styles/HoldPane.styles';
 
 /**
  *
@@ -63,53 +70,4 @@ export const HoldPane = (props: HoldPaneProps): JSX.Element => {
       </Stack>
     </Stack>
   );
-};
-
-const resumeButtonStyles = (theme: Theme): IButtonStyles => {
-  return {
-    root: {
-      borderRadius: _pxToRem(4),
-      padding: `${_pxToRem(6)} ${_pxToRem(20)} `
-    },
-    label: {
-      color: theme.palette.white,
-      fontWeight: 400,
-      display: 'flex',
-      fontSize: _pxToRem(14)
-    }
-  };
-};
-
-const holdPaneLabelStyles = {
-  fontWeight: 600,
-  fontHeight: _pxToRem(22),
-  fontSize: _pxToRem(16),
-  fontFamily: 'Segoe UI',
-  fontStyle: 'normal',
-  margin: '1rem auto 0.5rem'
-};
-
-const holdPaneTimerStyles = {
-  fontWeight: 600,
-  fontHeight: _pxToRem(22),
-  fontSize: _pxToRem(16),
-  fontFamily: 'Segoe UI',
-  fontStyle: 'normal',
-  margin: '1rem auto 0.5rem'
-};
-
-const paneStyles: IStackStyles = {
-  root: {
-    width: '100%',
-    height: '100%'
-  }
-};
-
-const holdPaneContentStyles: IStackStyles = {
-  root: {
-    display: 'flex',
-    margin: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  }
 };
