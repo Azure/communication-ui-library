@@ -34,6 +34,6 @@ export function parseQueryArgs(): QueryArgs {
     groupId: params.groupId ?? '',
     token: params.token ?? '',
     displayName: params.displayName ?? '',
-    role: params.role as Role
+    role: (params.role as Role) ?? undefined
   };
 }
