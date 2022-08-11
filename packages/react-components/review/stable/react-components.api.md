@@ -1135,6 +1135,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
     participantState?: ParticipantState | undefined;
+    isNarrow?: boolean | undefined;
 }) => JSX.Element>;
 
 // @public

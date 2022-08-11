@@ -11,7 +11,6 @@ import {
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';

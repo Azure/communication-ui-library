@@ -5,9 +5,12 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
-import { useLocale } from '../localization';
+import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback, ParticipantState } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantState } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -177,11 +180,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
   } = props;
 
-  const strings = { ...useLocale().strings.videoTile, ...props.strings };
-
   const [personaSize, setPersonaSize] = useState(100);
   const videoTileRef = useRef<HTMLElement>(null);
 
+  const locale = useLocale();
   const theme = useTheme();
 
   const isVideoRendered = !!renderElement;
@@ -225,7 +227,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const participantStateString = participantStateStringTrampoline(props, strings);
+  const participantStateString = participantStateStringTrampoline(props, locale);
 
   return (
     <Ref innerRef={videoTileRef}>
@@ -293,7 +295,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   );
 };
 
-const participantStateStringTrampoline = (props: VideoTileProps, strings: VideoTileStrings): string | undefined => {
+const participantStateStringTrampoline = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  const strings = { ...locale.strings.videoTile, ...props.strings };
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return props.participantState === 'Idle' || props.participantState === 'Connecting'
