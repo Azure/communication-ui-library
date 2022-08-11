@@ -183,6 +183,7 @@ export type {
   ParticipantListStyles,
   ParticipantMenuItemsCallback,
   ParticipantRemovedSystemMessage,
+  ParticipantState,
   ParticipantsButtonContextualMenuStyles,
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
@@ -233,12 +234,7 @@ export type {
   FileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
-export type {
-  HoldButtonProps,
-  HoldButtonStrings,
-  VideoGalleryRemoteParticipantState,
-  VideoTileStrings
-} from '../../react-components/src';
+export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';

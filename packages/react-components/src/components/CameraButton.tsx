@@ -150,7 +150,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
 
   let disabled = props.disabled || waitForCamera;
   /* @conditional-compile-remove(rooms) */
-  disabled = disabled || !_usePermissions().cameraButton;
+  const permissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  disabled = disabled || !permissions.cameraButton;
 
   const onRenderCameraOnIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />

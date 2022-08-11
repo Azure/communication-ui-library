@@ -122,7 +122,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   };
 
   return (
-    <>
+    <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Stack
         className={containerClassName}
@@ -151,6 +151,6 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
         </Stack>
         {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
-    </>
+    </div>
   );
 };

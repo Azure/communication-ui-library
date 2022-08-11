@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 const videoBaseStyle = mergeStyles({
   border: 0
@@ -59,4 +59,14 @@ export const screenShareContainerStyle = mergeStyles({
 export const stackContainerParticipantVideoStyles = {
   root: { borderRadius: 0 },
   videoContainer: { borderRadius: 0, '& video': { borderRadius: 0 } }
+};
+
+/**
+ * @private
+ */
+export const participantStateStyle: IStyle = {
+  textAlign: 'center',
+  paddingTop: '0.5rem',
+  fontWeight: 400,
+  fontSize: '0.75rem'
 };

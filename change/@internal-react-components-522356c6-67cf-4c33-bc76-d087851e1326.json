@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Video Gallery to display participants in a 'Connecting' or 'Ringing' state for PSTN and 1:N calling.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
