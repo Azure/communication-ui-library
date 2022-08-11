@@ -4,7 +4,11 @@
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
-import { useLocale } from '../../localization';
+import { CompositeLocale, useLocale } from '../../localization';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { usePropsFor } from '../hooks/usePropsFor';
 import {
   holdPaneContentStyles,
   holdPaneLabelStyles,
@@ -14,20 +18,16 @@ import {
 } from '../styles/HoldPane.styles';
 
 /**
- *
- */
-export interface HoldPaneProps {
-  onToggleHold: () => Promise<void>;
-}
-
-/**
  * Hold pane to display when the user places themselves on hold
  *
  * @beta
  */
-export const HoldPane = (props: HoldPaneProps): JSX.Element => {
-  const { onToggleHold } = props;
+export const HoldPane = (): JSX.Element => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const holdButtonProps = usePropsFor(HoldButton);
   const locale = useLocale();
+
+  const strings = stringsTrampoline(locale);
 
   const [time, setTime] = useState<number>(0);
 
@@ -48,13 +48,14 @@ export const HoldPane = (props: HoldPaneProps): JSX.Element => {
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles()}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles()}>{locale.strings.call.holdScreenLabel}</Text>
+        <Text styles={holdPaneLabelStyles()}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
-          text={locale.strings.call.resumeCallButtonLabel}
-          ariaLabel={locale.strings.call.resumeCallButtonAriaLabel}
+          text={strings.resumeCallButtonLabel}
+          ariaLabel={strings.resumeCallButtonAriaLabel}
           styles={resumeButtonStyles()}
           onClick={() => {
-            onToggleHold();
+            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+            holdButtonProps.onToggleHold();
           }}
         />
       </Stack>
@@ -79,4 +80,18 @@ const getReadableTime = (time: number): string => {
   const readableMinutes = ('0' + getMinutes(time)).slice(-2);
   const readableSeconds = ('0' + getSeconds(time)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
+};
+
+const stringsTrampoline = (locale: CompositeLocale) => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return {
+    holdScreenLabel: locale.strings.call.holdScreenLabel,
+    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel
+  };
+  return {
+    holdScreenLabel: '',
+    resumeCallButtonLabel: '',
+    resumeCallButtonAriaLabel: ''
+  };
 };
