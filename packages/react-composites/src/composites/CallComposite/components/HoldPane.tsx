@@ -31,7 +31,7 @@ export const HoldPane = (props: HoldPaneProps): JSX.Element => {
 
   const [time, setTime] = useState<number>(0);
 
-  const elapsedTime = getReadableTime(getHours(getMinutes(time)), getMinutes(time), getSeconds(time));
+  const elapsedTime = getReadableTime(time);
 
   const startTime = useRef(performance.now());
 
@@ -70,12 +70,13 @@ const getSeconds = (time: number): number => {
   return Math.floor((time / 1000) % 60);
 };
 
-const getHours = (minutes: number): number => {
-  return (minutes / 60) % 60;
+const getHours = (time: number): number => {
+  return Math.floor(getMinutes(time) / 60);
 };
 
-const getReadableTime = (hours: number, minutes: number, seconds: number): string => {
-  const readableMinutes = ('0' + minutes).slice(-2);
-  const readableSeconds = ('0' + seconds).slice(-2);
-  return hours >= 1 ? hours + ':' + readableMinutes + ':' + readableSeconds : readableMinutes + ':' + readableSeconds;
+const getReadableTime = (time: number): string => {
+  const hours = getHours(time);
+  const readableMinutes = ('0' + getMinutes(time)).slice(-2);
+  const readableSeconds = ('0' + getSeconds(time)).slice(-2);
+  return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
 };
