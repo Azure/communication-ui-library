@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren.",
     "removeMenuLabel": "Entfernen",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
-    "dismissSidePaneButton": "Schließen",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Zurück zum Anruf",
     "returnToCallButtonAriaLabel": "Zurück"
   }

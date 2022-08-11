@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Feed video. Fare clic per tornare alla schermata della chiamata.",
     "removeMenuLabel": "Rimuovi",
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito",
-    "dismissSidePaneButton": "Chiudi",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Torna alla chiamata",
     "returnToCallButtonAriaLabel": "Indietro"
   }

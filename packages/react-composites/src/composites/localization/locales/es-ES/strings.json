@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Fuentes de vídeo. Hacer clic para volver a la pantalla de la llamada.",
     "removeMenuLabel": "Quitar",
     "copyInviteLinkButtonLabel": "Copiar vínculo de invitación",
-    "dismissSidePaneButton": "Cerrar",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Volver a llamada",
     "returnToCallButtonAriaLabel": "Volver"
   }

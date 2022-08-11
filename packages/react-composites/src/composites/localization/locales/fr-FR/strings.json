@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",
     "removeMenuLabel": "Supprimer",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
-    "dismissSidePaneButton": "Fermer",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Revenir à l’appel",
     "returnToCallButtonAriaLabel": "Précédent"
   }

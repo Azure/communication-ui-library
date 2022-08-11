@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова.",
     "removeMenuLabel": "Удалить",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
-    "dismissSidePaneButton": "Закрыть",
+    "dismissSidePaneButtonLabel": "Закрыть",
     "returnToCallButtonAriaDescription": "Вернуться к звонку",
     "returnToCallButtonAriaLabel": "Назад"
   }

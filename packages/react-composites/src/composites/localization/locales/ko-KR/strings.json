@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "비디오 피드입니다. 클릭하면 통화 화면으로 돌아갑니다.",
     "removeMenuLabel": "제거",
     "copyInviteLinkButtonLabel": "초대 링크 복사",
-    "dismissSidePaneButton": "닫기",
+    "dismissSidePaneButtonLabel": "닫기",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로"
   }

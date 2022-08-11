@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Feeds de vídeo. Clique para retornar à tela de chamada.",
     "removeMenuLabel": "Remover",
     "copyInviteLinkButtonLabel": "Copiar o link de convite",
-    "dismissSidePaneButton": "Fechar",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Retornar à Chamada",
     "returnToCallButtonAriaLabel": "Voltar"
   }

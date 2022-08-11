@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm.",
     "removeMenuLabel": "Verwijderen",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
-    "dismissSidePaneButton": "Sluiten",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Terug naar gesprek",
     "returnToCallButtonAriaLabel": "Terug"
   }

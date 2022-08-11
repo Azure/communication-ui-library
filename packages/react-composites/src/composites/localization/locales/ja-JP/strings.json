@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。",
     "removeMenuLabel": "削除",
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
-    "dismissSidePaneButton": "閉じる",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る"
   }

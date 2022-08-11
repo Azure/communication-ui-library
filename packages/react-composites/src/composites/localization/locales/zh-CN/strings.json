@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。",
     "removeMenuLabel": "删除",
     "copyInviteLinkButtonLabel": "复制邀请链接",
-    "dismissSidePaneButton": "关闭",
+    "dismissSidePaneButtonLabel": "关闭",
     "returnToCallButtonAriaDescription": "返回通话",
     "returnToCallButtonAriaLabel": "返回"
   }

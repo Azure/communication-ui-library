@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın.",
     "removeMenuLabel": "Kaldır",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
-    "dismissSidePaneButton": "Kapat",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "Aramaya Dön",
     "returnToCallButtonAriaLabel": "Geri"
   }

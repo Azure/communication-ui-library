@@ -62,7 +62,7 @@
     "pictureInPictureTileAriaLabel": "影片摘要。按一下以返回通話畫面。",
     "removeMenuLabel": "移除",
     "copyInviteLinkButtonLabel": "複製邀請連結",
-    "dismissSidePaneButton": "關閉",
+    "dismissSidePaneButtonLabel": "Close",
     "returnToCallButtonAriaDescription": "返回通話",
     "returnToCallButtonAriaLabel": "返回"
   }
