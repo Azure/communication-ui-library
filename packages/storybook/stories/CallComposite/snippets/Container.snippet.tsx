@@ -35,7 +35,7 @@ const isRoomID = (id: string): boolean => {
   return false;
 };
 
-const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
+const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
   if (isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
@@ -43,7 +43,7 @@ const createCallAdapterLocator = (locator: string): CallAdapterLocator => {
   } else if (isRoomID(locator)) {
     return { roomId: locator };
   }
-  throw new Error(`Unrecognized locator: ${locator}`);
+  return undefined;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -56,12 +56,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  let locator;
-  try {
-    locator = createCallAdapterLocator(props.locator);
-  } catch (e) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
-  }
+  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -73,6 +68,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     undefined,
     leaveCall
   );
+
+  if (!locator) {
+    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  }
 
   if (adapter) {
     return (
