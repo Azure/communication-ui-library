@@ -1,12 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Aug 2022 18:29:31 GMT and should not be manually modified.
 
 <!-- Start content -->
 
+## [1.3.1](https://github.com/azure/communication-ui-library/tree/1.3.1)
+
+This is a patch release for issue [#2186](https://github.com/Azure/communication-ui-library/issues/2186):
+- Fix infinite spinner bug during screenshare. ([PR #2191](https://github.com/Azure/communication-ui-library/pull/2191) by jiangnanhello@live.com).
+
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.1-beta.1)
 
-Wed, 29 Jun 2022 17:31:05 GMT 
+Wed, 29 Jun 2022 17:31:05 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.0...1.3.1-beta.1)
 
 ### Features
@@ -20,7 +25,7 @@ Wed, 29 Jun 2022 17:31:05 GMT
   - Update microphone and camera button to be disabled when there are no cameras or microphones present ([PR #1993](https://github.com/azure/communication-ui-library/pull/1993) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add autofocus to rejoin call button on call end page ([PR #2008](https://github.com/azure/communication-ui-library/pull/2008) by 82062616+prprabhu-ms@users.noreply.github.com)
   - Add new prop onChange to dialpad to grab textfield values and modified onClickDialpadButton type to (buttonValue: string, buttonIndex: number) => void so we can grab info regarding which button is clicked ([PR #1989](https://github.com/azure/communication-ui-library/pull/1989) by carolinecao@microsoft.com)
-  
+
 
 ### Bug Fixes
 
@@ -57,7 +62,7 @@ A lot of bug fixes in this stable release are related to accessibility. Fixes in
 
 Also included are updates to the video streams with new features like a loading spinner in the remote stream when the remote participants connection is loading. Available in the components now and coming soon to the composites.
 
-Mon, 13 Jun 2022 18:29:25 GMT 
+Mon, 13 Jun 2022 18:29:25 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.2.2-beta.1...@azure/communication-react_v1.3.0)
 
 ### Minor changes
@@ -115,7 +120,7 @@ Mon, 13 Jun 2022 18:29:25 GMT
 
 ## [1.2.2-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.2.2-beta.1)
 
-Tue, 19 Apr 2022 20:46:13 GMT 
+Tue, 19 Apr 2022 20:46:13 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.2.0...1.2.2-beta.1)
 
 ### Features
