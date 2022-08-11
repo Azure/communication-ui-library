@@ -81,6 +81,22 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
+    if (props.isMobile && props.onPeopleButtonClicked) {
+      items.push({
+        key: 'peopleButtonKey',
+        text: localeStrings.component.strings.participantsButton.label,
+        onClick: () => {
+          if (props.onPeopleButtonClicked) {
+            props.onPeopleButtonClicked();
+          }
+        },
+        iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
+
     items.push({
       key: 'holdButtonKey',
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
@@ -125,7 +141,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
           )}
-          {isEnabled(options?.participantsButton) && (
+          {isEnabled(options?.participantsButton) &&
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ !props.isMobile && (
               <Participants
                 option={options?.participantsButton}
                 callInvitationURL={props.callInvitationURL}
