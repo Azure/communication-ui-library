@@ -116,7 +116,7 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(PSTN-calls) */
         // When the remote video tile is rendered as a small tile in horizontal gallery,
         // we hide the participants name if they are in hold/connecting states.
-        showLabel={isNarrow && participantState ? false : props.showLabel}
+        showLabel={isNarrow && isCallingOrHold(participantState) ? false : props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
@@ -124,3 +124,11 @@ export const _RemoteVideoTile = React.memo(
     );
   }
 );
+
+/**
+ * Checks if a participant state is calling or hold.
+ * These states match the states used to render the participantStateString in VideoTile and ParticipantItem.
+ */
+const isCallingOrHold = (participantState?: ParticipantState): boolean => {
+  return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
+};

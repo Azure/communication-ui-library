@@ -110,6 +110,7 @@ export default {
     width: controlsToAdd.videoTileWidth,
     height: controlsToAdd.videoTileHeight,
     // Hiding auto-generated controls
+    participantState: hiddenControl,
     userId: hiddenControl,
     noVideoAvailableAriaLabel: hiddenControl,
     children: hiddenControl,

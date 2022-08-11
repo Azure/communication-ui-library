@@ -267,7 +267,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        <Stack horizontal className={tileInfoContainerStyle}>
+        <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
           {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
             <Stack horizontal className={tileInfoStyle}>
               <Text className={mergeStyles(displayNameStyle)} title={displayName}>
@@ -305,4 +305,10 @@ const participantStateStringTrampoline = (props: VideoTileProps, strings: VideoT
     : undefined;
 
   return undefined;
+};
+
+const tileInfoContainerTokens = {
+  // A horizontal Stack sets the left margin to 0 for all it's children.
+  // We need to allow the children to set their own margins
+  childrenGap: 'none'
 };
