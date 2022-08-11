@@ -333,6 +333,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
+    participantState?: ParticipantState;
 };
 
 // @public
@@ -1209,7 +1210,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    state?: ParticipantState | undefined;
+    participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
 
 // @beta (undocumented)
