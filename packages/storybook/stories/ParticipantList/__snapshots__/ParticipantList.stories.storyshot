@@ -335,6 +335,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </div>
             <span
               className="stub-classname"
+              data-ui-id="participant-item-state-string"
             >
               Calling...
             </span>
@@ -415,6 +416,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </div>
             <span
               className="stub-classname"
+              data-ui-id="participant-item-state-string"
             >
               Calling...
             </span>
