@@ -73,7 +73,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   if (credential === undefined) {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
-  return <>Initializing...</>;
+  return <>Initializing....</>;
 };
 
 const leaveCall = async (adapter: CallAdapter): Promise<void> => {
