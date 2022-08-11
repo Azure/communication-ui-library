@@ -324,5 +324,7 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
   };
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
 
-  return <DialpadContainer strings={strings} {...props} />;
+  const showDeleteButton = props.showDeleteButton ?? true;
+
+  return <DialpadContainer strings={strings} {...props} showDeleteButton={showDeleteButton} />;
 };
