@@ -5,12 +5,9 @@ import {
   dataUiId,
   loadCallPageWithParticipantVideos,
   pageClick,
-  isTestProfileDesktop,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector,
   stableScreenshot,
-  waitForPiPiPToHaveLoaded,
   waitForCallPageParticipantVideos
 } from '../../common/utils';
 import { test } from './fixture';
@@ -31,8 +28,6 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
     }
   });
 };
-
-const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }) => {
@@ -86,24 +81,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
 
     await loadCallPageWithParticipantVideos(pages);
-  });
-
-  test('participant list loads correctly', async ({ pages }, testInfo) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      await pageClick(page, dataUiId('call-composite-participants-button'));
-      if (flavor === 'stable') {
-        const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-        // This will ensure no animation is happening for the callout
-        await buttonCallOut.waitForElementState('stable');
-      } else {
-        await waitForSelector(page, dataUiId('call-composite-people-pane'));
-        if (!isTestProfileDesktop(testInfo)) {
-          await waitForPiPiPToHaveLoaded(page, 2);
-        }
-      }
-      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
-    }
   });
 
   // This is a live smoke test.
