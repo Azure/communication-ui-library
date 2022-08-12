@@ -11,7 +11,7 @@ import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.st
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
-import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles, HoldButton } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
@@ -211,7 +211,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
-                {isEnabled(options?.moreButton) && !props.mobileView && (
+                {isEnabled(options?.moreButton) && isEnabled(options?.holdButton) && !props.mobileView && (
                   <DesktopMoreButton disabled={props.disableButtonsForLobbyPage} styles={commonButtonStyles} />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />

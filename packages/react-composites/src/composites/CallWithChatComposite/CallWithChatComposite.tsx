@@ -141,6 +141,11 @@ export interface CallWithChatControlOptions {
    * Show or hide the more button in the call-with-chat control bar.
    */
   moreButton?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Show or hide the hold button in the bottom sheet drawer
+   */
+  holdButton?: boolean;
 }
 
 type CallWithChatScreenProps = {
