@@ -112,15 +112,21 @@ class CallContext {
     this.callId = callId;
   }
 
-  public updateClientState(clientState: CallClientState): void {
+  public updateClientState(clientState: CallClientState, eventEmitter: EventEmitter): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
+
+    const nextPage = getCallCompositePage(call, latestEndedCall, this.state.page, () => {
+      const payload = { callId: latestEndedCall?.id, callEndedReason: latestEndedCall?.callEndReason };
+      eventEmitter.emit('callEnded', payload);
+    });
+
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      page: getCallCompositePage(call, latestEndedCall),
+      page: nextPage,
       endedCall: latestEndedCall,
       devices: clientState.deviceManager,
       latestErrors: clientState.latestErrors
@@ -197,7 +203,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       if (this.call?.id) {
         this.context.setCurrentCallId(this.call.id);
       }
-      this.context.updateClientState(clientState);
+      this.context.updateClientState(clientState, this.emitter);
     };
 
     this.handlers = createDefaultCallingHandlers(callClient, callAgent, deviceManager, undefined);
@@ -354,25 +360,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async leaveCall(): Promise<void> {
-    const callId = this.call?.id;
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
     this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
     this.context.setCurrentCallId(undefined);
     // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    this.context.updateClientState(this.callClient.getState(), this.emitter);
     this.stopCamera();
     this.mute();
-    // find the reason why the call has ended
-    const latestEndedCall = findLatestEndedCall(this.callClient.getState().callsEnded);
-
-    // emit that the call has ended from the composite
-    this.emitter.emit('callEnded', {
-      callId,
-      code: latestEndedCall?.callEndReason?.code,
-      subCode: latestEndedCall?.callEndReason?.subCode
-    });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
@@ -477,7 +473,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.setCurrentCallId(call.id);
 
     // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    this.context.updateClientState(this.callClient.getState(), this.emitter);
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
     this.subscribeCallEvents();
   }

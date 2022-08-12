@@ -81,6 +81,8 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  *
  * @param Call - The current call state
  * @param previousCall - The state of the most recent previous call that has ended.
+ * @param prevPage - The current page we are on before the state update
+ * @param endedCallHandler - What to do when we have determine the call has ended
  *
  * @remarks - The previousCall state is needed to determine if the call has ended.
  * When the call ends a new call object is created, and so we must lookback at the
@@ -91,7 +93,9 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  */
 export const getCallCompositePage = (
   call: CallState | undefined,
-  previousCall: CallState | undefined
+  previousCall: CallState | undefined,
+  prevPage: CallCompositePage,
+  endedCallHandler: () => void
 ): CallCompositePage => {
   // Must check for ongoing call *before* looking at any previous calls.
   // If the composite completes one call and joins another, the previous calls
@@ -114,17 +118,23 @@ export const getCallCompositePage = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
+    let endedCallPage: CallCompositePage = 'leftCall';
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
-        return 'accessDeniedTeamsMeeting';
+        endedCallPage = 'accessDeniedTeamsMeeting';
       case CallEndReasons.REMOVED_FROM_CALL:
-        return 'removedFromCall';
+        endedCallPage = 'removedFromCall';
       case CallEndReasons.LEFT_CALL:
         if (previousCall.diagnostics.network.latest.noNetwork) {
-          return 'joinCallFailedDueToNoNetwork';
+          endedCallPage = 'joinCallFailedDueToNoNetwork';
         }
-        return 'leftCall';
     }
+
+    if (prevPage !== endedCallPage) {
+      endedCallHandler();
+    }
+
+    return endedCallPage;
   }
 
   // No call state - show starting page (configuration)
