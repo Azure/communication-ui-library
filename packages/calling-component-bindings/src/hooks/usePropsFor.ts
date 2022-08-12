@@ -11,7 +11,7 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
@@ -108,7 +108,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   : AreEqual<Component, typeof ErrorBar> extends true
   ? ErrorBarSelector
   : AreEqual<Component, typeof Dialpad> extends true
-  ? /* @conditional-compile-remove(dialpad) */ EmptySelector
+  ? /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ EmptySelector
   : AreEqual<Component, typeof HoldButton> extends true
   ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
   : undefined;
@@ -133,7 +133,7 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 };
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   // Dialpad only has handlers currently and doesn't require any props from the stateful layer so return the emptySelector
   if (component === Dialpad) {
     return emptySelector;

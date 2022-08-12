@@ -4,6 +4,8 @@
 import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { IContextualMenuItem } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useState } from 'react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -29,6 +31,8 @@ import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 
 /**
  * @private
@@ -82,6 +86,15 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const dialpadStrings = useMemo(
+    () => ({
+      dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
+      dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel
+    }),
+    [localeStrings]
+  );
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
@@ -120,6 +133,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     return items;
   };
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [showDialpad, setShowDialpad] = useState(false);
+
   const theme = useTheme();
 
   /* @conditional-compile-remove(control-bar-button-injection) */
@@ -133,8 +149,22 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     return <></>;
   }
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onDismissDialpad = (): void => {
+    setShowDialpad(false);
+  };
+
   return (
     <Stack horizontalAlign="center">
+      {
+        /* @conditional-compile-remove(PSTN-calls) */
+        <SendDtmfDialpad
+          isMobile={!!props.isMobile}
+          strings={dialpadStrings}
+          showDialpad={showDialpad}
+          onDismissDialpad={onDismissDialpad}
+        />
+      }
       <Stack.Item>
         {/*
             Note: We use the layout="horizontal" instead of dockedBottom because of how we position the

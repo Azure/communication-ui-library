@@ -36,7 +36,7 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
  */
 export interface DialpadStrings {
   placeholderText: string;
-  deleteButtonAriaLabel: string;
+  deleteButtonAriaLabel?: string;
 }
 
 /**
@@ -107,6 +107,8 @@ export interface DialpadProps {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
+  /**  boolean input to determine when to show/hide delete button, default true */
+  showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }
 
@@ -183,12 +185,14 @@ const DialpadContainer = (props: {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
+  /**  boolean input to determine when to show/hide delete button, default true */
+  showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange } = props;
+  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange, showDeleteButton } = props;
 
   const sanitizeInput = (input: string): string => {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
@@ -251,7 +255,7 @@ const DialpadContainer = (props: {
         data-test-id="dialpad-input"
         onRenderSuffix={(): JSX.Element => (
           <>
-            {textValue.length !== 0 && (
+            {showDeleteButton && textValue.length !== 0 && (
               <IconButton
                 ariaLabel={props.strings.deleteButtonAriaLabel}
                 onClick={deleteNumbers}
@@ -308,11 +312,11 @@ const DialpadContainer = (props: {
  * @beta
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale().strings.dialpad;
 
   const dialpadLocaleStringsTrampoline = (): DialpadStrings => {
-    /* @conditional-compile-remove(dialpad) */
+    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     return localeStrings;
     // Even though the component strings type doesn't have `DialpadStrings` in stable build,
     // the string values exist. So unsafe cast for stable build.
@@ -320,5 +324,7 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
   };
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
 
-  return <DialpadContainer strings={strings} {...props} />;
+  const showDeleteButton = props.showDeleteButton ?? true;
+
+  return <DialpadContainer strings={strings} {...props} showDeleteButton={showDeleteButton} />;
 };
