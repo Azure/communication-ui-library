@@ -11,7 +11,7 @@ import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.st
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
-import { BaseCustomStyles, ControlBarButtonStyles, HoldButton } from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
@@ -26,8 +26,6 @@ import {
   generateCustomCallWithChatControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-import { useLocale } from '../localization';
-import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 
 /**
