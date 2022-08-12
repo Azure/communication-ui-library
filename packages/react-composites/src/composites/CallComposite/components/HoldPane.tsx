@@ -57,6 +57,7 @@ export const HoldPane = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
             holdButtonProps.onToggleHold();
           }}
+          data-ui-id="hold-page-resume-call-button"
         />
       </Stack>
     </Stack>
