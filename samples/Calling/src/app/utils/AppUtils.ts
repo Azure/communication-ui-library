@@ -42,19 +42,11 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
 /* @conditional-compile-remove(rooms) */
-export const ROOMS_API_BASE_URL = 'http://localhost:7071';
-
-/* @conditional-compile-remove(rooms) */
 export const createRoomId = async (): Promise<string> => {
   const requestOptions = {
-    method: 'POST',
-    headers: {
-      Host: 'alkwa-fn-test.azurewebsites.net',
-      'Content-Type': 'application/json',
-      'Referrer-Policy': 'no-referrer'
-    }
+    method: 'POST'
   };
-  const response = await fetch(ROOMS_API_BASE_URL + '/api/Rooms-CreateRoom', requestOptions);
+  const response = await fetch(`/createRoom`, requestOptions);
   if (!response.ok) {
     throw 'Invalid token response';
   }
@@ -73,9 +65,9 @@ export const joinRoom = async (userId: string, roomId: string, role: Role): Prom
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ acsUserId: userId, roomId: roomId, role: role })
+    body: JSON.stringify({ userId: userId, roomId: roomId, role: role })
   };
-  const response = await fetch(ROOMS_API_BASE_URL + '/api/Rooms-AddParticipants', requestOptions);
+  const response = await fetch('/addUserToRoom', requestOptions);
   if (!response.ok) {
     throw 'Invalid token response';
   }
