@@ -29,7 +29,7 @@ const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 test.describe('Call Composite E2E CallPage Tests', () => {
   // TODO: Split this test into multiple tests: one for beta/desktop, beta/mobile, stable each.
   // Do this after the test has been stabilized. Keep the same name for flakiness analysis.
-  test.only('participant list loads correctly', async ({ page, serverUrl }, testInfo) => {
+  test('participant list loads correctly', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
