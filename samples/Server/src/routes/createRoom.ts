@@ -8,6 +8,7 @@ import { createUser } from '../lib/identityClient';
 
 const router = express.Router();
 
+const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
 /**
  * route: /createRoom/
  *
@@ -21,20 +22,12 @@ router.post('/', async function (req, res, next) {
   const roomsClient: RoomsClient = new RoomsClient(getResourceConnectionString());
 
   const validFrom = new Date();
-  const validUntil = new Date(validFrom.getTime() + 5 * 60 * 1000);
-
-  const user = await createUser();
+  const validUntil = new Date(validFrom.getTime() + TWENTY_FOUR_HOURS);
 
   // Options payload to create a room
   const createRoomOptions: CreateRoomOptions = {
     validFrom: validFrom,
-    validUntil: validUntil,
-    participants: [
-      {
-        id: user,
-        role: 'Attendee'
-      }
-    ]
+    validUntil: validUntil
   };
 
   // create a room with the request payload
