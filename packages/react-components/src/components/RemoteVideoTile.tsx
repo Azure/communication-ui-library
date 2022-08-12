@@ -113,9 +113,7 @@ export const _RemoteVideoTile = React.memo(
         personaMinSize={props.personaMinSize}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        // When the remote video tile is rendered as a small tile in horizontal gallery,
-        // we hide the participants name if they are in hold/connecting states.
-        showLabel={props.isNarrow && isCallingOrHold(participantState) ? false : props.showLabel}
+        showLabel={canShowLabel(participantState, props.isNarrow, props.showLabel)}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
@@ -132,4 +130,25 @@ export const _RemoteVideoTile = React.memo(
  */
 const isCallingOrHold = (participantState?: ParticipantState): boolean => {
   return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
+};
+
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Determines if a label should be shown for a remote video tile.
+ * When the remote video tile is rendered as a small tile in horizontal gallery,
+ * we hide the participants name if they are in hold/connecting states.
+ */
+const canShowLabel = (participantState?: ParticipantState, isNarrow?: boolean, showLabel?: boolean): boolean => {
+  // if showLabel has been explicitly set to false, don't show the label
+  if (showLabel === false) {
+    return false;
+  }
+
+  // if the remote video tile is in a narrow layout and participant state should be displayed, don't show the label
+  if (isCallingOrHold(participantState) && isNarrow) {
+    return false;
+  }
+
+  return true;
 };
