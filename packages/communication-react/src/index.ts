@@ -114,7 +114,7 @@ export {
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
 export type {
@@ -217,7 +217,7 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export type {
   DialpadProps,
   DialpadStrings,
