@@ -52,7 +52,7 @@ export type CallControlsProps = {
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  disableForHoldScreen: boolean;
+  disableForHoldScreen?: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
