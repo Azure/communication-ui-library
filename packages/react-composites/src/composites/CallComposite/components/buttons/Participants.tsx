@@ -17,6 +17,7 @@ export const Participants = (props: {
   increaseFlyoutItemSize?: boolean;
   styles?: ControlBarButtonStyles;
   isMobile?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled?: boolean;
 }): JSX.Element => {
   const participantsButtonProps = usePropsFor(ParticipantsButton);
   const participantsButtonStyles = useMemo(
@@ -34,7 +35,10 @@ export const Participants = (props: {
       showLabel={props.displayType !== 'compact'}
       callInvitationURL={props.callInvitationURL}
       onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-      disabled={isDisabled(props.option)}
+      disabled={
+        isDisabled(props.option) ||
+        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ props.disabled
+      }
       styles={participantsButtonStyles}
       showParticipantOverflowTooltip={!props.isMobile}
     />

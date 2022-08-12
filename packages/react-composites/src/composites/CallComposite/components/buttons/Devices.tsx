@@ -12,6 +12,7 @@ export const Devices = (props: {
   displayType?: CallControlDisplayType;
   increaseFlyoutItemSize?: boolean;
   styles?: ControlBarButtonStyles;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled?: boolean;
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   const styles = useMemo(
@@ -30,6 +31,8 @@ export const Devices = (props: {
       {...devicesButtonProps}
       showLabel={props.displayType !== 'compact'}
       styles={styles}
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      disabled={props.disabled}
     />
   );
 };

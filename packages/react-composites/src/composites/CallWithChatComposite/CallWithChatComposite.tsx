@@ -206,6 +206,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const modalLayerHostId = useId('modalLayerhost');
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
   const isMobileWithActivePane = mobileView && activePane !== 'none';
@@ -322,6 +324,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 onMoreButtonClicked={onMoreButtonClicked}
                 mobileView={mobileView}
                 disableButtonsForLobbyPage={isInLobbyOrConnecting}
+                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                disableButtonsForHoldScreen={isInLocalHold}
                 callControls={props.callControls}
                 containerHeight={containerHeight}
                 containerWidth={containerWidth}

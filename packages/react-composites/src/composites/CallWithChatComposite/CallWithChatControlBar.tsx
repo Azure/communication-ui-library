@@ -11,7 +11,7 @@ import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.st
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
-import { BaseCustomStyles, ControlBarButtonStyles, HoldButton } from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
@@ -42,6 +42,7 @@ export interface CallWithChatControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
+  disableButtonsForHoldScreen: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -165,6 +166,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {isEnabled(options.cameraButton) && (
@@ -172,6 +175,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {props.mobileView && isEnabled(options?.chatButton) && chatButton}
@@ -180,6 +185,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     option={options.screenShareButton}
                     displayType={options.displayType}
                     styles={screenShareButtonStyles}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {
@@ -208,11 +215,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     data-ui-id="call-with-chat-composite-more-button"
                     strings={moreButtonStrings}
                     onClick={props.onMoreButtonClicked}
-                    disabled={props.disableButtonsForLobbyPage}
+                    disabled={props.disableButtonsForLobbyPage || props.disableButtonsForHoldScreen}
                   />
                 )}
                 {isEnabled(options?.moreButton) && isEnabled(options?.holdButton) && !props.mobileView && (
-                  <DesktopMoreButton disabled={props.disableButtonsForLobbyPage} styles={commonButtonStyles} />
+                  <DesktopMoreButton disabled={props.disableButtonsForHoldScreen} styles={commonButtonStyles} />
                 )}
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>

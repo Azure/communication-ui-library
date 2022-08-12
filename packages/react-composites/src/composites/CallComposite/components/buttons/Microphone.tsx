@@ -18,6 +18,7 @@ export const Microphone = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled?: boolean;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -54,6 +55,8 @@ export const Microphone = (props: {
       styles={styles}
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      disabled={props.disabled}
     />
   );
 };

@@ -47,6 +47,8 @@ export type CallControlsProps = {
    */
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  disableForHoldScreen: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
@@ -142,10 +144,30 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
-          {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
+          {isEnabled(options?.microphoneButton) && (
+            <Microphone
+              displayType={options?.displayType}
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
+                props.disableForHoldScreen
+              }
+            />
+          )}
+          {isEnabled(options?.cameraButton) && (
+            <Camera
+              displayType={options?.displayType}
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
+                props.disableForHoldScreen
+              }
+            />
+          )}
           {isEnabled(options?.screenShareButton) && (
-            <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
+            <ScreenShare
+              option={options?.screenShareButton}
+              displayType={options?.displayType}
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
+                props.disableForHoldScreen
+              }
+            />
           )}
           {isEnabled(options?.participantsButton) &&
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ !props.isMobile && (
@@ -169,7 +191,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )}
           {isEnabled(options?.devicesButton) && (
-            <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
+            <Devices
+              displayType={options?.displayType}
+              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
+                props.disableForHoldScreen
+              }
+            />
           )}
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -179,6 +207,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
                 showLabel={!props.isMobile}
+                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
+                  props.disableForHoldScreen
+                }
               />
             )
           }
