@@ -215,12 +215,17 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   } = props;
   useEffect(() => {
     (async () => {
-      await adapter.askDevicePermission({ video: true, audio: true });
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
+      if (role === 'Consumer') {
+        // Need to ask for audio devices to get access to speakers. Speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
+        // actually granting access to query both microphone and speaker. TODO: Need some investigation to see if we can get access to speakers without SDK.
+        await adapter.askDevicePermission({ video: false, audio: true });
+      } else {
+        await adapter.askDevicePermission({ video: true, audio: true });
+        adapter.queryCameras();
+        adapter.queryMicrophones();
+      }
     })();
-  }, [adapter]);
+  }, [adapter, role]);
 
   const mobileView = formFactor === 'mobile';
 
