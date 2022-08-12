@@ -26,6 +26,7 @@ import {
   generateCustomCallWithChatControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 
 /**
@@ -211,9 +212,17 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
-                {isEnabled(options?.moreButton) && isEnabled(options?.holdButton) && !props.mobileView && (
-                  <DesktopMoreButton disabled={props.disableButtonsForLobbyPage} styles={commonButtonStyles} />
-                )}
+                {
+                  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                    options?.moreButton
+                  ) &&
+                    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                      options?.holdButton
+                    ) &&
+                    !props.mobileView && (
+                      <DesktopMoreButton disabled={props.disableButtonsForLobbyPage} styles={commonButtonStyles} />
+                    )
+                }
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>

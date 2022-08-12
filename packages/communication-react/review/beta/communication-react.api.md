@@ -388,7 +388,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(one-to-n-calling) */ 'hold';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | 'hold';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -884,6 +884,7 @@ export interface CallWithChatControlOptions {
     chatButton?: boolean;
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
+    holdButton?: boolean;
     microphoneButton?: boolean;
     moreButton?: boolean;
     // @beta
