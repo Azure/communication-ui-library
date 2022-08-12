@@ -26,6 +26,7 @@ import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DtmfTone } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -146,6 +147,8 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    // @beta
+    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -284,7 +287,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(one-to-n-calling) */ 'hold';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | 'hold';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -427,6 +430,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
+    // @beta
+    sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -673,6 +678,7 @@ export interface CallWithChatControlOptions {
     chatButton?: boolean;
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
+    holdButton?: boolean;
     microphoneButton?: boolean;
     moreButton?: boolean;
     // @beta
