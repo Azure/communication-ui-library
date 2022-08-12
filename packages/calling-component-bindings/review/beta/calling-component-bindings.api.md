@@ -93,7 +93,7 @@ export type CallingHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
 };
 
 // @public
