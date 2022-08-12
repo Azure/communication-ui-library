@@ -42,13 +42,16 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
 /* @conditional-compile-remove(rooms) */
-export const createRoomId = async (): Promise<string> => {
+/**
+ * Create an ACS room
+ */
+export const createRoom = async (): Promise<string> => {
   const requestOptions = {
     method: 'POST'
   };
   const response = await fetch(`/createRoom`, requestOptions);
   if (!response.ok) {
-    throw 'Invalid token response';
+    throw 'Unable to create room';
   }
 
   const body = await response.json();
@@ -57,9 +60,9 @@ export const createRoomId = async (): Promise<string> => {
 
 /* @conditional-compile-remove(rooms) */
 /**
- * Joins an ACS room with a given roomId and role
+ * Add user to an ACS room with a given roomId and role
  */
-export const joinRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
+export const addUserToRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -69,7 +72,7 @@ export const joinRoom = async (userId: string, roomId: string, role: Role): Prom
   };
   const response = await fetch('/addUserToRoom', requestOptions);
   if (!response.ok) {
-    throw 'Invalid token response';
+    throw 'Unable to add user to room';
   }
 };
 
