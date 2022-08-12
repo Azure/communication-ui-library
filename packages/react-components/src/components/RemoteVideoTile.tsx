@@ -139,10 +139,14 @@ const isCallingOrHold = (participantState?: ParticipantState): boolean => {
  * When the remote video tile is rendered as a small tile in horizontal gallery,
  * we hide the participants name if they are in hold/connecting states.
  */
-const canShowLabel = (participantState?: ParticipantState, isNarrow?: boolean, showLabel?: boolean): boolean => {
+const canShowLabel = (
+  participantState?: ParticipantState,
+  isNarrow?: boolean,
+  showLabel?: boolean
+): boolean | undefined => {
   // if showLabel has been explicitly set to false, don't show the label
   if (showLabel === false) {
-    return false;
+    return showLabel;
   }
 
   // if the remote video tile is in a narrow layout and participant state should be displayed, don't show the label
@@ -150,5 +154,5 @@ const canShowLabel = (participantState?: ParticipantState, isNarrow?: boolean, s
     return false;
   }
 
-  return true;
+  return showLabel;
 };
