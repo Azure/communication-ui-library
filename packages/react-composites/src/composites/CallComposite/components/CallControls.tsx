@@ -80,10 +80,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       label: localeStrings.strings.call.moreButtonCallingLabel,
       tooltipOffContent: localeStrings.strings.callWithChat.moreDrawerButtonTooltip
-      }),
+    }),
     [localeStrings]
   );
-  
+
   /* @conditional-compile-remove(PSTN-calls) */
   const dialpadStrings = useMemo(
     () => ({
