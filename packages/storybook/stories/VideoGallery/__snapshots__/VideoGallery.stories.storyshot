@@ -149,16 +149,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           <div
             className="stub-classname"
           >
-            <div
-              className="ms-Stack stub-classname"
-              data-ui-id="video-tile"
-            >
-              <div
-                className="stub-classname"
-              />
+            <div>
               <div
                 className="ms-Stack stub-classname"
+                data-ui-id="video-tile"
               >
+                <div
+                  className="stub-classname"
+                />
                 <div
                   className="ms-Stack stub-classname"
                 >
@@ -166,32 +164,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack stub-classname"
                   >
                     <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 stub-classname"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
+                      className="ms-Stack stub-classname"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                        role="presentation"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 stub-classname"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-imageArea stub-classname"
+                          className="ms-Persona-coin ms-Persona--size48 stub-classname"
                           role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
                         >
                           <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials stub-classname"
+                            className="ms-Persona-imageArea stub-classname"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
@@ -199,41 +190,50 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                               }
                             }
                           >
-                            <span>
-                              R
-                            </span>
+                            <div
+                              aria-hidden="true"
+                              className="ms-Persona-initials stub-classname"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <span>
+                                R
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Stack stub-classname"
-              >
                 <div
                   className="ms-Stack stub-classname"
                 >
-                  <span
-                    className="stub-classname"
-                    title="Rick"
+                  <div
+                    className="ms-Stack stub-classname"
                   >
-                    Rick
-                  </span>
+                    <span
+                      className="stub-classname"
+                      title="Rick"
+                    >
+                      Rick
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack stub-classname"
-              data-ui-id="video-tile"
-            >
-              <div
-                className="stub-classname"
-              />
+            <div>
               <div
                 className="ms-Stack stub-classname"
+                data-ui-id="video-tile"
               >
+                <div
+                  className="stub-classname"
+                />
                 <div
                   className="ms-Stack stub-classname"
                 >
@@ -241,32 +241,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack stub-classname"
                   >
                     <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 stub-classname"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
+                      className="ms-Stack stub-classname"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                        role="presentation"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 stub-classname"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-imageArea stub-classname"
+                          className="ms-Persona-coin ms-Persona--size48 stub-classname"
                           role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
                         >
                           <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials stub-classname"
+                            className="ms-Persona-imageArea stub-classname"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
@@ -274,41 +267,50 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                               }
                             }
                           >
-                            <span>
-                              D
-                            </span>
+                            <div
+                              aria-hidden="true"
+                              className="ms-Persona-initials stub-classname"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <span>
+                                D
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Stack stub-classname"
-              >
                 <div
                   className="ms-Stack stub-classname"
                 >
-                  <span
-                    className="stub-classname"
-                    title="Daryl"
+                  <div
+                    className="ms-Stack stub-classname"
                   >
-                    Daryl
-                  </span>
+                    <span
+                      className="stub-classname"
+                      title="Daryl"
+                    >
+                      Daryl
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack stub-classname"
-              data-ui-id="video-tile"
-            >
-              <div
-                className="stub-classname"
-              />
+            <div>
               <div
                 className="ms-Stack stub-classname"
+                data-ui-id="video-tile"
               >
+                <div
+                  className="stub-classname"
+                />
                 <div
                   className="ms-Stack stub-classname"
                 >
@@ -316,32 +318,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack stub-classname"
                   >
                     <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 stub-classname"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
+                      className="ms-Stack stub-classname"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                        role="presentation"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 stub-classname"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-imageArea stub-classname"
+                          className="ms-Persona-coin ms-Persona--size48 stub-classname"
                           role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
                         >
                           <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials stub-classname"
+                            className="ms-Persona-imageArea stub-classname"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
@@ -349,41 +344,50 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                               }
                             }
                           >
-                            <span>
-                              M
-                            </span>
+                            <div
+                              aria-hidden="true"
+                              className="ms-Persona-initials stub-classname"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <span>
+                                M
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Stack stub-classname"
-              >
                 <div
                   className="ms-Stack stub-classname"
                 >
-                  <span
-                    className="stub-classname"
-                    title="Michonne"
+                  <div
+                    className="ms-Stack stub-classname"
                   >
-                    Michonne
-                  </span>
+                    <span
+                      className="stub-classname"
+                      title="Michonne"
+                    >
+                      Michonne
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div
-              className="ms-Stack stub-classname"
-              data-ui-id="video-tile"
-            >
-              <div
-                className="stub-classname"
-              />
+            <div>
               <div
                 className="ms-Stack stub-classname"
+                data-ui-id="video-tile"
               >
+                <div
+                  className="stub-classname"
+                />
                 <div
                   className="ms-Stack stub-classname"
                 >
@@ -391,32 +395,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack stub-classname"
                   >
                     <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 stub-classname"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
+                      className="ms-Stack stub-classname"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                        role="presentation"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 stub-classname"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-imageArea stub-classname"
+                          className="ms-Persona-coin ms-Persona--size48 stub-classname"
                           role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
                         >
                           <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials stub-classname"
+                            className="ms-Persona-imageArea stub-classname"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
@@ -424,28 +421,39 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                               }
                             }
                           >
-                            <span>
-                              D
-                            </span>
+                            <div
+                              aria-hidden="true"
+                              className="ms-Persona-initials stub-classname"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <span>
+                                D
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Stack stub-classname"
-              >
                 <div
                   className="ms-Stack stub-classname"
                 >
-                  <span
-                    className="stub-classname"
-                    title="Dwight"
+                  <div
+                    className="ms-Stack stub-classname"
                   >
-                    Dwight
-                  </span>
+                    <span
+                      className="stub-classname"
+                      title="Dwight"
+                    >
+                      Dwight
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
