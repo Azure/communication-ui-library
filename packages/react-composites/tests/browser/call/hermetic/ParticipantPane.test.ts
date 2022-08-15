@@ -15,26 +15,39 @@ import {
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 
 test.describe('Participant pane tests', async () => {
-  test('People pane opens and displays correctly', async ({ page, serverUrl }) => {
+  test('People pane opens and displays correctly', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
 
+    await waitForSelector(page, dataUiId('call-composite-people-pane'));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
-  test('click on add people button will show no options for ACS group call', async ({ page, serverUrl }) => {
+  test('click on add people button will show no options for ACS group call', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
 
@@ -43,7 +56,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-empty-dropdown.png`);
   });
 
-  test('click on add people button will show dialpad option for PSTN call', async ({ page, serverUrl }) => {
+  test('click on add people button will show dialpad option for PSTN call', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id
@@ -52,7 +65,13 @@ test.describe('Participant pane tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
 
@@ -70,7 +89,13 @@ test.describe('Participant pane tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
 
@@ -88,7 +113,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad.png`);
   });
 
-  test('callee participant is displayed with connection state', async ({ page, serverUrl }) => {
+  test('callee participant is displayed with connection state', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Connecting';
@@ -96,13 +121,19 @@ test.describe('Participant pane tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     await hidePiPiP(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
   });
 
-  test('callee participant name and connection state are truncated', async ({ page, serverUrl }) => {
+  test('callee participant name and connection state are truncated', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
@@ -112,7 +143,13 @@ test.describe('Participant pane tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await pageClick(page, dataUiId('call-composite-participants-button'));
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     await hidePiPiP(page);
     const participantStringId = dataUiId('participant-item-state-string');
