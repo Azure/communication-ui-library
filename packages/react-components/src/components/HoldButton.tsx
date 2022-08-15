@@ -40,7 +40,7 @@ export interface HoldButtonStrings {
   /**
    * Content for when button is unchecked
    */
-  toolTipOffContent: string;
+  tooltipOffContent: string;
 }
 
 /**

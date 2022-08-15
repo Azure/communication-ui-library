@@ -52,7 +52,8 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "moreButtonCallingLabel": "More"
   },
   "chat": {
     "chatListHeader": "In this chat",

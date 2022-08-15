@@ -136,6 +136,11 @@ export interface CallWithChatControlOptions {
    * @beta
    */
   onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Show or hide the more button in the call-with-chat control bar.
+   */
+  moreButton?: boolean;
 }
 
 type CallWithChatScreenProps = {
