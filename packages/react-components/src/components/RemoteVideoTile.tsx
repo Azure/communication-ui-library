@@ -100,6 +100,13 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, isReceiving]);
 
+    const showLabelTrampoline = useMemo(() => {
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      return canShowLabel(participantState, props.isNarrow, props.showLabel);
+      return props.showLabel;
+    }, [participantState, props.isNarrow, props.showLabel]);
+
     return (
       <VideoTile
         key={userId}
@@ -111,9 +118,7 @@ export const _RemoteVideoTile = React.memo(
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
         personaMinSize={props.personaMinSize}
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        showLabel={canShowLabel(participantState, props.isNarrow, props.showLabel)}
+        showLabel={showLabelTrampoline}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
