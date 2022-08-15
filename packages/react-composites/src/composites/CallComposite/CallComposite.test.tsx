@@ -43,18 +43,21 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
+  /* @conditional-compilation-remove(rooms) */
   test('Audio and video device permission should be requested for Presenter role', async () => {
     mount(<CallComposite adapter={adapter} role={'Presenter'} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
+  /* @conditional-compilation-remove(rooms) */
   test('Audio and video device permission should be requested for Attendee role', async () => {
     mount(<CallComposite adapter={adapter} role={'Attendee'} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
+  /* @conditional-compilation-remove(rooms) */
   test('Only audio device permission should be requested for Consumer role', async () => {
     mount(<CallComposite adapter={adapter} role={'Consumer'} />);
     expect(audioDevicePermissionRequests).toBe(1);
