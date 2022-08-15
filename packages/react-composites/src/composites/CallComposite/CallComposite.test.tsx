@@ -8,8 +8,10 @@ import React from 'react';
 import { MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 
+/* @conditional-compile-remove(rooms) */
 Enzyme.configure({ adapter: new Adapter() });
 
+/* @conditional-compile-remove(rooms) */
 describe('CallComposite device permission test for different roles', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;
