@@ -105,7 +105,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
 
   let pageElement: JSX.Element;
-  console.log(page);
   switch (page) {
     case 'configuration':
       pageElement = (

@@ -42,17 +42,17 @@ export const HoldPane = (): JSX.Element => {
     return () => {
       clearInterval(interval);
     };
-  });
+  }, [startTime]);
 
   return (
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
-        <Text styles={holdPaneTimerStyles()}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles()}>{strings.holdScreenLabel}</Text>
+        <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
+        <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
           text={strings.resumeCallButtonLabel}
           ariaLabel={strings.resumeCallButtonAriaLabel}
-          styles={resumeButtonStyles()}
+          styles={resumeButtonStyles}
           onClick={() => {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
             holdButtonProps.onToggleHold();
@@ -75,7 +75,10 @@ const getHours = (time: number): number => {
   return Math.floor(getMinutes(time) / 60);
 };
 
-const getReadableTime = (time: number): string => {
+/**
+ * @internal
+ */
+export const getReadableTime = (time: number): string => {
   const hours = getHours(time);
   const readableMinutes = ('0' + getMinutes(time)).slice(-2);
   const readableSeconds = ('0' + getSeconds(time)).slice(-2);

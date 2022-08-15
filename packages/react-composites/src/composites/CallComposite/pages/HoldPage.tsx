@@ -30,7 +30,6 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
   const callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
-  console.log('hold page');
 
   return (
     <CallArrangement
