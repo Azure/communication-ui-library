@@ -15,7 +15,7 @@ export const MoreButton = (props: ControlBarButtonProps): JSX.Element => {
     <ControlBarButton
       {...props}
       labelKey={'optionsButtonLabelKey'}
-      showLabel={false}
+      showLabel={props.showLabel}
       onRenderOnIcon={icon}
       onRenderOffIcon={icon}
       onClick={props.onClick}

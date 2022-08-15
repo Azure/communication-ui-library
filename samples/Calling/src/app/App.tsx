@@ -23,7 +23,7 @@ import {
   WEB_APP_TITLE
 } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
-import { createRoomId, getRoomIdFromUrl, joinRoom } from './utils/AppUtils';
+import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
@@ -124,7 +124,7 @@ const App = (): JSX.Element => {
             if (callDetails.option === 'StartRooms') {
               let roomId = '';
               try {
-                roomId = await createRoomId();
+                roomId = await createRoom();
               } catch (e) {
                 console.log(e);
               }
@@ -136,7 +136,7 @@ const App = (): JSX.Element => {
             if ('roomId' in callLocator) {
               if (userId) {
                 setRole(callDetails.role as Role);
-                await joinRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
+                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
               } else {
                 throw 'Invalid userId!';
               }
