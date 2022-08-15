@@ -2,12 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import {
-  CreateVideoStreamViewResult,
-  OnRenderAvatarCallback,
-  VideoGalleryRemoteParticipantState,
-  VideoStreamOptions
-} from '../types';
+import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -42,7 +37,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    state?: VideoGalleryRemoteParticipantState;
+    participantState?: ParticipantState;
   }) => {
     const {
       isAvailable,
@@ -60,7 +55,7 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
-      state
+      participantState
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -99,7 +94,9 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
+      return (
+        <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+      );
     }, [renderElement, isReceiving]);
 
     return (
@@ -116,7 +113,7 @@ export const _RemoteVideoTile = React.memo(
         personaMinSize={props.personaMinSize}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={state}
+        participantState={participantState}
       />
     );
   }

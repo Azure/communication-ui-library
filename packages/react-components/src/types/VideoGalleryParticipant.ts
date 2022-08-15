@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantState } from './ParticipantListParticipant';
+
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
  *
@@ -92,16 +96,11 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   isSpeaking?: boolean;
   /** Video stream of shared screen */
   screenShareStream?: VideoGalleryStream;
+  /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * @beta
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
-  state?: VideoGalleryRemoteParticipantState;
+  state?: ParticipantState;
 }
-
-/**
- * @beta
- * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
- */
-export declare type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';

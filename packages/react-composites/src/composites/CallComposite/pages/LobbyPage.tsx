@@ -66,7 +66,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 const disableLobbyPageControls = (
   callControlOptions: CallControlOptions | boolean | undefined
 ): CallControlOptions | boolean | undefined => {
-  let newOptions = callControlOptions;
+  // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
+  let newOptions = callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions;
   if (newOptions !== false) {
     if (newOptions === true || newOptions === undefined) {
       newOptions = {

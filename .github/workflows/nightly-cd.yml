@@ -145,3 +145,28 @@ jobs:
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+
+      - name: Check if npm package published successfully
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+
+  check_failure:
+    runs-on: ubuntu-latest
+    needs: release
+    if: failure()
+    name: Create GitHub issue on failure
+    steps:
+      # Failure of this action indicates a problem with our infrastructure.
+      # Always file a GitHub issue to alert the OCE of the problem.
+      - name: Create GitHub issue
+        id: create-issue
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:NIGHTLY_CD_FAILURE+state:open > $HOME/open_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/open_issues.json)
+          if [ $issue_count -gt 0 ]; then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Nightly workflow to release alpha package failed", "body": "Please investigate failures of https://github.com/Azure/communication-ui-library/actions/workflows/nightly-cd.yml", "labels":["NIGHTLY_CD_FAILURE"]}'
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

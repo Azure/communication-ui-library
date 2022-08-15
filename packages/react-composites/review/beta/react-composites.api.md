@@ -26,6 +26,7 @@ import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DtmfTone } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -146,6 +147,8 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    // @beta
+    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -423,6 +426,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
+    // @beta
+    sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -530,6 +535,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
+    alternateCallerId?: string | undefined;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;

@@ -17,6 +17,10 @@ import {
 } from './styles/PeoplePaneContent.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPeopleDropdown } from './AddPeopleDropdown';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
 export interface AddPeopleButtonProps {
@@ -24,6 +28,9 @@ export interface AddPeopleButtonProps {
   mobileView?: boolean;
   participantList?: JSX.Element;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId?: string;
 }
 
 /** @private */
@@ -39,11 +46,25 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
-    return <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />;
+    return (
+      <AddPeopleDropdown
+        strings={strings}
+        mobileView={mobileView}
+        inviteLink={inviteLink}
+        onAddParticipant={props.onAddParticipant}
+        alternateCallerId={props.alternateCallerId}
+      />
+    );
   } else {
     return (
       <Stack tokens={peoplePaneContainerTokens}>
-        <AddPeopleDropdown strings={strings} mobileView={mobileView} inviteLink={inviteLink} />
+        <AddPeopleDropdown
+          strings={strings}
+          mobileView={mobileView}
+          inviteLink={inviteLink}
+          onAddParticipant={props.onAddParticipant}
+          alternateCallerId={props.alternateCallerId}
+        />
         {participantList}
       </Stack>
     );

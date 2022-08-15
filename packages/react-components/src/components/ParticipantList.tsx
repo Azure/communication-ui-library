@@ -141,6 +141,9 @@ const onRenderParticipantDefault = (
       onRenderAvatar={onRenderAvatar}
       onClick={() => onParticipantClick?.(participant)}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      participantState={callingParticipant.state}
     />
   );
 };

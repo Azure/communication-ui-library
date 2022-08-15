@@ -37,6 +37,7 @@ export type {
   ParticipantAddedSystemMessage,
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
+  ParticipantState,
   ReadReceiptsBySenderId,
   SystemMessage,
   SystemMessageCommon,
@@ -46,7 +47,5 @@ export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
   VideoStreamOptions,
-  ViewScalingMode,
-  /* @conditional-compile-remove(PSTN-calls) */
-  VideoGalleryRemoteParticipantState
+  ViewScalingMode
 } from './types';
