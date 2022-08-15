@@ -147,4 +147,6 @@ To debug a particular test,
 * Single-step through the test, record a video etc through the Inspector.
 
 ### Running just specific hermetic tests
-When working on a specific hermetic test be sure to use `node scripts/runBrowserTests.mjs -l`. This should be used because all of the live tests will be run after even though you are using `test.only(...)`. This happens because the wrapper script calls playwright multiple times depending on which flags are given.
+When working on a specific hermetic test be sure to use `node scripts/runBrowserTests.mjs -l`. This should be used because all of the live tests will be run after even though you are using `test.only(...)`. This happens because the wrapper script calls playwright multiple times depending on which flags are given. 
+
+As well you will need to also use the flags `... -c call` and `... -c chat` to run just the composite tests that you are writing tests for.
