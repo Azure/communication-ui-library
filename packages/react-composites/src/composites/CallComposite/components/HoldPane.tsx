@@ -17,10 +17,7 @@ import {
   resumeButtonStyles
 } from '../styles/HoldPane.styles';
 
-/**
- * @internal
- */
-export interface HoldPaneStrings {
+interface HoldPaneStrings {
   holdScreenLabel: string;
   resumeCallButtonLabel: string;
   resumeCallButtonAriaLabel: string;
@@ -73,11 +70,11 @@ export const HoldPane = (): JSX.Element => {
 };
 
 const getMinutes = (time: number): number => {
-  return Math.floor((time / 60000) % 60);
+  return Math.floor(getSeconds(time) / 60);
 };
 
 const getSeconds = (time: number): number => {
-  return Math.floor((time / 1000) % 60);
+  return Math.floor(time / 1000);
 };
 
 const getHours = (time: number): number => {
@@ -89,8 +86,8 @@ const getHours = (time: number): number => {
  */
 export const getReadableTime = (time: number): string => {
   const hours = getHours(time);
-  const readableMinutes = ('0' + getMinutes(time)).slice(-2);
-  const readableSeconds = ('0' + getSeconds(time)).slice(-2);
+  const readableMinutes = ('0' + (getMinutes(time) % 60)).slice(-2);
+  const readableSeconds = ('0' + (getSeconds(time) % 60)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
 };
 

@@ -11,10 +11,9 @@ describe('Hold Pane tests', () => {
     expect(time).toBe('30:00');
   });
 
-  test.only('getReadableTime should report the correct time to be 1 hour', () => {
+  test('getReadableTime should report the correct time to be 1 hour', () => {
     const timeInMiliSeconds = 3600000;
     const time = getReadableTime(timeInMiliSeconds);
-    console.log(time);
 
     expect(time).toBe('1:00:00');
   });
