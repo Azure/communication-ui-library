@@ -28,6 +28,6 @@ test.describe('Call composite custom button injection tests', () => {
   test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { injectCustomButtons: 'true' }));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`custom-buttons.png`);
   });
 });
