@@ -43,24 +43,41 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compilation-remove(rooms) */
   test('Audio and video device permission should be requested for Presenter role', async () => {
+    if (isTestProfileStableFlavor()) {
+      return;
+    }
     mount(<CallComposite adapter={adapter} role={'Presenter'} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compilation-remove(rooms) */
   test('Audio and video device permission should be requested for Attendee role', async () => {
+    if (isTestProfileStableFlavor()) {
+      return;
+    }
     mount(<CallComposite adapter={adapter} role={'Attendee'} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compilation-remove(rooms) */
   test('Only audio device permission should be requested for Consumer role', async () => {
+    if (isTestProfileStableFlavor()) {
+      return;
+    }
     mount(<CallComposite adapter={adapter} role={'Consumer'} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(0);
   });
 });
+
+export const isTestProfileStableFlavor = () => {
+  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
+  if (flavor === 'stable') {
+    return true;
+  } else if (flavor === 'beta') {
+    return false;
+  } else {
+    throw 'Faled to find Communication React Flavor env variable';
+  }
+};
