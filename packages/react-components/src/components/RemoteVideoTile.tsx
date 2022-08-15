@@ -9,6 +9,12 @@ import {
   RemoteVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile } from './VideoTile';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGallery.styles';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { _useContainerWidth } from './utils/responsive';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -59,6 +65,13 @@ export const _RemoteVideoTile = React.memo(
       participantState
     } = props;
 
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    const containerRef = React.useRef<HTMLDivElement>(null);
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    const containerWidth = _useContainerWidth(containerRef);
+
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
         isMirrored: remoteVideoViewOptions?.isMirrored,
@@ -103,7 +116,7 @@ export const _RemoteVideoTile = React.memo(
     const showLabelTrampoline = useMemo(() => {
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
-      return canShowLabel(participantState, props.isNarrow, props.showLabel);
+      return canShowLabel(participantState, props.isNarrow, props.showLabel, containerWidth);
       return props.showLabel;
     }, [
       /* @conditional-compile-remove(one-to-n-calling) */
@@ -112,25 +125,30 @@ export const _RemoteVideoTile = React.memo(
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
       props.isNarrow,
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      containerWidth,
       props.showLabel
     ]);
 
     return (
-      <VideoTile
-        key={userId}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        displayName={displayName}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
-        showMuteIndicator={showMuteIndicator}
-        personaMinSize={props.personaMinSize}
-        showLabel={showLabelTrampoline}
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        participantState={participantState}
-      />
+      <div ref={containerRef}>
+        <VideoTile
+          key={userId}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          displayName={displayName}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={isMuted}
+          isSpeaking={isSpeaking}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          showLabel={showLabelTrampoline}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={participantState}
+        />
+      </div>
     );
   }
 );
@@ -155,16 +173,19 @@ const isCallingOrHold = (participantState?: ParticipantState): boolean => {
 const canShowLabel = (
   participantState?: ParticipantState,
   isNarrow?: boolean,
-  showLabel?: boolean
+  showLabel?: boolean,
+  containerWidth?: number
 ): boolean | undefined => {
   // if showLabel has been explicitly set to false, don't show the label
   if (showLabel === false) {
     return showLabel;
   }
-
-  // if the remote video tile is in a narrow layout and participant state should be displayed, don't show the label
+  // if the remote video tile is in a narrow layout and participant state should be displayed,
+  // don't show the label if video tile is compact.
   if (isCallingOrHold(participantState) && isNarrow) {
-    return false;
+    if (containerWidth && containerWidth / 16 <= SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width) {
+      return false;
+    }
   }
 
   return showLabel;
