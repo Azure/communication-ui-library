@@ -71,7 +71,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 });
 
-export const isTestProfileStableFlavor = (): boolean => {
+const isTestProfileStableFlavor = (): boolean => {
   const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
   if (flavor === 'stable') {
     return true;
