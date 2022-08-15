@@ -4,7 +4,6 @@
 import * as express from 'express';
 import { getResourceConnectionString } from '../lib/envHelper';
 import { RoomsClient, CreateRoomOptions } from '@azure/communication-rooms';
-import { createUser } from '../lib/identityClient';
 
 const router = express.Router();
 
@@ -16,12 +15,11 @@ const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
  *
  * @returns The new roomId as string
  */
-
 router.post('/', async function (req, res, next) {
-  // create RoomsClient
   const roomsClient: RoomsClient = new RoomsClient(getResourceConnectionString());
 
   const validFrom = new Date();
+  // We are choosing to keep a room valid for 24 hours but this may change
   const validUntil = new Date(validFrom.getTime() + TWENTY_FOUR_HOURS);
 
   // Options payload to create a room
@@ -31,8 +29,8 @@ router.post('/', async function (req, res, next) {
   };
 
   // create a room with the request payload
-  const createRoom = await roomsClient.createRoom(createRoomOptions);
-  res.send(createRoom);
+  const room = await roomsClient.createRoom(createRoomOptions);
+  res.send(room);
 });
 
 export default router;

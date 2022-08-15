@@ -36,8 +36,8 @@ router.post('/', async function (req, res, next) {
     }
   ];
 
-  const addParticipants = await roomsClient.addParticipants(addUserToRoomParam.roomId, addParticipantsList);
-  res.send(addParticipants);
+  await roomsClient.addParticipants(addUserToRoomParam.roomId, addParticipantsList);
+  res.send(201);
 });
 
 export default router;
