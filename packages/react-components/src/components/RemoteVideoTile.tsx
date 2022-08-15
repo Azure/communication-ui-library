@@ -105,7 +105,15 @@ export const _RemoteVideoTile = React.memo(
       /* @conditional-compile-remove(PSTN-calls) */
       return canShowLabel(participantState, props.isNarrow, props.showLabel);
       return props.showLabel;
-    }, [participantState, props.isNarrow, props.showLabel]);
+    }, [
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      participantState,
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      props.isNarrow,
+      props.showLabel
+    ]);
 
     return (
       <VideoTile
