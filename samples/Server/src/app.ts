@@ -15,6 +15,8 @@ import isValidThread from './routes/isValidThread';
 import userConfig from './routes/userConfig';
 import createThread from './routes/createThread';
 import addUser from './routes/addUser';
+import createRoom from './routes/createRoom';
+import addUserToRoom from './routes/addUserToRoom';
 
 const app = express();
 
@@ -65,6 +67,18 @@ app.use('/isValidThread', cors(), isValidThread);
  * purpose: Chat: to add user details to userconfig for chat thread
  */
 app.use('/userConfig', cors(), userConfig);
+
+/**
+ * route: /createRoom
+ * purpose: Calling: create a new room
+ */
+app.use('/createRoom', cors(), createRoom);
+
+/**
+ * route: /addUserToRoom
+ * purpose: Calling: add user to room with the given role
+ */
+app.use('/addUserToRoom', cors(), addUserToRoom);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -8,7 +8,7 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
 import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 
-import { themedDialpadModelStyle } from './CallingDialpad.styles';
+import { themeddialpadModalStyle } from './CallingDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
@@ -60,7 +60,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
     }
   };
 
-  const dialpadModelStyle: Partial<IModalStyles> = useMemo(() => themedDialpadModelStyle(theme), [theme]);
+  const dialpadModalStyle: Partial<IModalStyles> = useMemo(() => themeddialpadModalStyle(theme), [theme]);
 
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
 
@@ -89,7 +89,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
         {showDialpad && (
           <Stack styles={drawerContainerStyles}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
-              <Stack style={{ padding: '16px' }}>{dialpadComponent()}</Stack>
+              <Stack style={{ padding: '1rem' }}>{dialpadComponent()}</Stack>
             </_DrawerSurface>
           </Stack>
         )}
@@ -105,7 +105,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
           isOpen={showDialpad}
           onDismiss={onDismissTriggered}
           isBlocking={true}
-          styles={dialpadModelStyle}
+          styles={dialpadModalStyle}
           data-ui-id="call-with-chat-composite-dialpad"
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
@@ -114,7 +114,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings.dialpadCloseModalButtonAriaLabel}
               onClick={onDismissTriggered}
-              style={{ color: 'black' }}
+              style={{ color: theme.palette.black }}
             />
           </Stack>
 
