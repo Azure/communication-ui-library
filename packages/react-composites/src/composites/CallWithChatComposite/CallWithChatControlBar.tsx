@@ -19,7 +19,7 @@ import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
-import { MoreButton } from './MoreButton';
+import { MoreButton } from '../common/MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { ContainerRectProps } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
