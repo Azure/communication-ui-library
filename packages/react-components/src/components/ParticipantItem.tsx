@@ -259,7 +259,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       </Stack>
       {/* When the participantStateString has a value, we don't show the menu  */}
       {!me && participantStateString ? (
-        <Text className={mergeStyles(participantStateStringStyles)}>{participantStateString}</Text>
+        <Text data-ui-id="participant-item-state-string" className={mergeStyles(participantStateStringStyles)}>
+          {participantStateString}
+        </Text>
       ) : (
         <div>
           {menuItems && menuItems.length > 0 && (
