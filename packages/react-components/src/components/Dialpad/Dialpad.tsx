@@ -192,7 +192,7 @@ const DialpadContainer = (props: {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange, showDeleteButton } = props;
+  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange, showDeleteButton = true } = props;
 
   const sanitizeInput = (input: string): string => {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
@@ -324,7 +324,5 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
   };
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
 
-  const showDeleteButton = props.showDeleteButton ?? true;
-
-  return <DialpadContainer strings={strings} {...props} showDeleteButton={showDeleteButton} />;
+  return <DialpadContainer strings={strings} {...props} />;
 };
