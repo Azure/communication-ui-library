@@ -9,11 +9,9 @@ import {
   RemoteVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile } from './VideoTile';
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGallery.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { _useContainerWidth } from './utils/responsive';
 
 /**
@@ -59,17 +57,11 @@ export const _RemoteVideoTile = React.memo(
       userId,
       displayName,
       onRenderAvatar,
-      showMuteIndicator,
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      participantState
+      showMuteIndicator
     } = props;
 
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
     const containerRef = React.useRef<HTMLDivElement>(null);
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
+    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     const containerWidth = _useContainerWidth(containerRef);
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -114,21 +106,14 @@ export const _RemoteVideoTile = React.memo(
     }, [renderElement, isReceiving]);
 
     const showLabelTrampoline = useMemo(() => {
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      return canShowLabel(participantState, props.isNarrow, props.showLabel, containerWidth);
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+      return canShowLabel(props.participantState, props.isNarrow, props.showLabel, containerWidth);
       return props.showLabel;
     }, [
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
-      participantState,
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      props.isNarrow,
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
       containerWidth,
-      props.showLabel
+      props
     ]);
 
     return (
@@ -146,22 +131,12 @@ export const _RemoteVideoTile = React.memo(
           showLabel={showLabelTrampoline}
           /* @conditional-compile-remove(one-to-n-calling) */
           /* @conditional-compile-remove(PSTN-calls) */
-          participantState={participantState}
+          participantState={props.participantState}
         />
       </div>
     );
   }
 );
-
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * Checks if a participant state is calling or hold.
- * These states match the states used to render the participantStateString in VideoTile and ParticipantItem.
- */
-const isCallingOrHold = (participantState?: ParticipantState): boolean => {
-  return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
-};
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -176,6 +151,10 @@ const canShowLabel = (
   showLabel?: boolean,
   containerWidth?: number
 ): boolean | undefined => {
+  const isCallingOrHold = (participantState?: ParticipantState): boolean => {
+    return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
+  };
+
   // if showLabel has been explicitly set to false, don't show the label
   if (showLabel === false) {
     return showLabel;
