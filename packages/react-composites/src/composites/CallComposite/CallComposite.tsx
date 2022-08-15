@@ -80,7 +80,6 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
-  endCallScreen?: boolean;
 };
 
 type MainScreenProps = {
@@ -104,18 +103,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
 
   let pageElement: JSX.Element;
-
-  if (props.options?.endCallScreen === false) {
-    // keep the user on the call screen knowing that the developer will change up the UI at their earliest convenience
-    if (
-      page === 'leftCall' ||
-      page === 'joinCallFailedDueToNoNetwork' ||
-      page === 'accessDeniedTeamsMeeting' ||
-      page === 'removedFromCall'
-    ) {
-      page = 'call';
-    }
-  }
 
   switch (page) {
     case 'configuration':

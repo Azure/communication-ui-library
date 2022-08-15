@@ -116,6 +116,8 @@ class CallContext {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
 
+    // the perfect time to emit our call ended event is in this moment when we determine a state change will
+    // create a page change to an end call screen
     const nextPage = getCallCompositePage(call, latestEndedCall, this.state.page, () => {
       const payload = { callId: latestEndedCall?.id, callEndedReason: latestEndedCall?.callEndReason };
       eventEmitter.emit('callEnded', payload);
