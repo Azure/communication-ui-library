@@ -277,7 +277,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   );
 };
 
-const holdPageTrampoline = () => {
+const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';

@@ -18,6 +18,15 @@ import {
 } from '../styles/HoldPane.styles';
 
 /**
+ * @internal
+ */
+export interface HoldPaneStrings {
+  holdScreenLabel: string;
+  resumeCallButtonLabel: string;
+  resumeCallButtonAriaLabel: string;
+}
+
+/**
  * Hold pane to display when the user places themselves on hold
  *
  * @beta
@@ -85,7 +94,7 @@ export const getReadableTime = (time: number): string => {
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
 };
 
-const stringsTrampoline = (locale: CompositeLocale) => {
+const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return {
     holdScreenLabel: locale.strings.call.holdScreenLabel,
