@@ -96,6 +96,14 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/addUser/*',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/createRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/addUserToRoom',
+          target: 'http://[::1]:8080'
         }
       ]
     }
