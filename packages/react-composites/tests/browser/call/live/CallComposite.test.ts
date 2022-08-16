@@ -5,12 +5,9 @@ import {
   dataUiId,
   loadCallPageWithParticipantVideos,
   pageClick,
-  isTestProfileDesktop,
   waitForCallCompositeToLoad,
   waitForFunction,
-  waitForSelector,
   stableScreenshot,
-  waitForPiPiPToHaveLoaded,
   waitForCallPageParticipantVideos
 } from '../../common/utils';
 import { test } from './fixture';
@@ -31,8 +28,6 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
     }
   });
 };
-
-const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }) => {
@@ -88,24 +83,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('participant list loads correctly', async ({ pages }, testInfo) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      await pageClick(page, dataUiId('call-composite-participants-button'));
-      if (flavor === 'stable') {
-        const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-        // This will ensure no animation is happening for the callout
-        await buttonCallOut.waitForElementState('stable');
-      } else {
-        await waitForSelector(page, dataUiId('call-composite-people-pane'));
-        if (!isTestProfileDesktop(testInfo)) {
-          await waitForPiPiPToHaveLoaded(page, 2);
-        }
-      }
-      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
-    }
-  });
-
   // This is a live smoke test.
   // Rendering and un-rendering video streams involves complex logic spread across
   // the UI components, bindings and the headless SDK layers.
@@ -138,32 +115,5 @@ test.describe('Call Composite E2E CallPage Tests', () => {
         `video-gallery-camera-off-page-${idx}.png`
       );
     }
-  });
-});
-
-test.describe('Call composite custom button injection tests', () => {
-  test.beforeEach(async ({ pages, users, serverUrl }) => {
-    // Each test *must* join a new call to prevent test flakiness.
-    // We hit a Calling SDK service 500 error if we do not.
-    // An issue has been filed with the calling team.
-    const newTestGuid = generateGUID();
-    for (let i = 0; i < pages.length; i++) {
-      const page = pages[i];
-      const user = users[i];
-      user.groupId = newTestGuid;
-
-      await page.goto(
-        buildUrl(serverUrl, user, {
-          injectCustomButtons: 'true'
-        })
-      );
-      await waitForCallCompositeToLoad(page);
-    }
-    await loadCallPageWithParticipantVideos(pages);
-  });
-
-  test('injected buttons appear', async ({ pages }) => {
-    const page = pages[0];
-    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
   });
 });

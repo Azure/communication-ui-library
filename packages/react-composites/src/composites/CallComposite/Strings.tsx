@@ -248,4 +248,24 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * label for more button in the Calling composite
+   */
+  moreButtonCallingLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label for the resume call button on the hold pane
+   */
+  resumeCallButtonLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Aria label for the resume call button on the hold pane
+   */
+  resumeCallButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label for the hold pane
+   */
+  holdScreenLabel: string;
 }

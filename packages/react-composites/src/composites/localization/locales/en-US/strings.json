@@ -52,7 +52,11 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "moreButtonCallingLabel": "More",
+    "resumeCallButtonLabel": "Resume",
+    "resumeCallButtonAriaLabel": "Resume call",
+    "holdScreenLabel": "You're on hold"
   },
   "chat": {
     "chatListHeader": "In this chat",
