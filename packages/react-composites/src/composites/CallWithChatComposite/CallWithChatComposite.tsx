@@ -377,9 +377,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 };
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
-  (page === 'call' &&
-    callStatus ===
-      'Connected') /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ ||
+  (page === 'call' && callStatus === 'Connected') /* @conditional-compile-remove(one-to-n-calling) */ ||
   (page === 'hold' && callStatus === 'LocalHold');
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
