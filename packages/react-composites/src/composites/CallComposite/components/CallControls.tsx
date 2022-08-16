@@ -174,22 +174,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && (
-            <Microphone
-              displayType={options?.displayType}
-              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
-                props.disableForHoldScreen
-              }
-            />
-          )}
-          {isEnabled(options?.cameraButton) && (
-            <Camera
-              displayType={options?.displayType}
-              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
-                props.disableForHoldScreen
-              }
-            />
-          )}
+          {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
+          {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
           {isEnabled(options?.screenShareButton) && (
             <ScreenShare
               option={options?.screenShareButton}

@@ -9,18 +9,16 @@ import { _pxToRem } from '@internal/acs-ui-common';
  *
  * @private
  */
-export const resumeButtonStyles = (): IButtonStyles => {
-  return {
-    root: {
-      borderRadius: _pxToRem(4),
-      padding: `${_pxToRem(6)} ${_pxToRem(20)} `
-    },
-    label: {
-      fontWeight: 400,
-      display: 'flex',
-      fontSize: _pxToRem(14)
-    }
-  };
+export const resumeButtonStyles: IButtonStyles = {
+  root: {
+    borderRadius: _pxToRem(4),
+    padding: `${_pxToRem(6)} ${_pxToRem(20)} `
+  },
+  label: {
+    fontWeight: 400,
+    display: 'flex',
+    fontSize: _pxToRem(14)
+  }
 };
 
 /**
@@ -28,16 +26,14 @@ export const resumeButtonStyles = (): IButtonStyles => {
  *
  * @private
  */
-export const holdPaneLabelStyles = (): ITextStyles => {
-  return {
-    root: {
-      color: '#FFFFFF',
-      fontWeight: 600,
-      fontHeight: _pxToRem(22),
-      fontSize: _pxToRem(16),
-      margin: '1rem auto 0.5rem'
-    }
-  };
+export const holdPaneLabelStyles: ITextStyles = {
+  root: {
+    color: '#FFFFFF',
+    fontWeight: 600,
+    fontHeight: _pxToRem(22),
+    fontSize: _pxToRem(16),
+    margin: '1rem auto 0.5rem'
+  }
 };
 
 /**
@@ -45,16 +41,14 @@ export const holdPaneLabelStyles = (): ITextStyles => {
  *
  * @private
  */
-export const holdPaneTimerStyles = (): ITextStyles => {
-  return {
-    root: {
-      color: '#FFFFFF',
-      fontWeight: 600,
-      fontSize: _pxToRem(20),
-      lineHeight: _pxToRem(28),
-      margin: 'auto'
-    }
-  };
+export const holdPaneTimerStyles: ITextStyles = {
+  root: {
+    color: '#FFFFFF',
+    fontWeight: 600,
+    fontSize: _pxToRem(20),
+    lineHeight: _pxToRem(28),
+    margin: 'auto'
+  }
 };
 
 /**

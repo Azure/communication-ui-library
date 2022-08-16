@@ -44,7 +44,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    if (!isTestProfileDesktop(testInfo) && isTestProfileStableFlavor()) {
+    if (!isTestProfileDesktop(testInfo) && !isTestProfileStableFlavor()) {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
