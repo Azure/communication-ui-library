@@ -152,9 +152,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             <div
               style={
                 Object {
-                  "height": "100%",
-                  "position": "relative",
-                  "width": "100%",
+                  "display": "flex",
+                  "flexGrow": 1,
                 }
               }
             >
@@ -237,9 +236,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             <div
               style={
                 Object {
-                  "height": "100%",
-                  "position": "relative",
-                  "width": "100%",
+                  "display": "flex",
+                  "flexGrow": 1,
                 }
               }
             >
@@ -322,9 +320,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             <div
               style={
                 Object {
-                  "height": "100%",
-                  "position": "relative",
-                  "width": "100%",
+                  "display": "flex",
+                  "flexGrow": 1,
                 }
               }
             >
@@ -407,9 +404,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             <div
               style={
                 Object {
-                  "height": "100%",
-                  "position": "relative",
-                  "width": "100%",
+                  "display": "flex",
+                  "flexGrow": 1,
                 }
               }
             >
