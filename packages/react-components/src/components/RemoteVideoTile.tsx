@@ -13,6 +13,8 @@ import { VideoTile } from './VideoTile';
 import { SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGallery.styles';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { _useContainerWidth } from './utils/responsive';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { _isParticipantStateCallingOrHold } from './utils/common';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -42,7 +44,6 @@ export const _RemoteVideoTile = React.memo(
     showLabel?: boolean;
     personaMinSize?: number;
     participantState?: ParticipantState;
-    isNarrow?: boolean;
   }) => {
     const {
       isAvailable,
@@ -107,7 +108,7 @@ export const _RemoteVideoTile = React.memo(
 
     const showLabelTrampoline = useMemo(() => {
       /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-      return canShowLabel(props.participantState, props.isNarrow, props.showLabel, containerWidth);
+      return canShowLabel(props.participantState, props.showLabel, containerWidth);
       return props.showLabel;
     }, [
       /* @conditional-compile-remove(one-to-n-calling) */
@@ -147,21 +148,17 @@ export const _RemoteVideoTile = React.memo(
  */
 const canShowLabel = (
   participantState?: ParticipantState,
-  isNarrow?: boolean,
   showLabel?: boolean,
   containerWidth?: number
 ): boolean | undefined => {
-  const isCallingOrHold = (participantState?: ParticipantState): boolean => {
-    return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
-  };
-
   // if showLabel has been explicitly set to false, don't show the label
   if (showLabel === false) {
     return showLabel;
   }
-  // if the remote video tile is in a narrow layout and participant state should be displayed,
-  // don't show the label if video tile is compact.
-  if (isCallingOrHold(participantState) && isNarrow) {
+  // If the participant state is in calling or hold and
+  // the container width is less than the small horizontal gallery tile size,
+  // don't show the label (participant name)
+  if (_isParticipantStateCallingOrHold(participantState)) {
     if (containerWidth && containerWidth / 16 <= SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width) {
       return false;
     }

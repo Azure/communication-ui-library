@@ -227,6 +227,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
+  const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
 
   return (
@@ -269,23 +270,25 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
-          {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
-            <Stack horizontal className={tileInfoStyle}>
-              <Text className={mergeStyles(displayNameStyle)} title={displayName}>
-                {displayName}
-              </Text>
-              {showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileMicOff" />
-                </Stack>
-              )}
-            </Stack>
-          )}
-          {participantStateString && (
-            <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
-          )}
-        </Stack>
+        {(canShowLabel || participantStateString) && (
+          <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
+            {canShowLabel && (
+              <Stack horizontal className={tileInfoStyle}>
+                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                  {displayName}
+                </Text>
+                {showMuteIndicator && isMuted && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTileMicOff" />
+                  </Stack>
+                )}
+              </Stack>
+            )}
+            {participantStateString && (
+              <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
+            )}
+          </Stack>
+        )}
 
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
