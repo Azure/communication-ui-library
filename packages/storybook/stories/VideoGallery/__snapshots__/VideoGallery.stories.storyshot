@@ -149,7 +149,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           <div
             className="stub-classname"
           >
-            <div>
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            >
               <div
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
@@ -226,7 +234,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
             </div>
-            <div>
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            >
               <div
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
@@ -303,7 +319,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
             </div>
-            <div>
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            >
               <div
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
@@ -380,7 +404,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
             </div>
-            <div>
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            >
               <div
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
