@@ -228,7 +228,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [adapter, role]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ role]);
 
   const mobileView = formFactor === 'mobile';
 
