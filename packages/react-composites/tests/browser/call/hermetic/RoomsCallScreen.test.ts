@@ -28,7 +28,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-consumer.png');
   });
 
-  test.only('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
+  test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
