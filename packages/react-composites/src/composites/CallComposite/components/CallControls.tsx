@@ -115,7 +115,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
-        disabled: props.disableForHoldScreen
+        disabled: props.disableForHoldScreen,
+        ['data-ui-id']: 'people-button-more-menu'
       });
     }
 
@@ -129,7 +130,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
-      disabled: props.disableForHoldScreen
+      disabled: props.disableForHoldScreen,
+      ['data-ui-id']: 'hold-button-more-menu'
     });
 
     return items;
