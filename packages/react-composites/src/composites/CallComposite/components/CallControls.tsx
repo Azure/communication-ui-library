@@ -114,7 +114,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
-        }
+        },
+        disabled: props.disableForHoldScreen
       });
     }
 
@@ -127,7 +128,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
-      }
+      },
+      disabled: props.disableForHoldScreen
     });
 
     return items;
@@ -223,9 +225,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
                 showLabel={!props.isMobile}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled={
-                  props.disableForHoldScreen
-                }
               />
             )
           }
