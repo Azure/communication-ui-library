@@ -25,7 +25,8 @@ router.post('/', async function (req, res, next) {
   // Options payload to create a room
   const createRoomOptions: CreateRoomOptions = {
     validFrom: validFrom,
-    validUntil: validUntil
+    validUntil: validUntil,
+    roomJoinPolicy: 'CommunicationServiceUsers'
   };
 
   // create a room with the request payload
