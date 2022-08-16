@@ -118,23 +118,22 @@ export const _RemoteVideoTile = React.memo(
     ]);
 
     return (
-      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <VideoTile
-          key={userId}
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-          personaMinSize={props.personaMinSize}
-          showLabel={showLabelTrampoline}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          /* @conditional-compile-remove(PSTN-calls) */
-          participantState={props.participantState}
-        />
-      </div>
+      <VideoTile
+        ref={containerRef}
+        key={userId}
+        userId={userId}
+        renderElement={renderVideoStreamElement}
+        displayName={displayName}
+        onRenderPlaceholder={onRenderAvatar}
+        isMuted={isMuted}
+        isSpeaking={isSpeaking}
+        showMuteIndicator={showMuteIndicator}
+        personaMinSize={props.personaMinSize}
+        showLabel={showLabelTrampoline}
+        /* @conditional-compile-remove(one-to-n-calling) */
+        /* @conditional-compile-remove(PSTN-calls) */
+        participantState={props.participantState}
+      />
     );
   }
 );

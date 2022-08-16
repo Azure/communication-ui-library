@@ -57,6 +57,9 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 export interface VideoTileProps {
   /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  /** React Ref */
+  ref?: React.Ref<HTMLDivElement>;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
