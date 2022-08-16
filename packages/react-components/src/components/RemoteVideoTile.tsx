@@ -118,7 +118,7 @@ export const _RemoteVideoTile = React.memo(
     ]);
 
     return (
-      <div ref={containerRef}>
+      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
         <VideoTile
           key={userId}
           userId={userId}
