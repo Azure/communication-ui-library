@@ -32,9 +32,6 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
         />
         <div
           className="ms-Stack stub-classname"
-        />
-        <div
-          className="ms-Stack stub-classname"
         >
           <div
             style={
