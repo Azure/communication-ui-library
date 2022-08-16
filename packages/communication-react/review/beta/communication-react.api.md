@@ -390,7 +390,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -433,6 +433,7 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    holdScreenLabel: string;
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -456,6 +457,8 @@ export interface CallCompositeStrings {
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
+    resumeCallButtonAriaLabel: string;
+    resumeCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
