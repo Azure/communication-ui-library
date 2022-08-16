@@ -11,9 +11,10 @@ import { ParticipantList } from './ParticipantList';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantItem } from './ParticipantItem';
 /* @conditional-compile-remove(rooms) */
-import { IContextualMenuItem, registerIcons } from '@fluentui/react';
+import { IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(rooms) */
 import { _getPermissions } from '../permissions';
+import { registerIcons } from '@fluentui/react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
