@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce hold button to CallWithChat composite",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
