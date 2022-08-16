@@ -141,6 +141,11 @@ export interface CallWithChatControlOptions {
    * Show or hide the more button in the call-with-chat control bar.
    */
   moreButton?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Show or hide the hold button in the bottom sheet drawer
+   */
+  holdButton?: boolean;
 }
 
 type CallWithChatScreenProps = {
@@ -371,8 +376,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
   );
 };
 
-const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
-  page === 'call' && callStatus === 'Connected';
+const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return (page === 'call' && callStatus === 'Connected') || (page === 'hold' && callStatus === 'LocalHold');
+  return page === 'call' && callStatus === 'Connected';
+};
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
   if (callControls === undefined || callControls === true) {
