@@ -34,7 +34,8 @@ export type CallCompositePage =
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall';
+  | 'removedFromCall'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
 
 /**
  * {@link CallAdapter} state for pure UI purposes.

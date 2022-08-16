@@ -12,7 +12,7 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
  * @internal
  */
 export const _isInCall = (callStatus?: CallStatus): boolean =>
-  !!callStatus && !['None', 'Disconnected', 'Connecting'].includes(callStatus);
+  !!callStatus && !['None', 'Disconnected', 'Connecting', 'LocalHold', 'RemoteHold', 'Ringing'].includes(callStatus);
 
 /**
  * Check if the call state represents being in the lobby or waiting to be admitted.
