@@ -9,6 +9,12 @@ import {
   RemoteVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile } from './VideoTile';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGallery.styles';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { _useContainerWidth } from './utils/responsive';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { _isParticipantStateCallingOrHold } from './utils/common';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -52,11 +58,12 @@ export const _RemoteVideoTile = React.memo(
       userId,
       displayName,
       onRenderAvatar,
-      showMuteIndicator,
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      participantState
+      showMuteIndicator
     } = props;
+
+    const containerRef = React.useRef<HTMLDivElement>(null);
+    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+    const containerWidth = _useContainerWidth(containerRef);
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
@@ -99,22 +106,64 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, isReceiving]);
 
+    const showLabelTrampoline = useMemo(() => {
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+      return canShowLabel(props.participantState, props.showLabel, containerWidth);
+      return props.showLabel;
+    }, [
+      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      containerWidth,
+      props
+    ]);
+
     return (
-      <VideoTile
-        key={userId}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        displayName={displayName}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
-        showMuteIndicator={showMuteIndicator}
-        showLabel={props.showLabel}
-        personaMinSize={props.personaMinSize}
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        participantState={participantState}
-      />
+      // IMPORTANT: This div needs to be a flex so that the children take up its full width and height
+      <div ref={containerRef} style={{ display: 'flex', flexGrow: 1 }}>
+        <VideoTile
+          key={userId}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          displayName={displayName}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={isMuted}
+          isSpeaking={isSpeaking}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          showLabel={showLabelTrampoline}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={props.participantState}
+        />
+      </div>
     );
   }
 );
+
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Determines if a label should be shown for a remote video tile.
+ * When the remote video tile is rendered as a small tile in horizontal gallery,
+ * we hide the participants name if they are in hold/connecting states.
+ */
+const canShowLabel = (
+  participantState?: ParticipantState,
+  showLabel?: boolean,
+  containerWidth?: number
+): boolean | undefined => {
+  // if showLabel has been explicitly set to false, don't show the label
+  if (showLabel === false) {
+    return showLabel;
+  }
+  // If the participant state is in calling or hold and
+  // the container width is less than the small horizontal gallery tile size,
+  // don't show the label (participant name)
+  if (_isParticipantStateCallingOrHold(participantState)) {
+    if (containerWidth && containerWidth / 16 <= SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width) {
+      return false;
+    }
+  }
+
+  return showLabel;
+};
