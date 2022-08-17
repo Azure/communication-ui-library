@@ -81,9 +81,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
   const { callStatus } = useSelector(callStatusSelector);
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const disableControlsForHoldScreen = adapter.getState().page === 'hold';
-
   /* @conditional-compile-remove(one-to-n-calling) */
   const closePane = useCallback(() => {
     setActivePane('none');
@@ -181,8 +178,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 peopleButtonChecked={activePane === 'people'}
                 /* @conditional-compile-remove(one-to-n-calling) */
                 onPeopleButtonClicked={togglePeople}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                disableForHoldScreen={disableControlsForHoldScreen}
               />
             </Stack.Item>
           )}

@@ -8,7 +8,7 @@ import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
 import { HoldPane } from '../components/HoldPane';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { reduceCallControlsForMobile } from '../utils';
+import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 
 /**
  * @beta
@@ -27,9 +27,18 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const strings = useLocale().strings.call;
 
-  const callControlOptions = props.mobileView
+  let callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
+
+  callControlOptions = disableCallControls(callControlOptions, [
+    'cameraButton',
+    'microphoneButton',
+    'devicesButton',
+    'screenShareButton',
+    'participantsButton',
+    'holdButton'
+  ]);
 
   return (
     <CallArrangement

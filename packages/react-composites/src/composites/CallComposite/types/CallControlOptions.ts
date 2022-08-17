@@ -30,7 +30,7 @@ export type CallControlOptions = {
    * Show or Hide Camera Button during a call
    * @defaultValue true
    */
-  cameraButton?: boolean;
+  cameraButton?: boolean | { disabled: boolean };
   /**
    * Show or Hide EndCall button during a call.
    * @defaultValue true
@@ -40,12 +40,12 @@ export type CallControlOptions = {
    * Show or Hide Microphone button during a call.
    * @defaultValue true
    */
-  microphoneButton?: boolean;
+  microphoneButton?: boolean | { disabled: boolean };
   /**
    * Show or Hide Devices button during a call.
    * @defaultValue true
    */
-  devicesButton?: boolean;
+  devicesButton?: boolean | { disabled: boolean };
   /**
    * Show, Hide or Disable participants button during a call.
    * @defaultValue true
@@ -69,6 +69,7 @@ export type CallControlOptions = {
    * @beta
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+  holdButton?: boolean | { disabled: boolean };
 };
 
 /**
