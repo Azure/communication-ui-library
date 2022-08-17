@@ -30,7 +30,12 @@ export type CallControlOptions = {
    * Show or Hide Camera Button during a call
    * @defaultValue true
    */
-  cameraButton?: boolean | { disabled: boolean };
+  cameraButton?:
+    | boolean /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    | {
+        disabled: boolean;
+      };
   /**
    * Show or Hide EndCall button during a call.
    * @defaultValue true
@@ -40,12 +45,22 @@ export type CallControlOptions = {
    * Show or Hide Microphone button during a call.
    * @defaultValue true
    */
-  microphoneButton?: boolean | { disabled: boolean };
+  microphoneButton?:
+    | boolean /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    | {
+        disabled: boolean;
+      };
   /**
    * Show or Hide Devices button during a call.
    * @defaultValue true
    */
-  devicesButton?: boolean | { disabled: boolean };
+  devicesButton?:
+    | boolean /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    | {
+        disabled: boolean;
+      };
   /**
    * Show, Hide or Disable participants button during a call.
    * @defaultValue true
@@ -56,7 +71,8 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Show, Hide or disable the more button during a call.
    * @defaultValue true

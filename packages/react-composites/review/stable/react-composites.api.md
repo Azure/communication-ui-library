@@ -325,16 +325,10 @@ export type CallControlDisplayType = 'default' | 'compact';
 // @public
 export type CallControlOptions = {
     displayType?: CallControlDisplayType;
-    cameraButton?: boolean | {
-        disabled: boolean;
-    };
+    cameraButton?: boolean;
     endCallButton?: boolean;
-    microphoneButton?: boolean | {
-        disabled: boolean;
-    };
-    devicesButton?: boolean | {
-        disabled: boolean;
-    };
+    microphoneButton?: boolean;
+    devicesButton?: boolean;
     participantsButton?: boolean | {
         disabled: boolean;
     };
