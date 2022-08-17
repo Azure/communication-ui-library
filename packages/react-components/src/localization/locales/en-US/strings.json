@@ -5,7 +5,10 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
-    "displayNamePlaceholder": "Unnamed Participant"
+    "displayNamePlaceholder": "Unnamed Participant",
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
+    "participantStateHold": "On Hold"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -170,15 +173,15 @@
     "placeholderText": "Enter phone number",
     "deleteButtonAriaLabel": "Delete"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Resume",
     "offLabel": "Hold",
-    "toolTipOnContent": "Resume call",
-    "toolTipOffContent": "Hold call"
+    "tooltipOnContent": "Resume call",
+    "tooltipOffContent": "Hold call"
   },
   "videoTile": {
-    "participantStateConnecting": "Connecting...",
-    "participantStateRinging": "Ringing...",
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
     "participantStateHold": "On Hold"
   }
 }

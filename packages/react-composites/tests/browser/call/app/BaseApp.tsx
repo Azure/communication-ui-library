@@ -25,6 +25,8 @@ initializeIconsForUITests();
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {
   const { queryArgs, callAdapter } = props;
 
+  console.log(`Loaded test app with args ${JSON.stringify(queryArgs)}`);
+
   const locale = queryArgs.useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;
   if (queryArgs.showCallDescription) {
     locale.strings.call.configurationPageCallDetails =
@@ -40,6 +42,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
             <CallComposite
               adapter={callAdapter}
               locale={locale}
+              role={queryArgs.role}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined

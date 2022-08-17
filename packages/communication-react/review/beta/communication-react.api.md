@@ -202,6 +202,8 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    // @beta
+    sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -388,7 +390,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -427,10 +429,12 @@ export interface CallCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialpadPlaceHolderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    holdScreenLabel: string;
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -440,10 +444,12 @@ export interface CallCompositeStrings {
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    moreButtonCallingLabel: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     openDialpadButtonLabel: string;
+    openDtmfDialpad: string;
     peopleButtonLabel: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
@@ -453,6 +459,8 @@ export interface CallCompositeStrings {
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
+    resumeCallButtonAriaLabel: string;
+    resumeCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
@@ -475,6 +483,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    moreButton?: boolean;
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
@@ -534,7 +543,7 @@ export type CallingHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTone?: (dtmfTone: DtmfTone_2) => Promise<void>;
+    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
 };
 
 // @public
@@ -553,7 +562,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -633,6 +642,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
+    // @beta
+    sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -740,6 +751,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
+    alternateCallerId?: string | undefined;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
@@ -854,12 +866,14 @@ export interface CallWithChatCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     openDialpadButtonLabel: string;
+    openDtmfDialpad: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -878,7 +892,9 @@ export interface CallWithChatControlOptions {
     chatButton?: boolean;
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
+    holdButton?: boolean;
     microphoneButton?: boolean;
+    moreButton?: boolean;
     // @beta
     onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
@@ -1248,6 +1264,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1423,6 +1440,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
+    participantState?: ParticipantState;
 };
 
 // @beta
@@ -1705,6 +1723,7 @@ export interface DialpadProps {
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
@@ -1714,7 +1733,7 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
-    deleteButtonAriaLabel: string;
+    deleteButtonAriaLabel?: string;
     // (undocumented)
     placeholderText: string;
 }
@@ -1940,7 +1959,7 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
-    toolTipOffContent: string;
+    tooltipOffContent: string;
     tooltipOnContent: string;
 }
 
@@ -2307,6 +2326,7 @@ export interface ParticipantItemProps {
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    participantState?: ParticipantState;
     presence?: PersonaPresence;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
@@ -2320,6 +2340,9 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantStateConnecting?: string;
+    participantStateHold?: string;
+    participantStateRinging?: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -2449,6 +2472,9 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2780,11 +2806,8 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
     // @beta
-    state?: VideoGalleryRemoteParticipantState;
+    state?: ParticipantState;
 }
-
-// @beta
-export type VideoGalleryRemoteParticipantState = 'Connecting' | 'Ringing' | 'Connected' | 'Hold';
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -2847,7 +2870,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
-    participantState?: VideoGalleryRemoteParticipantState;
+    participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;

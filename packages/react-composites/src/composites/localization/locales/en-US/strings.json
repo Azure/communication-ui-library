@@ -52,7 +52,13 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "moreButtonCallingLabel": "More",
+    "resumeCallButtonLabel": "Resume",
+    "resumeCallButtonAriaLabel": "Resume call",
+    "holdScreenLabel": "You're on hold",
+    "openDtmfDialpad": "Show Dialpad",
+    "dtmfDialpadPlaceHolderText": "Enter number"
   },
   "chat": {
     "chatListHeader": "In this chat",
@@ -86,6 +92,8 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad"
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "openDtmfDialpad": "Show Dialpad",
+    "dtmfDialpadPlaceHolderText": "Enter number"
   }
 }

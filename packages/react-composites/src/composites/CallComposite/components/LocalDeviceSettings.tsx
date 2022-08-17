@@ -93,9 +93,11 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   let isSelectCamEnabled = props.cameraPermissionGranted;
   let isSelectMicEnabled = props.microphonePermissionGranted;
   /* @conditional-compile-remove(rooms) */
-  isSelectCamEnabled = isSelectCamEnabled && _usePermissions().cameraButton;
+  const permissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
-  isSelectMicEnabled = isSelectMicEnabled && _usePermissions().microphoneButton;
+  isSelectCamEnabled = isSelectCamEnabled && permissions.cameraButton;
+  /* @conditional-compile-remove(rooms) */
+  isSelectMicEnabled = isSelectMicEnabled && permissions.microphoneButton;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for

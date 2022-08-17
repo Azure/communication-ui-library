@@ -506,7 +506,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -772,6 +772,7 @@ export interface CallWithChatCompositeStrings {
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -2145,6 +2146,9 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
 export type ReadReceiptsBySenderId = {

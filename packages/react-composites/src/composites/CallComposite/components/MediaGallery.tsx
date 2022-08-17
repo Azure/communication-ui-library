@@ -2,7 +2,12 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import {
+  VideoGallery,
+  VideoStreamOptions,
+  OnRenderAvatarCallback,
+  CustomAvatarOptions
+} from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -56,11 +61,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
   const onRenderAvatar = useCallback(
-    (userId, options) => (
-      <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-      </Stack>
-    ),
+    (userId?: string, options?: CustomAvatarOptions) => {
+      return (
+        <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+          <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
+            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+          </Stack>
+        </Stack>
+      );
+    },
     [props.onFetchAvatarPersonaData]
   );
 

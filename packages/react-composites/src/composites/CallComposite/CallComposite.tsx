@@ -27,6 +27,8 @@ import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { HoldPage } from './pages/HoldPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -103,7 +105,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
 
   let pageElement: JSX.Element;
-
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -177,6 +178,20 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
+      );
+      break;
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    case holdPageTrampoline():
+      pageElement = (
+        <>
+          {
+            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ <HoldPage
+              mobileView={props.mobileView}
+              modalLayerHostId={props.modalLayerHostId}
+              options={props.options}
+            />
+          }
+        </>
       );
       break;
     default:
@@ -260,4 +275,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       </BaseProvider>
     </div>
   );
+};
+
+const holdPageTrampoline = (): string => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return 'hold';
+  return 'call';
 };

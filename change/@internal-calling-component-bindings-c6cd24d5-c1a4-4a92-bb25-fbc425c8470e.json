@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updated _isInCall util function to reflect hold states as being in a call as well.",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

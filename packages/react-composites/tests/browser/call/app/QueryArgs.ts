@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Role } from '@internal/react-components';
 import { MockCallAdapterState } from '../MockCallAdapterState';
 
 export interface QueryArgs {
@@ -17,6 +18,7 @@ export interface QueryArgs {
   groupId: string;
   token: string;
   displayName: string;
+  role?: Role;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -31,6 +33,7 @@ export function parseQueryArgs(): QueryArgs {
     userId: params.userId ?? '',
     groupId: params.groupId ?? '',
     token: params.token ?? '',
-    displayName: params.displayName ?? ''
+    displayName: params.displayName ?? '',
+    role: (params.role as Role) ?? undefined
   };
 }

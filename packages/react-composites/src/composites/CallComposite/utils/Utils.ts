@@ -102,6 +102,10 @@ export const getCallCompositePage = (
       return 'lobby';
     } else if (_isInCall(call?.state)) {
       return 'call';
+    } else if (call?.state === 'LocalHold') {
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      return 'hold';
+      return 'call';
     } else {
       // When the call object has been constructed after clicking , but before 'connecting' has been
       // set on the call object, we continue to show the configuration screen.
