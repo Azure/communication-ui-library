@@ -21,13 +21,6 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
-  test('Only few CallControls are enabled for Consumer', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-consumer.png');
-  });
-
   test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
