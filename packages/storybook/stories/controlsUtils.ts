@@ -167,6 +167,11 @@ export const controlsToAdd = {
     defaultValue: ['+###########'],
     name: 'Call locator (Participant IDs)'
   },
+  callParticipantsLocator1toN: {
+    control: 'array',
+    defaultValue: ['<ACS user id>'],
+    name: 'Call locator (Participant IDs)'
+  },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
   callStateText: { control: 'text', defaultValue: "You're in the lobby", name: 'Call State Text' },

@@ -9,10 +9,10 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
-import { ContosoCallContainerPSTN } from './snippets/ContainerPSTN.snippet';
+import { ContosoCallContainer1toN } from './snippets/Container1toN.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
-const JoinPSTNCallStory = (args, context): JSX.Element => {
+const Start1toNCallStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -21,8 +21,7 @@ const JoinPSTNCallStory = (args, context): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
-        <ContosoCallContainerPSTN
-          alternateCallerId={args.alternateCallerId}
+        <ContosoCallContainer1toN
           fluentTheme={context.theme}
           locator={args.callLocator}
           userId={{ communicationUserId: args.userId }}
@@ -39,18 +38,17 @@ const JoinPSTNCallStory = (args, context): JSX.Element => {
   );
 };
 
-export const JoinPSTNCall = JoinPSTNCallStory.bind({});
+export const Start1toNCall = Start1toNCallStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-joinpstncall`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join PSTN Call`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-start1toncall`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Start 1 To N Call`,
   component: CallComposite,
   argTypes: {
     userId: controlsToAdd.userId,
     token: controlsToAdd.token,
     displayName: controlsToAdd.displayName,
-    callLocator: controlsToAdd.callParticipantsLocator,
-    alternateCallerId: controlsToAdd.alternateCallerId,
+    callLocator: controlsToAdd.callParticipantsLocator1toN,
     formFactor: controlsToAdd.formFactor,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
