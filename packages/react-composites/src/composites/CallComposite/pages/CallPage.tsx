@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+import { _isInCall } from '@internal/calling-component-bindings';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -79,7 +80,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
-        callStatus === 'Connected' ? (
+        _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
             <MediaGallery
               isMobile={mobileView}
