@@ -5,8 +5,12 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
+import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantState } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -16,9 +20,20 @@ import {
   rootStyles,
   videoContainerStyles,
   videoHint,
-  tileInfoContainerStyle
+  tileInfoContainerStyle,
+  participantStateStringStyles
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+
+/**
+ * Strings of {@link VideoTile} that can be overridden.
+ * @beta
+ */
+export interface VideoTileStrings {
+  participantStateConnecting: string;
+  participantStateRinging: string;
+  participantStateHold: string;
+}
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -100,6 +115,17 @@ export interface VideoTileProps {
   noVideoAvailableAriaLabel?: string;
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * The call connection state of the participant.
+   * For example, `Hold` means the participant is on hold.
+   */
+  participantState?: ParticipantState;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  strings?: VideoTileStrings;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -108,19 +134,20 @@ const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
 const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 
 const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
-  const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
+  const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails } = props;
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Persona
-        styles={styles}
-        coinSize={coinSize}
-        hidePersonaDetails={hidePersonaDetails}
-        text={text ?? ''}
-        initialsTextColor="white"
-        aria-label={noVideoAvailableAriaLabel ?? ''}
-        showOverflowTooltip={false}
-      />
+      <Stack styles={defaultPersonaStyles}>
+        <Persona
+          coinSize={coinSize}
+          hidePersonaDetails={hidePersonaDetails}
+          text={text ?? ''}
+          initialsTextColor="white"
+          aria-label={noVideoAvailableAriaLabel ?? ''}
+          showOverflowTooltip={false}
+        />
+      </Stack>
     </Stack>
   );
 };
@@ -156,6 +183,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [personaSize, setPersonaSize] = useState(100);
   const videoTileRef = useRef<HTMLElement>(null);
 
+  const locale = useLocale();
   const theme = useTheme();
 
   const isVideoRendered = !!renderElement;
@@ -199,6 +227,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
+  const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
+  const participantStateString = participantStateStringTrampoline(props, locale);
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -239,20 +270,23 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
-          <Stack horizontal className={tileInfoContainerStyle}>
-            <Stack horizontal className={tileInfoStyle}>
-              {displayName && (
+        {(canShowLabel || participantStateString) && (
+          <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
+            {canShowLabel && (
+              <Stack horizontal className={tileInfoStyle}>
                 <Text className={mergeStyles(displayNameStyle)} title={displayName}>
                   {displayName}
                 </Text>
-              )}
-              {showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileMicOff" />
-                </Stack>
-              )}
-            </Stack>
+                {showMuteIndicator && isMuted && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTileMicOff" />
+                  </Stack>
+                )}
+              </Stack>
+            )}
+            {participantStateString && (
+              <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
+            )}
           </Stack>
         )}
 
@@ -262,4 +296,27 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       </Stack>
     </Ref>
   );
+};
+
+const participantStateStringTrampoline = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  const strings = { ...locale.strings.videoTile, ...props.strings };
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+    ? strings?.participantStateConnecting
+    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+    ? strings?.participantStateRinging
+    : props.participantState === 'Hold'
+    ? strings?.participantStateHold
+    : undefined;
+
+  return undefined;
+};
+
+const tileInfoContainerTokens = {
+  // A horizontal Stack sets the left margin to 0 for all it's children.
+  // We need to allow the children to set their own margins
+  childrenGap: 'none'
 };

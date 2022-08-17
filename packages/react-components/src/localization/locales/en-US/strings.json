@@ -5,7 +5,10 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
-    "displayNamePlaceholder": "Unnamed Participant"
+    "displayNamePlaceholder": "Unnamed Participant",
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
+    "participantStateHold": "On Hold"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -114,6 +117,7 @@
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
     "messageContentAriaText": "{author} said {message}",
+    "messageContentMineAriaText": "You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -166,13 +170,18 @@
     "displayNamePlaceholder": "Unnamed Participant"
   },
   "dialpad": {
-    "placeholderText": "Enter a number",
+    "placeholderText": "Enter phone number",
     "deleteButtonAriaLabel": "Delete"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Resume",
     "offLabel": "Hold",
-    "toolTipOnContent": "Resume call",
-    "toolTipOffContent": "Hold call"
+    "tooltipOnContent": "Resume call",
+    "tooltipOffContent": "Hold call"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Calling...",
+    "participantStateRinging": "Calling...",
+    "participantStateHold": "On Hold"
   }
 }

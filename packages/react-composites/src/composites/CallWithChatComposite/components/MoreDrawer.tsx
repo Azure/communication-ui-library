@@ -10,6 +10,8 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButton } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -18,6 +20,10 @@ import {
   generateCustomCallWithChatDrawerButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../CustomButton';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { useLocale } from '../../localization';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -81,6 +87,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CallWithChatControlOptions;
+  onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
 }
 
@@ -99,6 +106,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const localeStrings = useLocale();
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const holdButtonProps = usePropsFor(HoldButton);
+
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
@@ -172,7 +185,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -181,6 +193,31 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: props.onPeopleButtonClicked
     });
   }
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
+    drawerMenuItems.push({
+      itemKey: 'holdButtonKey',
+      text: localeStrings.component.strings.holdButton.tooltipOffContent,
+      onItemClick: () => {
+        holdButtonProps.onToggleHold();
+      },
+      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
+  /*@conditional-compile-remove(PSTN-calls) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
+    drawerMenuItems.push({
+      itemKey: 'showDialpadKey',
+      text: localeStrings.strings.callWithChat.openDtmfDialpad,
+      onItemClick: () => {
+        props.onClickShowDialpad && props.onClickShowDialpad();
+      },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>

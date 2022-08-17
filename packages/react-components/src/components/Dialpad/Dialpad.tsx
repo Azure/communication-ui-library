@@ -3,9 +3,8 @@
 
 import React from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
+
 import { IconButton } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
 import {
   concatStyleSets,
   DefaultButton,
@@ -16,13 +15,10 @@ import {
   TextField,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(dialpad) */
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(dialpad) */
 import { useState } from 'react';
 /* @conditional-compile-remove(dialpad) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(dialpad) */
 import {
   buttonStyles,
   containerStyles,
@@ -31,7 +27,6 @@ import {
   secondaryContentStyles,
   textFieldStyles
 } from '../styles/Dialpad.styles';
-/* @conditional-compile-remove(dialpad) */
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 
 /**
@@ -41,7 +36,7 @@ import { formatPhoneNumber } from '../utils/formatPhoneNumber';
  */
 export interface DialpadStrings {
   placeholderText: string;
-  deleteButtonAriaLabel: string;
+  deleteButtonAriaLabel?: string;
 }
 
 /**
@@ -64,7 +59,9 @@ export interface DialpadStyles {
  * @beta
  */
 export interface DialpadButtonProps {
+  /** Number displayed on each dialpad button */
   primaryContent: string;
+  /** Letters displayed on each dialpad button */
   secondaryContent?: string;
 }
 
@@ -110,10 +107,11 @@ export interface DialpadProps {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
+  /**  boolean input to determine when to show/hide delete button, default true */
+  showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }
 
-/* @conditional-compile-remove(dialpad) */
 const DialpadButton = (props: {
   primaryContent: string;
   secondaryContent?: string;
@@ -143,7 +141,6 @@ const DialpadButton = (props: {
   );
 };
 
-/* @conditional-compile-remove(dialpad) */
 const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [
     { primaryContent: '1' },
@@ -163,7 +160,6 @@ const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
 ];
 
-/* @conditional-compile-remove(dialpad) */
 const DtmfTones: DtmfTone[] = [
   'Num1',
   'Num2',
@@ -179,7 +175,6 @@ const DtmfTones: DtmfTone[] = [
   'Pound'
 ];
 
-/* @conditional-compile-remove(dialpad) */
 const DialpadContainer = (props: {
   strings: DialpadStrings;
   // dialpadButtons?: DialpadButtonProps[][];
@@ -190,12 +185,14 @@ const DialpadContainer = (props: {
   onDisplayDialpadInput?: (input: string) => string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
+  /**  boolean input to determine when to show/hide delete button, default true */
+  showDeleteButton?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange } = props;
+  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange, showDeleteButton = true } = props;
 
   const sanitizeInput = (input: string): string => {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
@@ -237,7 +234,11 @@ const DialpadContainer = (props: {
   };
 
   return (
-    <div className={mergeStyles(containerStyles(theme), props.styles?.root)} data-test-id="dialpadContainer">
+    <div
+      className={mergeStyles(containerStyles(theme), props.styles?.root)}
+      data-test-id="dialpadContainer"
+      data-ui-id="dialpadContainer"
+    >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
         value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
@@ -254,7 +255,7 @@ const DialpadContainer = (props: {
         data-test-id="dialpad-input"
         onRenderSuffix={(): JSX.Element => (
           <>
-            {textValue.length !== 0 && (
+            {showDeleteButton && textValue.length !== 0 && (
               <IconButton
                 ariaLabel={props.strings.deleteButtonAriaLabel}
                 onClick={deleteNumbers}
@@ -311,17 +312,17 @@ const DialpadContainer = (props: {
  * @beta
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale().strings.dialpad;
-  /* @conditional-compile-remove(dialpad) */
-  const strings = { ...localeStrings, ...props.strings };
 
-  return (
-    <>
-      {
-        /* @conditional-compile-remove(dialpad) */
-        <DialpadContainer strings={strings} {...props} />
-      }
-    </>
-  );
+  const dialpadLocaleStringsTrampoline = (): DialpadStrings => {
+    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+    return localeStrings;
+    // Even though the component strings type doesn't have `DialpadStrings` in stable build,
+    // the string values exist. So unsafe cast for stable build.
+    return '' as unknown as DialpadStrings;
+  };
+  const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
+
+  return <DialpadContainer strings={strings} {...props} />;
 };

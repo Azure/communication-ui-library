@@ -37,6 +37,7 @@ export type {
   ParticipantAddedSystemMessage,
   ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
+  ParticipantState,
   ReadReceiptsBySenderId,
   SystemMessage,
   SystemMessageCommon,

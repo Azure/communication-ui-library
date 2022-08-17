@@ -20,6 +20,7 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -54,7 +55,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -414,6 +415,52 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
+// @beta
+export const Dialpad: (props: DialpadProps) => JSX.Element;
+
+// @beta
+export interface DialpadButtonProps {
+    primaryContent: string;
+    secondaryContent?: string;
+}
+
+// @beta
+export interface DialpadProps {
+    onChange?: (input: string) => void;
+    onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
+    onDisplayDialpadInput?: (input: string) => string;
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
+    // (undocumented)
+    strings?: DialpadStrings;
+    // (undocumented)
+    styles?: DialpadStyles;
+}
+
+// @beta
+export interface DialpadStrings {
+    // (undocumented)
+    deleteButtonAriaLabel?: string;
+    // (undocumented)
+    placeholderText: string;
+}
+
+// @beta
+export interface DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    deleteIcon?: IButtonStyles;
+    // (undocumented)
+    primaryContent?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    secondaryContent?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
+}
+
 // @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
@@ -464,6 +511,9 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     drawerContentRoot?: BaseCustomStyles;
     lightDismissRoot?: BaseCustomStyles;
 }
+
+// @beta
+export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -816,6 +866,7 @@ export interface MessageThreadStrings {
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
+    messageContentMineAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -1032,6 +1083,9 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1081,6 +1135,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
 
 // @public

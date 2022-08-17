@@ -31,7 +31,7 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
   ```
 * Build the test applications.
   ```sh
-  rush build:e2e
+  rushx build:e2e
   ```
 
 ### Live tests
@@ -145,3 +145,8 @@ To debug a particular test,
   ```
 * Run the relevant test suite, usually selecting a single project: `node ./scripts/runBrowserTests.mjs -c chat -p desktop -d`
 * Single-step through the test, record a video etc through the Inspector.
+
+### Running just specific hermetic tests
+When working on a specific hermetic test be sure to use `node scripts/runBrowserTests.mjs -l`. This should be used because all of the live tests will be run after even though you are using `test.only(...)`. This happens because the wrapper script calls playwright multiple times depending on which flags are given. 
+
+As well you will need to also use the flags `... -c call` and `... -c chat` to run just the composite tests that you are writing tests for.

@@ -26,6 +26,7 @@ import { ComponentLocale } from '@internal/react-components';
 import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DtmfTone } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -146,6 +147,8 @@ export interface CallAdapterCallManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    // @beta
+    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -272,6 +275,9 @@ export type CallCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
 };
 
 // @public
@@ -281,7 +287,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -315,11 +321,17 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    dialpadCloseModalButtonAriaLabel: string;
+    dialpadModalAriaLabel: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialpadPlaceHolderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    holdScreenLabel: string;
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -329,10 +341,14 @@ export interface CallCompositeStrings {
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    moreButtonCallingLabel: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    openDialpadButtonLabel: string;
+    openDtmfDialpad: string;
     peopleButtonLabel: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
@@ -340,6 +356,8 @@ export interface CallCompositeStrings {
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
+    resumeCallButtonAriaLabel: string;
+    resumeCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
@@ -362,6 +380,7 @@ export type CallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    moreButton?: boolean;
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
@@ -413,6 +432,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
+    // @beta
+    sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -520,6 +541,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
+    alternateCallerId?: string | undefined;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
@@ -586,6 +608,9 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    PeoplePaneAddPerson?: JSX.Element;
+    PeoplePaneOpenDialpad?: JSX.Element;
+    DialpadStartCall?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -626,15 +651,23 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkButtonLabel: string;
+    dialpadCloseModalButtonAriaLabel: string;
+    dialpadModalAriaLabel: string;
+    dialpadModalTitle: string;
+    dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
+    openDialpadButtonLabel: string;
+    openDtmfDialpad: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
+    peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;
@@ -649,7 +682,9 @@ export interface CallWithChatControlOptions {
     chatButton?: boolean;
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
+    holdButton?: boolean;
     microphoneButton?: boolean;
+    moreButton?: boolean;
     // @beta
     onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
     peopleButton?: boolean;
@@ -933,6 +968,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemScreenShareStart: JSX.Element;
     VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
+    PeoplePaneAddPerson?: JSX.Element | undefined;
+    PeoplePaneOpenDialpad?: JSX.Element | undefined;
+    DialpadStartCall?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;

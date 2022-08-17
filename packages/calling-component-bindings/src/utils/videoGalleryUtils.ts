@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import {
+  DominantSpeakersInfo,
+  RemoteParticipantState as RemoteParticipantConnectionState
+} from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
@@ -30,6 +33,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
           participant.isMuted,
           checkIsSpeaking(participant),
           participant.videoStreams,
+          participant.state,
           participant.displayName
         );
       });
@@ -42,6 +46,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     isMuted: boolean,
     isSpeaking: boolean,
     videoStreams: { [key: number]: RemoteVideoStreamState },
+    state: RemoteParticipantConnectionState,
     displayName?: string
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -49,6 +54,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       isMuted,
       isSpeaking,
       videoStreams,
+      state,
       displayName
     );
   }
@@ -60,6 +66,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
+  state: RemoteParticipantConnectionState,
   displayName?: string
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -89,7 +96,10 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isSpeaking,
     videoStream,
     screenShareStream,
-    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable
+    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    state
   };
 };
 

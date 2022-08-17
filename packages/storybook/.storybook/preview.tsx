@@ -53,14 +53,15 @@ export const parameters = {
         COMPOSITE_FOLDER_PREFIX,
         [
           'Get Started',
+          'CallWithChatComposite',
           'CallComposite',
           'ChatComposite',
-          'CallWithChatComposite',
           'Adapters',
           'Cross-Framework Support',
         ],
         COMPONENT_FOLDER_PREFIX,
         [
+          'Overview',
           'Get Started',
           'Video Gallery',
           'Video Tile',

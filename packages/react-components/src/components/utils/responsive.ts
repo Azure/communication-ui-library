@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { RefObject, useEffect, useState, useRef } from 'react';
-import { convertRemToPx } from './common';
+import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
 
 /**
  * A utility hook for providing the width of a parent element.

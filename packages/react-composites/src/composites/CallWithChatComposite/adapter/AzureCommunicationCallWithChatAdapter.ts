@@ -16,7 +16,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -197,6 +197,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.sendDtmfTone.bind(this);
   }
 
   /** Join existing Call. */
@@ -371,6 +373,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
     return await this.callAdapter.addParticipant(participant, options);
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
+    return await this.callAdapter.sendDtmfTone(dtmfTone);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

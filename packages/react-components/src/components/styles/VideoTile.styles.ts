@@ -107,3 +107,23 @@ export const isSpeakingBorderDiv: IStyle = {
   // Ensure the isSpeaking element does not steal any pointer events such as onClick events
   pointerEvents: 'none'
 };
+
+/**
+ * @private
+ */
+export const participantStateStringStyles = (showLabel: boolean): IStyle => {
+  return {
+    textAlign: 'center',
+    minWidth: '3rem',
+    color: 'inherit',
+    width: showLabel ? 'auto' : '100%',
+    marginRight: showLabel ? 0 : 'none',
+    marginLeft: showLabel ? 'auto' : 'none',
+    fontSize: '0.75rem',
+    lineHeight: 'normal',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    padding: '0.25rem'
+  };
+};

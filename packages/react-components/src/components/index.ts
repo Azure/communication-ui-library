@@ -98,6 +98,8 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { VideoTileStrings } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {
@@ -122,9 +124,7 @@ export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
 export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
-/* @conditional-compile-remove(dialpad) */
 export { Dialpad } from './Dialpad/Dialpad';
-/* @conditional-compile-remove(dialpad) */
 export type { DialpadProps, DialpadStrings, DialpadButtonProps, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
 /* @conditional-compile-remove(PSTN-calls) */

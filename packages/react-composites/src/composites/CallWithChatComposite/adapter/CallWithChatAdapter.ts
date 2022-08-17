@@ -32,7 +32,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
@@ -308,6 +308,14 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * send dtmf tone to another participant in the call in 1:1 calls
+   *
+   * @beta
+   */
+  sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
 }
 
 /**

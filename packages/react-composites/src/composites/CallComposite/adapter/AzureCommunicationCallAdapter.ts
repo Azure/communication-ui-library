@@ -33,7 +33,7 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -252,6 +252,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.sendDtmfTone.bind(this);
   }
 
   public dispose(): void {
@@ -311,9 +313,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
-    const isTeamsMeeting = !('groupId' in this.locator);
+    const isTeamsMeeting = 'teamsLink' in this.locator;
     /* @conditional-compile-remove(rooms) */
-    const isRoomsCall = !('roomId' in this.locator);
+    const isRoomsCall = 'roomId' in this.locator;
 
     if (isTeamsMeeting) {
       return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -495,6 +497,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     if (this.call?.state === 'LocalHold') {
       this.handlers.onToggleHold();
     }
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
+    this.handlers.onSendDtmfTone(dtmfTone);
   }
 
   public getState(): CallAdapterState {

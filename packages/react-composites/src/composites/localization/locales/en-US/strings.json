@@ -46,7 +46,19 @@
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "soundLabel": "Sound",
-    "startCallButtonLabel": "Start call"
+    "startCallButtonLabel": "Start call",
+    "openDialpadButtonLabel": "Dial phone number",
+    "peoplePaneAddPeopleButtonLabel": "Add People",
+    "dialpadStartCallButtonLabel": "Call",
+    "dialpadModalTitle": "Dial Phone Number",
+    "dialpadModalAriaLabel": "Dialpad",
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "moreButtonCallingLabel": "More",
+    "resumeCallButtonLabel": "Resume",
+    "resumeCallButtonAriaLabel": "Resume call",
+    "holdScreenLabel": "You're on hold",
+    "openDtmfDialpad": "Show Dialpad",
+    "dtmfDialpadPlaceHolderText": "Enter number"
   },
   "chat": {
     "chatListHeader": "In this chat",
@@ -73,7 +85,15 @@
     "peoplePaneTitle": "People",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
     "removeMenuLabel": "Remove",
+    "openDialpadButtonLabel": "Dial phone number",
     "returnToCallButtonAriaDescription": "Return to Call",
-    "returnToCallButtonAriaLabel": "Back"
+    "returnToCallButtonAriaLabel": "Back",
+    "peoplePaneAddPeopleButtonLabel": "Add People",
+    "dialpadStartCallButtonLabel": "Call",
+    "dialpadModalTitle": "Dial Phone Number",
+    "dialpadModalAriaLabel": "Dialpad",
+    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "openDtmfDialpad": "Show Dialpad",
+    "dtmfDialpadPlaceHolderText": "Enter number"
   }
 }

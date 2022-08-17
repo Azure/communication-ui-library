@@ -43,7 +43,7 @@ const callAdapter = await callComposite.loadCallComposite(
   //The for composite which allows you control composite externally,
   // This function will be exposed to window.callComposite once you import composite bundle
   {
-    groupId, // string, Provide any GUID to join a group
+    locator: { groupId: groupId }, // provide a locator object to join a group call or a teams meeting interop call
     displayName, // string
     userId, // Object { communicationUserId: string }
     token // string

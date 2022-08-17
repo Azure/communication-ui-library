@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
@@ -14,12 +15,15 @@ import {
   createGroupId,
   fetchTokenResponse,
   getGroupIdFromUrl,
+  getOutboundParticipants,
   getTeamsLinkFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
+/* @conditional-compile-remove(rooms) */
+import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
@@ -50,6 +54,8 @@ const App = (): JSX.Element => {
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
+  /* @conditional-compile-remove(rooms) */
+  const [role, setRole] = useState<Role>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
@@ -91,30 +97,55 @@ const App = (): JSX.Element => {
     case 'home': {
       document.title = `home - ${WEB_APP_TITLE}`;
       // Show a simplified join home screen if joining an existing call
-      const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
+      const joiningExistingCall: boolean =
+        !!getGroupIdFromUrl() ||
+        !!getTeamsLinkFromUrl() ||
+        /* @conditional-compile-remove(rooms) */ !!getRoomIdFromUrl();
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
-          startCallHandler={(callDetails) => {
+          startCallHandler={async (callDetails) => {
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
-            const isTeamsCall = !!callDetails.teamsLink;
-            const locator = makeLocator(
-              callDetails.teamsLink,
-              /* @conditional-compile-remove(PSTN-calls) */ callDetails.outboundParticipants
-            );
-            setCallLocator(locator);
+            let callLocator: CallAdapterLocator | undefined =
+              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+
+            /* @conditional-compile-remove(rooms) */
+            callLocator = callLocator || getRoomIdFromUrl();
+
+            /* @conditional-compile-remove(PSTN-calls) */
+            callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
+
+            callLocator = callLocator || createGroupId();
+
+            /* @conditional-compile-remove(rooms) */
+            // There is an API call involved with creating a room so lets only create one if we know we have to
+            if (callDetails.option === 'StartRooms') {
+              let roomId = '';
+              try {
+                roomId = await createRoom();
+              } catch (e) {
+                console.log(e);
+              }
+
+              callLocator = { roomId: roomId };
+            }
+
+            /* @conditional-compile-remove(rooms) */
+            if ('roomId' in callLocator) {
+              if (userId) {
+                setRole(callDetails.role as Role);
+                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
+              } else {
+                throw 'Invalid userId!';
+              }
+            }
+            setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
-            if (
-              !joiningExistingCall &&
-              /* @conditional-compile-remove(PSTN-calls) */ !callDetails.outboundParticipants
-            ) {
-              const joinParam = isTeamsCall
-                ? '?teamsLink=' + encodeURIComponent((locator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (locator as GroupCallLocator).groupId;
-              window.history.pushState({}, document.title, window.location.origin + joinParam);
+            if (!joiningExistingCall) {
+              window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
             }
 
             setPage('call');
@@ -152,6 +183,8 @@ const App = (): JSX.Element => {
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={alternateCallerId}
           onCallEnded={() => setPage('endCall')}
+          /* @conditional-compile-remove(rooms) */
+          role={role}
         />
       );
     }
@@ -161,17 +194,19 @@ const App = (): JSX.Element => {
   }
 };
 
-function makeLocator(
-  teamsLink?: TeamsMeetingLinkLocator | undefined,
-  /* @conditional-compile-remove(PSTN-calls) */
-  outboundParticipants?: string[]
-): CallAdapterLocator {
-  /* @conditional-compile-remove(PSTN-calls) */
-  if (outboundParticipants) {
-    // set call participants and do not update the window URL since there is not a joinable link
-    return { participantIDs: outboundParticipants };
+const getJoinParams = (locator: CallAdapterLocator): string => {
+  if ('meetingLink' in locator) {
+    return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
   }
-  return teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
-}
+  /* @conditional-compile-remove(rooms) */
+  if ('roomId' in locator) {
+    return '?roomId=' + encodeURIComponent(locator.roomId);
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  if ('participantIDs' in locator) {
+    return '';
+  }
+  return '?groupId=' + encodeURIComponent(locator.groupId);
+};
 
 export default App;

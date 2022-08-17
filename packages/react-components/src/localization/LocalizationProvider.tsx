@@ -17,8 +17,13 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButtonStrings } from '../components';
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
+/* @conditional-compile-remove(one-to-n-calling) */
+// @conditional-compile-remove(PSTN-calls)
+import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -69,9 +74,16 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  // @conditional-compile-remove(PSTN-calls)
+  /** Strings for VideoTile */
+  videoTile: VideoTileStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
+  /** Strings for HoldButton */
+  holdButton: HoldButtonStrings;
 }
 
 /**
