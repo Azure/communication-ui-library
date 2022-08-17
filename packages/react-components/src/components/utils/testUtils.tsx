@@ -6,6 +6,7 @@ import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
+import { _PermissionsProvider, _getPermissions, _Permissions } from '../../permissions';
 
 /**
  * @private
@@ -36,4 +37,14 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
     strings[key] = { ...strings[key], ...testStrings[key] };
   });
   return { strings };
+};
+
+/**
+ * @private
+ */
+export const mountWithPermissions = (node: React.ReactElement, permissions: _Permissions): ReactWrapper => {
+  return mount(node, {
+    wrappingComponent: _PermissionsProvider,
+    wrappingComponentProps: { permissions }
+  });
 };
