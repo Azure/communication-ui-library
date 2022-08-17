@@ -17,7 +17,7 @@ import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../CallComposite/components/buttons/EndCall';
-import { MoreButton } from './MoreButton';
+import { MoreButton } from '../common/MoreButton';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { ContainerRectProps } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -26,6 +26,8 @@ import {
   generateCustomCallWithChatControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { DesktopMoreButton } from './components/DesktopMoreButton';
 
 /**
  * @private
@@ -41,6 +43,8 @@ export interface CallWithChatControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onClickShowDialpad: () => void;
 }
 
 const inferCallWithChatControlOptions = (
@@ -144,7 +148,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
   );
-
   return (
     <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
@@ -210,6 +213,21 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
+                {
+                  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                    options?.moreButton
+                  ) &&
+                    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                      options?.holdButton
+                    ) &&
+                    !props.mobileView && (
+                      <DesktopMoreButton
+                        disabled={props.disableButtonsForLobbyPage}
+                        styles={commonButtonStyles}
+                        onClickShowDialpad={props.onClickShowDialpad}
+                      />
+                    )
+                }
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
               </ControlBar>
             </Stack.Item>

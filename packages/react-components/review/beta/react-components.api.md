@@ -250,6 +250,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -456,6 +457,7 @@ export interface DialpadProps {
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
@@ -465,7 +467,7 @@ export interface DialpadProps {
 // @beta
 export interface DialpadStrings {
     // (undocumented)
-    deleteButtonAriaLabel: string;
+    deleteButtonAriaLabel?: string;
     // (undocumented)
     placeholderText: string;
 }
@@ -709,7 +711,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
-    toolTipOffContent: string;
+    tooltipOffContent: string;
     tooltipOnContent: string;
 }
 

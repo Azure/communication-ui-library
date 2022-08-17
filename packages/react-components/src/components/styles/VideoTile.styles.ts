@@ -86,16 +86,6 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const participantStateStyle: IStyle = {
-  textAlign: 'center',
-  paddingTop: '0.5rem',
-  fontWeight: 600,
-  fontSize: '0.75rem'
-};
-
-/**
- * @private
- */
 export const iconContainerStyle: IStyle = {
   height: '100%',
   alignItems: 'center',
@@ -116,4 +106,24 @@ export const isSpeakingBorderDiv: IStyle = {
   left: '0',
   // Ensure the isSpeaking element does not steal any pointer events such as onClick events
   pointerEvents: 'none'
+};
+
+/**
+ * @private
+ */
+export const participantStateStringStyles = (showLabel: boolean): IStyle => {
+  return {
+    textAlign: 'center',
+    minWidth: '3rem',
+    color: 'inherit',
+    width: showLabel ? 'auto' : '100%',
+    marginRight: showLabel ? 0 : 'none',
+    marginLeft: showLabel ? 'auto' : 'none',
+    fontSize: '0.75rem',
+    lineHeight: 'normal',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    padding: '0.25rem'
+  };
 };

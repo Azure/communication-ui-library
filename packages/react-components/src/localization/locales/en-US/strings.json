@@ -173,11 +173,11 @@
     "placeholderText": "Enter phone number",
     "deleteButtonAriaLabel": "Delete"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Resume",
     "offLabel": "Hold",
-    "toolTipOnContent": "Resume call",
-    "toolTipOffContent": "Hold call"
+    "tooltipOnContent": "Resume call",
+    "tooltipOffContent": "Hold call"
   },
   "videoTile": {
     "participantStateConnecting": "Calling...",
