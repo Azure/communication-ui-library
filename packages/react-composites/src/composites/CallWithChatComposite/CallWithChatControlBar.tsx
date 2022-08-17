@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useState } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -28,8 +26,6 @@ import {
   generateCustomCallWithChatControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/* @conditional-compile-remove(PSTN-calls) */
-import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 
@@ -47,6 +43,8 @@ export interface CallWithChatControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onClickShowDialpad: () => void;
 }
 
 const inferCallWithChatControlOptions = (
@@ -132,18 +130,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     [options]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel
-    }),
-    [callWithChatStrings]
-  );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDialpad, setShowDialpad] = useState(false);
-
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
     return <></>;
@@ -162,25 +148,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
   );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-
   return (
     <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          {
-            /* @conditional-compile-remove(PSTN-calls) */
-            <SendDtmfDialpad
-              isMobile={props.mobileView ?? false}
-              strings={dialpadStrings}
-              showDialpad={showDialpad}
-              onDismissDialpad={onDismissDialpad}
-            />
-          }
           <Stack horizontalAlign="center">
             <Stack.Item>
               {/*
@@ -250,7 +221,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                       options?.holdButton
                     ) &&
                     !props.mobileView && (
-                      <DesktopMoreButton disabled={props.disableButtonsForLobbyPage} styles={commonButtonStyles} />
+                      <DesktopMoreButton
+                        disabled={props.disableButtonsForLobbyPage}
+                        styles={commonButtonStyles}
+                        onClickShowDialpad={props.onClickShowDialpad}
+                      />
                     )
                 }
                 <EndCall displayType="compact" styles={endCallButtonStyles} />
