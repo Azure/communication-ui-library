@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import Enzyme from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 /* @conditional-compile-remove(rooms) */
 import { mountWithPermissions } from './utils/testUtils';
@@ -31,6 +31,14 @@ describe('ParticipantList tests for different roles', () => {
         participantitemoptions: <></>
       }
     });
+  });
+  test('ParticipantList should have remove item', async () => {
+    mount(
+      <ParticipantList
+        participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
+        onRemoveParticipant={dummyOnRemoveParticipantCallback}
+      />
+    );
   });
   /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have enabled remove menu item for Presenter role', async () => {

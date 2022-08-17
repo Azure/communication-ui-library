@@ -1,17 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(rooms) */
 import React from 'react';
 import Enzyme from 'enzyme';
-/* @conditional-compile-remove(rooms) */
 import { renderHook } from '@testing-library/react-hooks';
 import Adapter from 'enzyme-adapter-react-16';
-/* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, _getPermissions, _Permissions, _usePermissions } from './PermissionsProvider';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-/* @conditional-compile-remove(rooms) */
 const mockPresenterPermissions: _Permissions = {
   cameraButton: true,
   microphoneButton: true,
@@ -19,7 +15,6 @@ const mockPresenterPermissions: _Permissions = {
   removeParticipantButton: true
 };
 
-/* @conditional-compile-remove(rooms) */
 const mockConsumerPermissions: _Permissions = {
   cameraButton: false,
   microphoneButton: false,
@@ -27,7 +22,6 @@ const mockConsumerPermissions: _Permissions = {
   removeParticipantButton: false
 };
 
-/* @conditional-compile-remove(rooms) */
 const mockAttendeePermissions: _Permissions = {
   cameraButton: true,
   microphoneButton: true,
@@ -35,7 +29,6 @@ const mockAttendeePermissions: _Permissions = {
   removeParticipantButton: false
 };
 
-/* @conditional-compile-remove(rooms) */
 describe('Tests for permission provider hook by passing mock permissions', () => {
   test('Test _usepermissions for presenter', async () => {
     const wrapper = ({ children }): React.ReactElement => (
@@ -60,7 +53,6 @@ describe('Tests for permission provider hook by passing mock permissions', () =>
   });
 });
 
-/* @conditional-compile-remove(rooms) */
 describe('PermissionProvider tests for different roles', () => {
   test('Test permissions object for presenter', async () => {
     expect(_getPermissions('Presenter')).toEqual(mockPresenterPermissions);
