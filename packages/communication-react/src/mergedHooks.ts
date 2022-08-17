@@ -143,6 +143,6 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   if (!chatSelector && !callingSelector) {
     throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
   } else {
-    throw 'Get undefined props from useSelectors, please make sure the component is wrapped by providers.';
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
   }
 };
