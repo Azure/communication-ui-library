@@ -31,9 +31,8 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   cameraButton?:
-    | boolean /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    | {
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
       };
   /**
@@ -46,9 +45,8 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   microphoneButton?:
-    | boolean /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    | {
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
       };
   /**
@@ -56,9 +54,8 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   devicesButton?:
-    | boolean /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    | {
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
       };
   /**

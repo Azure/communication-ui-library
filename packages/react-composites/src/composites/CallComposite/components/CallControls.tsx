@@ -114,7 +114,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
-        disabled: isDisabled(options?.participantsButton),
         ['data-ui-id']: 'call-composite-more-menu-people-button'
       });
     }
@@ -213,7 +212,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 displayType={options?.displayType}
                 increaseFlyoutItemSize={props.increaseFlyoutItemSize}
                 isMobile={props.isMobile}
-                disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -222,7 +220,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 showLabel={options?.displayType !== 'compact'}
                 onClick={props.onPeopleButtonClicked}
                 data-ui-id="call-composite-people-button"
-                disabled={isDisabled(options?.participantsButton)}
                 strings={peopleButtonStrings}
               />
             )}
