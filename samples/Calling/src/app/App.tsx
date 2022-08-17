@@ -23,7 +23,7 @@ import {
   WEB_APP_TITLE
 } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
-import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
+import { createRoom, getRoomIdFromUrl } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
@@ -105,6 +105,10 @@ const App = (): JSX.Element => {
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
           startCallHandler={async (callDetails) => {
+            if (!userId) {
+              throw new Error('userId not defined');
+            }
+
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
@@ -134,12 +138,10 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
-              if (userId) {
-                setRole(callDetails.role as Role);
-                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
-              } else {
-                throw 'Invalid userId!';
-              }
+              setRole(callDetails.role as Role);
+            } else {
+              // unset role when call is not a Rooms call
+              setRole(undefined);
             }
             setCallLocator(callLocator);
 
