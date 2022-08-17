@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update _isInCall function for PSTN and 1toN",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
