@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { END_CALL_PAGES } from '../adapter/CallAdapter';
 import { reduceCallControlsForMobile } from './Utils';
 
 describe('SDKUtils tests', () => {

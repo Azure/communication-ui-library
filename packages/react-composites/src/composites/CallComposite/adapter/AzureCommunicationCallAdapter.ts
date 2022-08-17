@@ -47,10 +47,9 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
-  CallCompositePage,
-  OnEndCallPayload
+  CallAdapterCallEndedEvent
 } from './CallAdapter';
-import { getCallCompositePage, isCameraOn } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -67,13 +66,6 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
-
-const endCallPages: CallCompositePage[] = [
-  'accessDeniedTeamsMeeting',
-  'joinCallFailedDueToNoNetwork',
-  'leftCall',
-  'removedFromCall'
-];
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -121,11 +113,11 @@ class CallContext {
     this.callId = callId;
   }
 
-  public onCallEnded(handler: (callEndedData: OnEndCallPayload) => void): void {
+  public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
 
-  public offCallEnded(handler: (callEndedData: OnEndCallPayload) => void): void {
+  public offCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.off('callEnded', handler);
   }
 
@@ -133,8 +125,10 @@ class CallContext {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
 
+    // As the state is transitioning to a new state, trigger appropriate callback events.
+    const oldPage = this.state.page;
     const newPage = getCallCompositePage(call, latestEndedCall);
-    if (!endCallPages.includes(this.state.page) && endCallPages.includes(newPage)) {
+    if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', {
         callId: this.callId,
         callEndedCode: latestEndedCall?.callEndReason?.code,
@@ -148,7 +142,7 @@ class CallContext {
         userId: clientState.userId,
         displayName: clientState.callAgent?.displayName,
         call,
-        page: getCallCompositePage(call, latestEndedCall),
+        page: newPage,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors
@@ -656,7 +650,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     try {
       return await f();
     } catch (error) {
-      if (isCallError(error)) {
+      if (isCallError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
@@ -667,7 +661,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     try {
       return f();
     } catch (error) {
-      if (isCallError(error)) {
+      if (isCallError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
