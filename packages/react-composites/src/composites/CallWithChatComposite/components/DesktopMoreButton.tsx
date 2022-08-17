@@ -16,11 +16,16 @@ import { MoreButton } from '../../common/MoreButton';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
 
+/** @private */
+export interface DesktopMoreButtonProps extends ControlBarButtonProps {
+  onClickShowDialpad?: () => void;
+}
+
 /**
  *
  * @private
  */
-export const DesktopMoreButton = (props: ControlBarButtonProps): JSX.Element => {
+export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element => {
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale();
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -50,6 +55,21 @@ export const DesktopMoreButton = (props: ControlBarButtonProps): JSX.Element => 
         styles: buttonFlyoutIncreasedSizeStyles
       }
     });
+
+    /*@conditional-compile-remove(PSTN-calls) */
+    if (props.onClickShowDialpad) {
+      items.push({
+        key: 'showDialpadKey',
+        text: localeStrings.strings.callWithChat.openDtmfDialpad,
+        onClick: () => {
+          props.onClickShowDialpad && props.onClickShowDialpad();
+        },
+        iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
 
     return items;
   };

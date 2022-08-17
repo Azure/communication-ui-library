@@ -82,6 +82,7 @@ const VideoTileStory = (args): JSX.Element => {
       }
       displayName={args.displayName}
       showMuteIndicator={args.showMuteIndicator}
+      showLabel={args.showLabel}
       isMirrored={args.isMirrored}
       isMuted={args.isMuted}
       isSpeaking={args.isSpeaking}
@@ -101,6 +102,7 @@ export default {
   argTypes: {
     displayName: controlsToAdd.displayName,
     showMuteIndicator: controlsToAdd.showMuteIndicator,
+    showLabel: controlsToAdd.showVideoTileLabel,
     isVideoReady: controlsToAdd.isVideoReady,
     isMirrored: controlsToAdd.isVideoMirrored,
     isMuted: controlsToAdd.isMuted,
@@ -108,13 +110,13 @@ export default {
     width: controlsToAdd.videoTileWidth,
     height: controlsToAdd.videoTileHeight,
     // Hiding auto-generated controls
+    participantState: hiddenControl,
     userId: hiddenControl,
     noVideoAvailableAriaLabel: hiddenControl,
     children: hiddenControl,
     styles: hiddenControl,
     renderElement: hiddenControl,
     onRenderPlaceholder: hiddenControl,
-    showLabel: hiddenControl,
     initialsName: hiddenControl
   },
   parameters: {
