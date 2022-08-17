@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(rooms) */
 import React from 'react';
 import Enzyme from 'enzyme';
 /* @conditional-compile-remove(rooms) */
