@@ -14,7 +14,7 @@ export const Camera = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disabled?: boolean;
+  disabled?: boolean;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
