@@ -6,7 +6,6 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 /* @conditional-compile-remove(rooms) */
 import { mountWithPermissions } from './utils/testUtils';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantList } from './ParticipantList';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantItem } from './ParticipantItem';
@@ -18,7 +17,6 @@ import { registerIcons } from '@fluentui/react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-/* @conditional-compile-remove(rooms) */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const dummyOnRemoveParticipantCallback = () => {
   console.log('Removing participant');
