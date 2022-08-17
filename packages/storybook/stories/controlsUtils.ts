@@ -143,6 +143,7 @@ export const orientationArg = {
 };
 
 export const controlsToAdd = {
+  alternateCallerId: { control: 'text', description: 'added', defaultValue: '', name: 'Alternate CallerID' },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
@@ -160,6 +161,11 @@ export const controlsToAdd = {
     control: 'text',
     defaultValue: '',
     name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
+  },
+  callParticipantsLocator: {
+    control: 'array',
+    defaultValue: ['+###########'],
+    name: 'Call locator (Participant IDs)'
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },

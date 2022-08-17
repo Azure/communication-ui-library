@@ -193,9 +193,10 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         As well as these participantIDs you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
-        from a Azure Communications resource to the composite's adapter for PSTN. This phone number serves as your
-        caller ID when calling PSTN. This phone number is not required for calling other Azure Communications users,
-        however, will be required if you are looking to call a ACS user and a PSTN user in the same call.
+        known as an AlternateCallerId from a Azure Communications resource to the composite's adapter for PSTN. This
+        phone number serves as your caller ID when calling PSTN. This phone number is not required for calling other
+        Azure Communications users, however, will be required if you are looking to call a ACS user and a PSTN user in
+        the same call.
       </Description>
 
       <Heading>Call Composite Props</Heading>
