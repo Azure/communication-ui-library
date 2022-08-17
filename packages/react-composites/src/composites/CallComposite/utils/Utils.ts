@@ -153,6 +153,5 @@ export const IsCallEndedPage = (
     | 'leftCall'
     | 'lobby'
     | 'removedFromCall'
-    /* @conditional-compile-remove(PSTN-calls) */
-    | 'hold'
+    | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
 ): boolean => END_CALL_PAGES.includes(page);

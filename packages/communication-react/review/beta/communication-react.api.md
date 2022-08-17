@@ -189,6 +189,12 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 }
 
 // @public
+export type CallAdapterCallEndedEvent = {
+    callId?: string;
+    callEndReason?: CallEndReason;
+};
+
+// @public
 export interface CallAdapterCallManagement {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
@@ -488,9 +494,7 @@ export type CallControlOptions = {
 };
 
 // @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
 export class CallError extends Error {
