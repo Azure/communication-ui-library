@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add callEndReason to the onCallEnded event and fix the event to trigger before the composite page transition.",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
