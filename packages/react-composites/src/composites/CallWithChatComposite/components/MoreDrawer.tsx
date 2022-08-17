@@ -87,6 +87,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CallWithChatControlOptions;
+  onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
 }
 
@@ -184,7 +185,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -203,6 +203,18 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         holdButtonProps.onToggleHold();
       },
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
+  /*@conditional-compile-remove(PSTN-calls) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
+    drawerMenuItems.push({
+      itemKey: 'showDialpadKey',
+      text: localeStrings.strings.callWithChat.openDtmfDialpad,
+      onItemClick: () => {
+        props.onClickShowDialpad && props.onClickShowDialpad();
+      },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
     });
   }
 
