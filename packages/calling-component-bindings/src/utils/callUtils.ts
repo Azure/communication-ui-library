@@ -11,8 +11,16 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
  *
  * @internal
  */
-export const _isInCall = (callStatus?: CallStatus): boolean =>
-  !!callStatus && !['None', 'Disconnected', 'Connecting', 'LocalHold', 'RemoteHold', 'Ringing'].includes(callStatus);
+export const _isInCall = (callStatus?: CallStatus): boolean => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return (
+    !!callStatus && !['None', 'Disconnected', 'Connecting', 'LocalHold', 'Ringing', 'EarlyMedia'].includes(callStatus)
+  );
+  return (
+    !!callStatus &&
+    !['None', 'Disconnected', 'Connecting', 'LocalHold', 'RemoteHold', 'Ringing'].includes(callStatus as string)
+  );
+};
 
 /**
  * Check if the call state represents being in the lobby or waiting to be admitted.
