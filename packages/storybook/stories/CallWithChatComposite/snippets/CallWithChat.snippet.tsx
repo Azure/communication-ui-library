@@ -16,7 +16,7 @@ export type CallWithChatExampleProps = {
   displayName: string;
   endpointUrl: string;
   /**
-   * For CallWithChat you need to provide either a teams meeting locator or a special locator
+   * For CallWithChat you need to provide either a teams meeting locator or a CallAndChat locator
    * for the composite
    *
    * CallAndChatLocator: This locator is comprised of a groupId call locator and a chat thread
