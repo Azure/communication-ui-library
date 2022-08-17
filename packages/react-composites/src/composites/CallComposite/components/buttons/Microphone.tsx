@@ -55,7 +55,7 @@ export const Microphone = (props: {
       styles={styles}
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-      disabled={props.disabled}
+      disabled={microphoneButtonProps.disabled || props.disabled}
     />
   );
 };

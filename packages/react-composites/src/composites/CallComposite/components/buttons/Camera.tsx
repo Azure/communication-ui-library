@@ -25,7 +25,7 @@ export const Camera = (props: {
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-      disabled={props.disabled}
+      disabled={cameraButtonProps.disabled || props.disabled}
     />
   );
 };
