@@ -148,21 +148,22 @@ export const disableCallControls = (
   callControlOptions: CallControlOptions | boolean | undefined,
   disabledControls: (keyof CallControlOptions)[]
 ): CallControlOptions | boolean | undefined => {
+  if (callControlOptions === false) {
+    return false;
+  }
   // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
-  let newOptions = callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions ?? {};
-  if (newOptions !== false) {
-    if (newOptions === true || newOptions === undefined) {
-      newOptions = disabledControls.reduce((acc, key) => {
-        acc[key] = { disabled: true };
-        return acc;
-      }, {});
-    } else {
-      disabledControls.forEach((key) => {
-        if (newOptions[key] !== false) {
-          newOptions[key] = { disabled: true };
-        }
-      });
-    }
+  let newOptions = (callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions) ?? {};
+  if (newOptions === true || newOptions === undefined) {
+    newOptions = disabledControls.reduce((acc, key) => {
+      acc[key] = { disabled: true };
+      return acc;
+    }, {});
+  } else {
+    disabledControls.forEach((key) => {
+      if (newOptions[key] !== false) {
+        newOptions[key] = { disabled: true };
+      }
+    });
   }
   return newOptions;
 };
