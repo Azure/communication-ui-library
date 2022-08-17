@@ -47,7 +47,7 @@
 
     const callAdapter = await callComposite.loadCallComposite(
       {
-        groupId, // Provide any GUID to join a group
+        locator: { groupId: groupId }, // Provide any GUID to join a group
         displayName: displayName,
         userId: user,
         token: token
