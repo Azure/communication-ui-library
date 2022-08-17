@@ -217,7 +217,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     data-ui-id="call-with-chat-composite-more-button"
                     strings={moreButtonStrings}
                     onClick={props.onMoreButtonClicked}
-                    disabled={props.disableButtonsForLobbyPage || props.disableButtonsForHoldScreen}
+                    disabled={props.disableButtonsForLobbyPage}
                   />
                 )}
                 {
@@ -229,7 +229,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     ) &&
                     !props.mobileView && (
                       <DesktopMoreButton
-                        disabled={props.disableButtonsForLobbyPage}
+                        disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
                       />
