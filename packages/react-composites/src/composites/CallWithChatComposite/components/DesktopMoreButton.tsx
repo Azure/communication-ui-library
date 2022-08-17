@@ -5,7 +5,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-import React, { useState } from 'react';
+import React from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useMemo } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -13,15 +13,19 @@ import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Buttons.styles';
 import { MoreButton } from '../../common/MoreButton';
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
+
+/** @private */
+export interface DesktopMoreButtonProps extends ControlBarButtonProps {
+  onClickShowDialpad?: () => void;
+}
 
 /**
  *
  * @private
  */
-export const DesktopMoreButton = (props: ControlBarButtonProps): JSX.Element => {
+export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element => {
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale();
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -35,24 +39,6 @@ export const DesktopMoreButton = (props: ControlBarButtonProps): JSX.Element => 
     }),
     [localeStrings]
   );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: localeStrings.strings.callWithChat.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: localeStrings.strings.callWithChat.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.callWithChat.dtmfDialpadPlaceHolderText
-    }),
-    [localeStrings]
-  );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDialpad, setShowDialpad] = useState(false);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
 
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
@@ -71,40 +57,31 @@ export const DesktopMoreButton = (props: ControlBarButtonProps): JSX.Element => 
     });
 
     /*@conditional-compile-remove(PSTN-calls) */
-    items.push({
-      key: 'showDialpadKey',
-      text: localeStrings.strings.callWithChat.openDtmfDialpad,
-      onClick: () => {
-        setShowDialpad(true);
-      },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      }
-    });
+    if (props.onClickShowDialpad) {
+      items.push({
+        key: 'showDialpadKey',
+        text: localeStrings.strings.callWithChat.openDtmfDialpad,
+        onClick: () => {
+          props.onClickShowDialpad && props.onClickShowDialpad();
+        },
+        iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
 
     return items;
   };
 
   return (
-    <>
-      {
-        /* @conditional-compile-remove(PSTN-calls) */
-        <SendDtmfDialpad
-          isMobile={false}
-          strings={dialpadStrings}
-          showDialpad={showDialpad}
-          onDismissDialpad={onDismissDialpad}
-        />
-      }
-      <MoreButton
-        {...props}
-        data-ui-id="call-with-chat-composite-more-button"
-        /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-        strings={moreButtonStrings}
-        menuIconProps={{ hidden: true }}
-        menuProps={{ items: moreButtonContextualMenuItems() }}
-      />
-    </>
+    <MoreButton
+      {...props}
+      data-ui-id="call-with-chat-composite-more-button"
+      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      strings={moreButtonStrings}
+      menuIconProps={{ hidden: true }}
+      menuProps={{ items: moreButtonContextualMenuItems() }}
+    />
   );
 };

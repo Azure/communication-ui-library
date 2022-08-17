@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
@@ -24,7 +24,6 @@ import {
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -88,6 +87,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CallWithChatControlOptions;
+  onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
 }
 
@@ -185,25 +185,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: localeStrings.strings.callWithChat.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: localeStrings.strings.callWithChat.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.callWithChat.dtmfDialpadPlaceHolderText
-    }),
-    [localeStrings]
-  );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDialpad, setShowDialpad] = useState(false);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -226,12 +207,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }
 
   /*@conditional-compile-remove(PSTN-calls) */
-  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',
       text: localeStrings.strings.callWithChat.openDtmfDialpad,
       onItemClick: () => {
-        setShowDialpad(true);
+        props.onClickShowDialpad && props.onClickShowDialpad();
       },
       iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
     });
@@ -262,20 +243,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     drawerMenuItems.push(element);
   });
 
-  return (
-    <>
-      {
-        /* @conditional-compile-remove(PSTN-calls) */
-        <SendDtmfDialpad
-          isMobile
-          strings={dialpadStrings}
-          showDialpad={showDialpad}
-          onDismissDialpad={onDismissDialpad}
-        />
-      }
-      <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />
-    </>
-  );
+  return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
 
 const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevice): boolean =>
