@@ -375,6 +375,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={onClickShowDialpad}
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
                 />
               </Stack>
