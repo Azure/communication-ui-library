@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "update _isInCall function for PSTN and 1toN",
+  "comment": "Account for RemoteHold call status in Call Composite",
   "packageName": "@internal/react-composites",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
