@@ -283,6 +283,7 @@ export const controlsToAdd = {
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+  showVideoTileLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
   showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
   showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
   showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
